@@ -2,11 +2,14 @@
 using BugNET.Common;
 using BugNET.DAL;
 using BugNET.Entities;
+using log4net;
 
 namespace BugNET.BLL
 {
-    public class IssueVoteManager
+    public static class IssueVoteManager
     {
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         /// <summary>
         /// Saves this instance.
         /// </summary>
@@ -14,14 +17,13 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool SaveIssueVote(IssueVote issueVoteToSave)
         {
-            int TempId = DataProviderManager.Provider.CreateNewIssueVote(issueVoteToSave);
-            if (TempId > 0)
-            {
-                issueVoteToSave.Id = TempId;
-                return true;
-            }
-            else
+            var tempId = DataProviderManager.Provider.CreateNewIssueVote(issueVoteToSave);
+
+            if (tempId <= 0)
                 return false;
+
+            issueVoteToSave.Id = tempId;
+            return true;
         }
 
 
@@ -35,8 +37,9 @@ namespace BugNET.BLL
         /// </returns>
         public static bool HasUserVoted(int issueId, string username)
         {
-            if (issueId <= Globals.NewId)
+            if (issueId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("issueId"));
+
             if (string.IsNullOrEmpty(username))
                 throw new ArgumentNullException("username");
 

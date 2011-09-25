@@ -126,11 +126,11 @@ namespace BugNET.Issues.UserControls
         {
             BindRelated();
 
-            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.DELETE_PARENT_ISSUE.ToString()))
+            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.DeleteParentIssue.ToString()))
                 IssuesDataGrid.Columns[4].Visible = false;
 
             //check users role permission for adding a related issue
-            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.ADD_PARENT_ISSUE.ToString()))
+            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.AddParentIssue.ToString()))
                 AddParentIssuePanel.Visible = false;
         }
 

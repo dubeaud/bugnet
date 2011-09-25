@@ -52,11 +52,11 @@ namespace BugNET.Issues.UserControls
         {
             BindRelatedIssues();
 
-            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.DELETE_RELATED.ToString()))
+            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.DeleteRelated.ToString()))
                 RelatedIssuesDataGrid.Columns[4].Visible = false;
 
             //check users role permission for adding a related issue
-            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.ADD_RELATED.ToString()))
+            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.AddRelated.ToString()))
                 AddRelatedIssuePanel.Visible = false;
         }
 

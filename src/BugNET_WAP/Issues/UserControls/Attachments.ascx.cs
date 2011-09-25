@@ -66,10 +66,10 @@ namespace BugNET.Issues.UserControls
             BindAttachments();
 
             //check users role permission for adding an attachment
-            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.ADD_ATTACHMENT.ToString()))
+            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.AddAttachment.ToString()))
                 pnlAddAttachment.Visible = false;
 
-            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.DELETE_ATTACHMENT.ToString()))
+            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.DeleteAttachment.ToString()))
                 AttachmentsDataGrid.Columns[5].Visible = false;
         }
 

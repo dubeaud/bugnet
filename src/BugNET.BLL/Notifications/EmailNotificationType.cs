@@ -9,7 +9,7 @@ namespace BugNET.BLL.Notifications
     /// <summary>
     /// Email Format Type
     /// </summary>
-    public enum EmailFormatType : int
+    public enum EmailFormatType
     {
         /// <summary>
         /// Text
@@ -27,14 +27,14 @@ namespace BugNET.BLL.Notifications
     public class EmailNotificationType : INotificationType
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(EmailNotificationType));
-        private bool _Enabled = true;
+        private readonly bool _enabled = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EmailNotificationType"/> class.
         /// </summary>
         public EmailNotificationType()
         {
-            _Enabled = NotificationManager.IsNotificationTypeEnabled(this.Name);  
+            _enabled = NotificationManager.IsNotificationTypeEnabled(Name);  
         }
 
         #region INotificationType Members
@@ -56,7 +56,7 @@ namespace BugNET.BLL.Notifications
         {
             get
             {
-                return _Enabled;
+                return _enabled;
             }
         }
 
@@ -68,48 +68,50 @@ namespace BugNET.BLL.Notifications
         {
             try
             {
-                System.Web.Security.MembershipUser user = UserManager.GetUser(context.Username);
+                var user = UserManager.GetUser(context.Username);
 
                 //check if this user had this notifiction type enabled in their profile.
-                if (user != null && UserManager.IsNotificationTypeEnabled(context.Username, this.Name))
+                if (user != null && UserManager.IsNotificationTypeEnabled(context.Username, Name))
                 {                                   
-                    string From = HostSettingManager.GetHostSetting("HostEmailAddress");
-                    string SMTPServer = HostSettingManager.GetHostSetting("SMTPServer");
-                    int SMTPPort = int.Parse(HostSettingManager.GetHostSetting("SMTPPort"));
-                    bool SMTPAuthentictation = Convert.ToBoolean(HostSettingManager.GetHostSetting("SMTPAuthentication"));
-                    bool SMTPUseSSL = Boolean.Parse(HostSettingManager.GetHostSetting("SMTPUseSSL"));
-                    string SMTPDomain = HostSettingManager.GetHostSetting("SMTPDomain", string.Empty);
+                    var from = HostSettingManager.GetHostSetting("HostEmailAddress");
+                    var smtpServer = HostSettingManager.GetHostSetting("SMTPServer");
+                    var smtpPort = int.Parse(HostSettingManager.GetHostSetting("SMTPPort"));
+                    var smtpAuthentictation = Convert.ToBoolean(HostSettingManager.GetHostSetting("SMTPAuthentication"));
+                    var smtpUseSSL = Boolean.Parse(HostSettingManager.GetHostSetting("SMTPUseSSL"));
+                    
 
                     // Security Bugfix by SMOSS
                     // Only fetch the password if you need it
-                    string SMTPUsername="";
-                    string SMTPPassword="";
-                    if (SMTPAuthentictation)
+                    var smtpUsername = string.Empty;
+                    var smtpPassword = string.Empty;
+                    var smtpDomain = string.Empty;
+
+                    if (smtpAuthentictation)
                     {
-                        SMTPUsername = HostSettingManager.GetHostSetting("SMTPUsername");
-                        SMTPPassword = HostSettingManager.GetHostSetting("SMTPPassword");
+                        smtpUsername = HostSettingManager.GetHostSetting("SMTPUsername", string.Empty);
+                        smtpPassword = HostSettingManager.GetHostSetting("SMTPPassword", string.Empty);
+                        smtpDomain = HostSettingManager.GetHostSetting("SMTPDomain", string.Empty);
                     }
 
-                    SmtpClient smtp = new SmtpClient();
-                    smtp.Host = SMTPServer;
-                    smtp.Port = SMTPPort;
-                    smtp.EnableSsl = SMTPUseSSL;
+                    using(var smtp = new SmtpClient())
+                    {
+                        smtp.Host = smtpServer;
+                        smtp.Port = smtpPort;
+                        smtp.EnableSsl = smtpUseSSL;
 
-                    if (SMTPAuthentictation)
-                        smtp.Credentials = new NetworkCredential(SMTPUsername, SMTPPassword, SMTPDomain);
+                        if (smtpAuthentictation)
+                            smtp.Credentials = new NetworkCredential(smtpUsername, smtpPassword, smtpDomain);
 
-                    MailMessage message = new MailMessage(From, user.Email, context.Subject, context.BodyText);
-                    message.IsBodyHtml = true;
-
-                    smtp.Send(message);
-
-                    // try to clean up the credentials
-                    if (smtp.Credentials != null)
-                      smtp.Credentials = null;
-                    SMTPPassword="                 ";
-                    SMTPUsername="                 ";
+                        using(var message = new MailMessage(
+                            from, 
+                            user.Email, 
+                            context.Subject, 
+                            context.BodyText) {IsBodyHtml = true})
+                        {
+                            smtp.Send(message);   
+                        }
+                    }
                 }
-              
             }
             catch (Exception ex)
             {

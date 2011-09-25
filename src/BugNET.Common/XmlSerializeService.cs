@@ -12,7 +12,7 @@ namespace BugNET.Common
     /// <typeparam name="T"></typeparam>
 	public class XmlSerializeService<T>
 	{
-		XmlSerializer _serializer;
+        readonly XmlSerializer _serializer;
         private static readonly ILog Log = LogManager.GetLogger(typeof(XmlSerializeService<T>));
 
         /// <summary>
@@ -30,12 +30,12 @@ namespace BugNET.Common
 		/// <returns></returns>
 		public string ToXml(T data)
 		{
-			System.Text.StringBuilder builder = new System.Text.StringBuilder();
+			var builder = new System.Text.StringBuilder();
 
-			XmlWriterSettings settings = new XmlWriterSettings();
+			var settings = new XmlWriterSettings();
 			settings.OmitXmlDeclaration = true;
 
-			XmlSerializerNamespaces xmlnsEmpty = new XmlSerializerNamespaces();
+			var xmlnsEmpty = new XmlSerializerNamespaces();
 			xmlnsEmpty.Add("", ""); // kill any namespaces
 
 			try
@@ -60,10 +60,10 @@ namespace BugNET.Common
 		{
 			try
 			{
-				using (StringReader sr = new StringReader(xml))
+				using (var sr = new StringReader(xml))
 				{
 
-					T item = (T)_serializer.Deserialize(sr);
+					var item = (T)_serializer.Deserialize(sr);
 					return item;
 				}
 			}

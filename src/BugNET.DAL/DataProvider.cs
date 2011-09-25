@@ -37,7 +37,7 @@ namespace BugNET.DAL
         public abstract bool UpdateIssue(Issue issueToUpdate);
         public abstract int CreateNewIssue(Issue issueToCreate);
         public abstract List<Issue> GetIssuesByRelevancy(int projectId, string username);
-        public abstract List<Issue> GetIssuesByAssignedUserName(int projectId, string AssignedUserName);
+        public abstract List<Issue> GetIssuesByAssignedUserName(int projectId, string assignedUserName);
         public abstract List<Issue> GetIssuesByCreatorUserName(int projectId, string creatorUserName);
         public abstract List<Issue> GetIssuesByOwnerUserName(int projectId, string creatorUserName);
         public abstract List<Issue> GetOpenIssues(int projectId);
@@ -70,7 +70,7 @@ namespace BugNET.DAL
         public abstract bool UpdateQuery(int queryId, string username, int projectId, string queryName, bool isPublic, List<QueryClause> queryClauses);
         public abstract bool DeleteQuery(int queryId);
         public abstract List<RequiredField> GetRequiredFieldsForIssues();
-        public abstract void PerformGenericQuery<T>(ref List<T> List, List<QueryClause> queryClauses, string strSQL, string strOrderBy);
+        public abstract void PerformGenericQuery<T>(ref List<T> list, List<QueryClause> queryClauses, string sql, string strOrderBy);
         public abstract List<Issue> PerformQuery(int projectId, List<QueryClause> queryClauses);
         public abstract List<Issue> PerformSavedQuery(int projectId, int queryId);
         public abstract List<QueryClause> GetQueryClausesByQueryId(int queryId);
@@ -117,7 +117,7 @@ namespace BugNET.DAL
 
         // Priority
         public abstract int CreateNewPriority(Priority newPriority);
-        public abstract bool DeletePriority(int PriorityId);
+        public abstract bool DeletePriority(int priorityId);
         public abstract List<Priority> GetPrioritiesByProjectId(int projectId);
         public abstract Priority GetPriorityById(int priorityId);
         public abstract bool UpdatePriority(Priority priorityToUpdate);

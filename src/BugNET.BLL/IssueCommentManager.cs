@@ -5,15 +5,18 @@ using System.Text.RegularExpressions;
 using BugNET.Common;
 using BugNET.DAL;
 using BugNET.Entities;
+using log4net;
 
 namespace BugNET.BLL
 {
-    public class IssueCommentManager 
+    public static class IssueCommentManager 
     {
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         /// <summary>
         /// The default length of short comments (if not specified).
         /// </summary>
-        private const int CNST_defaultshortCommentLength = 100;
+        private const int CNST_DEFAULTSHORT_COMMENT_LENGTH = 100;
 
         #region Static Methods
         /// <summary>
@@ -22,37 +25,23 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool SaveIssueComment(IssueComment issueCommentToSave)
         {
-            if (issueCommentToSave.Id <= Globals.NewId)
-            {
-                int TempId = DataProviderManager.Provider.CreateNewIssueComment(issueCommentToSave);
-                if (TempId > Globals.NewId)
-                {
-                    issueCommentToSave.Id = TempId;
-                    IssueNotificationManager.SendNewIssueCommentNotification(issueCommentToSave.IssueId, IssueCommentManager.GetIssueCommentById(issueCommentToSave.Id));
-                    return true;
-                }
-                else
-                    return false;
-            }
-            else
+            if (issueCommentToSave.Id > Globals.NEW_ID)
             {
                 return DataProviderManager.Provider.UpdateIssueComment(issueCommentToSave);
             }
-        }
+            var tempId = DataProviderManager.Provider.CreateNewIssueComment(issueCommentToSave);
 
-        /// <summary>
-        /// Gets a "short text" version of the comment.
-        /// This is handy for lists or summary data. (perhaps something in notifications too).
-        /// The returned text is "CNST_defaultshortCommentLength" chars long, and is centred
-        /// on the middle-point (if the string is long enough).
-        /// This strips HTML from the comment and does a bit of cleaning of the output.
-        /// BGN-1732 - IssueComment needs a new Property to read short comments for list displays
-        /// </summary>
-        /// <param name="comment">The comment.</param>
-        /// <returns></returns>
-        public static string GetShortTextComment(string comment)
-        {
-            return GetShortTextComment(comment, CNST_defaultshortCommentLength);
+            if (tempId <= Globals.NEW_ID)
+                return false;
+
+            issueCommentToSave.Id = tempId;
+
+            IssueNotificationManager.SendNewIssueCommentNotification(
+                issueCommentToSave.IssueId,
+                GetIssueCommentById(
+                issueCommentToSave.Id));
+
+            return true;
         }
 
         /// <summary>
@@ -66,7 +55,7 @@ namespace BugNET.BLL
         /// <param name="comment">The comment.</param>
         /// <param name="howmuch">How long must the string be.</param>
         /// <returns></returns>
-        public static string GetShortTextComment(string comment, int howmuch)
+        public static string GetShortTextComment(string comment, int howmuch = CNST_DEFAULTSHORT_COMMENT_LENGTH)
         {
 
             string tmpcomment = comment.Trim();
@@ -144,15 +133,15 @@ namespace BugNET.BLL
         /// Performs a query containing any number of query clauses on a certain IssueID
         /// </summary>
         /// <param name="issueId"></param>
-        /// <param name="QueryClauses"></param>
+        /// <param name="queryClauses"></param>
         /// <returns></returns>
-        public static List<IssueComment> PerformQuery(int issueId, List<QueryClause> QueryClauses)
+        public static List<IssueComment> PerformQuery(int issueId, List<QueryClause> queryClauses)
         {
             if (issueId < 0)
-                throw new ArgumentOutOfRangeException("issueId must be bigger than 0");
-            QueryClauses.Add(new QueryClause("AND", "IssueId", "=", issueId.ToString(), System.Data.SqlDbType.Int, false));
+                throw new ArgumentOutOfRangeException("issueId", "issueId must be bigger than 0");
+            queryClauses.Add(new QueryClause("AND", "IssueId", "=", issueId.ToString(), SqlDbType.Int, false));
 
-            return PerformQuery(QueryClauses);
+            return PerformQuery(queryClauses);
         }
 
         /// <summary>
@@ -163,15 +152,15 @@ namespace BugNET.BLL
         /// WARNING! Will expose the entire IssueComment table, regardless of 
         /// project level privledges. (thats why its private for now)
         /// </summary>        
-        /// <param name="QueryClauses"></param>
+        /// <param name="queryClauses"></param>
         /// <returns></returns>
-        private static List<IssueComment> PerformQuery(List<QueryClause> QueryClauses)
+        private static List<IssueComment> PerformQuery(List<QueryClause> queryClauses)
         {
-            if (QueryClauses == null)
-                throw new ArgumentNullException("QueryClauses");
+            if (queryClauses == null)
+                throw new ArgumentNullException("queryClauses");
 
-            List<IssueComment> lst = new List<IssueComment>();
-            DataProviderManager.Provider.PerformGenericQuery<IssueComment>(ref lst, QueryClauses, @"SELECT a.*, b.UserName as CreatorUserName, a.Userid as CreatorUserID, b.Username as CreatorDisplayName from BugNet_IssueComments as a, aspnet_Users as b  WHERE a.UserId=b.UserID ", @" ORDER BY IssueCommentId DESC");
+            var lst = new List<IssueComment>();
+            DataProviderManager.Provider.PerformGenericQuery(ref lst, queryClauses, @"SELECT a.*, b.UserName as CreatorUserName, a.Userid as CreatorUserID, b.Username as CreatorDisplayName from BugNet_IssueComments as a, aspnet_Users as b  WHERE a.UserId=b.UserID ", @" ORDER BY IssueCommentId DESC");
 
             return lst;
         }
@@ -192,8 +181,7 @@ namespace BugNET.BLL
         {
             try
             {
-                string sOutputString;
-                sOutputString = sInputString;
+                var sOutputString = sInputString;
                 //Initial Cleaning Step
                 //Replace new line and carriage return with Spaces
                 sOutputString = sOutputString.Replace("\r", " ");
@@ -202,22 +190,22 @@ namespace BugNET.BLL
                 sOutputString = sOutputString.Replace("\t", string.Empty);
 
                 //Tag Removal
-                DataTable myDataTable = GetTableDefinition();
+                var myDataTable = GetTableDefinition();
                 myDataTable.DefaultView.Sort = "iID ASC";
                 foreach (DataRow drCleaningItem in myDataTable.Rows)
                 {
-                    string sOriginalString = (drCleaningItem["sOriginalString"]).ToString();
-                    string sReplacementString = (drCleaningItem["sReplacementString"]).ToString();
+                    var sOriginalString = (drCleaningItem["sOriginalString"]).ToString();
+                    var sReplacementString = (drCleaningItem["sReplacementString"]).ToString();
                     sOutputString = Regex.Replace
                        (sOutputString, sOriginalString, sReplacementString, RegexOptions.IgnoreCase);
                 }
 
                 //Initial replacement target string for linebreaks
-                string sBreaks = "\r\r\r";
+                var sBreaks = "\r\r\r";
 
                 // Initial replacement target string for sTabs
-                string sTabs = "\t\t\t\t\t";
-                for (int x = 0; x < sOutputString.Length; x++)
+                var sTabs = "\t\t\t\t\t";
+                for (var x = 0; x < sOutputString.Length; x++)
                 {
                     sOutputString = sOutputString.Replace(sBreaks, "\r\r");
                     sOutputString = sOutputString.Replace(sTabs, "\t\t\t\t");
@@ -248,7 +236,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         private static DataTable GetTableDefinition()
         {
-            DataTable dtCleaningCollection = new DataTable();
+            var dtCleaningCollection = new DataTable();
             dtCleaningCollection.Columns.Add("iID", typeof(int));
             dtCleaningCollection.Columns.Add("sOriginalString", typeof(string));
             dtCleaningCollection.Columns.Add("sReplacementString", typeof(string));

@@ -98,7 +98,7 @@ namespace BugNET.Queries
                 catch { }
             }
 
-            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.ADD_QUERY.ToString()))
+            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.AddQuery.ToString()))
             {
                 SaveQuery.Visible = false;
                 btnSaveQuery.Visible = false;

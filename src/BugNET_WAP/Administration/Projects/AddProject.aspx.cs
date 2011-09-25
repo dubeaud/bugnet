@@ -40,10 +40,10 @@ namespace BugNET.Administration.Projects
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
 		protected void Page_Load(object sender, System.EventArgs e)
 		{
-            if (!UserManager.HasPermission(Convert.ToInt32(Request.QueryString["id"]), Globals.Permission.ADMIN_CREATE_PROJECT.ToString()))
+            if (!UserManager.HasPermission(Convert.ToInt32(Request.QueryString["id"]), Globals.Permission.AdminCreateProject.ToString()))
                 Response.Redirect("~/Errors/AccessDenied.aspx");
 
-            if (Request.Cookies[Globals.SkipProjectIntro] == null)
+            if (Request.Cookies[Globals.SKIP_PROJECT_INTRO] == null)
                 WizardSteps.Add("UserControls/NewProjectIntro.ascx");        
 
             WizardSteps.Add("UserControls/ProjectDescription.ascx");

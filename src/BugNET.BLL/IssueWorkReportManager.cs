@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using BugNET.Common;
 using BugNET.DAL;
 using BugNET.Entities;
+using log4net;
 
 namespace BugNET.BLL
 {
-    public class IssueWorkReportManager
+    public static class IssueWorkReportManager
     {
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         #region Static Methods
+
         /// <summary>
         /// Saves this instance.
         /// </summary>
@@ -16,20 +20,21 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool SaveIssueWorkReport(IssueWorkReport issueWorkReportToSave)
         {
-            if (issueWorkReportToSave.Id <= Globals.NewId)
+            if (issueWorkReportToSave.Id <= Globals.NEW_ID)
             {
                 if (!String.IsNullOrEmpty(issueWorkReportToSave.CommentText))
                     issueWorkReportToSave.CommentId = DataProviderManager.Provider.CreateNewIssueComment(new IssueComment(issueWorkReportToSave.IssueId, issueWorkReportToSave.CommentText, issueWorkReportToSave.CreatorUserName));
 
-                int TempId = DataProviderManager.Provider.CreateNewIssueWorkReport(issueWorkReportToSave);
-                if (TempId > Globals.NewId)
+                var tempId = DataProviderManager.Provider.CreateNewIssueWorkReport(issueWorkReportToSave);
+                if (tempId > Globals.NEW_ID)
                 {
-                    issueWorkReportToSave.Id = TempId;
+                    issueWorkReportToSave.Id = tempId;
                     return true;
                 }
-                else
-                    return false;
+
+                return false;
             }
+
             return false;
         }
 
@@ -46,13 +51,12 @@ namespace BugNET.BLL
         /// <summary>
         /// Deletes the time entry.
         /// </summary>
-        /// <param name="BugTimeEntryId">The time entry id.</param>
+        /// <param name="issueWorkReportId">The time entry id.</param>
         /// <returns></returns>
         public static bool DeleteIssueWorkReport(int issueWorkReportId)
         {
-            if (issueWorkReportId <= Globals.NewId)
+            if (issueWorkReportId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("issueWorkReportId"));
-
 
             return (DataProviderManager.Provider.DeleteIssueWorkReport(issueWorkReportId));
         }

@@ -40,7 +40,7 @@ namespace BugNET.Entities
         /// <param name="customFieldId">The custom field id.</param>
         /// <param name="name">The name.</param>
         /// <param name="value">The value.</param>
-        public CustomFieldSelection(int customFieldId, string name, string value) :this(Globals.NewId,customFieldId,name, value, Globals.NewId)
+        public CustomFieldSelection(int customFieldId, string name, string value) :this(Globals.NEW_ID,customFieldId,name, value, Globals.NEW_ID)
         { }
 
 

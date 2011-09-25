@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using BugNET.Common;
 using BugNET.DAL;
 using BugNET.Entities;
+using log4net;
 
 namespace BugNET.BLL
 {
-    public class ProjectMailboxManager
+    public static class ProjectMailboxManager
     {
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         #region Static Methods
         /// <summary>
         /// Gets the project by mailbox.
@@ -16,7 +19,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static ProjectMailbox GetProjectByMailbox(string mailbox)
         {
-            if (mailbox == null || mailbox.Length == 0)
+            if (string.IsNullOrEmpty(mailbox))
                 throw (new ArgumentOutOfRangeException("mailbox"));
 
             return DataProviderManager.Provider.GetProjectByMailbox(mailbox);
@@ -43,24 +46,15 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool SaveProjectMailbox(ProjectMailbox projectMailboxToSave)
         {
-
-            if (projectMailboxToSave.Id <= Globals.NewId)
-            {
-
-                int TempId = DataProviderManager.Provider.CreateProjectMailbox(projectMailboxToSave);
-                if (TempId > 0)
-                {
-                    projectMailboxToSave.Id = TempId;
-                    return true;
-                }
-                else
-                    return false;
-            }
-            else
+            if (projectMailboxToSave.Id > Globals.NEW_ID)
             {
                 return DataProviderManager.Provider.UpdateProjectMailbox(projectMailboxToSave);
             }
-
+            var tempId = DataProviderManager.Provider.CreateProjectMailbox(projectMailboxToSave);
+            if (tempId <= 0)
+                return false;
+            projectMailboxToSave.Id = tempId;
+            return true;
         }
 
         /// <summary>

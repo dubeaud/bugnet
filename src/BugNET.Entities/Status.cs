@@ -27,7 +27,7 @@ namespace BugNET.Entities
             /// <param name="name">The name.</param>
             /// <param name="imageUrl">The image URL.</param>
             public Status(int projectId, string name, string imageUrl, bool isClosedState)
-                : this(Globals.NewId, projectId, name, -1, imageUrl, isClosedState)
+                : this(Globals.NEW_ID, projectId, name, -1, imageUrl, isClosedState)
             { }
 
             /// <summary>
@@ -39,7 +39,7 @@ namespace BugNET.Entities
             /// <param name="imageUrl">The image URL.</param>
             public Status(int id, int projectId, string name,int sortOrder, string imageUrl, bool isClosedState)
             {
-                if (projectId <= Globals.NewId)
+                if (projectId <= Globals.NEW_ID)
                     throw (new ArgumentOutOfRangeException("projectId"));
 
                 if (name == null || name.Length == 0)
@@ -87,7 +87,7 @@ namespace BugNET.Entities
                 get { return _ProjectId; }
                 set
                 {
-                    if (value <= Globals.NewId)
+                    if (value <= Globals.NEW_ID)
                         throw new ArgumentOutOfRangeException("value");
                     _ProjectId = value;
                 }

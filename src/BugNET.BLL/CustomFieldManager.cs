@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using BugNET.Common;
 using BugNET.DAL;
 using BugNET.Entities;
+using log4net;
 
 namespace BugNET.BLL
 {
-    public class CustomFieldManager
+    public static class CustomFieldManager
     {
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         #region Static Methods
         /// <summary>
         /// Saves this instance.
@@ -16,24 +19,19 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool SaveCustomField(CustomField customFieldToSave)
         {
-
-
-            if (customFieldToSave.Id <= Globals.NewId)
-            {
-                int TempId = DataProviderManager.Provider.CreateNewCustomField(customFieldToSave);
-                if (TempId > 0)
-                {
-                    customFieldToSave.Id = TempId;
-                    return true;
-                }
-                else
-                    return false;
-            }
-            else
+            if (customFieldToSave.Id > Globals.NEW_ID)
                 return (DataProviderManager.Provider.UpdateCustomField(customFieldToSave));
+
+            var tempId = DataProviderManager.Provider.CreateNewCustomField(customFieldToSave);
+
+            if (tempId <= 0)
+                return false;
+
+            customFieldToSave.Id = tempId;
+            return true;
         }
 
-       
+
         /// <summary>
         /// Deletes the custom field.
         /// </summary>
@@ -41,9 +39,8 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool DeleteCustomField(int customFieldId)
         {
-            if (customFieldId <= Globals.NewId)
+            if (customFieldId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("customFieldId"));
-
 
             return (DataProviderManager.Provider.DeleteCustomField(customFieldId));
         }
@@ -56,12 +53,11 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool SaveCustomFieldValues(int issueId, List<CustomField> fields)
         {
-            if (issueId <= Globals.NewId)
+            if (issueId <= Globals.NEW_ID)
                 throw new ArgumentNullException("issueId");
 
             if (fields == null)
                 throw (new ArgumentOutOfRangeException("fields"));
-
 
             return (DataProviderManager.Provider.SaveCustomFieldValues(issueId, fields));
         }
@@ -73,9 +69,8 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<CustomField> GetCustomFieldsByProjectId(int projectId)
         {
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("projectId"));
-
 
             return (DataProviderManager.Provider.GetCustomFieldsByProjectId(projectId));
         }
@@ -87,20 +82,20 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static CustomField GetCustomFieldById(int customFieldId)
         {
-            if (customFieldId <= Globals.NewId)
+            if (customFieldId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("customFieldId"));
 
             return DataProviderManager.Provider.GetCustomFieldById(customFieldId);
         }
 
         /// <summary>
-        /// Gets the custom fields by bug id.
+        /// Gets the custom fields by issue id.
         /// </summary>
-        /// <param name="bugId">The bug id.</param>
+        /// <param name="bugId">The issue id.</param>
         /// <returns></returns>
         public static List<CustomField> GetCustomFieldsByIssueId(int bugId)
         {
-            if (bugId <= Globals.NewId)
+            if (bugId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("bugId"));
 
 

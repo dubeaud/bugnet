@@ -7,7 +7,7 @@ namespace BugNET.BLL.Notifications
         /// </summary>
         public NotificationContext()
         {
-            this.UserDisplayName = string.Empty;
+            UserDisplayName = string.Empty;
         }
 
         /// <summary>
@@ -19,9 +19,9 @@ namespace BugNET.BLL.Notifications
         public NotificationContext(string username, string subject, string bodyText)
             : this()
         {
-            this.Username = username;
-            this.Subject = subject;
-            this.BodyText = bodyText;
+            Username = username;
+            Subject = subject;
+            BodyText = bodyText;
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace BugNET.BLL.Notifications
         public NotificationContext(string username, string subject, string bodyText, EmailFormatType emailFormatType)
             : this(username, subject, bodyText)
         {
-            this.EmailFormatType = emailFormatType;
+            EmailFormatType = emailFormatType;
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace BugNET.BLL.Notifications
         public NotificationContext(string username, string subject, string bodyText, EmailFormatType emailFormatType, string userDisplayName)
             : this(username, subject, bodyText, emailFormatType)
         {
-            this.UserDisplayName = userDisplayName;
+            UserDisplayName = userDisplayName;
         }
 
         #region INotificationContext Members

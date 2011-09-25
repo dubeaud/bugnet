@@ -135,10 +135,10 @@ namespace BugNET.Queries
 			dropQueries.DataSource = QueryManager.GetQueriesByUsername(User.Identity.Name,ProjectId);
 			dropQueries.DataBind();
 
-			if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.DELETE_QUERY.ToString()))
+			if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.DeleteQuery.ToString()))
 				btnDeleteQuery.Visible = false;
 
-            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.EDIT_QUERY.ToString()))
+            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.EditQuery.ToString()))
                 EditQueryButton.Visible = false;
 		}
 

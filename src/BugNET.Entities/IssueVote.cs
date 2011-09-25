@@ -30,7 +30,7 @@ namespace BugNET.Entities
         /// <param name="issueId">The issue id.</param>
         /// <param name="voteUsername">The vote username.</param>
 		public IssueVote(int issueId,string voteUsername) : 
-			this(Globals.NewId,issueId,voteUsername){}
+			this(Globals.NEW_ID,issueId,voteUsername){}
 
 
         /// <summary>

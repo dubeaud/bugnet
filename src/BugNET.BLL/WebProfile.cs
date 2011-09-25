@@ -7,29 +7,32 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+
+using System.Configuration;
+
 namespace BugNET.BLL
 {
     public class WebProfile
     {
-        private System.Web.Profile.ProfileBase _profileBase;
+        private readonly System.Web.Profile.ProfileBase _profileBase;
         
         public WebProfile() {
-            this._profileBase = new System.Web.Profile.ProfileBase();
+            _profileBase = new System.Web.Profile.ProfileBase();
         }
         
         public WebProfile(System.Web.Profile.ProfileBase profileBase) {
-            this._profileBase = profileBase;
+            _profileBase = profileBase;
         }
 
         public virtual string SelectedIssueColumns
         {
             get
             {
-                return ((string)(this.GetPropertyValue("SelectedIssueColumns")));
+                return ((string)(GetPropertyValue("SelectedIssueColumns")));
             }
             set
             {
-                this.SetPropertyValue("SelectedIssueColumns", value);
+                SetPropertyValue("SelectedIssueColumns", value);
             }
         }
 
@@ -37,11 +40,11 @@ namespace BugNET.BLL
         {
             get
             {
-                return ((string)(this.GetPropertyValue("NotificationTypes")));
+                return ((string)(GetPropertyValue("NotificationTypes")));
             }
             set
             {
-                this.SetPropertyValue("NotificationTypes", value);
+                SetPropertyValue("NotificationTypes", value);
             }
         }
 
@@ -49,47 +52,47 @@ namespace BugNET.BLL
         {
             get
             {
-                return ((string)(this.GetPropertyValue("PreferredLocale")));
+                return ((string)(GetPropertyValue("PreferredLocale")));
             }
             set
             {
-                this.SetPropertyValue("PreferredLocale", value);
+                SetPropertyValue("PreferredLocale", value);
             }
         }
         
         public virtual string LastName {
             get {
-                return ((string)(this.GetPropertyValue("LastName")));
+                return ((string)(GetPropertyValue("LastName")));
             }
             set {
-                this.SetPropertyValue("LastName", value);
+                SetPropertyValue("LastName", value);
             }
         }
         
         public virtual string FirstName {
             get {
-                return ((string)(this.GetPropertyValue("FirstName")));
+                return ((string)(GetPropertyValue("FirstName")));
             }
             set {
-                this.SetPropertyValue("FirstName", value);
+                SetPropertyValue("FirstName", value);
             }
         }
              
         public virtual int IssuesPageSize {
             get {
-                return ((int)(this.GetPropertyValue("IssuesPageSize")));
+                return ((int)(GetPropertyValue("IssuesPageSize")));
             }
             set {
-                this.SetPropertyValue("IssuesPageSize", value);
+                SetPropertyValue("IssuesPageSize", value);
             }
         }
              
         public virtual string DisplayName {
             get {
-                return ((string)(this.GetPropertyValue("DisplayName")));
+                return ((string)(GetPropertyValue("DisplayName")));
             }
             set {
-                this.SetPropertyValue("DisplayName", value);
+                SetPropertyValue("DisplayName", value);
             }
         }
         
@@ -101,74 +104,74 @@ namespace BugNET.BLL
         
         public virtual System.Web.Profile.ProfileBase ProfileBase {
             get {
-                return this._profileBase;
+                return _profileBase;
             }
         }
         
         public virtual object this[string propertyName] {
             get {
-                return this._profileBase[propertyName];
+                return _profileBase[propertyName];
             }
             set {
-                this._profileBase[propertyName] = value;
+                _profileBase[propertyName] = value;
             }
         }
         
         public virtual string UserName {
             get {
-                return this._profileBase.UserName;
+                return _profileBase.UserName;
             }
         }
         
         public virtual bool IsAnonymous {
             get {
-                return this._profileBase.IsAnonymous;
+                return _profileBase.IsAnonymous;
             }
         }
         
         public virtual bool IsDirty {
             get {
-                return this._profileBase.IsDirty;
+                return _profileBase.IsDirty;
             }
         }
         
         public virtual System.DateTime LastActivityDate {
             get {
-                return this._profileBase.LastActivityDate;
+                return _profileBase.LastActivityDate;
             }
         }
         
         public virtual System.DateTime LastUpdatedDate {
             get {
-                return this._profileBase.LastUpdatedDate;
+                return _profileBase.LastUpdatedDate;
             }
         }
         
-        public virtual System.Configuration.SettingsProviderCollection Providers {
+        public virtual SettingsProviderCollection Providers {
             get {
-                return this._profileBase.Providers;
+                return _profileBase.Providers;
             }
         }
         
-        public virtual System.Configuration.SettingsPropertyValueCollection PropertyValues {
+        public virtual SettingsPropertyValueCollection PropertyValues {
             get {
-                return this._profileBase.PropertyValues;
+                return _profileBase.PropertyValues;
             }
         }
         
-        public virtual System.Configuration.SettingsContext Context {
+        public virtual SettingsContext Context {
             get {
-                return this._profileBase.Context;
+                return _profileBase.Context;
             }
         }
         
         public virtual bool IsSynchronized {
             get {
-                return this._profileBase.IsSynchronized;
+                return _profileBase.IsSynchronized;
             }
         }
         
-        public static System.Configuration.SettingsPropertyCollection Properties {
+        public static SettingsPropertyCollection Properties {
             get {
                 return System.Web.Profile.ProfileBase.Properties;
             }
@@ -179,31 +182,31 @@ namespace BugNET.BLL
         }
         
         public virtual object GetPropertyValue(string propertyName) {
-            return this._profileBase.GetPropertyValue(propertyName);
+            return _profileBase.GetPropertyValue(propertyName);
         }
         
         public virtual void SetPropertyValue(string propertyName, object propertyValue) {
-            this._profileBase.SetPropertyValue(propertyName, propertyValue);
+            _profileBase.SetPropertyValue(propertyName, propertyValue);
         }
         
         public virtual System.Web.Profile.ProfileGroupBase GetProfileGroup(string groupName) {
-            return this._profileBase.GetProfileGroup(groupName);
+            return _profileBase.GetProfileGroup(groupName);
         }
         
         public virtual void Initialize(string username, bool isAuthenticated) {
-            this._profileBase.Initialize(username, isAuthenticated);
+            _profileBase.Initialize(username, isAuthenticated);
         }
         
         public virtual void Save() {
-            this._profileBase.Save();
+            _profileBase.Save();
         }
         
-        public virtual void Initialize(System.Configuration.SettingsContext context, System.Configuration.SettingsPropertyCollection properties, System.Configuration.SettingsProviderCollection providers) {
-            this._profileBase.Initialize(context, properties, providers);
+        public virtual void Initialize(SettingsContext context, SettingsPropertyCollection properties, SettingsProviderCollection providers) {
+            _profileBase.Initialize(context, properties, providers);
         }
         
-        public static System.Configuration.SettingsBase Synchronized(System.Configuration.SettingsBase settingsBase) {
-            return System.Web.Profile.ProfileBase.Synchronized(settingsBase);
+        public static SettingsBase Synchronized(SettingsBase settingsBase) {
+            return SettingsBase.Synchronized(settingsBase);
         }
         
         public static System.Web.Profile.ProfileBase Create(string userName) {

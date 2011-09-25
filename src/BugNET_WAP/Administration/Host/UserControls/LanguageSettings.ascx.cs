@@ -38,7 +38,7 @@ namespace BugNET.Administration.Host.UserControls
         public void Initialize()
         {
           
-            List<string> resources = ResourceManager.GetInstalledLanguageResources();
+            IEnumerable<string> resources = ResourceManager.GetInstalledLanguageResources();
             List<ListItem> resourceItems = new List<ListItem>();
             foreach (string code in resources)
             {

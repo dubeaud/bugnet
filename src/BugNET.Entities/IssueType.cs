@@ -25,7 +25,7 @@ namespace BugNET.Entities
             /// <param name="name">The name.</param>
             /// <param name="imageUrl">The image URL.</param>
             public IssueType(int projectId, string name,string imageUrl)
-                : this(Globals.NewId, projectId, name, -1, imageUrl)
+                : this(Globals.NEW_ID, projectId, name, -1, imageUrl)
 				{}
 
             /// <summary>
@@ -92,7 +92,7 @@ namespace BugNET.Entities
                 get { return _ProjectId; }
                 set
                 {
-                    if (value <= Globals.NewId)
+                    if (value <= Globals.NEW_ID)
                         throw (new ArgumentOutOfRangeException("value"));
                     _ProjectId = value;
                 }

@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using BugNET.Common;
 using BugNET.DAL;
 using BugNET.Entities;
+using log4net;
 
 namespace BugNET.BLL
 {
-    public class IssueHistoryManager
+    public static class IssueHistoryManager
     {
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         /// <summary>
         /// Saves the issue history.
         /// </summary>
@@ -15,30 +18,26 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool SaveIssueHistory(IssueHistory issueHistoryToSave)
         {
-            if (issueHistoryToSave.Id <= Globals.NewId)
-            {
-                int TempId = DataProviderManager.Provider.CreateNewIssueHistory(issueHistoryToSave);
-                if (TempId > 0)
-                {
-                    issueHistoryToSave.Id = TempId;
-                    return true;
-                }
-                else
-                    return false;
-            }
-            else
+            if (issueHistoryToSave.Id > Globals.NEW_ID)
                 return false;
+
+            var tempId = DataProviderManager.Provider.CreateNewIssueHistory(issueHistoryToSave);
+            if (tempId <= 0)
+                return false;
+
+            issueHistoryToSave.Id = tempId;
+            return true;
         }
 
         #region Static Methods
         /// <summary>
-        /// Gets the BugHistory by bug id.
+        /// Gets the BugHistory by issue id.
         /// </summary>
-        /// <param name="bugId">The bug id.</param>
+        /// <param name="issueId">The issue id.</param>
         /// <returns></returns>
         public static List<IssueHistory> GetIssueHistoryByIssueId(int issueId)
         {
-            if (issueId <= Globals.NewId)
+            if (issueId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("issueId"));
 
             return DataProviderManager.Provider.GetIssueHistoryByIssueId(issueId);
@@ -51,15 +50,16 @@ namespace BugNET.BLL
         /// Performs a query containing any number of query clauses on a certain projectID
         /// </summary>
         /// <param name="issueId"></param>
-        /// <param name="QueryClauses"></param>
+        /// <param name="queryClauses"></param>
         /// <returns></returns>
-        public static List<IssueHistory> PerformQuery(int issueID, List<QueryClause> QueryClauses)
+        public static List<IssueHistory> PerformQuery(int issueId, List<QueryClause> queryClauses)
         {
-            if (issueID < 0)
-                throw new ArgumentOutOfRangeException("projectID must be bigger than 0");
-            QueryClauses.Add(new QueryClause("AND", "IssueID", "=", issueID.ToString(), System.Data.SqlDbType.Int, false));
+            if (issueId < 0)
+                throw new ArgumentOutOfRangeException("issueId", "Issue id must be bigger than 0");
 
-            return PerformQuery(QueryClauses);
+            queryClauses.Add(new QueryClause("AND", "IssueID", "=", issueId.ToString(), System.Data.SqlDbType.Int, false));
+
+            return PerformQuery(queryClauses);
         }
 
         /// <summary>
@@ -70,15 +70,15 @@ namespace BugNET.BLL
         /// WARNING! Will expose the entire IssueHistory table, regardless of 
         /// project level privledges. 
         /// </summary>        
-        /// <param name="QueryClauses"></param>
+        /// <param name="queryClauses"></param>
         /// <returns></returns>
-        public static List<IssueHistory> PerformQuery(List<QueryClause> QueryClauses)
+        public static List<IssueHistory> PerformQuery(List<QueryClause> queryClauses)
         {
-            if (QueryClauses == null)
-                throw new ArgumentNullException("QueryClauses");
+            if (queryClauses == null)
+                throw new ArgumentNullException("queryClauses");
 
-            List<IssueHistory> lst = new List<IssueHistory>();
-            DataProviderManager.Provider.PerformGenericQuery<IssueHistory>(ref lst, QueryClauses, @"SELECT DISTINCT a.*, c.ProjectID as ProjectID, b.UserName as CreatorUserName, b.UserName as CreatorDisplayName from BugNet_IssueHistory as a, aspnet_Users as b, BugNet_Issues as d, BugNet_Projects as c  WHERE c.ProjectId=d.ProjectId AND d.IssueID=a.IssueID AND a.UserId=b.UserID AND ( 1=1 ", @" ) ORDER BY IssueHistoryId DESC");
+            var lst = new List<IssueHistory>();
+            DataProviderManager.Provider.PerformGenericQuery(ref lst, queryClauses, @"SELECT DISTINCT a.*, c.ProjectID as ProjectID, b.UserName as CreatorUserName, b.UserName as CreatorDisplayName from BugNet_IssueHistory as a, aspnet_Users as b, BugNet_Issues as d, BugNet_Projects as c  WHERE c.ProjectId=d.ProjectId AND d.IssueID=a.IssueID AND a.UserId=b.UserID AND ( 1=1 ", @" ) ORDER BY IssueHistoryId DESC");
 
             return lst;
         }

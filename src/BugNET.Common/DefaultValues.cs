@@ -7,7 +7,7 @@ namespace BugNET.Common {
     /// The DefaultValues class contains static properties which represent
     /// the minimum values for database identity fields.
     /// </summary>
-	public class DefaultValues {
+	public static class DefaultValues {
 
         /// <summary>
         /// Gets the category id min value.
@@ -22,9 +22,8 @@ namespace BugNET.Common {
         /// </summary>
         /// <returns></returns>
         public static DateTime GetDateTimeMinValue() {
-            DateTime MinValue= (DateTime)SqlDateTime.MinValue;
-            MinValue.AddYears(1);
-            return (MinValue);
+            var minValue = (DateTime)SqlDateTime.MinValue;
+            return minValue.AddYears(1);
         }
 
         /// <summary>

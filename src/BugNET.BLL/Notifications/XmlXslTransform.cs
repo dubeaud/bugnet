@@ -13,16 +13,15 @@ namespace BugNET.BLL.Notifications
         /// <returns></returns>
         public static string Transform(string xml, string xsl)
         {
-            System.Xml.Xsl.XslCompiledTransform transformer = new System.Xml.Xsl.XslCompiledTransform();
-            XmlReaderSettings settings = new XmlReaderSettings();
-            XmlReader xmlReader = XmlReader.Create(new System.IO.StringReader(xml));
-            XmlReader xslReader = XmlReader.Create(new System.IO.StringReader(xsl));
-            XsltArgumentList helpers = new XsltArgumentList();
+            var transformer = new XslCompiledTransform();
+            var xmlReader = XmlReader.Create(new System.IO.StringReader(xml));
+            var xslReader = XmlReader.Create(new System.IO.StringReader(xsl));
+            var helpers = new XsltArgumentList();
 
-            XslHelpers args = new XslHelpers();
+            var args = new XslHelpers();
             helpers.AddExtensionObject("urn:xsl-helpers", args);
 
-            using (System.IO.StringWriter writer = new System.IO.StringWriter())
+            using (var writer = new System.IO.StringWriter())
             {
                 transformer.Load(xslReader);
                 transformer.Transform(xmlReader, helpers, writer);
@@ -38,7 +37,7 @@ namespace BugNET.BLL.Notifications
         /// <returns></returns>
         public static string LoadEmailXslTemplate(string template,string path)
         {
-            string ext = ".xslt";
+            const string ext = ".xslt";
 
             if (!template.EndsWith(ext))
                 template += ext;

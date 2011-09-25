@@ -3,232 +3,234 @@ using System.Data.SqlTypes;
 
 namespace BugNET.Common
 {
-	/// <summary>
-	/// Global constants, enumerations and properties
-	/// </summary>
-	public class Globals
-	{
+    /// <summary>
+    /// Global constants, enumerations and properties
+    /// </summary>
+    public static class Globals
+    {
 
-		#region Public Constants
-		    //Cookie Constants
-		    public const string UserCookie = "BugNETUser";
-            public const string IssueColumns = "issuecolumns";
+        #region Public Constants
 
-            public const string ConfigFolder  = "\\Config\\";
-            public const string UploadFolder = "\\Uploads\\";
-            public const string UPLOAD_TOKEN = "UploadToken";
-            public const int UploadFolderLimit = 64;
-            
-		    /// <summary>
-		    /// Constant assigned to value for new bugs
-		    /// </summary>
-		    public const int NewBugAssignedTo = 0;
-		    public const int NewIssueStatusId = 1;
-		    public const int NewIssueResolutionId = 1;
-            public const string SkipProjectIntro = "skipprojectintro";
-		    public const string UnassignedDisplayText = "none";
-		    public const int NewId = 0;
-            public const int DefaultId = -1;
+        //Cookie Constants
+        public const string USER_COOKIE = "BugNETUser";
+        public const string ISSUE_COLUMNS = "issuecolumns";
 
-            public static string SuperUserRole = "Super Users";
-            public static string[] DefaultRoles = {"Project Administrators", "Read Only", "Reporter", "Developer", "Quality Assurance" };
-            public static string ProjectAdminRole = DefaultRoles[0];
+        public const string CONFIG_FOLDER = "\\Config\\";
+        public const string UPLOAD_FOLDER = "\\Uploads\\";
+        public const string UPLOAD_TOKEN = "UploadToken";
+        public const int UPLOAD_FOLDER_LIMIT = 64;
 
-            public static DateTime GetDateTimeMinValue()
-            {
-                DateTime MinValue = (DateTime)SqlDateTime.MinValue;
-                MinValue.AddYears(1);
-                return (MinValue);
-            }
+        /// <summary>
+        /// Constant assigned to value for new bugs
+        /// </summary>
+        public const int NEW_BUG_ASSIGNED_TO = 0;
+        public const int NEW_ISSUE_STATUS_ID = 1;
+        public const int NEW_ISSUE_RESOLUTION_ID = 1;
+        public const string SKIP_PROJECT_INTRO = "skipprojectintro";
+        public const string UNASSIGNED_DISPLAY_TEXT = "none";
+        public const int NEW_ID = 0;
+        public const int DEFAULT_ID = -1;
 
-            /// <summary>
-            /// Upgrade Status Enumeration
-            /// </summary>
-            public enum UpgradeStatus: int{
-                Upgrade = 0,
-                Install = 1,
-                None = 2,
-                Authenticated = 3
-            }
-        
-            /// <summary>
-            /// Default read only role permissions
-            /// </summary>
-            public static int[] ReadOnlyPermissions = { 
-                (int)Permission.SUBSCRIBE_ISSUE,
-                (int)Permission.VIEW_PROJECT_CALENDAR
+        public const string SUPER_USER_ROLE = "Super Users";
+
+        public static readonly string[] DefaultRoles = { "Project Administrators", "Read Only", "Reporter", "Developer", "Quality Assurance" };
+        public static readonly string ProjectAdminRole = DefaultRoles[0];
+
+        public static DateTime GetDateTimeMinValue()
+        {
+            var minValue = (DateTime)SqlDateTime.MinValue;
+            return minValue.AddYears(1);
+        }
+
+        /// <summary>
+        /// Upgrade Status Enumeration
+        /// </summary>
+        public enum UpgradeStatus
+        {
+            Upgrade = 0,
+            Install = 1,
+            None = 2,
+            Authenticated = 3
+        }
+
+        /// <summary>
+        /// Default read only role permissions
+        /// </summary>
+        public static readonly int[] ReadOnlyPermissions = { 
+                (int)Permission.SubscribeIssue,
+                (int)Permission.ViewProjectCalendar
             };
 
-            /// <summary>
-            /// Default reporter role permissions
-            /// </summary>
-            public static int[] ReporterPermissions = { 
-                (int)Permission.ADD_ISSUE, 
-                (int)Permission.ADD_COMMENT, 
-                (int)Permission.OWNER_EDIT_COMMENT, 
-                (int)Permission.SUBSCRIBE_ISSUE, 
-                (int)Permission.ADD_ATTACHMENT, 
-                (int)Permission.ADD_RELATED,
-                (int)Permission.ADD_PARENT_ISSUE,
-                (int)Permission.ADD_SUB_ISSUE,
-                (int)Permission.VIEW_PROJECT_CALENDAR
+        /// <summary>
+        /// Default reporter role permissions
+        /// </summary>
+        public static readonly int[] ReporterPermissions = { 
+                (int)Permission.AddIssue, 
+                (int)Permission.AddComment, 
+                (int)Permission.OwnerEditComment, 
+                (int)Permission.SubscribeIssue, 
+                (int)Permission.AddAttachment, 
+                (int)Permission.AddRelated,
+                (int)Permission.AddParentIssue,
+                (int)Permission.AddSubIssue,
+                (int)Permission.ViewProjectCalendar
             };
 
-            /// <summary>
-            /// Default developer role permissions
-            /// </summary>
-            public static int[] DeveloperPermissions = { 
-                (int)Permission.ADD_ISSUE, 
-                (int)Permission.ADD_COMMENT,
-                (int)Permission.ADD_ATTACHMENT,
-                (int)Permission.ADD_RELATED,
-                (int)Permission.ADD_TIME_ENTRY,
-                (int)Permission.ADD_PARENT_ISSUE,
-                (int)Permission.ADD_SUB_ISSUE,
-                (int)Permission.ADD_QUERY,
-                (int)Permission.OWNER_EDIT_COMMENT, 
-                (int)Permission.SUBSCRIBE_ISSUE,
-                (int)Permission.EDIT_ISSUE,
-                (int)Permission.ASSIGN_ISSUE,
-                (int)Permission.CHANGE_ISSUE_STATUS,
-                (int)Permission.VIEW_PROJECT_CALENDAR
+        /// <summary>
+        /// Default developer role permissions
+        /// </summary>
+        public static readonly int[] DeveloperPermissions = { 
+                (int)Permission.AddIssue, 
+                (int)Permission.AddComment,
+                (int)Permission.AddAttachment,
+                (int)Permission.AddRelated,
+                (int)Permission.AddTimeEntry,
+                (int)Permission.AddParentIssue,
+                (int)Permission.AddSubIssue,
+                (int)Permission.AddQuery,
+                (int)Permission.OwnerEditComment, 
+                (int)Permission.SubscribeIssue,
+                (int)Permission.EditIssue,
+                (int)Permission.AssignIssue,
+                (int)Permission.ChangeIssueStatus,
+                (int)Permission.ViewProjectCalendar
             };
 
-            /// <summary>
-            /// Default QA role permissions
-            /// </summary>
-            public static int[] QualityAssurancePermissions = { 
-                (int)Permission.ADD_ISSUE, 
-                (int)Permission.ADD_COMMENT,
-                (int)Permission.ADD_ATTACHMENT,
-                (int)Permission.ADD_RELATED,
-                (int)Permission.ADD_TIME_ENTRY,
-                (int)Permission.ADD_PARENT_ISSUE,
-                (int)Permission.ADD_SUB_ISSUE,
-                (int)Permission.ADD_QUERY,
-                (int)Permission.OWNER_EDIT_COMMENT, 
-                (int)Permission.SUBSCRIBE_ISSUE,
-                (int)Permission.EDIT_ISSUE,
-                (int)Permission.EDIT_ISSUE_TITLE,
-                (int)Permission.ASSIGN_ISSUE,
-                (int)Permission.CLOSE_ISSUE,
-                (int)Permission.DELETE_ISSUE,
-                (int)Permission.CHANGE_ISSUE_STATUS,
-                (int)Permission.VIEW_PROJECT_CALENDAR
+        /// <summary>
+        /// Default QA role permissions
+        /// </summary>
+        public static readonly int[] QualityAssurancePermissions = { 
+                (int)Permission.AddIssue, 
+                (int)Permission.AddComment,
+                (int)Permission.AddAttachment,
+                (int)Permission.AddRelated,
+                (int)Permission.AddTimeEntry,
+                (int)Permission.AddParentIssue,
+                (int)Permission.AddSubIssue,
+                (int)Permission.AddQuery,
+                (int)Permission.OwnerEditComment, 
+                (int)Permission.SubscribeIssue,
+                (int)Permission.EditIssue,
+                (int)Permission.EditIssueTitle,
+                (int)Permission.AssignIssue,
+                (int)Permission.CloseIssue,
+                (int)Permission.DeleteIssue,
+                (int)Permission.ChangeIssueStatus,
+                (int)Permission.ViewProjectCalendar
             };
 
-            /// <summary>
-            /// Default project administrator role permissions
-            /// </summary>
-            public static int[] AdministratorPermissions = { 
-                (int)Permission.ADD_ISSUE, 
-                (int)Permission.ADD_COMMENT,
-                (int)Permission.ADD_ATTACHMENT,
-                (int)Permission.ADD_RELATED,
-                (int)Permission.ADD_TIME_ENTRY,
-                (int)Permission.ADD_PARENT_ISSUE,
-                (int)Permission.ADD_SUB_ISSUE,
-                (int)Permission.ADD_QUERY,
-                (int)Permission.OWNER_EDIT_COMMENT, 
-                (int)Permission.SUBSCRIBE_ISSUE,
-                (int)Permission.EDIT_ISSUE,
-                (int)Permission.EDIT_COMMENT,
-                (int)Permission.EDIT_ISSUE_DESCRIPTION,
-                (int)Permission.EDIT_ISSUE_TITLE,
-                (int)Permission.DELETE_QUERY,
-                (int)Permission.DELETE_ATTACHMENT,
-                (int)Permission.DELETE_COMMENT,
-                (int)Permission.DELETE_ISSUE,
-                (int)Permission.DELETE_RELATED,
-                (int)Permission.DELETE_TIME_ENTRY,
-                (int)Permission.DELETE_QUERY,
-                (int)Permission.DELETE_SUB_ISSUE,
-                (int)Permission.DELETE_PARENT_ISSUE,
-                (int)Permission.ASSIGN_ISSUE,
-                (int)Permission.CLOSE_ISSUE,
-                (int)Permission.ADMIN_EDIT_PROJECT,
-                (int)Permission.CHANGE_ISSUE_STATUS,
-                (int)Permission.VIEW_PROJECT_CALENDAR
+        /// <summary>
+        /// Default project administrator role permissions
+        /// </summary>
+        public static readonly int[] AdministratorPermissions = { 
+                (int)Permission.AddIssue, 
+                (int)Permission.AddComment,
+                (int)Permission.AddAttachment,
+                (int)Permission.AddRelated,
+                (int)Permission.AddTimeEntry,
+                (int)Permission.AddParentIssue,
+                (int)Permission.AddSubIssue,
+                (int)Permission.AddQuery,
+                (int)Permission.OwnerEditComment, 
+                (int)Permission.SubscribeIssue,
+                (int)Permission.EditIssue,
+                (int)Permission.EditComment,
+                (int)Permission.EditIssueDescription,
+                (int)Permission.EditIssueTitle,
+                (int)Permission.DeleteQuery,
+                (int)Permission.DeleteAttachment,
+                (int)Permission.DeleteComment,
+                (int)Permission.DeleteIssue,
+                (int)Permission.DeleteRelated,
+                (int)Permission.DeleteTimeEntry,
+                (int)Permission.DeleteQuery,
+                (int)Permission.DeleteSubIssue,
+                (int)Permission.DeleteParentIssue,
+                (int)Permission.AssignIssue,
+                (int)Permission.CloseIssue,
+                (int)Permission.AdminEditProject,
+                (int)Permission.ChangeIssueStatus,
+                (int)Permission.ViewProjectCalendar
             };
 
-		#endregion
+        #endregion
 
-		#region Public Enumerations
-        public enum UserRegistration : int
+        #region Public Enumerations
+        public enum UserRegistration
         {
             None = 0,
             Public = 1,
             Verified = 2
         }
 
-		public enum ProjectAccessType : int 
-		{
-			None = 0,
-			Public = 1,
-			Private = 2
-		}
+        public enum ProjectAccessType
+        {
+            None = 0,
+            Public = 1,
+            Private = 2
+        }
 
-        public enum IssueVisibility : int
+        public enum IssueVisibility
         {
             Public = 0,
             Private = 1
         }
 
-      
+
         /// <summary>
         /// Permissions Enumeration
         /// </summary>
-        public enum Permission : int
+        public enum Permission
         {
             None = 0,
-            CLOSE_ISSUE = 1,
-            ADD_ISSUE = 2,
-            ASSIGN_ISSUE = 3,
-            EDIT_ISSUE = 4,
-            SUBSCRIBE_ISSUE = 5,
-            DELETE_ISSUE = 6,
-            ADD_COMMENT = 7,
-            EDIT_COMMENT = 8,
-            DELETE_COMMENT = 9,
-            ADD_ATTACHMENT = 10,
-            DELETE_ATTACHMENT = 11,
-            ADD_RELATED = 12,
-            DELETE_RELATED = 13,
-            REOPEN_ISSUE = 14,  
-            OWNER_EDIT_COMMENT = 15,
-            EDIT_ISSUE_DESCRIPTION = 16,
-            EDIT_ISSUE_TITLE = 17,
-            ADMIN_EDIT_PROJECT = 18,
-            ADD_TIME_ENTRY = 19,
-            DELETE_TIME_ENTRY = 20,
-            ADMIN_CREATE_PROJECT = 21,
-            ADD_QUERY = 22,
-            DELETE_QUERY = 23,
-            ADMIN_CLONE_PROJECT = 24,
-            ADD_SUB_ISSUE = 25,
-            DELETE_SUB_ISSUE = 26,
-            ADD_PARENT_ISSUE = 27,
-            DELETE_PARENT_ISSUE = 28,
-            ADMIN_DELETE_PROJECT = 29,
-            VIEW_PROJECT_CALENDAR = 30,
-            CHANGE_ISSUE_STATUS = 31,
-            EDIT_QUERY = 32
+            CloseIssue = 1,
+            AddIssue = 2,
+            AssignIssue = 3,
+            EditIssue = 4,
+            SubscribeIssue = 5,
+            DeleteIssue = 6,
+            AddComment = 7,
+            EditComment = 8,
+            DeleteComment = 9,
+            AddAttachment = 10,
+            DeleteAttachment = 11,
+            AddRelated = 12,
+            DeleteRelated = 13,
+            ReopenIssue = 14,
+            OwnerEditComment = 15,
+            EditIssueDescription = 16,
+            EditIssueTitle = 17,
+            AdminEditProject = 18,
+            AddTimeEntry = 19,
+            DeleteTimeEntry = 20,
+            AdminCreateProject = 21,
+            AddQuery = 22,
+            DeleteQuery = 23,
+            AdminCloneProject = 24,
+            AddSubIssue = 25,
+            DeleteSubIssue = 26,
+            AddParentIssue = 27,
+            DeleteParentIssue = 28,
+            AdminDeleteProject = 29,
+            ViewProjectCalendar = 30,
+            ChangeIssueStatus = 31,
+            EditQuery = 32
         }
-		#endregion
+        #endregion
 
-		#region Public Properties
-        
+        #region Public Properties
+
         /// <summary>
-        /// Parses the full bug id.
+        /// Parses the full issue id.
         /// </summary>
         /// <param name="fullId">The full id.</param>
         /// <returns></returns>
-		public static int ParseFullIssueId(string fullId)
-		{
-			string[] split = fullId.Split('-');
+        public static int ParseFullIssueId(string fullId)
+        {
+            var split = fullId.Split('-');
 
-			if(split.Length > 1)
-				return  Convert.ToInt32(split[1]);
+            if (split.Length > 1)
+                return Convert.ToInt32(split[1]);
 
             try
             {
@@ -238,8 +240,8 @@ namespace BugNET.Common
             {
                 return -1;
             }
-		}
-		#endregion
+        }
+        #endregion
 
-	}
+    }
 }

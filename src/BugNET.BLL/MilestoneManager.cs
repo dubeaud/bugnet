@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using BugNET.Common;
 using BugNET.DAL;
 using BugNET.Entities;
+using log4net;
 
 namespace BugNET.BLL
 {
-    public class MilestoneManager
+    public static class MilestoneManager
     {
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         #region Instance Methods
         /// <summary>
@@ -17,41 +19,31 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool SaveMilestone(Milestone milestoneToSave)
         {
-
-            if (milestoneToSave.Id <= Globals.NewId)
-            {
-
-                int TempId = DataProviderManager.Provider.CreateNewMilestone(milestoneToSave);
-                if (TempId > 0)
-                {
-                    milestoneToSave.Id = TempId;
-                    return true;
-                }
-                else
-                    return false;
-            }
-            else
+            if (milestoneToSave.Id > Globals.NEW_ID)
             {
                 return DataProviderManager.Provider.UpdateMilestone(milestoneToSave);
             }
-
+            var tempId = DataProviderManager.Provider.CreateNewMilestone(milestoneToSave);
+            if (tempId <= 0)
+                return false;
+            milestoneToSave.Id = tempId;
+            return true;
         }
+
         #endregion
 
         #region Static Methods
         /// <summary>
         /// Deletes the Milestone.
         /// </summary>
-        /// <param name="original_id">The original_id.</param>
+        /// <param name="originalId">The original_id.</param>
         /// <returns></returns>
-        public static bool DeleteMilestone(int original_id)
+        public static bool DeleteMilestone(int originalId)
         {
-            if (original_id <= Globals.NewId)
-                throw (new ArgumentOutOfRangeException("original_id"));
+            if (originalId <= Globals.NEW_ID)
+                throw (new ArgumentOutOfRangeException("originalId"));
 
-
-
-            return DataProviderManager.Provider.DeleteMilestone(original_id);
+            return DataProviderManager.Provider.DeleteMilestone(originalId);
         }
 
 
@@ -61,36 +53,24 @@ namespace BugNET.BLL
         /// <param name="projectId">The project id.</param>
         /// <param name="milestoneCompleted">if set to <c>true</c> [milestone completed].</param>
         /// <returns></returns>
-        public static List<Milestone> GetMilestoneByProjectId(int projectId, bool milestoneCompleted)
+        public static List<Milestone> GetMilestoneByProjectId(int projectId, bool milestoneCompleted = true)
         {
-            if (projectId <= Globals.NewId)
-                return new List<Milestone>();
-
-            return DataProviderManager.Provider.GetMilestonesByProjectId(projectId, milestoneCompleted);
-        }
-
-        /// <summary>
-        /// Gets the milestone by project id.
-        /// </summary>
-        /// <param name="projectId">The project id.</param>
-        /// <returns></returns>
-        public static List<Milestone> GetMilestoneByProjectId(int projectId)
-        {
-            return MilestoneManager.GetMilestoneByProjectId(projectId, true);
+            return projectId <= Globals.NEW_ID ? new List<Milestone>() : 
+                DataProviderManager.Provider.GetMilestonesByProjectId(projectId, milestoneCompleted);
         }
 
         /// <summary>
         /// Gets the Milestone by id.
         /// </summary>
-        /// <param name="MilestoneId">The Milestone id.</param>
+        /// <param name="milestoneId">The Milestone id.</param>
         /// <returns></returns>
-        public static Milestone GetMilestoneById(int MilestoneId)
+        public static Milestone GetMilestoneById(int milestoneId)
         {
-            if (MilestoneId < Globals.NewId)
-                throw (new ArgumentOutOfRangeException("MilestoneId"));
+            if (milestoneId < Globals.NEW_ID)
+                throw (new ArgumentOutOfRangeException("milestoneId"));
 
 
-            return DataProviderManager.Provider.GetMilestoneById(MilestoneId);
+            return DataProviderManager.Provider.GetMilestoneById(milestoneId);
         }
 
 
@@ -98,15 +78,13 @@ namespace BugNET.BLL
         /// <summary>
         /// Updates the Milestone.
         /// </summary>
-        /// <param name="projectId">The project id.</param>
         /// <param name="name">The name.</param>
         /// <param name="sortOrder">The sort order.</param>
-        /// <param name="original_id">The original_id.</param>
+        /// <param name="originalId">The original id.</param>
         /// <returns></returns>
-        public static bool UpdateMilestone(int projectId, string name, int sortOrder, int original_id)
+        public static bool UpdateMilestone(string name, int sortOrder, int originalId)
         {
-
-            Milestone v = MilestoneManager.GetMilestoneById(original_id);
+            var v = GetMilestoneById(originalId);
 
             v.Name = name;
             v.SortOrder = sortOrder;

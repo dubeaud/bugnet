@@ -28,7 +28,7 @@ namespace BugNET.Entities
             /// <param name="name">The name.</param>
             /// <param name="sortOrder">The sort order.</param>
 			public Milestone(int projectId, string name, int sortOrder,string imageUrl, DateTime? dueDate, DateTime? releaseDate, bool isCompleted, string notes)
-                : this(Globals.NewId, projectId, name, sortOrder, imageUrl, dueDate, releaseDate, isCompleted, notes)
+                : this(Globals.NEW_ID, projectId, name, sortOrder, imageUrl, dueDate, releaseDate, isCompleted, notes)
 				{}
 
             /// <summary>
@@ -38,7 +38,7 @@ namespace BugNET.Entities
             /// <param name="name">The name.</param>
             /// <param name="imageUrl">The image URL.</param>
             public Milestone(int projectId, string name, string imageUrl)
-                : this(Globals.NewId, projectId, name, -1, imageUrl, null, null,false,string.Empty)
+                : this(Globals.NEW_ID, projectId, name, -1, imageUrl, null, null,false,string.Empty)
             { }
 
             /// <summary>
@@ -52,7 +52,7 @@ namespace BugNET.Entities
             /// <param name="isCompleted">if set to <c>true</c> [is completed].</param>
             /// <param name="notes">The notes.</param>
             public Milestone(int projectId, string name, string imageUrl, DateTime? dueDate, DateTime? releaseDate, bool isCompleted, string notes)
-                : this(Globals.NewId, projectId, name, -1, imageUrl, dueDate, releaseDate, isCompleted, notes)
+                : this(Globals.NEW_ID, projectId, name, -1, imageUrl, dueDate, releaseDate, isCompleted, notes)
             { }
 
             /// <summary>
@@ -69,7 +69,7 @@ namespace BugNET.Entities
             /// <param name="notes">The notes.</param>
 			public Milestone(int id, int projectId, string name, int sortOrder, string imageUrl, DateTime? dueDate, DateTime? releaseDate, bool isCompleted, string notes) 
 			{
-				if (projectId<=Globals.NewId && id > Globals.NewId)
+				if (projectId<=Globals.NEW_ID && id > Globals.NEW_ID)
 					throw (new ArgumentOutOfRangeException("projectId"));
 
 				if (name == null ||name.Length==0 )
@@ -108,7 +108,7 @@ namespace BugNET.Entities
 				get {return _ProjectId;}
 				set 
 				{
-					if (value<=Globals.NewId )
+					if (value<=Globals.NEW_ID )
 						throw (new ArgumentOutOfRangeException("value"));
 					_ProjectId=value;
 				}

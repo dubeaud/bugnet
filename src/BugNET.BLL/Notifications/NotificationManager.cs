@@ -189,7 +189,7 @@ namespace BugNET.BLL.Notifications
             
             //load template path from host settings
             HostSettingManager mgr = new HostSettingManager();
-            string path = mgr.TemplatePath;
+            string path = HostSettingManager.TemplatePath;
 
             return XmlXslTransform.LoadEmailXslTemplate(template,path);
         }

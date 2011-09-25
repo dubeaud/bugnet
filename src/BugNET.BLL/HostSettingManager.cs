@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Web;
-using BugNET.Entities;
 using BugNET.DAL;
+using log4net;
 
 namespace BugNET.BLL
 {
-    public class HostSettingManager
+    public sealed class HostSettingManager
     {
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         /// <summary>
         /// Updates the host setting.
         /// </summary>
@@ -37,14 +38,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static string GetHostSetting(string key)
         {
-            if (GetHostSettings().Contains(key))
-            {
-                return Convert.ToString(HostSettingManager.GetHostSettings()[key]);
-            }
-            else
-            {
-                return string.Empty;
-            }
+            return GetHostSettings().Contains(key) ? Convert.ToString(GetHostSettings()[key]) : string.Empty;
         }
 
         /// <summary>
@@ -55,11 +49,11 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static int GetHostSetting(string key, int defaultValue)
         {
-            int val = defaultValue;
+            var val = defaultValue;
 
             if (GetHostSettings().Contains(key))
             {
-                string setting = Convert.ToString(HostSettingManager.GetHostSettings()[key]);
+                var setting = Convert.ToString(GetHostSettings()[key]);
                 if (!int.TryParse(setting, out val)) // tryparse fail return default value
                     return defaultValue;
             }
@@ -75,12 +69,11 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool GetHostSetting(string key, bool defaultValue)
         {
-            bool val = defaultValue;
-            string setting = "";
+            var val = defaultValue;
 
             if (GetHostSettings().Contains(key))
             {
-                setting = Convert.ToString(HostSettingManager.GetHostSettings()[key]);
+                var setting = Convert.ToString(GetHostSettings()[key]);
                 if (bool.TryParse(setting.ToLower(), out val))
                     return val;
             }
@@ -96,12 +89,11 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static string GetHostSetting(string key, string defaultValue)
         {
-            string val = defaultValue;
-            string setting = "";
+            var val = defaultValue;
 
             if (GetHostSettings().Contains(key))
             {
-                setting = Convert.ToString(HostSettingManager.GetHostSettings()[key]);
+                var setting = Convert.ToString(GetHostSettings()[key]);
                 if (setting.Length > 0)
                     val = setting;
             }
@@ -122,9 +114,9 @@ namespace BugNET.BLL
             {
                 h = new Hashtable();
 
-                List<HostSetting> al = DataProviderManager.Provider.GetHostSettings();
+                var al = DataProviderManager.Provider.GetHostSettings();
 
-                foreach (HostSetting hs in al)
+                foreach (var hs in al)
                 {
                     h.Add(hs.SettingName, hs.SettingValue);
                 }
@@ -143,11 +135,12 @@ namespace BugNET.BLL
         {
             get
             {
-                string str = HostSettingManager.GetHostSetting("SMTPServer");
+                var str = GetHostSetting("SMTPServer");
+
                 if (String.IsNullOrEmpty(str))
                     throw (new ApplicationException("SmtpServer configuration is missing or not set, check the host settings"));
-                else
-                    return (str);
+
+                return (str);
             }
         }
 
@@ -159,12 +152,12 @@ namespace BugNET.BLL
         {
             get
             {
+                var str = GetHostSetting("HostEmailAddress");
 
-                string str = HostSettingManager.GetHostSetting("HostEmailAddress");
                 if (String.IsNullOrEmpty(str))
                     throw (new ApplicationException("Host email address is not set, check the host settings."));
-                else
-                    return (str);
+
+                return (str);
             }
         }
 
@@ -176,11 +169,12 @@ namespace BugNET.BLL
         {
             get
             {
-                string str = HostSettingManager.GetHostSetting("UserAccountSource");
+                var str = GetHostSetting("UserAccountSource");
+
                 if (String.IsNullOrEmpty(str))
                     throw (new ApplicationException("UserAccountSource configuration is not set properly, check the host settings."));
-                else
-                    return (str);
+
+                return (str);
             }
         }
 
@@ -192,22 +186,14 @@ namespace BugNET.BLL
         {
             get
             {
-                string str = HostSettingManager.GetHostSetting("DefaultUrl");
+                var str = GetHostSetting("DefaultUrl");
+
                 if (String.IsNullOrEmpty(str))
                 {
                     throw (new ApplicationException("DefaultUrl configuration is not set, check the host settings."));
                 }
-                else
-                {
-                    if (str.EndsWith("/"))
-                    {
-                        return (str);
-                    }
-                    else
-                    {
-                        return (str += "/");
-                    }
-                }
+
+                return str.EndsWith("/") ? (str) : (string.Concat(str, "/"));
             }
         }
 
@@ -215,22 +201,21 @@ namespace BugNET.BLL
         /// Gets the template path.  Virtual for unit testing
         /// </summary>
         /// <value>The template path.</value>
-        public virtual string TemplatePath
+        public static string TemplatePath
         {
             get
             {
-                string str = HostSettingManager.GetHostSetting("SMTPEmailTemplateRoot", "~/templates");
+                var str = GetHostSetting("SMTPEmailTemplateRoot", "~/templates");
+
                 str = HttpContext.Current.Server.MapPath(str);
 
                 if (!System.IO.Directory.Exists(str))
                     throw new Exception(string.Format("The configured path: [{0}] does not exist, cannot load Xslt template", str));
-                else
-                {
-                    if (!str.EndsWith("\\"))
-                        str += "\\";
 
-                    return (str);
-                }
+                if (!str.EndsWith("\\"))
+                    str += "\\";
+
+                return (str);
             }
         }
     }

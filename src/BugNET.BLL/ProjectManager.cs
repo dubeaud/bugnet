@@ -11,7 +11,8 @@ namespace BugNET.BLL
 {
     public class ProjectManager
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(ProjectManager));
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         #region Public Methods
         /// <summary>
         /// Saves this instance.
@@ -19,52 +20,59 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool SaveProject(Project projectToSave)
         {
-            if (projectToSave.Id <= 0)
-            {
-
-                int TempId = DataProviderManager.Provider.CreateNewProject(projectToSave);
-                if (TempId > Globals.NewId)
-                {
-                    projectToSave.Id = TempId;
-                    try
-                    {
-                        //create default roles for new project.
-                        RoleManager.CreateDefaultProjectRoles(projectToSave.Id);
-                       
-                    }
-                    catch (Exception ex)
-                    {
-                        if (Log.IsErrorEnabled) Log.Error(string.Format(LoggingManager.GetErrorMessageResource("CouldNotCreateDefaultProjectRoles"), string.Format("ProjectID= {0}",projectToSave.Id)), ex);
-                        return false;
-                    }
-
-                    //create attachment directory
-                    if (projectToSave.AttachmentStorageType == IssueAttachmentStorageType.FileSystem)
-                    {
-                        try
-                        {
-                            // BGN-1909
-                            // Better santization of Upload Paths
-                            if (!checkUploadPath("~" + Globals.UploadFolder + projectToSave.UploadPath))
-                                throw new InvalidDataException("Upload path is invalid .");
-
-                            System.IO.Directory.CreateDirectory(HttpContext.Current.Server.MapPath("~" + Globals.UploadFolder + projectToSave.UploadPath));
-                        }
-                        catch (Exception ex)
-                        {
-                            if (Log.IsErrorEnabled) Log.Error(string.Format(LoggingManager.GetErrorMessageResource("CouldNotCreateUploadDirectory"), HttpContext.Current.Server.MapPath("~" + Globals.UploadFolder + projectToSave.UploadPath)), ex);
-                            return false;
-                        }
-                    }
-
-                    return true;
-                }
-                else
-                    return false;
-            }
-            else
+            if (projectToSave.Id > 0)
                 return (UpdateProject(projectToSave));
+
+            var tempId = DataProviderManager.Provider.CreateNewProject(projectToSave);
+            if (tempId <= Globals.NEW_ID)
+                return false;
+
+            projectToSave.Id = tempId;
+
+            try
+            {
+                //create default roles for new project.
+                RoleManager.CreateDefaultProjectRoles(projectToSave.Id);
+            }
+            catch (Exception ex)
+            {
+                if (Log.IsErrorEnabled)
+                    Log.Error(
+                        string.Format(
+                            LoggingManager.GetErrorMessageResource("CouldNotCreateDefaultProjectRoles"),
+                            string.Format("ProjectID= {0}", projectToSave.Id)), ex);
+                return false;
+            }
+
+            //create attachment directory
+            if (projectToSave.AttachmentStorageType == IssueAttachmentStorageType.FileSystem)
+            {
+                try
+                {
+                    // BGN-1909
+                    // Better santization of Upload Paths
+                    if (!CheckUploadPath("~" + Globals.UPLOAD_FOLDER + projectToSave.UploadPath))
+                        throw new InvalidDataException("Upload path is invalid .");
+
+                    Directory.CreateDirectory(
+                        HttpContext.Current.Server.MapPath("~" + Globals.UPLOAD_FOLDER +
+                                                           projectToSave.UploadPath));
+                }
+                catch (Exception ex)
+                {
+                    if (Log.IsErrorEnabled)
+                        Log.Error(
+                            string.Format(
+                                LoggingManager.GetErrorMessageResource("CouldNotCreateUploadDirectory"),
+                                HttpContext.Current.Server.MapPath("~" + Globals.UPLOAD_FOLDER +
+                                                                   projectToSave.UploadPath)), ex);
+                    return false;
+                }
+            }
+
+            return true;
         }
+
         #endregion
 
         #region Private Methods
@@ -76,27 +84,27 @@ namespace BugNET.BLL
         /// <returns></returns>
         private static bool UpdateProject(Project projectToUpdate)
         {
-            Project p = ProjectManager.GetProjectById(projectToUpdate.Id);
+            var p = GetProjectById(projectToUpdate.Id);
             if (projectToUpdate.AttachmentStorageType == IssueAttachmentStorageType.FileSystem && p.UploadPath != projectToUpdate.UploadPath)
             {
                 // BGN-1909
                 // Better santization of Upload Paths
-                string oldPath = "~" + Globals.UploadFolder + p.UploadPath.Trim();
-                string newPath = @"~" + Globals.UploadFolder + projectToUpdate.UploadPath.Trim();
+                string oldPath = "~" + Globals.UPLOAD_FOLDER + p.UploadPath.Trim();
+                string newPath = @"~" + Globals.UPLOAD_FOLDER + projectToUpdate.UploadPath.Trim();
                 
                 // WARNING: When editing an invalid path, and trying to make it valid, 
                 // you will still get an error. This is because the Directory.Move() call 
                 // can traverse directories! Maybe we should allow the database to change, 
                 // but not change the file system?
-                bool isPathNorty = !checkUploadPath(oldPath);
+                bool isPathNorty = !CheckUploadPath(oldPath);
 
-                if (!checkUploadPath(newPath))
+                if (!CheckUploadPath(newPath))
                     isPathNorty = true;
 
                 if (isPathNorty)
                 {
                     // something bad is going on. DONT even File.Exist()!!
-                    if (Log.IsErrorEnabled) Log.Error(string.Format(LoggingManager.GetErrorMessageResource("CouldNotCreateUploadDirectory"), HttpContext.Current.Server.MapPath(@"~" + Globals.UploadFolder + projectToUpdate.UploadPath)));
+                    if (Log.IsErrorEnabled) Log.Error(string.Format(LoggingManager.GetErrorMessageResource("CouldNotCreateUploadDirectory"), HttpContext.Current.Server.MapPath(@"~" + Globals.UPLOAD_FOLDER + projectToUpdate.UploadPath)));
                     return false;
                 }
 
@@ -114,7 +122,7 @@ namespace BugNET.BLL
                 }
                 catch (Exception ex)
                 {
-                    if (Log.IsErrorEnabled) Log.Error(string.Format(LoggingManager.GetErrorMessageResource("CouldNotCreateUploadDirectory"), HttpContext.Current.Server.MapPath("~" + Globals.UploadFolder + projectToUpdate.UploadPath)), ex);
+                    if (Log.IsErrorEnabled) Log.Error(string.Format(LoggingManager.GetErrorMessageResource("CouldNotCreateUploadDirectory"), HttpContext.Current.Server.MapPath("~" + Globals.UPLOAD_FOLDER + projectToUpdate.UploadPath)), ex);
                     return false;
                 }
             }
@@ -240,7 +248,7 @@ namespace BugNET.BLL
         {
             if (String.IsNullOrEmpty(userName))
                 throw new ArgumentOutOfRangeException("userName");
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw new ArgumentOutOfRangeException("projectId");
 
 
@@ -257,7 +265,7 @@ namespace BugNET.BLL
         {
             if (String.IsNullOrEmpty(userName))
                 throw new ArgumentOutOfRangeException("userName");
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw new ArgumentOutOfRangeException("projectId");
 
             if (DataProviderManager.Provider.RemoveUserFromProject(userName, projectId))
@@ -285,7 +293,7 @@ namespace BugNET.BLL
         {
             if (String.IsNullOrEmpty(userName))
                 throw new ArgumentOutOfRangeException("userName");
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw new ArgumentOutOfRangeException("projectId");
 
             return DataProviderManager.Provider.IsUserProjectMember(userName, projectId);
@@ -298,19 +306,20 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool DeleteProject(int projectId)
         {
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("projectId"));
 
-            string uploadpath = GetProjectById(projectId).UploadPath;
+            var uploadpath = GetProjectById(projectId).UploadPath;
 
             if (DataProviderManager.Provider.DeleteProject(projectId))
             {
                 try
                 {
-                    System.IO.Directory.Delete(HttpContext.Current.Server.MapPath("~" + Globals.UploadFolder + uploadpath), true);
+                    uploadpath = string.Concat("~", Globals.UPLOAD_FOLDER, uploadpath);
+                    Directory.Delete(HttpContext.Current.Server.MapPath(uploadpath), true);
                 }
-                catch { 
-                 //TODO Log this error
+                catch (Exception ex) {
+                    Log.Error(string.Format("Could not delete upload folder {0} for project id {1}", uploadpath, projectId), ex);
                 }
 
                 return true;
@@ -328,30 +337,29 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool CloneProject(int projectId, string projectName)
         {
-            if (projectId <= Globals.NewId)
-                throw (new ArgumentOutOfRangeException("projectId"));
-            if (string.IsNullOrEmpty(projectName))
-                throw new ArgumentNullException("projectName");
+            if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
+            if (string.IsNullOrEmpty(projectName)) throw new ArgumentNullException("projectName");
 
-            int NewProjectId = DataProviderManager.Provider.CloneProject(projectId, projectName);
-            if (NewProjectId != 0)
+            var newProjectId = DataProviderManager.Provider.CloneProject(projectId, projectName);
+
+            if (newProjectId != 0)
             {
-                Project NewProject = ProjectManager.GetProjectById(NewProjectId);
+                var newProject = GetProjectById(newProjectId);
                 try
                 {
-                    if (NewProject.AllowAttachments && NewProject.AttachmentStorageType == IssueAttachmentStorageType.FileSystem)
+                    if (newProject.AllowAttachments && newProject.AttachmentStorageType == IssueAttachmentStorageType.FileSystem)
                     {
                         // Old bugfix which wasn't carried forward.
-                        NewProject.UploadPath = System.Guid.NewGuid().ToString();
-                        DataProviderManager.Provider.UpdateProject(NewProject);
+                        newProject.UploadPath = Guid.NewGuid().ToString();
+                        DataProviderManager.Provider.UpdateProject(newProject);
 
-                        System.IO.Directory.CreateDirectory(HttpContext.Current.Server.MapPath("~" + Globals.UploadFolder + NewProject.UploadPath));
+                        Directory.CreateDirectory(HttpContext.Current.Server.MapPath("~" + Globals.UPLOAD_FOLDER + newProject.UploadPath));
                     }
                 }
                 catch (Exception ex)
                 {
                     if (Log.IsErrorEnabled)
-                        Log.Error(string.Format("Could not create new upload folder {0} for project {1}", NewProject.UploadPath, NewProject.Name), ex);
+                        Log.Error(string.Format("Could not create new upload folder {0} for project {1}", newProject.UploadPath, newProject.Name), ex);
 
                 }
                 HttpContext.Current.Cache.Remove("RolePermission");
@@ -368,7 +376,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<RoadMapIssue> GetRoadMap(int projectId)
         {
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("projectId"));
 
             return DataProviderManager.Provider.GetProjectRoadmap(projectId);
@@ -382,7 +390,7 @@ namespace BugNET.BLL
         /// <returns>total number of issues and total number of close issues</returns>
         public static int[] GetRoadMapProgress(int projectId, int milestoneId)
         {
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("projectId"));
             if (milestoneId < -1)
                 throw new ArgumentNullException("milestoneId");
@@ -397,7 +405,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<Issue> GetChangeLog(int projectId)
         {
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("projectId"));
 
             return DataProviderManager.Provider.GetProjectChangeLog(projectId);
@@ -426,15 +434,15 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="sPath"></param>
         /// <returns></returns>
-        public static bool checkUploadPath(string sPath)
+        public static bool CheckUploadPath(string sPath)
         {
-            bool isPathNorty = false;
-            string tmpPath = sPath; // dont even trim it!
+            var isPathNorty = false;
+            var tmpPath = sPath; // dont even trim it!
 
             // BGN-1904
             // Check the length of the upload path
             // 64 characters are allows            
-            if ((tmpPath.Length > Globals.UploadFolderLimit ))
+            if ((tmpPath.Length > Globals.UPLOAD_FOLDER_LIMIT ))
             {
                 isPathNorty = true;
             }
@@ -463,7 +471,7 @@ namespace BugNET.BLL
             tmpPath = tmpPath.Replace(@"\", " ");
 
             //check for illegal filename characters
-            if (tmpPath.IndexOfAny(System.IO.Path.GetInvalidFileNameChars()) != -1)
+            if (tmpPath.IndexOfAny(Path.GetInvalidFileNameChars()) != -1)
             {
                 isPathNorty = true;
             }

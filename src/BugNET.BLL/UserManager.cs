@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -9,11 +10,13 @@ using BugNET.Common;
 using BugNET.DAL;
 using BugNET.Entities;
 using BugNET.Providers.MembershipProviders;
+using log4net;
 
 namespace BugNET.BLL
 {
-    public class UserManager
+    public static class UserManager
     {
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         #region Static Methods
 
@@ -25,7 +28,7 @@ namespace BugNET.BLL
         /// <param name="email"></param>
         public static void CreateUser(string userName, string password, string email)
         {
-            MembershipUser user = Membership.CreateUser(userName, password, email);
+            Membership.CreateUser(userName, password, email);
         }
 
         /// <summary>
@@ -47,8 +50,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static MembershipUser GetUser(object userProviderKey)
         {
-            if (userProviderKey == null)
-                throw (new ArgumentOutOfRangeException("userProviderKey"));
+            if (userProviderKey == null) throw (new ArgumentOutOfRangeException("userProviderKey"));
             return Membership.GetUser(userProviderKey);
         }
 
@@ -59,10 +61,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static MembershipUser GetUser(string userName)
         {
-            if (String.IsNullOrEmpty(userName))
-                throw (new ArgumentOutOfRangeException("userName"));
-
-
+            if (String.IsNullOrEmpty(userName)) throw (new ArgumentOutOfRangeException("userName"));
             return Membership.GetUser(userName);
         }
 
@@ -72,14 +71,7 @@ namespace BugNET.BLL
         /// <returns>Collection of membership users</returns>
         public static List<CustomMembershipUser> GetAllUsers()
         {
-            //return Membership.GetAllUsers();
-
-            List<CustomMembershipUser> userList = new List<CustomMembershipUser>();
-            foreach (CustomMembershipUser u in Membership.GetAllUsers())
-            {
-                userList.Add(u);
-            }
-            return userList;
+            return Membership.GetAllUsers().Cast<CustomMembershipUser>().ToList();
         }
 
         /// <summary>
@@ -88,14 +80,9 @@ namespace BugNET.BLL
         /// <returns>Authorized Users Only</returns>
         public static List<CustomMembershipUser> GetAllAuthorizedUsers()
         {
-            List<CustomMembershipUser> users = UserManager.GetAllUsers();
-            List<CustomMembershipUser> AuthenticatedUsers = new List<CustomMembershipUser>();
-            foreach (CustomMembershipUser user in users)
-            {
-                if (user.IsApproved)
-                    AuthenticatedUsers.Add(user);
-            }
-            users = AuthenticatedUsers;
+            var users = GetAllUsers();
+            var authenticatedUsers = users.Where(user => user.IsApproved).ToList();
+            users = authenticatedUsers;
             return users;
         }
 
@@ -106,7 +93,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<CustomMembershipUser> FindUsersByName(string userNameToMatch)
         {
-            Dictionary<string, CustomMembershipUser> userList = new Dictionary<string, CustomMembershipUser>();
+            var userList = new Dictionary<string, CustomMembershipUser>();
             foreach (CustomMembershipUser u in Membership.FindUsersByName(userNameToMatch))
             {
                 userList[u.UserName] = u;
@@ -117,7 +104,7 @@ namespace BugNET.BLL
                 userList[u.UserName] = u;
             }
 
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             foreach (var c in userNameToMatch)
             {
                 switch (c)
@@ -151,12 +138,12 @@ namespace BugNET.BLL
                 }
             }
 
-            Regex regex = new Regex(sb.ToString());
-            List<string> invalidUsernames = new List<string>();
+            var regex = new Regex(sb.ToString());
+            var invalidUsernames = new List<string>();
             foreach (var u in userList.Values)
             {
-                string username = u.UserName;
-                int pos = username.IndexOf('\\');
+                var username = u.UserName;
+                var pos = username.IndexOf('\\');
                 if ((pos >= 0) && (username.Length > pos))
                 {
                     username = username.Substring(pos + 1);
@@ -182,13 +169,9 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<CustomMembershipUser> FindUsersByEmail(string emailToMatch)
         {
-            List<CustomMembershipUser> userList = new List<CustomMembershipUser>();
-            foreach (CustomMembershipUser u in Membership.FindUsersByEmail(emailToMatch))
-            {
-                userList.Add(u);
-            }
-            return userList;
+            return Membership.FindUsersByEmail(emailToMatch).Cast<CustomMembershipUser>().ToList();
         }
+
         /// <summary>
         /// Updates the user.
         /// </summary>
@@ -211,12 +194,12 @@ namespace BugNET.BLL
         /// </returns>
         public static bool IsInRole(int projectId, string roleName)
         {
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw new ArgumentOutOfRangeException("projectId");
             if (String.IsNullOrEmpty(roleName))
                 throw new ArgumentNullException("roleName");
 
-            return UserManager.IsInRole(HttpContext.Current.User.Identity.Name, projectId, roleName);
+            return IsInRole(HttpContext.Current.User.Identity.Name, projectId, roleName);
         }
 
         /// <summary>
@@ -233,8 +216,8 @@ namespace BugNET.BLL
             if (HttpContext.Current.User.Identity.Name.Length == 0)
                 return false;
 
-            List<Role> roles = RoleManager.GetRolesForUser(HttpContext.Current.User.Identity.Name);
-            return roles.Exists(delegate(Role r) { return r.Name == roleName; });
+            var roles = RoleManager.GetRolesForUser(HttpContext.Current.User.Identity.Name);
+            return roles.Exists(r => r.Name == roleName);
         }
 
         /// <summary>
@@ -253,13 +236,10 @@ namespace BugNET.BLL
             if (String.IsNullOrEmpty(userName))
                 throw new ArgumentNullException("userName");
 
-            List<Role> roles = RoleManager.GetRolesForUser(userName, projectId);
+            var roles = RoleManager.GetRolesForUser(userName, projectId);
 
-            Role role = roles.Find(delegate(Role r) { return r.Name == roleName; });
-            if (role != null)
-                return true;
-
-            return false;
+            var role = roles.Find(r => r.Name == roleName);
+            return role != null;
         }
 
         /// <summary>
@@ -275,7 +255,7 @@ namespace BugNET.BLL
             if (string.IsNullOrEmpty(permissionKey))
                 throw new ArgumentNullException("permissionKey");
 
-            return UserManager.HasPermission(Security.GetUserName(), projectId, permissionKey);
+            return HasPermission(Security.GetUserName(), projectId, permissionKey);
 
         }
 
@@ -296,18 +276,12 @@ namespace BugNET.BLL
                 throw new ArgumentNullException("permissionKey");
 
             //return true for all permission checks if the user is in the super users role.
-            if (UserManager.IsInRole(Globals.SuperUserRole))
+            if (IsInRole(Globals.SUPER_USER_ROLE))
                 return true;
 
-            List<Role> roles = RoleManager.GetRolesForUser(userName, projectId);
+            var roles = RoleManager.GetRolesForUser(userName, projectId);
 
-            foreach (Role r in roles)
-            {
-                if (RoleManager.RoleHasPermission(projectId, r.Name, permissionKey))
-                    return true;
-            }
-
-            return false;
+            return roles.Any(r => RoleManager.RoleHasPermission(projectId, r.Name, permissionKey));
         }
 
         /// <summary>
@@ -320,15 +294,8 @@ namespace BugNET.BLL
             if (string.IsNullOrEmpty(userName))
                 throw new ArgumentNullException("userName");
 
-            string DisplayName = new WebProfile().GetProfile(userName).DisplayName;
-            if (!string.IsNullOrEmpty(DisplayName))
-            {
-                return DisplayName;
-            }
-            else
-            {
-                return userName;
-            }
+            var displayName = new WebProfile().GetProfile(userName).DisplayName;
+            return !string.IsNullOrEmpty(displayName) ? displayName : userName;
         }
 
         /// <summary>
@@ -344,7 +311,8 @@ namespace BugNET.BLL
         /// <summary>
         /// Sends the user password reminder.
         /// </summary>
-        /// <param name="username">The username.</param>
+        /// <param name="user"></param>
+        /// <param name="passwordAnswer"></param>
         /// <returns></returns>
         public static void SendUserPasswordReminderNotification(MembershipUser user, string passwordAnswer)
         {
@@ -353,11 +321,11 @@ namespace BugNET.BLL
 
             //TODO: Move this to xslt notification
             //load template and replace the tokens
-            string template = NotificationManager.Instance.LoadNotificationTemplate("PasswordReminder");
-            string subject = NotificationManager.Instance.LoadNotificationTemplate("PasswordReminderSubject");
-            string displayname = UserManager.GetUserDisplayName(user.UserName);
+            var template = NotificationManager.Instance.LoadNotificationTemplate("PasswordReminder");
+            var subject = NotificationManager.Instance.LoadNotificationTemplate("PasswordReminderSubject");
+            var displayname = GetUserDisplayName(user.UserName);
 
-            NotificationManager.Instance.SendNotification(user.UserName, subject, String.Format(template, HostSettingManager.GetHostSetting("ApplicationTitle"), user.GetPassword(passwordAnswer)));
+            NotificationManager.Instance.SendNotification(user.UserName, subject, String.Format(template, HostSettingManager.GetHostSetting("ApplicationTitle"), user.GetPassword(passwordAnswer)), displayname);
 
         }
 
@@ -370,28 +338,31 @@ namespace BugNET.BLL
             if (user == null)
                 throw new ArgumentNullException("user");
 
-            EmailFormatType type = (EmailFormatType)HostSettingManager.GetHostSetting("SMTPEMailFormat", (int)EmailFormatType.Text);
+            var type = (EmailFormatType)HostSettingManager.GetHostSetting("SMTPEMailFormat", (int)EmailFormatType.Text);
 
             //load template and replace the tokens
-            string template = NotificationManager.Instance.LoadEmailNotificationTemplate("UserVerification", type);
-            string subject = NotificationManager.Instance.LoadNotificationTemplate("UserVerification");
-            string displayname = UserManager.GetUserDisplayName(user.UserName);
+            var template = NotificationManager.Instance.LoadEmailNotificationTemplate("UserVerification", type);
+            var subject = NotificationManager.Instance.LoadNotificationTemplate("UserVerification");
+            var displayname = GetUserDisplayName(user.UserName);
 
-            Dictionary<string, object> data = new Dictionary<string, object>();
+            var data = new Dictionary<string, object>();
 
-            ITUser u = new ITUser()
+            if (user.ProviderUserKey != null)
             {
-                Id = (Guid)user.ProviderUserKey,
-                CreationDate = user.CreationDate,
-                Email = user.Email,
-                UserName = user.UserName,
-                DisplayName = new WebProfile().GetProfile(user.UserName).DisplayName,
-                IsApproved = user.IsApproved
-            };
+                var u = new ITUser
+                            {
+                        Id = (Guid)user.ProviderUserKey,
+                        CreationDate = user.CreationDate,
+                        Email = user.Email,
+                        UserName = user.UserName,
+                        DisplayName = new WebProfile().GetProfile(user.UserName).DisplayName,
+                        IsApproved = user.IsApproved
+                    };
 
-            data.Add("User", u);
+                data.Add("User", u);
+            }
             template = NotificationManager.Instance.GenerateNotificationContent(template, data);
-            NotificationManager.Instance.SendNotification(user.UserName, subject, template);
+            NotificationManager.Instance.SendNotification(user.UserName, subject, template, displayname);
 
         }
 
@@ -405,65 +376,63 @@ namespace BugNET.BLL
             if (user == null)
                 throw new ArgumentNullException("user");
 
-            EmailFormatType type = (EmailFormatType)HostSettingManager.GetHostSetting("SMTPEMailFormat", (int)EmailFormatType.Text);
+            var type = (EmailFormatType)HostSettingManager.GetHostSetting("SMTPEMailFormat", (int)EmailFormatType.Text);
 
             //load template and replace the tokens
-            string template = NotificationManager.Instance.LoadEmailNotificationTemplate("PasswordReset", type);
-            string subject = NotificationManager.Instance.LoadNotificationTemplate("PasswordResetSubject");
-            string displayname = UserManager.GetUserDisplayName(user.UserName);
-            Dictionary<string, object> data = new Dictionary<string, object>();
+            var template = NotificationManager.Instance.LoadEmailNotificationTemplate("PasswordReset", type);
+            var subject = NotificationManager.Instance.LoadNotificationTemplate("PasswordResetSubject");
+            var displayname = GetUserDisplayName(user.UserName);
+            var data = new Dictionary<string, object>();
 
-            ITUser u = new ITUser()
-            {
-                CreationDate = user.CreationDate,
-                Email = user.Email,
-                UserName = user.UserName,
-                DisplayName = new WebProfile().GetProfile(user.UserName).DisplayName,
-                IsApproved = user.IsApproved
-            };
+            var u = new ITUser
+                {
+                    CreationDate = user.CreationDate,
+                    Email = user.Email,
+                    UserName = user.UserName,
+                    DisplayName = new WebProfile().GetProfile(user.UserName).DisplayName,
+                    IsApproved = user.IsApproved
+                };
 
             data.Add("User", u);
             data.Add("Password", newPassword);
             template = NotificationManager.Instance.GenerateNotificationContent(template, data);
-            NotificationManager.Instance.SendNotification(user.UserName, subject, template);
+            NotificationManager.Instance.SendNotification(user.UserName, subject, template, displayname);
 
         }
 
         /// <summary>
         /// Sends the user registered notification.
         /// </summary>
-        /// <param name="user">The user.</param>
+        /// <param name="userName">The user.</param>
         public static void SendUserRegisteredNotification(string userName)
         {
             if (userName == "")
-                throw new ArgumentNullException("user");
+                throw new ArgumentNullException("userName");
 
-            EmailFormatType type = (EmailFormatType)HostSettingManager.GetHostSetting("SMTPEMailFormat", (int)EmailFormatType.Text);
-            MembershipUser user = UserManager.GetUser(userName);
-            WebProfile profile = new WebProfile().GetProfile(user.UserName);
-
+            var type = (EmailFormatType)HostSettingManager.GetHostSetting("SMTPEMailFormat", (int)EmailFormatType.Text);
+            var user = GetUser(userName);
 
             //load template and replace the tokens
-            string template = NotificationManager.Instance.LoadEmailNotificationTemplate("UserRegistered", type);
-            string subject = NotificationManager.Instance.LoadNotificationTemplate("UserRegisteredSubject");
-            Dictionary<string, object> data = new Dictionary<string, object>();
+            var template = NotificationManager.Instance.LoadEmailNotificationTemplate("UserRegistered", type);
+            var subject = NotificationManager.Instance.LoadNotificationTemplate("UserRegisteredSubject");
+            var data = new Dictionary<string, object>();
 
-            ITUser u = new ITUser()
-            {
-                CreationDate = user.CreationDate,
-                Email = user.Email,
-                UserName = user.UserName,
-                DisplayName = new WebProfile().GetProfile(user.UserName).DisplayName,
-                IsApproved = user.IsApproved
-            };
+            var u = new ITUser
+                {
+                    CreationDate = user.CreationDate,
+                    Email = user.Email,
+                    UserName = user.UserName,
+                    DisplayName = new WebProfile().GetProfile(user.UserName).DisplayName,
+                    IsApproved = user.IsApproved
+                };
 
             data.Add("User", u);
             template = NotificationManager.Instance.GenerateNotificationContent(template, data);
 
             //all admin notifications sent to admin user defined in host settings, 
-            string AdminNotificationUsername = HostSettingManager.GetHostSetting("AdminNotificationUsername");
+            var adminNotificationUsername = HostSettingManager.GetHostSetting("AdminNotificationUsername");
 
-            NotificationManager.Instance.SendNotification(AdminNotificationUsername, subject, template);
+            NotificationManager.Instance.SendNotification(adminNotificationUsername, subject, template);
         }
 
         /// <summary>
@@ -481,16 +450,12 @@ namespace BugNET.BLL
             if (string.IsNullOrEmpty(notificationType))
                 throw new ArgumentNullException("notificationType");
 
-            WebProfile profile = new WebProfile().GetProfile(username);
+            var profile = new WebProfile().GetProfile(username);
 
             if (profile != null)
             {
-                string[] notificationTypes = profile.NotificationTypes.Split(';');
-                foreach (string s in notificationTypes)
-                {
-                    if (s.Equals(notificationType))
-                        return true;
-                }
+                var notificationTypes = profile.NotificationTypes.Split(';');
+                return notificationTypes.Any(s => s.Equals(notificationType));
             }
             return false;
         }

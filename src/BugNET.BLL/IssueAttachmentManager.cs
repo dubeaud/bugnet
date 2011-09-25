@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Web;
 using BugNET.Common;
 using BugNET.DAL;
@@ -9,9 +10,9 @@ using log4net;
 
 namespace BugNET.BLL
 {
-    public class IssueAttachmentManager
+    public static class IssueAttachmentManager
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(IssueAttachmentManager));
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         #region Instance Methods
         /// <summary>
@@ -22,33 +23,27 @@ namespace BugNET.BLL
         public static bool SaveIssueAttachment(IssueAttachment issueAttachmentToSave)
         {
 
-            if (issueAttachmentToSave.Id <= Globals.NewId)
+            if (issueAttachmentToSave.Id <= Globals.NEW_ID)
             {
                 //Start new save attachment code
                 if (issueAttachmentToSave.Attachment.Length > 0)
                 {
-                    bool isFileOk = false;
-                    string[] AllowedFileTypes = HostSettingManager.GetHostSetting("AllowedFileExtensions").Split(';');
-                    string fileExt = System.IO.Path.GetExtension(issueAttachmentToSave.FileName);
-                    string uploadedFileName = string.Empty;
+                    var isFileOk = false;
+                    var allowedFileTypes = HostSettingManager.GetHostSetting("AllowedFileExtensions").Split(';');
+                    var fileExt = Path.GetExtension(issueAttachmentToSave.FileName);
 
-                    uploadedFileName = Path.GetFileName(issueAttachmentToSave.FileName);
+                    var uploadedFileName = Path.GetFileName(issueAttachmentToSave.FileName);
 
                     //check if file type is allowed
-                    if (AllowedFileTypes.Length > 0 && AllowedFileTypes[0].CompareTo("*.*") == 0)
+                    if (allowedFileTypes.Length > 0 && allowedFileTypes[0].CompareTo("*.*") == 0)
                     {
                         isFileOk = true;
                     }
                     else
                     {
-                        foreach (string fileType in AllowedFileTypes)
+                        if (allowedFileTypes.Select(fileType => fileType.Substring(fileType.LastIndexOf("."))).Any(newfileType => newfileType.CompareTo(fileExt) == 0))
                         {
-                            string newfileType = fileType.Substring(fileType.LastIndexOf("."));
-                            if (newfileType.CompareTo(fileExt) == 0)
-                            {
-                                isFileOk = true;
-                                break;
-                            }
+                            isFileOk = true;
                         }
                     }
 
@@ -60,96 +55,87 @@ namespace BugNET.BLL
                     }
 
                     //check for illegal filename characters
-                    if (uploadedFileName.IndexOfAny(System.IO.Path.GetInvalidFileNameChars()) != -1)
+                    if (uploadedFileName != null && uploadedFileName.IndexOfAny(Path.GetInvalidFileNameChars()) != -1)
                     {
                         if (Log.IsErrorEnabled) Log.Error(string.Format(LoggingManager.GetErrorMessageResource("InvalidFileName"), uploadedFileName));
                         return false;
                     }
 
-                    //if the file is ok save it.
-                    if (isFileOk)
+                    // save the file to the upload directory
+                    var projectId = IssueManager.GetIssueById(issueAttachmentToSave.IssueId).ProjectId;
+                    var p = ProjectManager.GetProjectById(projectId);
+
+                    if (p.AllowAttachments)
                     {
-                        // save the file to the upload directory
-                        int projectId = IssueManager.GetIssueById(issueAttachmentToSave.IssueId).ProjectId;
-                        Project p = ProjectManager.GetProjectById(projectId);
-
-                        if (p.AllowAttachments)
+                        issueAttachmentToSave.ContentType = issueAttachmentToSave.ContentType.Replace("/x-png", "/png");
+                        if (issueAttachmentToSave.ContentType == "image/bmp")
                         {
-                            issueAttachmentToSave.ContentType = issueAttachmentToSave.ContentType.Replace("/x-png", "/png");
-                            if (issueAttachmentToSave.ContentType == "image/bmp")
+                            System.Drawing.Image img;
+
+                            using (var ms = new MemoryStream(issueAttachmentToSave.Attachment, 0, issueAttachmentToSave.Attachment.Length))
                             {
-                                System.Drawing.Image img;
+                                ms.Write(issueAttachmentToSave.Attachment, 0, issueAttachmentToSave.Attachment.Length);
+                                img = System.Drawing.Image.FromStream(ms);
+                                img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                                ms.Seek(0, SeekOrigin.Begin);
+                                issueAttachmentToSave.Attachment = ms.ToArray();
 
-                                using (MemoryStream ms = new MemoryStream(issueAttachmentToSave.Attachment, 0, issueAttachmentToSave.Attachment.Length))
-                                {
-                                    ms.Write(issueAttachmentToSave.Attachment, 0, issueAttachmentToSave.Attachment.Length);
-                                    img = System.Drawing.Image.FromStream(ms);
-                                    img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                                    ms.Seek(0, SeekOrigin.Begin);
-                                    issueAttachmentToSave.Attachment = ms.ToArray();
-
-                                }
-                                issueAttachmentToSave.ContentType = "image/png";
-                                issueAttachmentToSave.FileName = Path.ChangeExtension(issueAttachmentToSave.FileName, "png");
                             }
-                            issueAttachmentToSave.Size = issueAttachmentToSave.Attachment.Length;
+                            issueAttachmentToSave.ContentType = "image/png";
+                            issueAttachmentToSave.FileName = Path.ChangeExtension(issueAttachmentToSave.FileName, "png");
+                        }
+                        issueAttachmentToSave.Size = issueAttachmentToSave.Attachment.Length;
 
-                            if (p.AttachmentStorageType == IssueAttachmentStorageType.Database)
+                        if (p.AttachmentStorageType == IssueAttachmentStorageType.Database)
+                        {
+                            //save the attachment record to the database.
+                            var tempId = DataProviderManager.Provider.CreateNewIssueAttachment(issueAttachmentToSave);
+                            if (tempId > 0)
                             {
-                                //save the attachment record to the database.
-                                int TempId = DataProviderManager.Provider.CreateNewIssueAttachment(issueAttachmentToSave);
-                                if (TempId > 0)
-                                {
-                                    issueAttachmentToSave.Id = TempId;
-                                    return true;
-                                }
-                                else
-                                    return false;
+                                issueAttachmentToSave.Id = tempId;
+                                return true;
                             }
-                            else
-                            {
-                                string ProjectPath = p.UploadPath;
-
-                                try
-                                {
-                                    if (ProjectPath.Length == 0)
-                                        throw new ApplicationException(string.Format(LoggingManager.GetErrorMessageResource("UploadPathNotDefined"), p.Name));
-
-                                    Guid attachmentGuid = Guid.NewGuid();
-                                    byte[] AttachmentBytes = issueAttachmentToSave.Attachment;
-                                    issueAttachmentToSave.Attachment = null;    //set attachment to null    
-                                    issueAttachmentToSave.FileName = String.Format("{0}.{1}{2}", System.IO.Path.GetFileNameWithoutExtension(issueAttachmentToSave.FileName), attachmentGuid.ToString(), System.IO.Path.GetExtension(issueAttachmentToSave.FileName));
-                                    string UploadedFilePath = HttpContext.Current.Server.MapPath("~" + Globals.UploadFolder + ProjectPath) + "\\" + issueAttachmentToSave.FileName;
-
-
-                                    //save the attachment record to the database.
-                                    int TempId = DataProviderManager.Provider.CreateNewIssueAttachment(issueAttachmentToSave);
-                                    if (TempId > 0)
-                                    {
-                                        issueAttachmentToSave.Id = TempId;
-                                        //save file to file system
-                                        FileStream fs = File.Create(UploadedFilePath);
-                                        fs.Write(AttachmentBytes, 0, issueAttachmentToSave.Size);
-                                        fs.Close();
-                                        return true;
-                                    }
-                                    else
-                                        return false;
-                                }
-                                catch (DirectoryNotFoundException ex)
-                                {
-                                    if (Log.IsErrorEnabled) Log.Error(string.Format(LoggingManager.GetErrorMessageResource("UploadPathNotFound"), ProjectPath), ex);
-                                    throw;
-                                }
-                                catch (Exception ex)
-                                {
-                                    if (Log.IsErrorEnabled) Log.Error(ex.Message, ex);
-                                    throw;
-                                }
-                            }
-
+                            return false;
                         }
 
+                        var projectPath = p.UploadPath;
+
+                        try
+                        {
+                            if (projectPath.Length == 0)
+                                throw new ApplicationException(string.Format(LoggingManager.GetErrorMessageResource("UploadPathNotDefined"), p.Name));
+
+                            var attachmentGuid = Guid.NewGuid();
+                            var attachmentBytes = issueAttachmentToSave.Attachment;
+                            issueAttachmentToSave.Attachment = null;    //set attachment to null    
+                            issueAttachmentToSave.FileName = String.Format("{0}.{1}{2}", Path.GetFileNameWithoutExtension(issueAttachmentToSave.FileName), attachmentGuid, Path.GetExtension(issueAttachmentToSave.FileName));
+                            var uploadedFilePath = HttpContext.Current.Server.MapPath("~" + Globals.UPLOAD_FOLDER + projectPath) + "\\" + issueAttachmentToSave.FileName;
+
+
+                            //save the attachment record to the database.
+                            var tempId = DataProviderManager.Provider.CreateNewIssueAttachment(issueAttachmentToSave);
+                            if (tempId > 0)
+                            {
+                                issueAttachmentToSave.Id = tempId;
+                                //save file to file system
+                                var fs = File.Create(uploadedFilePath);
+                                fs.Write(attachmentBytes, 0, issueAttachmentToSave.Size);
+                                fs.Close();
+                                return true;
+                            }
+
+                            return false;
+                        }
+                        catch (DirectoryNotFoundException ex)
+                        {
+                            if (Log.IsErrorEnabled) Log.Error(string.Format(LoggingManager.GetErrorMessageResource("UploadPathNotFound"), projectPath), ex);
+                            throw;
+                        }
+                        catch (Exception ex)
+                        {
+                            if (Log.IsErrorEnabled) Log.Error(ex.Message, ex);
+                            throw;
+                        }
                     }
                 }
             }
@@ -159,14 +145,14 @@ namespace BugNET.BLL
 
         #region Static Methods
         /// <summary>
-        /// Gets all IssueAttachments for a bug
+        /// Gets all IssueAttachments for an issue
         /// </summary>
-        /// <param name="bugId"></param>
+        /// <param name="issueId"></param>
         /// <returns></returns>
         public static List<IssueAttachment> GetIssueAttachmentsByIssueId(int issueId)
         {
             // validate input
-            if (issueId <= Globals.NewId)
+            if (issueId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("issueId"));
 
             return DataProviderManager.Provider.GetIssueAttachmentsByIssueId(issueId);
@@ -175,12 +161,12 @@ namespace BugNET.BLL
         /// <summary>
         /// Gets an IssueAttachment by id
         /// </summary>
-        /// <param name="IssueAttachmentId">The IssueAttachment id.</param>
+        /// <param name="attachmentId">The IssueAttachment id.</param>
         /// <returns></returns>
         public static IssueAttachment GetIssueAttachmentById(int attachmentId)
         {
             // validate input
-            if (attachmentId <= Globals.NewId)
+            if (attachmentId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("attachmentId"));
 
             return DataProviderManager.Provider.GetIssueAttachmentById(attachmentId);
@@ -193,9 +179,9 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool DeleteIssueAttachment(int issueAttachmentId)
         {
-            IssueAttachment att = IssueAttachmentManager.GetIssueAttachmentById(issueAttachmentId);
-            Issue b = IssueManager.GetIssueById(att.IssueId);
-            Project p = ProjectManager.GetProjectById(b.ProjectId);
+            var att = GetIssueAttachmentById(issueAttachmentId);
+            var b = IssueManager.GetIssueById(att.IssueId);
+            var p = ProjectManager.GetProjectById(b.ProjectId);
 
             if (DataProviderManager.Provider.DeleteIssueAttachment(issueAttachmentId))
             {
@@ -204,13 +190,13 @@ namespace BugNET.BLL
                     //delete IssueAttachment from file system.
                     try
                     {
-                        File.Delete(System.Web.HttpContext.Current.Server.MapPath(string.Format("~{2}{0}\\{1}", p.UploadPath, att.FileName, Globals.UploadFolder)));
+                        File.Delete(HttpContext.Current.Server.MapPath(string.Format("~{2}{0}\\{1}", p.UploadPath, att.FileName, Globals.UPLOAD_FOLDER)));
                     }
                     catch (Exception ex)
                     {
                         //set user to log4net context, so we can use %X{user} in the appenders
-                        if (System.Web.HttpContext.Current.User != null && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-                            MDC.Set("user", System.Web.HttpContext.Current.User.Identity.Name);
+                        if (HttpContext.Current.User != null && HttpContext.Current.User.Identity.IsAuthenticated)
+                            MDC.Set("user", HttpContext.Current.User.Identity.Name);
 
                         if (Log.IsErrorEnabled)
                             Log.Error(String.Format("Error Deleting IssueAttachment - {0}", string.Format("{0}\\{1}", p.UploadPath, att.FileName)), ex);
@@ -230,15 +216,16 @@ namespace BugNET.BLL
         /// Performs a query containing any number of query clauses on a certain IssueID
         /// </summary>
         /// <param name="issueId"></param>
-        /// <param name="QueryClauses"></param>
+        /// <param name="queryClauses"></param>
         /// <returns></returns>
-        public static List<IssueAttachment> PerformQuery(int issueId, List<QueryClause> QueryClauses)
+        public static List<IssueAttachment> PerformQuery(int issueId, List<QueryClause> queryClauses)
         {
             if (issueId < 0)
-                throw new ArgumentOutOfRangeException("issueId must be bigger than 0");
-            QueryClauses.Add(new QueryClause("AND", "IssueId", "=", issueId.ToString(), System.Data.SqlDbType.Int, false));
+                throw new ArgumentOutOfRangeException("issueId", "must be bigger than 0");
 
-            return PerformQuery(QueryClauses);
+            queryClauses.Add(new QueryClause("AND", "IssueId", "=", issueId.ToString(), System.Data.SqlDbType.Int, false));
+
+            return PerformQuery(queryClauses);
         }
 
         /// <summary>
@@ -249,15 +236,15 @@ namespace BugNET.BLL
         /// WARNING! Will expose the entire IssueAttachment table, regardless of 
         /// project level privileges. (that's why its private for now)
         /// </summary>        
-        /// <param name="QueryClauses"></param>
+        /// <param name="queryClauses"></param>
         /// <returns></returns>
-        private static List<IssueAttachment> PerformQuery(List<QueryClause> QueryClauses)
+        private static List<IssueAttachment> PerformQuery(List<QueryClause> queryClauses)
         {
-            if (QueryClauses == null)
-                throw new ArgumentNullException("QueryClauses");
+            if (queryClauses == null)
+                throw new ArgumentNullException("queryClauses");
 
-            List<IssueAttachment> lst = new List<IssueAttachment>();
-            DataProviderManager.Provider.PerformGenericQuery<IssueAttachment>(ref lst, QueryClauses, @"SELECT a.*, b.UserName as CreatorUserName, a.Userid as CreatorUserID, b.Username as CreatorDisplayName from BugNet_IssueAttachment as a, aspnet_Users as b  WHERE a.UserId=b.UserID ", @" ORDER BY IssueAttachmentId DESC");
+            var lst = new List<IssueAttachment>();
+            DataProviderManager.Provider.PerformGenericQuery(ref lst, queryClauses, @"SELECT a.*, b.UserName as CreatorUserName, a.Userid as CreatorUserID, b.Username as CreatorDisplayName from BugNet_IssueAttachment as a, aspnet_Users as b  WHERE a.UserId=b.UserID ", @" ORDER BY IssueAttachmentId DESC");
 
             return lst;
         }
@@ -272,25 +259,20 @@ namespace BugNET.BLL
             if (string.IsNullOrEmpty(fileName))
                 return string.Format(LoggingManager.GetErrorMessageResource("InvalidFileName"), fileName);
 
-            bool isFileOk = false;
-            string[] AllowedFileTypes = HostSettingManager.GetHostSetting("AllowedFileExtensions").Split(';');
-            string fileExt = System.IO.Path.GetExtension(fileName);
+            var isFileOk = false;
+            var allowedFileTypes = HostSettingManager.GetHostSetting("AllowedFileExtensions").Split(';');
+            var fileExt = Path.GetExtension(fileName);
 
-            if (AllowedFileTypes.Length > 0 && AllowedFileTypes[0].CompareTo("*.*") == 0)
+            if (allowedFileTypes.Length > 0 && allowedFileTypes[0].CompareTo("*.*") == 0)
             {
                 isFileOk = true;
             }
             else
             {
 
-                foreach (string fileType in AllowedFileTypes)
+                if (allowedFileTypes.Select(fileType => fileType.Substring(fileType.LastIndexOf("."))).Any(newfileType => newfileType.CompareTo(fileExt) == 0))
                 {
-                    string newfileType = fileType.Substring(fileType.LastIndexOf("."));
-                    if (newfileType.CompareTo(fileExt) == 0)
-                    {
-                        isFileOk = true;
-                        break;
-                    }
+                    isFileOk = true;
                 }
             }
 
@@ -301,12 +283,7 @@ namespace BugNET.BLL
             }
 
             //check for illegal filename characters
-            if (fileName.IndexOfAny(System.IO.Path.GetInvalidFileNameChars()) != -1)
-            {
-                return string.Format(LoggingManager.GetErrorMessageResource("InvalidFileName"), fileName);
-            }
-
-            return string.Empty;
+            return fileName.IndexOfAny(Path.GetInvalidFileNameChars()) != -1 ? string.Format(LoggingManager.GetErrorMessageResource("InvalidFileName"), fileName) : string.Empty;
         }
 
         ///// <summary>

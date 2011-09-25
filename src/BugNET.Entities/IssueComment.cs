@@ -33,7 +33,7 @@ namespace BugNET.Entities
         /// <param name="comment">The comment.</param>
         /// <param name="creatorUsername">The creator username.</param>
         public IssueComment(int issueId, string comment, string creatorUsername)
-            : this(Globals.NewId, issueId, comment, creatorUsername, Guid.Empty, String.Empty, DateTime.MinValue)
+            : this(Globals.NEW_ID, issueId, comment, creatorUsername, Guid.Empty, String.Empty, DateTime.MinValue)
         { }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace BugNET.Entities
             if (comment == null || comment.Length == 0)
                 throw (new ArgumentOutOfRangeException("comment"));
 
-            if (issueId <= Globals.NewId)
+            if (issueId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("IssueId"));
 
             _Id = commentId;
@@ -143,7 +143,7 @@ namespace BugNET.Entities
             get { return _IssueId; }
             set
             {
-                if (value <= Globals.NewId)
+                if (value <= Globals.NEW_ID)
                     throw (new ArgumentOutOfRangeException("value"));
                 _IssueId = value;
             }

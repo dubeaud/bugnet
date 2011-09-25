@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using BugNET.Common;
 using BugNET.DAL;
 using BugNET.Entities;
+using log4net;
 
 namespace BugNET.BLL
 {
-    public class CustomFieldSelectionManager
+    public static class CustomFieldSelectionManager
     {
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         /// <summary>
         /// Saves this instance.
         /// </summary>
@@ -15,23 +18,17 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool SaveCustomFieldSelection(CustomFieldSelection customFieldSelectionToSave)
         {
-
-
-            if (customFieldSelectionToSave.Id <= Globals.NewId)
-            {
-                int TempId = DataProviderManager.Provider.CreateNewCustomFieldSelection(customFieldSelectionToSave);
-                if (TempId > 0)
-                {
-                    customFieldSelectionToSave.Id = TempId;
-                    return true;
-                }
-                else
-                    return false;
-            }
-            else
+            if (customFieldSelectionToSave.Id > Globals.NEW_ID)
                 return (DataProviderManager.Provider.UpdateCustomFieldSelection(customFieldSelectionToSave));
-        }
 
+            var tempId = DataProviderManager.Provider.CreateNewCustomFieldSelection(customFieldSelectionToSave);
+
+            if (tempId <= 0)
+                return false;
+
+            customFieldSelectionToSave.Id = tempId;
+            return true;
+        }
 
         #region Static Methods
 
@@ -42,9 +39,8 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool DeleteCustomFieldSelection(int customFieldSelectionId)
         {
-            if (customFieldSelectionId <= Globals.NewId)
+            if (customFieldSelectionId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("customFieldSelectionId"));
-
 
             return (DataProviderManager.Provider.DeleteCustomFieldSelection(customFieldSelectionId));
         }
@@ -57,9 +53,8 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<CustomFieldSelection> GetCustomFieldsSelectionsByCustomFieldId(int customFieldId)
         {
-            if (customFieldId <= Globals.NewId)
+            if (customFieldId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("customFieldId"));
-
 
             return (DataProviderManager.Provider.GetCustomFieldSelectionsByCustomFieldId(customFieldId));
         }
@@ -75,9 +70,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool UpdateCustomFieldSelection(int id, string name, string value, int sortOrder, int customFieldId)
         {
-
-
-            CustomFieldSelection cfs = GetCustomFieldSelectionById(id);
+            var cfs = GetCustomFieldSelectionById(id);
 
             cfs.Name = name;
             cfs.Value = value;
@@ -95,12 +88,10 @@ namespace BugNET.BLL
         /// <param name="customFieldId">The custom field id.</param>
         /// <param name="sortOrder">The sort order.</param>
         /// <returns></returns>
-        public static int CreateCustomFieldSelection(string name, string value,
-             int customFieldId, int sortOrder)
+        public static int CreateCustomFieldSelection(string name, string value, int customFieldId, int sortOrder)
         {
 
-
-            CustomFieldSelection cfs = new CustomFieldSelection(Globals.NewId, customFieldId,
+            var cfs = new CustomFieldSelection(Globals.NEW_ID, customFieldId,
                 name, value, sortOrder);
 
             return (DataProviderManager.Provider.CreateNewCustomFieldSelection(cfs));

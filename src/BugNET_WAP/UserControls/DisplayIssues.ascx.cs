@@ -43,8 +43,8 @@ namespace BugNET.UserControls
             }
             else
             {
-                if ((Request.Cookies[Globals.IssueColumns] != null) && (Request.Cookies[Globals.IssueColumns].Value != String.Empty))
-                    _arrIssueColumns = Request.Cookies[Globals.IssueColumns].Value.Split();
+                if ((Request.Cookies[Globals.ISSUE_COLUMNS] != null) && (Request.Cookies[Globals.ISSUE_COLUMNS].Value != String.Empty))
+                    _arrIssueColumns = Request.Cookies[Globals.ISSUE_COLUMNS].Value.Split();
             }  
         }
 
@@ -154,7 +154,7 @@ namespace BugNET.UserControls
                         lstIssueColumns.Items.Remove(lstIssueColumns.Items.FindByValue("4"));
                     }
 
-                    if ((!Page.User.Identity.IsAuthenticated) || (UserManager.HasPermission(projectId, Globals.Permission.EDIT_ISSUE.ToString()) == false) ||
+                    if ((!Page.User.Identity.IsAuthenticated) || (UserManager.HasPermission(projectId, Globals.Permission.EditIssue.ToString()) == false) ||
                         (UserManager.IsInRole(projectId, Globals.DefaultRoles[0]) == false))
                     {
                         //hide selection column for unauthenticated users 
@@ -327,9 +327,9 @@ namespace BugNET.UserControls
             }
             else
             {
-                Response.Cookies[Globals.IssueColumns].Value = strIssueColumns;
-                Response.Cookies[Globals.IssueColumns].Path = "/";
-                Response.Cookies[Globals.IssueColumns].Expires = DateTime.MaxValue;
+                Response.Cookies[Globals.ISSUE_COLUMNS].Value = strIssueColumns;
+                Response.Cookies[Globals.ISSUE_COLUMNS].Path = "/";
+                Response.Cookies[Globals.ISSUE_COLUMNS].Expires = DateTime.MaxValue;
             }
 
             OnRebindCommand(EventArgs.Empty);
@@ -471,7 +471,7 @@ namespace BugNET.UserControls
                 Issue b = ((Issue)e.Row.DataItem);
 
                 //Private issue check
-                if (b.Visibility == (int)Globals.IssueVisibility.Private && b.AssignedDisplayName != Security.GetUserName() && b.CreatorDisplayName != Security.GetUserName() && (!UserManager.IsInRole(Globals.SuperUserRole) || !UserManager.IsInRole(Globals.ProjectAdminRole)))
+                if (b.Visibility == (int)Globals.IssueVisibility.Private && b.AssignedDisplayName != Security.GetUserName() && b.CreatorDisplayName != Security.GetUserName() && (!UserManager.IsInRole(Globals.SUPER_USER_ROLE) || !UserManager.IsInRole(Globals.ProjectAdminRole)))
                     e.Row.Visible = false;
 
                 e.Row.FindControl("imgPrivate").Visible = b.Visibility == 0 ? false : true;

@@ -24,9 +24,9 @@ namespace BugNET.Administration.Projects
             {
                 BindData();
   
-                if (!UserManager.HasPermission(Convert.ToInt32(Request.QueryString["id"]), Globals.Permission.ADMIN_CLONE_PROJECT.ToString()))
+                if (!UserManager.HasPermission(Convert.ToInt32(Request.QueryString["id"]), Globals.Permission.AdminCloneProject.ToString()))
                     CloneProject.Visible = false;
-                if (!UserManager.HasPermission(Convert.ToInt32(Request.QueryString["id"]), Globals.Permission.ADMIN_CREATE_PROJECT.ToString()))
+                if (!UserManager.HasPermission(Convert.ToInt32(Request.QueryString["id"]), Globals.Permission.AdminCreateProject.ToString()))
                     NewProject.Visible = false;
             }
 
@@ -202,7 +202,7 @@ namespace BugNET.Administration.Projects
 				
 
 				//permission check to edit project
-                if(!UserManager.HasPermission(p.Id,Globals.Permission.ADMIN_EDIT_PROJECT.ToString()))
+                if(!UserManager.HasPermission(p.Id,Globals.Permission.AdminEditProject.ToString()))
                     e.Item.Visible = false;
 			}
 		}

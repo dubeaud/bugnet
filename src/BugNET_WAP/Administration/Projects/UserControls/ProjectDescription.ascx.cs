@@ -214,7 +214,7 @@ namespace BugNET.Administration.Projects.UserControls
         protected void validUploadPath_ServerValidate(object source, ServerValidateEventArgs args)
         {
             // BGN-1909
-            if (BugNET.BLL.ProjectManager.checkUploadPath("~" + Globals.UploadFolder + txtUploadPath.Text))
+            if (BugNET.BLL.ProjectManager.CheckUploadPath("~" + Globals.UPLOAD_FOLDER + txtUploadPath.Text))
             {
                 args.IsValid = true;
             }

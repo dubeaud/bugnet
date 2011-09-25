@@ -48,7 +48,7 @@ namespace BugNET.Entities
         /// <param name="comment">The comment.</param>
         /// <param name="creatorUserName">Name of the creator user.</param>
 		public IssueWorkReport(int issueId, DateTime reportDate, decimal duration, string comment, string creatorUserName)
-			:this(Globals.NewId,issueId,Guid.Empty, reportDate,duration, Globals.NewId, comment, creatorUserName, String.Empty)
+			:this(Globals.NEW_ID,issueId,Guid.Empty, reportDate,duration, Globals.NEW_ID, comment, creatorUserName, String.Empty)
 		{}
 		#endregion
 

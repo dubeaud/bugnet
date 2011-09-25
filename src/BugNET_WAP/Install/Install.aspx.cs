@@ -345,7 +345,7 @@ namespace BugNET.Install
                       List<Role> roles = RoleManager.GetRolesForUser("Admin");
                       if (roles.Count > 0)
                       {
-                          Role role = roles.SingleOrDefault(r => r.Name == Globals.SuperUserRole);
+                          Role role = roles.SingleOrDefault(r => r.Name == Globals.SUPER_USER_ROLE);
                           if (role != null)
                               found = true;
                       }

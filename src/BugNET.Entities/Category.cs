@@ -24,7 +24,7 @@ namespace BugNET.Entities
             /// <param name="CategoryId">The Category id.</param>
             /// <param name="childCount">The child count.</param>
             public Category(string name, int CategoryId, int childCount)
-                : this(CategoryId, Globals.NewId, Globals.NewId, name, childCount)
+                : this(CategoryId, Globals.NEW_ID, Globals.NEW_ID, name, childCount)
             { }
             /// <summary>
             /// Initializes a new instance of the <see cref="T:Category"/> class.
@@ -32,7 +32,7 @@ namespace BugNET.Entities
             /// <param name="name">The name.</param>
             /// <param name="CategoryId">The Category id.</param>
 			public Category( string name, int CategoryId)
-                : this(CategoryId, Globals.NewId, Globals.NewId, name, Globals.NewId)
+                : this(CategoryId, Globals.NEW_ID, Globals.NEW_ID, name, Globals.NEW_ID)
 			{}
 
             /// <summary>
@@ -41,7 +41,7 @@ namespace BugNET.Entities
             /// <param name="projectId">The project id.</param>
             /// <param name="name">The name.</param>
 			public Category( int projectId, string name )
-				: this( Globals.NewId, projectId,Globals.NewId,   name,Globals.NewId)
+				: this( Globals.NEW_ID, projectId,Globals.NEW_ID,   name,Globals.NEW_ID)
 			{}
 
             /// <summary>
@@ -52,7 +52,7 @@ namespace BugNET.Entities
             /// <param name="name">The name.</param>
             /// <param name="childCount">The child count.</param>
 			public Category( int projectId, int parentCategoryId, string name, int childCount)
-				: this( Globals.NewId, projectId,parentCategoryId,  name, childCount)
+				: this( Globals.NEW_ID, projectId,parentCategoryId,  name, childCount)
 			{}
 
             /// <summary>

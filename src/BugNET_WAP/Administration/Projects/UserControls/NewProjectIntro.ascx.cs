@@ -67,9 +67,9 @@ namespace BugNET.Administration.Projects.UserControls
 
             if (chkSkip.Checked)
             {
-                Response.Cookies[Globals.SkipProjectIntro].Value = "1";
-                Response.Cookies[Globals.SkipProjectIntro].Path = "/";
-                Response.Cookies[Globals.SkipProjectIntro].Expires = DateTime.MaxValue;
+                Response.Cookies[Globals.SKIP_PROJECT_INTRO].Value = "1";
+                Response.Cookies[Globals.SKIP_PROJECT_INTRO].Path = "/";
+                Response.Cookies[Globals.SKIP_PROJECT_INTRO].Expires = DateTime.MaxValue;
                 Response.Redirect("AddProject.aspx");
             }
     

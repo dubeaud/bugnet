@@ -21,10 +21,7 @@ namespace BugNET.BLL.Notifications
             if (!DateTime.TryParse(value, out dt))
                 return "";
 
-            if (dt.Date.Year > 1968)
-                return dt.ToString("yyyy-MM-dd HH:mm");
-            else
-                return "";
+            return dt.Date.Year > 1968 ? dt.ToString("yyyy-MM-dd HH:mm") : "";
         }
 
         /// <summary>
@@ -39,10 +36,7 @@ namespace BugNET.BLL.Notifications
             if (!DateTime.TryParse(value, out dt))
                 return "";
 
-            if (dt.Date.Year > 1968)
-                return dt.ToString("yyyy-MM-dd hh:mm tt");
-            else
-                return "";
+            return dt.Date.Year > 1968 ? dt.ToString("yyyy-MM-dd hh:mm tt") : "";
         }
 
         /// <summary>
@@ -57,10 +51,7 @@ namespace BugNET.BLL.Notifications
             if (!DateTime.TryParse(value, out dt))
                 return "";
 
-            if (dt.Date.Year > 1968)
-                return dt.ToShortDateString();
-            else
-                return "";
+            return dt.Date.Year > 1968 ? dt.ToShortDateString() : "";
         }
 
         /// <summary>
@@ -75,20 +66,7 @@ namespace BugNET.BLL.Notifications
             if (!DateTime.TryParse(value, out dt))
                 return "";
 
-            if (dt.Date.Year > 1968)
-                return dt.ToShortTimeString();
-            else
-                return "";
-        }
-
-        /// <summary>
-        /// Formats the quantity.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns></returns>
-        public string FormatQuantity(string value)
-        {
-            return FormatQuantity(value, "true");
+            return dt.Date.Year > 1968 ? dt.ToShortTimeString() : "";
         }
 
         /// <summary>
@@ -97,10 +75,10 @@ namespace BugNET.BLL.Notifications
         /// <param name="value">The value.</param>
         /// <param name="showZeroValue">The show zero value.</param>
         /// <returns></returns>
-        public string FormatQuantity(string value, string showZeroValue)
+        public string FormatQuantity(string value, string showZeroValue = "true")
         {
             decimal d;
-            bool show = false;
+            bool show;
 
             bool.TryParse(showZeroValue, out show);
 
@@ -109,11 +87,8 @@ namespace BugNET.BLL.Notifications
 
             if (show)
                 return d.ToString("###,##0");
-            else
-                if (d.Equals(0.00))
-                    return "";
-                else
-                    return d.ToString("###,##0");
+
+            return d.Equals(0.00) ? "" : d.ToString("###,##0");
         }
 
         /// <summary>
@@ -133,10 +108,7 @@ namespace BugNET.BLL.Notifications
         /// <returns></returns>
         public string ReplaceCrLfWithBR(string value)
         {
-            if (!string.IsNullOrEmpty(value))
-                return value.Replace("\r\n", "<br/>");
-
-            return value.ToString();
+            return !string.IsNullOrEmpty(value) ? value.Replace("\r\n", "<br/>") : value;
         }
 
         /// <summary>

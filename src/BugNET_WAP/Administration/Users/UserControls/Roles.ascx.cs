@@ -38,10 +38,10 @@ namespace BugNET.Administration.Users.UserControls
             dropProjects.DataBind();
 
 
-            if (UserManager.IsInRole(Globals.SuperUserRole))
+            if (UserManager.IsInRole(Globals.SUPER_USER_ROLE))
             {              
                 chkSuperUsers.Visible = true;
-                chkSuperUsers.Checked = UserManager.IsInRole(lblUserName.Text, 0, Globals.SuperUserRole);
+                chkSuperUsers.Checked = UserManager.IsInRole(lblUserName.Text, 0, Globals.SUPER_USER_ROLE);
             }
         }
 
@@ -85,9 +85,9 @@ namespace BugNET.Administration.Users.UserControls
         {
             string userName = lblUserName.Text;
 
-            if (chkSuperUsers.Checked && !UserManager.IsInRole(userName, 0, Globals.SuperUserRole))
+            if (chkSuperUsers.Checked && !UserManager.IsInRole(userName, 0, Globals.SUPER_USER_ROLE))
                 RoleManager.AddUserToRole(userName, 1);
-            else if (!chkSuperUsers.Checked && UserManager.IsInRole(userName, 0, Globals.SuperUserRole))
+            else if (!chkSuperUsers.Checked && UserManager.IsInRole(userName, 0, Globals.SUPER_USER_ROLE))
                 RoleManager.RemoveUserFromRole(userName, 1);
         }
         /// <summary>

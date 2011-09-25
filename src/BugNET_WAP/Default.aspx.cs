@@ -110,13 +110,13 @@ namespace BugNET
 			{
 				Project p = (Project)e.Item.DataItem;
 
-				if(!Context.User.Identity.IsAuthenticated || !UserManager.HasPermission(p.Id,Globals.Permission.ADD_ISSUE.ToString()))
+				if(!Context.User.Identity.IsAuthenticated || !UserManager.HasPermission(p.Id,Globals.Permission.AddIssue.ToString()))
 					e.Item.FindControl("ReportIssue").Visible=false;
 
-                if (!Context.User.Identity.IsAuthenticated || !UserManager.HasPermission(p.Id, Globals.Permission.ADMIN_EDIT_PROJECT.ToString()))
+                if (!Context.User.Identity.IsAuthenticated || !UserManager.HasPermission(p.Id, Globals.Permission.AdminEditProject.ToString()))
                     e.Item.FindControl("Settings").Visible = false;
 
-                if (!Context.User.Identity.IsAuthenticated || !UserManager.HasPermission(p.Id, Globals.Permission.VIEW_PROJECT_CALENDAR.ToString()))
+                if (!Context.User.Identity.IsAuthenticated || !UserManager.HasPermission(p.Id, Globals.Permission.ViewProjectCalendar.ToString()))
                     e.Item.FindControl("ProjectCalendar").Visible = false;
 
                 System.Web.UI.WebControls.Image ProjectImage = (System.Web.UI.WebControls.Image)e.Item.FindControl("ProjectImage");                 

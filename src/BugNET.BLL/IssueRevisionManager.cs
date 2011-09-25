@@ -2,11 +2,14 @@
 using BugNET.Common;
 using BugNET.DAL;
 using BugNET.Entities;
+using log4net;
 
 namespace BugNET.BLL
 {
-    public class IssueRevisionManager
+    public static class IssueRevisionManager
     {
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         #region Static Methods
         /// <summary>
         /// Saves this instance.
@@ -14,16 +17,16 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool SaveIssueRevision(IssueRevision issueRevisionToSave)
         {
-            if (issueRevisionToSave.Id <= Globals.NewId)
+            if (issueRevisionToSave.Id <= Globals.NEW_ID)
             {
-                int TempId = DataProviderManager.Provider.CreateNewIssueRevision(issueRevisionToSave);
-                if (TempId > Globals.NewId)
+                var tempId = DataProviderManager.Provider.CreateNewIssueRevision(issueRevisionToSave);
+                if (tempId > Globals.NEW_ID)
                 {
-                    issueRevisionToSave.Id = TempId;
+                    issueRevisionToSave.Id = tempId;
                     return true;
                 }
-                else
-                    return false;
+
+                return false;
             }
             return true;
         }

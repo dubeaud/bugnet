@@ -3,36 +3,31 @@ using System.Collections.Generic;
 using BugNET.Common;
 using BugNET.DAL;
 using BugNET.Entities;
+using log4net;
 
 namespace BugNET.BLL
 {
-    public class PriorityManager
+    public static class PriorityManager
     {
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         /// <summary>
         /// Saves this instance.
         /// </summary>
-        /// <param name="milestoneToSave">The milestone to save.</param>
+        /// <param name="priorityToSave"></param>
         /// <returns></returns>
         public static bool SavePriority(Priority priorityToSave)
         {
-            if (priorityToSave.Id <= Globals.NewId)
-            {
-
-                int TempId = DataProviderManager.Provider.CreateNewPriority(priorityToSave);
-                if (TempId > 0)
-                {
-                    priorityToSave.Id = TempId;
-                    return true;
-                }
-                else
-                    return false;
-            }
-            else
+            if (priorityToSave.Id > Globals.NEW_ID)
             {
                 return DataProviderManager.Provider.UpdatePriority(priorityToSave);
             }
+            var tempId = DataProviderManager.Provider.CreateNewPriority(priorityToSave);
+            if (tempId <= 0)
+                return false;
+            priorityToSave.Id = tempId;
+            return true;
         }
-
 
         #region Static Methods
         /// <summary>
@@ -42,7 +37,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static Priority GetPriorityById(int priorityId)
         {
-            if (priorityId <= Globals.NewId)
+            if (priorityId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("priorityId"));
 
             return DataProviderManager.Provider.GetPriorityById(priorityId);
@@ -56,7 +51,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static Priority CreateNewPriority(int projectId, string priorityName)
         {
-            return (PriorityManager.CreateNewPriority(projectId, priorityName, string.Empty));
+            return (CreateNewPriority(projectId, priorityName, string.Empty));
         }
 
 
@@ -69,11 +64,8 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static Priority CreateNewPriority(int projectId, string priorityName, string imageUrl)
         {
-            Priority newPriority = new Priority(projectId, priorityName, imageUrl);
-            if (PriorityManager.SavePriority(newPriority) == true)
-                return newPriority;
-            else
-                return null;
+            var newPriority = new Priority(projectId, priorityName, imageUrl);
+            return SavePriority(newPriority) ? newPriority : null;
         }
 
 
@@ -84,7 +76,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool DeletePriority(int priorityId)
         {
-            if (priorityId <= Globals.NewId)
+            if (priorityId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("priorityId"));
 
             return (DataProviderManager.Provider.DeletePriority(priorityId));
@@ -98,8 +90,8 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<Priority> GetPrioritiesByProjectId(int projectId)
         {
-            if (projectId <= Globals.NewId)
-                throw (new ArgumentOutOfRangeException("priorityId"));
+            if (projectId <= Globals.NEW_ID)
+                throw (new ArgumentOutOfRangeException("projectId"));
 
             return (DataProviderManager.Provider.GetPrioritiesByProjectId(projectId));
         }

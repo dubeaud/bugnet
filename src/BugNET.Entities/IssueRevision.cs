@@ -30,7 +30,7 @@ namespace BugNET.Entities
        /// <param name="repository">The repository.</param>
        /// <param name="revisionDate">The revision date.</param>
        public IssueRevision(int revision,int issueId, string author, string message, string repository, string revisionDate)
-           : this(Globals.NewId,issueId, revision, author, message, repository, revisionDate, DateTime.MinValue)
+           : this(Globals.NEW_ID,issueId, revision, author, message, repository, revisionDate, DateTime.MinValue)
        {}
 
        /// <summary>

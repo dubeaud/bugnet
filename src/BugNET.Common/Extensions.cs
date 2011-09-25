@@ -16,8 +16,11 @@ namespace BugNET.Common
         /// <returns></returns>
         public static IEnumerable<T> Sort<T>(this IEnumerable<T> source, string sortExpression)
         {
-            string[] sortParts = sortExpression.Split(' ');
+            if (source == null) throw new ArgumentNullException("source");
+
+            var sortParts = sortExpression.Split(' ');
             var param = Expression.Parameter(typeof(T), string.Empty);
+
             try
             {
                 var property = Expression.Property(param, sortParts[0]);
@@ -25,9 +28,9 @@ namespace BugNET.Common
 
                 if (sortParts.Length > 1 && sortParts[1].Equals("desc", StringComparison.OrdinalIgnoreCase))
                 {
-                    return source.AsQueryable<T>().OrderByDescending<T, object>(sortLambda);
+                    return source.AsQueryable().OrderByDescending(sortLambda);
                 }
-                return source.AsQueryable<T>().OrderBy<T, object>(sortLambda);
+                return source.AsQueryable().OrderBy(sortLambda);
             }
             catch (ArgumentException)
             {

@@ -114,7 +114,7 @@ namespace BugNET.UserInterfaceLayer
                     if (!ProjectPath.EndsWith("\\"))
                         ProjectPath = String.Concat(ProjectPath, "\\");
 
-                    Path = String.Concat("~", Globals.UploadFolder, ProjectPath, FileName);
+                    Path = String.Concat("~", Globals.UPLOAD_FOLDER, ProjectPath, FileName);
 
                     if (System.IO.File.Exists(context.Server.MapPath(Path)))
                     {

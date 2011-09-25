@@ -1,33 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BugNET.Common;
 using BugNET.DAL;
 using BugNET.Entities;
+using log4net;
 
 namespace BugNET.BLL
 {
     /// <summary>
     /// Manager class for issues
     /// </summary>
-    public class IssueManager
+    public static class IssueManager
     {
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         #region Instance Methods
         /// <summary>
-        /// Saves the bug
+        /// Saves the issue
         /// </summary>
         /// <param name="issueToSave">The issue to save.</param>
         /// <returns></returns>
         public static bool SaveIssue(Issue issueToSave)
         {
-            if (issueToSave.Id <= Globals.NewId)
+            if (issueToSave.Id <= Globals.NEW_ID)
             {
-                int TempId = DataProviderManager.Provider.CreateNewIssue(issueToSave);
+                var tempId = DataProviderManager.Provider.CreateNewIssue(issueToSave);
 
-                if (TempId > 0)
+                if (tempId > 0)
                 {
-                    issueToSave.Id = TempId;
+                    issueToSave.Id = tempId;
                     //add vote
-                    IssueVote vote = new IssueVote(issueToSave.Id, issueToSave.CreatorUserName);
+                    var vote = new IssueVote(issueToSave.Id, issueToSave.CreatorUserName);
                     IssueVoteManager.SaveIssueVote(vote);
 
 
@@ -38,45 +42,42 @@ namespace BugNET.BLL
 
                     return true;
                 }
-                else
-                    return false;
+                return false;
             }
-            else
+
+            var issueChanges = GetIssueChanges(GetIssueById(issueToSave.Id), issueToSave);
+
+            if (issueChanges.Count > 0)
             {
-                List<IssueHistory> issueChanges = GetIssueChanges(IssueManager.GetIssueById(issueToSave.Id), issueToSave);
-                
-                if (issueChanges.Count > 0)
+                var result = DataProviderManager.Provider.UpdateIssue(issueToSave);
+                if (result)
                 {
-                    bool result = DataProviderManager.Provider.UpdateIssue(issueToSave);
-                    if (result)
+                    UpdateIssueHistory(issueChanges);
+
+                    IssueNotificationManager.SendIssueNotifications(issueToSave.Id, issueChanges);
+                    if (issueToSave.SendNewAssigneeNotification)
                     {
-                        IssueManager.UpdateIssueHistory(issueChanges);
+                        //add this user to notifications and send them a notification
+                        var issueNotification = new IssueNotification(issueToSave.Id, issueToSave.AssignedUserName);
 
-                        IssueNotificationManager.SendIssueNotifications(issueToSave.Id, issueChanges);
-                        if (issueToSave.SendNewAssigneeNotification)
-                        {
-                            //add this user to notifications and send them a notification
-                            IssueNotification issueNotification = new IssueNotification(issueToSave.Id, issueToSave.AssignedUserName);
-                            
-                            IssueNotificationManager.SaveIssueNotification(issueNotification);
-                            IssueNotificationManager.SendNewAssigneeNotification(issueToSave.Id, issueToSave.AssignedDisplayName);
-                        }
+                        IssueNotificationManager.SaveIssueNotification(issueNotification);
+                        IssueNotificationManager.SendNewAssigneeNotification(issueToSave.Id, issueToSave.AssignedDisplayName);
                     }
-                    return result;
                 }
-
-                return true;
+                return result;
             }
+
+            return true;
         }
 
         /// <summary>
         /// Updates the IssueHistory objects in the changes array list
         /// </summary>
         /// <param name="issueChanges">The issue changes.</param>
-        private static void UpdateIssueHistory(List<IssueHistory> issueChanges)
+        private static void UpdateIssueHistory(IEnumerable<IssueHistory> issueChanges)
         {
-            foreach (IssueHistory issueHistory in issueChanges)
-               IssueHistoryManager.SaveIssueHistory(issueHistory);
+            foreach (var issueHistory in issueChanges)
+                IssueHistoryManager.SaveIssueHistory(issueHistory);
         }
 
         /// <summary>
@@ -84,15 +85,14 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="originalIssue">The original issue.</param>
         /// <param name="issueToCompare">The issue to compare.</param>
-        /// <param name="creatorUsername">The creator username.</param>
         /// <returns></returns>
         public static List<IssueHistory> GetIssueChanges(Issue originalIssue, Issue issueToCompare)
         {
-            List<IssueHistory> issueChanges = new List<IssueHistory>();
+            var issueChanges = new List<IssueHistory>();
 
             if (originalIssue != null && issueToCompare != null)
             {
-                string createdUserName = issueToCompare.CreatorUserName;
+                var createdUserName = issueToCompare.CreatorUserName;
 
                 if (originalIssue.Title.ToLower() != issueToCompare.Title.ToLower())
                     issueChanges.Add(new IssueHistory(originalIssue.Id, createdUserName, "Title", originalIssue.Title, issueToCompare.Title));
@@ -104,7 +104,7 @@ namespace BugNET.BLL
                     issueChanges.Add(new IssueHistory(originalIssue.Id, createdUserName, "Priority", originalIssue.PriorityName, issueToCompare.PriorityName));
                 if (originalIssue.StatusId != issueToCompare.StatusId)
                     issueChanges.Add(new IssueHistory(originalIssue.Id, createdUserName, "Status", originalIssue.StatusName, issueToCompare.StatusName));
-                if (originalIssue.MilestoneId !=issueToCompare. MilestoneId)
+                if (originalIssue.MilestoneId != issueToCompare.MilestoneId)
                     issueChanges.Add(new IssueHistory(originalIssue.Id, createdUserName, "Milestone", originalIssue.MilestoneName, issueToCompare.MilestoneName));
                 if (originalIssue.AffectedMilestoneId != issueToCompare.AffectedMilestoneId)
                     issueChanges.Add(new IssueHistory(originalIssue.Id, createdUserName, "Affected Milestone", originalIssue.AffectedMilestoneName, issueToCompare.AffectedMilestoneName));
@@ -113,25 +113,25 @@ namespace BugNET.BLL
                 if (originalIssue.ResolutionId != issueToCompare.ResolutionId)
                     issueChanges.Add(new IssueHistory(originalIssue.Id, createdUserName, "Resolution", originalIssue.ResolutionName, issueToCompare.ResolutionName));
 
-                string newAssignedUserName = String.IsNullOrEmpty(originalIssue.AssignedUserName) ? Globals.UnassignedDisplayText : issueToCompare.AssignedUserName;
+                var newAssignedUserName = String.IsNullOrEmpty(originalIssue.AssignedUserName) ? Globals.UNASSIGNED_DISPLAY_TEXT : issueToCompare.AssignedUserName;
 
                 if ((originalIssue.AssignedUserName != newAssignedUserName))
                 {
                     // if the new assigned user is the unassigned user then don't trigger the new assignee notification
-                    originalIssue.SendNewAssigneeNotification = (newAssignedUserName != Globals.UnassignedDisplayText);
+                    originalIssue.SendNewAssigneeNotification = (newAssignedUserName != Globals.UNASSIGNED_DISPLAY_TEXT);
                     originalIssue.NewAssignee = true;
 
-                    string newAssignedDisplayName = (newAssignedUserName == Globals.UnassignedDisplayText) ? newAssignedUserName :
+                    var newAssignedDisplayName = (newAssignedUserName == Globals.UNASSIGNED_DISPLAY_TEXT) ? newAssignedUserName :
                         UserManager.GetUserDisplayName(newAssignedUserName);
                     issueChanges.Add(new IssueHistory(originalIssue.Id, createdUserName, "Assigned to", originalIssue.AssignedDisplayName, newAssignedDisplayName));
                 }
                 if (originalIssue.OwnerUserName != issueToCompare.OwnerUserName)
                 {
-                    string newOwnerDisplayName = UserManager.GetUserDisplayName(issueToCompare.OwnerUserName);
+                    var newOwnerDisplayName = UserManager.GetUserDisplayName(issueToCompare.OwnerUserName);
                     issueChanges.Add(new IssueHistory(originalIssue.Id, createdUserName, "Owner", originalIssue.OwnerDisplayName, newOwnerDisplayName));
                 }
                 if (originalIssue.Estimation != issueToCompare.Estimation)
-                    issueChanges.Add(new IssueHistory(originalIssue.Id, createdUserName, "Estimation", IssueManager.EstimationToString(originalIssue.Estimation), IssueManager.EstimationToString(issueToCompare.Estimation)));
+                    issueChanges.Add(new IssueHistory(originalIssue.Id, createdUserName, "Estimation", EstimationToString(originalIssue.Estimation), EstimationToString(issueToCompare.Estimation)));
                 if (originalIssue.Visibility != issueToCompare.Visibility)
                     issueChanges.Add(new IssueHistory(originalIssue.Id, createdUserName, "Visibility", originalIssue.Visibility == 0 ? Boolean.FalseString : Boolean.TrueString, issueToCompare.Visibility == 0 ? Boolean.FalseString : Boolean.TrueString));
                 if (originalIssue.DueDate != issueToCompare.DueDate)
@@ -163,21 +163,13 @@ namespace BugNET.BLL
         /// <param name="issueCountList">The issue count list.</param>
         private static List<IssueCount> CalculateIssueCountListPercentage(List<IssueCount> issueCountList)
         {
-            int issueSum = 0;
-
             // calculate the total issues count
-            foreach (IssueCount issueCount in issueCountList)
-            {
-                issueSum += issueCount.Count;
-            }
+            var issueSum = issueCountList.Sum(issueCount => issueCount.Count);
 
             // update each issue percentage
-            foreach (IssueCount issueCount in issueCountList)
+            foreach (var issueCount in issueCountList)
             {
-                if (issueSum != 0)
-                    issueCount.Percentage = Math.Round((decimal)((issueCount.Count * 100) / issueSum));
-                else
-                    issueCount.Percentage = 0;
+                issueCount.Percentage = issueSum != 0 ? Math.Round((decimal)((issueCount.Count * 100) / issueSum)) : 0;
             }
 
             return issueCountList;
@@ -210,7 +202,7 @@ namespace BugNET.BLL
         }
 
         /// <summary>
-        /// Gets the bug status count by project.
+        /// Gets the issue status count by project.
         /// </summary>
         /// <param name="projectId">The project id.</param>
         /// <returns></returns>
@@ -223,7 +215,7 @@ namespace BugNET.BLL
         }
 
         /// <summary>
-        /// Gets the bug version count by project.
+        /// Gets the issue version count by project.
         /// </summary>
         /// <param name="projectId">The project id.</param>
         /// <returns></returns>
@@ -235,7 +227,7 @@ namespace BugNET.BLL
             return CalculateIssueCountListPercentage(DataProviderManager.Provider.GetIssueMilestoneCountByProject(projectId));
         }
         /// <summary>
-        /// Gets the bug priority count by project.
+        /// Gets the issue priority count by project.
         /// </summary>
         /// <param name="projectId">The project id.</param>
         /// <returns></returns>
@@ -247,7 +239,7 @@ namespace BugNET.BLL
             return DataProviderManager.Provider.GetIssuePriorityCountByProject(projectId);
         }
         /// <summary>
-        /// Gets the bug user count by project.
+        /// Gets the issue user count by project.
         /// </summary>
         /// <param name="projectId">The project id.</param>
         /// <returns></returns>
@@ -287,7 +279,7 @@ namespace BugNET.BLL
         }
 
         /// <summary>
-        /// Gets the bug type count by project.
+        /// Gets the issue type count by project.
         /// </summary>
         /// <param name="projectId">The project id.</param>
         /// <returns></returns>
@@ -313,7 +305,7 @@ namespace BugNET.BLL
             return DataProviderManager.Provider.GetIssueCountByProjectAndCategory(projectId, categoryId);
         }
 
-      
+
 
         /// <summary>
         /// Gets the bugs by criteria.
@@ -321,18 +313,18 @@ namespace BugNET.BLL
         /// <param name="projectId">The project id.</param>
         /// <param name="componentId">The component id.</param>
         /// <param name="versionId">The version id.</param>
-        /// <param name="IssueTypeId">The type id.</param>
+        /// <param name="issueTypeId">The type id.</param>
         /// <param name="priorityId">The priority id.</param>
         /// <param name="statusId">The status id.</param>
-        /// <param name="AssignedToUserName">Name of the assigned to user.</param>
+        /// <param name="assignedToUserName">Name of the assigned to user.</param>
         /// <param name="resolutionId">The resolution id.</param>
         /// <param name="keywords">The keywords.</param>
         /// <param name="excludeClosed">if set to <c>true</c> [exclude closed].</param>
         /// <param name="reporterUserName">Name of the reporter user.</param>
         /// <param name="fixedInVersionId">The fixed in version id.</param>
         /// <returns></returns>
-        public static List<Issue> GetIssuesByCriteria(int projectId, int componentId, int versionId, int IssueTypeId,
-                int priorityId, int statusId, string AssignedToUserName,
+        public static List<Issue> GetIssuesByCriteria(int projectId, int componentId, int versionId, int issueTypeId,
+                int priorityId, int statusId, string assignedToUserName,
                 int resolutionId, string keywords, bool excludeClosed, string reporterUserName, int fixedInVersionId)
         {
 
@@ -342,7 +334,7 @@ namespace BugNET.BLL
             //    priorityId, statusId, AssignedToUserName, resolutionId, keywords, excludeClosed,reporterUserName,fixedInVersionId);
         }
 
-        
+
         /// <summary>
         /// Deletes the issue
         /// </summary>
@@ -439,48 +431,43 @@ namespace BugNET.BLL
         /// <summary>
         /// Returns an Issue object, pre-populated with defaults settings.
         /// </summary>
-        /// <param name="projectId">The project id.</param> 
-        /// <param name="AssignedName">The Assigned To username.</param> 
-        /// <param name="OwnerName">The owner and reporter username.</param> 
+        /// <param name="projectId">The project id.</param>
+        /// <param name="title"></param>
+        /// <param name="description"></param>
+        /// <param name="assignedName"></param>
+        /// <param name="ownerName"></param>
         /// <returns></returns>
-        public static Issue GetDefaultIssueByProjectId(int projectId, string Title, string Description, string AssignedName, string OwnerName)
+        public static Issue GetDefaultIssueByProjectId(int projectId, string title, string description, string assignedName, string ownerName)
         {
             if (projectId < DefaultValues.GetProjectIdMinValue())
                 throw new ArgumentOutOfRangeException(string.Format("ProjectID must be {0} or larger.", DefaultValues.GetProjectIdMinValue()));
 
-            Project CurProject = ProjectManager.GetProjectById(projectId);
+            var curProject = ProjectManager.GetProjectById(projectId);
 
-            if (CurProject == null)
+            if (curProject == null)
                 throw new ArgumentException("Project not found for ProjectID.");
 
-            List<Category> Cats = CategoryManager.GetCategoriesByProjectId(projectId);
-            Category defCat = null;
-            List<Status> Statuses = StatusManager.GetStatusByProjectId(projectId);
-            Status defStatus = null;
-            List<Priority> Priorities = PriorityManager.GetPrioritiesByProjectId(projectId);
-            Priority defPriority = null;
-            List<IssueType> IssueTypes = IssueTypeManager.GetIssueTypesByProjectId(projectId);
-            IssueType defIssueType = null;
-            List<Resolution> Resolutions = ResolutionManager.GetResolutionsByProjectId(projectId);
-            Resolution defResolution = null;
-            List<Milestone> AffectedMilestones = MilestoneManager.GetMilestoneByProjectId(projectId);
-            Milestone defAffectedMilestone = null;
-            List<Milestone> Milestones = MilestoneManager.GetMilestoneByProjectId(projectId);
-            Milestone defMilestone = null;
+            var cats = CategoryManager.GetCategoriesByProjectId(projectId);
+            var statuses = StatusManager.GetStatusByProjectId(projectId);
+            var priorities = PriorityManager.GetPrioritiesByProjectId(projectId);
+            var issueTypes = IssueTypeManager.GetIssueTypesByProjectId(projectId);
+            var resolutions = ResolutionManager.GetResolutionsByProjectId(projectId);
+            var affectedMilestones = MilestoneManager.GetMilestoneByProjectId(projectId);
+            var milestones = MilestoneManager.GetMilestoneByProjectId(projectId);
 
             // Select the first one in the list, not really the default intended.
-            defCat = Cats[0];
-            defStatus = Statuses[0];
-            defPriority = Priorities[0];
-            defIssueType = IssueTypes[0];
-            defResolution = Resolutions[0];
-            defAffectedMilestone = AffectedMilestones[0];
-            defMilestone = Milestones[0];
+            var defCat = cats[0];
+            var defStatus = statuses[0];
+            var defPriority = priorities[0];
+            var defIssueType = issueTypes[0];
+            var defResolution = resolutions[0];
+            var defAffectedMilestone = affectedMilestones[0];
+            var defMilestone = milestones[0];
 
             // Now create an issue                
-            Issue iss = new Issue(0, projectId, Title, Description, defCat.Id, defPriority.Id, defStatus.Id,
+            var iss = new Issue(0, projectId, title, description, defCat.Id, defPriority.Id, defStatus.Id,
                 defIssueType.Id, defMilestone.Id, defAffectedMilestone.Id, defResolution.Id,
-                OwnerName, AssignedName, OwnerName, 0, 0, DateTime.MinValue);
+                ownerName, assignedName, ownerName, 0, 0, DateTime.MinValue);
 
             return iss;
         }
@@ -527,11 +514,6 @@ namespace BugNET.BLL
             return DataProviderManager.Provider.PerformSavedQuery(projectId, queryId);
         }
 
-        /// <summary>
-        /// Checks the Issue ID passed in to verify that it exists.
-        /// </summary>
-        /// <param name="issueId">Issue ID to check</param>
-        /// <returns>True if the ID is valid. False otherwise.</returns>
         //public static bool IsValidId(int issueId)
         //{
         //    bool isValid = false;

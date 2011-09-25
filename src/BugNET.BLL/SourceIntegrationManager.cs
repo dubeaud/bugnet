@@ -11,8 +11,8 @@ namespace BugNET.BLL
 {
     public static class SourceIntegrationManager
     {
-        private static Dictionary<int, string> errors = new Dictionary<int, string>();
-        private static readonly ILog Log = LogManager.GetLogger(typeof(SourceIntegrationManager));
+        private static readonly Dictionary<int, string> Errors = new Dictionary<int, string>();
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
         /// Creates the repository.
@@ -23,13 +23,13 @@ namespace BugNET.BLL
         {
             var sb = new StringBuilder();
 
-            string repoPath = HostSettingManager.GetHostSetting("RepositoryRootPath") + repositoryName;
+            var repoPath = HostSettingManager.GetHostSetting("RepositoryRootPath") + repositoryName;
 
-            string repoCheckoutPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) +
+            var repoCheckoutPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) +
                 Path.DirectorySeparatorChar + Guid.NewGuid().ToString();
 
 
-            string repoUrl = new Uri(repoPath).AbsoluteUri;
+            var repoUrl = new Uri(repoPath).AbsoluteUri;
 
             if (!repoUrl.EndsWith("/"))
                 repoUrl += "/";
@@ -53,7 +53,7 @@ namespace BugNET.BLL
                 sb.AppendLine();
 
                 // Add Issue tracker properties
-                string url = HostSettingManager.GetHostSetting("DefaultUrl").Trim();
+                var url = HostSettingManager.GetHostSetting("DefaultUrl").Trim();
                 if (!url.EndsWith("/"))
                     url += "/";
 
@@ -117,6 +117,9 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="projectId"></param>
         /// <param name="tagName"></param>
+        /// <param name="comment"></param>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
         /// <returns></returns>
         public static string CreateTag(int projectId, string tagName, string comment, string userName, string password)
         {
@@ -129,11 +132,9 @@ namespace BugNET.BLL
 
             try
             {
-                string arguments;
-                if(!string.IsNullOrEmpty(userName))
-                    arguments = string.Format("--non-interactive copy \"{0}trunk\" \"{0}tags/{1}\" --username {2} --password {3} -m \"{4}\"", repoUrl, tagName, userName, password, comment);
-                else
-                    arguments = string.Format("--non-interactive copy \"{0}trunk\" \"{0}tags/{1}\" -m \"{2}\"", repoUrl, tagName, comment);
+                var arguments = !string.IsNullOrEmpty(userName) 
+                    ? string.Format("--non-interactive copy \"{0}trunk\" \"{0}tags/{1}\" --username {2} --password {3} -m \"{4}\"", repoUrl, tagName, userName, password, comment) 
+                    : string.Format("--non-interactive copy \"{0}trunk\" \"{0}tags/{1}\" -m \"{2}\"", repoUrl, tagName, comment);
 
                 return RunCommand("svn", arguments);
             }
@@ -172,18 +173,6 @@ namespace BugNET.BLL
             Directory.Delete(path);
         }
 
-        /// <summary>
-        /// Runs a separate process and returns the standard out and error text. This is intended for command line apps only.
-        /// If the process does not end in 5minutes it will be killed.
-        /// </summary>
-        /// <param name="command"></param>
-        /// <param name="args"></param>
-        /// <returns></returns>
-        private static string RunCommand(string command, string args)
-        {
-            return RunCommand(command, args, 300);
-        }
-
 
         /// <summary>
         /// Runs a seperate process and returns the standard outout and error text. This is intended for command line apps only.
@@ -192,37 +181,38 @@ namespace BugNET.BLL
         /// <param name="args"></param>
         /// <param name="killAfterSeconds"></param>
         /// <returns></returns>
-        private static string RunCommand(string command, string args, int killAfterSeconds)
+        private static string RunCommand(string command, string args, int killAfterSeconds = 300)
         {
             Process proc = null;
 
             try
             {
-                var startInfo = new ProcessStartInfo(command, args);
-                startInfo.CreateNoWindow = true;
-                startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                startInfo.UseShellExecute = false;
-                startInfo.RedirectStandardOutput = true;
-                startInfo.RedirectStandardError = true;
+                var startInfo = new ProcessStartInfo(command, args)
+                    {
+                        CreateNoWindow = true,
+                        WindowStyle = ProcessWindowStyle.Hidden,
+                        UseShellExecute = false,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true
+                    };
 
-                proc = new Process();
-                proc.StartInfo = startInfo;
-                proc.ErrorDataReceived += new DataReceivedEventHandler(CommandProcess_ErrorDataReceived);
+                proc = new Process {StartInfo = startInfo};
+                proc.ErrorDataReceived += CommandProcessErrorDataReceived;
                 proc.Start();
 
                 proc.BeginErrorReadLine();
 
-                string retVal = proc.StandardOutput.ReadToEnd();
+                var retVal = proc.StandardOutput.ReadToEnd();
 
                 if (!proc.WaitForExit(killAfterSeconds * 1000))
                     proc.Kill();
 
-                if (errors.ContainsKey(proc.Id))
-                    retVal += Environment.NewLine + "Error: " + Environment.NewLine + errors[proc.Id];
+                if (Errors.ContainsKey(proc.Id))
+                    retVal += Environment.NewLine + "Error: " + Environment.NewLine + Errors[proc.Id];
 
                 // hide password from being displayed
-                Regex RegexObj = new Regex("--password\\s+\\S+\\s", RegexOptions.IgnoreCase);
-                args = RegexObj.Replace(args, "--password **** ");
+                var regexObj = new Regex("--password\\s+\\S+\\s", RegexOptions.IgnoreCase);
+                args = regexObj.Replace(args, "--password **** ");
 
                 return command + " " + args + Environment.NewLine + retVal;
                 
@@ -231,8 +221,8 @@ namespace BugNET.BLL
             {
                 if (proc != null)
                 {
-                    if (errors.ContainsKey(proc.Id))
-                        errors.Remove(proc.Id);
+                    if (Errors.ContainsKey(proc.Id))
+                        Errors.Remove(proc.Id);
 
                     proc.Dispose();
                 }
@@ -246,7 +236,7 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        static void CommandProcess_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+        static void CommandProcessErrorDataReceived(object sender, DataReceivedEventArgs e)
         {
             // RC: Sometimes an error occurres in hear. I think the process is ending while we are getting the data, but Im not sure.
             // I'm stuffing it for now.
@@ -254,18 +244,21 @@ namespace BugNET.BLL
             {
                 if (sender != null)
                 {
-                    if (e.Data != null && e.Data.Length > 0)
+                    if (!string.IsNullOrEmpty(e.Data))
                     {
-                        int id = ((Process)sender).Id;
+                        var id = ((Process)sender).Id;
 
-                        if (errors.ContainsKey(id))
-                            errors[id] += Environment.NewLine + e.Data;
+                        if (Errors.ContainsKey(id))
+                            Errors[id] += Environment.NewLine + e.Data;
                         else
-                            errors.Add(id, e.Data);
+                            Errors.Add(id, e.Data);
                     }
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message, ex);
+            }
         }
     }
 }

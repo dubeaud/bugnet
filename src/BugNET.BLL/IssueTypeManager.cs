@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using BugNET.Common;
 using BugNET.DAL;
 using BugNET.Entities;
+using log4net;
 
 namespace BugNET.BLL
 {
-    public class IssueTypeManager
+    public static class IssueTypeManager
     {
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         #region Static Methods
         /// <summary>
         /// Saves this instance.
@@ -15,36 +18,29 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool SaveIssueType(IssueType issueTypeToSave)
         {
-
-            if (issueTypeToSave.Id <= Globals.NewId)
-            {
-
-                int TempId = DataProviderManager.Provider.CreateNewIssueType(issueTypeToSave);
-                if (TempId > 0)
-                {
-                    issueTypeToSave.Id = TempId;
-                    return true;
-                }
-                else
-                    return false;
-            }
-            else
+            if (issueTypeToSave.Id > Globals.NEW_ID)
             {
                 return DataProviderManager.Provider.UpdateIssueType(issueTypeToSave);
             }
 
+            var tempId = DataProviderManager.Provider.CreateNewIssueType(issueTypeToSave);
+
+            if (tempId <= 0)
+                return false;
+
+            issueTypeToSave.Id = tempId;
+            return true;
         }
 
 
-    
         /// <summary>
         /// Gets the IssueType by id.
         /// </summary>
-        /// <param name="IssueTypeId">The IssueType id.</param>
+        /// <param name="issueTypeId">The IssueType id.</param>
         /// <returns></returns>
         public static IssueType GetIssueTypeById(int issueTypeId)
         {
-            if (issueTypeId <= Globals.NewId)
+            if (issueTypeId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("issueTypeId"));
 
             return DataProviderManager.Provider.GetIssueTypeById(issueTypeId);
@@ -57,7 +53,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool DeleteIssueType(int issueTypeId)
         {
-            if (issueTypeId <= Globals.NewId)
+            if (issueTypeId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("issueTypeId"));
 
             return DataProviderManager.Provider.DeleteIssueType(issueTypeId);
@@ -70,7 +66,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<IssueType> GetIssueTypesByProjectId(int projectId)
         {
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("projectId"));
 
             return DataProviderManager.Provider.GetIssueTypesByProjectId(projectId);
@@ -82,16 +78,17 @@ namespace BugNET.BLL
         /// 
         /// Performs a query containing any number of query clauses on a certain projectID
         /// </summary>
-        /// <param name="issueId"></param>
-        /// <param name="QueryClauses"></param>
+        /// <param name="projectId"></param>
+        /// <param name="queryClauses"></param>
         /// <returns></returns>
-        public static List<IssueType> PerformQuery(int projectID, List<QueryClause> QueryClauses)
+        public static List<IssueType> PerformQuery(int projectId, List<QueryClause> queryClauses)
         {
-            if (projectID < 0)
-                throw new ArgumentOutOfRangeException("projectID must be bigger than 0");
-            QueryClauses.Add(new QueryClause("AND", "ProjectID", "=", projectID.ToString(), System.Data.SqlDbType.Int, false));
+            if (projectId < 0)
+                throw new ArgumentOutOfRangeException("projectId", "projectI d must be bigger than 0");
 
-            return PerformQuery(QueryClauses);
+            queryClauses.Add(new QueryClause("AND", "ProjectID", "=", projectId.ToString(), System.Data.SqlDbType.Int, false));
+
+            return PerformQuery(queryClauses);
         }
 
         /// <summary>
@@ -102,22 +99,18 @@ namespace BugNET.BLL
         /// WARNING! Will expose the entire IssueType table, regardless of 
         /// project level privledges. (thats why its private for now)
         /// </summary>        
-        /// <param name="QueryClauses"></param>
+        /// <param name="queryClauses"></param>
         /// <returns></returns>
-        private static List<IssueType> PerformQuery(List<QueryClause> QueryClauses)
+        private static List<IssueType> PerformQuery(List<QueryClause> queryClauses)
         {
-            if (QueryClauses == null)
-                throw new ArgumentNullException("QueryClauses");
+            if (queryClauses == null)
+                throw new ArgumentNullException("queryClauses");
 
-            List<IssueType> lst = new List<IssueType>();
-            DataProviderManager.Provider.PerformGenericQuery<IssueType>(ref lst, QueryClauses, @"SELECT a.*, b.ProjectName as ProjectName from BugNet_ProjectIssueTypes as a, BugNet_Projects as b  WHERE a.ProjectID=b.ProjectID ", @" ORDER BY a.ProjectID, a.IssueTypeID ASC");
+            var lst = new List<IssueType>();
+            DataProviderManager.Provider.PerformGenericQuery<IssueType>(ref lst, queryClauses, @"SELECT a.*, b.ProjectName as ProjectName from BugNet_ProjectIssueTypes as a, BugNet_Projects as b  WHERE a.ProjectID=b.ProjectID ", @" ORDER BY a.ProjectID, a.IssueTypeID ASC");
 
             return lst;
         }
-
-
-
-
 
         #endregion
     }

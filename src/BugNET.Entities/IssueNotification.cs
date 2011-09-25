@@ -35,7 +35,7 @@ namespace BugNET.Entities
         /// <param name="issueId">The bug id.</param>
         /// <param name="notificationUsername">The notification username.</param>
         public IssueNotification(int issueId, string notificationUsername) :
-            this(Globals.NewId, issueId, notificationUsername, string.Empty, string.Empty) { }
+            this(Globals.NEW_ID, issueId, notificationUsername, string.Empty, string.Empty) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:IssueNotification"/> class.

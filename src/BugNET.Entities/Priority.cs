@@ -24,7 +24,7 @@ namespace BugNET.Entities
             /// <param name="projectId">The project id.</param>
             /// <param name="name">The name.</param>
             public Priority(int projectId, string name)
-                : this(Globals.NewId, projectId, name,-1, string.Empty)
+                : this(Globals.NEW_ID, projectId, name,-1, string.Empty)
             { }
 
             /// <summary>
@@ -34,7 +34,7 @@ namespace BugNET.Entities
             /// <param name="name">The name.</param>
             /// <param name="imageUrl">The image URL.</param>
             public Priority(int projectId, string name, string imageUrl)
-                : this(Globals.NewId, projectId, name,-1, imageUrl)
+                : this(Globals.NEW_ID, projectId, name,-1, imageUrl)
             { }
 
             /// <summary>
@@ -46,7 +46,7 @@ namespace BugNET.Entities
             /// <param name="imageUrl">The image URL.</param>
             public Priority(int id, int projectId, string name,int sortOrder, string imageUrl)
             {
-                if (projectId <= Globals.NewId)
+                if (projectId <= Globals.NEW_ID)
                     throw (new ArgumentOutOfRangeException("projectId"));
 
                 if (name == null || name.Length == 0)
@@ -80,7 +80,7 @@ namespace BugNET.Entities
                 get { return _ProjectId; }
                 set
                 {
-                    if (value <= Globals.NewId)
+                    if (value <= Globals.NEW_ID)
                         throw new ArgumentOutOfRangeException("value");
 
                     _ProjectId = value;

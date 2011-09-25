@@ -10,8 +10,8 @@ namespace BugNET.DAL
     public class DataProviderManager
     {
 
-        private static DataProvider defaultProvider;
-        private static DataProviderCollection providers;
+        private static DataProvider _defaultProvider;
+        private static DataProviderCollection _providers;
 
         /// <summary>
         /// Initializes the <see cref="DataProviderManager"/> class.
@@ -26,22 +26,25 @@ namespace BugNET.DAL
         /// </summary>
         private static void Initialize()
         {
-            DataProviderConfiguration configuration = (DataProviderConfiguration)ConfigurationManager.GetSection("DataProvider");
+            var configuration = (DataProviderConfiguration)ConfigurationManager.GetSection("DataProvider");
 
             if (configuration == null || configuration.DefaultProvider == null || configuration.Providers == null || configuration.Providers.Count < 1)
                 throw new ProviderException("You must specify a valid default data provider.");           
 
-            providers = new DataProviderCollection();
-            ProvidersHelper.InstantiateProviders(configuration.Providers, providers, typeof(DataProvider));
-            providers.SetReadOnly();
-            defaultProvider = providers[configuration.DefaultProvider];
+            _providers = new DataProviderCollection();
+            ProvidersHelper.InstantiateProviders(configuration.Providers, _providers, typeof(DataProvider));
+            _providers.SetReadOnly();
+            _defaultProvider = _providers[configuration.DefaultProvider];
 
-            if (defaultProvider == null)
+            if (_defaultProvider == null)
             {
-                throw new ConfigurationErrorsException(
-                    "You must specify a default provider for the feature.",
-                    configuration.ElementInformation.Properties["defaultProvider"].Source,
-                    configuration.ElementInformation.Properties["defaultProvider"].LineNumber);
+                var propertyInformation = configuration.ElementInformation.Properties["defaultProvider"];
+
+                if (propertyInformation != null)
+                    throw new ConfigurationErrorsException(
+                        "You must specify a default provider for the feature.",
+                        propertyInformation.Source,
+                        propertyInformation.LineNumber);
             }
         }
 
@@ -53,7 +56,7 @@ namespace BugNET.DAL
         {
             get
             {
-                return defaultProvider;
+                return _defaultProvider;
             }
         }
 
@@ -65,7 +68,7 @@ namespace BugNET.DAL
         {
             get
             {
-                return providers;
+                return _providers;
             }
         }  
     }

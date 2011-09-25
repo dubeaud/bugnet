@@ -17,13 +17,13 @@ namespace BugNET.Administration
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!UserManager.IsInRole(Globals.SuperUserRole) && !UserManager.IsInRole(Globals.ProjectAdminRole))
+            if (!UserManager.IsInRole(Globals.SUPER_USER_ROLE) && !UserManager.IsInRole(Globals.ProjectAdminRole))
                 Response.Redirect("~/Errors/AccessDenied.aspx");
 
             if (!Page.IsPostBack)
             {
                 //hide log viewer and host settings for non superusers
-                if (!UserManager.IsInRole(Globals.SuperUserRole))
+                if (!UserManager.IsInRole(Globals.SUPER_USER_ROLE))
                 {
                     lnkConfiguration.Visible = false;
                     Image4.Visible = false;

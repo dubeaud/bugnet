@@ -10,11 +10,14 @@ using System.Collections.Generic;
 using System.Web.Security;
 using BugNET.Common;
 using BugNET.DAL;
+using log4net;
 
 namespace BugNET.BLL
 {
-    public class UpgradeManager
+    public static class UpgradeManager
     {
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         /// <summary>
         /// Executes the statements.
         /// </summary>
@@ -38,45 +41,51 @@ namespace BugNET.BLL
         /// <returns>[true] if successful</returns>
         public static bool MigrateUsers()
         {
-            SqlConnection conn = new SqlConnection(WebConfigurationManager.ConnectionStrings[0].ConnectionString);
             try
             {
-                SqlCommand command = new SqlCommand("SELECT * FROM Users", conn);
-                conn.Open();
-                SqlDataReader dr = command.ExecuteReader();
-
-                while (dr.Read())
+                using(var conn = new SqlConnection(WebConfigurationManager.ConnectionStrings[0].ConnectionString))
                 {
-                    MembershipUser NewUser;
-                    //create new membership user 
-                    if ((string)dr["UserName"] == "Admin")
+                    using(var command = new SqlCommand("SELECT * FROM Users", conn))
                     {
-                        NewUser = Membership.CreateUser((string)dr["UserName"], (string)dr["Password"], (string)dr["Email"]);
-                    }
-                    else
-                    {
-                        string password = (string)dr["Password"];
-                        if (password.Length < 7)
-                        {
-                            password = Membership.GeneratePassword(7, 0);
-                        }
-                        NewUser = Membership.CreateUser((string)dr["UserName"], password, (string)dr["Email"]);
-                    }
+                        conn.Open();
 
-                    if (NewUser != null)
-                    {
-                        if (dr["Active"].ToString() == "0")
+                        using(var dr = command.ExecuteReader())
                         {
-                            NewUser.IsApproved = false;
+                            while (dr.Read())
+                            {
+                                MembershipUser newUser;
+                                //create new membership user 
+                                if ((string)dr["UserName"] == "Admin")
+                                {
+                                    newUser = Membership.CreateUser((string)dr["UserName"], (string)dr["Password"], (string)dr["Email"]);
+                                }
+                                else
+                                {
+                                    var password = (string)dr["Password"];
+                                    if (password.Length < 7)
+                                    {
+                                        password = Membership.GeneratePassword(7, 0);
+                                    }
+                                    newUser = Membership.CreateUser((string)dr["UserName"], password, (string)dr["Email"]);
+                                }
+
+                                if (dr["Active"].ToString() == "0")
+                                {
+                                    newUser.IsApproved = false;
+                                }
+                            }
                         }
                     }
                 }
+
                 return true;
             }
-            finally
+            catch (Exception ex)
             {
-                conn.Close();
+
             }
+
+            return false;
         }
 
         /// <summary>
@@ -95,27 +104,33 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static string UpdateMachineKey()
         {
-            HttpContext context = HttpContext.Current;
-            string backupFolder = Globals.ConfigFolder + "Backup_" + DateTime.Now.ToString("yyyymmddhhmm") + "\\";
-            string strError = "";
+            var context = HttpContext.Current;
+            var backupFolder = Globals.CONFIG_FOLDER + "Backup_" + DateTime.Now.ToString("yyyymmddhhmm") + "\\";
+            var strError = "";
+
             try
             {
                 if (!(Directory.Exists(context.Server.MapPath("~") + backupFolder)))
                 {
                     Directory.CreateDirectory(context.Server.MapPath("~") + backupFolder);
                 }
+
                 if (File.Exists(context.Server.MapPath("~") + "\\web.config"))
                 {
                     File.Copy(context.Server.MapPath("~") + "\\web.config", context.Server.MapPath("~") + backupFolder + "web_old.config", true);
                 }
 
+                var config = WebConfigurationManager.OpenWebConfiguration("~");
+                var webSection = (SystemWebSectionGroup)config.GetSectionGroup("system.web");
 
-                Configuration config = WebConfigurationManager.OpenWebConfiguration("~");
-                SystemWebSectionGroup WebSection = (SystemWebSectionGroup)config.GetSectionGroup("system.web");
-                WebSection.MachineKey.ValidationKey = GenRandomValues(128);
-                WebSection.MachineKey.DecryptionKey = GenRandomValues(64);
+                if (webSection != null)
+                {
+                    webSection.MachineKey.ValidationKey = GenRandomValues(128);
+                    webSection.MachineKey.DecryptionKey = GenRandomValues(64);
+                }
 
                 config.AppSettings.Settings.Add("InstallationDate", DateTime.Today.ToShortDateString());
+
                 //save
                 config.Save(ConfigurationSaveMode.Full);
 
@@ -134,12 +149,12 @@ namespace BugNET.BLL
         /// <returns></returns>
         private static string GenRandomValues(int len)
         {
-            byte[] buff = new byte[len / 2];
-            RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
+            var buff = new byte[len / 2];
+            var rng = new RNGCryptoServiceProvider();
             rng.GetBytes(buff);
-            StringBuilder sb = new StringBuilder(len);
-            for (int i = 0; i < buff.Length; i++)
-                sb.Append(string.Format("{0:X2}", buff[i]));
+            var sb = new StringBuilder(len);
+            foreach (var t in buff)
+                sb.Append(string.Format("{0:X2}", t));
 
             return sb.ToString();
         }
@@ -169,10 +184,7 @@ namespace BugNET.BLL
                 return Globals.UpgradeStatus.Authenticated;
 
             // Now test for upgrade.
-            if (DataProviderManager.Provider.GetDatabaseVersion() != UpgradeManager.GetCurrentVersion())
-                return Globals.UpgradeStatus.Upgrade;
-
-            return Globals.UpgradeStatus.None;
+            return DataProviderManager.Provider.GetDatabaseVersion() != GetCurrentVersion() ? Globals.UpgradeStatus.Upgrade : Globals.UpgradeStatus.None;
         }
 
         /// <summary>
@@ -185,12 +197,12 @@ namespace BugNET.BLL
         }
 
         /// <summary>
-        /// Gets the bug net version from the currently running assembly.
+        /// Gets the BugNET version from the currently running assembly.
         /// </summary>
         /// <returns></returns>
         public static string GetCurrentVersion()
         {
-            return String.Format("{0}", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            return String.Format("{0}", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
 
         }
 
@@ -200,11 +212,7 @@ namespace BugNET.BLL
         /// <returns>True is BugNET is installed</returns>
         public static bool IsInstalled()
         {
-            if (UpgradeManager.GetUpgradeStatus() == Globals.UpgradeStatus.Install)
-                return false;
-
-            return true;
-
+            return GetUpgradeStatus() != Globals.UpgradeStatus.Install;
         }
     }
 }

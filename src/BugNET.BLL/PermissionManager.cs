@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
 using BugNET.DAL;
 using BugNET.Entities;
+using log4net;
 
 namespace BugNET.BLL
 {
-    public class PermissionManager
+    public static class PermissionManager
     {
-        #region Static Methods
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        #region Static Methods
 
         /// <summary>
         /// Gets all permissions.
@@ -17,6 +19,7 @@ namespace BugNET.BLL
         {
             return DataProviderManager.Provider.GetAllPermissions();
         }
+
         #endregion
     }
 }

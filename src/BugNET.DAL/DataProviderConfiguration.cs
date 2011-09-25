@@ -6,7 +6,6 @@ namespace BugNET.DAL
     /// 
     /// </summary>
     /// <example>
-    /// <?xml version="1.0"?>
     /// <configuration>
     ///    <configSections>
     ///      <section name="DataProvider" 

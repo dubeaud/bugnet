@@ -95,7 +95,7 @@ namespace BugNET.Webservices
             if (c != null)
             {
                 string UserName = Thread.CurrentPrincipal.Identity.Name;
-                if (!UserManager.IsInRole(UserName, c.ProjectId, Globals.ProjectAdminRole) && !UserManager.IsInRole(UserName, 0, Globals.SuperUserRole))
+                if (!UserManager.IsInRole(UserName, c.ProjectId, Globals.ProjectAdminRole) && !UserManager.IsInRole(UserName, 0, Globals.SUPER_USER_ROLE))
                     throw new UnauthorizedAccessException(LoggingManager.GetErrorMessageResource("AccessDenied"));
 
                 c.Name = name;
@@ -127,7 +127,7 @@ namespace BugNET.Webservices
             {
                 string UserName = Thread.CurrentPrincipal.Identity.Name;
 
-                if (!UserManager.IsInRole(UserName, c.ProjectId, Globals.ProjectAdminRole) && !UserManager.IsInRole(UserName, 0, Globals.SuperUserRole))
+                if (!UserManager.IsInRole(UserName, c.ProjectId, Globals.ProjectAdminRole) && !UserManager.IsInRole(UserName, 0, Globals.SUPER_USER_ROLE))
                     throw new UnauthorizedAccessException(LoggingManager.GetErrorMessageResource("AccessDenied"));
 
                 c.ParentCategoryId = Convert.ToInt32(newParentId);
@@ -220,7 +220,7 @@ namespace BugNET.Webservices
 
             string UserName = Thread.CurrentPrincipal.Identity.Name; 
 
-            if (!UserManager.IsInRole(UserName, Convert.ToInt32(projectId), Globals.ProjectAdminRole) && !UserManager.IsInRole(UserName, 0, Globals.SuperUserRole))
+            if (!UserManager.IsInRole(UserName, Convert.ToInt32(projectId), Globals.ProjectAdminRole) && !UserManager.IsInRole(UserName, 0, Globals.SUPER_USER_ROLE))
                 throw new UnauthorizedAccessException(LoggingManager.GetErrorMessageResource("AccessDenied"));
 
             Category c = new Category(Convert.ToInt32(projectId),Convert.ToInt32(parentCategoryId), name,0);
@@ -244,7 +244,7 @@ namespace BugNET.Webservices
             {
                 string UserName = Thread.CurrentPrincipal.Identity.Name;
 
-                if (!UserManager.IsInRole(UserName, c.ProjectId, Globals.ProjectAdminRole) && !UserManager.IsInRole(UserName, 0, Globals.SuperUserRole))
+                if (!UserManager.IsInRole(UserName, c.ProjectId, Globals.ProjectAdminRole) && !UserManager.IsInRole(UserName, 0, Globals.SUPER_USER_ROLE))
                     throw new UnauthorizedAccessException(LoggingManager.GetErrorMessageResource("AccessDenied"));
 
                 if (c.ChildCount > 0)

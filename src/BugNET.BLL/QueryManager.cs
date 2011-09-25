@@ -3,27 +3,31 @@ using System.Collections.Generic;
 using BugNET.Common;
 using BugNET.DAL;
 using BugNET.Entities;
+using log4net;
 
 namespace BugNET.BLL
 {
-    public class QueryManager
+    public static class QueryManager
     {
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         /// <summary>
         /// Saves the query.
         /// </summary>
         /// <param name="username">The username.</param>
         /// <param name="projectId">The project id.</param>
         /// <param name="queryName">Name of the query.</param>
+        /// <param name="isPublic"></param>
         /// <param name="queryClauses">The query clauses.</param>
         /// <returns></returns>
         public static bool SaveQuery(string username, int projectId, string queryName, bool isPublic, List<QueryClause> queryClauses)
         {
             //if username is null then query is global for all users on a project
 
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw new ArgumentOutOfRangeException("projectId");
 
-            if (queryName == null || queryName.Length == 0)
+            if (string.IsNullOrEmpty(queryName))
                 throw new ArgumentOutOfRangeException("queryName");
 
             if (queryClauses.Count == 0)
@@ -47,10 +51,10 @@ namespace BugNET.BLL
             if (queryId <= 0)
                 throw new ArgumentOutOfRangeException("queryId");
 
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw new ArgumentOutOfRangeException("projectId");
 
-            if (queryName == null || queryName.Length == 0)
+            if (string.IsNullOrEmpty(queryName))
                 throw new ArgumentOutOfRangeException("queryName");
 
             if (queryClauses.Count == 0)
@@ -66,7 +70,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool DeleteQuery(int queryId)
         {
-            if (queryId <= Globals.NewId)
+            if (queryId <= Globals.NEW_ID)
                 throw new ArgumentOutOfRangeException("queryId");
 
             return DataProviderManager.Provider.DeleteQuery(queryId);
@@ -90,7 +94,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<Query> GetQueriesByUsername(string username, int projectId)
         {
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw new ArgumentOutOfRangeException("projectId");
 
             return DataProviderManager.Provider.GetQueriesByUserName(username, projectId);

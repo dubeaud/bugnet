@@ -30,7 +30,7 @@ namespace BugNET.Account
 
                 BulletedList4.Items[0].Attributes.Add("class", "on");
 
-                List<string> resources = ResourceManager.GetInstalledLanguageResources();
+                IEnumerable<string> resources = ResourceManager.GetInstalledLanguageResources();
                 List<ListItem> resourceItems = new List<ListItem>();
                 foreach(string code in resources)
                 {

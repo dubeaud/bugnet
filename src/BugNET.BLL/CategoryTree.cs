@@ -1,7 +1,8 @@
 using System;
-
+using System.Linq;
 using BugNET.Entities;
 using System.Collections.Generic;
+using log4net;
 
 namespace BugNET.BLL
 {
@@ -10,16 +11,11 @@ namespace BugNET.BLL
 	/// </summary>
 	public class CategoryTree
 	{
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:CategoryTree"/> class.
-        /// </summary>
-		public CategoryTree()
-		{}
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-		private int _CompIndent = 1;
-        private List<Category> _UnSortedCats;
-		private List<Category> _SortedCats;
-
+	    private int _compIndent = 1;
+        private List<Category> _unSortedCats;
+		private List<Category> _sortedCats;
 
         /// <summary>
         /// Gets the component tree by project id.
@@ -29,14 +25,14 @@ namespace BugNET.BLL
 		public List<Category> GetCategoryTreeByProjectId(int projectId) 
 		{
   
-            _SortedCats = new List<Category>();
-			_UnSortedCats = CategoryManager.GetCategoriesByProjectId(projectId);
-			foreach(Category parentCat in GetTopLevelCategories() ) 
+            _sortedCats = new List<Category>();
+			_unSortedCats = CategoryManager.GetCategoriesByProjectId(projectId);
+			foreach(var parentCat in GetTopLevelCategories() ) 
 			{
-				_SortedCats.Add( parentCat );
+				_sortedCats.Add( parentCat );
 				BindSubCategories(parentCat.Id);
 			}
-			return _SortedCats;
+			return _sortedCats;
 		}
 
 
@@ -46,12 +42,12 @@ namespace BugNET.BLL
         /// <param name="parentId">The parent id.</param>
 		void BindSubCategories(int parentId) 
 		{
-			foreach(Category childCat in GetChildCategories(parentId) ) 
+			foreach(var childCat in GetChildCategories(parentId) ) 
 			{
-				_SortedCats.Add( new Category( DisplayIndent() + childCat.Name, childCat.Id ) );
-				_CompIndent ++;
+				_sortedCats.Add( new Category( DisplayIndent() + childCat.Name, childCat.Id ) );
+				_compIndent ++;
 				BindSubCategories(childCat.Id);
-				_CompIndent --;
+				_compIndent --;
 			}
 		}
 
@@ -59,36 +55,28 @@ namespace BugNET.BLL
         /// Gets the top level categories.
         /// </summary>
         /// <returns></returns>
-		List<Category> GetTopLevelCategories() 
-		{
-            List<Category> colCats = new List<Category>();
-			foreach (Category cat in _UnSortedCats)
-				if (cat.ParentCategoryId == 0)
-					colCats.Add(cat);
-			return colCats;
-		}
+		IEnumerable<Category> GetTopLevelCategories()
+        {
+            return _unSortedCats.Where(cat => cat.ParentCategoryId == 0).ToList();
+        }
 
-        /// <summary>
+	    /// <summary>
         /// Gets the child categories.
         /// </summary>
         /// <param name="parentId">The parent id.</param>
         /// <returns></returns>
-        List<Category> GetChildCategories(int parentId) 
-		{
-            List<Category> colCats = new List<Category>();
-			foreach (Category cat in _UnSortedCats)
-				if (cat.ParentCategoryId == parentId)
-					colCats.Add(cat);
-			return colCats;
-		}
+        IEnumerable<Category> GetChildCategories(int parentId)
+	    {
+	        return _unSortedCats.Where(cat => cat.ParentCategoryId == parentId).ToList();
+	    }
 
-        /// <summary>
+	    /// <summary>
         /// Displays the indent.
         /// </summary>
         /// <returns></returns>
 		string DisplayIndent() 
 		{     
-		    return new String('-', _CompIndent) + " ";     
+		    return new String('-', _compIndent) + " ";     
 		}
 
 	}

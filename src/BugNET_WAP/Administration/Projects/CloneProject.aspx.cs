@@ -14,7 +14,7 @@ namespace BugNET.Administration.Projects
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!UserManager.HasPermission(Convert.ToInt32(Request.QueryString["id"]), Globals.Permission.ADMIN_CLONE_PROJECT.ToString()))
+            if (!UserManager.HasPermission(Convert.ToInt32(Request.QueryString["id"]), Globals.Permission.AdminCloneProject.ToString()))
                 Response.Redirect("~/Errors/AccessDenied.aspx");
 
             if (!IsPostBack)

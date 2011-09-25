@@ -287,7 +287,7 @@ namespace BugNET.Providers.DataProviders
         /// <returns></returns>
         public override bool DeleteIssue(int issueId)
         {
-            if (issueId <= Globals.NewId)
+            if (issueId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("ssueId"));
             try
             {
@@ -459,15 +459,15 @@ namespace BugNET.Providers.DataProviders
         /// <param name="projectId">The project id.</param>
         /// <param name="assignedUserName">Name of the assigned user.</param>
         /// <returns></returns>
-        public override System.Collections.Generic.List<Issue> GetIssuesByAssignedUserName(int projectId, string userName)
+        public override System.Collections.Generic.List<Issue> GetIssuesByAssignedUserName(int projectId, string assignedUserName)
         {
-            if (userName == null)
-                throw (new ArgumentNullException("userName"));
+            if (assignedUserName == null)
+                throw (new ArgumentNullException("assignedUserName"));
             if (projectId <= 0)
                 throw (new ArgumentOutOfRangeException("projectId"));
 
             SqlCommand sqlCmd = new SqlCommand();
-            AddParamToSQLCmd(sqlCmd, "@UserName", SqlDbType.NVarChar, 255, ParameterDirection.Input, userName);
+            AddParamToSQLCmd(sqlCmd, "@UserName", SqlDbType.NVarChar, 255, ParameterDirection.Input, assignedUserName);
             AddParamToSQLCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETISSUESBYASSIGNEDUSERNAME);
 
@@ -908,7 +908,7 @@ namespace BugNET.Providers.DataProviders
         public override bool DeleteIssueNotification(int issueId, string userName)
         {
             // Validate Parameters
-            if (issueId <= Globals.NewId)
+            if (issueId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("issueId"));
             if (userName == String.Empty)
                 throw (new ArgumentOutOfRangeException("userName"));
@@ -1209,7 +1209,7 @@ namespace BugNET.Providers.DataProviders
         {
             if (string.IsNullOrEmpty(roleName))
                 throw new ArgumentNullException("roleName");
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw new ArgumentOutOfRangeException("projectId");
 
             try
@@ -1257,7 +1257,7 @@ namespace BugNET.Providers.DataProviders
         /// <returns></returns>
         public override bool RemoveUserFromRole(string userName, int roleId)
         {
-            if (roleId <= Globals.NewId)
+            if (roleId <= Globals.NEW_ID)
                 throw (new ArgumentNullException("roleId"));
             if (string.IsNullOrEmpty(userName))
                 throw (new ArgumentNullException("userName"));
@@ -1283,7 +1283,7 @@ namespace BugNET.Providers.DataProviders
         /// <returns></returns>
         public override bool AddUserToRole(string userName, int roleId)
         {
-            if (roleId <= Globals.NewId)
+            if (roleId <= Globals.NEW_ID)
                 throw (new ArgumentNullException("roleId"));
             if (string.IsNullOrEmpty(userName))
                 throw (new ArgumentNullException("userName"));
@@ -1313,7 +1313,7 @@ namespace BugNET.Providers.DataProviders
         /// <returns></returns>
         public override bool DeleteRole(int roleId)
         {
-            if (roleId <= Globals.NewId)
+            if (roleId <= Globals.NEW_ID)
                 throw (new ArgumentNullException("roleId"));
 
             try
@@ -1340,7 +1340,7 @@ namespace BugNET.Providers.DataProviders
         /// <returns></returns>
         public override Role GetRoleById(int roleId)
         {
-            if (roleId <= Globals.NewId)
+            if (roleId <= Globals.NEW_ID)
                 throw (new ArgumentNullException("roleId"));
 
             try
@@ -1450,7 +1450,7 @@ namespace BugNET.Providers.DataProviders
         /// <returns></returns>
         public override System.Collections.Generic.List<Permission> GetPermissionsByRoleId(int roleId)
         {
-            if (roleId <= Globals.NewId)
+            if (roleId <= Globals.NEW_ID)
                 throw (new ArgumentNullException("roleId"));
 
             try
@@ -1476,9 +1476,9 @@ namespace BugNET.Providers.DataProviders
         /// <returns></returns>
         public override bool DeletePermission(int roleId, int permissionId)
         {
-            if (roleId <= Globals.NewId)
+            if (roleId <= Globals.NEW_ID)
                 throw (new ArgumentNullException("roleId"));
-            if (permissionId <= Globals.NewId)
+            if (permissionId <= Globals.NEW_ID)
                 throw (new ArgumentNullException("permissionId"));
             try
             {
@@ -1509,9 +1509,9 @@ namespace BugNET.Providers.DataProviders
         public override bool AddPermission(int roleId, int permissionId)
         {
             // Validate Parameters
-            if (roleId <= Globals.NewId)
+            if (roleId <= Globals.NEW_ID)
                 throw (new ArgumentNullException("roleId"));
-            if (permissionId <= Globals.NewId)
+            if (permissionId <= Globals.NEW_ID)
                 throw (new ArgumentNullException("permissionId"));
 
             // Execute SQL Command
@@ -1603,7 +1603,7 @@ namespace BugNET.Providers.DataProviders
         /// <returns></returns>
         public override bool DeleteProject(int projectId)
         {
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("projectID"));
 
             // Execute SQL Command
@@ -1640,7 +1640,7 @@ namespace BugNET.Providers.DataProviders
         /// <returns></returns>
         public override Project GetProjectById(int projectId)
         {
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw (new ArgumentNullException("projectId"));
 
             SqlCommand sqlCmd = new SqlCommand();
@@ -2041,7 +2041,7 @@ namespace BugNET.Providers.DataProviders
         /// <returns></returns>
         public override int[] GetProjectRoadmapProgress(int projectId, int milestoneId)
         {
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw new ArgumentOutOfRangeException("projectId");
             if (milestoneId < -1) //allow unscheduled
                 throw new ArgumentOutOfRangeException("milestoneId");
@@ -2246,7 +2246,7 @@ namespace BugNET.Providers.DataProviders
         public override bool DeleteCategory(int categoryId)
         {
             // Validate Parameters
-            if (categoryId <= Globals.NewId)
+            if (categoryId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("categoryId"));
 
             // Execute SQL Command
@@ -2291,7 +2291,7 @@ namespace BugNET.Providers.DataProviders
         public override System.Collections.Generic.List<Category> GetCategoriesByProjectId(int projectId)
         {
             // Validate Parameters
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("projectId"));
 
             // Execute SQL Command
@@ -2312,7 +2312,7 @@ namespace BugNET.Providers.DataProviders
         public override System.Collections.Generic.List<Category> GetRootCategoriesByProjectId(int projectId)
         {
             // Validate Parameters
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("projectId"));
 
             // Execute SQL Command
@@ -2333,7 +2333,7 @@ namespace BugNET.Providers.DataProviders
         public override System.Collections.Generic.List<Category> GetChildCategoriesByCategoryId(int categoryId)
         {
             // Validate Parameters
-            if (categoryId <= Globals.NewId)
+            if (categoryId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("categoryId"));
 
             // Execute SQL Command
@@ -2354,7 +2354,7 @@ namespace BugNET.Providers.DataProviders
         public override Category GetCategoryById(int categoryId)
         {
             // Validate Parameters
-            if (categoryId <= Globals.NewId)
+            if (categoryId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("categoryId"));
 
             // Execute SQL Command
@@ -2483,7 +2483,7 @@ namespace BugNET.Providers.DataProviders
         /// <returns></returns>
         public override bool DeleteIssueAttachment(int attachmentId)
         {
-            if (attachmentId <= Globals.NewId)
+            if (attachmentId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("attachmentId"));
             try
             {
@@ -2536,7 +2536,7 @@ namespace BugNET.Providers.DataProviders
         public override List<Query> GetQueriesByUserName(string userName, int projectId)
         {
             // Validate Parameters
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("projectId"));
 
             // Execute SQL Command
@@ -2743,7 +2743,7 @@ namespace BugNET.Providers.DataProviders
         private void PerformQueryOnCustomFields(int projectId, ref List<QueryClause> queryClauses, ref List<Issue> outIssueCollection)
         {
             //validate parameters
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("projectId"));
 
             if (queryClauses.Count == 0)
@@ -3035,10 +3035,10 @@ namespace BugNET.Providers.DataProviders
         public override System.Collections.Generic.List<Issue> PerformSavedQuery(int projectId, int queryId)
         {
             // Validate Parameters
-            if (queryId <= Globals.NewId)
+            if (queryId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("queryId"));
 
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("projectId"));
 
             // Get Query Clauses
@@ -3061,7 +3061,7 @@ namespace BugNET.Providers.DataProviders
         /// <param name="projectId">The project id.</param>
         /// <param name="queryClauses">The query clauses.</param>
         /// <returns></returns>
-        public override void PerformGenericQuery<T>(ref List<T> List, List<QueryClause> queryClauses, string strSQL, string strOrderBy)
+        public override void PerformGenericQuery<T>(ref List<T> list, List<QueryClause> queryClauses, string strSQL, string strOrderBy)
         {
             TGenerateListFromReader<T> gcfr = null;// = GetListTypeFromReader(typeof(T));
 
@@ -3211,7 +3211,7 @@ namespace BugNET.Providers.DataProviders
 
             if (gcfr != null)
             {
-                TExecuteReaderCmd<T>(sqlCmd, gcfr, ref List);
+                TExecuteReaderCmd<T>(sqlCmd, gcfr, ref list);
                 //note we are passing this methods objects by reference because we want
                 //the collection to be added to. If we don't pass by reference, we lose the collection
                 //when the method returns.
@@ -3272,7 +3272,7 @@ namespace BugNET.Providers.DataProviders
         public override Query GetQueryById(int queryId)
         {
             // Validate Parameters
-            if (queryId <= Globals.NewId)
+            if (queryId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("queryId"));
 
             // Get Query Clauses
@@ -3380,9 +3380,9 @@ namespace BugNET.Providers.DataProviders
         public override int CreateNewChildIssue(int primaryIssueId, int secondaryIssueId)
         {
             // Validate Parameters
-            if (primaryIssueId <= Globals.NewId)
+            if (primaryIssueId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("primaryIssueId"));
-            if (secondaryIssueId <= Globals.NewId)
+            if (secondaryIssueId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("secondaryIssueId"));
 
             try
@@ -3414,9 +3414,9 @@ namespace BugNET.Providers.DataProviders
         public override bool DeleteChildIssue(int primaryIssueId, int secondaryIssueId)
         {
             // Validate Parameters
-            if (primaryIssueId <= Globals.NewId)
+            if (primaryIssueId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("primaryIssueId"));
-            if (secondaryIssueId <= Globals.NewId)
+            if (secondaryIssueId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("secondaryIssueId"));
 
             try
@@ -3449,9 +3449,9 @@ namespace BugNET.Providers.DataProviders
         public override int CreateNewParentIssue(int primaryIssueId, int secondaryIssueId)
         {
             // Validate Parameters
-            if (primaryIssueId <= Globals.NewId)
+            if (primaryIssueId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("primaryIssueId"));
-            if (secondaryIssueId <= Globals.NewId)
+            if (secondaryIssueId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("secondaryIssueId"));
 
             try
@@ -3483,9 +3483,9 @@ namespace BugNET.Providers.DataProviders
         public override bool DeleteParentIssue(int primaryIssueId, int secondaryIssueId)
         {
             // Validate Parameters
-            if (primaryIssueId <= Globals.NewId)
+            if (primaryIssueId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("primaryIssueId"));
-            if (secondaryIssueId <= Globals.NewId)
+            if (secondaryIssueId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("secondaryIssueId"));
 
             try
@@ -3518,9 +3518,9 @@ namespace BugNET.Providers.DataProviders
         public override int CreateNewRelatedIssue(int primaryIssueId, int secondaryIssueId)
         {
             // Validate Parameters
-            if (primaryIssueId <= Globals.NewId)
+            if (primaryIssueId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("primaryIssueId"));
-            if (secondaryIssueId <= Globals.NewId)
+            if (secondaryIssueId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("secondaryIssueId"));
 
             try
@@ -3552,10 +3552,10 @@ namespace BugNET.Providers.DataProviders
         public override bool DeleteRelatedIssue(int primaryIssueId, int secondaryIssueId)
         {
             // Validate Parameters
-            if (primaryIssueId <= Globals.NewId)
+            if (primaryIssueId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("primaryIssueId"));
 
-            if (secondaryIssueId <= Globals.NewId)
+            if (secondaryIssueId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("secondaryIssueId"));
 
             try
@@ -3621,7 +3621,7 @@ namespace BugNET.Providers.DataProviders
         /// <returns></returns>
         public override List<IssueRevision> GetIssueRevisionsByIssueId(int issueId)
         {
-            if (issueId <= Globals.NewId)
+            if (issueId <= Globals.NEW_ID)
                 throw new ArgumentOutOfRangeException("issueId");
             try
             {
@@ -3786,7 +3786,7 @@ namespace BugNET.Providers.DataProviders
         public override bool DeleteMilestone(int milestoneId)
         {
             // Validate Parameters
-            if (milestoneId <= Globals.NewId)
+            if (milestoneId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("milestoneId"));
 
             // Execute SQL Command
@@ -3822,7 +3822,7 @@ namespace BugNET.Providers.DataProviders
         public override System.Collections.Generic.List<Milestone> GetMilestonesByProjectId(int projectId, bool milestoneCompleted)
         {
             // Validate Parameters
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("projectId"));
 
             // Execute SQL Command
@@ -3844,7 +3844,7 @@ namespace BugNET.Providers.DataProviders
         public override Milestone GetMilestoneById(int milestoneId)
         {
             // Validate Parameters
-            if (milestoneId <= Globals.NewId)
+            if (milestoneId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("milestoneId"));
 
             // Execute SQL Command
@@ -3929,19 +3929,19 @@ namespace BugNET.Providers.DataProviders
         /// <summary>
         /// Deletes the priority.
         /// </summary>
-        /// <param name="PriorityId">The priority id.</param>
+        /// <param name="priorityId">The priority id.</param>
         /// <returns></returns>
-        public override bool DeletePriority(int PriorityId)
+        public override bool DeletePriority(int priorityId)
         {
             // Validate Parameters
-            if (PriorityId <= Globals.NewId)
-                throw (new ArgumentOutOfRangeException("PriorityId"));
+            if (priorityId <= Globals.NEW_ID)
+                throw (new ArgumentOutOfRangeException("priorityId"));
 
             // Execute SQL Command
             SqlCommand sqlCmd = new SqlCommand();
 
             AddParamToSQLCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
-            AddParamToSQLCmd(sqlCmd, "@PriorityIdToDelete", SqlDbType.Int, 0, ParameterDirection.Input, PriorityId);
+            AddParamToSQLCmd(sqlCmd, "@PriorityIdToDelete", SqlDbType.Int, 0, ParameterDirection.Input, priorityId);
 
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_PRIORITY_DELETE);
             ExecuteScalarCmd(sqlCmd);
@@ -3957,7 +3957,7 @@ namespace BugNET.Providers.DataProviders
         public override System.Collections.Generic.List<Priority> GetPrioritiesByProjectId(int projectId)
         {
             // Validate Parameters
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("projectId"));
 
             // Execute SQL Command
@@ -3978,7 +3978,7 @@ namespace BugNET.Providers.DataProviders
         public override Priority GetPriorityById(int priorityId)
         {
             // Validate Parameters
-            if (priorityId <= Globals.NewId)
+            if (priorityId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("priorityId"));
 
             // Execute SQL Command
@@ -4174,7 +4174,7 @@ namespace BugNET.Providers.DataProviders
         /// <returns></returns>
         public override bool DeleteStatus(int statusId)
         {
-            if (statusId <= Globals.NewId)
+            if (statusId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("statusId"));
 
             // Execute SQL Command
@@ -4197,7 +4197,7 @@ namespace BugNET.Providers.DataProviders
         public override System.Collections.Generic.List<Status> GetStatusByProjectId(int projectId)
         {
             // validate Parameters
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("projectId"));
 
             // Execute SQL Command
@@ -4248,7 +4248,7 @@ namespace BugNET.Providers.DataProviders
         public override Status GetStatusById(int statusId)
         {
             // validate Parameters
-            if (statusId <= Globals.NewId)
+            if (statusId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("statusId"));
 
             // Execute SQL Command
@@ -4275,7 +4275,7 @@ namespace BugNET.Providers.DataProviders
         /// <returns></returns>
         public override CustomField GetCustomFieldById(int customFieldId)
         {
-            if (customFieldId <= Globals.NewId)
+            if (customFieldId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("customFieldId"));
 
             SqlCommand sqlCmd = new SqlCommand();
@@ -4298,7 +4298,7 @@ namespace BugNET.Providers.DataProviders
         /// <returns></returns>
         public override System.Collections.Generic.List<CustomField> GetCustomFieldsByProjectId(int projectId)
         {
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("projectId"));
 
             SqlCommand sqlCmd = new SqlCommand();
@@ -4318,7 +4318,7 @@ namespace BugNET.Providers.DataProviders
         /// <returns></returns>
         public override System.Collections.Generic.List<CustomField> GetCustomFieldsByIssueId(int issueId)
         {
-            if (issueId <= Globals.NewId)
+            if (issueId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("issueId"));
 
             SqlCommand sqlCmd = new SqlCommand();
@@ -4392,7 +4392,7 @@ namespace BugNET.Providers.DataProviders
         public override bool DeleteCustomField(int customFieldId)
         {
             // Validate Parameters
-            if (customFieldId <= Globals.NewId)
+            if (customFieldId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("customFieldId"));
 
             // Execute SQL Command
@@ -4419,7 +4419,7 @@ namespace BugNET.Providers.DataProviders
             if (fields == null)
                 throw (new ArgumentNullException("fields"));
 
-            if (issueId <= Globals.NewId)
+            if (issueId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("issueId"));
 
             // Execute SQL Commands
@@ -4498,7 +4498,7 @@ namespace BugNET.Providers.DataProviders
         /// <returns></returns>
         public override System.Collections.Generic.List<CustomFieldSelection> GetCustomFieldSelectionsByCustomFieldId(int customFieldId)
         {
-            if (customFieldId <= Globals.NewId)
+            if (customFieldId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("customFieldId"));
 
             SqlCommand sqlCmd = new SqlCommand();
@@ -4518,7 +4518,7 @@ namespace BugNET.Providers.DataProviders
         /// <returns></returns>
         public override CustomFieldSelection GetCustomFieldSelectionById(int customFieldSelectionId)
         {
-            if (customFieldSelectionId <= Globals.NewId)
+            if (customFieldSelectionId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("customFieldSelectionId"));
 
             SqlCommand sqlCmd = new SqlCommand();
@@ -4569,7 +4569,7 @@ namespace BugNET.Providers.DataProviders
         public override IssueType GetIssueTypeById(int issueTypeId)
         {
             // validate Parameters
-            if (issueTypeId <= Globals.NewId)
+            if (issueTypeId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("issueTypeId"));
 
             // Execute SQL Command
@@ -4618,7 +4618,7 @@ namespace BugNET.Providers.DataProviders
         /// <returns></returns>
         public override bool DeleteIssueType(int issueTypeId)
         {
-            if (issueTypeId <= Globals.NewId)
+            if (issueTypeId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("issueTypeId"));
 
             // Execute SQL Command
@@ -4667,7 +4667,7 @@ namespace BugNET.Providers.DataProviders
         public override List<IssueType> GetIssueTypesByProjectId(int projectId)
         {
             // validate Parameters
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("projectId"));
 
             // Execute SQL Command
@@ -4692,7 +4692,7 @@ namespace BugNET.Providers.DataProviders
         public override Resolution GetResolutionById(int resolutionId)
         {
             // validate Parameters
-            if (resolutionId <= Globals.NewId)
+            if (resolutionId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("resolutinoId"));
 
             // Execute SQL Command
@@ -4742,7 +4742,7 @@ namespace BugNET.Providers.DataProviders
         /// <returns></returns>
         public override bool DeleteResolution(int resolutionId)
         {
-            if (resolutionId <= Globals.NewId)
+            if (resolutionId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("resolutionId"));
 
             // Execute SQL Command
@@ -4791,7 +4791,7 @@ namespace BugNET.Providers.DataProviders
         public override List<Resolution> GetResolutionsByProjectId(int projectId)
         {
             // validate Parameters
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("projectId"));
 
             // Execute SQL Command

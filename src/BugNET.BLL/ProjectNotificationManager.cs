@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using BugNET.Common;
 using BugNET.DAL;
 using BugNET.Entities;
+using log4net;
 
 namespace BugNET.BLL
 {
-    public class ProjectNotificationManager
+    public static class ProjectNotificationManager
     {
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
         /// Saves this instance.
@@ -15,14 +17,11 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool SaveProjectNotification(ProjectNotification projectNotificationToSave)
         {
-            int TempId = DataProviderManager.Provider.CreateNewProjectNotification(projectNotificationToSave);
-            if (TempId > 0)
-            {
-                projectNotificationToSave.Id = TempId;
-                return true;
-            }
-            else
+            var tempId = DataProviderManager.Provider.CreateNewProjectNotification(projectNotificationToSave);
+            if (tempId <= 0)
                 return false;
+            projectNotificationToSave.Id = tempId;
+            return true;
         }
 
         /// <summary>
@@ -45,7 +44,7 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="projectId">The project id.</param>
         /// <returns></returns>
-        public static List<ProjectNotification> GetProjectNotificationsByProjectId(int projectId)
+        public static IEnumerable<ProjectNotification> GetProjectNotificationsByProjectId(int projectId)
         {
             if (projectId <= DefaultValues.GetProjectIdMinValue())
                 throw (new ArgumentOutOfRangeException("projectId"));

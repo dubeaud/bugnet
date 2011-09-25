@@ -4,7 +4,7 @@ using BugNET.Entities;
 
 namespace BugNET.BLL
 {
-    public class ApplicationLogManager
+    public static class ApplicationLogManager
     {
         /// <summary>
         /// Gets the log.

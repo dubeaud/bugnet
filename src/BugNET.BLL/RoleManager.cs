@@ -4,11 +4,14 @@ using System.Web;
 using BugNET.DAL;
 using BugNET.Entities;
 using BugNET.Common;
+using log4net;
 
 namespace BugNET.BLL
 {
-    public class RoleManager
+    public static class RoleManager
     {
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         #region Instance Methods
         /// <summary>
         /// Saves the role object
@@ -16,21 +19,15 @@ namespace BugNET.BLL
         /// <returns><c>true</c> if successful</returns>
         public static bool SaveRole(Role roleToSave)
         {
-            if (roleToSave.Id <= Globals.NewId)
-            {
-                int TempId = DataProviderManager.Provider.CreateNewRole(roleToSave);
-                if (TempId > 0)
-                {
-                    roleToSave.Id = TempId;
-                    return true;
-                }
-                else
-                    return false;
-            }
-            else
+            if (roleToSave.Id > Globals.NEW_ID)
             {
                 return DataProviderManager.Provider.UpdateRole(roleToSave);
             }
+            var tempId = DataProviderManager.Provider.CreateNewRole(roleToSave);
+            if (tempId <= 0)
+                return false;
+            roleToSave.Id = tempId;
+            return true;
         }
 
         #endregion
@@ -42,39 +39,40 @@ namespace BugNET.BLL
         /// <param name="projectId">The project id.</param>
         public static void CreateDefaultProjectRoles(int projectId)
         {
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("projectId"));
 
-            foreach (string role in Globals.DefaultRoles)
+            foreach (var role in Globals.DefaultRoles)
             {
-                Role r = new Role(projectId, role, role, false);
-                int NewRoleId = DataProviderManager.Provider.CreateNewRole(r);
+                var r = new Role(projectId, role, role, false);
+                var newRoleId = DataProviderManager.Provider.CreateNewRole(r);
 
-                int[] Permissions = null;
+                int[] permissions = null;
                 //add permissions to roles
                 switch (role)
                 {
                     case "Project Administrators":
-                        Permissions = Globals.AdministratorPermissions;
+                        permissions = Globals.AdministratorPermissions;
                         break;
                     case "Read Only":
-                        Permissions = Globals.ReadOnlyPermissions;
+                        permissions = Globals.ReadOnlyPermissions;
                         break;
                     case "Reporter":
-                        Permissions = Globals.ReporterPermissions;
+                        permissions = Globals.ReporterPermissions;
                         break;
                     case "Developer":
-                        Permissions = Globals.DeveloperPermissions;
+                        permissions = Globals.DeveloperPermissions;
                         break;
                     case "Quality Assurance":
-                        Permissions = Globals.QualityAssurancePermissions;
+                        permissions = Globals.QualityAssurancePermissions;
                         break;
                 }
 
-                foreach (int i in Permissions)
-                {
-                    RoleManager.AddRolePermission(NewRoleId, i);
-                }
+                if (permissions != null)
+                    foreach (var i in permissions)
+                    {
+                        AddRolePermission(newRoleId, i);
+                    }
             }
         }
 
@@ -85,7 +83,7 @@ namespace BugNET.BLL
         /// <returns>List of role objects</returns>
         public static List<Role> GetRolesByProject(int projectId)
         {
-            if (projectId <= Globals.NewId)
+            if (projectId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("projectId"));
 
             return DataProviderManager.Provider.GetRolesByProject(projectId);
@@ -98,7 +96,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static Role GetRoleById(int roleId)
         {
-            if (roleId <= Globals.NewId)
+            if (roleId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("roleId"));
 
             return DataProviderManager.Provider.GetRoleById(roleId);
@@ -114,10 +112,10 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static int CreateRole(string roleName, int projectId, string description, bool autoAssign)
         {
-            if (!RoleManager.RoleExists(roleName, projectId))
+            if (!RoleExists(roleName, projectId))
             {
-                Role r = new Role(projectId, roleName, description, autoAssign);
-                RoleManager.SaveRole(r);
+                var r = new Role(projectId, roleName, description, autoAssign);
+                SaveRole(r);
                 return r.Id;
             }
 
@@ -132,10 +130,8 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool RoleExists(string roleName, int projectId)
         {
-            if (projectId <= 0)
-                throw new ArgumentOutOfRangeException("projectId");
-            if (String.IsNullOrEmpty(roleName))
-                throw new ArgumentOutOfRangeException("roleName");
+            if (projectId <= 0) throw new ArgumentOutOfRangeException("projectId");
+            if (String.IsNullOrEmpty(roleName)) throw new ArgumentOutOfRangeException("roleName");
 
             return DataProviderManager.Provider.RoleExists(roleName, projectId);
         }
@@ -148,8 +144,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<Role> GetRolesForUser(string userName, int projectId)
         {
-            if (String.IsNullOrEmpty(userName))
-                throw new ArgumentOutOfRangeException("userName");
+            if (String.IsNullOrEmpty(userName)) throw new ArgumentOutOfRangeException("userName");
 
             return DataProviderManager.Provider.GetRolesByUserName(userName, projectId);
         }
@@ -161,8 +156,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<Role> GetRolesForUser(string userName)
         {
-            if (String.IsNullOrEmpty(userName))
-                throw new ArgumentOutOfRangeException("userName");
+            if (String.IsNullOrEmpty(userName)) throw new ArgumentOutOfRangeException("userName");
 
             return DataProviderManager.Provider.GetRolesByUserName(userName);
         }
@@ -186,7 +180,7 @@ namespace BugNET.BLL
         {
             if (String.IsNullOrEmpty(userName))
                 throw new ArgumentOutOfRangeException("userName");
-            if (roleId <= Globals.NewId)
+            if (roleId <= Globals.NEW_ID)
                 throw new ArgumentOutOfRangeException("roleId");
 
             DataProviderManager.Provider.AddUserToRole(userName, roleId);
@@ -235,8 +229,7 @@ namespace BugNET.BLL
         /// <returns>Role Permissions DataView</returns>
         public static List<RolePermission> GetRolePermissions()
         {
-            List<RolePermission> permissions;
-            permissions = (List<RolePermission>)HttpContext.Current.Cache["RolePermission"];
+            var permissions = (List<RolePermission>)HttpContext.Current.Cache["RolePermission"];
             if (permissions == null)
             {
                 permissions = DataProviderManager.Provider.GetRolePermissions();
@@ -256,11 +249,10 @@ namespace BugNET.BLL
         public static bool RoleHasPermission(int projectId, string role, string permissionKey)
         {
             //check if the role for a project has permission
-            RolePermission permission = RoleManager.GetRolePermissions().Find(delegate(RolePermission p) { return p.ProjectId == projectId && p.RoleName == role && p.PermissionKey == permissionKey; });
-            if (permission != null)
-                return true;
+            var permission = GetRolePermissions().Find(
+                p => p.ProjectId == projectId && p.RoleName == role && p.PermissionKey == permissionKey);
 
-            return false;
+            return permission != null;
         }
 
         /// <summary>
@@ -268,9 +260,9 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="roleId">The role id.</param>
         /// <returns>List of permission objects</returns>
-        public static List<Permission> GetPermissionsByRoleId(int roleId)
+        public static IEnumerable<Permission> GetPermissionsByRoleId(int roleId)
         {
-            if (roleId <= Globals.NewId)
+            if (roleId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("roleId"));
 
             return DataProviderManager.Provider.GetPermissionsByRoleId(roleId);
@@ -284,10 +276,8 @@ namespace BugNET.BLL
         /// <returns>[true] if successful</returns>
         public static bool DeleteRolePermission(int roleId, int permissionId)
         {
-            if (roleId <= Globals.NewId)
-                throw (new ArgumentOutOfRangeException("roleId"));
-            if (permissionId <= Globals.NewId)
-                throw (new ArgumentOutOfRangeException("permissionId"));
+            if (roleId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("roleId"));
+            if (permissionId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("permissionId"));
 
             if (DataProviderManager.Provider.DeletePermission(roleId, permissionId))
             {
@@ -305,10 +295,8 @@ namespace BugNET.BLL
         /// <returns>[true] if successful</returns>
         public static bool AddRolePermission(int roleId, int permissionId)
         {
-            if (roleId <= Globals.NewId)
-                throw (new ArgumentOutOfRangeException("roleId"));
-            if (permissionId <= Globals.NewId)
-                throw (new ArgumentOutOfRangeException("permissionId"));
+            if (roleId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("roleId"));
+            if (permissionId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("permissionId"));
 
             if (DataProviderManager.Provider.AddPermission(roleId, permissionId))
             {

@@ -51,7 +51,7 @@ namespace BugNET.Issues.UserControls
 			BindComments();
 
 			//check users role permission for adding a comment
-			if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.ADD_COMMENT.ToString()))
+			if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.AddComment.ToString()))
 				pnlAddComment.Visible = false;
 		}
 
@@ -142,20 +142,20 @@ namespace BugNET.Issues.UserControls
                 lnkDeleteComment.Visible = false;
 
                 // Check if the current user is Authenticated and has permission to edit a comment.//If user can edit comments
-                if (Page.User.Identity.IsAuthenticated && UserManager.HasPermission(ProjectId, Globals.Permission.EDIT_COMMENT.ToString()))
+                if (Page.User.Identity.IsAuthenticated && UserManager.HasPermission(ProjectId, Globals.Permission.EditComment.ToString()))
                     lnkEditComment.Visible = true;
                 // Check if the project admin or a super user trying to edit the comment.
-                else if ((Page.User.Identity.IsAuthenticated && UserManager.IsInRole(Globals.SuperUserRole)) || (Page.User.Identity.IsAuthenticated && UserManager.IsInRole(this.ProjectId, Globals.ProjectAdminRole)))
+                else if ((Page.User.Identity.IsAuthenticated && UserManager.IsInRole(Globals.SUPER_USER_ROLE)) || (Page.User.Identity.IsAuthenticated && UserManager.IsInRole(this.ProjectId, Globals.ProjectAdminRole)))
                     lnkEditComment.Visible = true;
                 // Check if it is the original user, the project admin or a super user trying to edit the comment.
-                else if (currentComment.CreatorUserName.ToLower() == Context.User.Identity.Name.ToLower() && UserManager.HasPermission(ProjectId, Globals.Permission.OWNER_EDIT_COMMENT.ToString()))
+                else if (currentComment.CreatorUserName.ToLower() == Context.User.Identity.Name.ToLower() && UserManager.HasPermission(ProjectId, Globals.Permission.OwnerEditComment.ToString()))
                     lnkEditComment.Visible = true;
 
                 // Check if the current user is Authenticated and has the permission to delete a comment			
-                if (Page.User.Identity.IsAuthenticated && UserManager.HasPermission(ProjectId, Globals.Permission.DELETE_COMMENT.ToString()))
+                if (Page.User.Identity.IsAuthenticated && UserManager.HasPermission(ProjectId, Globals.Permission.DeleteComment.ToString()))
                 {
                     // Check if it is the original user, the project admin or a super user trying to delete the comment.
-                    if (currentComment.CreatorUserName.ToLower() == Context.User.Identity.Name.ToLower() || UserManager.IsInRole(Globals.SuperUserRole) || UserManager.IsInRole(this.ProjectId, Globals.ProjectAdminRole))
+                    if (currentComment.CreatorUserName.ToLower() == Context.User.Identity.Name.ToLower() || UserManager.IsInRole(Globals.SUPER_USER_ROLE) || UserManager.IsInRole(this.ProjectId, Globals.ProjectAdminRole))
                     {
                         lnkDeleteComment.Visible = true;
                     }

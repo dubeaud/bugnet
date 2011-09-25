@@ -41,7 +41,7 @@ namespace BugNET.Entities {
             /// <param name="required">if set to <c>true</c> [required].</param>
             /// <param name="fieldType">Type of the field.</param>
             public CustomField(int projectId, string name, ValidationDataType dataType, bool required,CustomFieldType fieldType)
-                : this(Globals.NewId , projectId, name, dataType, required, String.Empty,fieldType)
+                : this(Globals.NEW_ID , projectId, name, dataType, required, String.Empty,fieldType)
             { }
 
 
@@ -51,7 +51,7 @@ namespace BugNET.Entities {
             /// <param name="id">The id.</param>
             /// <param name="value">The value.</param>
             public CustomField(int id, string value)
-                : this(id, Globals.NewId, String.Empty, ValidationDataType.String, false, value,CustomFieldType.Text)
+                : this(id, Globals.NEW_ID, String.Empty, ValidationDataType.String, false, value,CustomFieldType.Text)
             { }
 
             /// <summary>

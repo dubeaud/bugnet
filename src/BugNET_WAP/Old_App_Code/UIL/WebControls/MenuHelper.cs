@@ -37,9 +37,9 @@ namespace BugNET.UserInterfaceLayer.WebControls
                 if (HttpContext.Current.User.Identity.IsAuthenticated)
                 {
                     //check add issue permission
-                    if (UserManager.HasPermission(ProjectId, Globals.Permission.ADD_ISSUE.ToString()))
+                    if (UserManager.HasPermission(ProjectId, Globals.Permission.AddIssue.ToString()))
                         Items.Add(new SuckerMenuItem(string.Format("~/Issues/IssueDetail.aspx?pid={0}", ProjectId),Resources.SharedResources.NewIssue,this));
-                    if (UserManager.HasPermission(ProjectId, Globals.Permission.VIEW_PROJECT_CALENDAR.ToString()))
+                    if (UserManager.HasPermission(ProjectId, Globals.Permission.ViewProjectCalendar.ToString()))
                         oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/ProjectCalendar.aspx?pid={0}", ProjectId),Resources.SharedResources.Calendar, this));
                 }
             }
@@ -53,7 +53,7 @@ namespace BugNET.UserInterfaceLayer.WebControls
                 if (ProjectId != -1 && UserManager.IsInRole(Globals.ProjectAdminRole))
                     Items.Add(new SuckerMenuItem(string.Format("~/Administration/Projects/EditProject.aspx?id={0}", ProjectId), Resources.SharedResources.EditProject, this,"admin"));
 
-                if (UserManager.IsInRole(Globals.SuperUserRole))
+                if (UserManager.IsInRole(Globals.SUPER_USER_ROLE))
                 {
                     SuckerMenuItem oItemAdmin = new SuckerMenuItem("~/Administration/Admin.aspx", Resources.SharedResources.Admin + " »", this, "admin");
                     Items.Add(oItemAdmin);

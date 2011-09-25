@@ -58,7 +58,7 @@ namespace BugNET.Administration.Projects.UserControls
             lstAllUsers.DataBind();
 
             // Copy selected users into Selected Users List Box
-            List<ProjectNotification> projectNotifications = ProjectNotificationManager.GetProjectNotificationsByProjectId(ProjectId);
+            IEnumerable<ProjectNotification> projectNotifications = ProjectNotificationManager.GetProjectNotificationsByProjectId(ProjectId);
             foreach (ProjectNotification currentNotification in projectNotifications)
             {
                 ListItem matchItem = lstAllUsers.Items.FindByValue(currentNotification.NotificationUsername);

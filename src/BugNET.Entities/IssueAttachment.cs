@@ -31,7 +31,7 @@ namespace BugNET.Entities
         /// <param name="contentType">Type of the content.</param>
         /// <param name="attachment">The attachment.</param>
         public IssueAttachment(string fileName, string contentType, byte[] attachment)
-            : this(Globals.NewId, Globals.NewId, String.Empty, String.Empty, Globals.GetDateTimeMinValue(), fileName, contentType, attachment, 0, string.Empty)
+            : this(Globals.NEW_ID, Globals.NEW_ID, String.Empty, String.Empty, Globals.GetDateTimeMinValue(), fileName, contentType, attachment, 0, string.Empty)
         { }
 
 
@@ -44,7 +44,7 @@ namespace BugNET.Entities
         /// <param name="contentType">Type of the content.</param>
         /// <param name="attachment">The attachment.</param>
         public IssueAttachment(int issueId, string creatorUserName, string fileName, string contentType, byte[] attachment, int size, string description)
-            : this(Globals.NewId, issueId, creatorUserName, String.Empty, Globals.GetDateTimeMinValue(), fileName, contentType, attachment, size, description)
+            : this(Globals.NEW_ID, issueId, creatorUserName, String.Empty, Globals.GetDateTimeMinValue(), fileName, contentType, attachment, size, description)
         { }
 
 
@@ -108,7 +108,7 @@ namespace BugNET.Entities
             get { return _IssueId; }
             set
             {
-                if (value <= Globals.NewId)
+                if (value <= Globals.NEW_ID)
                     throw (new ArgumentOutOfRangeException("value"));
                 _IssueId = value;
             }

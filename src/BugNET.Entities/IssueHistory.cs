@@ -53,7 +53,7 @@ namespace BugNET.Entities
         public IssueHistory(int issueId, string createdUserName, string fieldChanged, string oldValue, string newValue)
             : this
             (
-            Globals.NewId,
+            Globals.NEW_ID,
             issueId,
             createdUserName,
             string.Empty,
