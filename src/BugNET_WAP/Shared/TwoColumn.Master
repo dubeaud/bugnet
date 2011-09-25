@@ -1,0 +1,20 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="TwoColumn.master.cs" MasterPageFile="~/Shared/Site.Master" Inherits="BugNET.Shared.TwoColumn" %>
+<%@ Register Src="~/UserControls/Banner.ascx" TagName="Banner" TagPrefix="bn" %>
+<%@ Register Src="~/UserControls/Footer.ascx" TagName="Footer" TagPrefix="bn" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="PageTitle" runat="server">
+    <asp:ContentPlaceHolder ID="PageTitle" runat="server">
+    </asp:ContentPlaceHolder>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+     <div id="left">
+        <asp:contentplaceholder id="Left" runat="server">
+        </asp:contentplaceholder>
+    </div>
+    <div id="content">
+        <asp:contentplaceholder id="Content" runat="server">
+        </asp:contentplaceholder>
+    </div>
+</asp:Content>

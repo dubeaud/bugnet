@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{001B5C78-CC5E-4DB6-A03A-EAAE1D558D2C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BugNET.BLL</RootNamespace>
+    <AssemblyName>BugNET.BLL</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\..\lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Common\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="ApplicationLogManager.cs" />
+    <Compile Include="CategoryManager.cs" />
+    <Compile Include="CategoryTree.cs" />
+    <Compile Include="CustomFieldManager.cs" />
+    <Compile Include="CustomFieldSelectionManager.cs" />
+    <Compile Include="HostSettingManager.cs" />
+    <Compile Include="IssueAttachmentManager.cs" />
+    <Compile Include="IssueCommentManager.cs" />
+    <Compile Include="IssueHistoryManager.cs" />
+    <Compile Include="IssueManager.cs" />
+    <Compile Include="IssueNotificationManager.cs" />
+    <Compile Include="IssueRevisionManager.cs" />
+    <Compile Include="IssueTypeManager.cs" />
+    <Compile Include="IssueVoteManager.cs" />
+    <Compile Include="IssueWorkReportManager.cs" />
+    <Compile Include="LoggingManager.cs" />
+    <Compile Include="MilestoneManager.cs" />
+    <Compile Include="Notifications\EmailNotificationType.cs" />
+    <Compile Include="Notifications\INotificationContext.cs" />
+    <Compile Include="Notifications\INotificationType.cs" />
+    <Compile Include="Notifications\IToXml.cs" />
+    <Compile Include="Notifications\NotificationContext.cs" />
+    <Compile Include="Notifications\NotificationManager.cs" />
+    <Compile Include="Notifications\XmlSerializeService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Notifications\XmlXslTransform.cs" />
+    <Compile Include="Notifications\XslHelpers.cs" />
+    <Compile Include="PermissionManager.cs" />
+    <Compile Include="PriorityManager.cs" />
+    <Compile Include="ProjectMailboxManager.cs" />
+    <Compile Include="ProjectManager.cs" />
+    <Compile Include="ProjectNotificationManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryManager.cs" />
+    <Compile Include="RelatedIssueManager.cs" />
+    <Compile Include="RequiredFieldManager.cs" />
+    <Compile Include="ResolutionManager.cs" />
+    <Compile Include="ResourceManager.cs" />
+    <Compile Include="RoleManager.cs" />
+    <Compile Include="Security.cs" />
+    <Compile Include="StatusManager.cs" />
+    <Compile Include="SourceIntegrationManager.cs" />
+    <Compile Include="UpgradeManager.cs" />
+    <Compile Include="UserManager.cs" />
+    <Compile Include="WebProfile.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BugNET.Common\BugNET.Common.csproj">
+      <Project>{69F2F661-AA9A-4C9F-8217-6A22E8C66FEB}</Project>
+      <Name>BugNET.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BugNET.DAL\BugNET.DAL.csproj">
+      <Project>{EFD03A92-584B-4930-9FB1-58DF64BF7FD4}</Project>
+      <Name>BugNET.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BugNET.Entities\BugNET.Entities.csproj">
+      <Project>{5A0AE67B-1F8C-4A6D-A02B-B57BB219288F}</Project>
+      <Name>BugNET.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\Providers\MembershipProviders\Provider.MembershipProviders.csproj">
+      <Project>{6B8EBBE2-196F-4F79-BC2F-918FC0AF3D67}</Project>
+      <Name>Provider.MembershipProviders</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

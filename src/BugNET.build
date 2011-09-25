@@ -1,0 +1,189 @@
+<?xml version="1.0" ?>
+<project name="BugNET" default="ci" xmlns="http://nant.sf.net/schemas/nant.xsd">
+	<!-- include common properties and paths -->
+	<include buildfile="C:\Build\Common.build" />
+	
+	<!-- Setup properties -->
+	<property name="nant.settings.currentframework" value="net-4.0" />
+	<property name="configuration" value="release" />
+	<property name="project.name" value="BugNET" />
+	<property name="project.version" value="0.9" />
+	
+	<!-- Options -->
+	<property name="publish.enabled" value="true" />
+	<property name="archive.enabled" value="true" />
+	<property name="unittest.enabled" value="false" />
+	<property name="sandcastle.enabled" value="false" />
+	
+	<target name="version" description="Creates assembly information file with the updated build number">
+        <!-- create c# solutioninfo file --> 
+        <asminfo output="Common/GlobalAssemblyInfo.cs" language="CSharp">
+			<imports>
+                <import namespace="System" />
+                <import namespace="System.Reflection" />
+				<import namespace="System.Runtime.InteropServices" />
+				<import namespace="System.Runtime.CompilerServices" />
+            </imports>
+            <attributes>
+				<attribute type="ComVisibleAttribute" value="false" />
+                <attribute type="AssemblyConfigurationAttribute" value="${nant.settings.currentframework}.${platform::get-name()}" />
+                <attribute type="AssemblyCompanyAttribute" value="http://www.bugnetproject.com" />
+				<attribute type="AssemblyCopyrightAttribute" value="Copyright (C) 2006-2011 BugNET Project" />
+                <attribute type="AssemblyProductAttribute" value="BugNET Open Source Issue Tracker" />
+                <attribute type="AssemblyVersionAttribute" value="${CCNetLabel}" /> <!-- Major.Minor.Build.Revision-->
+                <attribute type="AssemblyInformationalVersionAttribute" value="${CCNetLabel}" /> <!-- Major.Minor.Build.Revision-->
+            </attributes>
+        </asminfo>
+    </target>
+	
+	<target name="build" description="Compiles using the release configuration">
+		<echo message="Building solution via msbuild task." />
+		<msbuild project=".\BugNET.sln">
+			<arg value="/p:Configuration=Release"/>
+		</msbuild>
+	</target>	
+
+	<target name="unittest" description="Run unit and code coverage tests.">
+		<if test="${not unittest.enabled}">
+	        <echo message="Not running Unit Testing and Code Coverage tests." />			
+		</if>
+		<if test="${unittest.enabled}">
+	        <echo message="Performing Unit Testing." />	    
+			<exec program="${toolsdirectory}\NUnit\${nunit.version}\bin\net-2.0\nunit-console.exe" workingdir="${outputdirectory}" failonerror="false" commandline="BugNet.Tests.dll /xml:..\results\nunit_results.xml /nologo"/>
+		</if>
+    </target>
+		
+	<target name="document" description="build code documentation">
+		<if test="${not sandcastle.enabled}">
+	        <echo message="Not building code documentation - Sandcastle." />			
+		</if>
+   		<if test="${sandcastle.enabled}">
+	        <echo message="Building code documentation - Sandcastle." />
+			<property name="sandcastle.input" value="C:\Projects\BugNET_CI\doc\BugNET.shfb" />			
+			<exec program="${toolsdirectory}\Sandcastle Help File Builder\${sandcastlebuilder.version}\SandcastleBuilderConsole.exe" failonerror="false">
+		      <arg value="${sandcastle.input}" />
+		    </exec>		
+		</if>
+    </target>
+	
+	 <target name="publish" description="Zip up deployable files and place package in publish folder.">
+		<if test="${not publish.enabled}">
+	        <echo message="Not publishing zipped deployables." />			
+		</if>
+		<if test="${publish.enabled}">
+	        <echo message="Publishing zipped deployables." />	
+			<call target="publish.bugnet" />
+		</if>
+	</target>
+	
+	<target name="publish.bugnet" description="Produces a distrubutable that can be deployed to a specific environment">
+		<!-- copy install-->
+		<copy includeemptydirs="false" todir="${build.dir}\dist\BugNET">
+			<fileset basedir=".\BugNET_WAP">
+				<include name="**\*"/>
+				<exclude name="release.config" />
+				<exclude name="development.config" />
+				<exclude name="**\Latest.SqlDataProvider.sql" />
+				<exclude name="**\obj\**" />
+				<exclude name="**\*.csproj" />
+				<exclude name="**\*.pdb" />
+				<exclude name="**\*.cs" />
+				<exclude name="**\BugNet.mdf" />
+				<exclude name="**\BugNet_log.ldf" />
+			</fileset>
+		</copy>	
+		<copy todir="${build.dir}\dist\BugNET\bin">
+			<fileset basedir="${outputdirectory}">
+				<include name="**\*.dll"/>
+				<include name="**\*.xml" />
+			    <exclude name="**\nunit*"/>
+				<exclude name="**\BugNET.SubversionHooks\*"/>
+				<exclude name="**\Rhino*"/>
+				<exclude name="**\BugNet.UnitTests.*"/>
+			</fileset>
+		</copy>	
+		<copy todir="${build.dir}\dist\BugNET\bin">
+			<fileset basedir="..\lib">
+				<!--Copy any lib files-->
+
+			</fileset>
+		</copy>	
+		<copy todir="${build.dir}\dist\">
+			<fileset basedir="../doc">
+				<include name="**\*.html"/>
+				<include name="**\*.txt" />
+			</fileset>
+		</copy>	
+		
+		<property name="filename" value=".\BugNET_WAP\Providers\DataProviders\SqlDataProvider\Latest.SqlDataProvider.sql" />	
+		<if test="${file::exists(filename) and file::get-length(filename) > 0}">
+			<echo message="Copying latest sql script" />
+			<copy file="${filename}"
+				tofile="${build.dir}\dist\BugNET\Providers\DataProviders\SqlDataProvider\${CCNetLabel}.0.SqlDataProvider.sql" />
+		</if>	
+
+		<copy file=".\BugNET_WAP\release.config" 
+			tofile="${build.dir}\dist\BugNET\web.config" overwrite="true" />
+			
+		<!-- copy svn hooks utility-->
+		<copy todir="${build.dir}\dist\BugNET.SubversionHooks">
+			<fileset basedir="${outputdirectory}\BugNET.SubversionHooks">
+				<include name="**\*.dll"/>
+				<include name="**\*.bat"/>
+				<include name="**\*.exe"/>
+				<include name="**\*.config"/>
+				<include name="**\*.xml" />
+			    <exclude name="**\nunit*"/>
+				<exclude name="**\Rhino*"/>
+				<exclude name="**\BugNet.UnitTests.*"/>
+			</fileset>
+		</copy>	
+	</target>
+	
+	<target name="archive" description="Archives the build as a zip file">
+		<if test="${not archive.enabled}">
+	        <echo message="Not archiving build" />			
+		</if>
+   		<if test="${archive.enabled}">
+		
+			<mkdir dir="${publishdirectory}" />
+			
+			<!-- zip it! -->
+			<zip zipfile="${publishdirectory}\${project.name}-${CCNetLabel}-Install.zip">
+				<fileset basedir="${build.dir}\dist">
+					<include name="**\*" />
+					<exclude name="Latest.SqlDataProvider.sql"/>
+				</fileset>
+			</zip>
+			
+			<!-- zip the source -->
+			<zip zipfile="${publishdirectory}\${project.name}-${CCNetLabel}-Source.zip">
+				<fileset basedir="C:\Projects\BugNET">
+					<include name="**\*" />
+					<exclude name="**\Help"/>
+					<exclude name="**build**"/>
+					<exclude name="**\*.suo"/>
+					<exclude name="**\*.user"/>
+					<exclude name="**\tools"/>
+				</fileset>
+			</zip>
+			
+			<copy todir="${CCNetArtifactDirectory}\${CCNetLabel}\">
+				<fileset basedir="${publishdirectory}">
+					<include name="*.*"/>
+				</fileset>
+			</copy>
+			<delete>
+				<fileset>
+					<include name="${CCNetArtifactDirectory}\Latest\*.*" />
+				</fileset>
+			</delete>
+			<copy todir="${CCNetArtifactDirectory}\Latest\">
+				<fileset basedir="${publishdirectory}">
+					<include name="*.*"/>
+				</fileset>
+			</copy>	
+		</if>
+    </target>
+</project>
+

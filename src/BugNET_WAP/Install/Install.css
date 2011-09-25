@@ -1,0 +1,102 @@
+
+Body, A
+{
+   font-family: Verdana, Arial, Helvetica, Sans Serif;
+   font-size: 8pt;
+   font-weight: normal;
+   color: black;
+}
+
+Body
+{
+    background-color: white;
+    margin:2.5em;
+}
+
+.Normal
+{
+   font-family: Verdana, Arial, Helvetica, Sans Serif;
+   font-size: 8pt;
+   font-weight: normal;
+   color: black;
+}
+
+.NormalBold
+{
+   font-family: Verdana, Arial, Helvetica, Sans Serif;
+   font-size: 8pt;
+   font-weight: bold;
+   color: black;
+}
+
+H1
+{
+	font-size: 1.5em;
+	font-weight: bold;
+	color: #75808A;
+	text-decoration: underline;
+}
+
+H2  {
+	font-size: 1.4em;
+    font-weight: bold;
+    color: #75808A;
+}
+
+H3  {
+    font-size:  1.2em;
+    font-weight:  bold;
+    color: #75808A;
+}
+
+H4  {
+    font-size:  1.2em;
+    font-weight: bold;
+    color: #75808A;
+}
+
+H5  {
+    font-size:  1.1em;
+    font-weight:    bold;
+    color: #75808A;
+}
+
+H6  {
+    font-size:  1.0em;
+    font-weight:    bold;
+    color: #75808A;
+}
+
+A:link  {
+    font-size:  1.0em;
+    font-weight:    bold;
+    text-decoration:    none;
+    color:  #75808A;
+}
+
+A:visited   {
+    font-size:  1.0em;
+    font-weight:    bold;
+    text-decoration:    none;
+    color:  #75808A;
+}
+
+A:active    {
+    font-size:  1.0em;
+    font-weight:    bold;
+    text-decoration:    none;
+    color:  #75808A;
+}
+
+A:hover {
+    font-size:  1.0em;
+    font-weight:    bold;
+    text-decoration: underline;
+    color:  #cc0000;
+}
+
+HR {
+    color: dimgrey;
+    height:1pt;
+    text-align:left
+}

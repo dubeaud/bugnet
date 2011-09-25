@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+    <siteMapNode url="~/Default.aspx" title="Home"  description="Home">
+        <siteMapNode url="~/Login.aspx" title="Login" description="Login" Visible="False" />
+        <siteMapNode url="~/Register.aspx" title="Register" description="Register" Visible="False" />
+        <siteMapNode url="~/ForgotPassword.aspx" title="Forgot Password" description="Forgot Password"  Visible="False" />
+        <siteMapNode url="~/UserProfile.aspx" title="User Profile" description="User Profile"  Visible="False" />
+        <siteMapNode url="~/Issues/MyIssues.aspx" title="My Issues" description="My Issues" />
+        <siteMapNode url="~/Default.aspx?1" title="Projects" description="Projects">
+            <siteMapNode url="~/Projects/ProjectSummary.aspx" title="Summary" description="Project Summary"/>
+            <siteMapNode url="~/Projects/ProjectCalendar.aspx" title="Calendar" description="Calendar"/>
+            <siteMapNode url="~/Projects/Roadmap.aspx" title="Roadmap" description="Roadmap"/>
+            <siteMapNode url="~/Projects/ChangeLog.aspx" title="Change Log" description="Change Log" />
+            <siteMapNode url="~/SvnBrowse/SubversionBrowser.aspx" title="Repository" description="Repository" />
+        </siteMapNode>
+        <siteMapNode url="~/Issues/IssueList.aspx" title="Issues" description="Issues">
+            <siteMapNode url="~/Issues/IssueDetail.aspx#" title="New Issue" description="New Issue" />
+            <siteMapNode url="~/Issues/IssueDetail.aspx" title="Issue Detail" description="Issue Detail"  Visible="False" />
+            <siteMapNode url="~/Issues/IssueSearch.aspx" title="Full Text Search" description="Full Text Search" />
+        </siteMapNode>
+        <siteMapNode url="~/Queries/QueryList.aspx" title="Queries" description="Queries">
+            <siteMapNode url="~/Queries/QueryDetail.aspx" title="Query Detail" description="Create New Query" />
+        </siteMapNode>
+        
+        <siteMapNode url="~/Administration/Admin.aspx" title="Admin" description="Admin">
+            <siteMapNode url="~/Administration/Projects/ProjectList.aspx" title="Projects" description="Projects">
+                <siteMapNode url="~/Administration/Projects/AddProject.aspx" title="New Project" description="New Project" />
+                <siteMapNode url="~/Administration/Projects/EditProject.aspx" title="Edit Project" description="Edit Project" />
+            </siteMapNode>
+            <siteMapNode url="~/Administration/Host/LogViewer.aspx" title="Log Viewer" description="Log Viewer" />
+            <siteMapNode url="~/Administration/Host/Settings.aspx" title="Application Configuration" description="Application Configuration" />
+            <siteMapNode url="~/Administration/Users/UserList.aspx" title="Users" description="Users" >
+                <siteMapNode url="~/Administration/Users/ManageUser.aspx" title="Edit User Account" description="Edit User Account"  Visible="False" />
+                <siteMapNode url="~/Administration/Users/AddUser.aspx" title="Add User" description="Add User" />
+            </siteMapNode>
+        </siteMapNode>
+        <!--<siteMapNode url="~/Reports/SelectReport.aspx" title="Reports" description="Reports" />-->
+    </siteMapNode>
+</siteMap>

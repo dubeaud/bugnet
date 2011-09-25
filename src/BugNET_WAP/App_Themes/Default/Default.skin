@@ -1,0 +1,62 @@
+﻿<%@ Register Assembly="BugNET" Namespace="BugNET.UserInterfaceLayer.WebControls" TagPrefix="BNWC" %>
+<%--
+Default skin template. The following skins are provided as examples only.
+
+1. Named control skin. The SkinId should be uniquely defined because
+   duplicate SkinId's per control type are not allowed in the same theme.
+
+<asp:GridView runat="server" SkinId="gridviewSkin" BackColor="White" >
+   <AlternatingRowStyle BackColor="Blue" />
+</asp:GridView>
+
+2. Default skin. The SkinId is not defined. Only one default 
+   control skin per control type is allowed in the same theme.
+
+<asp:Image runat="server" ImageUrl="~/images/image1.jpg" />
+--%>
+
+<asp:Image runat="server" SkinId="Logo" ImageUrl="Images/logo.png" Height="48px" Width="48px" />
+
+<asp:TextBox runat="Server" CssClass="textInput" />
+
+<BNWC:GridView runat="server" SkinID="GridView" CssClass="grid" BorderWidth="1px" BorderStyle="Solid" GridLines="None" CellPadding="2" AutoGenerateColumns="False">
+    <FooterStyle CssClass="gridFooter" />
+    <PagerStyle CssClass="gridPager" />
+    <SelectedRowStyle CssClass="gridSelectedRow" />
+    <HeaderStyle CssClass="gridHeader" />
+    <AlternatingRowStyle CssClass="gridAltRow" />
+    <PagerSettings FirstPageImageUrl="Images/resultset_first.gif" LastPageImageUrl="Images/resultset_last.gif" 
+        PreviousPageImageUrl="Images/resultset_previous.gif" Mode="NumericFirstLast" NextPageImageUrl="Images/resultset_next.gif" />
+</BNWC:GridView>
+
+<asp:GridView runat="server" SkinID="GridView" CssClass="grid" BorderWidth="1px" BorderStyle="Solid" GridLines="None" CellPadding="2" AutoGenerateColumns="False">
+    <FooterStyle CssClass="gridFooter" />
+    <PagerStyle CssClass="gridPager" />
+    <SelectedRowStyle CssClass="gridSelectedRow" />
+    <HeaderStyle CssClass="gridHeader" />
+    <AlternatingRowStyle CssClass="gridAltRow" />
+    <PagerSettings FirstPageImageUrl="Images/resultset_first.gif" LastPageImageUrl="Images/resultset_last.gif" 
+        PreviousPageImageUrl="Images/resultset_previous.gif" Mode="NumericFirstLast" NextPageImageUrl="Images/resultset_next.gif" />
+</asp:GridView>
+
+<asp:DataGrid runat="server" SkinID="DataGrid" autogeneratecolumns="False" BorderWidth="0px" GridLines="None" CellPadding="3">
+    <FooterStyle CssClass="gridFooter"  />
+    <PagerStyle CssClass="gridPager" />
+    <SelectedItemStyle CssClass="gridSelectedRow" />
+    <HeaderStyle CssClass="gridHeader" />
+    <AlternatingItemStyle CssClass="gridAltRow"/>
+</asp:DataGrid>
+
+<asp:Calendar SkinID="Calendar" ShowNextPrevMonth="false"  BorderWidth="0px" ShowGridLines="true" DayNameFormat="Full" BorderColor="#CCCCCC"  runat="server">
+    <DayStyle VerticalAlign="Top" HorizontalAlign="Left" CssClass="calDayStyle" />  
+    <DayHeaderStyle BackColor="#F2F3E5" Height="20px" />
+    <SelectedDayStyle BackColor="#FFFFC1"  ForeColor="#DBDCDE" />
+    <WeekendDayStyle BackColor="#F0F0F0" ForeColor="#cccccc" />
+    <TitleStyle BackColor="White" BorderWidth="0" Font-Bold="true" BorderColor="White" Height="25px" BorderStyle="None" Font-Size="20px" ForeColor="#555557" />
+</asp:Calendar>
+
+<ajaxToolkit:CollapsiblePanelExtender SkinID="CollapsiblePanelExtender" runat="server" 
+    CollapsedSize="0"	 						    
+    ExpandedImage="Images/collapse.jpg"
+    CollapsedImage="Images/expand.jpg">
+</ajaxToolkit:CollapsiblePanelExtender>

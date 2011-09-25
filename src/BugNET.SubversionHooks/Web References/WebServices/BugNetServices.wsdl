@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://bugnetproject.com/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://bugnetproject.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://bugnetproject.com/">
+      <s:element name="LogIn">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LogInResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="LogInResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LogOut">
+        <s:complexType />
+      </s:element>
+      <s:element name="LogOutResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="CreateNewIssueRevision">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="revision" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="issueId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="repository" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="revisionAuthor" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="revisionDate" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="revisionMessage" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateNewIssueRevisionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CreateNewIssueRevisionResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangeTreeNode">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="nodeId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="newText" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="oldText" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangeTreeNodeResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="MoveNode">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="nodeId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="oldParentId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="newParentId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="index" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MoveNodeResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="AddCategory">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="projectId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parentCategoryId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddCategoryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddCategoryResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteCategory">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CategoryId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteCategoryResponse">
+        <s:complexType />
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="LogInSoapIn">
+    <wsdl:part name="parameters" element="tns:LogIn" />
+  </wsdl:message>
+  <wsdl:message name="LogInSoapOut">
+    <wsdl:part name="parameters" element="tns:LogInResponse" />
+  </wsdl:message>
+  <wsdl:message name="LogOutSoapIn">
+    <wsdl:part name="parameters" element="tns:LogOut" />
+  </wsdl:message>
+  <wsdl:message name="LogOutSoapOut">
+    <wsdl:part name="parameters" element="tns:LogOutResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateNewIssueRevisionSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateNewIssueRevision" />
+  </wsdl:message>
+  <wsdl:message name="CreateNewIssueRevisionSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateNewIssueRevisionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ChangeTreeNodeSoapIn">
+    <wsdl:part name="parameters" element="tns:ChangeTreeNode" />
+  </wsdl:message>
+  <wsdl:message name="ChangeTreeNodeSoapOut">
+    <wsdl:part name="parameters" element="tns:ChangeTreeNodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="MoveNodeSoapIn">
+    <wsdl:part name="parameters" element="tns:MoveNode" />
+  </wsdl:message>
+  <wsdl:message name="MoveNodeSoapOut">
+    <wsdl:part name="parameters" element="tns:MoveNodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddCategorySoapIn">
+    <wsdl:part name="parameters" element="tns:AddCategory" />
+  </wsdl:message>
+  <wsdl:message name="AddCategorySoapOut">
+    <wsdl:part name="parameters" element="tns:AddCategoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteCategorySoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteCategory" />
+  </wsdl:message>
+  <wsdl:message name="DeleteCategorySoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteCategoryResponse" />
+  </wsdl:message>
+  <wsdl:portType name="BugNetServicesSoap">
+    <wsdl:operation name="LogIn">
+      <wsdl:input message="tns:LogInSoapIn" />
+      <wsdl:output message="tns:LogInSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="LogOut">
+      <wsdl:input message="tns:LogOutSoapIn" />
+      <wsdl:output message="tns:LogOutSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateNewIssueRevision">
+      <wsdl:input message="tns:CreateNewIssueRevisionSoapIn" />
+      <wsdl:output message="tns:CreateNewIssueRevisionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeTreeNode">
+      <wsdl:input message="tns:ChangeTreeNodeSoapIn" />
+      <wsdl:output message="tns:ChangeTreeNodeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MoveNode">
+      <wsdl:input message="tns:MoveNodeSoapIn" />
+      <wsdl:output message="tns:MoveNodeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddCategory">
+      <wsdl:input message="tns:AddCategorySoapIn" />
+      <wsdl:output message="tns:AddCategorySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCategory">
+      <wsdl:input message="tns:DeleteCategorySoapIn" />
+      <wsdl:output message="tns:DeleteCategorySoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BugNetServicesSoap" type="tns:BugNetServicesSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="LogIn">
+      <soap:operation soapAction="http://bugnetproject.com/LogIn" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LogOut">
+      <soap:operation soapAction="http://bugnetproject.com/LogOut" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateNewIssueRevision">
+      <soap:operation soapAction="http://bugnetproject.com/CreateNewIssueRevision" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeTreeNode">
+      <soap:operation soapAction="http://bugnetproject.com/ChangeTreeNode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MoveNode">
+      <soap:operation soapAction="http://bugnetproject.com/MoveNode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddCategory">
+      <soap:operation soapAction="http://bugnetproject.com/AddCategory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCategory">
+      <soap:operation soapAction="http://bugnetproject.com/DeleteCategory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="BugNetServicesSoap12" type="tns:BugNetServicesSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="LogIn">
+      <soap12:operation soapAction="http://bugnetproject.com/LogIn" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LogOut">
+      <soap12:operation soapAction="http://bugnetproject.com/LogOut" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateNewIssueRevision">
+      <soap12:operation soapAction="http://bugnetproject.com/CreateNewIssueRevision" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeTreeNode">
+      <soap12:operation soapAction="http://bugnetproject.com/ChangeTreeNode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MoveNode">
+      <soap12:operation soapAction="http://bugnetproject.com/MoveNode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddCategory">
+      <soap12:operation soapAction="http://bugnetproject.com/AddCategory" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCategory">
+      <soap12:operation soapAction="http://bugnetproject.com/DeleteCategory" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BugNetServices">
+    <wsdl:port name="BugNetServicesSoap" binding="tns:BugNetServicesSoap">
+      <soap:address location="http://localhost/BugNET/WebServices/BugNetServices.asmx" />
+    </wsdl:port>
+    <wsdl:port name="BugNetServicesSoap12" binding="tns:BugNetServicesSoap12">
+      <soap12:address location="http://localhost/BugNET/WebServices/BugNetServices.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

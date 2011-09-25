@@ -1,0 +1,15 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/Shared/Site.Master" AutoEventWireup="true"
+    CodeBehind="SingleColumn.master.cs" Inherits="BugNET.Shared.SingleColumn" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="PageTitle" runat="server">
+    <asp:ContentPlaceHolder ID="PageTitle" runat="server">
+    </asp:ContentPlaceHolder>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <div id="fullcontentcolumn">
+        <asp:ContentPlaceHolder ID="Content" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+</asp:Content>
