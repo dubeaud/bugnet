@@ -325,7 +325,7 @@ namespace BugNET
                 // Add the item to the feed
                 feedItems.Add(item);
             }
-            feed.Title = TextSyndicationContent.CreatePlaintextContent(string.Format(GetLocalResourceObject("IssuesByCateogoryTitle").ToString(), p.Name));
+            feed.Title = TextSyndicationContent.CreatePlaintextContent(string.Format(GetLocalResourceObject("IssuesByCategoryTitle").ToString(), p.Name));
             feed.Description = TextSyndicationContent.CreatePlaintextContent(string.Format(GetLocalResourceObject("IssuesByCategoryDescription").ToString(), p.Name));
             feed.Items = feedItems;     
         }

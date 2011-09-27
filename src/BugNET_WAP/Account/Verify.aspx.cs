@@ -16,7 +16,7 @@ namespace BugNET.Account
             //Make sure that a valid querystring value was passed through
             if (string.IsNullOrEmpty(Request.QueryString["ID"]) || !Regex.IsMatch(Request.QueryString["ID"].ToLower(), "[0-9a-f]{8}\\-([0-9a-f]{4}\\-){3}[0-9a-f]{12}"))
             {
-                InformationLabel.Text = "An invalid ID value was passed in through the querystring.";
+                InformationLabel.Text = GetLocalResourceObject("InvalidUserAccountID").ToString();
             }
             else
             {
@@ -29,7 +29,7 @@ namespace BugNET.Account
                 if (userInfo == null)
                 {
                     //Could not find user!
-                    InformationLabel.Text = "The user account could not be found in the membership database.";
+                    InformationLabel.Text = GetLocalResourceObject("UserAccountCouldNotBeFound").ToString();
                 }
                 else
                 {
@@ -39,7 +39,7 @@ namespace BugNET.Account
                         userInfo.IsApproved = true;
                         Membership.UpdateUser(userInfo);
                         //Log the user in and redirect
-                        System.Web.Security.FormsAuthentication.RedirectFromLoginPage(userInfo.UserName,false); 
+                        FormsAuthentication.RedirectFromLoginPage(userInfo.UserName,false); 
 
                         //Display a message
                         //InformationLabel.Text = "Your account has been verified and you can now log into the site.";

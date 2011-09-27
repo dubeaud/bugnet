@@ -123,9 +123,6 @@
   <data name="cmdAddTimeEntry.Text" xml:space="preserve">
     <value>Add Time Entry</value>
   </data>
-  <data name="CommentOptional" xml:space="preserve">
-    <value>(optional - will be added as an issue comment)</value>
-  </data>
   <data name="Comments.Text" xml:space="preserve">
     <value>Comments:</value>
   </data>
@@ -161,5 +158,8 @@
   </data>
   <data name="TimeEntriesDataGrid.WorkDateHeader.Text" xml:space="preserve">
     <value>Date</value>
+  </data>
+  <data name="CommentOptional.Text" xml:space="preserve">
+    <value>(optional - will be added as an issue comment)</value>
   </data>
 </root>

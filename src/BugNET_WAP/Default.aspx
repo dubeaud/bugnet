@@ -85,13 +85,13 @@
         </ItemTemplate>
     </asp:Repeater>
     <div class="info" id="UserMessage" runat="server" Visible="False">
-        <asp:Label ID="lblMessage"  runat="server" meta:resourcekey="lblMessage"></asp:Label>
+        <asp:Label ID="lblMessage"  runat="server"></asp:Label>
     </div>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Left" runat="server">
     <div class="welcomemessage">
         <h2 class="title">
-            <asp:Label ID="lblApplicationTitle" runat="server" meta:resourcekey="lblApplicationTitle">BugNET Issue Tracker</asp:Label></h2>
+            <asp:Label ID="lblApplicationTitle" runat="server">BugNET Issue Tracker</asp:Label></h2>
         <div class="content">
             <p>
                 <asp:Label ID="WelcomeMessage" runat="Server"></asp:Label>

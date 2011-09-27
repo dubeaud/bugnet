@@ -186,7 +186,7 @@
   <data name="OwnedIssuesTitle" xml:space="preserve">
     <value>{0} - Issues</value>
   </data>
-  <data name="RelevantIssueDescription" xml:space="preserve">
+  <data name="RelevantIssuesDescription" xml:space="preserve">
     <value>A syndication of relevant issues for {0}</value>
   </data>
   <data name="RelevantIssuesTitle" xml:space="preserve">

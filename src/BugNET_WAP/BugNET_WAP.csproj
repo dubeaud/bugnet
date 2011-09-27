@@ -1368,7 +1368,9 @@
     <Content Include="Administration\Projects\UserControls\App_LocalResources\NewProjectSummary.ascx.resx" />
     <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectCategories.ascx.resx" />
     <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectCustomFields.ascx.resx" />
-    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectDescription.ascx.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectDescription.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectIssueTypes.ascx.resx" />
     <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectMembers.ascx.resx" />
     <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectMilestones.ascx.resx" />
@@ -1383,8 +1385,15 @@
     <Content Include="Administration\Host\UserControls\App_LocalResources\LanguageSettings.ascx.resx" />
     <Content Include="Account\App_LocalResources\ForgotPassword.aspx.resx" />
     <Content Include="Account\App_LocalResources\Login.aspx.resx" />
-    <Content Include="Account\App_LocalResources\Register.aspx.resx" />
-    <Content Include="Account\App_LocalResources\UserProfile.aspx.resx" />
+    <Content Include="Account\App_LocalResources\Register.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Account\App_LocalResources\UserProfile.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Account\App_LocalResources\Verify.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <EmbeddedResource Include="Administration\Projects\UserControls\ProjectPriorities.ascx.resx">
       <DependentUpon>ProjectPriorities.ascx.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -1480,19 +1489,27 @@
       <LastGenOutput>SharedResources.Designer.cs</LastGenOutput>
     </Content>
     <Content Include="UserControls\App_LocalResources\Banner.ascx.resx" />
-    <Content Include="App_LocalResources\Default.aspx.resx" />
+    <Content Include="App_LocalResources\Default.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="UserControls\App_LocalResources\LoginControl.ascx.resx" />
     <Content Include="Projects\App_LocalResources\ProjectSummary.aspx.resx" />
     <Content Include="Projects\App_LocalResources\ReleaseNotes.aspx.resx" />
     <Content Include="Issues\App_LocalResources\MyIssues.aspx.resx" />
     <Content Include="Projects\App_LocalResources\Roadmap.aspx.resx" />
     <Content Include="Projects\App_LocalResources\ChangeLog.aspx.resx" />
-    <Content Include="Projects\App_LocalResources\ProjectCalendar.aspx.resx" />
+    <Content Include="Projects\App_LocalResources\ProjectCalendar.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="UserControls\App_LocalResources\DisplayIssues.ascx.resx" />
     <Content Include="Queries\App_LocalResources\QueryList.aspx.resx" />
     <Content Include="Queries\App_LocalResources\QueryDetail.aspx.resx" />
-    <Content Include="UserControls\App_LocalResources\PickQuery.ascx.resx" />
-    <Content Include="UserControls\App_LocalResources\PickCategory.ascx.resx" />
+    <Content Include="UserControls\App_LocalResources\PickQuery.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="UserControls\App_LocalResources\PickCategory.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="UserControls\App_LocalResources\PickMilestone.ascx.resx" />
     <Content Include="UserControls\App_LocalResources\PickPriority.ascx.resx" />
     <Content Include="UserControls\App_LocalResources\PickProject.ascx.resx" />
@@ -1510,9 +1527,15 @@
     </Content>
     <Content Include="Errors\App_LocalResources\Error.aspx.resx" />
     <Content Include="Errors\App_LocalResources\SessionExpired.aspx.resx" />
-    <Content Include="Issues\App_LocalResources\IssueList.aspx.resx" />
-    <Content Include="Issues\App_LocalResources\IssueDetail.aspx.resx" />
-    <Content Include="Issues\App_LocalResources\IssueSearch.aspx.resx" />
+    <Content Include="Issues\App_LocalResources\IssueList.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Issues\App_LocalResources\IssueDetail.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Issues\App_LocalResources\IssueSearch.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Issues\UserControls\App_LocalResources\Attachments.ascx.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\Comments.ascx.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\History.ascx.resx" />
@@ -1521,7 +1544,9 @@
     <Content Include="Issues\UserControls\App_LocalResources\RelatedIssues.ascx.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\Revisions.ascx.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\SubIssues.ascx.resx" />
-    <Content Include="Issues\UserControls\App_LocalResources\TimeTracking.ascx.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\TimeTracking.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Administration\Users\App_LocalResources\AddUser.aspx.resx" />
     <Content Include="Administration\Users\App_LocalResources\ManageUser.aspx.resx" />
     <Content Include="Administration\Users\UserControls\App_LocalResources\Membership.ascx.resx" />

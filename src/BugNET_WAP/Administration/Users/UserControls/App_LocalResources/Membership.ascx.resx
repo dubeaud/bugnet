@@ -141,6 +141,9 @@
   <data name="UpdateUserMessage" xml:space="preserve">
     <value>The user has been updated successfully.</value>
   </data>
+  <data name="UserAuthorizedError" xml:space="preserve">
+    <value>Unable to authorize user</value>
+  </data>
   <data name="UserAuthorizedMessage" xml:space="preserve">
     <value>The user has been authorized successfully.</value>
   </data>
@@ -149,6 +152,9 @@
   </data>
   <data name="UserIsOnline" xml:space="preserve">
     <value>User Is Online</value>
+  </data>
+  <data name="UserUnAuthorizedError" xml:space="preserve">
+    <value>Unable to unauthorize user</value>
   </data>
   <data name="UserUnAuthorizedMessage" xml:space="preserve">
     <value>The user has been unauthorized successfully.</value>

@@ -146,7 +146,7 @@
     <value>Search all projects</value>
   </data>
   <data name="SearchOptions.Text" xml:space="preserve">
-    <value>Options</value>
+    <value>Options...</value>
   </data>
   <data name="SearchHTMLEncoded.Text" xml:space="preserve">
     <value>Search fields with HTML Encoded elements too (BETA)</value>

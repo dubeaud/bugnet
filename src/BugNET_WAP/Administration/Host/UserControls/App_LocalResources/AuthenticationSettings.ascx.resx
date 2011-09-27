@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AnonymousAccess" xml:space="preserve">
+  <data name="AnonymousAccess.Text" xml:space="preserve">
     <value>Anonymous Access</value>
   </data>
   <data name="AuthenticationSettings" xml:space="preserve">
@@ -138,16 +138,16 @@
   <data name="UserAccountSource" xml:space="preserve">
     <value>User Account Source</value>
   </data>
-  <data name="UserRegistration" xml:space="preserve">
+  <data name="UserRegistration.Text" xml:space="preserve">
     <value>User Registration</value>
   </data>
-  <data name="UserRegistration_None" xml:space="preserve">
+  <data name="UserRegistration_None.Text" xml:space="preserve">
     <value>None</value>
   </data>
-  <data name="UserRegistration_Public" xml:space="preserve">
+  <data name="UserRegistration_Public.Text" xml:space="preserve">
     <value>Public</value>
   </data>
-  <data name="UserRegistration_Verified" xml:space="preserve">
+  <data name="UserRegistration_Verified.Text" xml:space="preserve">
     <value>Verified</value>
   </data>
 </root>

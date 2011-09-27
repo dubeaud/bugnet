@@ -221,7 +221,7 @@
         </ol>
     </div>    
     <div class="submit">
-        <asp:Button Text="<%$ Resources:AddNew %>" meta:resourcekey="AddCustomFieldButton"  CausesValidation="false" runat="server" id="Button1" onclick="lnkAddCustomField_Click" />
+        <asp:Button Text="<%$ Resources:AddNew %>" CausesValidation="false" runat="server" id="Button1" onclick="lnkAddCustomField_Click" />
     </div>        			
 
 

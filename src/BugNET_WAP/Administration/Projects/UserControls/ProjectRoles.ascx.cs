@@ -238,7 +238,7 @@ namespace BugNET.Administration.Projects.UserControls
             Roles.Visible= !Roles.Visible;          
             txtRoleName.Visible = true;
             txtRoleName.Text = string.Empty;
-            RoleNameTitle.Text = GetLocalResourceObject("AddNewRoleManager.Text").ToString();       
+            RoleNameTitle.Text = GetLocalResourceObject("AddNewRole.Text").ToString();       
             cmdDelete.Visible = false;
             cancel.Visible = false;
             BindRoleDetails(-1);

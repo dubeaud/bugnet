@@ -13,7 +13,7 @@
             runat="server" EnableViewState="False" Text="Login failed: "
             Visible="False" Font-Bold="True" ForeColor="Red" />
         <asp:Label ID="loginCanceledLabel" runat="server"  
-            meta:resourcekey="LoginCanceled" EnableViewState="False" Text="Login canceled"
+            meta:resourcekey="LoginCancelled" EnableViewState="False" Text="Login cancelled"
             Visible="False" Font-Bold="True" ForeColor="Red" />
         <asp:Panel ID="pnlOpenIDLogin" runat="server" Visible="false">
             <p style="margin: 1em 0 2em 0">

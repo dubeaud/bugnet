@@ -165,4 +165,7 @@
   <data name="NoStatusSet" xml:space="preserve">
     <value>No status set on project</value>
   </data>
+  <data name="AssignedToUser.Text" xml:space="preserve">
+    <value>Assigned to me</value>
+  </data>
 </root>

@@ -1,10 +1,10 @@
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="UserProfile.aspx.cs" MasterPageFile="~/Shared/TwoColumn.master"
-    Title="User Profile" Inherits="BugNET.Account.UserProfile" meta:resourcekey="Page1" %>
+    Title="User Profile" Inherits="BugNET.Account.UserProfile" meta:resourcekey="Page" %>
 
 <asp:Content ID="Content3" runat="server" ContentPlaceHolderID="PageTitle">
     <h1 class="page-title">
         User Profile -
-        <asp:Literal ID="litUserName" runat="Server" meta:resourcekey="litUserName1" /></h1>
+        <asp:Literal ID="litUserName" runat="Server" /></h1>
 </asp:Content>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="Content">
     <asp:MultiView ID="ProfileView" ActiveViewIndex="0" runat="server">
@@ -38,8 +38,7 @@
                             Text="<%$ Resources:SharedResources, Required %>" ControlToValidate="FullName"></asp:RequiredFieldValidator>
                     </li>
                     <li>
-                        <asp:Label ID="Label4" AssociatedControlID="Email" runat="server" Text="<%$ Resources:SharedResources, Email %>"
-                            meta:resourcekey="Label41" />
+                        <asp:Label ID="Label4" AssociatedControlID="Email" runat="server" Text="<%$ Resources:SharedResources, Email %>" />
                         <asp:TextBox ID="Email" runat="server" />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" Display="Dynamic"
                             Text="<%$ Resources:SharedResources, Required %>" ControlToValidate="Email" />
@@ -76,7 +75,7 @@
                     <li>
                         <asp:Label ID="Label11" AssociatedControlID="NewPassword" runat="server" Text="Enter your new password:"
                             meta:resourcekey="Label111" />
-                        <asp:TextBox ID="NewPassword" runat="server" TextMode="Password" meta:resourcekey="NewPassword1" />
+                        <asp:TextBox ID="NewPassword" runat="server" TextMode="Password" />
                         <asp:RequiredFieldValidator ID="rfvPassword" ValidationGroup="pwdReset" runat="server"
                             ControlToValidate="NewPassword" SetFocusOnError="True" Display="Dynamic">*</asp:RequiredFieldValidator>
                     </li>
@@ -120,7 +119,7 @@
                 <asp:LinkButton ID="LinkButton4" OnClick="SavePasswordSettings_Click" ValidationGroup="pwdReset"
                     runat="server" Text="<%$ Resources:SharedResources, Save %>" />
                 <asp:ImageButton runat="server" ID="ImageButton6" OnClick="BackButton_Click" CssClass="icon"
-                    ImageUrl="~/Images/lt.gif" meta:resourcekey="ImageButton11" />
+                    ImageUrl="~/Images/lt.gif" />
                 <asp:LinkButton ID="Linkbutton5" runat="server" CssClass="button" OnClick="BackButton_Click"
                     Text="<%$ Resources:SharedResources, Return %>" />
             </div>
@@ -164,7 +163,7 @@
                 <asp:LinkButton ID="SaveCustomSettings" OnClick="SaveCustomSettings_Click" runat="server"
                     Text="<%$ Resources:SharedResources, Save %>" />
                 <asp:ImageButton runat="server" ID="ImageButton1" OnClick="BackButton_Click" CssClass="icon"
-                    ImageUrl="~/Images/lt.gif" meta:resourcekey="ImageButton11" />
+                    ImageUrl="~/Images/lt.gif"  />
                 <asp:LinkButton ID="Linkbutton1" runat="server" CssClass="button" OnClick="BackButton_Click"
                     Text="<%$ Resources:SharedResources, Return %>" />
             </div>

@@ -147,4 +147,22 @@
   <data name="UserDetails.Text" xml:space="preserve">
     <value>User Details</value>
   </data>
+  <data name="PasswordChanged" xml:space="preserve">
+    <value>Password was changed successfully</value>
+  </data>
+  <data name="PasswordChangeError" xml:space="preserve">
+    <value>Password could not be changed</value>
+  </data>
+  <data name="ProfileSaved" xml:space="preserve">
+    <value>Your profile was updated successfully</value>
+  </data>
+  <data name="ProfileUpdateError" xml:space="preserve">
+    <value>Your profile was could not be updated</value>
+  </data>
+  <data name="Page.Title" xml:space="preserve">
+    <value>Page</value>
+  </data>
+  <data name="Label111.Text" xml:space="preserve">
+    <value>Enter your new password:</value>
+  </data>
 </root>

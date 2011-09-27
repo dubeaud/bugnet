@@ -18,7 +18,7 @@
                 </li>
                 <li>
                     <asp:Label ID="label8" runat="server" AssociatedControlID="UserRegistration"
-                        Text="User Registration"  meta:resourceKey="UserRegistration" />
+                        Text="User Registration" meta:resourceKey="UserRegistration" />
                     <div class="labelgroup">
                         <asp:RadioButtonList RepeatDirection="Horizontal"  TextAlign="Left" ID="UserRegistration" runat="server">
                             <asp:ListItem id="option4" runat="server"  meta:resourceKey="UserRegistration_None" Text="None" Value="0"  />

@@ -43,8 +43,8 @@
     <asp:TextBox ID="txtSearch" runat="server"></asp:TextBox>&nbsp;
     <asp:Button ID="btnGlobalSearch" runat="server" OnClick="Button1_Click" Text="Search" />
     <ajaxToolkit:TextBoxWatermarkExtender ID="TBWE2" runat="server" TargetControlID="txtSearch"
-        WatermarkText="<%$ Resources:SearchWatermark %>" meta:resourcekey="SearchWatermark" WatermarkCssClass="watermarked" />
-    &nbsp;<asp:HyperLink ID="srchOptions" runat="server" Visible="False">Options...</asp:HyperLink>
+        WatermarkText="<%$ Resources:SearchWatermark %>" WatermarkCssClass="watermarked" />
+    &nbsp;<asp:HyperLink ID="srchOptions" runat="server" Visible="False" meta:resourcekey="SearchOptions" >Options...</asp:HyperLink>
     <br /><br />
     <asp:Panel ID="pnlOptions" runat="server">
         <asp:CheckBox ID="chkSearchTitle" runat="server" Text="Search Title" meta:resourcekey="SearchTitle" Checked="true" />

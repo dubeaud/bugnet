@@ -159,4 +159,7 @@
   <data name="VerificationInsructionsTitle.Text" xml:space="preserve">
     <value>Thanks for registering with us</value>
   </data>
+  <data name="TitleLabel.Text" xml:space="preserve">
+    <value>Sign up for your new account</value>
+  </data>
 </root>

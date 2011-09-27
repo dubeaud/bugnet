@@ -1,6 +1,6 @@
 <%@ Page Language="c#" ValidateRequest="false" Inherits="BugNET.Issues.IssueDetail"
     MasterPageFile="~/Shared/IssueDetail.master" Title=" " CodeBehind="IssueDetail.aspx.cs"
-    meta:resourcekey="Page" AutoEventWireup="True" %>
+    AutoEventWireup="True" %>
 
 <%@ Register TagPrefix="it" TagName="DisplayCustomFields" Src="~/UserControls/DisplayCustomFields.ascx" %>
 <%@ Register TagPrefix="it" TagName="PickCategory" Src="~/UserControls/PickCategory.ascx" %>
@@ -248,8 +248,7 @@
                 </div>
             </ContentTemplate>
         </asp:UpdatePanel>
-        <asp:Panel ID="pnlAddAttachment" CssClass="fieldgroup" Visible="false" runat="server"
-            meta:resourcekey="pnlAddAttachment">
+        <asp:Panel ID="pnlAddAttachment" CssClass="fieldgroup" Visible="false" runat="server">
             <p style="padding: 8px 0 8px 0;">
                 <strong>
                     <asp:Label ID="lblAddAttachment" runat="server" meta:resourcekey="Attachment" Text="Attachment"></asp:Label></strong></p>

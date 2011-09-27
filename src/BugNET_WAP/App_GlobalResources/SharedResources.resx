@@ -417,4 +417,7 @@
   <data name="ValidationSummaryHeaderText" xml:space="preserve">
     <value>Please correct the following:</value>
   </data>
+  <data name="Size" xml:space="preserve">
+    <value>Size</value>
+  </data>
 </root>

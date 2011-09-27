@@ -20,7 +20,7 @@
 			</ol>
 		</div>
 		 <div class="submit">
-			<asp:Button id="btnClone" meta:resourcekey="CloneProjectButton" Text="<%$ Resources:CloneProject %>" Runat="Server" OnClick="btnClone_Click" />
+			<asp:Button id="btnClone" Text="<%$ Resources:CloneProject %>" Runat="Server" OnClick="btnClone_Click" />
 			&nbsp;&nbsp;
 			<asp:Button id="btnCancel" Text="<%$ Resources:SharedResources, Cancel %>" CausesValidation="false" OnClick="btnCancel_Click"
 				Runat="Server" />

@@ -204,4 +204,10 @@
   <data name="Votes" xml:space="preserve">
     <value>votes</value>
   </data>
+  <data name="ProgressLabel.Text" xml:space="preserve">
+    <value>Percent Complete:</value>
+  </data>
+  <data name="Attachment.Text" xml:space="preserve">
+    <value>Attachment</value>
+  </data>
 </root>

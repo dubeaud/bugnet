@@ -6,7 +6,7 @@ runat="server" AutoGenerateColumns="false" ShowHeader="false">
         <asp:boundcolumn headertext="" datafield="NotificationDisplayName" />
     </Columns>
 </asp:datagrid>	
-<asp:Panel ID="pnlNotificationAdmin" runat="server" meta:resourcekey="pnlNotificationAdmin" GroupingText="Add Remove Notifications(Managers Only)">
+<asp:Panel ID="pnlNotificationAdmin" runat="server" meta:resourcekey="pnlNotificationAdmin" GroupingText="Add Remove Notifications (Managers Only)">
     <table style="padding:15px">
         <tr>
             <td rowspan="3">

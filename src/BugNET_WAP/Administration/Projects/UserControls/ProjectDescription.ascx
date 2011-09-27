@@ -20,7 +20,7 @@
                 <div style="display:inline-block;">
                     <bn:HtmlEditor id="ProjectDescriptionHtmlEditor" Width="450" runat="server"  />
                     <asp:RequiredFieldValidator Text="<%$ Resources:SharedResources, Required %>" ErrorMessage="Description is required"  Display="Dynamic"
-                        meta:resourcekey="DescriptionRequiredFieldValidator" SetFocusOnError="True" ControlToValidate="ProjectDescriptionHtmlEditor" Runat="server" id="RequiredFieldValidator2" /> 
+                        SetFocusOnError="True" ControlToValidate="ProjectDescriptionHtmlEditor" Runat="server" id="RequiredFieldValidator2" /> 
                 </div>
             </li>
            <li>       
@@ -83,7 +83,7 @@
                         </div>
                     </li>
                     <li id="AttachmentUploadPathRow" runat="server" visible="false">
-                        <asp:Label CssClass="col1" ID="Label5" AssociatedControlID="txtUploadPath" meta:resourcekey="UploadPathLabel" runat="server" Text="Upload Path:" />
+                        <asp:Label CssClass="col1" ID="Label5" AssociatedControlID="txtUploadPath" meta:resourcekey="UploadPath" runat="server" Text="Upload Path:" />
                         ~\Uploads\&nbsp;<asp:TextBox id="txtUploadPath" Width="300px" runat="Server" Text="" />
                         <asp:CustomValidator ID="validUploadPath" runat="server" 
                             ControlToValidate="txtUploadPath" 

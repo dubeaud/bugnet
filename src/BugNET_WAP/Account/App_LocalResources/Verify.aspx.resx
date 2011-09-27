@@ -117,49 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AccessTypeLabel.Text" xml:space="preserve">
-    <value>Access Type:</value>
+  <data name="InvalidUserAccountID" xml:space="preserve">
+    <value>An invalid user account id was detected</value>
   </data>
-  <data name="AttachmentStorageTypeLabel.Text" xml:space="preserve">
-    <value>Storage Type:</value>
+  <data name="UserAccountCouldNotBeFound" xml:space="preserve">
+    <value>The user account could not be found in the membership database.</value>
   </data>
-  <data name="Description.Text" xml:space="preserve">
-    <value>Description:</value>
-  </data>
-  <data name="EnableAttachmentsLabel.Text" xml:space="preserve">
-    <value>Allow Attachments:</value>
-  </data>
-  <data name="ProjectCodeLabel.Text" xml:space="preserve">
-    <value>Project Code:</value>
-  </data>
-  <data name="ProjectCodeValidator.ErrorMessage" xml:space="preserve">
-    <value>Project Code is required</value>
-  </data>
-  <data name="ProjectDescription.Text" xml:space="preserve">
-    <value>Enter the details for the project.</value>
-  </data>
-  <data name="ProjectDescriptionValidator.ErrorMessage" xml:space="preserve">
-    <value>Description is required</value>
-  </data>
-  <data name="ProjectManagerLabel.Text" xml:space="preserve">
-    <value>Manager:</value>
-  </data>
-  <data name="ProjectManagerValidator.ErrorMessage" xml:space="preserve">
-    <value>Project Manager is required</value>
-  </data>
-  <data name="ProjectName.Text" xml:space="preserve">
-    <value>Project Name:</value>
-  </data>
-  <data name="ProjectNameRequiredFieldValidator.ErrorMessage" xml:space="preserve">
-    <value>Project Name is required</value>
-  </data>
-  <data name="SelectUser" xml:space="preserve">
-    <value>-- Select User --</value>
-  </data>
-  <data name="UploadPath.Text" xml:space="preserve">
-    <value>Upload Path:</value>
-  </data>
-  <data name="AllowIssueVotingLabel.Text" xml:space="preserve">
-    <value>Allow Issue Voting:</value>
+  <data name="LoginLabel.Text" xml:space="preserve">
+    <value>Verify Your Account</value>
   </data>
 </root>

@@ -142,4 +142,7 @@
   <data name="Page.Title" xml:space="preserve">
     <value>Issue List</value>
   </data>
+  <data name="ViewIssuesLabel.Text" xml:space="preserve">
+    <value>View Issues:</value>
+  </data>
 </root>

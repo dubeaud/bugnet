@@ -153,4 +153,7 @@
   <data name="Page.Title" xml:space="preserve">
     <value>Project Calendar</value>
   </data>
+  <data name="ViewLabel.Text" xml:space="preserve">
+    <value>View:</value>
+  </data>
 </root>

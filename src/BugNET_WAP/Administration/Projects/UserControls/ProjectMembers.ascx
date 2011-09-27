@@ -32,7 +32,7 @@
 			<h3><asp:literal ID="Literal1" runat="Server" meta:resourcekey="AssignUserTitle" /></h3>
 		</div>
 		<p>	
-		    <asp:label ID="Label3" runat="server" meta:resourcekey="AssignUsersDescriptionLabel" /> 
+		    <asp:label ID="Label3" runat="server" meta:resourcekey="AssignUsersDescription" /> 
 		</p>
 		<div>
 		    <asp:UpdatePanel ID="UpdatePanel2" RenderMode="inline" runat="Server">
