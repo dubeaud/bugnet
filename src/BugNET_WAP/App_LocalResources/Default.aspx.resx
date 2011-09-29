@@ -136,7 +136,7 @@
     <value>Next milestone due - {0}</value>
   </data>
   <data name="NoDueDatesSet" xml:space="preserve">
-    <value>&lt;font color='red'&gt;No due dates set&lt;/font&gt;</value>
+    <value>&lt;font color='red'&gt;No due dates set.&lt;/font&gt;</value>
   </data>
   <data name="None" xml:space="preserve">
     <value>none</value>
@@ -163,6 +163,9 @@
     <value>Updated Recently</value>
   </data>
   <data name="NoStatusSet" xml:space="preserve">
-    <value>No status set on project</value>
+    <value>&lt;font color='red'&gt;Warning:&lt;/font&gt; No Statuses set on project.</value>
+  </data>
+  <data name="NoClosedStatus" xml:space="preserve">
+    <value>&lt;Font color='red'&gt;Warning:&lt;/font&gt; No Project Statuses are set to Closed</value>
   </data>
 </root>
