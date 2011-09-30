@@ -93,24 +93,59 @@ namespace BugNET.BLL.Notifications
                         smtpDomain = HostSettingManager.GetHostSetting("SMTPDomain", string.Empty);
                     }
 
-                    using(var smtp = new SmtpClient())
+
+
+                    using (var smtp = new SmtpClient())
                     {
-                        smtp.Host = smtpServer;
-                        smtp.Port = smtpPort;
-                        smtp.EnableSsl = smtpUseSSL;
-
-                        if (smtpAuthentictation)
-                            smtp.Credentials = new NetworkCredential(smtpUsername, smtpPassword, smtpDomain);
-
-                        using(var message = new MailMessage(
-                            from, 
-                            user.Email, 
-                            context.Subject, 
-                            context.BodyText) {IsBodyHtml = true})
+                        try
                         {
-                            smtp.Send(message);   
+                            smtp.Host = smtpServer;
+                            smtp.Port = smtpPort;
+                            smtp.EnableSsl = smtpUseSSL;
+
+                            if (smtpAuthentictation)
+                                smtp.Credentials = new NetworkCredential(smtpUsername, smtpPassword, smtpDomain);
+
+                            using (var message = new MailMessage(
+                                from,
+                                user.Email,
+                                context.Subject,
+                                context.BodyText) { IsBodyHtml = true })
+                            {
+                                smtp.Send(message);
+                            }
+                        }
+                        finally
+                        {
+                            if (smtpAuthentictation)
+                            {
+                                // Clean up the credentials left in memory by overwriting.
+                                //
+                                // This method is the only place which will expose the smtp server
+                                // username and password unencrypted. (I have not done the encryption
+                                // yet, but when it does... - SMoss).
+
+                                // A normal windows memory dump will expose the credentials to a
+                                // trained attacker (especially if they are obvious).
+
+                                // TODO: Have not tested if this actually sanitizes the memory or                                
+                                // allocates a new chunk of memory containing the "overwrite" characters.
+
+                                smtp.Credentials = null;                                
+                                
+                                // Dont make these point to a variable, use three seperate
+                                // strings.
+
+                                // Most older compilers dont see this trick and creates
+                                // three instances of the overwrite characters.
+
+                                smtpPassword = "                            ";
+                                smtpUsername = "                            ";
+                                smtpDomain = "                            ";
+                            }
                         }
                     }
+
                 }
             }
             catch (Exception ex)
