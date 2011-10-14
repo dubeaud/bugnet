@@ -45,7 +45,6 @@
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ApplicationLog.cs" />
-    <Compile Include="ApplicationLogComparer.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="CustomField.cs" />
     <Compile Include="CustomFieldSelection.cs" />
@@ -57,7 +56,6 @@
     <Compile Include="IssueAttachment.cs" />
     <Compile Include="IssueAttachmentStorageType.cs" />
     <Compile Include="IssueComment.cs" />
-    <Compile Include="IssueComparer.cs" />
     <Compile Include="IssueCount.cs" />
     <Compile Include="IssueHistory.cs" />
     <Compile Include="IssueNotification.cs" />
@@ -74,7 +72,6 @@
     <Compile Include="Permission.cs" />
     <Compile Include="Priority.cs" />
     <Compile Include="Project.cs" />
-    <Compile Include="ProjectComparer.cs" />
     <Compile Include="ProjectImage.cs" />
     <Compile Include="ProjectMailbox.cs" />
     <Compile Include="ProjectNotification.cs" />

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using BugNET.Entities;
 
-namespace BugNET.Entities
+namespace BugNET.BLL
 {
     /// <summary>
     /// Comparers for Issues.
@@ -98,6 +99,7 @@ namespace BugNET.Entities
               break;
             case "Priority":
               retVal = (x.PriorityId - y.PriorityId);
+              // retVal = (PriorityManager.GetPriorityById(x.PriorityId).SortOrder - PriorityManager.GetPriorityById(y.PriorityId).SortOrder);
               break;
             case "TimeLogged":
               retVal = (int)(x.TimeLogged - y.TimeLogged);

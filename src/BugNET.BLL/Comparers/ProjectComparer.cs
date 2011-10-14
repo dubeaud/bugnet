@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using BugNET.Entities;
 
-namespace BugNET.Entities
+namespace BugNET.BLL
 {
     public class ProjectComparer : IComparer<Project>
     {
