@@ -98,8 +98,8 @@ namespace BugNET.BLL
               retVal = (x.StatusId- y.StatusId);
               break;
             case "Priority":
-              retVal = (x.PriorityId - y.PriorityId);
-              // retVal = (PriorityManager.GetPriorityById(x.PriorityId).SortOrder - PriorityManager.GetPriorityById(y.PriorityId).SortOrder);
+              // retVal = (x.PriorityId - y.PriorityId);
+              retVal = (PriorityManager.GetPriorityById(x.PriorityId).SortOrder - PriorityManager.GetPriorityById(y.PriorityId).SortOrder);
               break;
             case "TimeLogged":
               retVal = (int)(x.TimeLogged - y.TimeLogged);
