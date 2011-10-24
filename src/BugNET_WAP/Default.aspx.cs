@@ -177,9 +177,12 @@ namespace BugNET
                     }
                     else
                     {
-                        // No open issue states means that nothing is open.
-                        // Optimization by not running the query.
-                        OpenIssuesLink.Text = string.Format(GetLocalResourceObject("OpenIssuesCount").ToString(), 0);
+                        // OpenIssuesLink.Text = string.Format(GetLocalResourceObject("OpenIssuesCount").ToString(), 0);
+
+                        // No open issue statuses means there is a problem with the setup of the system.
+                        OpenIssuesLink.Text = GetLocalResourceObject("NoClosedStatus").ToString();
+                            
+                        
                     }
                 }
                 else

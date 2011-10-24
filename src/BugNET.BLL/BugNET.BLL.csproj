@@ -50,9 +50,12 @@
     <Compile Include="..\Common\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Comparers\ApplicationLogComparer.cs" />
     <Compile Include="ApplicationLogManager.cs" />
     <Compile Include="CategoryManager.cs" />
     <Compile Include="CategoryTree.cs" />
+    <Compile Include="Comparers\IssueComparer.cs" />
+    <Compile Include="Comparers\ProjectComparer.cs" />
     <Compile Include="CustomFieldManager.cs" />
     <Compile Include="CustomFieldSelectionManager.cs" />
     <Compile Include="HostSettingManager.cs" />

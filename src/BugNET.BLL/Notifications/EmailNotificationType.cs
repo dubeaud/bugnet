@@ -73,13 +73,12 @@ namespace BugNET.BLL.Notifications
 
                 //check if this user had this notifiction type enabled in their profile.
                 if (user != null && UserManager.IsNotificationTypeEnabled(context.Username, Name))
-                {                                   
+                {
                     var from = HostSettingManager.HostEmailAddress;
                     var smtpServer = HostSettingManager.SmtpServer;
                     var smtpPort = int.Parse(HostSettingManager.Get(HostSettingNames.SMTPPort));
                     var smtpAuthentictation = Convert.ToBoolean(HostSettingManager.Get(HostSettingNames.SMTPAuthentication));
                     var smtpUseSSL = Boolean.Parse(HostSettingManager.Get(HostSettingNames.SMTPUseSSL));
-                    
 
                     // Security Bugfix by SMOSS
                     // Only fetch the password if you need it
@@ -94,8 +93,9 @@ namespace BugNET.BLL.Notifications
                         smtpDomain = HostSettingManager.Get(HostSettingNames.SMTPDomain, string.Empty);
                     }
 
-                    using(var smtp = new SmtpClient())
+                    using (var smtp = new SmtpClient())
                     {
+
                         smtp.Host = smtpServer;
                         smtp.Port = smtpPort;
                         smtp.EnableSsl = smtpUseSSL;
@@ -103,15 +103,17 @@ namespace BugNET.BLL.Notifications
                         if (smtpAuthentictation)
                             smtp.Credentials = new NetworkCredential(smtpUsername, smtpPassword, smtpDomain);
 
-                        using(var message = new MailMessage(
-                            from, 
-                            user.Email, 
-                            context.Subject, 
-                            context.BodyText) {IsBodyHtml = true})
+                        using (var message = new MailMessage(
+                            from,
+                            user.Email,
+                            context.Subject,
+                            context.BodyText) { IsBodyHtml = true })
                         {
-                            smtp.Send(message);   
+                            smtp.Send(message);
                         }
+
                     }
+
                 }
             }
             catch (Exception ex)
