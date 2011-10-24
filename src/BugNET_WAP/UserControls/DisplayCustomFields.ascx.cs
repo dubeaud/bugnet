@@ -102,10 +102,10 @@ namespace BugNET.UserControls
 
                 switch (currentField.FieldType)
                 {
-                    case CustomField.CustomFieldType.DropDownList:
+                    case Common.CustomFieldType.DropDownList:
                         DropDownList ddl = new DropDownList();
                         ddl.ID = FIELD_VALUE_NAME;
-                        ddl.DataSource = CustomFieldSelectionManager.GetCustomFieldsSelectionsByCustomFieldId(currentField.Id);
+                        ddl.DataSource = CustomFieldSelectionManager.GetByCustomFieldId(currentField.Id);
                         ddl.DataTextField = "Name";
                         ddl.DataValueField = "Value";
                         ddl.DataBind();
@@ -115,7 +115,7 @@ namespace BugNET.UserControls
                         if (IsLocked)
                             ddl.Enabled = false;
                         break;
-                    case CustomField.CustomFieldType.Date:
+                    case Common.CustomFieldType.Date:
                         TextBox FieldValue1 = new TextBox();
                         AjaxControlToolkit.CalendarExtender cal = new AjaxControlToolkit.CalendarExtender();
                         Image img = new Image();
@@ -139,37 +139,36 @@ namespace BugNET.UserControls
                             img.Visible = false;
                         }
                         break;
-                    case CustomField.CustomFieldType.Text:
-                        TextBox FieldValue = new TextBox();
-                        FieldValue.ID = FIELD_VALUE_NAME;
-                        FieldValue.Text = currentField.Value;
-                        ph.Controls.Add(FieldValue);
+                    case Common.CustomFieldType.Text:
+                        var fieldValue = new TextBox {ID = FIELD_VALUE_NAME, Text = currentField.Value};
+                        ph.Controls.Add(fieldValue);
                         if (IsLocked)
-                            FieldValue.Enabled = false;
+                            fieldValue.Enabled = false;
                         break;
-                    case CustomField.CustomFieldType.YesNo:
-                        CheckBox chk = new CheckBox();
-                        chk.ID = FIELD_VALUE_NAME;
+                    case Common.CustomFieldType.YesNo:
+                        var chk = new CheckBox {ID = FIELD_VALUE_NAME};
                         if (!String.IsNullOrEmpty(currentField.Value))
                             chk.Checked = Boolean.Parse(currentField.Value);
                         ph.Controls.Add(chk);
                         if (IsLocked)
                             chk.Enabled = false;
                         break;
-                    case CustomField.CustomFieldType.RichText:
-                        BugNET.UserControls.HtmlEditor editor = new HtmlEditor();
-                        editor.ID = FIELD_VALUE_NAME;       
+                    case Common.CustomFieldType.RichText:
+                        var editor = new HtmlEditor {ID = FIELD_VALUE_NAME};
+
                         ph.Controls.Add(editor);
                         editor.Text = currentField.Value;
                         //if (IsLocked)
                         //    editor.Enabled = false;
                         break;
-                    case CustomField.CustomFieldType.UserList:
-                        ddl = new DropDownList();
-                        ddl.ID = FIELD_VALUE_NAME;
-                        ddl.DataSource = UserManager.GetUsersByProjectId(currentField.ProjectId);
-                        ddl.DataTextField = "DisplayName";
-                        ddl.DataValueField = "UserName";
+                    case Common.CustomFieldType.UserList:
+                        ddl = new DropDownList
+                                  {
+                                      ID = FIELD_VALUE_NAME,
+                                      DataSource = UserManager.GetUsersByProjectId(currentField.ProjectId),
+                                      DataTextField = "DisplayName",
+                                      DataValueField = "UserName"
+                                  };
                         ddl.DataBind();
                         ddl.Items.Insert(0, new ListItem("-- Select One --", string.Empty));
                         ddl.SelectedValue = currentField.Value;
@@ -179,33 +178,39 @@ namespace BugNET.UserControls
                         break;
                 }
 
-                Label lblFieldName = (Label)e.Item.FindControl("lblFieldName");
+                var lblFieldName = (Label)e.Item.FindControl("lblFieldName");
                 lblFieldName.AssociatedControlID = FIELD_VALUE_NAME;
                 lblFieldName.Text = string.Format("{0}:", currentField.Name);
 
                 if (EnableValidation) 
                 { 
                     //if required dynamically add a required field validator
-                    if (currentField.Required && currentField.FieldType != CustomField.CustomFieldType.YesNo)
+                    if (currentField.Required && currentField.FieldType != Common.CustomFieldType.YesNo)
                     {
-                        RequiredFieldValidator valReq = new RequiredFieldValidator();
-                        valReq.ControlToValidate = FIELD_VALUE_NAME;
-                        valReq.Text = " (required)";
-                        valReq.Display = ValidatorDisplay.Dynamic;
-                        if (currentField.FieldType == CustomField.CustomFieldType.DropDownList)
+                        var valReq = new RequiredFieldValidator
+                                         {
+                                             ControlToValidate = FIELD_VALUE_NAME,
+                                             Text = " (required)",
+                                             Display = ValidatorDisplay.Dynamic
+                                         };
+
+                        if (currentField.FieldType == Common.CustomFieldType.DropDownList)
                             valReq.InitialValue = string.Empty;
+
                         ph.Controls.Add(valReq);
                     }
 
                     //create datatype check validator
-                    if (currentField.FieldType != CustomField.CustomFieldType.YesNo)
+                    if (currentField.FieldType != Common.CustomFieldType.YesNo)
                     {
-                        CompareValidator valCompare = new CompareValidator();
-                        valCompare.Type = currentField.DataType;
-                        valCompare.Text = String.Format("({0})", currentField.DataType);
-                        valCompare.Operator = ValidationCompareOperator.DataTypeCheck;
-                        valCompare.Display = ValidatorDisplay.Dynamic;
-                        valCompare.ControlToValidate = FIELD_VALUE_NAME;
+                        var valCompare = new CompareValidator
+                                             {
+                                                 Type = currentField.DataType,
+                                                 Text = String.Format("({0})", currentField.DataType),
+                                                 Operator = ValidationCompareOperator.DataTypeCheck,
+                                                 Display = ValidatorDisplay.Dynamic,
+                                                 ControlToValidate = FIELD_VALUE_NAME
+                                             };
                         ph.Controls.Add(valCompare);
                     }
                 }
@@ -222,18 +227,18 @@ namespace BugNET.UserControls
         {
             get
             {
-                List<CustomField> colFields = new List<CustomField>();
-                for (int i = 0; i < lstCustomFields.Items.Count; i++)
+                var colFields = new List<CustomField>();
+                for (var i = 0; i < lstCustomFields.Items.Count; i++)
                 {
-                    DataListItem item = lstCustomFields.Items[i];
+                    var item = lstCustomFields.Items[i];
                     if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
                     {
-                        int fieldId = (int)lstCustomFields.DataKeys[i];
+                        var fieldId = (int)lstCustomFields.DataKeys[i];
 
-                        Control c = item.FindControl("FieldValue");
+                        var c = item.FindControl("FieldValue");
                         if (c != null)
                         {
-                            string fieldValue = string.Empty;
+                            var fieldValue = string.Empty;
 
                             if (c.GetType() == typeof(DropDownList) && ((DropDownList)c).SelectedIndex != 0)
                                 fieldValue = ((DropDownList)c).SelectedValue;
@@ -244,10 +249,10 @@ namespace BugNET.UserControls
                             if (c.GetType() == typeof(CheckBox))
                                 fieldValue = ((CheckBox)c).Checked.ToString();
 
-                            if (c.GetType() == typeof(BugNET.UserControls.HtmlEditor))
-                                fieldValue = ((BugNET.UserControls.HtmlEditor)c).Text;
+                            if (c.GetType() == typeof(HtmlEditor))
+                                fieldValue = ((HtmlEditor)c).Text;
 
-                            colFields.Add(new CustomField(fieldId, fieldValue));
+                            colFields.Add(new CustomField { Id = fieldId, Value = fieldValue});
                         }
                     }
                 }

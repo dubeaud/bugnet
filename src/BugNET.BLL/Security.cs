@@ -9,7 +9,7 @@ namespace BugNET.BLL
 	public static class Security
 	{
         private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
+         
         /// <summary>
         /// Gets the name of the logged on user.
         /// </summary>

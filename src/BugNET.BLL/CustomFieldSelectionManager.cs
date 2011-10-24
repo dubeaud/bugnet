@@ -14,19 +14,19 @@ namespace BugNET.BLL
         /// <summary>
         /// Saves this instance.
         /// </summary>
-        /// <param name="customFieldSelectionToSave">The custom field selection to save.</param>
+        /// <param name="entity">The custom field selection to save.</param>
         /// <returns></returns>
-        public static bool SaveCustomFieldSelection(CustomFieldSelection customFieldSelectionToSave)
+        public static bool SaveOrUpdate(CustomFieldSelection entity)
         {
-            if (customFieldSelectionToSave.Id > Globals.NEW_ID)
-                return (DataProviderManager.Provider.UpdateCustomFieldSelection(customFieldSelectionToSave));
+            if (entity.Id > Globals.NEW_ID)
+                return (DataProviderManager.Provider.UpdateCustomFieldSelection(entity));
 
-            var tempId = DataProviderManager.Provider.CreateNewCustomFieldSelection(customFieldSelectionToSave);
+            var tempId = DataProviderManager.Provider.CreateNewCustomFieldSelection(entity);
 
             if (tempId <= 0)
                 return false;
 
-            customFieldSelectionToSave.Id = tempId;
+            entity.Id = tempId;
             return true;
         }
 
@@ -37,10 +37,9 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="customFieldSelectionId">The custom field selection id.</param>
         /// <returns></returns>
-        public static bool DeleteCustomFieldSelection(int customFieldSelectionId)
+        public static bool Delete(int customFieldSelectionId)
         {
-            if (customFieldSelectionId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("customFieldSelectionId"));
+            if (customFieldSelectionId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("customFieldSelectionId"));
 
             return (DataProviderManager.Provider.DeleteCustomFieldSelection(customFieldSelectionId));
         }
@@ -51,50 +50,11 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="customFieldId">The custom field id.</param>
         /// <returns></returns>
-        public static List<CustomFieldSelection> GetCustomFieldsSelectionsByCustomFieldId(int customFieldId)
+        public static List<CustomFieldSelection> GetByCustomFieldId(int customFieldId)
         {
-            if (customFieldId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("customFieldId"));
+            if (customFieldId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("customFieldId"));
 
             return (DataProviderManager.Provider.GetCustomFieldSelectionsByCustomFieldId(customFieldId));
-        }
-
-        /// <summary>
-        /// Updates the custom field selection.
-        /// </summary>
-        /// <param name="id">The id.</param>
-        /// <param name="name">The name.</param>
-        /// <param name="value">The value.</param>
-        /// <param name="sortOrder">The sort order.</param>
-        /// <param name="customFieldId">The custom field id.</param>
-        /// <returns></returns>
-        public static bool UpdateCustomFieldSelection(int id, string name, string value, int sortOrder, int customFieldId)
-        {
-            var cfs = GetCustomFieldSelectionById(id);
-
-            cfs.Name = name;
-            cfs.Value = value;
-            cfs.SortOrder = sortOrder;
-            //cfs.CustomFieldId = customFieldId;
-
-            return (DataProviderManager.Provider.UpdateCustomFieldSelection(cfs));
-        }
-
-        /// <summary>
-        /// Creates the custom field selection.
-        /// </summary>
-        /// <param name="name">The name.</param>
-        /// <param name="value">The value.</param>
-        /// <param name="customFieldId">The custom field id.</param>
-        /// <param name="sortOrder">The sort order.</param>
-        /// <returns></returns>
-        public static int CreateCustomFieldSelection(string name, string value, int customFieldId, int sortOrder)
-        {
-
-            var cfs = new CustomFieldSelection(Globals.NEW_ID, customFieldId,
-                name, value, sortOrder);
-
-            return (DataProviderManager.Provider.CreateNewCustomFieldSelection(cfs));
         }
 
         /// <summary>
@@ -102,7 +62,7 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="id">The id.</param>
         /// <returns></returns>
-        public static CustomFieldSelection GetCustomFieldSelectionById(int id)
+        public static CustomFieldSelection GetById(int id)
         {
             return (DataProviderManager.Provider.GetCustomFieldSelectionById(id));
         }

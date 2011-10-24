@@ -1,67 +1,15 @@
 ﻿using System;
+using System.Xml.Serialization;
 using BugNET.Common;
 
 namespace BugNET.Entities
 {
-    public class Issue  : IToXml
+    public class Issue
     {
-        #region Private Variables
-        private string _AssignedDisplayName;
-        private Guid _AssignedUserId;
-        private string _AssignedUserName;
-        private string _CreatorDisplayName;
-        private string _CreatorUserName;
-        private Guid _CreatorUserId;
-        private string _LastUpdateDisplayName;
-        private string _LastUpdateUserName;
-        private DateTime _LastUpdate;
-        private int _CategoryId;
-        private string _CategoryName;
-        private DateTime _DateCreated;
-        private int _Id;
-        private int _MilestoneId;
-        private string _MilestoneName;
-        private string _MilestoneImageUrl;
-        private DateTime? _MilestoneDueDate;
-        private int _PriorityId;
-        private string _PriorityName;
-        private string _PriorityImageUrl;
-        private int _StatusId;
-        private string _StatusName;
-        private string _StatusImageUrl;
-        private int _IssueTypeId;
-        private string _IssueTypeName;
-        private string _IssueTypeImageUrl;
-        private int _ResolutionId;
-        private string _ResolutionName;
-        private string _ResolutionImageUrl;
-        private string _ProjectName;
-        private int _ProjectId;
-        private string _Title;
-        private string _Description;
-        private bool _NewAssignee;
-        private string _ProjectCode;
-        private DateTime _DueDate;
-        private int _Visibility;
-        private double _TimeLogged;
-        private decimal _Estimation;
-        private string _OwnerUserName;
-        private string _OwnerDisplayName;
-        private Guid _OwnerUserId;
-        private int _AffectedMilestoneId;
-        private string _AffectedMilestoneName;
-        private string _AffectedMilestoneImageUrl;
-        private int _Progress;
-        private bool _Disabled;
-        private int _Votes;
-        private bool _SendNewAssigneeNotification;
-        private bool _IsClosed;
-        #endregion
-
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:Issue"/> class.
+        /// Initializes a new instance of the <see cref="Issue"/> class.
         /// </summary>
         /// <param name="id">The id.</param>
         /// <param name="projectId">The project id.</param>
@@ -109,6 +57,7 @@ namespace BugNET.Entities
         /// <param name="lastUpdateDisplayName">Last name of the update display.</param>
         /// <param name="progress">The progress.</param>
         /// <param name="disabled">if set to <c>true</c> [disabled].</param>
+        /// <param name="votes"></param>
         public Issue(
             int id,
             int projectId,
@@ -158,136 +107,149 @@ namespace BugNET.Entities
             bool disabled,
             int votes)
         {
-            _Id = id;
-            _ProjectId = projectId;
-            _ProjectName = projectName;
-            _ProjectCode = projectCode;
-            _Title = title;
-            _IssueTypeId = issueTypeId;
-            _IssueTypeName = issueTypeName;
-            _IssueTypeImageUrl = issueTypeImageUrl;
-            _Description = description;
-            _CategoryId = categoryId;
-            _CategoryName = categoryName;
-            _MilestoneId = milestoneId;
-            _MilestoneName = milestoneName;
-            _MilestoneImageUrl = milestoneImageUrl;
-            _MilestoneDueDate = milestoneDueDate;
-            _AffectedMilestoneId = affectedMilestoneId;
-            _AffectedMilestoneName = affectedMilestoneName;
-            _AffectedMilestoneImageUrl = affectedMilestoneImageUrl;
-            _PriorityId = priorityId;
-            _PriorityName = priorityName;
-            _PriorityImageUrl = priorityImageUrl;
-            _StatusId = statusId;
-            _StatusName = statusName;
-            _StatusImageUrl = statusImageUrl;
-            _IssueTypeId = issueTypeId;
-            _IssueTypeName = issueTypeName;
-            _IssueTypeImageUrl = issueTypeImageUrl;
-            _ResolutionId = resolutionId;
-            _ResolutionName = resolutionName;
-            _ResolutionImageUrl = resolutionImageUrl;
-            _DateCreated = dateCreated;
-            _AssignedUserName = assignedUserName;
-            _AssignedDisplayName = assignedDisplayName;
-            _AssignedUserId = assignedUserId;
-            _CreatorDisplayName = creatorDisplayName;
-            _CreatorUserName = creatorUserName;
-            _CreatorUserId = creatorUserId;
-            _OwnerDisplayName = ownerDisplayName;
-            _OwnerUserName = ownerUserName;
-            _OwnerUserId = ownerUserId;
-            _LastUpdateDisplayName = lastUpdateDisplayName;
-            _LastUpdate = lastUpdate;
-            _LastUpdateUserName = lastUpdateUserName;
-            _DueDate = dueDate;
-            _Visibility = visiblity;
-            _TimeLogged = timeLogged;
-            _Estimation = estimation;
-            _Progress = progress;
-            _Disabled = disabled;
-            _Votes = votes;
-        }
-
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:Issue"/> class.
-        /// </summary>
-        /// <param name="projectId">The project id.</param>
-        /// <param name="summary">The summary.</param>
-        /// <param name="description">The description.</param>
-        /// <param name="componentId">The component id.</param>
-        /// <param name="versionId">The version id.</param>
-        /// <param name="priorityId">The priority id.</param>
-        /// <param name="statusId">The status id.</param>
-        /// <param name="IssueTypeId">The type id.</param>
-        /// <param name="fixedInVersionId">The fixed in version id.</param>
-        /// <param name="AssignedToUserName">Name of the assigned to user.</param>
-        /// <param name="reporterUserName">The reporter username.</param>
-        /// <param name="estimation">The estimation.</param>
-        public Issue(int id, int projectId, string title, string description, int categoryId,
-            int priorityId, int statusId, int issueTypeId, int milestoneId, int affectedMilestoneId, int resolutionId, string ownerUserName, string assignedUserName, string creatorUserName, decimal estimation, int visibility, DateTime dueDate)
-            : this
-        (
-            id,
-            projectId,
-            String.Empty,
-            String.Empty,
-            title,
-            description,
-            categoryId,
-            String.Empty,
-            priorityId,
-            string.Empty,
-            string.Empty,
-            statusId,
-            string.Empty,
-            string.Empty,
-            issueTypeId,
-            string.Empty,
-            string.Empty,
-            resolutionId,
-            string.Empty,
-            string.Empty,
-            string.Empty,
-            assignedUserName,
-            Guid.Empty,
-            String.Empty,
-            creatorUserName,
-            Guid.Empty,
-            string.Empty,
-            ownerUserName,
-            Guid.Empty,
-            dueDate,
-            milestoneId,
-            String.Empty,
-            string.Empty,
-            null,
-            affectedMilestoneId,
-            string.Empty,
-            string.Empty,
-            visibility,
-            0,
-            estimation,
-            DateTime.Now,
-            DateTime.Now,
-            creatorUserName,
-            string.Empty,
-            0,
-            false,
-            0
-        )
-        {
-            if (!String.IsNullOrEmpty(AssignedUserName))
-                _NewAssignee = true;
+            Id = id;
+            ProjectId = projectId;
+            ProjectName = projectName;
+            ProjectCode = projectCode;
+            Title = title;
+            IssueTypeId = issueTypeId;
+            IssueTypeName = issueTypeName;
+            IssueTypeImageUrl = issueTypeImageUrl;
+            Description = description;
+            CategoryId = categoryId;
+            CategoryName = categoryName;
+            MilestoneId = milestoneId;
+            MilestoneName = milestoneName;
+            MilestoneImageUrl = milestoneImageUrl;
+            MilestoneDueDate = milestoneDueDate;
+            AffectedMilestoneId = affectedMilestoneId;
+            AffectedMilestoneName = affectedMilestoneName;
+            AffectedMilestoneImageUrl = affectedMilestoneImageUrl;
+            PriorityId = priorityId;
+            PriorityName = priorityName;
+            PriorityImageUrl = priorityImageUrl;
+            StatusId = statusId;
+            StatusName = statusName;
+            StatusImageUrl = statusImageUrl;
+            IssueTypeId = issueTypeId;
+            IssueTypeName = issueTypeName;
+            IssueTypeImageUrl = issueTypeImageUrl;
+            ResolutionId = resolutionId;
+            ResolutionName = resolutionName;
+            ResolutionImageUrl = resolutionImageUrl;
+            DateCreated = dateCreated;
+            AssignedUserName = assignedUserName;
+            AssignedDisplayName = assignedDisplayName;
+            AssignedUserId = assignedUserId;
+            CreatorDisplayName = creatorDisplayName;
+            CreatorUserName = creatorUserName;
+            CreatorUserId = creatorUserId;
+            OwnerDisplayName = ownerDisplayName;
+            OwnerUserName = ownerUserName;
+            OwnerUserId = ownerUserId;
+            LastUpdateDisplayName = lastUpdateDisplayName;
+            LastUpdate = lastUpdate;
+            LastUpdateUserName = lastUpdateUserName;
+            DueDate = dueDate;
+            Visibility = visiblity;
+            TimeLogged = timeLogged;
+            Estimation = estimation;
+            Progress = progress;
+            Disabled = disabled;
+            Votes = votes;
         }
 
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Issue"/> class.
         /// </summary>
-        public Issue() { }
+        /// <param name="id"></param>
+        /// <param name="projectId">The project id.</param>
+        /// <param name="title"></param>
+        /// <param name="description">The description.</param>
+        /// <param name="categoryId"></param>
+        /// <param name="priorityId">The priority id.</param>
+        /// <param name="statusId">The status id.</param>
+        /// <param name="creatorUserName"></param>
+        /// <param name="estimation">The estimation.</param>
+        /// <param name="issueTypeId"></param>
+        /// <param name="milestoneId"></param>
+        /// <param name="affectedMilestoneId"></param>
+        /// <param name="resolutionId"></param>
+        /// <param name="ownerUserName"></param>
+        /// <param name="assignedUserName"></param>
+        /// <param name="visibility"></param>
+        /// <param name="dueDate"></param>
+        public Issue(int id, int projectId, string title, string description, int categoryId,
+                     int priorityId, int statusId, int issueTypeId, int milestoneId, int affectedMilestoneId,
+                     int resolutionId, string ownerUserName, string assignedUserName, string creatorUserName,
+                     decimal estimation, int visibility, DateTime dueDate)
+            : this
+                (
+                id,
+                projectId,
+                String.Empty,
+                String.Empty,
+                title,
+                description,
+                categoryId,
+                String.Empty,
+                priorityId,
+                string.Empty,
+                string.Empty,
+                statusId,
+                string.Empty,
+                string.Empty,
+                issueTypeId,
+                string.Empty,
+                string.Empty,
+                resolutionId,
+                string.Empty,
+                string.Empty,
+                string.Empty,
+                assignedUserName,
+                Guid.Empty,
+                String.Empty,
+                creatorUserName,
+                Guid.Empty,
+                string.Empty,
+                ownerUserName,
+                Guid.Empty,
+                dueDate,
+                milestoneId,
+                String.Empty,
+                string.Empty,
+                null,
+                affectedMilestoneId,
+                string.Empty,
+                string.Empty,
+                visibility,
+                0,
+                estimation,
+                DateTime.Now,
+                DateTime.Now,
+                creatorUserName,
+                string.Empty,
+                0,
+                false,
+                0
+                )
+        {
+            NewAssignee = (!String.IsNullOrEmpty(AssignedUserName));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Issue"/> class.
+        /// </summary>
+        public Issue()
+        {
+            AssignedDisplayName = string.Empty;
+            AssignedUserName = string.Empty;
+            LastUpdateUserName = string.Empty;
+            Title = string.Empty;
+            Description = string.Empty;
+        }
+
         #endregion
 
         #region Properties
@@ -296,21 +258,7 @@ namespace BugNET.Entities
         /// Gets or sets a value indicating whether this instance is closed.
         /// </summary>
         /// <value><c>true</c> if this instance is closed; otherwise, <c>false</c>.</value>
-        public bool IsClosed
-        {
-            get
-            {
-                return _IsClosed;
-                //if (ProjectId != 0 && StatusId != 0)
-                //{
-                //    Status status = Status.GetStatusByProjectId(ProjectId).Find(s => s.Id == this.StatusId);
-                //    return status.IsClosedState ? true : false;
-                //}
-                //else
-                //    return false;
-            }
-            set { _IsClosed = value; }
-        }
+        public bool IsClosed { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [send new assignee notification].
@@ -318,61 +266,311 @@ namespace BugNET.Entities
         /// <value>
         /// 	<c>true</c> if [send new assignee notification]; otherwise, <c>false</c>.
         /// </value>
-        public bool SendNewAssigneeNotification
-        {
-            get;
-            set;
-        }
+        public bool SendNewAssigneeNotification { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [new assignee].
         /// </summary>
         /// <value><c>true</c> if [new assignee]; otherwise, <c>false</c>.</value>
-        public bool NewAssignee
-        {
-            get;
-            set;
-        }
+        public bool NewAssignee { get; set; }
 
         /// <summary>
         /// Gets or sets the progress.
         /// </summary>
         /// <value>The progress.</value>
-        public int Progress
-        {
-            get { return _Progress; }
-            set { _Progress = value; }
-        }
+        public int Progress { get; set; }
 
         /// <summary>
         /// Gets or sets the votes.
         /// </summary>
         /// <value>The votes.</value>
-        public int Votes
-        {
-            get { return _Votes; }
-            set { _Votes = value; }
-        }
+        public int Votes { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="Issue"/> is disabled.
         /// </summary>
         /// <value><c>true</c> if disabled; otherwise, <c>false</c>.</value>
-        public bool Disabled
-        {
-            get { return _Disabled; }
-            set { _Disabled = value; }
-        }
+        public bool Disabled { get; set; }
 
         /// <summary>
         /// Gets or sets the estimation.
         /// </summary>
         /// <value>The estimation.</value>
-        public decimal Estimation
+        public decimal Estimation { get; set; }
+
+        /// <summary>
+        /// Gets the time logged.
+        /// </summary>
+        /// <value>The time logged.</value>
+        public double TimeLogged { get; set; }
+
+
+        /// <summary>
+        /// Gets or sets the display name of the assigned to user.
+        /// </summary>
+        /// <value>The display name of the assigned to user.</value>
+        public string AssignedDisplayName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the display name of the assigned.
+        /// </summary>
+        /// <value>The display name of the assigned.</value>
+        public string AssignedUserName { get; set; }
+
+
+        /// <summary>
+        /// Gets or sets the visibility.
+        /// </summary>
+        /// <value>The visibility.</value>
+        public int Visibility { get; set; }
+
+
+        /// <summary>
+        /// Component Id
+        /// </summary>
+        public int CategoryId { get; set; }
+
+        /// <summary>
+        /// Component Name
+        /// </summary>
+        public string CategoryName { get; set; }
+
+        /// <summary>
+        /// Reporter Display Name
+        /// </summary>
+        public string CreatorDisplayName { get; set; }
+
+        /// <summary>
+        /// Reporter User Name
+        /// </summary>
+        public string CreatorUserName { get; set; }
+
+        /// <summary>
+        /// Gets the reporter user id.
+        /// </summary>
+        /// <value>The reporter user id.</value>
+        public Guid CreatorUserId { get; set; }
+
+        /// <summary>
+        /// Gets the owner username.
+        /// </summary>
+        /// <value>The owner username.</value>
+        public string OwnerUserName { get; set; }
+
+
+        /// <summary>
+        /// Gets the display name of the owner.
+        /// </summary>
+        /// <value>The display name of the owner.</value>
+        public string OwnerDisplayName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the owner id.
+        /// </summary>
+        /// <value>The owner id.</value>
+        public Guid OwnerUserId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the assigned to user id.
+        /// </summary>
+        /// <value>The assigned to user id.</value>
+        public Guid AssignedUserId { get; set; }
+
+        /// <summary>
+        /// Gets the date created.
+        /// </summary>
+        /// <value>The date created.</value>
+        public DateTime DateCreated { get; set; }
+
+        /// <summary>
+        /// Gets the id.
+        /// </summary>
+        /// <value>The id.</value>
+        public int Id { get; set; }
+
+        /// <summary>
+        /// Gets the full id.
+        /// </summary>
+        /// <value>The full id.</value>
+        [XmlIgnore]
+        public string FullId
         {
-            get { return _Estimation; }
-            set { _Estimation = value; }
+            get { return string.Concat(ProjectCode, "-", Id); }
         }
+
+        /// <summary>
+        /// Gets the last update.
+        /// </summary>
+        /// <value>The last update.</value>
+        public DateTime LastUpdate { get; set; }
+
+        /// <summary>
+        /// Gets the due date.
+        /// </summary>
+        /// <value>The due date.</value>
+        public DateTime DueDate { get; set; }
+
+        /// <summary>
+        /// Gets the name of the last update display.
+        /// </summary>
+        /// <value>The name of the last update display.</value>
+        public string LastUpdateDisplayName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the last update user.
+        /// </summary>
+        /// <value>The name of the last update user.</value>
+        public string LastUpdateUserName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the version id.
+        /// </summary>
+        /// <value>The version id.</value>
+        public int MilestoneId { get; set; }
+
+        /// <summary>
+        /// Gets the name of the version.
+        /// </summary>
+        /// <value>The name of the version.</value>
+        public string MilestoneName { get; set; }
+
+        /// <summary>
+        /// Gets the milestone image URL.
+        /// </summary>
+        /// <value>The milestone image URL.</value>
+        public string MilestoneImageUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the affected milestone id.
+        /// </summary>
+        /// <value>The affected milestone id.</value>
+        public int AffectedMilestoneId { get; set; }
+
+
+        /// <summary>
+        /// Gets the name of the affected milestone.
+        /// </summary>
+        /// <value>The name of the affected milestone.</value>
+        public string AffectedMilestoneName { get; set; }
+
+        /// <summary>
+        /// Gets the affected milestone image URL.
+        /// </summary>
+        /// <value>The affected milestone image URL.</value>
+        public string AffectedMilestoneImageUrl { get; set; }
+
+        /// <summary>
+        /// Gets the due date of the version.
+        /// </summary>
+        /// <value>The due date of the version.</value>
+        public DateTime? MilestoneDueDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type id.
+        /// </summary>
+        /// <value>The type id.</value>
+        public int IssueTypeId { get; set; }
+
+        /// <summary>
+        /// Gets the name of the type.
+        /// </summary>
+        /// <value>The name of the type.</value>
+        public string IssueTypeName { get; set; }
+
+        /// <summary>
+        /// Gets the issue type image URL.
+        /// </summary>
+        /// <value>The issue type image URL.</value>
+        public string IssueTypeImageUrl { get; set; }
+
+
+        /// <summary>
+        /// Gets or sets the resolution id.
+        /// </summary>
+        /// <value>The resolution id.</value>
+        public int ResolutionId { get; set; }
+
+        /// <summary>
+        /// Gets the name of the resolution.
+        /// </summary>
+        /// <value>The name of the resolution.</value>
+        public string ResolutionName { get; set; }
+
+        /// <summary>
+        /// Gets the resolution image URL.
+        /// </summary>
+        /// <value>The resolution image URL.</value>
+        public string ResolutionImageUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the priority id.
+        /// </summary>
+        /// <value>The priority id.</value>
+        public int PriorityId { get; set; }
+
+        /// <summary>
+        /// Gets the name of the priority.
+        /// </summary>
+        /// <value>The name of the priority.</value>
+        public string PriorityName { get; set; }
+
+        /// <summary>
+        /// Gets the priority image URL.
+        /// </summary>
+        /// <value>The priority image URL.</value>
+        public string PriorityImageUrl { get; set; }
+
+
+        /// <summary>
+        /// Gets the project id.
+        /// </summary>
+        /// <value>The project id.</value>
+        public int ProjectId { get; set; }
+
+        /// <summary>
+        /// Gets the name of the project.
+        /// </summary>
+        /// <value>The name of the project.</value>
+        public string ProjectName { get; set; }
+
+        /// <summary>
+        /// Gets the project code.
+        /// </summary>
+        /// <value>The project code.</value>
+        public string ProjectCode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the status id.
+        /// </summary>
+        /// <value>The status id.</value>
+        public int StatusId { get; set; }
+
+        /// <summary>
+        /// Gets the name of the status.
+        /// </summary>
+        /// <value>The name of the status.</value>
+        public string StatusName { get; set; }
+
+        /// <summary>
+        /// Gets the status image URL.
+        /// </summary>
+        /// <value>The status image URL.</value>
+        public string StatusImageUrl { get; set; }
+
+
+        /// <summary>
+        /// Gets or sets the summary.
+        /// </summary>
+        /// <value>The summary.</value>
+        public string Title { get; set; }
+
+        /// <summary>
+        /// Gets or sets the description.
+        /// </summary>
+        /// <value>The description.</value>
+        public string Description { get; set; }
+
+        #endregion
 
         /// <summary>
         /// Estimations to string.
@@ -383,464 +581,5 @@ namespace BugNET.Entities
         {
             return estimation >= 0 ? estimation.ToString() : "empty";
         }
-
-        /// <summary>
-        /// Gets the time logged.
-        /// </summary>
-        /// <value>The time logged.</value>
-        public double TimeLogged
-        {
-            get { return _TimeLogged; }
-            set { _TimeLogged = value; } 
-        }
-
-
-        /// <summary>
-        /// Gets or sets the display name of the assigned to user.
-        /// </summary>
-        /// <value>The display name of the assigned to user.</value>
-        public string AssignedDisplayName
-        {
-            get { return (String.IsNullOrEmpty(_AssignedDisplayName)) ? string.Empty : _AssignedDisplayName; }
-            set { _AssignedDisplayName = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the display name of the assigned.
-        /// </summary>
-        /// <value>The display name of the assigned.</value>
-        public string AssignedUserName
-        {
-            get { return (String.IsNullOrEmpty(_AssignedUserName)) ? string.Empty : _AssignedUserName; }
-            set { _AssignedUserName = value; }
-        }
-
-
-        /// <summary>
-        /// Gets or sets the visibility.
-        /// </summary>
-        /// <value>The visibility.</value>
-        public int Visibility
-        {
-            get { return _Visibility; }
-            set { _Visibility = value; }
-        }
-
-
-        /// <summary>
-        /// Component Id
-        /// </summary>
-        public int CategoryId
-        {
-            get { return _CategoryId; }
-            set { _CategoryId = value; }
-        }
-
-        /// <summary>
-        /// Component Name
-        /// </summary>
-        public string CategoryName
-        {
-            get { return _CategoryName; }
-            set { _CategoryName = value; }
-        }
-
-        /// <summary>
-        /// Reporter Display Name
-        /// </summary>
-        public string CreatorDisplayName
-        {
-            get { return _CreatorDisplayName; }
-            set { _CreatorDisplayName = value; } 
-        }
-
-        /// <summary>
-        /// Reporter User Name
-        /// </summary>
-        public string CreatorUserName
-        {
-            get { return _CreatorUserName; }
-            set { _CreatorUserName = value; } 
-        }
-
-        /// <summary>
-        /// Gets the reporter user id.
-        /// </summary>
-        /// <value>The reporter user id.</value>
-        public Guid CreatorUserId
-        {
-            get { return (_CreatorUserId); }
-            set { _CreatorUserId = value; } 
-        }
-
-        /// <summary>
-        /// Gets the owner username.
-        /// </summary>
-        /// <value>The owner username.</value>
-        public string OwnerUserName
-        {
-            get { return (_OwnerUserName); }
-            set { _OwnerUserName = value; }
-        }
-
-
-        /// <summary>
-        /// Gets the display name of the owner.
-        /// </summary>
-        /// <value>The display name of the owner.</value>
-        public string OwnerDisplayName
-        {
-            get { return _OwnerDisplayName; }
-            set { _OwnerDisplayName = value; } 
-        }
-
-        /// <summary>
-        /// Gets or sets the owner id.
-        /// </summary>
-        /// <value>The owner id.</value>
-        public Guid OwnerUserId
-        {
-            get { return _OwnerUserId; }
-            set { _OwnerUserId = value; }
-        }
-        /// <summary>
-        /// Gets or sets the assigned to user id.
-        /// </summary>
-        /// <value>The assigned to user id.</value>
-        public Guid AssignedUserId
-        {
-            get { return _AssignedUserId; }
-            set { _AssignedUserId = value; }
-        }
-
-        /// <summary>
-        /// Gets the date created.
-        /// </summary>
-        /// <value>The date created.</value>
-        public DateTime DateCreated
-        {
-            get { return _DateCreated; }
-            set { _DateCreated = value; } 
-        }
-
-        /// <summary>
-        /// Gets the id.
-        /// </summary>
-        /// <value>The id.</value>
-        public int Id
-        {
-            get { return _Id; }
-            set { _Id = value; } 
-        }
-
-        /// <summary>
-        /// Gets the full id.
-        /// </summary>
-        /// <value>The full id.</value>
-        public string FullId
-        {
-            get { return string.Concat(_ProjectCode, "-", _Id); }
-            set { } 
-        }
-
-        /// <summary>
-        /// Gets the last update.
-        /// </summary>
-        /// <value>The last update.</value>
-        public DateTime LastUpdate
-        {
-            get { return _LastUpdate; }
-            set { _LastUpdate = value; } 
-        }
-
-        /// <summary>
-        /// Gets the due date.
-        /// </summary>
-        /// <value>The due date.</value>
-        public DateTime DueDate
-        {
-            get { return _DueDate; }
-            set { _DueDate = value; }
-        }
-
-        /// <summary>
-        /// Gets the name of the last update display.
-        /// </summary>
-        /// <value>The name of the last update display.</value>
-        public string LastUpdateDisplayName
-        {
-            get { return _LastUpdateDisplayName; }
-            set { _LastUpdateDisplayName = value; } 
-        }
-
-        /// <summary>
-        /// Gets or sets the name of the last update user.
-        /// </summary>
-        /// <value>The name of the last update user.</value>
-        public string LastUpdateUserName
-        {
-            get { return (String.IsNullOrEmpty(_LastUpdateUserName)) ? string.Empty : _LastUpdateUserName; }
-            set { _LastUpdateUserName = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the version id.
-        /// </summary>
-        /// <value>The version id.</value>
-        public int MilestoneId
-        {
-            get { return _MilestoneId; }
-            set { _MilestoneId = value; }
-        }
-
-        /// <summary>
-        /// Gets the name of the version.
-        /// </summary>
-        /// <value>The name of the version.</value>
-        public string MilestoneName
-        {
-            get { return _MilestoneName; }
-            set { _MilestoneName = value; } 
-        }
-
-        /// <summary>
-        /// Gets the milestone image URL.
-        /// </summary>
-        /// <value>The milestone image URL.</value>
-        public string MilestoneImageUrl
-        {
-            get { return _MilestoneImageUrl; }
-            set { _MilestoneImageUrl = value; } 
-        }
-
-        /// <summary>
-        /// Gets or sets the affected milestone id.
-        /// </summary>
-        /// <value>The affected milestone id.</value>
-        public int AffectedMilestoneId
-        {
-            get { return _AffectedMilestoneId; }
-            set { _AffectedMilestoneId = value; }
-        }
-
-
-        /// <summary>
-        /// Gets the name of the affected milestone.
-        /// </summary>
-        /// <value>The name of the affected milestone.</value>
-        public string AffectedMilestoneName
-        {
-            get { return _AffectedMilestoneName; }
-            set { _AffectedMilestoneName = value; } 
-        }
-
-        /// <summary>
-        /// Gets the affected milestone image URL.
-        /// </summary>
-        /// <value>The affected milestone image URL.</value>
-        public string AffectedMilestoneImageUrl
-        {
-            get { return _AffectedMilestoneImageUrl; }
-            set { _AffectedMilestoneImageUrl = value; } 
-        }
-
-        /// <summary>
-        /// Gets the due date of the version.
-        /// </summary>
-        /// <value>The due date of the version.</value>
-        public DateTime? MilestoneDueDate
-        {
-            get { return _MilestoneDueDate; }
-            set { _MilestoneDueDate = value; } 
-        }
-
-        /// <summary>
-        /// Gets or sets the type id.
-        /// </summary>
-        /// <value>The type id.</value>
-        public int IssueTypeId
-        {
-            get { return _IssueTypeId; }
-            set { _IssueTypeId = value; }
-        }
-
-        /// <summary>
-        /// Gets the name of the type.
-        /// </summary>
-        /// <value>The name of the type.</value>
-        public string IssueTypeName
-        {
-            get { return _IssueTypeName; }
-            set { _IssueTypeName = value; } 
-        }
-
-        /// <summary>
-        /// Gets the issue type image URL.
-        /// </summary>
-        /// <value>The issue type image URL.</value>
-        public string IssueTypeImageUrl
-        {
-            get { return _IssueTypeImageUrl; }
-            set { _IssueTypeImageUrl = value; } 
-        }
-
-
-        /// <summary>
-        /// Gets or sets the resolution id.
-        /// </summary>
-        /// <value>The resolution id.</value>
-        public int ResolutionId
-        {
-            get { return _ResolutionId; }
-            set { _ResolutionId = value; }
-        }
-
-        /// <summary>
-        /// Gets the name of the resolution.
-        /// </summary>
-        /// <value>The name of the resolution.</value>
-        public string ResolutionName
-        {
-            get { return _ResolutionName; }
-            set { _ResolutionName = value; } 
-        }
-
-        /// <summary>
-        /// Gets the resolution image URL.
-        /// </summary>
-        /// <value>The resolution image URL.</value>
-        public string ResolutionImageUrl
-        {
-            get { return _ResolutionImageUrl; }
-            set { _ResolutionImageUrl = value; } 
-        }
-
-
-        /// <summary>
-        /// Gets or sets the priority id.
-        /// </summary>
-        /// <value>The priority id.</value>
-        public int PriorityId
-        {
-            get { return _PriorityId; }
-            set { _PriorityId = value; }
-        }
-
-        /// <summary>
-        /// Gets the name of the priority.
-        /// </summary>
-        /// <value>The name of the priority.</value>
-        public string PriorityName
-        {
-            get { return _PriorityName; }
-            set { _PriorityName = value; } 
-        }
-
-        /// <summary>
-        /// Gets the priority image URL.
-        /// </summary>
-        /// <value>The priority image URL.</value>
-        public string PriorityImageUrl
-        {
-            get { return _PriorityImageUrl; }
-            set { _PriorityImageUrl = value; } 
-        }
-
-
-        /// <summary>
-        /// Gets the project id.
-        /// </summary>
-        /// <value>The project id.</value>
-        public int ProjectId
-        {
-            get { return _ProjectId; }
-            set { _ProjectId = value; } 
-        }
-
-        /// <summary>
-        /// Gets the name of the project.
-        /// </summary>
-        /// <value>The name of the project.</value>
-        public string ProjectName
-        {
-            get { return _ProjectName; }
-            set { _ProjectName = value; } 
-        }
-
-        /// <summary>
-        /// Gets the project code.
-        /// </summary>
-        /// <value>The project code.</value>
-        public string ProjectCode
-        {
-            get { return _ProjectCode; }
-            set { _ProjectCode = value; } 
-        }
-
-        /// <summary>
-        /// Gets or sets the status id.
-        /// </summary>
-        /// <value>The status id.</value>
-        public int StatusId
-        {
-            get { return _StatusId; }
-            set { _StatusId = value; }
-        }
-
-        /// <summary>
-        /// Gets the name of the status.
-        /// </summary>
-        /// <value>The name of the status.</value>
-        public string StatusName
-        {
-            get { return _StatusName; }
-            set { _StatusName = value; } 
-        }
-
-        /// <summary>
-        /// Gets the status image URL.
-        /// </summary>
-        /// <value>The status image URL.</value>
-        public string StatusImageUrl
-        {
-            get { return _StatusImageUrl; }
-            set { _StatusImageUrl = value; } 
-        }
-
-
-        /// <summary>
-        /// Gets or sets the summary.
-        /// </summary>
-        /// <value>The summary.</value>
-        public string Title
-        {
-            get { return (_Title == null || _Title.Length == 0) ? string.Empty : _Title; }
-            set { _Title = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the description.
-        /// </summary>
-        /// <value>The description.</value>
-        public string Description
-        {
-            get { return (_Description == null || _Description.Length == 0) ? string.Empty : _Description; }
-            set { _Description = value; }
-        }
-
-        #endregion
-
-        #region IToXml Members
-
-        /// <summary>
-        /// Toes the XML.
-        /// </summary>
-        /// <returns></returns>
-        public string ToXml()
-        {
-            XmlSerializeService<Issue> service = new XmlSerializeService<Issue>();
-            return service.ToXml(this);
-        }
-        #endregion
     }
 }

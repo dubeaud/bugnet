@@ -29,13 +29,6 @@ namespace BugNET.UserInterfaceLayer
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(DownloadAttachment));
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Upload"/> class.
-        /// </summary>
-        public DownloadAttachment()
-        {
-        }
-
         #region IHttpHandler Members
 
         /// <summary>
@@ -56,19 +49,19 @@ namespace BugNET.UserInterfaceLayer
         {
             if (context.Request.QueryString["mode"] == "project")
             {
-                int projectId = Int32.Parse(context.Request.QueryString["id"]);
-                ProjectImage ProjectImage = ProjectManager.GetProjectImage(projectId);
+                var projectId = context.Request.QueryString.Get("id", Globals.NEW_ID);
 
-                if (ProjectImage != null)
+                var projectImage = ProjectManager.GetProjectImage(projectId);
+
+                if (projectImage != null)
                 {
                     // Write out the attachment
                     context.Server.ScriptTimeout = 600;
                     context.Response.Buffer = true;
                     context.Response.Clear();
                     context.Response.ContentType = "application/octet-stream";
-                    //context.Response.AddHeader("Content-Disposition", "attachment; filename=\"" + attachment.FileName + "\";");
-                    context.Response.AddHeader("Content-Length", ProjectImage.ImageFileLength.ToString());
-                    context.Response.BinaryWrite(ProjectImage.ImageContent);
+                    context.Response.AddHeader("Content-Length", projectImage.ImageFileLength.ToString());
+                    context.Response.BinaryWrite(projectImage.ImageContent);
                 }
                 else
                 {
@@ -79,8 +72,8 @@ namespace BugNET.UserInterfaceLayer
             else
             {
                 // Get the attachment
-                int attachmentId = Int32.Parse(context.Request.QueryString["id"]);
-                IssueAttachment attachment = IssueAttachmentManager.GetIssueAttachmentById(attachmentId);
+                var attachmentId = context.Request.QueryString.Get("id", Globals.NEW_ID);
+                var attachment = IssueAttachmentManager.GetById(attachmentId);
 
                 if (attachment.Attachment != null)
                 {
@@ -104,25 +97,24 @@ namespace BugNET.UserInterfaceLayer
                 else
                 {
 
-                    Project p = ProjectManager.GetProjectById(IssueManager.GetIssueById(attachment.IssueId).ProjectId);
+                    var p = ProjectManager.GetProjectById(IssueManager.GetIssueById(attachment.IssueId).ProjectId);
 
-                    string FileName = attachment.FileName;
-                    string ProjectPath = p.UploadPath;
-                    string Path;
+                    var fileName = attachment.FileName;
+                    var projectPath = p.UploadPath;
 
                     //append a trailing slash if it doesn't exist
-                    if (!ProjectPath.EndsWith("\\"))
-                        ProjectPath = String.Concat(ProjectPath, "\\");
+                    if (!projectPath.EndsWith("\\"))
+                        projectPath = String.Concat(projectPath, "\\");
 
-                    Path = String.Concat("~", Globals.UPLOAD_FOLDER, ProjectPath, FileName);
+                    var path = String.Concat("~", Globals.UPLOAD_FOLDER, projectPath, fileName);
 
-                    if (System.IO.File.Exists(context.Server.MapPath(Path)))
+                    if (System.IO.File.Exists(context.Server.MapPath(path)))
                     {
                         context.Response.Clear();
                         context.Response.ContentType = attachment.ContentType;
                         if (attachment.ContentType.ToLower().StartsWith("image/")) context.Response.AddHeader("Content-Disposition", "inline; filename=\"" + attachment.FileName + "\";");
                         else context.Response.AddHeader("Content-Disposition", "attachment; filename=\"" + attachment.FileName + "\";");
-                        context.Response.WriteFile(Path);
+                        context.Response.WriteFile(path);
                     }
                     else
                     {

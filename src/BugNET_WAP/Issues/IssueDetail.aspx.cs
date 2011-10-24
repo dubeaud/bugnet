@@ -13,7 +13,7 @@ namespace BugNET.Issues
     /// <summary>
     /// Issue Detail Page
     /// </summary>
-    public partial class IssueDetail : BugNET.UserInterfaceLayer.BasePage
+    public partial class IssueDetail : BasePage
     {
 
         #region Private Events
@@ -27,8 +27,8 @@ namespace BugNET.Issues
 
             if (!Page.IsPostBack)
             {
-                lnkDelete.Attributes.Add("onclick", string.Format("return confirm('{0}');", GetLocalResourceObject("DeleteIssue").ToString()));
-                imgDelete.Attributes.Add("onclick", string.Format("return confirm('{0}');", GetLocalResourceObject("DeleteIssue").ToString()));
+                lnkDelete.Attributes.Add("onclick", string.Format("return confirm('{0}');", GetLocalResourceObject("DeleteIssue")));
+                imgDelete.Attributes.Add("onclick", string.Format("return confirm('{0}');", GetLocalResourceObject("DeleteIssue")));
 
                 // Get Issue Id from Query String
                 if (Request.QueryString["id"] != null)
@@ -94,14 +94,10 @@ namespace BugNET.Issues
             }
 
             //need to rebind these on every postback because of dynamic controls
-            if (IssueId == 0)
-            {
-                ctlCustomFields.DataSource = CustomFieldManager.GetCustomFieldsByProjectId(ProjectId);
-            }
-            else
-            {
-                ctlCustomFields.DataSource = CustomFieldManager.GetCustomFieldsByIssueId(IssueId);
-            }
+            ctlCustomFields.DataSource = IssueId == 0 ? 
+                CustomFieldManager.GetByProjectId(ProjectId) : 
+                CustomFieldManager.GetByIssueId(IssueId);
+
             ctlCustomFields.DataBind();
 
             // The ExpandIssuePaths method is called to handle
@@ -287,7 +283,7 @@ namespace BugNET.Issues
                     VotedLabel.Visible = false;
                 }
 
-                if (StatusManager.GetStatusById(currentIssue.StatusId).IsClosedState)
+                if (StatusManager.GetById(currentIssue.StatusId).IsClosedState)
                 {
                     VoteButton.Visible = false;
                     VotedLabel.Visible = false;
@@ -305,15 +301,15 @@ namespace BugNET.Issues
         {
             List<ITUser> users = UserManager.GetUsersByProjectId(ProjectId);
             //Get Type
-            DropIssueType.DataSource = IssueTypeManager.GetIssueTypesByProjectId(ProjectId);
+            DropIssueType.DataSource = IssueTypeManager.GetByProjectId(ProjectId);
             DropIssueType.DataBind();
 
             //Get Priority
-            DropPriority.DataSource = PriorityManager.GetPrioritiesByProjectId(ProjectId);
+            DropPriority.DataSource = PriorityManager.GetByProjectId(ProjectId);
             DropPriority.DataBind();
 
             //Get Resolutions
-            DropResolution.DataSource = ResolutionManager.GetResolutionsByProjectId(ProjectId);
+            DropResolution.DataSource = ResolutionManager.GetByProjectId(ProjectId);
             DropResolution.DataBind();
 
             //Get categories
@@ -324,15 +320,15 @@ namespace BugNET.Issues
             //Get milestones
             if (IssueId == 0)
             {
-                DropMilestone.DataSource = MilestoneManager.GetMilestoneByProjectId(ProjectId, false);
+                DropMilestone.DataSource = MilestoneManager.GetByProjectId(ProjectId, false);
             }
             else
             {
-                DropMilestone.DataSource = MilestoneManager.GetMilestoneByProjectId(ProjectId);
+                DropMilestone.DataSource = MilestoneManager.GetByProjectId(ProjectId);
             }
             DropMilestone.DataBind();
 
-            DropAffectedMilestone.DataSource = MilestoneManager.GetMilestoneByProjectId(ProjectId);
+            DropAffectedMilestone.DataSource = MilestoneManager.GetByProjectId(ProjectId);
             DropAffectedMilestone.DataBind();
 
             //Get Users
@@ -343,7 +339,7 @@ namespace BugNET.Issues
             DropOwned.DataBind();
             DropOwned.SelectedValue = User.Identity.Name;
 
-            DropStatus.DataSource = StatusManager.GetStatusByProjectId(ProjectId);
+            DropStatus.DataSource = StatusManager.GetByProjectId(ProjectId);
             DropStatus.DataBind();
 
             lblDateCreated.Text = DateTime.Now.ToString("f");
@@ -407,25 +403,38 @@ namespace BugNET.Issues
             {
                 //add attachment if present.
                 // get the current file
-                HttpPostedFile uploadFile = this.AspUploadFile.PostedFile;
-                HttpContext context = HttpContext.Current;
+                var uploadFile = AspUploadFile.PostedFile;
 
-                string returnMessage = IssueAttachmentManager.ValidateFileName(uploadFile.FileName);
+                var inValidReason = string.Empty;
 
-                if (string.IsNullOrEmpty(returnMessage))
+                var validFile = IssueAttachmentManager.IsValidFile(uploadFile.FileName, out inValidReason);
+
+                if (validFile)
                 {
                     if (uploadFile.ContentLength > 0)
                     {
                         byte[] fileBytes;
-                        using (System.IO.Stream input = uploadFile.InputStream)
+                        using (var input = uploadFile.InputStream)
                         {
                             fileBytes = new byte[uploadFile.ContentLength];
                             input.Read(fileBytes, 0, uploadFile.ContentLength);
                         }
 
-                        IssueAttachment issueAttachment = new IssueAttachment(IssueId, Security.GetUserName(), uploadFile.FileName, uploadFile.ContentType, fileBytes, fileBytes.Length, AttachmentDescription.Text.Trim());
+                        var issueAttachment = new IssueAttachment
+                        {
+                            Id = Globals.NEW_ID,
+                            Attachment = fileBytes,
+                            Description = AttachmentDescription.Text.Trim(),
+                            DateCreated = DateTime.Now,
+                            ContentType = uploadFile.ContentType,
+                            CreatorDisplayName = string.Empty,
+                            CreatorUserName = Security.GetUserName(),
+                            FileName = uploadFile.FileName,
+                            IssueId = IssueId,
+                            Size = fileBytes.Length
+                        };
 
-                        if (!IssueAttachmentManager.SaveIssueAttachment(issueAttachment))
+                        if (!IssueAttachmentManager.SaveOrUpdate(issueAttachment))
                         {
                             Message1.ShowErrorMessage(string.Format(GetGlobalResourceObject("Exceptions","SaveAttachmentError").ToString(), uploadFile.FileName)); 
                         }
@@ -433,31 +442,32 @@ namespace BugNET.Issues
 
                 }
                 else
-                    Message1.ShowErrorMessage(returnMessage); 
+                    Message1.ShowErrorMessage(inValidReason); 
 
 
                 //create a vote for the new issue
-                IssueVote vote = new IssueVote(IssueId, Security.GetUserName());
-                if (!IssueVoteManager.SaveIssueVote(vote))
+                var vote = new IssueVote { IssueId = IssueId, VoteUsername = Security.GetUserName()};
+
+                if (!IssueVoteManager.SaveOrUpdate(vote))
                     Message1.ShowErrorMessage(Resources.Exceptions.SaveIssueVoteError);
 
                 if (chkNotifyOwner.Checked)
                 {
-                    System.Web.Security.MembershipUser oUser = UserManager.GetUser(newIssue.OwnerUserName);
+                    var oUser = UserManager.GetUser(newIssue.OwnerUserName);
                     if (oUser != null)
                     {
-                        IssueNotification notify = new IssueNotification(IssueId, oUser.UserName);
-                        IssueNotificationManager.SaveIssueNotification(notify);
+                        var notify = new IssueNotification { IssueId = IssueId, NotificationUsername = oUser.UserName};
+                        IssueNotificationManager.SaveOrUpdate(notify);
                        
                     }
                 }
                 if (chkNotifyAssignedTo.Checked && !string.IsNullOrEmpty(newIssue.AssignedUserName))
                 {
-                    System.Web.Security.MembershipUser oUser = UserManager.GetUser(newIssue.AssignedUserName);
+                    var oUser = UserManager.GetUser(newIssue.AssignedUserName);
                     if (oUser != null)
                     {
-                        IssueNotification notify = new IssueNotification(IssueId, oUser.UserName);
-                        IssueNotificationManager.SaveIssueNotification(notify);
+                        var notify = new IssueNotification { IssueId = IssueId, NotificationUsername = oUser.UserName };
+                        IssueNotificationManager.SaveOrUpdate(notify);
                     }
                 }
                 IssueNotificationManager.SendIssueAddNotifications(IssueId);
@@ -473,11 +483,10 @@ namespace BugNET.Issues
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void lnkSave_Click(object sender, EventArgs e)
         {
-            if (Page.IsValid)
-            {
-                SaveIssue();
-                Response.Redirect(string.Format("~/Issues/IssueDetail.aspx?id={0}", this.IssueId));
-            }
+            if (!Page.IsValid) return;
+
+            SaveIssue();
+            Response.Redirect(string.Format("~/Issues/IssueDetail.aspx?id={0}", IssueId));
         }
 
         /// <summary>
@@ -490,10 +499,13 @@ namespace BugNET.Issues
             if (!User.Identity.IsAuthenticated)
                 Response.Redirect(string.Format("~/Login.aspx?ReturnUrl={0}", Server.UrlEncode(Request.RawUrl)));
 
-            IssueVote vote = new IssueVote(this.IssueId, Security.GetUserName());
-            IssueVoteManager.SaveIssueVote(vote);
-            int count = Convert.ToInt32(IssueVoteCount.Text) + 1;
+            var vote = new IssueVote { IssueId = IssueId, VoteUsername = Security.GetUserName() };
+            IssueVoteManager.SaveOrUpdate(vote);
+
+            var count = Convert.ToInt32(IssueVoteCount.Text) + 1;
+
             Votes.Text = GetLocalResourceObject("Votes").ToString();
+
             IssueVoteCount.Text = count.ToString();
             VoteButton.Visible = false;
             VotedLabel.Visible = true;
@@ -591,7 +603,7 @@ namespace BugNET.Issues
                 //remove closed status' if user does not have access
                 if (!UserManager.HasPermission(ProjectId, Globals.Permission.CloseIssue.ToString()))
                 {
-                    List<Status> status = StatusManager.GetStatusByProjectId(ProjectId).FindAll(st => st.IsClosedState == true);
+                    List<Status> status = StatusManager.GetByProjectId(ProjectId).FindAll(st => st.IsClosedState == true);
                     DropDownList stat = (DropDownList)DropStatus.FindControl("dropStatus");
                     foreach (Status s in status)
                         stat.Items.Remove(stat.Items.FindByValue(s.Id.ToString()));

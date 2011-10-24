@@ -11,7 +11,7 @@ namespace BugNET.Entities
 	public class MailboxEntry
 	{
         /// <summary>
-        /// Initializes a new instance of the <see cref="Entry"/> class.
+        /// Initializes a new instance of the <see cref="MailboxEntry"/> class.
         /// </summary>
 		public MailboxEntry()
 		{}

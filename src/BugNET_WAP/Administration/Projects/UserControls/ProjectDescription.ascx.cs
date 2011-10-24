@@ -112,7 +112,7 @@ namespace BugNET.Administration.Projects.UserControls
 			if (Page.IsValid) 
 			{
                 Globals.ProjectAccessType at = (rblAccessType.SelectedValue == "Public") ? Globals.ProjectAccessType.Public : Globals.ProjectAccessType.Private;
-                IssueAttachmentStorageType attachmentStorageType = (AttachmentStorageType.SelectedValue == "2") ? IssueAttachmentStorageType.Database : IssueAttachmentStorageType.FileSystem;
+                IssueAttachmentStorageTypes attachmentStorageType = (AttachmentStorageType.SelectedValue == "2") ? IssueAttachmentStorageTypes.Database : IssueAttachmentStorageTypes.FileSystem;
                 Project newProject = null; 
 
                 // get the current file

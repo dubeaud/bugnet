@@ -105,7 +105,7 @@ namespace BugNET.UserControls
                 PopulateNodes(categories, tvCategory.Nodes);
             }
             TreeNode tn = new TreeNode();
-            tn.Text = String.Format("{0}</a></td><td style='width:100%;text-align:right;'><a>{1}&nbsp;",GetLocalResourceObject("Unassigned").ToString(), IssueManager.GetIssueCountByProjectAndCategory(ProjectId, 0));
+            tn.Text = String.Format("{0}</a></td><td style='width:100%;text-align:right;'><a>{1}&nbsp;",GetLocalResourceObject("Unassigned"), IssueManager.GetIssueCountByProjectAndCategory(ProjectId));
             tn.NavigateUrl = String.Format("~/Issues/IssueList.aspx?pid={0}&c={1}", ProjectId, 0);
             tvCategory.Nodes.Add(tn);
 

@@ -20,8 +20,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<RelatedIssue> GetChildIssues(int issueId)
         {
-            if (issueId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("issueId"));
+            if (issueId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("issueId"));
 
             return DataProviderManager.Provider.GetChildIssues(issueId);
         }
@@ -33,8 +32,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<RelatedIssue> GetRelatedIssues(int issueId)
         {
-            if (issueId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("issueId"));
+            if (issueId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("issueId"));
 
             return DataProviderManager.Provider.GetRelatedIssues(issueId);
         }
@@ -46,8 +44,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<RelatedIssue> GetParentIssues(int issueId)
         {
-            if (issueId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("issueId"));
+            if (issueId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("issueId"));
 
             return DataProviderManager.Provider.GetParentIssues(issueId);
         }
@@ -60,10 +57,8 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool DeleteRelatedIssue(int issueId, int linkedIssueId)
         {
-            if (issueId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("issueId"));
-            if (linkedIssueId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("linkedIssueId"));
+            if (issueId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("issueId"));
+            if (linkedIssueId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("linkedIssueId"));
 
             return DataProviderManager.Provider.DeleteRelatedIssue(issueId, linkedIssueId);
         }
@@ -76,15 +71,9 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static int CreateNewRelatedIssue(int primaryIssueId, int secondaryIssueId)
         {
-            if (primaryIssueId == secondaryIssueId)
-                return 0;
-
-            if (primaryIssueId <= 0)
-                throw (new ArgumentOutOfRangeException("primaryIssueId"));
-
-            if (secondaryIssueId <= 0)
-                throw (new ArgumentOutOfRangeException("secondaryIssueId"));
-
+            if (primaryIssueId == secondaryIssueId) return 0;
+            if (primaryIssueId <= 0) throw (new ArgumentOutOfRangeException("primaryIssueId"));
+            if (secondaryIssueId <= 0) throw (new ArgumentOutOfRangeException("secondaryIssueId"));
 
             return DataProviderManager.Provider.CreateNewRelatedIssue(primaryIssueId, secondaryIssueId);
         }
@@ -97,14 +86,9 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static int CreateNewParentIssue(int primaryIssueId, int secondaryIssueId)
         {
-            if (primaryIssueId == secondaryIssueId)
-                return 0;
-
-            if (primaryIssueId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("primaryIssueId"));
-
-            if (secondaryIssueId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("secondaryIssueId"));
+            if (primaryIssueId == secondaryIssueId) return 0;
+            if (primaryIssueId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("primaryIssueId"));
+            if (secondaryIssueId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("secondaryIssueId"));
 
             return DataProviderManager.Provider.CreateNewParentIssue(primaryIssueId, secondaryIssueId);
         }
@@ -117,15 +101,11 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool DeleteChildIssue(int primaryIssueId, int secondaryIssueId)
         {
-            if (primaryIssueId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("primaryIssueId"));
-
-            if (secondaryIssueId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("secondaryIssueId"));
+            if (primaryIssueId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("primaryIssueId"));
+            if (secondaryIssueId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("secondaryIssueId"));
 
             return DataProviderManager.Provider.DeleteChildIssue(primaryIssueId, secondaryIssueId);
         }
-
 
         /// <Summary>
         /// Creates the new child issue.
@@ -135,14 +115,9 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static int CreateNewChildIssue(int primaryIssueId, int secondaryIssueId)
         {
-            if (primaryIssueId == secondaryIssueId)
-                return 0;
-
-            if (primaryIssueId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("primaryIssueId"));
-
-            if (secondaryIssueId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("secondaryIssueId"));
+            if (primaryIssueId == secondaryIssueId) return 0;
+            if (primaryIssueId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("primaryIssueId"));
+            if (secondaryIssueId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("secondaryIssueId"));
 
             return DataProviderManager.Provider.CreateNewChildIssue(primaryIssueId, secondaryIssueId);
         }
@@ -155,14 +130,11 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool DeleteParentIssue(int primaryIssueId, int secondaryIssueId)
         {
-            if (primaryIssueId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("primaryIssueId"));
+            if (primaryIssueId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("primaryIssueId"));
+            if (secondaryIssueId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("secondaryIssueId"));
 
-            if (secondaryIssueId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("secondaryIssueId"));
             return DataProviderManager.Provider.DeleteParentIssue(primaryIssueId, secondaryIssueId);
         }
-
 
         #endregion
     }

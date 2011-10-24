@@ -1,6 +1,7 @@
 using System;
 using System.Configuration;
 using System.Web;
+using BugNET.Common;
 using log4net;
 using log4net.Appender;
 
@@ -19,10 +20,10 @@ namespace BugNET.BLL
         public static void ConfigureLogging()
         {
             ConfigureAdoNetAppender();
-            //if email notification of errors are enabled create a smtp logging appender.
-            if (Convert.ToBoolean(HostSettingManager.GetHostSetting("EmailErrors")))
-                ConfigureEmailLoggingAppender();
 
+            //if email notification of errors are enabled create a smtp logging appender.
+            if (HostSettingManager.Get(HostSettingNames.EmailErrors, false))
+                ConfigureEmailLoggingAppender();
         }
 
         /// <summary>
@@ -32,7 +33,7 @@ namespace BugNET.BLL
         {
             // Get the Hierarchy object that organizes the loggers
             var hier =
-              log4net.LogManager.GetRepository() as log4net.Repository.Hierarchy.Hierarchy;
+              LogManager.GetRepository() as log4net.Repository.Hierarchy.Hierarchy;
 
             if (hier == null) return;
 
@@ -52,17 +53,17 @@ namespace BugNET.BLL
         public static void ConfigureEmailLoggingAppender()
         {
             var hier =
-            (log4net.Repository.Hierarchy.Hierarchy)log4net.LogManager.GetRepository();
+            (log4net.Repository.Hierarchy.Hierarchy)LogManager.GetRepository();
 
             if (hier == null) return;
 
             var appender = (SmtpAppender)hier.Root.GetAppender("SmtpAppender") ?? new SmtpAppender();
 
             appender.Name = "SmtpAppender";
-            appender.From = HostSettingManager.GetHostSetting("HostEmailAddress");
-            appender.To = HostSettingManager.GetHostSetting("ErrorLoggingEmailAddress");
+            appender.From = HostSettingManager.Get(HostSettingNames.HostEmailAddress, string.Empty);
+            appender.To = HostSettingManager.Get(HostSettingNames.ErrorLoggingEmailAddress, string.Empty);
             appender.Subject = "BugNET Error";
-            appender.SmtpHost = HostSettingManager.GetHostSetting("SMTPServer");
+            appender.SmtpHost = HostSettingManager.SmtpServer;
             appender.Priority = System.Net.Mail.MailPriority.High;
             appender.Threshold = log4net.Core.Level.Error;
             appender.BufferSize = 0;
@@ -85,7 +86,7 @@ namespace BugNET.BLL
         public static void RemoveEmailLoggingAppender()
         {
             var hier =
-             log4net.LogManager.GetRepository() as log4net.Repository.Hierarchy.Hierarchy;
+             LogManager.GetRepository() as log4net.Repository.Hierarchy.Hierarchy;
 
             if (hier == null) return;
 

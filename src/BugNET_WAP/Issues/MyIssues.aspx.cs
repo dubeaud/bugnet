@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Web.Security;
 using System.Web.UI.WebControls;
 using BugNET.BLL;
@@ -94,7 +95,7 @@ namespace BugNET.Issues
             MembershipUser user = Membership.GetUser();
             List<QueryClause> queryClauses = new List<QueryClause>();
             queryClauses.Add(new QueryClause(BooleanOperator, "IssueAssignedUserId", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
-            return IssueManager.PerformQuery(0, queryClauses).Count.ToString();
+            return IssueManager.PerformQuery(queryClauses).Count.ToString();
 
         }
 
@@ -107,7 +108,7 @@ namespace BugNET.Issues
             MembershipUser user = Membership.GetUser();
             List<QueryClause> queryClauses = new List<QueryClause>();
             queryClauses.Add(new QueryClause(BooleanOperator, "IssueCreatorUserId", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
-            return IssueManager.PerformQuery(0, queryClauses).Count.ToString();
+            return IssueManager.PerformQuery(queryClauses).Count.ToString();
         }
 
         /// <summary>
@@ -121,14 +122,14 @@ namespace BugNET.Issues
             queryClauses.Add(new QueryClause(BooleanOperator, "IssueAssignedUserId", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
             foreach (Project p in ProjectManager.GetProjectsByMemberUserName(Context.User.Identity.Name))
             {
-                List<Status> status = StatusManager.GetStatusByProjectId(p.Id).FindAll(s => !s.IsClosedState);
+                List<Status> status = StatusManager.GetByProjectId(p.Id).FindAll(s => !s.IsClosedState);
                 foreach (Status st in status)
                 {
                     queryClauses.Add(new QueryClause(BooleanOperator, "IssueStatusId", "<>", st.Id.ToString(), SqlDbType.Int, false));
                 }
 
             }
-            return IssueManager.PerformQuery(0, queryClauses).Count.ToString();
+            return IssueManager.PerformQuery(queryClauses).Count.ToString();
         }
 
         /// <summary>
@@ -140,7 +141,7 @@ namespace BugNET.Issues
             MembershipUser user = Membership.GetUser();
             List<QueryClause> queryClauses = new List<QueryClause>();
             queryClauses.Add(new QueryClause(BooleanOperator, "IssueOwnerUserId", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
-            return IssueManager.PerformQuery(0, queryClauses).Count.ToString();
+            return IssueManager.PerformQuery(queryClauses).Count.ToString();
         }
 
         /// <summary>
@@ -177,7 +178,7 @@ namespace BugNET.Issues
                         queryClauses.Add(new QueryClause(BooleanOperator, "IssueAssignedUserId", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
                         foreach (Project p in ProjectManager.GetProjectsByMemberUserName(Context.User.Identity.Name))
                         {
-                            List<Status> status = StatusManager.GetStatusByProjectId(p.Id).FindAll(s => !s.IsClosedState);
+                            List<Status> status = StatusManager.GetByProjectId(p.Id).FindAll(s => !s.IsClosedState);
                             foreach (Status st in status)
                             {
                                 queryClauses.Add(new QueryClause(BooleanOperator, "IssueStatusId", "<>", st.Id.ToString(), SqlDbType.Int, false));
@@ -199,19 +200,16 @@ namespace BugNET.Issues
                 {
                     foreach (Project p in ProjectManager.GetProjectsByMemberUserName(Context.User.Identity.Name))
                     {
-                        List<Status> status = StatusManager.GetStatusByProjectId(p.Id).FindAll(s => s.IsClosedState);
-                        foreach (Status st in status)
-                        {
-                            queryClauses.Add(new QueryClause(BooleanOperator, "IssueStatusId", "<>", st.Id.ToString(), SqlDbType.Int, false));
-                        }
+                        var status = StatusManager.GetByProjectId(p.Id).FindAll(s => s.IsClosedState);
+                        queryClauses.AddRange(status.Select(st => new QueryClause(BooleanOperator, "IssueStatusId", "<>", st.Id.ToString(), SqlDbType.Int, false)));
                     }
                 }
 
                 //List<Issue> issues = Issue.PerformQuery(0, queryClauses);
                 if (ProjectListBoxFilter.SelectedIndex != 0)
-                    ctlDisplayIssues.DataSource = IssueManager.PerformQuery(0, queryClauses).FindAll(i => PresentationUtils.GetSelectedItemsIntegerList(ProjectListBoxFilter).Contains(i.ProjectId));
+                    ctlDisplayIssues.DataSource = IssueManager.PerformQuery(queryClauses).FindAll(i => PresentationUtils.GetSelectedItemsIntegerList(ProjectListBoxFilter).Contains(i.ProjectId));
                 else
-                    ctlDisplayIssues.DataSource = IssueManager.PerformQuery(0, queryClauses);
+                    ctlDisplayIssues.DataSource = IssueManager.PerformQuery(queryClauses);
                 ctlDisplayIssues.DataBind();
 
             }

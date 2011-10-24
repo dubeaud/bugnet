@@ -17,6 +17,5 @@ namespace BugNET.BLL
         {
             return DataProviderManager.Provider.GetRequiredFieldsForIssues();
         }
-
     }
 }

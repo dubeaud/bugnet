@@ -258,7 +258,7 @@
   <data name="IssueTitle" xml:space="preserve">
     <value>Issue Title</value>
   </data>
-  <data name="NewRoleDescription.Text" xml:space="preserve">
+  <data name="NewRoleDescriptionLabel.Text" xml:space="preserve">
     <value>To create a new role enter the name, description and check the required permssions then click save.</value>
   </data>
   <data name="OtherLabel.Text" xml:space="preserve">

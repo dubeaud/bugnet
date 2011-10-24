@@ -18,7 +18,7 @@ namespace BugNET.UserControls
         protected void Page_Load(object sender, EventArgs e)
         {
             //hide user registration if disabled in host settings
-            if (!Page.User.Identity.IsAuthenticated && Convert.ToInt32(HostSettingManager.GetHostSetting("UserRegistration")) == (int)Globals.UserRegistration.None)
+            if (!Page.User.Identity.IsAuthenticated && Convert.ToInt32(HostSettingManager.Get(HostSettingNames.UserRegistration)) == (int)Globals.UserRegistration.None)
             {
                 if (LoginView1.FindControl("lnkRegister") != null)
                     LoginView1.FindControl("lnkRegister").Visible = false;
@@ -36,14 +36,13 @@ namespace BugNET.UserControls
             }
 
             // Make the search panel invisible to anonymous users if set in Host Settings
-            if (!Page.User.Identity.IsAuthenticated && !Boolean.Parse(HostSettingManager.GetHostSetting("AnonymousAccess")))
+            if (!Page.User.Identity.IsAuthenticated && !Boolean.Parse(HostSettingManager.Get(HostSettingNames.AnonymousAccess)))
                 Panel1.Visible = false;
 
 
-            AppTitle.Text = HostSettingManager.GetHostSetting("ApplicationTitle").ToString();
+            AppTitle.Text = HostSettingManager.Get(HostSettingNames.ApplicationTitle);
             ddlProject.DataTextField = "Name";
             ddlProject.DataValueField = "Id";
-            int ProjectId = 0;
 
             if (!Page.IsPostBack)
             { 
@@ -53,7 +52,7 @@ namespace BugNET.UserControls
                     ddlProject.DataBind();
                     ddlProject.Items.Insert(0, new ListItem(GetLocalResourceObject("SelectProject").ToString()));
                 }
-                else if (!Page.User.Identity.IsAuthenticated && Boolean.Parse(HostSettingManager.GetHostSetting("AnonymousAccess")))
+                else if (!Page.User.Identity.IsAuthenticated && Boolean.Parse(HostSettingManager.Get(HostSettingNames.AnonymousAccess)))
                 {
                     ddlProject.DataSource = ProjectManager.GetPublicProjects();
                     ddlProject.DataBind();
@@ -69,7 +68,6 @@ namespace BugNET.UserControls
                     try
                     {
                         ddlProject.SelectedValue = Request.QueryString["pid"].ToString();
-                        ProjectId = int.Parse(Request.QueryString["pid"].ToString());
                     }
                     catch { }
                 }

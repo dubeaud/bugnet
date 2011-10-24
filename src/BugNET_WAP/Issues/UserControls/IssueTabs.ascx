@@ -42,7 +42,7 @@
     }
 </script>
 <div class="issueTabsContainer">
-<asp:UpdatePanel ID="IssueTabsUpdatePanel" runat="server" >
+<asp:UpdatePanel ID="IssueTabsUpdatePanel" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="true">
 	<ContentTemplate>
 		<div> 
 		<div class="scrollable">

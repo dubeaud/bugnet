@@ -15,12 +15,15 @@ namespace BugNET.BLL
         /// Saves this instance.
         /// </summary>
         /// <returns></returns>
-        public static bool SaveProjectNotification(ProjectNotification projectNotificationToSave)
+        public static bool SaveOrUpdate(ProjectNotification entity)
         {
-            var tempId = DataProviderManager.Provider.CreateNewProjectNotification(projectNotificationToSave);
-            if (tempId <= 0)
-                return false;
-            projectNotificationToSave.Id = tempId;
+            if (entity == null) throw new ArgumentNullException("entity");
+            if (entity.ProjectId <= Globals.NEW_ID) throw (new ArgumentException("Cannot save notification, the project id is invalid"));
+
+            var tempId = DataProviderManager.Provider.CreateNewProjectNotification(entity);
+
+            if (tempId <= 0) return false;
+            entity.Id = tempId;
             return true;
         }
 
@@ -30,10 +33,9 @@ namespace BugNET.BLL
         /// <param name="projectId">The project id.</param>
         /// <param name="username">The username.</param>
         /// <returns></returns>
-        public static bool DeleteProjectNotification(int projectId, string username)
+        public static bool Delete(int projectId, string username)
         {
-            if (projectId <= DefaultValues.GetProjectIdMinValue())
-                throw (new ArgumentOutOfRangeException("projectId"));
+            if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
             return DataProviderManager.Provider.DeleteProjectNotification(projectId, username);
         }
@@ -44,10 +46,9 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="projectId">The project id.</param>
         /// <returns></returns>
-        public static IEnumerable<ProjectNotification> GetProjectNotificationsByProjectId(int projectId)
+        public static IEnumerable<ProjectNotification> GetByProjectId(int projectId)
         {
-            if (projectId <= DefaultValues.GetProjectIdMinValue())
-                throw (new ArgumentOutOfRangeException("projectId"));
+            if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
             return DataProviderManager.Provider.GetProjectNotificationsByProjectId(projectId);
         }
@@ -57,10 +58,9 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="username">The username.</param>
         /// <returns></returns>
-        public static List<ProjectNotification> GetProjectNotificationsByUsername(string username)
+        public static List<ProjectNotification> GetByUsername(string username)
         {
-            if (string.IsNullOrEmpty(username))
-                throw (new ArgumentOutOfRangeException("username"));
+            if (string.IsNullOrEmpty(username)) throw (new ArgumentOutOfRangeException("username"));
 
             return DataProviderManager.Provider.GetProjectNotificationsByUsername(username);
         }

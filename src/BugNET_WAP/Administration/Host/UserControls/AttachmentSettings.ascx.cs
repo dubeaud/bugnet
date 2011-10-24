@@ -1,4 +1,5 @@
 ﻿using System;
+using BugNET.Common;
 using BugNET.BLL;
 using BugNET.UserInterfaceLayer;
 
@@ -23,8 +24,8 @@ namespace BugNET.Administration.Host.UserControls
         /// </summary>
         public bool Update()
         {         
-            HostSettingManager.UpdateHostSetting("AllowedFileExtensions", AllowedFileExtentions.Text.Trim());
-            HostSettingManager.UpdateHostSetting("FileSizeLimit", FileSizeLimit.Text.Trim());
+            HostSettingManager.UpdateHostSetting(HostSettingNames.AllowedFileExtensions, AllowedFileExtentions.Text.Trim());
+            HostSettingManager.UpdateHostSetting(HostSettingNames.FileSizeLimit, FileSizeLimit.Text.Trim());
             return true;
         }
 
@@ -33,8 +34,8 @@ namespace BugNET.Administration.Host.UserControls
         /// </summary>
         public void Initialize()
         {
-            AllowedFileExtentions.Text = HostSettingManager.GetHostSetting("AllowedFileExtensions");
-            FileSizeLimit.Text = HostSettingManager.GetHostSetting("FileSizeLimit");
+            AllowedFileExtentions.Text = HostSettingManager.Get(HostSettingNames.AllowedFileExtensions);
+            FileSizeLimit.Text = HostSettingManager.Get(HostSettingNames.FileSizeLimit);
         }
 
         #endregion

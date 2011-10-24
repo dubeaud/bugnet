@@ -70,14 +70,8 @@
     <Compile Include="Notifications\EmailNotificationType.cs" />
     <Compile Include="Notifications\INotificationContext.cs" />
     <Compile Include="Notifications\INotificationType.cs" />
-    <Compile Include="Notifications\IToXml.cs" />
     <Compile Include="Notifications\NotificationContext.cs" />
     <Compile Include="Notifications\NotificationManager.cs" />
-    <Compile Include="Notifications\XmlSerializeService.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Notifications\XmlXslTransform.cs" />
-    <Compile Include="Notifications\XslHelpers.cs" />
     <Compile Include="PermissionManager.cs" />
     <Compile Include="PriorityManager.cs" />
     <Compile Include="ProjectMailboxManager.cs" />

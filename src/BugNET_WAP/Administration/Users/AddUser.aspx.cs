@@ -129,11 +129,11 @@ namespace BugNET.Administration.Users
                     Profile.Save();
 
                     //auto assign user to roles
-                    List<Role> roles = RoleManager.GetAllRoles();
+                    List<Role> roles = RoleManager.GetAll();
                     foreach (Role r in roles)
                     {
                         if (r.AutoAssign)
-                            RoleManager.AddUserToRole(mu.UserName, r.Id);
+                            RoleManager.AddUser(mu.UserName, r.Id);
                     }
                 }
 

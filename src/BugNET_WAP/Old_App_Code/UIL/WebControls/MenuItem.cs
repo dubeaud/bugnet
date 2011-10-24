@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System.Linq;
+using System.Web;
 
 namespace BugNET.UserInterfaceLayer.WebControls
 {
@@ -7,13 +8,12 @@ namespace BugNET.UserInterfaceLayer.WebControls
     /// http://www.aspcode.net/Suckerfish-menu-with-ASPNET-and-JQuery.aspx
     /// </summary>
     public class SuckerMenuItem 
-    { 
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="SuckerMenuItem"/> class.
         /// </summary>
         /// <param name="sLink">The s link.</param>
         /// <param name="sText">The s text.</param>
-        /// <param name="sClass">The s class.</param>
         /// <param name="oRoot">The o root.</param>
         public SuckerMenuItem(string sLink, string sText, MenuHelperRoot oRoot) :this (sLink,sText,oRoot,string.Empty)
         {}
@@ -47,11 +47,8 @@ namespace BugNET.UserInterfaceLayer.WebControls
             get 
             { 
                 if (Link != "#" && m_Root.IsCurrent(this)) 
-                    return true; 
-                foreach (SuckerMenuItem oItem in Items) 
-                    if (oItem.RecursiveIsCurrent) 
-                        return true; 
-                return false; 
+                    return true;
+                return Items.Any(oItem => oItem.RecursiveIsCurrent);
             } 
         }
 
@@ -62,7 +59,7 @@ namespace BugNET.UserInterfaceLayer.WebControls
         public string GetHtml() 
         {
             Text = Text.Replace("»", "<span class=\"sf-sub-indicator\"> »</span>");
-            System.Text.StringBuilder oBuilder = new System.Text.StringBuilder(); 
+            var oBuilder = new System.Text.StringBuilder(); 
 //oBuilder.Append("<li " + (RecursiveIsCurrent ? " " + m_Root.LICurrentDecoration : "") + ">");
 
             oBuilder.Append("<li " + (CssClass != string.Empty ? "class=\"" + CssClass + "\"" : "") + ">");
@@ -70,7 +67,7 @@ namespace BugNET.UserInterfaceLayer.WebControls
             { 
                 oBuilder.Append("<a href=\"" + Link + "\" class=\"sf-with-ul\">" + Text + "</a>"); 
                 oBuilder.Append("<ul>"); 
-                foreach (SuckerMenuItem oItem in Items) 
+                foreach (var oItem in Items) 
                     oBuilder.Append(oItem.GetHtml()); 
                 oBuilder.Append("</ul>"); 
             } 

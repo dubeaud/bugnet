@@ -70,7 +70,7 @@ namespace BugNET.Administration.Projects.UserControls
         protected void CategoryValidation_Validate(object sender, ServerValidateEventArgs e)
         {
             //validate that at least one version exists.
-            if (CategoryManager.GetCategoriesByProjectId(ProjectId).Count > 0)
+            if (CategoryManager.GetByProjectId(ProjectId).Count > 0)
             {
                 e.IsValid = true;
             }
@@ -97,14 +97,14 @@ namespace BugNET.Administration.Projects.UserControls
                 QueryClause q = new QueryClause("AND", "IssueCategoryId", "=", HiddenField1.Value, SqlDbType.Int, false);
                 queryClauses.Add(q);
 
-                List<Issue> issues = IssueManager.PerformQuery(ProjectId, queryClauses);
+                List<Issue> issues = IssueManager.PerformQuery(queryClauses, ProjectId);
 
                 if (RadioButton1.Checked) //delete category 
                 {
                     //if (RecursiveDelete.Checked == true)
                     //Category.DeleteChildCategoriesByCategoryId(OldCategoryId);
                     //delete the category.
-                    CategoryManager.DeleteCategory(OldCategoryId);
+                    CategoryManager.Delete(OldCategoryId);
                 }
 
                 if (RadioButton2.Checked) //reassign issues to existing category.
@@ -128,7 +128,7 @@ namespace BugNET.Administration.Projects.UserControls
                     }
 
                     //delete the category.
-                    CategoryManager.DeleteCategory(OldCategoryId);
+                    CategoryManager.Delete(OldCategoryId);
                 }
 
                 //assign new category 
@@ -139,16 +139,16 @@ namespace BugNET.Administration.Projects.UserControls
                         Message1.ShowErrorMessage(GetLocalResourceObject("NewCategoryNotEntered").ToString());
                         return;
                     }
-                    Category c = new Category(ProjectId, 0, NewCategoryTextBox.Text, 0);
-                    CategoryManager.SaveCategory(c);
-                    foreach (Issue issue in issues)
+                    var c = new Category { ProjectId = ProjectId, ParentCategoryId = 0, Name = NewCategoryTextBox.Text, ChildCount = 0 };
+                    CategoryManager.SaveOrUpdate(c);
+                    foreach (var issue in issues)
                     {
                         issue.CategoryName = NewCategoryTextBox.Text;
                         issue.CategoryId = c.Id;
                         IssueManager.SaveIssue(issue);
                     }
                     //delete the category.
-                    CategoryManager.DeleteCategory(OldCategoryId);
+                    CategoryManager.Delete(OldCategoryId);
 
                 }
             }

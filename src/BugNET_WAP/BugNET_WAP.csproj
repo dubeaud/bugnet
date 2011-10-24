@@ -429,6 +429,13 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Errors\AccessDenied.aspx.cs">
+      <DependentUpon>AccessDenied.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Errors\AccessDenied.aspx.designer.cs">
+      <DependentUpon>AccessDenied.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Errors\Error.aspx.cs">
       <DependentUpon>Error.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -552,7 +559,9 @@
       <DependentUpon>Revisions.ascx</DependentUpon>
     </Compile>
     <Compile Include="Old_App_Code\UIL\DownloadAttachment.cs" />
-    <Compile Include="Old_App_Code\UIL\ErrorRedirector.cs" />
+    <Compile Include="Old_App_Code\UIL\ErrorRedirector.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Old_App_Code\UIL\GridViewExportUtil.cs" />
     <Compile Include="Old_App_Code\UIL\IEditHostSettingControl.cs" />
     <Compile Include="Old_App_Code\UIL\IssueListState.cs" />
@@ -875,6 +884,7 @@
     <Content Include="Administration\Users\UserList.aspx" />
     <Content Include="App_Themes\Default\superfish.css" />
     <Content Include="Default.aspx" />
+    <Content Include="Errors\AccessDenied.aspx" />
     <Content Include="Errors\NotFound.aspx" />
     <Content Include="Errors\SomethingMissing.aspx" />
     <Content Include="favicon.ico" />
@@ -1487,6 +1497,7 @@
     <Content Include="App_GlobalResources\SharedResources.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>SharedResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="UserControls\App_LocalResources\Banner.ascx.resx" />
     <Content Include="App_LocalResources\Default.aspx.resx">
@@ -1560,6 +1571,7 @@
     <Content Include="Errors\App_LocalResources\SomethingMissing.resx" />
     <Content Include="UserControls\App_LocalResources\PickImage.ascx.resx" />
     <Content Include="UserControls\App_LocalResources\CategoryTreeView.ascx.resx" />
+    <Content Include="Errors\App_LocalResources\AccessDenied.aspx.resx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BugNET.BLL\BugNET.BLL.csproj">
@@ -1603,7 +1615,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>59847</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

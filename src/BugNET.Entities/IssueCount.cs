@@ -2,93 +2,52 @@
 {
     public class IssueCount
     {
-        private object _Id;
-        private string _Name;
-        private int _Count;
-        private string _ImageUrl;
-        private decimal _Percentage;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="IssueCount"/> class.
         /// </summary>
         /// <param name="id">The id.</param>
         /// <param name="name">The name.</param>
         /// <param name="count">The count.</param>
+        /// <param name="imageUrl"></param>
         /// <param name="percentage">The percentage.</param>
-        public IssueCount(object id, string name, int count, string imageUrl, decimal percentage)
+        public IssueCount(object id, string name, int count, string imageUrl, decimal percentage = -1)
         {
-            _Id = id;
-            _Name = name;
-            _Count = count;
-            _ImageUrl = imageUrl;
-            _Percentage = percentage;
+            Id = id;
+            Name = name;
+            Count = count;
+            ImageUrl = imageUrl;
+            Percentage = percentage;
 
         }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="IssueCount"/> class.
-        /// </summary>
-        /// <param name="id">The id.</param>
-        /// <param name="name">The name.</param>
-        /// <param name="count">The count.</param>
-        public IssueCount(object id, string name, int count, string imageUrl)
-            : this(id, name, count, imageUrl, -1)
-        { }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="IssueCount"/> class.
-        /// </summary>
-        /// <param name="name">The name.</param>
-        /// <param name="count">The count.</param>
-        public IssueCount(string name, int count)
-            : this(-1, name, count, string.Empty, -1)
-        { }
 
         /// <summary>
         /// Gets the id.
         /// </summary>
         /// <value>The id.</value>
-        public object Id
-        {
-            get { return _Id; }
-        }
+        public object Id { get; private set; }
 
         /// <summary>
         /// Gets the count.
         /// </summary>
         /// <value>The count.</value>
-        public int Count
-        {
-            get { return _Count; }
-        }
+        public int Count { get; private set; }
 
         /// <summary>
         /// Gets the name.
         /// </summary>
         /// <value>The name.</value>
-        public string Name
-        {
-            get { return _Name; }
-        }
+        public string Name { get; private set; }
 
         /// <summary>
         /// Gets the image URL.
         /// </summary>
         /// <value>The image URL.</value>
-        public string ImageUrl
-        {
-            get { return _ImageUrl; }
-        }
+        public string ImageUrl { get; private set; }
 
         /// <summary>
         /// Gets the percentage.
         /// </summary>
         /// <value>The percentage.</value>
-        public decimal Percentage
-        {
-            get { return _Percentage; }
-            set { _Percentage = value; }
-        }
-
+        public decimal Percentage { get; set; }
     }
 }

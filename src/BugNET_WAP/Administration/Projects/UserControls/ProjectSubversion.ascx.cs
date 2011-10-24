@@ -1,9 +1,11 @@
+using System;
+using BugNET.BLL;
+using BugNET.Common;
+using BugNET.Entities;
+using BugNET.UserInterfaceLayer;
+
 namespace BugNET.Administration.Projects.UserControls
 {
-    using System;
-    using BugNET.BLL;
-    using BugNET.Entities;
-    using BugNET.UserInterfaceLayer;
 
     /// <summary>
 	///		Summary description for ProjectDescription.
@@ -11,7 +13,7 @@ namespace BugNET.Administration.Projects.UserControls
 	public partial class ProjectSubversion : System.Web.UI.UserControl,IEditProjectControl
 	{
 
-        private int _ProjectId = -1;
+        private int _projectId = -1;
         
         /// <summary>
         /// Handles the Load event of the Page control.
@@ -39,7 +41,7 @@ namespace BugNET.Administration.Projects.UserControls
 
             svnOut.Text = SourceIntegrationManager.CreateRepository(name);
 
-            string rootUrl = HostSettingManager.GetHostSetting("RepoRootUrl");
+            string rootUrl = HostSettingManager.Get(HostSettingNames.RepositoryRootUrl);
             if(!rootUrl.EndsWith("/"))
                 rootUrl += "/";
 
@@ -74,10 +76,10 @@ namespace BugNET.Administration.Projects.UserControls
 		{
             get
             {
-                return _ProjectId;
+                return _projectId;
             }
 
-            set { _ProjectId = value; }
+            set { _projectId = value; }
 		}
 
         /// <summary>
@@ -97,7 +99,7 @@ namespace BugNET.Administration.Projects.UserControls
            Project projectToUpdate = ProjectManager.GetProjectById(ProjectId);
             svnUrl.Text = projectToUpdate.SvnRepositoryUrl;
 
-           bool svnAdminEnabled = bool.Parse(HostSettingManager.GetHostSetting("EnableRepositoryCreation"));
+           bool svnAdminEnabled = bool.Parse(HostSettingManager.Get(HostSettingNames.EnableRepositoryCreation));
 
            if (svnAdminEnabled)
            {

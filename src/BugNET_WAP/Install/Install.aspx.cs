@@ -207,7 +207,7 @@ namespace BugNET.Install
                     if (NewUser != null)
                     {
                         //add the admin user to the Super Users role.
-                        RoleManager.AddUserToRole("Admin", 1);
+                        RoleManager.AddUser("Admin", 1);
                         //add user profile information
                         WebProfile Profile = new WebProfile().GetProfile("Admin");
                         Profile.FirstName = "Admin";
@@ -342,7 +342,7 @@ namespace BugNET.Install
 
                       //check if the admin user is in the super users role.
                       bool found = false;
-                      List<Role> roles = RoleManager.GetRolesForUser("Admin");
+                      List<Role> roles = RoleManager.GetForUser("Admin");
                       if (roles.Count > 0)
                       {
                           Role role = roles.SingleOrDefault(r => r.Name == Globals.SUPER_USER_ROLE);
@@ -350,7 +350,7 @@ namespace BugNET.Install
                               found = true;
                       }
                       if (!found)
-                          RoleManager.AddUserToRole("Admin", 1);
+                          RoleManager.AddUser("Admin", 1);
 
                       UpgradeManager.UpdateDatabaseVersion(UpgradeManager.GetCurrentVersion());
                       return true;

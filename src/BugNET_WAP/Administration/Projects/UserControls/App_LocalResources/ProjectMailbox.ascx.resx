@@ -120,4 +120,7 @@
   <data name="ConfirmDelete" xml:space="preserve">
     <value>Are you sure you want to delete the \"{0}\" mailbox?</value>
   </data>
+  <data name="NoConfiguredMailBoxes" xml:space="preserve">
+    <value>There are no Mailboxes for this project.</value>
+  </data>
 </root>

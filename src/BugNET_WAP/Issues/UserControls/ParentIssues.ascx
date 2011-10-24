@@ -3,7 +3,7 @@
     <asp:label ID="lblDescription" meta:resourcekey="lblDescription"  runat="server" Text="List all issues on which this issue depends. Enter the ID of the issue in the 
 	text box below and click the Add Parent Issue button."></asp:label>	
 </p>
-<asp:DataGrid id="IssuesDataGrid" AutoGenerateColumns="false" Width="100%" SkinID="DataGrid" OnItemDataBound="grdIssueItemDataBound" OnItemCommand="grdBugsItemCommand" Runat="Server">
+<asp:DataGrid id="IssuesDataGrid" AutoGenerateColumns="false" Width="100%" SkinID="DataGrid" OnItemDataBound="GrdIssueItemDataBound" OnItemCommand="GrdBugsItemCommand" Runat="Server">
 	<columns>
 		<asp:templatecolumn SortExpression="IssueId" HeaderText="<%$ Resources:SharedResources, Id %>" >
 			<itemtemplate>

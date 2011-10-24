@@ -30,10 +30,10 @@ namespace BugNET.BLL
                 if (tempId > 0)
                 {
                     issueToSave.Id = tempId;
-                    //add vote
-                    var vote = new IssueVote(issueToSave.Id, issueToSave.CreatorUserName);
-                    IssueVoteManager.SaveIssueVote(vote);
 
+                    //add vote
+                    var vote = new IssueVote { IssueId = issueToSave.Id, VoteUsername = issueToSave.CreatorUserName};
+                    IssueVoteManager.SaveOrUpdate(vote);
 
                     //TOOD: handle adding an attachment for new issue.
 
@@ -58,10 +58,10 @@ namespace BugNET.BLL
                     if (issueToSave.SendNewAssigneeNotification)
                     {
                         //add this user to notifications and send them a notification
-                        var issueNotification = new IssueNotification(issueToSave.Id, issueToSave.AssignedUserName);
+                        var notification = new IssueNotification() { IssueId = issueToSave.Id, NotificationUsername = issueToSave.AssignedUserName };
 
-                        IssueNotificationManager.SaveIssueNotification(issueNotification);
-                        IssueNotificationManager.SendNewAssigneeNotification(issueToSave.Id, issueToSave.AssignedDisplayName);
+                        IssueNotificationManager.SaveOrUpdate(notification);
+                        IssueNotificationManager.SendNewAssigneeNotification(notification);
                     }
                 }
                 return result;
@@ -77,7 +77,7 @@ namespace BugNET.BLL
         private static void UpdateIssueHistory(IEnumerable<IssueHistory> issueChanges)
         {
             foreach (var issueHistory in issueChanges)
-                IssueHistoryManager.SaveIssueHistory(issueHistory);
+                IssueHistoryManager.SaveOrUpdate(issueHistory);
         }
 
         /// <summary>
@@ -92,26 +92,34 @@ namespace BugNET.BLL
 
             if (originalIssue != null && issueToCompare != null)
             {
-                var createdUserName = issueToCompare.CreatorUserName;
+                var history = new IssueHistory { CreatedUserName = issueToCompare.CreatorUserName, IssueId = originalIssue.Id, DateChanged = DateTime.Now };
 
                 if (originalIssue.Title.ToLower() != issueToCompare.Title.ToLower())
-                    issueChanges.Add(new IssueHistory(originalIssue.Id, createdUserName, "Title", originalIssue.Title, issueToCompare.Title));
+                    issueChanges.Add(GetNewIssueHistory(history, "Title", originalIssue.Title, issueToCompare.Title));
+
                 if (originalIssue.Description.ToLower() != issueToCompare.Description.ToLower())
-                    issueChanges.Add(new IssueHistory(originalIssue.Id, createdUserName, "Description", originalIssue.Description, issueToCompare.Description));
+                    issueChanges.Add(GetNewIssueHistory(history, "Description", originalIssue.Description, issueToCompare.Description));
+
                 if (originalIssue.CategoryId != issueToCompare.CategoryId)
-                    issueChanges.Add(new IssueHistory(originalIssue.Id, createdUserName, "Category", originalIssue.CategoryName, issueToCompare.CategoryName));
+                    issueChanges.Add(GetNewIssueHistory(history, "Category", originalIssue.CategoryName, issueToCompare.CategoryName));
+
                 if (originalIssue.PriorityId != issueToCompare.PriorityId)
-                    issueChanges.Add(new IssueHistory(originalIssue.Id, createdUserName, "Priority", originalIssue.PriorityName, issueToCompare.PriorityName));
+                    issueChanges.Add(GetNewIssueHistory(history, "Priority", originalIssue.PriorityName, issueToCompare.PriorityName));
+
                 if (originalIssue.StatusId != issueToCompare.StatusId)
-                    issueChanges.Add(new IssueHistory(originalIssue.Id, createdUserName, "Status", originalIssue.StatusName, issueToCompare.StatusName));
+                    issueChanges.Add(GetNewIssueHistory(history, "Status", originalIssue.StatusName, issueToCompare.StatusName));
+
                 if (originalIssue.MilestoneId != issueToCompare.MilestoneId)
-                    issueChanges.Add(new IssueHistory(originalIssue.Id, createdUserName, "Milestone", originalIssue.MilestoneName, issueToCompare.MilestoneName));
+                    issueChanges.Add(GetNewIssueHistory(history, "Milestone", originalIssue.MilestoneName, issueToCompare.MilestoneName));
+
                 if (originalIssue.AffectedMilestoneId != issueToCompare.AffectedMilestoneId)
-                    issueChanges.Add(new IssueHistory(originalIssue.Id, createdUserName, "Affected Milestone", originalIssue.AffectedMilestoneName, issueToCompare.AffectedMilestoneName));
+                    issueChanges.Add(GetNewIssueHistory(history, "Affected Milestone", originalIssue.AffectedMilestoneName, issueToCompare.AffectedMilestoneName));
+
                 if (originalIssue.IssueTypeId != issueToCompare.IssueTypeId)
-                    issueChanges.Add(new IssueHistory(originalIssue.Id, createdUserName, "Issue Type", originalIssue.IssueTypeName, issueToCompare.IssueTypeName));
+                    issueChanges.Add(GetNewIssueHistory(history, "Issue Type", originalIssue.IssueTypeName, issueToCompare.IssueTypeName));
+
                 if (originalIssue.ResolutionId != issueToCompare.ResolutionId)
-                    issueChanges.Add(new IssueHistory(originalIssue.Id, createdUserName, "Resolution", originalIssue.ResolutionName, issueToCompare.ResolutionName));
+                    issueChanges.Add(GetNewIssueHistory(history, "Resolution", originalIssue.ResolutionName, issueToCompare.ResolutionName));
 
                 var newAssignedUserName = String.IsNullOrEmpty(originalIssue.AssignedUserName) ? Globals.UNASSIGNED_DISPLAY_TEXT : issueToCompare.AssignedUserName;
 
@@ -121,23 +129,32 @@ namespace BugNET.BLL
                     originalIssue.SendNewAssigneeNotification = (newAssignedUserName != Globals.UNASSIGNED_DISPLAY_TEXT);
                     originalIssue.NewAssignee = true;
 
-                    var newAssignedDisplayName = (newAssignedUserName == Globals.UNASSIGNED_DISPLAY_TEXT) ? newAssignedUserName :
-                        UserManager.GetUserDisplayName(newAssignedUserName);
-                    issueChanges.Add(new IssueHistory(originalIssue.Id, createdUserName, "Assigned to", originalIssue.AssignedDisplayName, newAssignedDisplayName));
+                    var newAssignedDisplayName = (newAssignedUserName == Globals.UNASSIGNED_DISPLAY_TEXT) ? newAssignedUserName : UserManager.GetUserDisplayName(newAssignedUserName);
+                    issueChanges.Add(GetNewIssueHistory(history, "Assigned to", originalIssue.AssignedDisplayName, newAssignedDisplayName));
                 }
+
                 if (originalIssue.OwnerUserName != issueToCompare.OwnerUserName)
                 {
                     var newOwnerDisplayName = UserManager.GetUserDisplayName(issueToCompare.OwnerUserName);
-                    issueChanges.Add(new IssueHistory(originalIssue.Id, createdUserName, "Owner", originalIssue.OwnerDisplayName, newOwnerDisplayName));
+                    issueChanges.Add(GetNewIssueHistory(history, "Owner", originalIssue.OwnerDisplayName, newOwnerDisplayName));
                 }
+
                 if (originalIssue.Estimation != issueToCompare.Estimation)
-                    issueChanges.Add(new IssueHistory(originalIssue.Id, createdUserName, "Estimation", EstimationToString(originalIssue.Estimation), EstimationToString(issueToCompare.Estimation)));
+                    issueChanges.Add(GetNewIssueHistory(history, "Estimation", Utilities.EstimationToString(originalIssue.Estimation), Utilities.EstimationToString(issueToCompare.Estimation)));
+
                 if (originalIssue.Visibility != issueToCompare.Visibility)
-                    issueChanges.Add(new IssueHistory(originalIssue.Id, createdUserName, "Visibility", originalIssue.Visibility == 0 ? Boolean.FalseString : Boolean.TrueString, issueToCompare.Visibility == 0 ? Boolean.FalseString : Boolean.TrueString));
+                    issueChanges.Add(GetNewIssueHistory(history, "Visibility", Utilities.GetBooleanAsString(originalIssue.Visibility.ToBool()), Utilities.GetBooleanAsString(issueToCompare.Visibility.ToBool())));
+
                 if (originalIssue.DueDate != issueToCompare.DueDate)
-                    issueChanges.Add(new IssueHistory(originalIssue.Id, createdUserName, "Due Date", originalIssue.DueDate == DateTime.MinValue ? string.Empty : originalIssue.DueDate.ToShortDateString(), issueToCompare.DueDate.ToShortDateString()));
+                {
+                    var originalDate = originalIssue.DueDate == DateTime.MinValue ? string.Empty : originalIssue.DueDate.ToShortDateString();
+                    var newDate = issueToCompare.DueDate == DateTime.MinValue ? string.Empty : issueToCompare.DueDate.ToShortDateString();
+
+                    issueChanges.Add(GetNewIssueHistory(history, "Due Date", originalDate, newDate));
+                }
+                    
                 if (originalIssue.Progress != issueToCompare.Progress)
-                    issueChanges.Add(new IssueHistory(originalIssue.Id, createdUserName, "Percent complete", string.Format("{0}%", originalIssue.Progress), string.Format("{0}%", issueToCompare.Progress)));
+                    issueChanges.Add(GetNewIssueHistory(history, "Progress", originalIssue.Progress.ToString("p"), issueToCompare.Progress.ToString("p")));
             }
             else
             {
@@ -147,15 +164,21 @@ namespace BugNET.BLL
             return issueChanges;
         }
 
-        /// <summary>
-        /// Estimations to string.
-        /// </summary>
-        /// <param name="estimation">The estimation.</param>
-        /// <returns></returns>
-        public static string EstimationToString(decimal estimation)
+        private static IssueHistory GetNewIssueHistory(IssueHistory history, string fieldChanged, string oldValue, string newValue)
         {
-            return estimation >= 0 ? estimation.ToString() : "empty";
+            return new IssueHistory
+                       {
+                           CreatedUserName = history.CreatedUserName,
+                           CreatorDisplayName = string.Empty,
+                           DateChanged = history.DateChanged,
+                           FieldChanged = fieldChanged,
+                           IssueId = history.IssueId,
+                           NewValue = newValue,
+                           OldValue = oldValue
+                       };
         }
+
+
 
         /// <summary>
         /// Calculate issue's percentage of issue list.
@@ -182,8 +205,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static Issue GetIssueById(int issueId)
         {
-            if (issueId <= DefaultValues.GetIssueIdMinValue())
-                throw (new ArgumentOutOfRangeException("issueId"));
+            if (issueId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("issueId"));
 
             return (DataProviderManager.Provider.GetIssueById(issueId));
         }
@@ -195,8 +217,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<Issue> GetIssuesByProjectId(int projectId)
         {
-            if (projectId <= DefaultValues.GetProjectIdMinValue())
-                throw (new ArgumentOutOfRangeException("projectId"));
+            if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
             return (DataProviderManager.Provider.GetIssuesByProjectId(projectId));
         }
@@ -208,8 +229,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<IssueCount> GetIssueStatusCountByProject(int projectId)
         {
-            if (projectId <= DefaultValues.GetProjectIdMinValue())
-                throw (new ArgumentOutOfRangeException("projectId"));
+            if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
             return CalculateIssueCountListPercentage(DataProviderManager.Provider.GetIssueStatusCountByProject(projectId));
         }
@@ -221,8 +241,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<IssueCount> GetIssueMilestoneCountByProject(int projectId)
         {
-            if (projectId <= DefaultValues.GetProjectIdMinValue())
-                throw (new ArgumentOutOfRangeException("projectId"));
+            if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
             return CalculateIssueCountListPercentage(DataProviderManager.Provider.GetIssueMilestoneCountByProject(projectId));
         }
@@ -233,8 +252,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<IssueCount> GetIssuePriorityCountByProject(int projectId)
         {
-            if (projectId <= DefaultValues.GetProjectIdMinValue())
-                throw (new ArgumentOutOfRangeException("projectId"));
+            if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
             return DataProviderManager.Provider.GetIssuePriorityCountByProject(projectId);
         }
@@ -245,8 +263,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<IssueCount> GetIssueUserCountByProject(int projectId)
         {
-            if (projectId <= DefaultValues.GetProjectIdMinValue())
-                throw (new ArgumentOutOfRangeException("projectId"));
+            if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
             return DataProviderManager.Provider.GetIssueUserCountByProject(projectId);
         }
@@ -258,12 +275,10 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static int GetIssueUnassignedCountByProject(int projectId)
         {
-            if (projectId <= DefaultValues.GetProjectIdMinValue())
-                throw (new ArgumentOutOfRangeException("projectId"));
+            if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
             return DataProviderManager.Provider.GetIssueUnassignedCountByProject(projectId);
         }
-
 
         /// <summary>
         /// Gets the issue unscheduled milestone count by project.
@@ -272,8 +287,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static int GetIssueUnscheduledMilestoneCountByProject(int projectId)
         {
-            if (projectId <= DefaultValues.GetProjectIdMinValue())
-                throw (new ArgumentOutOfRangeException("projectId"));
+            if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
             return DataProviderManager.Provider.GetIssueUnscheduledMilestoneCountByProject(projectId);
         }
@@ -285,8 +299,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<IssueCount> GetIssueTypeCountByProject(int projectId)
         {
-            if (projectId <= DefaultValues.GetProjectIdMinValue())
-                throw (new ArgumentOutOfRangeException("projectId"));
+            if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
             return DataProviderManager.Provider.GetIssueTypeCountByProject(projectId);
         }
@@ -297,15 +310,12 @@ namespace BugNET.BLL
         /// <param name="projectId">The project id.</param>
         /// <param name="categoryId">The category id.</param>
         /// <returns></returns>
-        public static int GetIssueCountByProjectAndCategory(int projectId, int categoryId)
+        public static int GetIssueCountByProjectAndCategory(int projectId, int categoryId = 0)
         {
-            if (projectId <= DefaultValues.GetProjectIdMinValue())
-                throw (new ArgumentOutOfRangeException("projectId"));
+            if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
             return DataProviderManager.Provider.GetIssueCountByProjectAndCategory(projectId, categoryId);
         }
-
-
 
         /// <summary>
         /// Gets the bugs by criteria.
@@ -342,8 +352,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool DeleteIssue(int issueId)
         {
-            if (issueId <= DefaultValues.GetIssueIdMinValue())
-                throw (new ArgumentOutOfRangeException("issueId"));
+            if (issueId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("issueId"));
 
             return DataProviderManager.Provider.DeleteIssue(issueId);
         }
@@ -356,11 +365,8 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<Issue> GetIssuesByAssignedUserName(int projectId, string username)
         {
-            if (projectId <= DefaultValues.GetProjectIdMinValue())
-                throw (new ArgumentOutOfRangeException("projectId"));
-
-            if (username == null || username.Length == 0)
-                throw (new ArgumentOutOfRangeException("username"));
+            if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
+            if (string.IsNullOrEmpty(username)) throw (new ArgumentOutOfRangeException("username"));
 
             return (DataProviderManager.Provider.GetIssuesByAssignedUserName(projectId, username));
         }
@@ -373,11 +379,8 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<Issue> GetIssuesByCreatorUserName(int projectId, string username)
         {
-            if (projectId <= DefaultValues.GetProjectIdMinValue())
-                throw (new ArgumentOutOfRangeException("projectId"));
-
-            if (username == null || username.Length == 0)
-                throw (new ArgumentOutOfRangeException("username"));
+            if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
+            if (string.IsNullOrEmpty(username)) throw (new ArgumentOutOfRangeException("username"));
 
             return (DataProviderManager.Provider.GetIssuesByCreatorUserName(projectId, username));
         }
@@ -390,10 +393,8 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<Issue> GetIssuesByOwnerUserName(int projectId, string username)
         {
-            if (projectId <= DefaultValues.GetProjectIdMinValue())
-                throw (new ArgumentOutOfRangeException("projectId"));
-            if (username == null || username.Length == 0)
-                throw (new ArgumentOutOfRangeException("username"));
+            if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
+            if (string.IsNullOrEmpty(username)) throw (new ArgumentOutOfRangeException("username"));
 
             return DataProviderManager.Provider.GetIssuesByOwnerUserName(projectId, username);
         }
@@ -406,10 +407,8 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<Issue> GetIssuesByRelevancy(int projectId, string username)
         {
-            if (projectId <= DefaultValues.GetProjectIdMinValue())
-                throw (new ArgumentOutOfRangeException("projectId"));
-            if (username == null || username.Length == 0)
-                throw (new ArgumentOutOfRangeException("username"));
+            if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
+            if (string.IsNullOrEmpty(username)) throw (new ArgumentOutOfRangeException("username"));
 
             return (DataProviderManager.Provider.GetIssuesByRelevancy(projectId, username));
         }
@@ -420,10 +419,9 @@ namespace BugNET.BLL
         /// <param name="username">The username.</param>
         /// <param name="excludeClosedStatus">if set to <c>true</c> [exclude closed status].</param>
         /// <returns></returns>
-        public static List<Issue> GetMonitoredIssuesByUserName(string username, bool excludeClosedStatus)
+        public static List<Issue> GetMonitoredIssuesByUserName(string username, bool excludeClosedStatus = true)
         {
-            if (username == null || username.Length == 0)
-                throw (new ArgumentOutOfRangeException("username"));
+            if (string.IsNullOrEmpty(username)) throw (new ArgumentOutOfRangeException("username"));
 
             return DataProviderManager.Provider.GetMonitoredIssuesByUserName(username, excludeClosedStatus);
         }
@@ -439,21 +437,19 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static Issue GetDefaultIssueByProjectId(int projectId, string title, string description, string assignedName, string ownerName)
         {
-            if (projectId < DefaultValues.GetProjectIdMinValue())
-                throw new ArgumentOutOfRangeException(string.Format("ProjectID must be {0} or larger.", DefaultValues.GetProjectIdMinValue()));
+            if (projectId < Globals.NEW_ID) throw new ArgumentOutOfRangeException(string.Format("ProjectID must be {0} or larger.", Globals.NEW_ID));
 
             var curProject = ProjectManager.GetProjectById(projectId);
 
-            if (curProject == null)
-                throw new ArgumentException("Project not found for ProjectID.");
+            if (curProject == null) throw new ArgumentException("Project not found for ProjectID.");
 
-            var cats = CategoryManager.GetCategoriesByProjectId(projectId);
-            var statuses = StatusManager.GetStatusByProjectId(projectId);
-            var priorities = PriorityManager.GetPrioritiesByProjectId(projectId);
-            var issueTypes = IssueTypeManager.GetIssueTypesByProjectId(projectId);
-            var resolutions = ResolutionManager.GetResolutionsByProjectId(projectId);
-            var affectedMilestones = MilestoneManager.GetMilestoneByProjectId(projectId);
-            var milestones = MilestoneManager.GetMilestoneByProjectId(projectId);
+            var cats = CategoryManager.GetByProjectId(projectId);
+            var statuses = StatusManager.GetByProjectId(projectId);
+            var priorities = PriorityManager.GetByProjectId(projectId);
+            var issueTypes = IssueTypeManager.GetByProjectId(projectId);
+            var resolutions = ResolutionManager.GetByProjectId(projectId);
+            var affectedMilestones = MilestoneManager.GetByProjectId(projectId);
+            var milestones = MilestoneManager.GetByProjectId(projectId);
 
             // Select the first one in the list, not really the default intended.
             var defCat = cats[0];
@@ -479,8 +475,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<Issue> GetOpenIssues(int projectId)
         {
-            if (projectId <= DefaultValues.GetProjectIdMinValue())
-                throw (new ArgumentOutOfRangeException("projectId"));
+            if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
             return (DataProviderManager.Provider.GetOpenIssues(projectId));
         }
@@ -489,13 +484,12 @@ namespace BugNET.BLL
         /// <summary>
         /// Performs the query.
         /// </summary>
-        /// <param name="projectId">The project id.</param>
         /// <param name="queryClauses">The query clauses.</param>
+        /// <param name="projectId">The project id.</param>
         /// <returns></returns>
-        public static List<Issue> PerformQuery(int projectId, List<QueryClause> queryClauses)
+        public static List<Issue> PerformQuery(List<QueryClause> queryClauses, int projectId = 0)
         {
-            if (queryClauses.Count == 0)
-                throw new ArgumentOutOfRangeException("queryClauses");
+            if (queryClauses.Count == 0) throw new ArgumentOutOfRangeException("queryClauses");
 
             return DataProviderManager.Provider.PerformQuery(projectId, queryClauses);
         }
@@ -508,23 +502,12 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<Issue> PerformSavedQuery(int projectId, int queryId)
         {
-            if (queryId <= DefaultValues.GetQueryIdMinValue())
-                throw (new ArgumentOutOfRangeException("queryId"));
+            if (queryId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("queryId"));
+            if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
             return DataProviderManager.Provider.PerformSavedQuery(projectId, queryId);
         }
 
-        //public static bool IsValidId(int issueId)
-        //{
-        //    bool isValid = false;
-        //    Issue requestedIssue = null;
-
-        //    requestedIssue = DataProviderManager.Provider.GetIssueById(issueId);
-
-        //    isValid = requestedIssue != null;
-
-        //    return isValid;
-        //}
         #endregion
     }
 }

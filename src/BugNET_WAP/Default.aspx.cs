@@ -23,18 +23,18 @@ namespace BugNET
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
 		protected void Page_Load(object sender, System.EventArgs e)
 		{
-            Page.Title = string.Format("{0} - {1}", "Home", HostSettingManager.GetHostSetting("ApplicationTitle"));
+            Page.Title = string.Format("{0} - {1}", "Home", HostSettingManager.Get(HostSettingNames.ApplicationTitle));
             if (!Page.IsPostBack)
             {
-                lblApplicationTitle.Text = HostSettingManager.GetHostSetting("ApplicationTitle");
-                WelcomeMessage.Text = HostSettingManager.GetHostSetting("WelcomeMessage");
+                lblApplicationTitle.Text = HostSettingManager.Get(HostSettingNames.ApplicationTitle);
+                WelcomeMessage.Text = HostSettingManager.Get(HostSettingNames.WelcomeMessage);
                 
             }
 
 			if (!Context.User.Identity.IsAuthenticated)			
 			{	
 				//get all public available projects here
-                if (Boolean.Parse(HostSettingManager.GetHostSetting("AnonymousAccess")))
+                if (Boolean.Parse(HostSettingManager.Get(HostSettingNames.AnonymousAccess)))
 				{
 					rptProject.DataSource = ProjectManager.GetPublicProjects();
 				}
@@ -128,7 +128,7 @@ namespace BugNET
 
                 string milestone = string.Empty;
 
-                List<Milestone> milestoneList = MilestoneManager.GetMilestoneByProjectId(p.Id);
+                List<Milestone> milestoneList = MilestoneManager.GetByProjectId(p.Id);
                 milestoneList = milestoneList.FindAll(m => m.DueDate.HasValue && m.IsCompleted != true);
 
                 if (milestoneList.Count > 0)
@@ -161,7 +161,7 @@ namespace BugNET
 
                 //get total open issues
                 List<QueryClause> queryClauses = new List<QueryClause>();
-                List<Status> status = StatusManager.GetStatusByProjectId(p.Id);
+                List<Status> status = StatusManager.GetByProjectId(p.Id);
 
                 if (status.Count > 0)
                 {
@@ -172,7 +172,7 @@ namespace BugNET
                     }
                     if (queryClauses.Count > 0)
                     {
-                        List<Issue> issueList = IssueManager.PerformQuery(p.Id, queryClauses);
+                        List<Issue> issueList = IssueManager.PerformQuery(queryClauses, p.Id);
                         OpenIssuesLink.Text = string.Format(GetLocalResourceObject("OpenIssuesCount").ToString(), issueList.Count);
                     }
                     else

@@ -8,11 +8,12 @@ namespace BugNET.Entities
         /// <summary>
         /// Sorting column
         /// </summary>
-        private string _sortColumn;
+        private readonly string _sortColumn;
+
         /// <summary>
         /// Reverse sorting
         /// </summary>
-        private bool _reverse;
+        private readonly bool _reverse;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="IssueComparer"/> class.
@@ -33,13 +34,9 @@ namespace BugNET.Entities
         /// <param name="x">The x.</param>
         /// <param name="y">The y.</param>
         /// <returns></returns>
-        public bool Equals(Project x, Project y) {
-          if (x.Id == y.Id) {
-            return true;
-          }
-          else {
-            return false;
-          }
+        public bool Equals(Project x, Project y)
+        {
+            return x.Id == y.Id;
         }
 
         /// <summary>
@@ -51,7 +48,7 @@ namespace BugNET.Entities
         /// Value Condition Less than zero<paramref name="x"/> is less than <paramref name="y"/>.Zero<paramref name="x"/> equals <paramref name="y"/>.Greater than zero<paramref name="x"/> is greater than <paramref name="y"/>.
         /// </returns>
         public int Compare(Project x, Project y) {
-          int retVal = 0;
+          var retVal = 0;
           switch (_sortColumn) {
 
             case "Created":

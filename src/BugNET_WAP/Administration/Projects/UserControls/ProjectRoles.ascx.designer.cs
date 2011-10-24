@@ -13,6 +13,15 @@ namespace BugNET.Administration.Projects.UserControls {
     public partial class ProjectRoles {
         
         /// <summary>
+        /// txtProjectID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField txtProjectID;
+        
+        /// <summary>
         /// lblError control.
         /// </summary>
         /// <remarks>

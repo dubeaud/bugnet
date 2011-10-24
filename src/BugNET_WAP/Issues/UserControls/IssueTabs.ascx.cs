@@ -158,13 +158,13 @@ namespace BugNET.Issues.UserControls
             switch (tabValue)
             {
                 case "0":
-                    return string.Format("{0} ({1})", tabName, IssueId == 0 ? 0 : IssueCommentManager.GetIssueCommentsByIssueId(IssueId).Count);
+                    return string.Format("{0} ({1})", tabName, IssueId == 0 ? 0 : IssueCommentManager.GetByIssueId(IssueId).Count);
                 case "2":
-                    return string.Format("{0} ({1})", tabName, IssueId == 0 ? 0 : IssueHistoryManager.GetIssueHistoryByIssueId(IssueId).Count);
+                    return string.Format("{0} ({1})", tabName, IssueId == 0 ? 0 : IssueHistoryManager.GetByIssueId(IssueId).Count);
                 case "1":
-                    return string.Format("{0} ({1})",tabName,IssueId == 0 ? 0 : IssueAttachmentManager.GetIssueAttachmentsByIssueId(IssueId).Count);
+                    return string.Format("{0} ({1})",tabName,IssueId == 0 ? 0 : IssueAttachmentManager.GetByIssueId(IssueId).Count);
                 case "3":
-                    return string.Format("{0} ({1})", tabName, IssueId == 0 ? 0 : IssueNotificationManager.GetIssueNotificationsByIssueId(IssueId).Count);
+                    return string.Format("{0} ({1})", tabName, IssueId == 0 ? 0 : IssueNotificationManager.GetByIssueId(IssueId).Count);
                 case "6":
                     return string.Format("{0} ({1})", tabName, IssueId == 0 ? 0 : RelatedIssueManager.GetRelatedIssues(IssueId).Count);
                 case "5":
@@ -172,9 +172,9 @@ namespace BugNET.Issues.UserControls
                 case "4":
                     return string.Format("{0} ({1})", tabName, IssueId == 0 ? 0 : RelatedIssueManager.GetChildIssues(IssueId).Count);
                 case "7":
-                    return string.Format("{0} ({1})", tabName, IssueId == 0 ? 0 : IssueRevisionManager.GetIssueRevisionsByIssueId(IssueId).Count);
+                    return string.Format("{0} ({1})", tabName, IssueId == 0 ? 0 : IssueRevisionManager.GetByIssueId(IssueId).Count);
                 case "8":
-                    return string.Format("{0} ({1})", tabName, IssueId == 0 ? 0 : IssueWorkReportManager.GetWorkReportsByIssueId(IssueId).Count);
+                    return string.Format("{0} ({1})", tabName, IssueId == 0 ? 0 : IssueWorkReportManager.GetByIssueId(IssueId).Count);
                 default:
                     return tabName;
             }

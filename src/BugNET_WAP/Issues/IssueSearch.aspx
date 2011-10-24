@@ -1,9 +1,7 @@
 ﻿<%@ Page Language="c#" Inherits="BugNET.SearchResults" MasterPageFile="~/Shared/SingleColumn.master"
     Title="<%$ Resources:SharedResources, Search %>" CodeBehind="IssueSearch.aspx.cs" %>
 <%@ Register Src="~/UserControls/DisplayIssues.ascx" TagName="DisplayIssues" TagPrefix="uc1" %>
-<%@ Register Src="UserControls/History.ascx" TagName="History" TagPrefix="uc2" %>
 <%@ Register TagPrefix="it" TagName="TextImage" Src="~/UserControls/TextImage.ascx" %>
-<%@ Register Assembly="BugNET" Namespace="BugNET.UserInterfaceLayer" TagPrefix="cc1" %>
 
 <asp:Content runat="server" ID="Content1" ContentPlaceHolderID="Content">
 

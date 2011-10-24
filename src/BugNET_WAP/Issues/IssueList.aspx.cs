@@ -346,7 +346,7 @@ namespace BugNET.Issues
                    else
                    {
                        isStatus = true;
-                       List<Status> closedStatus = StatusManager.GetStatusByProjectId(ProjectId).FindAll(s => !s.IsClosedState);
+                       List<Status> closedStatus = StatusManager.GetByProjectId(ProjectId).FindAll(s => !s.IsClosedState);
                        foreach (Status status in closedStatus)                     
                            queryClauses.Add(new QueryClause("AND", "IssueStatusId", "<>", status.Id.ToString(), SqlDbType.Int, false));
                    }
@@ -367,7 +367,7 @@ namespace BugNET.Issues
                //exclude all closed status's
                if (!isStatus)
                {
-                   List<Status> status = StatusManager.GetStatusByProjectId(ProjectId).FindAll(delegate(Status s) { return s.IsClosedState == true; });
+                   List<Status> status = StatusManager.GetByProjectId(ProjectId).FindAll(delegate(Status s) { return s.IsClosedState == true; });
                    foreach (Status st in status)
                    {
                        q = new QueryClause(BooleanOperator, "IssueStatusId", "<>", st.Id.ToString(), SqlDbType.Int, false);
@@ -379,11 +379,11 @@ namespace BugNET.Issues
                //queryClauses.Add(q);
                try
                {
-                   colIssues = IssueManager.PerformQuery(ProjectId, queryClauses);
+                   colIssues = IssueManager.PerformQuery(queryClauses, ProjectId);
                    
                    // TODO: WARNING Potential Cross Site Scripting attack
                    // also this code only runs if the previous code does not freak out
-                   ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?{0}&channel=7", Request.QueryString.ToString());
+                   ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?{0}&channel=7", Request.QueryString);
                }
                catch
                {

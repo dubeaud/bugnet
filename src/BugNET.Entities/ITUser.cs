@@ -8,27 +8,17 @@ namespace BugNET.Entities
     /// BugNET user class for working with the membership provider
     /// </summary>
     [XmlRootAttribute("User")]
-    public class ITUser  : IToXml
+    public class ITUser
     {
-        private Guid _Id;
-        private string _UserName;
-        private string _Email;
-        private string _DisplayName;
-        private string _FirstName;
-        private string _LastName;
-        private DateTime _CreationDate;
-        private DateTime _LastLoginDate;
-        private bool _IsApproved;
+        private string _displayName;
+        private string _firstName;
+        private string _lastName;
 
         /// <summary>
         /// Gets the id.
         /// </summary>
         /// <value>The id.</value>
-        public Guid Id
-        {
-            get { return _Id; }
-            set { _Id = value; }
-        }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is approved.
@@ -36,50 +26,31 @@ namespace BugNET.Entities
         /// <value>
         /// 	<c>true</c> if this instance is approved; otherwise, <c>false</c>.
         /// </value>
-        public bool IsApproved
-        {
-            get { return _IsApproved; }
-            set { _IsApproved = value; }
-        }
+        public bool IsApproved { get; set; }
+
         /// <summary>
         /// Gets or sets the last login date.
         /// </summary>
         /// <value>The last login date.</value>
-        public DateTime LastLoginDate
-        {
-            get { return _LastLoginDate; }
-            set { _LastLoginDate = value; }
-        }
+        public DateTime LastLoginDate { get; set; }
 
         /// <summary>
         /// Gets or sets the creation date.
         /// </summary>
         /// <value>The creation date.</value>
-        public DateTime CreationDate
-        {
-            get { return _CreationDate; }
-            set { _CreationDate = value; }
-        }
+        public DateTime CreationDate { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the user.
         /// </summary>
         /// <value>The name of the user.</value>
-        public string UserName
-        {
-            get { return _UserName; }
-            set { _UserName = value; }
-        }
+        public string UserName { get; set; }
 
         /// <summary>
         /// Gets or sets the email address of the user.
         /// </summary>
         /// <value>The name of the user.</value>
-        public string Email
-        {
-            get { return _Email; }
-            set { _Email = value; }
-        }
+        public string Email { get; set; }
 
         /// <summary>
         /// Gets or sets the display name.
@@ -87,15 +58,15 @@ namespace BugNET.Entities
         /// <value>The display name.</value>
         public string DisplayName
         {
-            get { return (_DisplayName == string.Empty) ? _UserName : _DisplayName; }
-            set { _DisplayName = value; }
+            get { return (_displayName == string.Empty) ? UserName : _displayName; }
+            set { _displayName = value; }
         }
 
 
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:ITUser"/> class.
+        /// Initializes a new instance of the <see cref="ITUser"/> class.
         /// </summary>
         public ITUser() { }
 
@@ -104,17 +75,22 @@ namespace BugNET.Entities
         /// </summary>
         /// <param name="userId">The user id.</param>
         /// <param name="userName">Name of the user.</param>
+        /// <param name="lastName"></param>
         /// <param name="displayName">The display name.</param>
+        /// <param name="firstName"></param>
+        /// <param name="creationDate"></param>
+        /// <param name="lastLoginDate"></param>
+        /// <param name="isApproved"></param>
         public ITUser(Guid userId, string userName, string firstName, string lastName, string displayName, DateTime creationDate, DateTime lastLoginDate, bool isApproved)
         {
-            _Id = userId;
-            _UserName = userName;
-            _DisplayName = displayName;
-            _CreationDate = creationDate;
-            _FirstName = firstName;
-            _LastName = lastName;
-            _IsApproved = isApproved;
-            _LastLoginDate = lastLoginDate;
+            Id = userId;
+            UserName = userName;
+            _displayName = displayName;
+            CreationDate = creationDate;
+            _firstName = firstName;
+            _lastName = lastName;
+            IsApproved = isApproved;
+            LastLoginDate = lastLoginDate;
         }
 
         /// <summary>
@@ -126,21 +102,6 @@ namespace BugNET.Entities
         public ITUser(Guid userId, string userName, string displayName)
             : this(userId, userName, string.Empty, string.Empty, displayName, DateTime.MinValue, DateTime.MinValue, true)
         { }
-
-
-        #endregion
-
-        #region IToXml Members
-
-        /// <summary>
-        /// Toes the XML.
-        /// </summary>
-        /// <returns></returns>
-        public string ToXml()
-        {
-            XmlSerializeService<ITUser> service = new XmlSerializeService<ITUser>();
-            return service.ToXml(this);
-        }
 
         #endregion
     }

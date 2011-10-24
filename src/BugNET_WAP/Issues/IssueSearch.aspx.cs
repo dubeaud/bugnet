@@ -54,10 +54,10 @@ namespace BugNET
                 //}
 
                 if (Request.QueryString["cr"] != null)
-                    mainIssues.Sort(new IssueComparer("Created", true));
+                    _mainIssues.Sort(new IssueComparer("Created", true));
 
                 if (Request.QueryString["ur"] != null)
-                    mainIssues.Sort(new IssueComparer("LastUpdate", true));
+                    _mainIssues.Sort(new IssueComparer("LastUpdate", true));
 
             }
 
@@ -86,8 +86,8 @@ namespace BugNET
             //Session[ISSUELISTSTATE] = state;
         }
 
-        List<Issue> mainIssues = null;
-        List<IssueComment> mainComments = null;
+        List<Issue> _mainIssues = null;
+        List<IssueComment> _mainComments = null;
 
         /// <summary>
         /// Handles the Click event of the Button1 control.
@@ -118,8 +118,8 @@ namespace BugNET
         /// </summary>
         private void BindIssues()
         {
-            mainIssues = new List<Issue>();
-            mainComments = new List<IssueComment>();
+            _mainIssues = new List<Issue>();
+            _mainComments = new List<IssueComment>();
 
             // The problem is in Version 0.8, global searches accross all projects for the same integer 
             // codes (for things like status and priority) are meaningless. 
@@ -130,27 +130,14 @@ namespace BugNET
             //
             // ---------------------------------------------------------------
 
-            List<Project> srchprj = new List<Project>();
+            var searchProjects = new List<Project>();
 
             // are we logged in ?
-            if (String.IsNullOrEmpty(Context.User.Identity.Name))
-            {
-                //var tmpprj = (from proj in Project.GetPublicProjects()
-                //              orderby proj.Code
-                //              select proj);
-                //srchprj.AddRange(tmpprj);
-                srchprj = ProjectManager.GetPublicProjects();
-            }
-            else
-            {
-                //var tmpprj = (from proj in Project.GetProjectsByMemberUserName(Context.User.Identity.Name)
-                //             orderby proj.Code
-                //               select proj);
-                // srchprj.AddRange(tmpprj);
-                srchprj = ProjectManager.GetProjectsByMemberUserName(Context.User.Identity.Name);
-            }
+            searchProjects = String.IsNullOrEmpty(Context.User.Identity.Name) ? 
+                ProjectManager.GetPublicProjects() : 
+                ProjectManager.GetProjectsByMemberUserName(Context.User.Identity.Name);
 
-            srchprj.Sort(new ProjectComparer("Name", false));
+            searchProjects.Sort(new ProjectComparer("Name", false));
 
             // ---------------------------------------------------------------
             //
@@ -159,70 +146,56 @@ namespace BugNET
             //
             // ---------------------------------------------------------------
 
-            PerformIssueSearch(srchprj);
+            PerformIssueSearch(searchProjects);
 
             // ---------------------------------------------------------------
             // 
             // Bind the UI controls
             //
             // ---------------------------------------------------------------
-            SearchProjectRepeater.DataSource = srchprj;
+            SearchProjectRepeater.DataSource = searchProjects;
 
             SearchProjectRepeater.DataBind();
-            if (mainComments.Count > 0)
-            {
-                lblSearchSummary.Text = string.Format("{0} Issues found.<br />{1} Matching Comment(s) found.", mainIssues.Count.ToString(), mainComments.Count.ToString());
-            }
-            else
-            {
-                lblSearchSummary.Text = string.Format("{0} Issues found.", mainIssues.Count.ToString());
-            }
 
-            //if (srchHistory)
-            //{
-            //    // ctlHistory.IssueId = 0;
-            //    // ctlHistory.HistoryList = lstMainHistory;
-            //    //// ctlHistory.Initialize();
-            //    // ctlHistory.BindHistory();
-            //    // GroupedIssueHistory1.HistoryList = lstMainHistory;
-            //    // GroupedIssueHistory1.BindHistory();
-            //}
+            lblSearchSummary.Text = _mainComments.Count > 0 ? 
+                string.Format("{0} Issues found.<br />{1} Matching Comment(s) found.", _mainIssues.Count, _mainComments.Count) : 
+                string.Format("{0} Issues found.", _mainIssues.Count);
+
         }
 
         /// <summary>
         /// Performs the issue search and populates mainIssues and mainComment.
         /// </summary>
-        /// <param name="srchprj">A List of projects to search through.</Project>.</param>
-        private void PerformIssueSearch(List<Project> srchprj)
+        /// <param name="searchProjects">A List of projects to search through.</param>
+        private void PerformIssueSearch(IEnumerable<Project> searchProjects)
         {
 
-            List<IssueComment> foundComments = new List<IssueComment>();
-            List<IssueComment> IssueComments = new List<IssueComment>();
-            List<IssueHistory> lstMainHistory = new List<IssueHistory>();
+            var foundComments = new List<IssueComment>();
+            var issueComments = new List<IssueComment>();
+            var lstMainHistory = new List<IssueHistory>();
 
             // Our search strings on normal and "like" comparators
             // Note: these are deliberately not trimmed!
             // to the users, "test" might be different from "test "
-            string strSearch = txtSearch.Text;
-            string strLike = "%" + strSearch + "%";
-            string strHtmlSearch = Server.HtmlEncode(strSearch);
-            string strHtmlLike = "%" + strHtmlSearch + "%";
+            var strSearch = txtSearch.Text;
+            var strLike = "%" + strSearch + "%";
+            var strHtmlSearch = Server.HtmlEncode(strSearch);
+            var strHtmlLike = "%" + strHtmlSearch + "%";
 
             // if the two strings are equal srchHtmlcode is false
             // If they are not equal, then I need to search for the HTML encoded 
             // variants later on.
-            bool srchHtmlcode = !(strHtmlSearch == strSearch);
+            var srchHtmlcode = strHtmlSearch != strSearch;
 
 
-            bool srchComments = chkComments.Checked;
-            bool srchOpenIssues = chkExcludeClosedIssues.Checked;
-            bool srchUserName = false;//= chkUsername.Checked ; // not implemented
-            bool srchCommentUserName = false;// chkCommentUsername.Checked;
+            var srchComments = chkComments.Checked;
+            var srchOpenIssues = chkExcludeClosedIssues.Checked;
+            var srchUserName = false;//= chkUsername.Checked ; // not implemented
 
-            bool srchHistory = false; //  chkHistory.Checked;
+            var srchHistory = false; //  chkHistory.Checked;
 
             // Sort the projects using LINQ
-            foreach (Project p in srchprj)
+            foreach (var p in searchProjects)
             {
                 // now search each project with wildcard parameters 
                 // (except for the search string)            
@@ -236,7 +209,7 @@ namespace BugNET
                 //
                 // ---------------------------------------------------------------
 
-                List<QueryClause> queryClauses = new List<QueryClause>();
+                var queryClauses = new List<QueryClause>();
 
                 // NOTE WE ARE OPENING A PARENTHISES using the 
                 // "William Highfield" trick ;)
@@ -246,7 +219,7 @@ namespace BugNET
                 // 
                 // The parenthesis ensure this, however you need to close the parenthesis off properly.
 
-                QueryClause q = new QueryClause("AND (", "IssueDescription", "LIKE", strLike, SqlDbType.NVarChar, false);
+                var q = new QueryClause("AND (", "IssueDescription", "LIKE", strLike, SqlDbType.NVarChar, false);
                 queryClauses.Add(q);
                 q = new QueryClause("OR", "IssueTitle", "LIKE", strLike, SqlDbType.NVarChar, false);
                 queryClauses.Add(q);
@@ -289,23 +262,23 @@ namespace BugNET
 
 
                 // Use the new Generic way to search with those QueryClauses
-                List<Issue> Issues = IssueManager.PerformQuery(p.Id, queryClauses);
+                var issues = IssueManager.PerformQuery(queryClauses, p.Id);
 
                 // Now we can quicjkly filter out open issues
                 if (srchOpenIssues)
                 {
                     // get list of open issues for the project using LINQ                 
-                    var tmpIssues = from iss in Issues
-                                    join st in StatusManager.GetStatusByProjectId(p.Id)
+                    var tmpIssues = from iss in issues
+                                    join st in StatusManager.GetByProjectId(p.Id)
                                     on iss.StatusId equals st.Id
                                     where st.IsClosedState == false
                                     select iss;
 
-                    mainIssues.AddRange(tmpIssues);
+                    _mainIssues.AddRange(tmpIssues);
                 }
                 else
                 {
-                    mainIssues.AddRange(Issues);
+                    _mainIssues.AddRange(issues);
                 }
 
                 //if (srchComments /*|| srchHistory*/ )
@@ -342,7 +315,7 @@ namespace BugNET
                         var tmpIssues = from hist in lstprjHistory
                                         join iss1 in Issue.GetIssuesByProjectId(p.Id)
                                         on hist.Id equals iss1.Id
-                                        join st in Status.GetStatusByProjectId(p.Id)
+                                        join st in Status.GetByProjectId(p.Id)
                                         on iss1.StatusId equals st.Id
                                         where st.IsClosedState = false
                                         select iss1;
@@ -366,18 +339,18 @@ namespace BugNET
 
                 if (srchComments)
                 {
-                    IssueComments.Clear();
+                    issueComments.Clear();
                     foundComments.Clear();
 
                     // Get ALL issues
-                    Issues = IssueManager.GetIssuesByProjectId(p.Id);
+                    issues = IssueManager.GetIssuesByProjectId(p.Id);
 
                     // Now filter out the Closed issues if we need to
                     if (srchOpenIssues)
                     {
                         // get list of open issues with matching history items for the project using LINQ                 
-                        var tmpIssues = from Iss in Issues
-                                        join st in StatusManager.GetStatusByProjectId(p.Id)
+                        var tmpIssues = from Iss in issues
+                                        join st in StatusManager.GetByProjectId(p.Id)
                                         on Iss.StatusId equals st.Id
                                         where st.IsClosedState = false
                                         select Iss;
@@ -385,12 +358,12 @@ namespace BugNET
                         List<Issue> tmpIssueList = new List<Issue>();
                         tmpIssueList.AddRange(tmpIssues);
 
-                        Issues.Clear();
-                        Issues.AddRange(tmpIssueList);
+                        issues.Clear();
+                        issues.AddRange(tmpIssueList);
                         // Issues now only has open issues
                     }
 
-                    foreach (Issue iss in Issues)
+                    foreach (Issue iss in issues)
                     {
                         // New Way
                         // Using the Generic Interface
@@ -422,13 +395,13 @@ namespace BugNET
                         //    qryComment.Add(q);
                         //}
 
-                        IssueComments = IssueCommentManager.PerformQuery(iss.Id, qryComment);
+                        issueComments = IssueCommentManager.PerformQuery(iss.Id, qryComment);
 
                         // Did we find anything?
-                        if (IssueComments.Count > 0)
+                        if (issueComments.Count > 0)
                         {
-                            mainComments.AddRange(IssueComments);
-                            mainIssues.Add(iss);
+                            _mainComments.AddRange(issueComments);
+                            _mainIssues.Add(iss);
                             // make sure we record the parent issue of the comment(s)
                         }
                     }
@@ -449,27 +422,27 @@ namespace BugNET
             // --------------------------------------------------------------- 
 
 
-            var tmpIss = (from iss1 in mainIssues
+            var tmpIss = (from iss1 in _mainIssues
                           orderby iss1.ProjectId, iss1.Id descending
                           select iss1).Distinct(new DistinctIssueComparer());
 
 
             List<Issue> tmpIssues1 = new List<Issue>();
             tmpIssues1.AddRange(tmpIss);
-            mainIssues.Clear();
-            mainIssues.AddRange(tmpIssues1);
+            _mainIssues.Clear();
+            _mainIssues.AddRange(tmpIssues1);
 
             // mainIssues list should be pure now
 
-            var tmpComm = (from comm in mainComments
+            var tmpComm = (from comm in _mainComments
                            orderby comm.IssueId, comm.Id
                            select comm)
                            .Distinct();
 
             List<IssueComment> tmpComm1 = new List<IssueComment>();
             tmpComm1.AddRange(tmpComm);
-            mainComments.Clear();
-            mainComments.AddRange(tmpComm1);
+            _mainComments.Clear();
+            _mainComments.AddRange(tmpComm1);
 
 
         }
@@ -477,16 +450,16 @@ namespace BugNET
         /// <summary>
         /// A LINQ helper method that Returns a list of distinct projects from a list of issues.
         /// </summary>
-        /// <param name="Issues">The issues.</param>
+        /// <param name="issues">The issues.</param>
         /// <returns></returns>
-        private List<Project> GetDistinctProjects(List<Issue> Issues)
+        private List<Project> GetDistinctProjects(IEnumerable<Issue> issues)
         {
-            var prjs = (from p in Issues
+            var prjs = (from p in issues
                         join proj in ProjectManager.GetAllProjects()
                         on p.ProjectId equals proj.Id
                         select proj).Distinct();
-            List<Project> ProjList = new List<Project>(prjs);
-            return ProjList;
+            var projList = new List<Project>(prjs);
+            return projList;
         }
 
         protected void chkHistory_CheckedChanged(object sender, EventArgs e)
@@ -504,7 +477,7 @@ namespace BugNET
         private void BindSearchProject()
         {
 
-            /*  List<Milestone> milestones = Milestone.GetMilestoneByProjectId(ProjectId).Sort<Milestone>("SortOrder" + ascending).ToList();
+            /*  List<Milestone> milestones = Milestone.GetByProjectId(ProjectId).Sort<Milestone>("SortOrder" + ascending).ToList();
               if (ViewMode == 1)
                   ChangeLogRepeater.DataSource = milestones.Take(5);
               else
@@ -536,7 +509,7 @@ namespace BugNET
 
 
                 // Only get this projects issues using LINQ
-                List<Issue> FilteredIssues = new List<Issue>(from iss in mainIssues
+                List<Issue> FilteredIssues = new List<Issue>(from iss in _mainIssues
                                                              where p.Id == iss.ProjectId
                                                              select iss);
 
@@ -589,7 +562,7 @@ namespace BugNET
             {
                 Issue i = (Issue)e.Item.DataItem;
                 // Only get this projects issues using LINQ
-                List<IssueComment> FilteredComm = new List<IssueComment>(from comm in mainComments
+                List<IssueComment> FilteredComm = new List<IssueComment>(from comm in _mainComments
                                                                          where i.Id == comm.IssueId
                                                                          select comm);
 

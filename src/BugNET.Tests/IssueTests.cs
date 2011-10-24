@@ -209,7 +209,7 @@ namespace BugNET.Tests
 
             clauses.Add(q);
 
-            List<Issue> results = IssueManager.PerformQuery(96, clauses);
+            List<Issue> results = IssueManager.PerformQuery(clauses, 96);
 
             foreach (Issue result in results)
                 Console.WriteLine("Id: {1}; Title: {0}", result.Title, result.Id);
@@ -251,7 +251,7 @@ namespace BugNET.Tests
 
             clauses.Add(q);
 
-            List<Issue> results = IssueManager.PerformQuery(95, clauses);
+            List<Issue> results = IssueManager.PerformQuery(clauses, 95);
 
             foreach (Issue result in results)
                 Console.WriteLine("Id: {1}; Title: {0}", result.Title, result.Id);

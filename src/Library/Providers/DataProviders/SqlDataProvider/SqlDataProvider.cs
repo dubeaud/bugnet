@@ -36,7 +36,7 @@ namespace BugNET.Providers.DataProviders
         /// <param name="name">The name.</param>
         /// <param name="config">The configuration</param>
         public override void Initialize(string name, NameValueCollection config)
-        {          
+        {
             base.Initialize(name, config);
 
             string str = config["connectionStringName"];
@@ -45,7 +45,7 @@ namespace BugNET.Providers.DataProviders
                 _providerPath = config["providerPath"];
 
             this._connectionString = ConfigurationManager.ConnectionStrings[str].ConnectionString;
-           
+
             if (string.IsNullOrEmpty(str))
                 throw new ProviderException("connectionStringName value not specified in web.config for SqlDataProvider");
 
@@ -71,7 +71,7 @@ namespace BugNET.Providers.DataProviders
         private const string SP_PROJECT_ADDUSERTOPROJECT = "BugNet_Project_AddUserToProject";
         private const string SP_PROJECT_REMOVEUSERFROMPROJECT = "BugNet_Project_RemoveUserFromProject";
         private const string SP_PROJECT_GETPROJECTSBYMEMBERUSERNAME = "BugNet_Project_GetProjectsByMemberUserName";
-        private const string SP_PROJECT_GETPROJECTBYCODE = "BugNet_Project_GetProjectByCode";        
+        private const string SP_PROJECT_GETPROJECTBYCODE = "BugNet_Project_GetProjectByCode";
         private const string SP_PROJECT_CLONEPROJECT = "BugNet_Project_CloneProject";
         private const string SP_PROJECT_GETROADMAP = "BugNet_Project_GetRoadMap";
         private const string SP_PROJECT_GETROADMAPPROGRESS = "BugNet_Project_GetRoadMapProgress";
@@ -122,7 +122,7 @@ namespace BugNET.Providers.DataProviders
         private const string SP_ISSUE_GETISSUESBYPROJECTID = "BugNet_Issue_GetIssuesByProjectId";
 
         private const string SP_ISSUE_GETISSUEMILESTONECOUNTBYPROJECT = "BugNet_Issue_GetIssueMilestoneCountByProject";
-        
+
         private const string SP_ISSUE_GETISSUESTATUSCOUNTBYPROJECT = "BugNet_Issue_GetIssueStatusCountByProject";
         private const string SP_ISSUE_GETISSUEPRIORITYCOUNTBYPROJECT = "BugNet_Issue_GetIssuePriorityCountByProject";
         private const string SP_ISSUE_GETISSUEUSERCOUNTBYPROJECT = "BugNet_Issue_GetIssueUserCountByProject";
@@ -841,7 +841,7 @@ namespace BugNET.Providers.DataProviders
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUEHISTORY_GETISSUEHISTORYBYISSUEID);
 
             List<IssueHistory> issueHistoryList = new List<IssueHistory>();
-            TExecuteReaderCmd<IssueHistory>(sqlCmd, TGenerateIssueHistoryListFromReader<IssueHistory>, ref issueHistoryList);
+            TExecuteReaderCmd<IssueHistory>(sqlCmd, GenerateIssueHistoryListFromReader, ref issueHistoryList);
 
             return issueHistoryList;
         }
@@ -894,7 +894,7 @@ namespace BugNET.Providers.DataProviders
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUENOTIFICATION_GETISSUENOTIFICATIONSBYISSUEID);
 
             List<IssueNotification> issueNotificationList = new List<IssueNotification>();
-            TExecuteReaderCmd<IssueNotification>(sqlCmd, TGenerateIssueNotificationListFromReader<IssueNotification>, ref issueNotificationList);
+            TExecuteReaderCmd<IssueNotification>(sqlCmd, GenerateIssueNotificationListFromReader, ref issueNotificationList);
 
             return issueNotificationList;
         }
@@ -977,7 +977,7 @@ namespace BugNET.Providers.DataProviders
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUECOMMENT_GETISSUECOMMENTSBYISSUEID);
 
                 List<IssueComment> issueCommentList = new List<IssueComment>();
-                TExecuteReaderCmd<IssueComment>(sqlCmd, TGenerateIssueCommentListFromReader<IssueComment>, ref issueCommentList);
+                TExecuteReaderCmd<IssueComment>(sqlCmd, GenerateIssueCommentListFromReader, ref issueCommentList);
 
                 return issueCommentList;
             }
@@ -1004,7 +1004,7 @@ namespace BugNET.Providers.DataProviders
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUECOMMENT_GETISSUECOMMENTBYID);
 
                 List<IssueComment> issueCommentList = new List<IssueComment>();
-                TExecuteReaderCmd<IssueComment>(sqlCmd, TGenerateIssueCommentListFromReader<IssueComment>, ref issueCommentList);
+                TExecuteReaderCmd<IssueComment>(sqlCmd, GenerateIssueCommentListFromReader, ref issueCommentList);
 
                 if (issueCommentList.Count > 0)
                     return issueCommentList[0];
@@ -1089,7 +1089,7 @@ namespace BugNET.Providers.DataProviders
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_HOSTSETTING_GETHOSTSETTINGS);
 
             List<HostSetting> hostSettingList = new List<HostSetting>();
-            TExecuteReaderCmd<HostSetting>(sqlCmd, TGenerateHostSettingListFromReader<HostSetting>, ref hostSettingList);
+            TExecuteReaderCmd<HostSetting>(sqlCmd, GenerateHostSettingListFromReader, ref hostSettingList);
 
             return hostSettingList;
         }
@@ -1129,7 +1129,7 @@ namespace BugNET.Providers.DataProviders
             SqlCommand sqlCmd = new SqlCommand();
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ROLE_GETALLROLES);
             List<Role> roleList = new List<Role>();
-            TExecuteReaderCmd<Role>(sqlCmd, TGenerateRoleListFromReader<Role>, ref roleList);
+            TExecuteReaderCmd<Role>(sqlCmd, GenerateRoleListFromReader, ref roleList);
             return roleList;
         }
 
@@ -1235,17 +1235,17 @@ namespace BugNET.Providers.DataProviders
         /// <param name="userName">Name of the user.</param>
         /// <param name="projectId">The project id.</param>
         /// <returns></returns>
-        public override System.Collections.Generic.List<Role> GetRolesByUserName(string userName, int projectId)
+        public override List<Role> GetRolesByUserName(string userName, int projectId)
         {
             // Execute SQL Command
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ROLE_GETPROJECTROLESBYUSER);
 
             AddParamToSQLCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
             AddParamToSQLCmd(sqlCmd, "@UserName", SqlDbType.NVarChar, 0, ParameterDirection.Input, userName);
 
-            List<Role> roleList = new List<Role>();
-            TExecuteReaderCmd<Role>(sqlCmd, TGenerateRoleListFromReader<Role>, ref roleList);
+            var roleList = new List<Role>();
+            TExecuteReaderCmd(sqlCmd, GenerateRoleListFromReader, ref roleList);
             return roleList;
         }
 
@@ -1351,7 +1351,7 @@ namespace BugNET.Providers.DataProviders
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ROLE_GETROLEBYID);
 
                 List<Role> roleList = new List<Role>();
-                TExecuteReaderCmd<Role>(sqlCmd, TGenerateRoleListFromReader<Role>, ref roleList);
+                TExecuteReaderCmd<Role>(sqlCmd, GenerateRoleListFromReader, ref roleList);
                 if (roleList.Count > 0)
                     return roleList[0];
                 else
@@ -1378,7 +1378,7 @@ namespace BugNET.Providers.DataProviders
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ROLE_GETROLESBYUSER);
 
             List<Role> roleList = new List<Role>();
-            TExecuteReaderCmd<Role>(sqlCmd, TGenerateRoleListFromReader<Role>, ref roleList);
+            TExecuteReaderCmd<Role>(sqlCmd, GenerateRoleListFromReader, ref roleList);
 
             return roleList;
         }
@@ -1398,7 +1398,7 @@ namespace BugNET.Providers.DataProviders
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ROLE_GETROLESBYPROJECT);
 
             List<Role> roleList = new List<Role>();
-            TExecuteReaderCmd<Role>(sqlCmd, TGenerateRoleListFromReader<Role>, ref roleList);
+            TExecuteReaderCmd<Role>(sqlCmd, GenerateRoleListFromReader, ref roleList);
 
             return roleList;
         }
@@ -2146,15 +2146,14 @@ namespace BugNET.Providers.DataProviders
         /// <returns></returns>
         public override List<ProjectNotification> GetProjectNotificationsByProjectId(int projectId)
         {
-            if (projectId <= DefaultValues.GetProjectIdMinValue())
-                throw (new ArgumentOutOfRangeException("projectId"));
+            if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
             AddParamToSQLCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_PROJECTNOTIFICATION_GETPROJECTNOTIFICATIONSBYPROJECTID);
 
-            List<ProjectNotification> projectNotificationList = new List<ProjectNotification>();
-            TExecuteReaderCmd<ProjectNotification>(sqlCmd, TGenerateProjectNotificationListFromReader<ProjectNotification>, ref projectNotificationList);
+            var projectNotificationList = new List<ProjectNotification>();
+            TExecuteReaderCmd(sqlCmd, GenerateProjectNotificationListFromReader, ref projectNotificationList);
 
             return projectNotificationList;
         }
@@ -2168,15 +2167,13 @@ namespace BugNET.Providers.DataProviders
         public override bool DeleteProjectNotification(int projectId, string username)
         {
             // Validate Parameters
-            if (projectId <= DefaultValues.GetProjectIdMinValue())
-                throw (new ArgumentOutOfRangeException("projectId"));
-            if (username == String.Empty)
-                throw (new ArgumentOutOfRangeException("username"));
+            if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
+            if (username == String.Empty) throw (new ArgumentOutOfRangeException("username"));
 
             try
             {
                 // Execute SQL Command
-                SqlCommand sqlCmd = new SqlCommand();
+                var sqlCmd = new SqlCommand();
 
                 AddParamToSQLCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 4, ParameterDirection.ReturnValue, null);
                 AddParamToSQLCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
@@ -2184,8 +2181,8 @@ namespace BugNET.Providers.DataProviders
 
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_PROJECTNOTIFICATION_DELETE);
                 ExecuteScalarCmd(sqlCmd);
-                int returnValue = (int)sqlCmd.Parameters["@ReturnValue"].Value;
-                return (returnValue == 0 ? true : false);
+                var returnValue = (int)sqlCmd.Parameters["@ReturnValue"].Value;
+                return (returnValue == 0);
             }
             catch (Exception ex)
             {
@@ -2208,7 +2205,7 @@ namespace BugNET.Providers.DataProviders
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_PROJECTNOTIFICATION_GETPROJECTNOTIFICATIONSBYUSERNAME);
 
             List<ProjectNotification> projectNotificationList = new List<ProjectNotification>();
-            TExecuteReaderCmd<ProjectNotification>(sqlCmd, TGenerateProjectNotificationListFromReader<ProjectNotification>, ref projectNotificationList);
+            TExecuteReaderCmd<ProjectNotification>(sqlCmd, GenerateProjectNotificationListFromReader, ref projectNotificationList);
 
             return projectNotificationList;
         }
@@ -2225,7 +2222,7 @@ namespace BugNET.Providers.DataProviders
             if (newCategory == null)
                 throw (new ArgumentNullException("newCategory"));
 
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
 
             AddParamToSQLCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
             AddParamToSQLCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, newCategory.ProjectId);
@@ -2250,15 +2247,15 @@ namespace BugNET.Providers.DataProviders
                 throw (new ArgumentOutOfRangeException("categoryId"));
 
             // Execute SQL Command
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
 
             AddParamToSQLCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 4, ParameterDirection.ReturnValue, null);
             AddParamToSQLCmd(sqlCmd, "@CategoryId", SqlDbType.Int, 4, ParameterDirection.Input, categoryId);
 
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_CATEGORY_DELETE);
             ExecuteScalarCmd(sqlCmd);
-            int returnValue = (int)sqlCmd.Parameters["@ReturnValue"].Value;
-            return (returnValue == 0 ? true : false);
+            var returnValue = (int)sqlCmd.Parameters["@ReturnValue"].Value;
+            return (returnValue == 0);
         }
 
         /// <summary>
@@ -2268,7 +2265,7 @@ namespace BugNET.Providers.DataProviders
         /// <returns></returns>
         public override bool UpdateCategory(Category categoryToUpdate)
         {
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
 
             AddParamToSQLCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
             AddParamToSQLCmd(sqlCmd, "@CategoryId", SqlDbType.Int, 0, ParameterDirection.Input, categoryToUpdate.Id);
@@ -2279,8 +2276,8 @@ namespace BugNET.Providers.DataProviders
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_CATEGORY_UPDATE);
             ExecuteScalarCmd(sqlCmd);
 
-            int returnValue = (int)sqlCmd.Parameters["@ReturnValue"].Value;
-            return (returnValue == 0 ? true : false);
+            var returnValue = (int)sqlCmd.Parameters["@ReturnValue"].Value;
+            return (returnValue == 0);
         }
 
         /// <summary>
@@ -2295,11 +2292,11 @@ namespace BugNET.Providers.DataProviders
                 throw (new ArgumentOutOfRangeException("projectId"));
 
             // Execute SQL Command
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
             AddParamToSQLCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_CATEGORY_GETCATEGORIESBYPROJECTID);
-            List<Category> categoryList = new List<Category>();
-            TExecuteReaderCmd<Category>(sqlCmd, TGenerateCategoryListFromReader<Category>, ref categoryList);
+            var categoryList = new List<Category>();
+            TExecuteReaderCmd(sqlCmd, GenerateCategoryListFromReader, ref categoryList);
 
             return categoryList;
         }
@@ -2309,18 +2306,18 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="projectId">The project id.</param>
         /// <returns></returns>
-        public override System.Collections.Generic.List<Category> GetRootCategoriesByProjectId(int projectId)
+        public override List<Category> GetRootCategoriesByProjectId(int projectId)
         {
             // Validate Parameters
             if (projectId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("projectId"));
 
             // Execute SQL Command
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
             AddParamToSQLCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_CATEGORY_GETROOTCATEGORIESBYPROJECTID);
-            List<Category> categoryList = new List<Category>();
-            TExecuteReaderCmd<Category>(sqlCmd, TGenerateCategoryListFromReader<Category>, ref categoryList);
+            var categoryList = new List<Category>();
+            TExecuteReaderCmd(sqlCmd, GenerateCategoryListFromReader, ref categoryList);
 
             return categoryList;
         }
@@ -2330,18 +2327,18 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="categoryId">The category id.</param>
         /// <returns></returns>
-        public override System.Collections.Generic.List<Category> GetChildCategoriesByCategoryId(int categoryId)
+        public override List<Category> GetChildCategoriesByCategoryId(int categoryId)
         {
             // Validate Parameters
             if (categoryId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("categoryId"));
 
             // Execute SQL Command
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
             AddParamToSQLCmd(sqlCmd, "@CategoryId", SqlDbType.Int, 0, ParameterDirection.Input, categoryId);
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_CATEGORY_GETCHILDCATEGORIESBYCATEGORYID);
-            List<Category> categoryList = new List<Category>();
-            TExecuteReaderCmd<Category>(sqlCmd, TGenerateCategoryListFromReader<Category>, ref categoryList);
+            var categoryList = new List<Category>();
+            TExecuteReaderCmd(sqlCmd, GenerateCategoryListFromReader, ref categoryList);
 
             return categoryList;
         }
@@ -2358,16 +2355,13 @@ namespace BugNET.Providers.DataProviders
                 throw (new ArgumentOutOfRangeException("categoryId"));
 
             // Execute SQL Command
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
             AddParamToSQLCmd(sqlCmd, "@CategoryId", SqlDbType.Int, 0, ParameterDirection.Input, categoryId);
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_CATEGORY_GETCATEGORYBYID);
-            List<Category> categoryList = new List<Category>();
-            TExecuteReaderCmd<Category>(sqlCmd, TGenerateCategoryListFromReader<Category>, ref categoryList);
+            var categoryList = new List<Category>();
+            TExecuteReaderCmd(sqlCmd, GenerateCategoryListFromReader, ref categoryList);
 
-            if (categoryList.Count > 0)
-                return categoryList[0];
-            else
-                return null;
+            return categoryList.Count > 0 ? categoryList[0] : null;
         }
         #endregion
 
@@ -2424,7 +2418,7 @@ namespace BugNET.Providers.DataProviders
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUEATTACHMENT_GETATTACHMENTSBYISSUEID);
 
             List<IssueAttachment> issueAttachmentList = new List<IssueAttachment>();
-            TExecuteReaderCmd<IssueAttachment>(sqlCmd, TGenerateIssueAttachmentListFromReader<IssueAttachment>, ref issueAttachmentList);
+            TExecuteReaderCmd<IssueAttachment>(sqlCmd, GenerateIssueAttachmentListFromReader, ref issueAttachmentList);
 
             return issueAttachmentList;
         }
@@ -2436,36 +2430,47 @@ namespace BugNET.Providers.DataProviders
         /// <returns></returns>
         public override IssueAttachment GetIssueAttachmentById(int attachmentId)
         {
-            if (attachmentId <= 0)
-                throw (new ArgumentOutOfRangeException("attachmentId"));
+            if (attachmentId <= 0) throw (new ArgumentOutOfRangeException("attachmentId"));
 
             IssueAttachment attachment = null;
 
             try
             {
-                SqlCommand sqlCmd = new SqlCommand();
+                var sqlCmd = new SqlCommand();
                 AddParamToSQLCmd(sqlCmd, "@IssueAttachmentId", SqlDbType.Int, 0, ParameterDirection.Input, attachmentId);
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUEATTACHMENT_GETATTACHMENTBYID);
 
                 // Execute Reader
-                if (_connectionString == string.Empty)
-                    throw (new ArgumentOutOfRangeException("_connectionString"));
+                if (_connectionString == string.Empty) throw (new ArgumentException("Connection string cannot be null or empty"));
 
-
-                using (SqlConnection cn = new SqlConnection(this._connectionString))
+                using (var cn = new SqlConnection(_connectionString))
                 {
                     sqlCmd.Connection = cn;
                     cn.Open();
-                    SqlDataReader dtr = sqlCmd.ExecuteReader();
-                    if (dtr.Read())
+                    using (var rdr = sqlCmd.ExecuteReader())
                     {
-                        byte[] attachmentData = null;
-                        if (dtr["Attachment"] != DBNull.Value)
-                            attachmentData = (byte[])dtr["Attachment"];
+                        if (rdr.Read())
+                        {
+                            byte[] attachmentData = null;
 
-                        attachment = new IssueAttachment((int)dtr["IssueId"], (string)dtr["CreatorUserName"], (string)dtr["FileName"], (string)dtr["ContentType"], attachmentData, (int)dtr["FileSize"], (string)dtr["Description"]);
+                            if (rdr["Attachment"] != DBNull.Value)
+                                attachmentData = (byte[])rdr["Attachment"];
+
+                            attachment = new IssueAttachment
+                                            {
+                                                Id = rdr.GetInt32(rdr.GetOrdinal("IssueAttachmentId")),
+                                                Attachment = attachmentData,
+                                                Description = rdr.GetString(rdr.GetOrdinal("Description")),
+                                                DateCreated = rdr.GetDateTime(rdr.GetOrdinal("DateCreated")),
+                                                ContentType = rdr.GetString(rdr.GetOrdinal("ContentType")),
+                                                CreatorDisplayName = rdr.GetString(rdr.GetOrdinal("CreatorDisplayName")),
+                                                CreatorUserName = rdr.GetString(rdr.GetOrdinal("CreatorUsername")),
+                                                FileName = rdr.GetString(rdr.GetOrdinal("FileName")),
+                                                IssueId = rdr.GetInt32(rdr.GetOrdinal("IssueId")),
+                                                Size = rdr.GetInt32(rdr.GetOrdinal("FileSize"))
+                                            };
+                        }
                     }
-
                 }
 
                 return attachment;
@@ -2495,8 +2500,8 @@ namespace BugNET.Providers.DataProviders
 
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUEATTACHMENT_DELETEATTACHMENT);
                 ExecuteScalarCmd(sqlCmd);
-                int returnValue = (int)sqlCmd.Parameters["@ReturnValue"].Value;
-                return (returnValue == 0 ? true : false);
+                var returnValue = (int)sqlCmd.Parameters["@ReturnValue"].Value;
+                return (returnValue == 0);
             }
             catch (Exception ex)
             {
@@ -2536,16 +2541,15 @@ namespace BugNET.Providers.DataProviders
         public override List<Query> GetQueriesByUserName(string userName, int projectId)
         {
             // Validate Parameters
-            if (projectId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("projectId"));
+            if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
             // Execute SQL Command
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
             AddParamToSQLCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
             AddParamToSQLCmd(sqlCmd, "@UserName", SqlDbType.NVarChar, 255, ParameterDirection.Input, userName);
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_QUERY_GETQUERIESBYUSERNAME);
-            List<Query> queryList = new List<Query>();
-            TExecuteReaderCmd<Query>(sqlCmd, TGenerateQueryListFromReader<Query>, ref queryList);
+            var queryList = new List<Query>();
+            TExecuteReaderCmd(sqlCmd, GenerateQueryListFromReader, ref queryList);
             return queryList;
         }
 
@@ -2555,24 +2559,17 @@ namespace BugNET.Providers.DataProviders
         /// <param name="userName">Name of the user.</param>
         /// <param name="projectId">The project id.</param>
         /// <param name="queryName">Name of the query.</param>
+        /// <param name="isPublic"></param>
         /// <param name="queryClauses">The query clauses.</param>
         /// <returns></returns>
         public override bool SaveQuery(string userName, int projectId, string queryName, bool isPublic, List<QueryClause> queryClauses)
         {
-            if (queryName == null || queryName == String.Empty)
-                throw (new ArgumentOutOfRangeException("queryName"));
-
-            if (queryClauses.Count == 0)
-                throw (new ArgumentOutOfRangeException("queryClauses"));
+            if (string.IsNullOrEmpty(queryName)) throw (new ArgumentOutOfRangeException("queryName"));
+            if (queryClauses.Count == 0) throw (new ArgumentOutOfRangeException("queryClauses"));
 
             // Create Save Query Command
-            SqlCommand cmdSaveQuery = new SqlCommand();
-            int intPublic;
-            if (isPublic == true)
-                intPublic = 1;
-            else
-                intPublic = 0;
-
+            var cmdSaveQuery = new SqlCommand();
+            var intPublic = isPublic ? 1 : 0;
 
             AddParamToSQLCmd(cmdSaveQuery, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
             AddParamToSQLCmd(cmdSaveQuery, "@Username", SqlDbType.NVarChar, 255, ParameterDirection.Input, userName == string.Empty ? DBNull.Value : (object)userName);
@@ -2583,7 +2580,7 @@ namespace BugNET.Providers.DataProviders
             SetCommandType(cmdSaveQuery, CommandType.StoredProcedure, SP_QUERY_SAVEQUERY);
 
             // Create Save Query Clause Command
-            SqlCommand cmdClause = new SqlCommand();
+            var cmdClause = new SqlCommand();
 
             cmdClause.Parameters.Add("@QueryId", SqlDbType.Int);
             cmdClause.Parameters.Add("@BooleanOperator", SqlDbType.NVarChar, 50);
@@ -2597,12 +2594,12 @@ namespace BugNET.Providers.DataProviders
 
             ExecuteScalarCmd(cmdSaveQuery);
 
-            int queryId = (int)cmdSaveQuery.Parameters["@ReturnValue"].Value;
+            var queryId = (int)cmdSaveQuery.Parameters["@ReturnValue"].Value;
             if (queryId == 0)
                 return false;
 
             // Save Query Clauses
-            foreach (QueryClause clause in queryClauses)
+            foreach (var clause in queryClauses)
             {
                 cmdClause.Parameters["@QueryId"].Value = queryId;
                 cmdClause.Parameters["@BooleanOperator"].Value = clause.BooleanOperator;
@@ -2629,23 +2626,13 @@ namespace BugNET.Providers.DataProviders
         /// <returns></returns>
         public override bool UpdateQuery(int queryId, string userName, int projectId, string queryName, bool isPublic, List<QueryClause> queryClauses)
         {
-            if (queryId <= 0)
-                throw new ArgumentOutOfRangeException("queryId");
-
-            if (queryName == null || queryName == String.Empty)
-                throw (new ArgumentOutOfRangeException("queryName"));
-
-            if (queryClauses.Count == 0)
-                throw (new ArgumentOutOfRangeException("queryClauses"));
+            if (queryId <= 0) throw new ArgumentOutOfRangeException("queryId");
+            if (string.IsNullOrEmpty(queryName)) throw (new ArgumentOutOfRangeException("queryName"));
+            if (queryClauses.Count == 0) throw (new ArgumentOutOfRangeException("queryClauses"));
 
             // Create Save Query Command
-            SqlCommand cmdSaveQuery = new SqlCommand();
-            int intPublic;
-            if (isPublic == true)
-                intPublic = 1;
-            else
-                intPublic = 0;
-
+            var cmdSaveQuery = new SqlCommand();
+            var intPublic = isPublic ? 1 : 0;
 
             AddParamToSQLCmd(cmdSaveQuery, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
             AddParamToSQLCmd(cmdSaveQuery, "@QueryId", SqlDbType.Int, 0, ParameterDirection.Input, queryId);
@@ -2657,7 +2644,7 @@ namespace BugNET.Providers.DataProviders
             SetCommandType(cmdSaveQuery, CommandType.StoredProcedure, SP_QUERY_UPDATEQUERY);
 
             // Create Save Query Clause Command
-            SqlCommand cmdClause = new SqlCommand();
+            var cmdClause = new SqlCommand();
 
             cmdClause.Parameters.Add("@QueryId", SqlDbType.Int);
             cmdClause.Parameters.Add("@BooleanOperator", SqlDbType.NVarChar, 50);
@@ -2672,7 +2659,7 @@ namespace BugNET.Providers.DataProviders
             ExecuteScalarCmd(cmdSaveQuery);
 
             // Save Query Clauses
-            foreach (QueryClause clause in queryClauses)
+            foreach (var clause in queryClauses)
             {
                 cmdClause.Parameters["@QueryId"].Value = queryId;
                 cmdClause.Parameters["@BooleanOperator"].Value = clause.BooleanOperator;
@@ -3035,11 +3022,8 @@ namespace BugNET.Providers.DataProviders
         public override System.Collections.Generic.List<Issue> PerformSavedQuery(int projectId, int queryId)
         {
             // Validate Parameters
-            if (queryId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("queryId"));
-
-            if (projectId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("projectId"));
+            if (queryId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("queryId"));
+            if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
             // Get Query Clauses
             SqlCommand sqlCmd = new SqlCommand();
@@ -3075,26 +3059,26 @@ namespace BugNET.Providers.DataProviders
             //TGenerateProjectMemberRoleListFromReader<T>(SqlDataReader returnData, ref List<MemberRoles> memberRoleList)
             //TGenerateRolePermissionListFromReader<T>(SqlDataReader returnData, ref List<RolePermission> rolePermissionList)
             //TGeneratePermissionListFromReader<T>(SqlDataReader returnData, ref List<Permission> permissionList)
-            //TGenerateIssueRevisionListFromReader<T>(SqlDataReader returnData, ref List<IssueRevision> revisionList)
+            //GenerateIssueRevisionListFromReader<T>(SqlDataReader returnData, ref List<IssueRevision> revisionList)
             //TGenerateRequiredFieldListFromReader<T>(SqlDataReader returnData, ref List<RequiredField> requiredFieldList)
-            //TGenerateCategoryListFromReader<T>(SqlDataReader returnData, ref List<Category> categoryList)
-            //TGenerateHostSettingListFromReader<T>(SqlDataReader returnData, ref List<HostSetting> hostsettingList)
+            //GenerateCategoryListFromReader<T>(SqlDataReader returnData, ref List<Category> categoryList)
+            //GenerateHostSettingListFromReader<T>(SqlDataReader returnData, ref List<HostSetting> hostsettingList)
             //TGenerateProjectListFromReader<T>(SqlDataReader returnData, ref List<Project> projectList)
             //TGenerateApplicationLogListFromReader<T>(SqlDataReader returnData, ref List<ApplicationLog> applicationLogList)
-            //TGenerateIssueNotificationListFromReader<T>(SqlDataReader returnData, ref List<IssueNotification> issueNotificationList)
+            //GenerateIssueNotificationListFromReader<T>(SqlDataReader returnData, ref List<IssueNotification> issueNotificationList)
             //TGenerateProjectNotificationListFromReader<T>(SqlDataReader returnData, ref List<ProjectNotification> projectNotificationList)
-            //TGenerateRelatedIssueListFromReader<T>(SqlDataReader returnData, ref List<RelatedIssue> relatedIssueList)
+            //GenerateRelatedIssueListFromReader<T>(SqlDataReader returnData, ref List<RelatedIssue> relatedIssueList)
             //TGenerateUserListFromReader<T>(SqlDataReader returnData, ref List<ITUser> userList)
             //TGenerateStatusListFromReader<T>(SqlDataReader returnData, ref List<Status> statusList)
-            //TGenerateMilestoneListFromReader<T>(SqlDataReader returnData, ref List<Milestone> milestoneList)
+            //GenerateMilestoneListFromReader<T>(SqlDataReader returnData, ref List<Milestone> milestoneList)
             //TGeneratePriorityListFromReader<T>(SqlDataReader returnData, ref List<Priority> priorityList)            
             //TGenerateQueryClauseListFromReader<T>(SqlDataReader returnData, ref List<QueryClause> queryClauseList)
             //TGenerateIssueTimeEntryListFromReader<T>(SqlDataReader returnData, ref List<IssueWorkReport> issueWorkReportList)
             //TGenerateResolutionListFromReader<T>(SqlDataReader returnData, ref List<Resolution> resolutionList)
-            //TGenerateRoleListFromReader<T>(SqlDataReader returnData, ref List<Role> roleList)
+            //GenerateRoleListFromReader<T>(SqlDataReader returnData, ref List<Role> roleList)
             //TGenerateCustomFieldListFromReader<T>(SqlDataReader returnData, ref List<CustomField> customFieldList)
             //TGenerateCustomFieldSelectionListFromReader<T>(SqlDataReader returnData, ref List<CustomFieldSelection> customFieldSelectionList)
-            //TGenerateQueryListFromReader<T>(SqlDataReader returnData, ref List<Query> queryList)
+            //GenerateQueryListFromReader<T>(SqlDataReader returnData, ref List<Query> queryList)
             //TGenerateRoadmapIssueListFromReader<T>(SqlDataReader returnData, ref List<RoadMapIssue> issueList)
             //
             // ---------------------------------------------------------------
@@ -3105,28 +3089,28 @@ namespace BugNET.Providers.DataProviders
 
             //if (theType == typeof(ProjectMailbox))
             //{
-            //    System.Reflection.MethodInfo mi = this.GetType().GetMethod("TGenerateProjectMailboxListFromReader").MakeGenericMethod(new Type[] { typeof(ProjectMailbox) });
+            //    System.Reflection.MethodInfo mi = this.GetType().GetMethod("GenerateProjectMailboxListFromReader").MakeGenericMethod(new Type[] { typeof(ProjectMailbox) });
             //    gcfr = (TGenerateListFromReader<T>)Delegate.CreateDelegate(typeof(TGenerateListFromReader<ProjectMailbox>), this, mi);
             //}
 
 
             if (theType == typeof(IssueHistory))
             {
-                System.Reflection.MethodInfo mi = this.GetType().GetMethod("TGenerateIssueHistoryListFromReader").MakeGenericMethod(new Type[] { typeof(IssueHistory) });
+                System.Reflection.MethodInfo mi = this.GetType().GetMethod("GenerateIssueHistoryListFromReader").MakeGenericMethod(new Type[] { typeof(IssueHistory) });
                 gcfr = (TGenerateListFromReader<T>)Delegate.CreateDelegate(typeof(TGenerateListFromReader<IssueHistory>), this, mi);
             }
 
             //TGenerateIssueTypeListFromReader<T>(SqlDataReader returnData, ref List<IssueType> issueTypeList)
             if (theType == typeof(IssueHistory))
             {
-                System.Reflection.MethodInfo mi = this.GetType().GetMethod("TGenerateIssueHistoryListFromReader").MakeGenericMethod(new Type[] { typeof(IssueHistory) });
+                System.Reflection.MethodInfo mi = this.GetType().GetMethod("GenerateIssueHistoryListFromReader").MakeGenericMethod(new Type[] { typeof(IssueHistory) });
                 gcfr = (TGenerateListFromReader<T>)Delegate.CreateDelegate(typeof(TGenerateListFromReader<IssueHistory>), this, mi);
             }
 
 
             if (theType == typeof(IssueAttachment))
             {
-                System.Reflection.MethodInfo mi = this.GetType().GetMethod("TGenerateIssueAttachmentListFromReader").MakeGenericMethod(new Type[] { typeof(IssueAttachment) });
+                System.Reflection.MethodInfo mi = this.GetType().GetMethod("GenerateIssueAttachmentListFromReader").MakeGenericMethod(new Type[] { typeof(IssueAttachment) });
                 gcfr = (TGenerateListFromReader<T>)Delegate.CreateDelegate(typeof(TGenerateListFromReader<IssueAttachment>), this, mi);
             }
 
@@ -3138,7 +3122,7 @@ namespace BugNET.Providers.DataProviders
 
             if (theType == typeof(IssueComment))
             {
-                System.Reflection.MethodInfo mi = this.GetType().GetMethod("TGenerateIssueCommentListFromReader").MakeGenericMethod(new Type[] { typeof(IssueComment) });
+                System.Reflection.MethodInfo mi = this.GetType().GetMethod("GenerateIssueCommentListFromReader").MakeGenericMethod(new Type[] { typeof(IssueComment) });
                 gcfr = (TGenerateListFromReader<T>)Delegate.CreateDelegate(typeof(TGenerateListFromReader<IssueComment>), this, mi);
             }
 
@@ -3254,13 +3238,13 @@ namespace BugNET.Providers.DataProviders
         public override List<QueryClause> GetQueryClausesByQueryId(int queryId)
         {
             // Get Query Clauses
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
             AddParamToSQLCmd(sqlCmd, "@QueryId", SqlDbType.Int, 0, ParameterDirection.Input, queryId);
 
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_QUERY_GETSAVEDQUERY);
 
-            List<QueryClause> queryClauses = new List<QueryClause>();
-            TExecuteReaderCmd<QueryClause>(sqlCmd, TGenerateQueryClauseListFromReader<QueryClause>, ref queryClauses);
+            var queryClauses = new List<QueryClause>();
+            TExecuteReaderCmd(sqlCmd, TGenerateQueryClauseListFromReader<QueryClause>, ref queryClauses);
             return queryClauses;
         }
 
@@ -3272,18 +3256,17 @@ namespace BugNET.Providers.DataProviders
         public override Query GetQueryById(int queryId)
         {
             // Validate Parameters
-            if (queryId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("queryId"));
+            if (queryId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("queryId"));
 
             // Get Query Clauses
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
             AddParamToSQLCmd(sqlCmd, "@QueryId", SqlDbType.Int, 0, ParameterDirection.Input, queryId);
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_QUERY_GETQUERYBYID);
 
-            List<Query> queryList = new List<Query>();
-            TExecuteReaderCmd<Query>(sqlCmd, TGenerateQueryListFromReader<Query>, ref queryList);
+            var queryList = new List<Query>();
+            TExecuteReaderCmd(sqlCmd, GenerateQueryListFromReader, ref queryList);
 
-            Query q = queryList[0];
+            var q = queryList[0];
 
             // Get Query Clauses
             sqlCmd = new SqlCommand();
@@ -3291,8 +3274,8 @@ namespace BugNET.Providers.DataProviders
 
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_QUERY_GETSAVEDQUERY);
 
-            List<QueryClause> queryClauses = new List<QueryClause>();
-            TExecuteReaderCmd<QueryClause>(sqlCmd, TGenerateQueryClauseListFromReader<QueryClause>, ref queryClauses);
+            var queryClauses = new List<QueryClause>();
+            TExecuteReaderCmd(sqlCmd, TGenerateQueryClauseListFromReader<QueryClause>, ref queryClauses);
             q.Clauses = queryClauses;
 
             return q;
@@ -3306,18 +3289,17 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="issueId">The issue id.</param>
         /// <returns></returns>
-        public override System.Collections.Generic.List<RelatedIssue> GetChildIssues(int issueId)
+        public override List<RelatedIssue> GetChildIssues(int issueId)
         {
-            if (issueId <= 0)
-                throw (new ArgumentOutOfRangeException("issueId"));
+            if (issueId <= 0) throw (new ArgumentOutOfRangeException("issueId"));
 
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
             AddParamToSQLCmd(sqlCmd, "@IssueId", SqlDbType.Int, 0, ParameterDirection.Input, issueId);
-            AddParamToSQLCmd(sqlCmd, "@RelationType", SqlDbType.Int, 0, ParameterDirection.Input, IssueRelationType.ParentChild);
+            AddParamToSQLCmd(sqlCmd, "@RelationType", SqlDbType.Int, 0, ParameterDirection.Input, IssueRelationTypes.ParentChild);
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_RELATEDISSUE_GETCHILDISSUES);
 
-            List<RelatedIssue> relatedIssueList = new List<RelatedIssue>();
-            TExecuteReaderCmd<RelatedIssue>(sqlCmd, TGenerateRelatedIssueListFromReader<RelatedIssue>, ref relatedIssueList);
+            var relatedIssueList = new List<RelatedIssue>();
+            TExecuteReaderCmd(sqlCmd, GenerateRelatedIssueListFromReader, ref relatedIssueList);
 
             return relatedIssueList;
         }
@@ -3327,18 +3309,17 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="issueId">The issue id.</param>
         /// <returns></returns>
-        public override System.Collections.Generic.List<RelatedIssue> GetParentIssues(int issueId)
+        public override List<RelatedIssue> GetParentIssues(int issueId)
         {
-            if (issueId <= 0)
-                throw (new ArgumentOutOfRangeException("issueId"));
+            if (issueId <= 0) throw (new ArgumentOutOfRangeException("issueId"));
 
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
             AddParamToSQLCmd(sqlCmd, "@IssueId", SqlDbType.Int, 0, ParameterDirection.Input, issueId);
-            AddParamToSQLCmd(sqlCmd, "@RelationType", SqlDbType.Int, 0, ParameterDirection.Input, IssueRelationType.ParentChild);
+            AddParamToSQLCmd(sqlCmd, "@RelationType", SqlDbType.Int, 0, ParameterDirection.Input, IssueRelationTypes.ParentChild);
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_RELATEDISSUE_GETPARENTISSUES);
 
-            List<RelatedIssue> relatedIssueList = new List<RelatedIssue>();
-            TExecuteReaderCmd<RelatedIssue>(sqlCmd, TGenerateRelatedIssueListFromReader<RelatedIssue>, ref relatedIssueList);
+            var relatedIssueList = new List<RelatedIssue>();
+            TExecuteReaderCmd(sqlCmd, GenerateRelatedIssueListFromReader, ref relatedIssueList);
 
             return relatedIssueList;
         }
@@ -3346,22 +3327,21 @@ namespace BugNET.Providers.DataProviders
         /// <summary>
         /// Gets the related issues.
         /// </summary>
-        /// <param name="IssueId">The issue id.</param>
+        /// <param name="issueId">The issue id.</param>
         /// <returns></returns>
-        public override System.Collections.Generic.List<RelatedIssue> GetRelatedIssues(int issueId)
+        public override List<RelatedIssue> GetRelatedIssues(int issueId)
         {
-            if (issueId <= 0)
-                throw (new ArgumentOutOfRangeException("issueId"));
+            if (issueId <= 0) throw (new ArgumentOutOfRangeException("issueId"));
 
             try
             {
-                SqlCommand sqlCmd = new SqlCommand();
+                var sqlCmd = new SqlCommand();
                 AddParamToSQLCmd(sqlCmd, "@IssueId", SqlDbType.Int, 0, ParameterDirection.Input, issueId);
-                AddParamToSQLCmd(sqlCmd, "@RelationType", SqlDbType.Int, 0, ParameterDirection.Input, IssueRelationType.Related);
+                AddParamToSQLCmd(sqlCmd, "@RelationType", SqlDbType.Int, 0, ParameterDirection.Input, IssueRelationTypes.Related);
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_RELATEDISSUE_GETRELATEDISSUES);
 
-                List<RelatedIssue> relatedIssueList = new List<RelatedIssue>();
-                TExecuteReaderCmd<RelatedIssue>(sqlCmd, TGenerateRelatedIssueListFromReader<RelatedIssue>, ref relatedIssueList);
+                var relatedIssueList = new List<RelatedIssue>();
+                TExecuteReaderCmd(sqlCmd, GenerateRelatedIssueListFromReader, ref relatedIssueList);
 
                 return relatedIssueList;
             }
@@ -3393,7 +3373,7 @@ namespace BugNET.Providers.DataProviders
                 AddParamToSQLCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
                 AddParamToSQLCmd(sqlCmd, "@PrimaryIssueId", SqlDbType.Int, 0, ParameterDirection.Input, primaryIssueId);
                 AddParamToSQLCmd(sqlCmd, "@SecondaryIssueId", SqlDbType.Int, 0, ParameterDirection.Input, secondaryIssueId);
-                AddParamToSQLCmd(sqlCmd, "@RelationType", SqlDbType.Int, 0, ParameterDirection.Input, IssueRelationType.ParentChild);
+                AddParamToSQLCmd(sqlCmd, "@RelationType", SqlDbType.Int, 0, ParameterDirection.Input, IssueRelationTypes.ParentChild);
 
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_RELATEDISSUE_CREATENEWCHILDISSUE);
                 ExecuteScalarCmd(sqlCmd);
@@ -3427,7 +3407,7 @@ namespace BugNET.Providers.DataProviders
                 AddParamToSQLCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
                 AddParamToSQLCmd(sqlCmd, "@PrimaryIssueId", SqlDbType.Int, 0, ParameterDirection.Input, primaryIssueId);
                 AddParamToSQLCmd(sqlCmd, "@SecondaryIssueId", SqlDbType.Int, 0, ParameterDirection.Input, secondaryIssueId);
-                AddParamToSQLCmd(sqlCmd, "@RelationType", SqlDbType.Int, 0, ParameterDirection.Input, IssueRelationType.ParentChild);
+                AddParamToSQLCmd(sqlCmd, "@RelationType", SqlDbType.Int, 0, ParameterDirection.Input, IssueRelationTypes.ParentChild);
 
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_RELATEDISSUE_DELETECHILDISSUE);
                 ExecuteScalarCmd(sqlCmd);
@@ -3462,7 +3442,7 @@ namespace BugNET.Providers.DataProviders
                 AddParamToSQLCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
                 AddParamToSQLCmd(sqlCmd, "@PrimaryIssueId", SqlDbType.Int, 0, ParameterDirection.Input, primaryIssueId);
                 AddParamToSQLCmd(sqlCmd, "@SecondaryIssueId", SqlDbType.Int, 0, ParameterDirection.Input, secondaryIssueId);
-                AddParamToSQLCmd(sqlCmd, "@RelationType", SqlDbType.Int, 0, ParameterDirection.Input, IssueRelationType.ParentChild);
+                AddParamToSQLCmd(sqlCmd, "@RelationType", SqlDbType.Int, 0, ParameterDirection.Input, IssueRelationTypes.ParentChild);
 
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_RELATEDISSUE_CREATENEWPARENTISSUE);
                 ExecuteScalarCmd(sqlCmd);
@@ -3496,7 +3476,7 @@ namespace BugNET.Providers.DataProviders
                 AddParamToSQLCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
                 AddParamToSQLCmd(sqlCmd, "@PrimaryIssueId", SqlDbType.Int, 0, ParameterDirection.Input, primaryIssueId);
                 AddParamToSQLCmd(sqlCmd, "@SecondaryIssueId", SqlDbType.Int, 0, ParameterDirection.Input, secondaryIssueId);
-                AddParamToSQLCmd(sqlCmd, "@RelationType", SqlDbType.Int, 0, ParameterDirection.Input, IssueRelationType.ParentChild);
+                AddParamToSQLCmd(sqlCmd, "@RelationType", SqlDbType.Int, 0, ParameterDirection.Input, IssueRelationTypes.ParentChild);
 
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_RELATEDISSUE_DELETEPARENTISSUE);
                 ExecuteScalarCmd(sqlCmd);
@@ -3531,7 +3511,7 @@ namespace BugNET.Providers.DataProviders
                 AddParamToSQLCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
                 AddParamToSQLCmd(sqlCmd, "@PrimaryIssueId", SqlDbType.Int, 0, ParameterDirection.Input, primaryIssueId);
                 AddParamToSQLCmd(sqlCmd, "@SecondaryIssueId", SqlDbType.Int, 0, ParameterDirection.Input, secondaryIssueId);
-                AddParamToSQLCmd(sqlCmd, "@RelationType", SqlDbType.Int, 0, ParameterDirection.Input, IssueRelationType.Related);
+                AddParamToSQLCmd(sqlCmd, "@RelationType", SqlDbType.Int, 0, ParameterDirection.Input, IssueRelationTypes.Related);
 
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_RELATEDISSUE_CREATENEWRELATEDISSUE);
                 ExecuteScalarCmd(sqlCmd);
@@ -3566,7 +3546,7 @@ namespace BugNET.Providers.DataProviders
                 AddParamToSQLCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
                 AddParamToSQLCmd(sqlCmd, "@PrimaryIssueId", SqlDbType.Int, 0, ParameterDirection.Input, primaryIssueId);
                 AddParamToSQLCmd(sqlCmd, "@SecondaryIssueId", SqlDbType.Int, 0, ParameterDirection.Input, secondaryIssueId);
-                AddParamToSQLCmd(sqlCmd, "@RelationType", SqlDbType.Int, 0, ParameterDirection.Input, IssueRelationType.Related);
+                AddParamToSQLCmd(sqlCmd, "@RelationType", SqlDbType.Int, 0, ParameterDirection.Input, IssueRelationTypes.Related);
 
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_RELATEDISSUE_DELETERELATEDISSUE);
                 ExecuteScalarCmd(sqlCmd);
@@ -3631,7 +3611,7 @@ namespace BugNET.Providers.DataProviders
 
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUEREVISION_GETISSUEREVISIONSBYISSUEID);
                 List<IssueRevision> revisionList = new List<IssueRevision>();
-                TExecuteReaderCmd<IssueRevision>(sqlCmd, TGenerateIssueRevisionListFromReader<IssueRevision>, ref revisionList);
+                TExecuteReaderCmd<IssueRevision>(sqlCmd, GenerateIssueRevisionListFromReader, ref revisionList);
                 return revisionList;
             }
             catch (Exception ex)
@@ -3831,7 +3811,7 @@ namespace BugNET.Providers.DataProviders
             AddParamToSQLCmd(sqlCmd, "@MilestoneCompleted", SqlDbType.Bit, 0, ParameterDirection.Input, milestoneCompleted);
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_MILESTONE_GETMILESTONEBYPROJECTID);
             List<Milestone> milestoneList = new List<Milestone>();
-            TExecuteReaderCmd<Milestone>(sqlCmd, TGenerateMilestoneListFromReader<Milestone>, ref milestoneList);
+            TExecuteReaderCmd<Milestone>(sqlCmd, GenerateMilestoneListFromReader, ref milestoneList);
 
             return milestoneList;
         }
@@ -3852,7 +3832,7 @@ namespace BugNET.Providers.DataProviders
             AddParamToSQLCmd(sqlCmd, "@MilestoneId", SqlDbType.Int, 0, ParameterDirection.Input, milestoneId);
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_MILESTONE_GETMILESTONEBYID);
             List<Milestone> milestoneList = new List<Milestone>();
-            TExecuteReaderCmd<Milestone>(sqlCmd, TGenerateMilestoneListFromReader<Milestone>, ref milestoneList);
+            TExecuteReaderCmd<Milestone>(sqlCmd, GenerateMilestoneListFromReader, ref milestoneList);
 
             if (milestoneList.Count > 0)
                 return milestoneList[0];
@@ -3965,7 +3945,7 @@ namespace BugNET.Providers.DataProviders
             AddParamToSQLCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_PRIORITY_GETPRIORITIESBYPROJECTID);
             List<Priority> priorityList = new List<Priority>();
-            TExecuteReaderCmd<Priority>(sqlCmd, TGeneratePriorityListFromReader<Priority>, ref priorityList);
+            TExecuteReaderCmd<Priority>(sqlCmd, GeneratePriorityListFromReader, ref priorityList);
             return priorityList;
 
         }
@@ -3986,7 +3966,7 @@ namespace BugNET.Providers.DataProviders
             AddParamToSQLCmd(sqlCmd, "@PriorityId", SqlDbType.Int, 0, ParameterDirection.Input, priorityId);
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_PRIORITY_GETPRIORITYBYID);
             List<Priority> priorityList = new List<Priority>();
-            TExecuteReaderCmd<Priority>(sqlCmd, TGeneratePriorityListFromReader<Priority>, ref priorityList);
+            TExecuteReaderCmd<Priority>(sqlCmd, GeneratePriorityListFromReader, ref priorityList);
             if (priorityList.Count > 0)
                 return priorityList[0];
             else
@@ -4033,18 +4013,15 @@ namespace BugNET.Providers.DataProviders
             if (String.IsNullOrEmpty(mailbox))
                 throw new ArgumentOutOfRangeException("mailbox");
 
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_PROJECTMAILBOX_GETPROJECTBYMAILBOX);
 
             AddParamToSQLCmd(sqlCmd, "@mailbox", SqlDbType.NVarChar, 0, ParameterDirection.Input, mailbox);
 
-            List<ProjectMailbox> projectList = new List<ProjectMailbox>();
-            TExecuteReaderCmd<ProjectMailbox>(sqlCmd, TGenerateProjectMailboxListFromReader<ProjectMailbox>, ref projectList);
+            var projectList = new List<ProjectMailbox>();
+            TExecuteReaderCmd(sqlCmd, GenerateProjectMailboxListFromReader, ref projectList);
 
-            if (projectList.Count > 0)
-                return projectList[0];
-            else
-                return null;
+            return projectList.Count > 0 ? projectList[0] : null;
 
         }
 
@@ -4053,20 +4030,18 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="projectId">The project id.</param>
         /// <returns></returns>
-        public override System.Collections.Generic.List<ProjectMailbox> GetMailboxsByProjectId(int projectId)
+        public override List<ProjectMailbox> GetMailboxsByProjectId(int projectId)
         {
             // validate input
-            if (projectId <= 0)
-                throw (new ArgumentOutOfRangeException("projectId"));
+            if (projectId <= 0) throw (new ArgumentOutOfRangeException("projectId"));
 
-
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_PROJECTMAILBOX_GETMAILBYPROJECTID);
 
             AddParamToSQLCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
 
-            List<ProjectMailbox> projectList = new List<ProjectMailbox>();
-            TExecuteReaderCmd<ProjectMailbox>(sqlCmd, TGenerateProjectMailboxListFromReader<ProjectMailbox>, ref projectList);
+            var projectList = new List<ProjectMailbox>();
+            TExecuteReaderCmd(sqlCmd, GenerateProjectMailboxListFromReader, ref projectList);
             return projectList;
         }
 
@@ -4077,10 +4052,9 @@ namespace BugNET.Providers.DataProviders
         /// <returns></returns>
         public override int CreateProjectMailbox(ProjectMailbox mailboxToUpdate)
         {
-            if (mailboxToUpdate == null)
-                throw new ArgumentNullException("mailboxToUpdate");
+            if (mailboxToUpdate == null) throw new ArgumentNullException("mailboxToUpdate");
 
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_PROJECTMAILBOX_CREATEPROJECTMAILBOX);
 
             AddParamToSQLCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
@@ -4101,10 +4075,9 @@ namespace BugNET.Providers.DataProviders
         /// <returns></returns>
         public override bool UpdateProjectMailbox(ProjectMailbox mailboxToUpdate)
         {
-            if (mailboxToUpdate == null)
-                throw new ArgumentNullException("mailboxToUpdate");
+            if (mailboxToUpdate == null) throw new ArgumentNullException("mailboxToUpdate");
 
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_PROJECTMAILBOX_UPDATEPROJECTMAILBOX);
 
             AddParamToSQLCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
@@ -4116,7 +4089,7 @@ namespace BugNET.Providers.DataProviders
 
             ExecuteScalarCmd(sqlCmd);
 
-            return ((int)sqlCmd.Parameters["@ReturnValue"].Value == 0 ? true : false);
+            return ((int)sqlCmd.Parameters["@ReturnValue"].Value == 0);
 
         }
 
@@ -4130,14 +4103,14 @@ namespace BugNET.Providers.DataProviders
             if (mailboxId <= 0)
                 throw new ArgumentOutOfRangeException("mailboxId");
 
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_PROJECTMAILBOX_DELETEPROJECTMAILBOX);
 
             AddParamToSQLCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
             AddParamToSQLCmd(sqlCmd, "@ProjectMailboxId", SqlDbType.Int, 0, ParameterDirection.Input, mailboxId);
 
             ExecuteScalarCmd(sqlCmd);
-            return ((int)sqlCmd.Parameters["@ReturnValue"].Value == 0 ? true : false);
+            return ((int)sqlCmd.Parameters["@ReturnValue"].Value == 0);
         }
         #endregion
 
@@ -4150,11 +4123,10 @@ namespace BugNET.Providers.DataProviders
         public override int CreateNewStatus(Status newStatus)
         {
             // Validate Parameters
-            if (newStatus == null)
-                throw (new ArgumentNullException("newStatus"));
+            if (newStatus == null) throw (new ArgumentNullException("newStatus"));
 
             // Execute SQL Command
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
 
             AddParamToSQLCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
             AddParamToSQLCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, newStatus.ProjectId);
@@ -4207,7 +4179,7 @@ namespace BugNET.Providers.DataProviders
 
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_STATUS_GETSTATUSBYPROJECTID);
             List<Status> statusList = new List<Status>();
-            TExecuteReaderCmd<Status>(sqlCmd, TGenerateStatusListFromReader<Status>, ref statusList);
+            TExecuteReaderCmd<Status>(sqlCmd, GenerateStatusListFromReader, ref statusList);
             return statusList;
         }
 
@@ -4258,7 +4230,7 @@ namespace BugNET.Providers.DataProviders
 
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_STATUS_GETSTATUSBYID);
             List<Status> statusList = new List<Status>();
-            TExecuteReaderCmd<Status>(sqlCmd, TGenerateStatusListFromReader<Status>, ref statusList);
+            TExecuteReaderCmd<Status>(sqlCmd, GenerateStatusListFromReader, ref statusList);
 
             if (statusList.Count > 0)
                 return statusList[0];
@@ -4278,17 +4250,14 @@ namespace BugNET.Providers.DataProviders
             if (customFieldId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("customFieldId"));
 
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
             AddParamToSQLCmd(sqlCmd, "@CustomFieldId", SqlDbType.Int, 0, ParameterDirection.Input, customFieldId);
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_CUSTOMFIELD_GETCUSTOMFIELDBYID);
 
-            List<CustomField> customFieldList = new List<CustomField>();
-            TExecuteReaderCmd<CustomField>(sqlCmd, TGenerateCustomFieldListFromReader<CustomField>, ref customFieldList);
+            var customFieldList = new List<CustomField>();
+            TExecuteReaderCmd(sqlCmd, GenerateCustomFieldListFromReader, ref customFieldList);
 
-            if (customFieldList.Count > 0)
-                return customFieldList[0];
-            else
-                return null;
+            return customFieldList.Count > 0 ? customFieldList[0] : null;
         }
 
         /// <summary>
@@ -4296,17 +4265,17 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="projectId">The project id.</param>
         /// <returns></returns>
-        public override System.Collections.Generic.List<CustomField> GetCustomFieldsByProjectId(int projectId)
+        public override List<CustomField> GetCustomFieldsByProjectId(int projectId)
         {
             if (projectId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("projectId"));
 
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
             AddParamToSQLCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_CUSTOMFIELD_GETCUSTOMFIELDSBYPROJECTID);
 
-            List<CustomField> customFieldList = new List<CustomField>();
-            TExecuteReaderCmd<CustomField>(sqlCmd, TGenerateCustomFieldListFromReader<CustomField>, ref customFieldList);
+            var customFieldList = new List<CustomField>();
+            TExecuteReaderCmd(sqlCmd, GenerateCustomFieldListFromReader, ref customFieldList);
 
             return customFieldList;
         }
@@ -4316,17 +4285,17 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="issueId">The issue id.</param>
         /// <returns></returns>
-        public override System.Collections.Generic.List<CustomField> GetCustomFieldsByIssueId(int issueId)
+        public override List<CustomField> GetCustomFieldsByIssueId(int issueId)
         {
             if (issueId <= Globals.NEW_ID)
                 throw (new ArgumentOutOfRangeException("issueId"));
 
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
             AddParamToSQLCmd(sqlCmd, "@IssueId", SqlDbType.Int, 0, ParameterDirection.Input, issueId);
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_CUSTOMFIELD_GETCUSTOMFIELDSBYISSUEID);
 
-            List<CustomField> customFieldList = new List<CustomField>();
-            TExecuteReaderCmd<CustomField>(sqlCmd, TGenerateCustomFieldListFromReader<CustomField>, ref customFieldList);
+            var customFieldList = new List<CustomField>();
+            TExecuteReaderCmd(sqlCmd, GenerateCustomFieldListFromReader, ref customFieldList);
 
             return customFieldList;
         }
@@ -4342,7 +4311,7 @@ namespace BugNET.Providers.DataProviders
                 throw new ArgumentNullException("newCustomField");
 
             // Execute SQL Command
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
 
             AddParamToSQLCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
             AddParamToSQLCmd(sqlCmd, "@CustomFieldName", SqlDbType.NText, 50, ParameterDirection.Input, newCustomField.Name);
@@ -4506,7 +4475,7 @@ namespace BugNET.Providers.DataProviders
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_CUSTOMFIELDSELECTION_GETCUSTOMFIELDSELECTIONSBYCUSTOMFIELDID);
 
             List<CustomFieldSelection> customFieldSelectionList = new List<CustomFieldSelection>();
-            TExecuteReaderCmd<CustomFieldSelection>(sqlCmd, TGenerateCustomFieldSelectionListFromReader<CustomFieldSelection>, ref customFieldSelectionList);
+            TExecuteReaderCmd<CustomFieldSelection>(sqlCmd, GenerateCustomFieldSelectionListFromReader, ref customFieldSelectionList);
 
             return customFieldSelectionList;
         }
@@ -4526,7 +4495,7 @@ namespace BugNET.Providers.DataProviders
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_CUSTOMFIELDSELECTION_GETCUSTOMFIELDSELECTIONBYID);
 
             List<CustomFieldSelection> customFieldSelectionList = new List<CustomFieldSelection>();
-            TExecuteReaderCmd<CustomFieldSelection>(sqlCmd, TGenerateCustomFieldSelectionListFromReader<CustomFieldSelection>, ref customFieldSelectionList);
+            TExecuteReaderCmd<CustomFieldSelection>(sqlCmd, GenerateCustomFieldSelectionListFromReader, ref customFieldSelectionList);
 
             if (customFieldSelectionList.Count > 0)
                 return customFieldSelectionList[0];
@@ -4579,7 +4548,7 @@ namespace BugNET.Providers.DataProviders
 
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUETYPE_GETISSUETYPEBYID);
             List<IssueType> issueTypeList = new List<IssueType>();
-            TExecuteReaderCmd<IssueType>(sqlCmd, TGenerateIssueTypeListFromReader<IssueType>, ref issueTypeList);
+            TExecuteReaderCmd<IssueType>(sqlCmd, GenerateIssueTypeListFromReader, ref issueTypeList);
 
             if (issueTypeList.Count > 0)
                 return issueTypeList[0];
@@ -4677,7 +4646,7 @@ namespace BugNET.Providers.DataProviders
 
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUETYPE_GETISSUETYPESBYPROJECTID);
             List<IssueType> issueTypeList = new List<IssueType>();
-            TExecuteReaderCmd<IssueType>(sqlCmd, TGenerateIssueTypeListFromReader<IssueType>, ref issueTypeList);
+            TExecuteReaderCmd<IssueType>(sqlCmd, GenerateIssueTypeListFromReader, ref issueTypeList);
             return issueTypeList;
         }
 
@@ -4693,21 +4662,18 @@ namespace BugNET.Providers.DataProviders
         {
             // validate Parameters
             if (resolutionId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("resolutinoId"));
+                throw (new ArgumentOutOfRangeException("resolutionId"));
 
             // Execute SQL Command
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
 
             AddParamToSQLCmd(sqlCmd, "@ResolutionId", SqlDbType.Int, 0, ParameterDirection.Input, resolutionId);
 
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_RESOLUTION_GETRESOLUTIONBYID);
-            List<Resolution> resolutionList = new List<Resolution>();
-            TExecuteReaderCmd<Resolution>(sqlCmd, TGenerateResolutionListFromReader<Resolution>, ref resolutionList);
+            var resolutionList = new List<Resolution>();
+            TExecuteReaderCmd(sqlCmd, GenerateResolutionListFromReader, ref resolutionList);
 
-            if (resolutionList.Count > 0)
-                return resolutionList[0];
-            else
-                return null;
+            return resolutionList.Count > 0 ? resolutionList[0] : null;
         }
 
 
@@ -4795,13 +4761,13 @@ namespace BugNET.Providers.DataProviders
                 throw (new ArgumentOutOfRangeException("projectId"));
 
             // Execute SQL Command
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
 
             AddParamToSQLCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
 
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_RESOLUTION_GETRESOLUTIONSBYPROJECTID);
-            List<Resolution> resolutionList = new List<Resolution>();
-            TExecuteReaderCmd<Resolution>(sqlCmd, TGenerateResolutionListFromReader<Resolution>, ref resolutionList);
+            var resolutionList = new List<Resolution>();
+            TExecuteReaderCmd(sqlCmd, GenerateResolutionListFromReader, ref resolutionList);
             return resolutionList;
         }
 
@@ -4856,7 +4822,7 @@ namespace BugNET.Providers.DataProviders
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUEWORKREPORT_GETBYISSUEWORKREPORTSBYISSUEID);
 
             List<IssueWorkReport> issueTimeEntryList = new List<IssueWorkReport>();
-            TExecuteReaderCmd<IssueWorkReport>(sqlCmd, TGenerateIssueTimeEntryListFromReader<IssueWorkReport>, ref issueTimeEntryList);
+            TExecuteReaderCmd<IssueWorkReport>(sqlCmd, GenerateIssueTimeEntryListFromReader, ref issueTimeEntryList);
 
             return issueTimeEntryList;
         }
@@ -4915,7 +4881,7 @@ namespace BugNET.Providers.DataProviders
 
                 List<ApplicationLog> applicationLogList = new List<ApplicationLog>();
                 AddParamToSQLCmd(sqlCmd, "@FilterType", SqlDbType.NVarChar, 50, ParameterDirection.Input, (filterType.Length == 0) ? DBNull.Value : (object)filterType);
-                TExecuteReaderCmd<ApplicationLog>(sqlCmd, TGenerateApplicationLogListFromReader<ApplicationLog>, ref applicationLogList);
+                TExecuteReaderCmd<ApplicationLog>(sqlCmd, GenerateApplicationLogListFromReader, ref applicationLogList);
 
                 return applicationLogList;
             }
@@ -4955,7 +4921,7 @@ namespace BugNET.Providers.DataProviders
 
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_LANGUAGES_GETINSTALLEDLANGUAGES);
                 List<string> cultureCodes = new List<string>();
-                TExecuteReaderCmd<string>(sqlCmd, TGenerateInstalledResourcesListFromReader<string>, ref cultureCodes);
+                TExecuteReaderCmd<string>(sqlCmd, GenerateInstalledResourcesListFromReader, ref cultureCodes);
                 return cultureCodes;
             }
             catch (Exception ex)
@@ -5047,7 +5013,7 @@ namespace BugNET.Providers.DataProviders
 
             return new DataAccessException("Database Error", ex);
         }
-       
+
 
         #region SQL Helper Methods
 
@@ -5181,15 +5147,22 @@ namespace BugNET.Providers.DataProviders
         /// <summary>
         /// Ts the generate issue comment list from reader.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="returnData">The return data.</param>
         /// <param name="issueCommentList">The issue comment list.</param>
-        public void TGenerateIssueCommentListFromReader<T>(SqlDataReader returnData, ref List<IssueComment> issueCommentList)
+        private static void GenerateIssueCommentListFromReader(IDataReader returnData, ref List<IssueComment> issueCommentList)
         {
             while (returnData.Read())
             {
-                IssueComment newAttachment = new IssueComment((int)returnData["IssueCommentId"], (int)returnData["IssueId"], (string)returnData["Comment"], (string)returnData["CreatorUsername"], (Guid)returnData["CreatorUserId"], (string)returnData["CreatorDisplayName"], (DateTime)returnData["DateCreated"]);
-                issueCommentList.Add(newAttachment);
+                issueCommentList.Add(new IssueComment
+                                         {
+                                            Id = returnData.GetInt32(returnData.GetOrdinal("IssueCommentId")),
+                                            Comment = returnData.GetString(returnData.GetOrdinal("Comment")),
+                                            DateCreated = returnData.GetDateTime(returnData.GetOrdinal("DateCreated")),
+                                            CreatorDisplayName = returnData.GetString(returnData.GetOrdinal("CreatorDisplayName")),
+                                            CreatorUserName = returnData.GetString(returnData.GetOrdinal("CreatorUsername")),
+                                            IssueId = returnData.GetInt32(returnData.GetOrdinal("IssueId")),
+                                            CreatorUserId = returnData.GetGuid(returnData.GetOrdinal("CreatorUserId"))
+                                         });
             }
         }
 
@@ -5208,7 +5181,7 @@ namespace BugNET.Providers.DataProviders
             }
         }
 
-        
+
         /// <summary>
         /// Ts the generate issue list from reader.
         /// </summary>
@@ -5270,14 +5243,13 @@ namespace BugNET.Providers.DataProviders
                 issueList.Add(issue);
             }
         }
-    
+
         /// <summary>
         /// Ts the generate installed resources list from reader.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="returnData">The return data.</param>
         /// <param name="cultureCodes">The culture codes.</param>
-        private void TGenerateInstalledResourcesListFromReader<T>(SqlDataReader returnData, ref List<string> cultureCodes)
+        private static void GenerateInstalledResourcesListFromReader(IDataReader returnData, ref List<string> cultureCodes)
         {
             while (returnData.Read())
             {
@@ -5288,65 +5260,80 @@ namespace BugNET.Providers.DataProviders
         /// <summary>
         /// Ts the generate issue history list from reader.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="returnData">The return data.</param>
         /// <param name="issueHistoryList">The issue history list.</param>
-        public void TGenerateIssueHistoryListFromReader<T>(SqlDataReader returnData, ref List<IssueHistory> issueHistoryList)
+        private static void GenerateIssueHistoryListFromReader(IDataReader returnData, ref List<IssueHistory> issueHistoryList)
         {
             while (returnData.Read())
             {
-                IssueHistory newHistory = new IssueHistory((int)returnData["IssueHistoryId"], (int)returnData["IssueId"], (string)returnData["CreatorUsername"], (string)returnData["CreatorDisplayName"], (string)returnData["FieldChanged"], (string)returnData["OldValue"], (string)returnData["NewValue"], (DateTime)returnData["DateCreated"]);
-                issueHistoryList.Add(newHistory);
+                issueHistoryList.Add(new IssueHistory
+                {
+                    Id = returnData.GetInt32(returnData.GetOrdinal("IssueHistoryId")),
+                    IssueId = returnData.GetInt32(returnData.GetOrdinal("IssueId")),
+                    CreatedUserName = returnData.GetString(returnData.GetOrdinal("CreatorUsername")),
+                    CreatorDisplayName = returnData.GetString(returnData.GetOrdinal("CreatorDisplayName")),
+                    FieldChanged = returnData.GetString(returnData.GetOrdinal("FieldChanged")),
+                    NewValue = returnData.GetString(returnData.GetOrdinal("NewValue")),
+                    OldValue = returnData.GetString(returnData.GetOrdinal("OldValue")),
+                    DateChanged = returnData.GetDateTime(returnData.GetOrdinal("DateCreated"))
+                });
             }
         }
 
         /// <summary>
         /// Ts the generate issue notification list from reader.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="returnData">The return data.</param>
         /// <param name="issueNotificationList">The issue notification list.</param>
-        private void TGenerateIssueNotificationListFromReader<T>(SqlDataReader returnData, ref List<IssueNotification> issueNotificationList)
+        private static void GenerateIssueNotificationListFromReader(IDataReader returnData, ref List<IssueNotification> issueNotificationList)
         {
             while (returnData.Read())
             {
-                //IssueNotification newNotification = new IssueNotification((int)returnData["IssueNotificationId"], (int)returnData["IssueId"], (string)returnData["NotificationUsername"], (string)returnData["NotificationEmail"], (string)returnData["NotificationDisplayName"]);
-                IssueNotification newNotification = new IssueNotification(1, (int)returnData["IssueId"], (string)returnData["NotificationUsername"], (string)returnData["NotificationEmail"], (string)returnData["NotificationDisplayName"]);
-                issueNotificationList.Add(newNotification);
+                issueNotificationList.Add(new IssueNotification
+                {
+                    Id = 1,
+                    IssueId = returnData.GetInt32(returnData.GetOrdinal("IssueId")),
+                    NotificationUsername = returnData.GetString(returnData.GetOrdinal("NotificationUsername")),
+                    NotificationEmail = returnData.GetString(returnData.GetOrdinal("NotificationEmail")),
+                    NotificationDisplayName = returnData.GetString(returnData.GetOrdinal("NotificationDisplayName"))
+                });
             }
         }
 
         /// <summary>
         /// Ts the generate host setting list from reader.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="returnData">The return data.</param>
         /// <param name="hostsettingList">The hostsetting list.</param>
-        private void TGenerateHostSettingListFromReader<T>(SqlDataReader returnData, ref List<HostSetting> hostsettingList)
+        private static void GenerateHostSettingListFromReader(IDataReader returnData, ref List<HostSetting> hostsettingList)
         {
             while (returnData.Read())
             {
-                HostSetting hostsetting = new HostSetting((string)returnData["SettingName"], (string)returnData["SettingValue"]);
-                hostsettingList.Add(hostsetting);
+                hostsettingList.Add(new HostSetting
+                                        {
+                                            SettingName = returnData.GetString(returnData.GetOrdinal("SettingName")),
+                                            SettingValue = returnData.GetString(returnData.GetOrdinal("SettingValue"))
+                                        });
             }
         }
 
         /// <summary>
         /// Ts the generate role list from reader.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="returnData">The return data.</param>
         /// <param name="roleList">The role list.</param>
-        private void TGenerateRoleListFromReader<T>(SqlDataReader returnData, ref List<Role> roleList)
+        private static void GenerateRoleListFromReader(IDataReader returnData, ref List<Role> roleList)
         {
             while (returnData.Read())
             {
-                int ProjectId = 0;
-                if (returnData["ProjectId"] != DBNull.Value)
-                    ProjectId = Convert.ToInt32(returnData["ProjectId"]);
-
-                Role role = new Role((int)returnData["RoleId"], ProjectId, (string)returnData["RoleName"], (string)returnData["RoleDescription"], (bool)returnData["AutoAssign"]);
-                roleList.Add(role);
+                roleList.Add(new Role
+                {
+                    Id = returnData.GetInt32(returnData.GetOrdinal("RoleId")),
+                    ProjectId = (returnData["ProjectId"] != DBNull.Value) ? returnData.GetInt32(returnData.GetOrdinal("ProjectId")) : 0,
+                    Name = returnData.GetString(returnData.GetOrdinal("RoleName")),
+                    AutoAssign = returnData.GetBoolean(returnData.GetOrdinal("AutoAssign")),
+                    Description = returnData.GetString(returnData.GetOrdinal("RoleDescription")),
+                });
             }
         }
 
@@ -5412,7 +5399,7 @@ namespace BugNET.Providers.DataProviders
                     (string)returnData["AttachmentUploadPath"], (DateTime)returnData["DateCreated"],
                     (Globals.ProjectAccessType)returnData["ProjectAccessType"], (bool)returnData["ProjectDisabled"],
                     (bool)returnData["AllowAttachments"], (Guid)returnData["ProjectManagerUserId"],
-                    (IssueAttachmentStorageType)returnData["AttachmentStorageType"], returnData["SvnRepositoryUrl"].ToString(), (bool)returnData["AllowIssueVoting"],
+                    (IssueAttachmentStorageTypes)returnData["AttachmentStorageType"], returnData["SvnRepositoryUrl"].ToString(), (bool)returnData["AllowIssueVoting"],
                     null);
                 projectList.Add(project);
             }
@@ -5511,15 +5498,21 @@ namespace BugNET.Providers.DataProviders
         /// <summary>
         /// Ts the generate project notification list from reader.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="returnData">The return data.</param>
         /// <param name="projectNotificationList">The project notification list.</param>
-        private void TGenerateProjectNotificationListFromReader<T>(SqlDataReader returnData, ref List<ProjectNotification> projectNotificationList)
+        private static void GenerateProjectNotificationListFromReader(IDataReader returnData, ref List<ProjectNotification> projectNotificationList)
         {
             while (returnData.Read())
             {
-                ProjectNotification newNotification = new ProjectNotification((int)returnData["ProjectNotificationId"], (int)returnData["ProjectId"], (string)returnData["ProjectName"], (string)returnData["NotificationUsername"], (string)returnData["NotificationEmail"], (string)returnData["NotificationDisplayName"]);
-                projectNotificationList.Add(newNotification);
+                projectNotificationList.Add(new ProjectNotification
+                                                {
+                                                    Id = returnData.GetInt32(returnData.GetOrdinal("ProjectNotificationId")),
+                                                    NotificationDisplayName = returnData.GetString(returnData.GetOrdinal("NotificationDisplayName")),
+                                                    NotificationEmail = returnData.GetString(returnData.GetOrdinal("NotificationEmail")),
+                                                    NotificationUsername = returnData.GetString(returnData.GetOrdinal("NotificationUsername")),
+                                                    ProjectId = returnData.GetInt32(returnData.GetOrdinal("ProjectId")),
+                                                    ProjectName = returnData.GetString(returnData.GetOrdinal("ProjectName")),
+                                                });
             }
         }
 
@@ -5529,27 +5522,45 @@ namespace BugNET.Providers.DataProviders
         /// <typeparam name="T"></typeparam>
         /// <param name="returnData">The return data.</param>
         /// <param name="categoryList">The category list.</param>
-        private void TGenerateCategoryListFromReader<T>(SqlDataReader returnData, ref List<Category> categoryList)
+        private static void GenerateCategoryListFromReader(IDataReader returnData, ref List<Category> categoryList)
         {
             while (returnData.Read())
             {
-                Category category = new Category((int)returnData["CategoryId"], (int)returnData["ProjectId"], (int)returnData["ParentCategoryId"], (string)returnData["CategoryName"], (int)returnData["ChildCount"]);
-                categoryList.Add(category);
+                categoryList.Add(new Category
+                        {
+                            Id = returnData.GetInt32(returnData.GetOrdinal("CategoryId")),
+                            ProjectId = returnData.GetInt32(returnData.GetOrdinal("ProjectId")),
+                            Name = returnData.GetString(returnData.GetOrdinal("CategoryName")),
+                            ChildCount = returnData.GetInt32(returnData.GetOrdinal("ChildCount")),
+                            ParentCategoryId = returnData.GetInt32(returnData.GetOrdinal("ParentCategoryId")),
+                        });
             }
         }
 
         /// <summary>
         /// Ts the generate issue attachment list from reader.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="returnData">The return data.</param>
         /// <param name="issueAttachmentList">The issue attachment list.</param>
-        public void TGenerateIssueAttachmentListFromReader<T>(SqlDataReader returnData, ref List<IssueAttachment> issueAttachmentList)
+        private static void GenerateIssueAttachmentListFromReader(IDataReader returnData, ref List<IssueAttachment> issueAttachmentList)
         {
             while (returnData.Read())
             {
-                IssueAttachment newAttachment = new IssueAttachment((int)returnData["IssueAttachmentId"], (int)returnData["IssueId"], (string)returnData["CreatorUsername"], (string)returnData["CreatorDisplayName"], (DateTime)returnData["DateCreated"], (string)returnData["FileName"], (int)returnData["FileSize"], (string)returnData["Description"]);
-                issueAttachmentList.Add(newAttachment);
+                var attachment = new IssueAttachment
+                                     {
+                                         Id = returnData.GetInt32(returnData.GetOrdinal("IssueAttachmentId")),
+                                         Attachment = null,
+                                         Description = returnData.GetString(returnData.GetOrdinal("Description")),
+                                         DateCreated = returnData.GetDateTime(returnData.GetOrdinal("DateCreated")),
+                                         ContentType = returnData.GetString(returnData.GetOrdinal("ContentType")),
+                                         CreatorDisplayName = returnData.GetString(returnData.GetOrdinal("CreatorDisplayName")),
+                                         CreatorUserName = returnData.GetString(returnData.GetOrdinal("CreatorUsername")),
+                                         FileName = returnData.GetString(returnData.GetOrdinal("FileName")),
+                                         IssueId = returnData.GetInt32(returnData.GetOrdinal("IssueId")),
+                                         Size = returnData.GetInt32(returnData.GetOrdinal("FileSize"))
+                                     };
+
+                issueAttachmentList.Add(attachment);
             }
         }
 
@@ -5559,7 +5570,7 @@ namespace BugNET.Providers.DataProviders
         /// <typeparam name="T"></typeparam>
         /// <param name="returnData">The return data.</param>
         /// <param name="queryClauseList">The query clause list.</param>
-        private void TGenerateQueryClauseListFromReader<T>(SqlDataReader returnData, ref List<QueryClause> queryClauseList)
+        private void TGenerateQueryClauseListFromReader<T>(IDataReader returnData, ref List<QueryClause> queryClauseList)
         {
             while (returnData.Read())
             {
@@ -5571,18 +5582,20 @@ namespace BugNET.Providers.DataProviders
         /// <summary>
         /// Ts the generate query list from reader.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="returnData">The return data.</param>
         /// <param name="queryList">The query list.</param>
-        private void TGenerateQueryListFromReader<T>(SqlDataReader returnData, ref List<Query> queryList)
+        private static void GenerateQueryListFromReader(IDataReader returnData, ref List<Query> queryList)
         {
             while (returnData.Read())
             {
-                Query q = new Query((int)returnData["QueryId"], (string)returnData["QueryName"], (bool)returnData["IsPublic"]);
-                queryList.Add(q);
+                queryList.Add(new Query
+                                  {
+                                      Id = returnData.GetInt32(returnData.GetOrdinal("QueryId")),
+                                      Name = returnData.GetString(returnData.GetOrdinal("QueryName")),
+                                      IsPublic = returnData.GetBoolean(returnData.GetOrdinal("IsPublic"))
+                                  });
             }
         }
-
 
         /// <summary>
         /// Ts the generate required field list from reader.
@@ -5602,50 +5615,70 @@ namespace BugNET.Providers.DataProviders
         /// <summary>
         /// Ts the generate related issue list from reader.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="returnData">The return data.</param>
         /// <param name="relatedIssueList">The related issue list.</param>
-        private void TGenerateRelatedIssueListFromReader<T>(SqlDataReader returnData, ref List<RelatedIssue> relatedIssueList)
+        private static void GenerateRelatedIssueListFromReader(IDataReader returnData, ref List<RelatedIssue> relatedIssueList)
         {
             while (returnData.Read())
             {
-                RelatedIssue newRelatedIssue = new RelatedIssue((int)returnData["IssueId"], (string)returnData["IssueTitle"], returnData["IssueStatus"] == DBNull.Value ? string.Empty : (string)returnData["IssueStatus"], returnData["IssueResolution"] == DBNull.Value ? string.Empty : (string)returnData["IssueResolution"], (DateTime)returnData["DateCreated"]);
-                relatedIssueList.Add(newRelatedIssue);
+                var relatedIssue = new RelatedIssue
+                                       {
+                                           DateCreated = returnData.GetDateTime(returnData.GetOrdinal("DateCreated")),
+                                           IssueId = returnData.GetInt32(returnData.GetOrdinal("IssueId")),
+                                           Resolution = DefaultIfNull(returnData["IssueResolution"], string.Empty),
+                                           Status = DefaultIfNull(returnData["IssueStatus"], string.Empty), 
+                                           Title = returnData.GetString(returnData.GetOrdinal("IssueTitle"))
+                                       };
+
+                relatedIssueList.Add(relatedIssue);
             }
         }
 
         /// <summary>
         /// Ts the generate issue revision list from reader.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="returnData">The return data.</param>
         /// <param name="revisionList">The revision list.</param>
-        private void TGenerateIssueRevisionListFromReader<T>(SqlDataReader returnData, ref List<IssueRevision> revisionList)
+        private static void GenerateIssueRevisionListFromReader(IDataReader returnData, ref List<IssueRevision> revisionList)
         {
             while (returnData.Read())
             {
-                IssueRevision issueRevision = new IssueRevision((int)returnData["IssueRevisionId"], (int)returnData["IssueId"], (int)returnData["Revision"],
-                    returnData["RevisionAuthor"].ToString(), returnData["RevisionMessage"].ToString(), returnData["Repository"].ToString(), returnData["RevisionDate"].ToString(),
-                    (DateTime)returnData["DateCreated"]);
-                revisionList.Add(issueRevision);
+                revisionList.Add(new IssueRevision
+                                    {
+                                        Id = returnData.GetInt32(returnData.GetOrdinal("IssueRevisionId")),
+                                        Author = returnData.GetString(returnData.GetOrdinal("RevisionAuthor")),
+                                        DateCreated = returnData.GetDateTime(returnData.GetOrdinal("DateCreated")),
+                                        IssueId = returnData.GetInt32(returnData.GetOrdinal("IssueId")),
+                                        Message = returnData.GetString(returnData.GetOrdinal("RevisionMessage")),
+                                        Repository = returnData.GetString(returnData.GetOrdinal("Repository")),
+                                        RevisionDate = returnData.GetString(returnData.GetOrdinal("RevisionDate")),
+                                        Revision = returnData.GetInt32(returnData.GetOrdinal("Revision"))
+                                    });
             }
         }
 
         /// <summary>
         /// Ts the generate milestone list from reader.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="returnData">The return data.</param>
         /// <param name="milestoneList">The milestone list.</param>
-        private void TGenerateMilestoneListFromReader<T>(SqlDataReader returnData, ref List<Milestone> milestoneList)
+        private static void GenerateMilestoneListFromReader(IDataReader returnData, ref List<Milestone> milestoneList)
         {
             while (returnData.Read())
             {
-                Milestone milestone = new Milestone((int)returnData["MilestoneId"], (int)returnData["ProjectId"],
-                    (string)returnData["MilestoneName"], (int)returnData["SortOrder"], (string)returnData["MilestoneImageUrl"],
-                    returnData["MilestoneDueDate"] == DBNull.Value ? null : (DateTime?)returnData["MilestoneDueDate"],
-                    returnData["MilestoneReleaseDate"] == DBNull.Value ? null : (DateTime?)returnData["MilestoneReleaseDate"], (bool)returnData["MilestoneCompleted"],
-                    returnData["MilestoneNotes"] == DBNull.Value ? string.Empty : (string)returnData["MilestoneNotes"]);
+                var milestone = new Milestone
+                                    {
+                                        Id = returnData.GetInt32(returnData.GetOrdinal("MilestoneId")),
+                                        ProjectId = returnData.GetInt32(returnData.GetOrdinal("ProjectId")),
+                                        Name = returnData.GetString(returnData.GetOrdinal("MilestoneName")),
+                                        DueDate = returnData[returnData.GetOrdinal("MilestoneDueDate")] as DateTime?,
+                                        ImageUrl = returnData.GetString(returnData.GetOrdinal("MilestoneImageUrl")),
+                                        ReleaseDate = returnData[returnData.GetOrdinal("MilestoneReleaseDate")] as DateTime?,
+                                        IsCompleted = returnData.GetBoolean(returnData.GetOrdinal("MilestoneCompleted")),
+                                        Notes = returnData[returnData.GetOrdinal("MilestoneNotes")] as string ?? string.Empty,
+                                        SortOrder = returnData.GetInt32(returnData.GetOrdinal("SortOrder"))
+                                    };
+
                 milestoneList.Add(milestone);
             }
         }
@@ -5653,35 +5686,43 @@ namespace BugNET.Providers.DataProviders
         /// <summary>
         /// Ts the generate priority list from reader.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="returnData">The return data.</param>
         /// <param name="priorityList">The priority list.</param>
-        private void TGeneratePriorityListFromReader<T>(SqlDataReader returnData, ref List<Priority> priorityList)
+        private static void GeneratePriorityListFromReader(IDataReader returnData, ref List<Priority> priorityList)
         {
             while (returnData.Read())
             {
-                Priority priority = new Priority((int)returnData["PriorityId"], (int)returnData["ProjectId"], (string)returnData["PriorityName"], (int)returnData["SortOrder"],
-                    (string)returnData["PriorityImageUrl"]);
-                priorityList.Add(priority);
+                priorityList.Add(new Priority
+                                     {
+                                         Id = returnData.GetInt32(returnData.GetOrdinal("PriorityId")),
+                                         ProjectId = returnData.GetInt32(returnData.GetOrdinal("ProjectId")),
+                                         Name = returnData.GetString(returnData.GetOrdinal("PriorityName")),
+                                         ImageUrl = returnData.GetString(returnData.GetOrdinal("PriorityImageUrl")),
+                                         SortOrder = returnData.GetInt32(returnData.GetOrdinal("SortOrder")),
+                                     });
             }
         }
 
         /// <summary>
         /// Ts the generate project mailbox list from reader.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="returnData">The return data.</param>
         /// <param name="projectMailboxList">The project mailbox list.</param>
-        public void TGenerateProjectMailboxListFromReader<T>(SqlDataReader returnData, ref List<ProjectMailbox> projectMailboxList)
+        private static void GenerateProjectMailboxListFromReader(IDataReader returnData, ref List<ProjectMailbox> projectMailboxList)
         {
             while (returnData.Read())
             {
-                ProjectMailbox mailbox = new ProjectMailbox((int)returnData["ProjectMailboxId"], (string)returnData["Mailbox"], (int)returnData["ProjectId"]
-                    , returnData["AssignToUserId"] == DBNull.Value ? Guid.Empty : (Guid)returnData["AssignToUserId"]
-                    , (int)returnData["IssueTypeId"], returnData["AssignToUserName"] == DBNull.Value ? string.Empty : (string)returnData["AssignToUserName"],
-                    (string)returnData["AssignToDisplayName"],
-                    (string)returnData["IssueTypeName"]);
-
+                var mailbox = new ProjectMailbox
+                                  {
+                                      AssignToDisplayName = returnData.GetString(returnData.GetOrdinal("AssignToDisplayName")),
+                                      AssignToId = returnData["AssignToUserId"] as Guid? ?? Guid.Empty,
+                                      AssignToUserName = DefaultIfNull(returnData["AssignToUserName"], string.Empty),
+                                      Id = returnData.GetInt32(returnData.GetOrdinal("ProjectMailboxId")),
+                                      IssueTypeId = returnData.GetInt32(returnData.GetOrdinal("IssueTypeId")),
+                                      IssueTypeName = returnData.GetString(returnData.GetOrdinal("IssueTypeName")),
+                                      Mailbox = returnData.GetString(returnData.GetOrdinal("Mailbox")),
+                                      ProjectId = returnData.GetInt32(returnData.GetOrdinal("ProjectId"))
+                                  };
                 projectMailboxList.Add(mailbox);
             }
         }
@@ -5689,127 +5730,162 @@ namespace BugNET.Providers.DataProviders
         /// <summary>
         /// Ts the generate status list from reader.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="returnData">The return data.</param>
         /// <param name="statusList">The status list.</param>
-        private void TGenerateStatusListFromReader<T>(SqlDataReader returnData, ref List<Status> statusList)
+        private static void GenerateStatusListFromReader(IDataReader returnData, ref List<Status> statusList)
         {
             while (returnData.Read())
             {
-                Status status = new Status((int)returnData["StatusId"], (int)returnData["ProjectId"], (string)returnData["StatusName"],
-                    (int)returnData["SortOrder"], (string)returnData["StatusImageUrl"], (bool)returnData["IsClosedState"]);
-                statusList.Add(status);
+                statusList.Add(new Status
+                                   {
+                                       Id = returnData.GetInt32(returnData.GetOrdinal("StatusId")),
+                                       ProjectId = returnData.GetInt32(returnData.GetOrdinal("ProjectId")),
+                                       Name = returnData.GetString(returnData.GetOrdinal("StatusName")),
+                                       SortOrder = returnData.GetInt32(returnData.GetOrdinal("SortOrder")),
+                                       ImageUrl = returnData.GetString(returnData.GetOrdinal("StatusImageUrl")),
+                                       IsClosedState = returnData.GetBoolean(returnData.GetOrdinal("IsClosedState"))
+                                   });
             }
         }
 
         /// <summary>
         /// Ts the generate custom field list from reader.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="returnData">The return data.</param>
         /// <param name="customFieldList">The custom field list.</param>
-        private void TGenerateCustomFieldListFromReader<T>(SqlDataReader returnData, ref List<CustomField> customFieldList)
+        private static void GenerateCustomFieldListFromReader(IDataReader returnData, ref List<CustomField> customFieldList)
         {
             while (returnData.Read())
             {
-
-                CustomField cf = new CustomField((int)returnData["CustomFieldId"],
-                            (int)returnData["ProjectId"],
-                            (string)returnData["CustomFieldName"],
-                            (ValidationDataType)returnData["CustomFieldDataType"],
-                            (bool)returnData["CustomFieldRequired"],
-                            (string)returnData["CustomFieldValue"], (CustomField.CustomFieldType)returnData["CustomFieldTypeId"]);
-                customFieldList.Add(cf);
+                customFieldList.Add(new CustomField
+                                        {
+                                            Id = returnData.GetInt32(returnData.GetOrdinal("CustomFieldId")),
+                                            ProjectId = returnData.GetInt32(returnData.GetOrdinal("ProjectId")),
+                                            Name = returnData.GetString(returnData.GetOrdinal("CustomFieldName")),
+                                            DataType = (ValidationDataType)returnData["CustomFieldDataType"],
+                                            FieldType = (CustomFieldType)returnData["CustomFieldTypeId"],
+                                            Required = returnData.GetBoolean(returnData.GetOrdinal("CustomFieldRequired")),
+                                            Value = returnData.GetString(returnData.GetOrdinal("CustomFieldValue")),
+                                        });
             }
         }
 
         /// <summary>
         /// Ts the generate custom field selection list from reader.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="returnData">The return data.</param>
-        /// <param name="customFieldList">The custom field list.</param>
-        private void TGenerateCustomFieldSelectionListFromReader<T>(SqlDataReader returnData, ref List<CustomFieldSelection> customFieldSelectionList)
+        /// <param name="customFieldSelectionList">The custom field list.</param>
+        private static void GenerateCustomFieldSelectionListFromReader(IDataReader returnData, ref List<CustomFieldSelection> customFieldSelectionList)
         {
             while (returnData.Read())
             {
-
-                CustomFieldSelection cfs = new CustomFieldSelection((int)returnData["CustomFieldSelectionId"],
-                                (int)returnData["CustomFieldId"],
-                                (string)returnData["CustomFieldSelectionName"],
-                                (string)returnData["CustomFieldSelectionValue"],
-                                (int)returnData["CustomFieldSelectionSortOrder"]);
-                customFieldSelectionList.Add(cfs);
+                customFieldSelectionList.Add(new CustomFieldSelection
+                                                 {
+                                                     Id = returnData.GetInt32(returnData.GetOrdinal("CustomFieldSelectionId")),
+                                                     CustomFieldId = returnData.GetInt32(returnData.GetOrdinal("CustomFieldId")),
+                                                     Value = returnData.GetString(returnData.GetOrdinal("CustomFieldSelectionValue")),
+                                                     Name = returnData.GetString(returnData.GetOrdinal("CustomFieldSelectionName")),
+                                                     SortOrder = returnData.GetInt32(returnData.GetOrdinal("CustomFieldSelectionSortOrder")),
+                                                 });
             }
         }
 
         /// <summary>
         /// Ts the generate issue type list from reader.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="returnData">The return data.</param>
         /// <param name="issueTypeList">The issue type list.</param>
-        private void TGenerateIssueTypeListFromReader<T>(SqlDataReader returnData, ref List<IssueType> issueTypeList)
+        private static void GenerateIssueTypeListFromReader(IDataReader returnData, ref List<IssueType> issueTypeList)
         {
             while (returnData.Read())
             {
-                IssueType issueType = new IssueType((int)returnData["IssueTypeId"], (int)returnData["ProjectId"], (string)returnData["IssueTypeName"], (int)returnData["SortOrder"], (string)returnData["IssueTypeImageUrl"]);
-                issueTypeList.Add(issueType);
+                issueTypeList.Add(new IssueType
+                                      {
+                                          Id = returnData.GetInt32(returnData.GetOrdinal("IssueTypeId")),
+                                          ProjectId = returnData.GetInt32(returnData.GetOrdinal("ProjectId")),
+                                          Name = returnData.GetString(returnData.GetOrdinal("IssueTypeName")),
+                                          SortOrder = returnData.GetInt32(returnData.GetOrdinal("SortOrder")),
+                                          ImageUrl = returnData.GetString(returnData.GetOrdinal("IssueTypeImageUrl")),
+                                      });
             }
         }
 
         /// <summary>
         /// Ts the generate issue time entry list from reader.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="returnData">The return data.</param>
-        /// <param name="issueTimeEntryList">The issue time entry list.</param>
-        private void TGenerateIssueTimeEntryListFromReader<T>(SqlDataReader returnData, ref List<IssueWorkReport> issueWorkReportList)
+        /// <param name="issueWorkReportList">The issue time entry list.</param>
+        private static void GenerateIssueTimeEntryListFromReader(IDataReader returnData, ref List<IssueWorkReport> issueWorkReportList)
         {
             while (returnData.Read())
             {
-                IssueWorkReport issueWorkReport = new IssueWorkReport((int)returnData["IssueWorkReportId"], (int)returnData["IssueId"], (Guid)returnData["CreatorUserId"], (DateTime)returnData["WorkDate"], (decimal)returnData["Duration"], (int)returnData["IssueCommentId"], (string)returnData["Comment"], (string)returnData["CreatorUserName"], (string)returnData["CreatorDisplayName"]);
-                issueWorkReportList.Add(issueWorkReport);
+                issueWorkReportList.Add(new IssueWorkReport
+                {
+                    Id = returnData.GetInt32(returnData.GetOrdinal("IssueWorkReportId")),
+                    CommentId = returnData.GetInt32(returnData.GetOrdinal("IssueCommentId")),
+                    CommentText = returnData.GetString(returnData.GetOrdinal("Comment")),
+                    CreatorDisplayName = returnData.GetString(returnData.GetOrdinal("CreatorDisplayName")),
+                    CreatorUserId = returnData.GetGuid(returnData.GetOrdinal("CreatorUserId")),
+                    CreatorUserName = returnData.GetString(returnData.GetOrdinal("CreatorUserName")),
+                    Duration = returnData.GetDecimal(returnData.GetOrdinal("Duration")),
+                    IssueId = returnData.GetInt32(returnData.GetOrdinal("IssueId")),
+                    WorkDate = returnData.GetDateTime(returnData.GetOrdinal("WorkDate"))
+                });
             }
         }
-
 
         /// <summary>
         /// Ts the generate resolution list from reader.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="returnData">The return data.</param>
         /// <param name="resolutionList">The resolution list.</param>
-        private void TGenerateResolutionListFromReader<T>(SqlDataReader returnData, ref List<Resolution> resolutionList)
+        private static void GenerateResolutionListFromReader(SqlDataReader returnData, ref List<Resolution> resolutionList)
         {
             while (returnData.Read())
             {
-                Resolution resolution = new Resolution((int)returnData["ResolutionId"], (int)returnData["ProjectId"], (string)returnData["ResolutionName"], (int)returnData["SortOrder"], (string)returnData["ResolutionImageUrl"]);
-                resolutionList.Add(resolution);
+                resolutionList.Add(new Resolution
+                                       {
+                                           Id = returnData.GetInt32(returnData.GetOrdinal("ResolutionId")),
+                                           ProjectId = returnData.GetInt32(returnData.GetOrdinal("ProjectId")),
+                                           Name = returnData.GetString(returnData.GetOrdinal("ResolutionName")),
+                                           SortOrder = returnData.GetInt32(returnData.GetOrdinal("SortOrder")),
+                                           ImageUrl = returnData.GetString(returnData.GetOrdinal("ResolutionImageUrl")),
+                                       });
             }
         }
 
         /// <summary>
         /// Ts the generate application log list from reader.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="returnData">The return data.</param>
         /// <param name="applicationLogList">The application log list.</param>
-        private void TGenerateApplicationLogListFromReader<T>(SqlDataReader returnData, ref List<ApplicationLog> applicationLogList)
+        private static void GenerateApplicationLogListFromReader(IDataReader returnData, ref List<ApplicationLog> applicationLogList)
         {
             while (returnData.Read())
             {
-                ApplicationLog newAppLog = new ApplicationLog((int)returnData["Id"], (DateTime)returnData["Date"], (string)returnData["Thread"], (string)returnData["Level"], (string)returnData["User"], (string)returnData["Logger"], (string)returnData["Message"], (string)returnData["Exception"]);
+                var newAppLog = new ApplicationLog
+                    {
+                        Id = (int)returnData["Id"],
+                        Date = (DateTime)returnData["Date"],
+                        Thread = (string)returnData["Thread"],
+                        Level = (string)returnData["Level"],
+                        User = (string)returnData["User"],
+                        Logger = (string)returnData["Logger"],
+                        Message = (string)returnData["Message"],
+                        Exception = (string)returnData["Exception"]
+                    };
+
                 applicationLogList.Add(newAppLog);
             }
         }
 
+        private static T DefaultIfNull<T>(object value, T defaultValue)
+        {
+            if (value == null) return defaultValue;
+
+            return (T)value;
+        }
+
         #endregion
-    
-        
-
-        
-
-       
     }
 }

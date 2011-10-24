@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using BugNET.BLL;
+using BugNET.Common;
 using BugNET.UserInterfaceLayer;
 
 namespace BugNET.Administration.Host.UserControls
@@ -70,12 +71,12 @@ namespace BugNET.Administration.Host.UserControls
                 } //End subversion integration validation
 
 
-                HostSettingManager.UpdateHostSetting("EnableRepositoryCreation", EnableRepoCreation.Checked.ToString());
-                HostSettingManager.UpdateHostSetting("RepositoryRootPath", RepoRootPath.Text);
-                HostSettingManager.UpdateHostSetting("RepositoryRootUrl", RepoRootUrl.Text);
-                HostSettingManager.UpdateHostSetting("RepositoryBackupPath", RepoBackupPath.Text);
-                HostSettingManager.UpdateHostSetting("SvnAdminEmailAddress", SvnAdminEmailAddress.Text);
-                HostSettingManager.UpdateHostSetting("SvnHookPath", SvnHookPath.Text);
+                HostSettingManager.UpdateHostSetting(HostSettingNames.EnableRepositoryCreation, EnableRepoCreation.Checked.ToString());
+                HostSettingManager.UpdateHostSetting(HostSettingNames.RepositoryRootPath, RepoRootPath.Text);
+                HostSettingManager.UpdateHostSetting(HostSettingNames.RepositoryRootUrl, RepoRootUrl.Text);
+                HostSettingManager.UpdateHostSetting(HostSettingNames.RepositoryBackupPath, RepoBackupPath.Text);
+                HostSettingManager.UpdateHostSetting(HostSettingNames.SvnAdminEmailAddress, SvnAdminEmailAddress.Text);
+                HostSettingManager.UpdateHostSetting(HostSettingNames.SvnHookPath, SvnHookPath.Text);
                 return true;
         }
 
@@ -84,15 +85,15 @@ namespace BugNET.Administration.Host.UserControls
         /// </summary>
         public void Initialize()
         {
-            bool enableRepoCreation = false;
-            Boolean.TryParse(HostSettingManager.GetHostSetting("EnableRepositoryCreation"), out enableRepoCreation);
+            bool enableRepoCreation;
+            Boolean.TryParse(HostSettingManager.Get(HostSettingNames.EnableRepositoryCreation), out enableRepoCreation);
 
             EnableRepoCreation.Checked = enableRepoCreation;
-            RepoRootPath.Text = HostSettingManager.GetHostSetting("RepositoryRootPath");
-            RepoRootUrl.Text = HostSettingManager.GetHostSetting("RepositoryRootUrl");
-            RepoBackupPath.Text = HostSettingManager.GetHostSetting("RepositoryBackupPath");
-            SvnAdminEmailAddress.Text = HostSettingManager.GetHostSetting("SvnAdminEmailAddress");
-            SvnHookPath.Text = HostSettingManager.GetHostSetting("SvnHookPath");
+            RepoRootPath.Text = HostSettingManager.Get(HostSettingNames.RepositoryRootPath);
+            RepoRootUrl.Text = HostSettingManager.Get(HostSettingNames.RepositoryRootUrl);
+            RepoBackupPath.Text = HostSettingManager.Get(HostSettingNames.RepositoryBackupPath);
+            SvnAdminEmailAddress.Text = HostSettingManager.Get(HostSettingNames.SvnAdminEmailAddress);
+            SvnHookPath.Text = HostSettingManager.Get(HostSettingNames.SvnHookPath);
         }
 
         #endregion

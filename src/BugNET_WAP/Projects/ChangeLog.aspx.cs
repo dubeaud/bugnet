@@ -173,7 +173,7 @@ namespace BugNET.Projects
         private void BindChangeLog()
         {
             string ascending = SortMilestonesAscending == true ? "" : " desc";
-            List<Milestone> milestones = MilestoneManager.GetMilestoneByProjectId(ProjectId).Sort<Milestone>("SortOrder" + ascending).ToList();
+            List<Milestone> milestones = MilestoneManager.GetByProjectId(ProjectId).Sort<Milestone>("SortOrder" + ascending).ToList();
             if (ViewMode == 1)
                 ChangeLogRepeater.DataSource = milestones.Take(5);
             else
@@ -442,13 +442,13 @@ namespace BugNET.Projects
                 queryClauses.Add(new QueryClause("AND", "IssueMilestoneId", "=", m.Id.ToString(), SqlDbType.Int, false));
                 //int closedStatusId = 0;
 
-                List<Status> closedStatus = StatusManager.GetStatusByProjectId(ProjectId).FindAll(s => !s.IsClosedState);
+                List<Status> closedStatus = StatusManager.GetByProjectId(ProjectId).FindAll(s => !s.IsClosedState);
                 foreach (Status status in closedStatus)
                 {
                     //closedStatusId = status.Id;
                     queryClauses.Add(new QueryClause("AND", "IssueStatusId", "<>", status.Id.ToString(), SqlDbType.Int, false));
                 }
-                List<Issue> issueList = IssueManager.PerformQuery(ProjectId, queryClauses);
+                List<Issue> issueList = IssueManager.PerformQuery(queryClauses, ProjectId);
                 if (issueList.Count > 0)
                 {
                     if (!string.IsNullOrEmpty(SortField))

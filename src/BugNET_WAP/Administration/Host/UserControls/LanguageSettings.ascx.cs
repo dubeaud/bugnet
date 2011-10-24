@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Web.UI.WebControls;
 using BugNET.BLL;
+using BugNET.Common;
 using BugNET.UserInterfaceLayer;
 
 namespace BugNET.Administration.Host.UserControls
@@ -17,7 +18,7 @@ namespace BugNET.Administration.Host.UserControls
         protected void Page_Load(object sender, EventArgs e)
         {
            //BGN-1835 Problematic displaying of Languages settings
-            lblDefaultLanguage.Text = HostSettingManager.GetHostSetting("ApplicationDefaultLanguage");
+            lblDefaultLanguage.Text = HostSettingManager.Get(HostSettingNames.ApplicationDefaultLanguage);
         }
 
         #region IEditHostSettingControl Members
@@ -28,7 +29,7 @@ namespace BugNET.Administration.Host.UserControls
         /// <returns></returns>
         public bool Update()
         {
-            HostSettingManager.UpdateHostSetting("ApplicationDefaultLanguage", ApplicationDefaultLanguage.SelectedValue);
+            HostSettingManager.UpdateHostSetting(HostSettingNames.ApplicationDefaultLanguage, ApplicationDefaultLanguage.SelectedValue);
             return true;
         }
 
@@ -53,7 +54,7 @@ namespace BugNET.Administration.Host.UserControls
             LanguagesGridView.DataSource = resourceItems;
             LanguagesGridView.DataBind();
             
-            ApplicationDefaultLanguage.SelectedValue = HostSettingManager.GetHostSetting("ApplicationDefaultLanguage");
+            ApplicationDefaultLanguage.SelectedValue = HostSettingManager.Get(HostSettingNames.ApplicationDefaultLanguage);
 
         }
 

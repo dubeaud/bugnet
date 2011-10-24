@@ -82,7 +82,7 @@ namespace BugNET.Administration.Projects.UserControls
             grdMilestones.Columns[7].HeaderText = GetGlobalResourceObject("SharedResources", "Order").ToString();
            
 
-            grdMilestones.DataSource = MilestoneManager.GetMilestoneByProjectId(ProjectId);
+            grdMilestones.DataSource = MilestoneManager.GetByProjectId(ProjectId);
             grdMilestones.DataKeyField = "Id";
             grdMilestones.DataBind();
 
@@ -102,7 +102,7 @@ namespace BugNET.Administration.Projects.UserControls
         {
             int mileStoneId = (int)grdMilestones.DataKeys[e.Item.ItemIndex];
 
-            if (!MilestoneManager.DeleteMilestone(mileStoneId))
+            if (!MilestoneManager.Delete(mileStoneId))
                 lblError.Text = "Could not delete Milestone";
             else
                 BindMilestones();
@@ -126,7 +126,7 @@ namespace BugNET.Administration.Projects.UserControls
         protected void MilestoneValidation_Validate(object sender, ServerValidateEventArgs e)
         {
             //validate that at least one Milestone exists.
-            if (MilestoneManager.GetMilestoneByProjectId(ProjectId).Count > 0)
+            if (MilestoneManager.GetByProjectId(ProjectId).Count > 0)
             {
                 e.IsValid = true;
             }
@@ -167,14 +167,14 @@ namespace BugNET.Administration.Projects.UserControls
             CheckBox IsCompletedMilestone = (CheckBox)e.Item.FindControl("chkEditCompletedMilestone");
             TextBox txtMilestoneNotes = (TextBox)e.Item.FindControl("txtMilestoneNotes");
 
-            Milestone m = MilestoneManager.GetMilestoneById(Convert.ToInt32(grdMilestones.DataKeys[e.Item.ItemIndex]));
+            Milestone m = MilestoneManager.GetById(Convert.ToInt32(grdMilestones.DataKeys[e.Item.ItemIndex]));
             m.Name = txtMilestoneName.Text.Trim();
             m.ImageUrl = pickimg.SelectedValue;
             m.DueDate = MilestoneDueDate.SelectedValue;
             m.ReleaseDate = MilestoneReleaseDate.SelectedValue;
             m.IsCompleted = IsCompletedMilestone.Checked;
             m.Notes = txtMilestoneNotes.Text;
-            MilestoneManager.SaveMilestone(m);
+            MilestoneManager.SaveOrUpdate(m);
 
             grdMilestones.EditItemIndex = -1;
             BindMilestones();
@@ -269,9 +269,18 @@ namespace BugNET.Administration.Projects.UserControls
             if (newName == String.Empty)
                 return;
 
-            Milestone newMilestone = new Milestone(ProjectId, newName, lstImages.SelectedValue, DueDate.SelectedValue,
-                ReleaseDate.SelectedValue, chkCompletedMilestone.Checked, txtMilestoneNotes.Text);
-            if (MilestoneManager.SaveMilestone(newMilestone))
+            var newMilestone = new Milestone
+                                   {
+                                       ProjectId = ProjectId, 
+                                       Name = newName, 
+                                       ImageUrl = lstImages.SelectedValue, 
+                                       DueDate = DueDate.SelectedValue,
+                                       ReleaseDate = ReleaseDate.SelectedValue, 
+                                       IsCompleted = chkCompletedMilestone.Checked, 
+                                       Notes = txtMilestoneNotes.Text
+                                   };
+
+            if (MilestoneManager.SaveOrUpdate(newMilestone))
             {
                 txtMilestoneNotes.Text = string.Empty;
                 txtName.Text = string.Empty; 
@@ -303,17 +312,17 @@ namespace BugNET.Administration.Projects.UserControls
                     //move row up
                     if (itemIndex == 0)
                         return;
-                    m = MilestoneManager.GetMilestoneById(Convert.ToInt32(e.CommandArgument));
+                    m = MilestoneManager.GetById(Convert.ToInt32(e.CommandArgument));
                     m.SortOrder -= 1;
-                    MilestoneManager.SaveMilestone(m);
+                    MilestoneManager.SaveOrUpdate(m);
                     break;
                 case "down":
                     //move row down
                     if (itemIndex == grdMilestones.Items.Count -1)
                         return;
-                    m = MilestoneManager.GetMilestoneById(Convert.ToInt32(e.CommandArgument));
+                    m = MilestoneManager.GetById(Convert.ToInt32(e.CommandArgument));
                     m.SortOrder += 1;
-                    MilestoneManager.SaveMilestone(m);
+                    MilestoneManager.SaveOrUpdate(m);
                     break;
             }
             BindMilestones();

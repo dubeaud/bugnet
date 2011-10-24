@@ -106,6 +106,10 @@
       <Project>{001B5C78-CC5E-4DB6-A03A-EAAE1D558D2C}</Project>
       <Name>BugNET.BLL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\BugNET.Common\BugNET.Common.csproj">
+      <Project>{69F2F661-AA9A-4C9F-8217-6A22E8C66FEB}</Project>
+      <Name>BugNET.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\BugNET.Entities\BugNET.Entities.csproj">
       <Project>{5A0AE67B-1F8C-4A6D-A02B-B57BB219288F}</Project>
       <Name>BugNET.Entities</Name>

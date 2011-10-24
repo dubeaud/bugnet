@@ -55,13 +55,11 @@
     </Compile>
     <Compile Include="Issue.cs" />
     <Compile Include="IssueAttachment.cs" />
-    <Compile Include="IssueAttachmentStorageType.cs" />
     <Compile Include="IssueComment.cs" />
     <Compile Include="IssueComparer.cs" />
     <Compile Include="IssueCount.cs" />
     <Compile Include="IssueHistory.cs" />
     <Compile Include="IssueNotification.cs" />
-    <Compile Include="IssueRelationType.cs" />
     <Compile Include="IssueRevision.cs" />
     <Compile Include="IssueType.cs" />
     <Compile Include="IssueVote.cs" />

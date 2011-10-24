@@ -65,7 +65,7 @@ namespace BugNET.Issues.UserControls
             HistoryDataGrid.Columns[3].HeaderText = GetLocalResourceObject("HistoryDataGrid.OldValueHeader.Text").ToString();
             HistoryDataGrid.Columns[4].HeaderText = GetLocalResourceObject("HistoryDataGrid.NewValueHeader.Text").ToString();
 
-            List<IssueHistory> history = IssueHistoryManager.GetIssueHistoryByIssueId(IssueId);
+            List<IssueHistory> history = IssueHistoryManager.GetByIssueId(IssueId);
 
             if (history.Count == 0)
             {

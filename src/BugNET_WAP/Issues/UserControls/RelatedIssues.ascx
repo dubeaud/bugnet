@@ -6,7 +6,7 @@
 </p>
 <BN:Message ID="RelatedIssuesMessage" runat="server" />
 <asp:Label ID="RelatedIssuesLabel"  Font-Italic="true" runat="server"></asp:Label> 
-<asp:Datagrid  runat="server" ID="RelatedIssuesDataGrid" Width="100%"  SkinID="DataGrid" EnableViewState="true" OnItemDataBound="grdIssueItemDataBound" OnItemCommand="RelatedIssuesDataGrid_ItemCommand">
+<asp:Datagrid  runat="server" ID="RelatedIssuesDataGrid" Width="100%"  SkinID="DataGrid" EnableViewState="true" OnItemDataBound="GrdIssueItemDataBound" OnItemCommand="RelatedIssuesDataGrid_ItemCommand">
     <columns>
 		<asp:templatecolumn SortExpression="IssueId" HeaderText="<%$ Resources:SharedResources, Id %>">
 			<itemtemplate>

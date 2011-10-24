@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Web.UI.WebControls;
 using BugNET.BLL;
 using BugNET.Common;
@@ -18,19 +17,16 @@ namespace BugNET.Administration.Projects
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		protected void Page_Load(object sender, System.EventArgs e)
+		protected void Page_Load(object sender, EventArgs e)
 		{
-            if (!IsPostBack)
-            {
-                BindData();
-  
-                if (!UserManager.HasPermission(Convert.ToInt32(Request.QueryString["id"]), Globals.Permission.AdminCloneProject.ToString()))
-                    CloneProject.Visible = false;
-                if (!UserManager.HasPermission(Convert.ToInt32(Request.QueryString["id"]), Globals.Permission.AdminCreateProject.ToString()))
-                    NewProject.Visible = false;
-            }
+            if (IsPostBack) return;
 
-           
+            BindData();
+
+            if (!UserManager.HasPermission(Convert.ToInt32(Request.QueryString["id"]), Globals.Permission.AdminCloneProject.ToString()))
+                CloneProject.Visible = false;
+            if (!UserManager.HasPermission(Convert.ToInt32(Request.QueryString["id"]), Globals.Permission.AdminCreateProject.ToString()))
+                NewProject.Visible = false;
 		}
 
         /// <summary>
@@ -38,7 +34,7 @@ namespace BugNET.Administration.Projects
         /// </summary>
         private void BindData()
         {
-            List<Project> projects = ProjectManager.GetAllProjects();
+            var projects = ProjectManager.GetAllProjects();
             projects.Sort(new ProjectComparer(SortField, SortAscending));
             dgProjects.DataSource = projects;
             dgProjects.DataBind();
@@ -70,24 +66,13 @@ namespace BugNET.Administration.Projects
         /// <value>The sort field.</value>
         string SortField
         {
-            get
-            {
-                object o = ViewState["SortField"];
-                if (o == null)
-                {
-                    return "Name";
-                }
-                return (string)o;
-            }
-
+            get { return ViewState.Get("SortField", "Name"); }
             set
             {
                 if (value == SortField)
-                {
-                    // same as current sort file, toggle sort direction
-                    SortAscending = !SortAscending;
-                }
-                ViewState["SortField"] = value;
+                    SortAscending = !SortAscending; // same as current sort file, toggle sort direction
+
+                ViewState.Set("SortField", value);
             }
         }
 
@@ -97,20 +82,8 @@ namespace BugNET.Administration.Projects
         /// <value><c>true</c> if [sort ascending]; otherwise, <c>false</c>.</value>
         bool SortAscending
         {
-            get
-            {
-                object o = ViewState["SortAscending"];
-                if (o == null)
-                {
-                    return false;
-                }
-                return (bool)o;
-            }
-
-            set
-            {
-                ViewState["SortAscending"] = value;
-            }
+            get { return ViewState.Get("SortAscending", false); }
+            set { ViewState.Set("SortAscending", value); }
         }
 
 		#region Web Form Designer generated code
@@ -190,21 +163,21 @@ namespace BugNET.Administration.Projects
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Web.UI.WebControls.DataGridItemEventArgs"/> instance containing the event data.</param>
 		private void dgProjects_ItemDataBound(object sender, DataGridItemEventArgs e)
-		{ 
-			if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem) 
-			{
-				Project p = (Project)e.Item.DataItem;
-				Label lblActive = (Label)e.Item.FindControl("lblActive");
-				Label lblCreated= (Label)e.Item.FindControl("lblCreated");
-		
-				lblCreated.Text= p.DateCreated.ToShortDateString();
-                lblActive.Text = p.Disabled == true ? GetGlobalResourceObject("SharedResources", "Yes").ToString() : GetGlobalResourceObject("SharedResources", "No").ToString();
-				
+		{
+            if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem) return;
 
-				//permission check to edit project
-                if(!UserManager.HasPermission(p.Id,Globals.Permission.AdminEditProject.ToString()))
-                    e.Item.Visible = false;
-			}
+            var p = (Project)e.Item.DataItem;
+            var lblActive = (Label)e.Item.FindControl("lblActive");
+            var lblCreated = (Label)e.Item.FindControl("lblCreated");
+		
+            lblCreated.Text= p.DateCreated.ToShortDateString();
+            lblActive.Text = p.Disabled ? 
+                GetGlobalResourceObject("SharedResources", "Yes").ToString() : 
+                GetGlobalResourceObject("SharedResources", "No").ToString();
+				
+            //permission check to edit project
+            if(!UserManager.HasPermission(p.Id,Globals.Permission.AdminEditProject.ToString()))
+                e.Item.Visible = false;
 		}
 	}
 }

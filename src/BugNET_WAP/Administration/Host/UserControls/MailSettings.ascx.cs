@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Mail;
 using BugNET.BLL;
 using BugNET.BLL.Notifications;
+using BugNET.Common;
 using BugNET.UserInterfaceLayer;
 using log4net;
 
@@ -31,16 +32,16 @@ namespace BugNET.Administration.Host.UserControls
         public bool Update()
         {
               
-                HostSettingManager.UpdateHostSetting("HostEmailAddress", HostEmail.Text);
-                HostSettingManager.UpdateHostSetting("SMTPServer", SMTPServer.Text);
-                HostSettingManager.UpdateHostSetting("SMTPAuthentication", SMTPEnableAuthentication.Checked.ToString());
-                HostSettingManager.UpdateHostSetting("SMTPUsername", SMTPUsername.Text);
-                HostSettingManager.UpdateHostSetting("SMTPPassword", SMTPPassword.Text);
-                HostSettingManager.UpdateHostSetting("SMTPDomain", SMTPDomain.Text);
-                HostSettingManager.UpdateHostSetting("SMTPPort", SMTPPort.Text);
-                HostSettingManager.UpdateHostSetting("SMTPUseSSL", SMTPUseSSL.Checked.ToString());
-                HostSettingManager.UpdateHostSetting("SMTPEMailFormat", SMTPEmailFormat.SelectedValue);
-                HostSettingManager.UpdateHostSetting("SMTPEmailTemplateRoot", SMTPEmailTemplateRoot.Text);
+                HostSettingManager.UpdateHostSetting(HostSettingNames.HostEmailAddress, HostEmail.Text);
+                HostSettingManager.UpdateHostSetting(HostSettingNames.SMTPServer, SMTPServer.Text);
+                HostSettingManager.UpdateHostSetting(HostSettingNames.SMTPAuthentication, SMTPEnableAuthentication.Checked.ToString());
+                HostSettingManager.UpdateHostSetting(HostSettingNames.SMTPUsername, SMTPUsername.Text);
+                HostSettingManager.UpdateHostSetting(HostSettingNames.SMTPPassword, SMTPPassword.Text);
+                HostSettingManager.UpdateHostSetting(HostSettingNames.SMTPDomain, SMTPDomain.Text);
+                HostSettingManager.UpdateHostSetting(HostSettingNames.SMTPPort, SMTPPort.Text);
+                HostSettingManager.UpdateHostSetting(HostSettingNames.SMTPUseSSL, SMTPUseSSL.Checked.ToString());
+                HostSettingManager.UpdateHostSetting(HostSettingNames.SMTPEMailFormat, SMTPEmailFormat.SelectedValue);
+                HostSettingManager.UpdateHostSetting(HostSettingNames.SMTPEmailTemplateRoot, SMTPEmailTemplateRoot.Text);
                 return true;
 
         }
@@ -50,17 +51,17 @@ namespace BugNET.Administration.Host.UserControls
         /// </summary>
         public void Initialize()
         {
-            HostEmail.Text = HostSettingManager.GetHostSetting("HostEmailAddress");
-            SMTPServer.Text = HostSettingManager.GetHostSetting("SMTPServer");
-            SMTPEnableAuthentication.Checked = Boolean.Parse(HostSettingManager.GetHostSetting("SMTPAuthentication"));
-            SMTPUsername.Text = HostSettingManager.GetHostSetting("SMTPUsername");
-            SMTPPort.Text = HostSettingManager.GetHostSetting("SMTPPort");
-            SMTPUseSSL.Checked = Boolean.Parse(HostSettingManager.GetHostSetting("SMTPUseSSL"));
-            SMTPPassword.Attributes.Add("value", HostSettingManager.GetHostSetting("SMTPPassword"));
+            HostEmail.Text = HostSettingManager.Get(HostSettingNames.HostEmailAddress);
+            SMTPServer.Text = HostSettingManager.Get(HostSettingNames.SMTPServer);
+            SMTPEnableAuthentication.Checked = Boolean.Parse(HostSettingManager.Get(HostSettingNames.SMTPAuthentication));
+            SMTPUsername.Text = HostSettingManager.Get(HostSettingNames.SMTPUsername);
+            SMTPPort.Text = HostSettingManager.Get(HostSettingNames.SMTPPort);
+            SMTPUseSSL.Checked = Boolean.Parse(HostSettingManager.Get(HostSettingNames.SMTPUseSSL));
+            SMTPPassword.Attributes.Add("value", HostSettingManager.Get(HostSettingNames.SMTPPassword));
             ShowSMTPAuthenticationFields();
-            SMTPEmailFormat.SelectedValue = HostSettingManager.GetHostSetting("SMTPEMailFormat", (int)EmailFormatType.Text).ToString();
-            SMTPEmailTemplateRoot.Text = HostSettingManager.GetHostSetting("SMTPEmailTemplateRoot", "~/templates").ToString();
-            SMTPDomain.Text = HostSettingManager.GetHostSetting("SMTPDomain", string.Empty).ToString();
+            SMTPEmailFormat.SelectedValue = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, (int)EmailFormatType.Text).ToString();
+            SMTPEmailTemplateRoot.Text = HostSettingManager.Get(HostSettingNames.SMTPEmailTemplateRoot, "~/templates");
+            SMTPDomain.Text = HostSettingManager.Get(HostSettingNames.SMTPDomain, string.Empty);
         }
 
         #endregion
@@ -76,14 +77,18 @@ namespace BugNET.Administration.Host.UserControls
             {
                 if (!string.IsNullOrEmpty(HostEmail.Text))
                 {
-                    SmtpClient smtp = new SmtpClient(SMTPServer.Text, int.Parse(SMTPPort.Text));
-                    smtp.EnableSsl = SMTPUseSSL.Checked;
+                    var smtp = new SmtpClient(SMTPServer.Text, int.Parse(SMTPPort.Text))
+                                   {EnableSsl = SMTPUseSSL.Checked};
 
                     if (SMTPEnableAuthentication.Checked)
                         smtp.Credentials = new NetworkCredential(SMTPUsername.Text, SMTPPassword.Text, SMTPDomain.Text);
 
-                    MailMessage message = new MailMessage(HostEmail.Text, HostEmail.Text,string.Format(GetLocalResourceObject("EmailConfigurationTestSubject").ToString(), HostSettingManager.GetHostSetting("ApplicationTitle")), string.Empty);
-                    message.IsBodyHtml = false;
+                    var message = new MailMessage(HostEmail.Text, HostEmail.Text,
+                                                  string.Format(
+                                                      GetLocalResourceObject("EmailConfigurationTestSubject").ToString(),
+                                                      HostSettingManager.Get(
+                                                          HostSettingNames.ApplicationTitle)), string.Empty)
+                                      {IsBodyHtml = false};
 
                     smtp.Send(message);
 

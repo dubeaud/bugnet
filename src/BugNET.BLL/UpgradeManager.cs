@@ -95,7 +95,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool UpdateDatabaseVersion(string version)
         {
-            return HostSettingManager.UpdateHostSetting("Version", version);
+            return HostSettingManager.UpdateHostSetting(HostSettingNames.Version, version);
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace BugNET.BLL
             // Querying for AD and windows authentication must take precedence over            
             // upgrading.
             // We can query the database from now on, because BugNET is installed          
-            //string adStatus = HostSetting.GetHostSetting("UserAccountSource");
+            //string adStatus = HostSetting.Get("UserAccountSource");
             //if (adStatus == "WindowsSAM")
             //    return Globals.UpgradeStatus.WindowsSAM;
             //if (adStatus == "ActiveDirectory")

@@ -75,12 +75,12 @@ namespace BugNET.Issues.UserControls
         /// </summary>
         private void BindNotifications()
         {
-            NotificationsDataGrid.DataSource = IssueNotificationManager.GetIssueNotificationsByIssueId(IssueId);
+            NotificationsDataGrid.DataSource = IssueNotificationManager.GetByIssueId(IssueId);
             NotificationsDataGrid.DataBind();
 
             lstProjectUsers.DataSource = UserManager.GetUsersByProjectId(_ProjectId);
             lstProjectUsers.DataBind();
-            List<IssueNotification> CurrentUsers = IssueNotificationManager.GetIssueNotificationsByIssueId(IssueId);
+            List<IssueNotification> CurrentUsers = IssueNotificationManager.GetByIssueId(IssueId);
             foreach (IssueNotification item in CurrentUsers)
             {
                 if (lstProjectUsers.Items.FindByValue(item.NotificationUsername) != null)
@@ -102,7 +102,8 @@ namespace BugNET.Issues.UserControls
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
         protected void btnDontRecieveNotfictaions_Click(object sender, EventArgs e)
         {
-            IssueNotificationManager.DeleteIssueNotification(IssueId, Page.User.Identity.Name);
+            var notify = new IssueNotification { IssueId = IssueId, NotificationUsername = Page.User.Identity.Name };
+            IssueNotificationManager.Delete(notify);
             BindNotifications();
         }
 
@@ -113,8 +114,8 @@ namespace BugNET.Issues.UserControls
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
         protected void btnReceiveNotifications_Click(object sender, EventArgs e)
         {
-            IssueNotification notify = new IssueNotification(IssueId, Page.User.Identity.Name);
-            IssueNotificationManager.SaveIssueNotification(notify);
+            var notify = new IssueNotification { IssueId = IssueId, NotificationUsername = Page.User.Identity.Name};
+            IssueNotificationManager.SaveOrUpdate(notify);
 
             BindNotifications();
         }
@@ -126,12 +127,11 @@ namespace BugNET.Issues.UserControls
         /// <param name="e"></param>
         protected void btnAddNot_Click(object sender, EventArgs e)
         {
-            if (lstProjectUsers.SelectedItem != null)
-            {
-                IssueNotification notify = new IssueNotification(IssueId, lstProjectUsers.SelectedItem.Value);
-                IssueNotificationManager.SaveIssueNotification(notify);
-                BindNotifications();
-            }
+            if (lstProjectUsers.SelectedItem == null) return;
+
+            var notify = new IssueNotification { IssueId = IssueId, NotificationUsername = lstProjectUsers.SelectedItem.Value};
+            IssueNotificationManager.SaveOrUpdate(notify);
+            BindNotifications();
         }
 
         /// <summary>
@@ -141,11 +141,11 @@ namespace BugNET.Issues.UserControls
         /// <param name="e"></param>
         protected void btnDelNot_Click(object sender, EventArgs e)
         {
-            if (lstNotificationUsers.SelectedItem != null)
-            {
-                IssueNotificationManager.DeleteIssueNotification(IssueId, lstNotificationUsers.SelectedItem.Value);
-                BindNotifications();
-            }
+            if (lstNotificationUsers.SelectedItem == null) return;
+
+            var notify = new IssueNotification { IssueId = IssueId, NotificationUsername = lstNotificationUsers.SelectedItem.Value };
+            IssueNotificationManager.Delete(notify);
+            BindNotifications();
         }
     }
 }

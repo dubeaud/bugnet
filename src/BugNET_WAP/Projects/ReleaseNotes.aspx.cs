@@ -19,10 +19,10 @@ namespace BugNET.Projects
             Literal1.Text = GetLocalResourceObject("Page.Title").ToString();
             ProjectId = Convert.ToInt32(Request.QueryString["pid"]);
             MilestoneId = Convert.ToInt32(Request.QueryString["m"]);
-            litMilestone.Text = MilestoneManager.GetMilestoneById(MilestoneId).Name;
+            litMilestone.Text = MilestoneManager.GetById(MilestoneId).Name;
             litProject.Text = ProjectManager.GetProjectById(ProjectId).Name;
 
-            rptReleaseNotes.DataSource = IssueTypeManager.GetIssueTypesByProjectId(ProjectId);
+            rptReleaseNotes.DataSource = IssueTypeManager.GetByProjectId(ProjectId);
             rptReleaseNotes.DataBind();
 
             Output.Text = string.Format("<h1>{2} - {0} - {1}</h1>", litProject.Text, litMilestone.Text, GetLocalResourceObject("Page.Title").ToString());
@@ -49,13 +49,13 @@ namespace BugNET.Projects
                 queryClauses.Add( new QueryClause("AND", "IssueTypeId", "=", issueType.Id.ToString(), SqlDbType.Int, false));
                 queryClauses.Add(new QueryClause("AND", "IssueMilestoneId", "=", MilestoneId.ToString(), SqlDbType.Int, false));
 
-                List<Status> openStatus = StatusManager.GetStatusByProjectId(ProjectId).FindAll(s => !s.IsClosedState);
+                List<Status> openStatus = StatusManager.GetByProjectId(ProjectId).FindAll(s => !s.IsClosedState);
                 foreach (Status st in openStatus)
                 {
                     queryClauses.Add(new QueryClause("AND", "IssueStatusId", "<>", st.Id.ToString(), SqlDbType.Int, false));
                 }
 
-                List<Issue> issueList = IssueManager.PerformQuery(ProjectId, queryClauses);
+                List<Issue> issueList = IssueManager.PerformQuery(queryClauses, ProjectId);
                 if (issueList.Count > 0)
                 {
                     list.DataSource = issueList;

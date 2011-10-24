@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace BugNET.Entities
 {
@@ -16,9 +15,9 @@ namespace BugNET.Entities
         /// <returns></returns>
         bool IEqualityComparer<Issue>.Equals(Issue x, Issue y)
         {
-            if (Object.ReferenceEquals(x, y)) return true;
+            if (ReferenceEquals(x, y)) return true;
 
-            if (Object.ReferenceEquals(x, null) || Object.ReferenceEquals(y, null)) 
+            if (ReferenceEquals(x, null) || ReferenceEquals(y, null)) 
                 return false;
 
             return x.Id == y.Id;
@@ -33,9 +32,7 @@ namespace BugNET.Entities
         /// </returns>
         int IEqualityComparer<Issue>.GetHashCode(Issue obj)
         {
-            if (Object.ReferenceEquals(obj, null)) return 0;
-
-            return obj.Id.GetHashCode();
+            return ReferenceEquals(obj, null) ? 0 : obj.Id.GetHashCode();
         }
 
         #endregion

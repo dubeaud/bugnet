@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Web;
+using System.Linq;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -15,11 +17,11 @@ namespace BugNET.Issues.UserControls
     /// <summary>
     /// 
     /// </summary>
-    public partial class Attachments : System.Web.UI.UserControl, IIssueTab
+    public partial class Attachments : UserControl, IIssueTab
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(Attachments));
-        private int _IssueId = 0;
-        private int _ProjectId = 0;
+        private int _issueId;
+        private int _projectId;
 
         /// <summary>
         /// Handles the Load event of the Page control.
@@ -28,8 +30,8 @@ namespace BugNET.Issues.UserControls
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            ScriptManager sman = ScriptManager.GetCurrent(Page);
-            sman.RegisterPostBackControl(UploadButton);
+            var sman = ScriptManager.GetCurrent(Page);
+            if (sman != null) sman.RegisterPostBackControl(UploadButton);
         }
 
         #region IIssueTab Members
@@ -40,8 +42,8 @@ namespace BugNET.Issues.UserControls
         /// <value>The bug id.</value>
         public int IssueId
         {
-            get { return _IssueId; }
-            set { _IssueId = value; }
+            get { return _issueId; }
+            set { _issueId = value; }
         }
 
         /// <summary>
@@ -50,8 +52,8 @@ namespace BugNET.Issues.UserControls
         /// <value>The project id.</value>
         public int ProjectId
         {
-            get { return _ProjectId; }
-            set { _ProjectId = value; }
+            get { return _projectId; }
+            set { _projectId = value; }
         }
 
         /// <summary>
@@ -83,7 +85,7 @@ namespace BugNET.Issues.UserControls
             //Fix tab names after adding or deleting a record.
            //IssueTabs tabs = this.Parent as Issues.UserControls.IssueTabs;
            //tabs.RefreshTabNames();
-            List<IssueAttachment> attachments = IssueAttachmentManager.GetIssueAttachmentsByIssueId(_IssueId);
+            List<IssueAttachment> attachments = IssueAttachmentManager.GetByIssueId(_issueId);
 
             if (attachments.Count == 0)
             {
@@ -108,27 +110,40 @@ namespace BugNET.Issues.UserControls
         protected void UploadDocument(object sender, EventArgs e)
         {
             // get the current file
-            HttpPostedFile uploadFile = this.AspUploadFile.PostedFile;
+            var uploadFile = AspUploadFile.PostedFile;
 
             // if there was a file uploaded
             if (uploadFile.ContentLength > 0)
             {
+                var inValidReason = string.Empty;
+                var fileName = Path.GetFileName(uploadFile.FileName);
 
-                string returnMessage = IssueAttachmentManager.ValidateFileName(uploadFile.FileName);
+                var validFile = IssueAttachmentManager.IsValidFile(fileName, out inValidReason);
 
-                if (string.IsNullOrEmpty(returnMessage))
+                if (validFile)
                 {
                     byte[] fileBytes;
-                    using (System.IO.Stream input = uploadFile.InputStream)
+                    using (var input = uploadFile.InputStream)
                     {
                         fileBytes = new byte[uploadFile.ContentLength];
                         input.Read(fileBytes, 0, uploadFile.ContentLength);
                     }
 
-                    IssueAttachment attachment = new IssueAttachment(IssueId, Security.GetUserName(),
-                        uploadFile.FileName, uploadFile.ContentType, fileBytes, fileBytes.Length, AttachmentDescription.Text.Trim());
+                    var attachment = new IssueAttachment
+                    {
+                        Id = Globals.NEW_ID,
+                        Attachment = fileBytes,
+                        Description = AttachmentDescription.Text.Trim(),
+                        DateCreated = DateTime.Now,
+                        ContentType = uploadFile.ContentType,
+                        CreatorDisplayName = string.Empty,
+                        CreatorUserName = Security.GetUserName(),
+                        FileName = fileName,
+                        IssueId = IssueId,
+                        Size = fileBytes.Length
+                    };
 
-                    if (!IssueAttachmentManager.SaveIssueAttachment(attachment))
+                    if (!IssueAttachmentManager.SaveOrUpdate(attachment))
                     {
                         AttachmentsMessage.ShowErrorMessage(string.Format(GetGlobalResourceObject("Exceptions", "SaveAttachmentError").ToString(), uploadFile.FileName));
                         if (Log.IsWarnEnabled) Log.Warn(string.Format(GetGlobalResourceObject("Exceptions", "SaveAttachmentError").ToString(), uploadFile.FileName));
@@ -136,18 +151,26 @@ namespace BugNET.Issues.UserControls
                     }
 
                     //add history record and send notifications
-                    IssueHistory history = new IssueHistory(_IssueId, Security.GetUserName(), Resources.SharedResources.Attachment.ToString(), string.Empty, Resources.SharedResources.Added);
-                    IssueHistoryManager.SaveIssueHistory(history);
+                    var history = new IssueHistory
+                                      {
+                                          IssueId = _issueId,
+                                          CreatedUserName = Security.GetUserName(),
+                                          DateChanged = DateTime.Now,
+                                          FieldChanged = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Attachment", "Attachment"),
+                                          OldValue = fileName,
+                                          NewValue = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Added", "Added")
+                                      };
 
-                    List<IssueHistory> changes = new List<IssueHistory>();
-                    changes.Add(history);
+                    IssueHistoryManager.SaveOrUpdate(history);
 
-                    IssueNotificationManager.SendIssueNotifications(_IssueId, changes);
+                    var changes = new List<IssueHistory> {history};
+
+                    IssueNotificationManager.SendIssueNotifications(_issueId, changes);
 
                     BindAttachments();
                 }
                 else
-                    AttachmentsMessage.ShowErrorMessage(returnMessage); 
+                    AttachmentsMessage.ShowErrorMessage(inValidReason); 
             }
         }
 
@@ -195,16 +218,7 @@ namespace BugNET.Issues.UserControls
             switch (e.CommandName)
             {
                 case "Delete":
-                    IssueAttachmentManager.DeleteIssueAttachment(Convert.ToInt32(e.CommandArgument));
-
-                    IssueHistory history = new IssueHistory(_IssueId, Security.GetUserName(), Resources.SharedResources.Attachment.ToString(), string.Empty, Resources.SharedResources.Deleted);
-                    IssueHistoryManager.SaveIssueHistory(history);
-
-                    List<IssueHistory> changes = new List<IssueHistory>();
-                    changes.Add(history);
-
-                    IssueNotificationManager.SendIssueNotifications(_IssueId, changes);
-
+                    IssueAttachmentManager.Delete(Convert.ToInt32(e.CommandArgument));
                     break;
             }
             BindAttachments();

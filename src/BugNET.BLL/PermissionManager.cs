@@ -15,7 +15,7 @@ namespace BugNET.BLL
         /// Gets all permissions.
         /// </summary>
         /// <returns></returns>
-        public static List<Permission> GetAllPermissions()
+        public static List<Permission> GetAll()
         {
             return DataProviderManager.Provider.GetAllPermissions();
         }

@@ -2,7 +2,6 @@ using System;
 using System.Web;
 using BugNET.BLL;
 using BugNET.Common;
-using BugNET.Entities;
 
 namespace BugNET.UserInterfaceLayer
 {
@@ -12,19 +11,13 @@ namespace BugNET.UserInterfaceLayer
     public class BasePage : System.Web.UI.Page
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:BasePage"/> class.
-        /// </summary>
-        public BasePage()
-        { }
-
-        /// <summary>
         /// Raises the <see cref="E:System.Web.UI.Control.Load"></see> event.
         /// </summary>
         /// <param name="e">The <see cref="T:System.EventArgs"></see> object that contains the event data.</param>
-        protected override void OnLoad(System.EventArgs e)
+        protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            Page.Title = string.Format("{0} - {1}", Page.Title, HostSettingManager.GetHostSetting("ApplicationTitle"));
+            Page.Title = string.Format("{0} - {1}", Page.Title, HostSettingManager.Get(HostSettingNames.ApplicationTitle));
         }
 
         /// <summary>
@@ -35,7 +28,7 @@ namespace BugNET.UserInterfaceLayer
             if (Session["ReferrerUrl"] != null)
                 Response.Redirect((string)Session["ReferrerUrl"]);
             else
-                Response.Redirect(string.Format("~/Issues/IssueList.aspx?pid={0}", ProjectId.ToString()));
+                Response.Redirect(string.Format("~/Issues/IssueList.aspx?pid={0}", ProjectId));
         }
 
         /// <summary>
@@ -44,14 +37,8 @@ namespace BugNET.UserInterfaceLayer
         /// <value>The project id.</value>
         public virtual int ProjectId
         {
-            get
-            {
-                if (ViewState["ProjectId"] == null)
-                    return -1;
-                else
-                    return (int)ViewState["ProjectId"];
-            }
-            set { ViewState["ProjectId"] = value; }
+            get { return ViewState.Get("ProjectId", Globals.NEW_ID); }
+            set { ViewState.Set("ProjectId", value); }
         }
 
         /// <summary>
@@ -67,29 +54,13 @@ namespace BugNET.UserInterfaceLayer
             if (Context.Session != null && User.Identity.IsAuthenticated)
             {
                 //check whether a new session was generated
-                //if (Session.IsNewSession)
-                //{
-                //    //check whether a cookies had already been associated with this request
-                //    HttpCookie sessionCookie = Request.Cookies["ASP.NET_SessionId"];
-                //    if (sessionCookie != null)
-                //    {
-                //        string sessionValue = sessionCookie.Value;
-                //        if (!string.IsNullOrEmpty(sessionValue))
-                //        {
-                //            // we have session timeout condition!
-                //            Response.Redirect("~/Errors/SessionExpired.aspx", true);
-                //        }
-                //    }
-                //}
-
-                //check whether a new session was generated
                 if (Session.IsNewSession)
                 {
                     //check whether a cookies had already been associated with this request
-                    HttpCookie sessionCookie = Request.Cookies["ASP.NET_SessionId"];
+                    var sessionCookie = Request.Cookies["ASP.NET_SessionId"];
                     if (sessionCookie != null)
                     {
-                        string sessionValue = sessionCookie.Value;
+                        var sessionValue = sessionCookie.Value;
                         if (!string.IsNullOrEmpty(sessionValue))
                         {
                             if (Session.SessionID != sessionValue)
@@ -108,58 +79,57 @@ namespace BugNET.UserInterfaceLayer
             //1. Application must allow anonymous identification (DisableAnonymousAccess HostSetting)
             //2. User must be athenticated if anonymous identification is false
             //3. Default page is not protected so the unauthenticated user may login
-            if (!Boolean.Parse(HostSettingManager.GetHostSetting("AnonymousAccess")) && !User.Identity.IsAuthenticated && !Request.Url.LocalPath.EndsWith("Default.aspx"))
+            if (!HostSettingManager.Get(HostSettingNames.AnonymousAccess, false) && 
+                !User.Identity.IsAuthenticated && 
+                !Request.Url.LocalPath.EndsWith("Default.aspx"))
             {
                 ErrorRedirector.TransferToLoginPage(Page);
             }
-            else if (Request.QueryString["pid"] != null)
+
+            var projectId = Request.QueryString.Get("pid", Globals.NEW_ID);
+
+            if (projectId <= Globals.NEW_ID) return;
+
+            // Security check: Ensure the project exists (ie PID is valid project)
+            var myProj = ProjectManager.GetProjectById(projectId);
+
+            if (myProj == null)
             {
-                int ProjectId=-1;
-                try
-                {
-                    ProjectId = Convert.ToInt32(Request.QueryString["pid"]);
-                }
-                catch
-                {
-                    ErrorRedirector.TransferToNotFoundPage(Page);
-                }
+                // If myProj is a null it will cause an exception later on the page anyway, but I want to
+                // take extra measures here to prevent leaks of datatypes through exception messages.
+                // 
+                // This protects against the administrator turning on remote error messages and also 
+                // protects the business logic from injection attacks. 
+                //
+                // If this page is used consistently it will fool a hacker into thinking an actual 
+                // DB QUERY executed using the supplied attack. ;)
+                ErrorRedirector.TransferToNotFoundPage(Page);
+                return;
+            }
 
-                // Security check: Ensure the project exists (ie PID is valid project)
-                Project myProj = ProjectManager.GetProjectById(ProjectId);
+            // set the project id if we have one
+            ProjectId = projectId;
 
-                if (myProj == null)
-                {
-                    // If myProj is a null it will cause an exception later on the page anyway, but I want to
-                    // take extra measures here to prevent leaks of datatypes through exception messages.
-                    // 
-                    // This protects against the administrator turning on remote error messages and also 
-                    // protects the business logic from injection attacks. 
-                    //
-                    // If this page is used consistently it will fool a hacker into thinking an actual 
-                    // DB QUERY executed using the supplied attack. ;)
+            //Security check using the following rules:
+            //1. Anonymous user
+            //2. The project type is private
+            if (!User.Identity.IsAuthenticated &&
+                myProj.AccessType == Globals.ProjectAccessType.Private)
+            {
+                ErrorRedirector.TransferToLoginPage(Page);
+                return;
+            }
 
-                    ErrorRedirector.TransferToNotFoundPage(Page);
-                }
-
-                //Security check using the following rules:
-                //1. Anonymous user
-                //2. The project type is private
-                if (!User.Identity.IsAuthenticated && myProj.AccessType == Globals.ProjectAccessType.Private)
-                {
-                    ErrorRedirector.TransferToLoginPage(Page);
-                }
-
-                //Security check using the following rules:
-                //1. Authenticated user
-                //2. The project type is private 
-                //3. The user is not a project member
-                else if (User.Identity.IsAuthenticated && myProj.AccessType == Globals.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(User.Identity.Name, ProjectId))
-                {
-                    ErrorRedirector.TransferToLoginPage(Page);
-                }
+            //Security check using the following rules:
+            //1. Authenticated user
+            //2. The project type is private 
+            //3. The user is not a project member
+            if (User.Identity.IsAuthenticated &&
+                myProj.AccessType == Globals.ProjectAccessType.Private &&
+                !ProjectManager.IsUserProjectMember(User.Identity.Name, projectId))
+            {
+                ErrorRedirector.TransferToLoginPage(Page);
             }
         }
-
     }
-
 }

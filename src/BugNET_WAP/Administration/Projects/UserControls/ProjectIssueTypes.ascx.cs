@@ -88,7 +88,7 @@ namespace BugNET.Administration.Projects.UserControls
             grdIssueTypes.Columns[2].HeaderText = GetGlobalResourceObject("SharedResources", "Image").ToString();
             grdIssueTypes.Columns[3].HeaderText = GetGlobalResourceObject("SharedResources", "Order").ToString();
 
-            grdIssueTypes.DataSource = IssueTypeManager.GetIssueTypesByProjectId(ProjectId);
+            grdIssueTypes.DataSource = IssueTypeManager.GetByProjectId(ProjectId);
             grdIssueTypes.DataKeyField = "Id";
             grdIssueTypes.DataBind();
 
@@ -114,17 +114,17 @@ namespace BugNET.Administration.Projects.UserControls
                     //move row up
                     if (itemIndex == 0)
                         return;
-                    s = IssueTypeManager.GetIssueTypeById(Convert.ToInt32(grdIssueTypes.DataKeys[e.Item.ItemIndex]));
+                    s = IssueTypeManager.GetById(Convert.ToInt32(grdIssueTypes.DataKeys[e.Item.ItemIndex]));
                     s.SortOrder -= 1;
-                    IssueTypeManager.SaveIssueType(s);
+                    IssueTypeManager.SaveOrUpdate(s);
                     break;
                 case "down":
                     //move row down
                     if (itemIndex == grdIssueTypes.Items.Count - 1)
                         return;
-                    s = IssueTypeManager.GetIssueTypeById(Convert.ToInt32(grdIssueTypes.DataKeys[e.Item.ItemIndex]));
+                    s = IssueTypeManager.GetById(Convert.ToInt32(grdIssueTypes.DataKeys[e.Item.ItemIndex]));
                     s.SortOrder += 1;
-                    IssueTypeManager.SaveIssueType(s);
+                    IssueTypeManager.SaveOrUpdate(s);
                     break;
             }
             BindIssueType();
@@ -142,8 +142,9 @@ namespace BugNET.Administration.Projects.UserControls
             if (newName == String.Empty)
                 return;
 
-            IssueType newIssueType = new IssueType(ProjectId, newName, lstImages.SelectedValue);
-            if (IssueTypeManager.SaveIssueType(newIssueType))
+            var newIssueType = new IssueType { ProjectId = ProjectId, Name = newName, ImageUrl = lstImages.SelectedValue};
+
+            if (IssueTypeManager.SaveOrUpdate(newIssueType))
             {
                 txtName.Text = "";
                 BindIssueType();
@@ -199,10 +200,10 @@ namespace BugNET.Administration.Projects.UserControls
                 throw new ArgumentNullException("Issue Type name empty");
             }
 
-            IssueType s = IssueTypeManager.GetIssueTypeById(Convert.ToInt32(grdIssueTypes.DataKeys[e.Item.ItemIndex]));
+            IssueType s = IssueTypeManager.GetById(Convert.ToInt32(grdIssueTypes.DataKeys[e.Item.ItemIndex]));
             s.Name = txtIssueTypeName.Text.Trim();
             s.ImageUrl = pickimg.SelectedValue;
-            IssueTypeManager.SaveIssueType(s);
+            IssueTypeManager.SaveOrUpdate(s);
 
             grdIssueTypes.EditItemIndex = -1;
             BindIssueType();

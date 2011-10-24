@@ -22,13 +22,13 @@ namespace BugNET.Account
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, System.EventArgs e)
         {
-            Page.Title = string.Format("{0} - {1}", GetLocalResourceObject("Page.Title").ToString(), HostSettingManager.GetHostSetting("ApplicationTitle"));
+            Page.Title = string.Format("{0} - {1}", GetLocalResourceObject("Page.Title"), HostSettingManager.Get(HostSettingNames.ApplicationTitle));
 
             #region Security Check
             //redirect to access denied if user registration disabled
-            if (Convert.ToInt32(HostSettingManager.GetHostSetting("UserRegistration")) == (int)Globals.UserRegistration.None)
+            if (Convert.ToInt32(HostSettingManager.Get(HostSettingNames.UserRegistration)) == (int)Globals.UserRegistration.None)
                 Response.Redirect("~/AccessDenied.aspx", true);
-            else if (Convert.ToInt32(HostSettingManager.GetHostSetting("UserRegistration")) == (int)Globals.UserRegistration.Verified)
+            else if (Convert.ToInt32(HostSettingManager.Get(HostSettingNames.UserRegistration)) == (int)Globals.UserRegistration.Verified)
             {
                 CreateUserWizard1.DisableCreatedUser = true;
                 CreateUserWizard1.CompleteStep.ContentTemplateContainer.FindControl("VerificationPanel").Visible = true;
@@ -84,14 +84,14 @@ namespace BugNET.Account
                 Profile.Save();
 
                 //auto assign user to roles
-                List<Role> roles = RoleManager.GetAllRoles();
+                List<Role> roles = RoleManager.GetAll();
                 foreach (Role r in roles)
                 {
                     if (r.AutoAssign)
-                        RoleManager.AddUserToRole(user.UserName, r.Id);
+                        RoleManager.AddUser(user.UserName, r.Id);
                 }
 
-                if (Convert.ToBoolean(HostSettingManager.GetHostSetting("UserRegistration",(int)Globals.UserRegistration.Verified)))
+                if (Convert.ToBoolean(HostSettingManager.Get(HostSettingNames.UserRegistration,(int)Globals.UserRegistration.Verified)))
                 {
                     UserManager.SendUserVerificationNotification(user);
                 }

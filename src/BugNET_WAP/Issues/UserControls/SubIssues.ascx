@@ -2,7 +2,7 @@
 <p style="margin-bottom:1em">
     <asp:label ID="lblDescription" meta:resourcekey="lblDescription"  runat="server" />
 </p>
-<asp:DataGrid id="grdIssues" AutoGenerateColumns="false" Width="100%" SkinID="DataGrid" OnItemDataBound="grdIssuesItemDataBound" OnItemCommand="grdIssuesItemCommand" Runat="Server">
+<asp:DataGrid id="grdIssues" AutoGenerateColumns="false" Width="100%" SkinID="DataGrid" OnItemDataBound="GrdIssuesItemDataBound" OnItemCommand="GrdIssuesItemCommand" Runat="Server">
 	<columns>
 		<asp:templatecolumn SortExpression="IssueId" HeaderText="<%$ Resources:SharedResources, Id %>">
 			<itemtemplate>

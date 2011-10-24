@@ -29,7 +29,7 @@
         <xsl:text>&#10;</xsl:text>
         <xsl:text>Description: </xsl:text><xsl:value-of select="helpers:StripHTML2(Issue/Description)" />
         <xsl:text>&#10;</xsl:text>
-		<xsl:text>&#10;</xsl:text>
+		    <xsl:text>&#10;</xsl:text>
         <xsl:text> More information on this issue can be found at </xsl:text>
         <xsl:value-of select="HostSetting_DefaultUrl" />Issues/IssueDetail.aspx?id=<xsl:value-of select="Issue/Id" />
         <xsl:text>&#10;</xsl:text>

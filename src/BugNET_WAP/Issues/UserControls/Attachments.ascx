@@ -30,22 +30,29 @@
         </asp:TemplateColumn>
     </Columns>
 </asp:DataGrid>
-<asp:Panel ID="pnlAddAttachment" CssClass="fieldgroup" runat="server">
-    <h3>
-        <asp:Label ID="lblAddAttachment" runat="server" meta:resourcekey="lblAddAttachment" Text="Add Attachment"></asp:Label>
-    </h3>
-    <ol>
-        <li>
-            <asp:Label ID="Label1" runat="server" Text="File:" AssociatedControlID="AspUploadFile" />
-            <asp:FileUpload ID="AspUploadFile" runat="server" />
-        </li>
-        <li>
-            <asp:Label ID="Label7" runat="server" Text="Description:" AssociatedControlID="AttachmentDescription" />
-            <asp:TextBox ID="AttachmentDescription" Width="250px" runat="server" />
-        </li>
-    </ol>
-    <div class="submit">
-        <asp:Button ID="UploadButton" runat="server" OnClick="UploadDocument" meta:resourcekey="lblAddAttachment" ValidationGroup="AddAttachment"
-            Text="Add Attachment" />
-    </div>
-</asp:Panel>
+<asp:UpdatePanel ID="upFile" runat="server">
+    <Triggers>
+        <asp:PostBackTrigger ControlID="UploadButton" />
+    </Triggers>
+    <ContentTemplate>
+        <asp:Panel ID="pnlAddAttachment" CssClass="fieldgroup" runat="server">
+            <h3>
+                <asp:Label ID="lblAddAttachment" runat="server" meta:resourcekey="lblAddAttachment" Text="Add Attachment"></asp:Label>
+            </h3>
+            <ol>
+                <li>
+                    <asp:Label ID="Label1" runat="server" Text="File:" AssociatedControlID="AspUploadFile" />
+                    <asp:FileUpload ID="AspUploadFile" runat="server" />
+                </li>
+                <li>
+                    <asp:Label ID="Label7" runat="server" Text="Description:" AssociatedControlID="AttachmentDescription" />
+                    <asp:TextBox ID="AttachmentDescription" Width="250px" runat="server" />
+                </li>
+            </ol>
+            <div class="submit">
+                <asp:Button ID="UploadButton" runat="server" OnClick="UploadDocument" meta:resourcekey="lblAddAttachment" ValidationGroup="AddAttachment"
+                    Text="Add Attachment" />
+            </div>
+        </asp:Panel>    
+    </ContentTemplate>
+</asp:UpdatePanel>

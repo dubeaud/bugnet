@@ -12,7 +12,7 @@
 </head>
 <body>
     <div id="container">
-        <form id="form1" runat="server">
+        <form id="form1" runat="server" enctype="multipart/form-data">
         <ajaxToolkit:ToolkitScriptManager ID="ScriptManager1" runat="server" EnableScriptGlobalization="true"
             EnableScriptLocalization="true" EnablePartialRendering="true" EnablePageMethods="true">
             <Services>

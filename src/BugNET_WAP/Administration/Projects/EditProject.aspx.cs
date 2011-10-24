@@ -5,7 +5,6 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using BugNET.BLL;
 using BugNET.Common;
-using BugNET.Entities;
 using BugNET.UserInterfaceLayer;
 
 namespace BugNET.Administration.Projects
@@ -13,10 +12,10 @@ namespace BugNET.Administration.Projects
 	/// <summary>
 	/// Edit project administration page.
 	/// </summary>
-	public partial class EditProject :  BugNET.UserInterfaceLayer.BasePage 
+	public partial class EditProject : BasePage 
 	{
-		private Control contentControl;
-        Dictionary<string, string> _MenuItems = new Dictionary<string, string>();
+		private Control _contentControl;
+	    readonly Dictionary<string, string> _menuItems = new Dictionary<string, string>();
 
         /// <summary>
         /// Handles the Load event of the Page control.
@@ -25,48 +24,45 @@ namespace BugNET.Administration.Projects
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
 		protected void Page_Load(object sender, System.EventArgs e)
 		{
-            if (!UserManager.HasPermission(Convert.ToInt32(Request.QueryString["id"]), Globals.Permission.AdminEditProject.ToString()))
+
+            if (!UserManager.HasPermission(ProjectId, Globals.Permission.AdminEditProject.ToString()))
                 Response.Redirect("~/Errors/AccessDenied.aspx");
 
 			if (!Page.IsPostBack)
 			{
-				//get project id
-				if (Request.QueryString["id"] != null)
-					ProjectId = Convert.ToInt32(Request.QueryString["id"]);
-
 				litProjectName.Text = ProjectManager.GetProjectById(ProjectId).Name;
 
-
-                string message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), litProjectName.Text);
+                var message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), litProjectName.Text);
                 Image1.OnClientClick = String.Format("return confirm('{0}');", message);
+
                 message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), litProjectName.Text);
                 DeleteButton.OnClientClick = String.Format("return confirm('{0}');", message);
 
-                if (!UserManager.HasPermission(Convert.ToInt32(Request.QueryString["id"]), Globals.Permission.AdminDeleteProject.ToString()))
+                if (!UserManager.HasPermission(ProjectId, Globals.Permission.AdminDeleteProject.ToString()))
                 {
                     DeleteButton.Visible = false;
                     Image1.Visible = false;
                 }
 
-                Project p = ProjectManager.GetProjectById(ProjectId);
+                var p = ProjectManager.GetProjectById(ProjectId);
                 ProjectDisableEnable(p.Disabled);
 			}
 
-            _MenuItems.Add(GetLocalResourceObject("Details").ToString(), "application_home.png");
-            _MenuItems.Add(GetLocalResourceObject("Categories").ToString(), "plugin.gif");
-            _MenuItems.Add(GetLocalResourceObject("Status").ToString(), "greencircle.png");
-            _MenuItems.Add(GetLocalResourceObject("Priorities").ToString(), "Critical.gif");
-            _MenuItems.Add(GetLocalResourceObject("Milestones").ToString(), "package.gif");
-            _MenuItems.Add(GetLocalResourceObject("IssueTypes").ToString(), "bug.gif");
-            _MenuItems.Add(GetLocalResourceObject("Resolutions").ToString(), "accept.gif");
-            _MenuItems.Add(GetLocalResourceObject("Members").ToString(), "users_group.png");
-            _MenuItems.Add(GetLocalResourceObject("SecurityRoles").ToString(), "shield.gif");
-            _MenuItems.Add(GetLocalResourceObject("Notifications").ToString(), "email_go.gif");
-            _MenuItems.Add(GetLocalResourceObject("CustomFields").ToString(), "textfield.gif");
-            _MenuItems.Add(GetLocalResourceObject("Mailboxes").ToString(), "email.gif");
-            _MenuItems.Add(GetLocalResourceObject("Subversion").ToString(), "svnLogo_sm.jpg");
+            _menuItems.Add(GetLocalResourceObject("Details").ToString(), "application_home.png");
+            _menuItems.Add(GetLocalResourceObject("Categories").ToString(), "plugin.gif");
+            _menuItems.Add(GetLocalResourceObject("Status").ToString(), "greencircle.png");
+            _menuItems.Add(GetLocalResourceObject("Priorities").ToString(), "Critical.gif");
+            _menuItems.Add(GetLocalResourceObject("Milestones").ToString(), "package.gif");
+            _menuItems.Add(GetLocalResourceObject("IssueTypes").ToString(), "bug.gif");
+            _menuItems.Add(GetLocalResourceObject("Resolutions").ToString(), "accept.gif");
+            _menuItems.Add(GetLocalResourceObject("Members").ToString(), "users_group.png");
+            _menuItems.Add(GetLocalResourceObject("SecurityRoles").ToString(), "shield.gif");
+            _menuItems.Add(GetLocalResourceObject("Notifications").ToString(), "email_go.gif");
+            _menuItems.Add(GetLocalResourceObject("CustomFields").ToString(), "textfield.gif");
+            _menuItems.Add(GetLocalResourceObject("Mailboxes").ToString(), "email.gif");
+            _menuItems.Add(GetLocalResourceObject("Subversion").ToString(), "svnLogo_sm.jpg");
 
-            AdminMenu.DataSource = _MenuItems;
+            AdminMenu.DataSource = _menuItems;
             AdminMenu.DataBind();    
 
             if (TabId != -1)
@@ -114,14 +110,14 @@ namespace BugNET.Administration.Projects
         /// <param name="e">The <see cref="System.Web.UI.WebControls.RepeaterItemEventArgs"/> instance containing the event data.</param>
         protected void AdminMenu_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
-            {
-                KeyValuePair<string, string> dataItem = (KeyValuePair<string, string>)e.Item.DataItem;
-                HtmlGenericControl listItem = e.Item.FindControl("ListItem") as HtmlGenericControl;
-                LinkButton lb = e.Item.FindControl("MenuButton") as LinkButton;
+            if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem) return;
+
+            var dataItem = (KeyValuePair<string, string>)e.Item.DataItem;
+            var listItem = e.Item.FindControl("ListItem") as HtmlGenericControl;
+            var lb = e.Item.FindControl("MenuButton") as LinkButton;
+            if (listItem != null)
                 listItem.Attributes.Add("style", string.Format("background: #C4EFA1 url(../../images/{0}) no-repeat 5px 4px;", dataItem.Value));
-                lb.Text = dataItem.Key;
-            }
+            if (lb != null) lb.Text = dataItem.Key;
         }
 
         /// <summary>
@@ -130,15 +126,8 @@ namespace BugNET.Administration.Projects
         /// <value>The tab id.</value>
         int TabId 
 		{
-			get 
-			{
-				if (ViewState["TabId"] == null)
-					return 0;
-				else
-					return (int)ViewState["TabId"];
-			}
-
-			set { ViewState["TabId"] = value; }
+			get { return ViewState.Get("TabId", 0); }
+            set { ViewState.Set("TabId", value);}
 		}
 
         /// <summary>
@@ -193,7 +182,7 @@ namespace BugNET.Administration.Projects
 				
 			}
 
-            for (int i = 0; i < _MenuItems.Count; i++)
+            for (var i = 0; i < _menuItems.Count; i++)
             {
                 if (i == TabId)
                     ((HtmlGenericControl)AdminMenu.Items[i].FindControl("ListItem")).Attributes.Add("class", "on");
@@ -201,14 +190,14 @@ namespace BugNET.Administration.Projects
                     ((HtmlGenericControl)AdminMenu.Items[i].FindControl("ListItem")).Attributes.Add("class", "off");
             }
 
-			contentControl = Page.LoadControl("~/Administration/Projects/UserControls/" + controlName);
-			((IEditProjectControl)contentControl).ProjectId = ProjectId;
+			_contentControl = Page.LoadControl("~/Administration/Projects/UserControls/" + controlName);
+			((IEditProjectControl)_contentControl).ProjectId = ProjectId;
 			plhContent.Controls.Clear();
-			plhContent.Controls.Add( contentControl );
-			contentControl.ID = "ctlContent";
-            Image2.Visible = ((IEditProjectControl)contentControl).ShowSaveButton;
-            SaveButton.Visible = ((IEditProjectControl)contentControl).ShowSaveButton;
-            ((IEditProjectControl)contentControl).Initialize();
+			plhContent.Controls.Add( _contentControl );
+			_contentControl.ID = "ctlContent";
+            Image2.Visible = ((IEditProjectControl)_contentControl).ShowSaveButton;
+            SaveButton.Visible = ((IEditProjectControl)_contentControl).ShowSaveButton;
+            ((IEditProjectControl)_contentControl).Initialize();
             plhContent.Visible = true;
 		}
 
@@ -219,7 +208,7 @@ namespace BugNET.Administration.Projects
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
 		protected void DisableButton_Click(Object s, EventArgs e) 
 		{
-            Project p = ProjectManager.GetProjectById(ProjectId);
+            var p = ProjectManager.GetProjectById(ProjectId);
             p.Disabled = true;
             ProjectManager.SaveProject(p);
 
@@ -244,7 +233,7 @@ namespace BugNET.Administration.Projects
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void RestoreButton_Click(Object s, EventArgs e)
         {
-            Project p = ProjectManager.GetProjectById(ProjectId);
+            var p = ProjectManager.GetProjectById(ProjectId);
             p.Disabled = false;
             ProjectManager.SaveProject(p);
 
@@ -258,14 +247,11 @@ namespace BugNET.Administration.Projects
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void SaveButton_Click(object s, EventArgs e)
         {
-            Control c = plhContent.FindControl("ctlContent");
-            if (c != null)
-            {
-                if (((IEditProjectControl)c).Update())
-                    Message1.ShowInfoMessage(GetLocalResourceObject("ProjectUpdated").ToString());
+            var c = plhContent.FindControl("ctlContent");
+            if (c == null) return;
 
-            }
-
+            if (((IEditProjectControl)c).Update())
+                Message1.ShowInfoMessage(GetLocalResourceObject("ProjectUpdated").ToString());
         }
 	}
 }

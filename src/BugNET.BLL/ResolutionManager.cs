@@ -11,22 +11,22 @@ namespace BugNET.BLL
     {
         private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        #region Static Methods
-
         /// <summary>
         /// Saves this instance.
         /// </summary>
         /// <returns></returns>
-        public static bool SaveResolution(Resolution resolutionToSave)
+        public static bool SaveOrUpdate(Resolution entity)
         {
-            if (resolutionToSave.Id > Globals.NEW_ID)
-            {
-                return DataProviderManager.Provider.UpdateResolution(resolutionToSave);
-            }
-            var tempId = DataProviderManager.Provider.CreateNewResolution(resolutionToSave);
-            if (tempId <= 0)
-                return false;
-            resolutionToSave.Id = tempId;
+            if (entity == null) throw new ArgumentNullException("entity");
+            if (entity.ProjectId <= Globals.NEW_ID) throw (new ArgumentException("Cannot save resolution, the project id is invalid"));
+            if (string.IsNullOrEmpty(entity.Name)) throw (new ArgumentException("The resolution name cannot be empty or null"));
+
+            if (entity.Id > Globals.NEW_ID)
+                return DataProviderManager.Provider.UpdateResolution(entity);
+
+            var tempId = DataProviderManager.Provider.CreateNewResolution(entity);
+            if (tempId <= 0) return false;
+            entity.Id = tempId;
             return true;
         }
 
@@ -35,10 +35,9 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="resolutionId">The resolution id.</param>
         /// <returns></returns>
-        public static Resolution GetResolutionById(int resolutionId)
+        public static Resolution GetById(int resolutionId)
         {
-            if (resolutionId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("resolutionId"));
+            if (resolutionId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("resolutionId"));
 
             return DataProviderManager.Provider.GetResolutionById(resolutionId);
         }
@@ -48,10 +47,9 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="resolutionId">The resolution id.</param>
         /// <returns></returns>
-        public static bool DeleteResolution(int resolutionId)
+        public static bool Delete(int resolutionId)
         {
-            if (resolutionId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("resolutionId"));
+            if (resolutionId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("resolutionId"));
 
             return DataProviderManager.Provider.DeleteResolution(resolutionId);
         }
@@ -62,13 +60,11 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="projectId">The project id.</param>
         /// <returns></returns>
-        public static List<Resolution> GetResolutionsByProjectId(int projectId)
+        public static List<Resolution> GetByProjectId(int projectId)
         {
-            if (projectId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("projectId"));
+            if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
             return DataProviderManager.Provider.GetResolutionsByProjectId(projectId);
         }
-        #endregion
     }
 }

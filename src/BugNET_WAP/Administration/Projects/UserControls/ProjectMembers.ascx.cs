@@ -195,13 +195,13 @@ namespace BugNET.Administration.Projects.UserControls
 			if (ddlProjectMembers.SelectedIndex > 0) 
 			{
 
-				lstAllRoles.DataSource = RoleManager.GetRolesByProject(ProjectId);
+				lstAllRoles.DataSource = RoleManager.GetByProjectId(ProjectId);
                 lstAllRoles.DataTextField = "Name";
                 lstAllRoles.DataValueField = "Id";
 				lstAllRoles.DataBind();
  
 				// Copy selected users into Selected Users List Box
-                List<Role> UserRoles = RoleManager.GetRolesForUser(ddlProjectMembers.SelectedValue, ProjectId);
+                List<Role> UserRoles = RoleManager.GetForUser(ddlProjectMembers.SelectedValue, ProjectId);
 				foreach (Role CurrentRole in UserRoles) 
 				{
 					ListItem matchItem = lstAllRoles.Items.FindByValue(CurrentRole.Id.ToString());
@@ -224,7 +224,7 @@ namespace BugNET.Administration.Projects.UserControls
 		{
 			if (lstAllRoles.SelectedIndex > -1) 
 			{
-                RoleManager.AddUserToRole(ddlProjectMembers.SelectedValue, int.Parse(lstAllRoles.SelectedValue));
+                RoleManager.AddUser(ddlProjectMembers.SelectedValue, int.Parse(lstAllRoles.SelectedValue));
 				lstSelectedRoles.SelectedIndex = -1;
 				lstSelectedRoles.Items.Add( lstAllRoles.SelectedItem );
 				lstAllRoles.Items.Remove(lstAllRoles.SelectedItem);
@@ -240,7 +240,7 @@ namespace BugNET.Administration.Projects.UserControls
 		{
 			if (lstSelectedRoles.SelectedIndex > -1) 
 			{
-                RoleManager.RemoveUserFromRole(ddlProjectMembers.SelectedValue, Int32.Parse(lstSelectedRoles.SelectedValue));
+                RoleManager.RemoveUser(ddlProjectMembers.SelectedValue, Int32.Parse(lstSelectedRoles.SelectedValue));
 				lstAllRoles.SelectedIndex = -1;
 				lstAllRoles.Items.Add( lstSelectedRoles.SelectedItem );
 				lstSelectedRoles.Items.Remove(lstSelectedRoles.SelectedItem);

@@ -68,7 +68,7 @@ namespace BugNET.Projects
         /// </summary>
         private void BindRoadmap()
         {
-            RoadmapRepeater.DataSource = MilestoneManager.GetMilestoneByProjectId(ProjectId,false);
+            RoadmapRepeater.DataSource = MilestoneManager.GetByProjectId(ProjectId,false);
             RoadmapRepeater.DataBind();
         }
 
@@ -241,7 +241,7 @@ namespace BugNET.Projects
                     Repeater list = (Repeater)e.Item.FindControl("IssuesList");
                     List<QueryClause> queryClauses = new List<QueryClause>();
                     queryClauses.Add(new QueryClause("AND", "IssueMilestoneId", "=", m.Id.ToString(), SqlDbType.Int, false));
-                    List<Issue> issueList = IssueManager.PerformQuery(ProjectId, queryClauses);
+                    List<Issue> issueList = IssueManager.PerformQuery(queryClauses, ProjectId);
                     if (issueList.Count > 0)
                     {
                         if (!string.IsNullOrEmpty(SortField))

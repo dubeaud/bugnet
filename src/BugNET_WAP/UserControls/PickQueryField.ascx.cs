@@ -98,7 +98,7 @@ namespace BugNET.UserControls
 				case "IssuePriorityId" :
 					dropValue.Visible = true;
 					txtValue.Visible = false;
-					dropValue.DataSource = PriorityManager.GetPrioritiesByProjectId(ProjectId);
+					dropValue.DataSource = PriorityManager.GetByProjectId(ProjectId);
 					dropValue.DataTextField = "Name";
 					dropValue.DataValueField = "Id";
                     DateValue.Visible = false;
@@ -106,7 +106,7 @@ namespace BugNET.UserControls
 				case "IssueTypeId":
 					dropValue.Visible = true;
 					txtValue.Visible = false;
-					dropValue.DataSource = IssueTypeManager.GetIssueTypesByProjectId(ProjectId);
+					dropValue.DataSource = IssueTypeManager.GetByProjectId(ProjectId);
 					dropValue.DataTextField = "Name";
 					dropValue.DataValueField = "Id";
                     DateValue.Visible = false;
@@ -114,7 +114,7 @@ namespace BugNET.UserControls
 				case "IssueMilestoneId" :
 					dropValue.Visible = true;
 					txtValue.Visible = false;
-					dropValue.DataSource = MilestoneManager.GetMilestoneByProjectId(ProjectId);
+					dropValue.DataSource = MilestoneManager.GetByProjectId(ProjectId);
 					dropValue.DataTextField = "Name";
 					dropValue.DataValueField = "Id";
                     DateValue.Visible = false;
@@ -122,14 +122,14 @@ namespace BugNET.UserControls
                 case "IssueAffectedMilestoneId":
                     dropValue.Visible = true;
                     txtValue.Visible = false;
-                    dropValue.DataSource = MilestoneManager.GetMilestoneByProjectId(ProjectId);
+                    dropValue.DataSource = MilestoneManager.GetByProjectId(ProjectId);
                     dropValue.DataTextField = "Name";
                     dropValue.DataValueField = "Id";
                     break;
                 case "IssueResolutionId":
                     dropValue.Visible = true;
                     txtValue.Visible = false;
-                    dropValue.DataSource = ResolutionManager.GetResolutionsByProjectId(ProjectId);
+                    dropValue.DataSource = ResolutionManager.GetByProjectId(ProjectId);
                     dropValue.DataTextField = "Name";
                     dropValue.DataValueField = "Id";
                     DateValue.Visible = false;
@@ -146,7 +146,7 @@ namespace BugNET.UserControls
 				case "IssueStatusId" :
 					dropValue.Visible = true;
 					txtValue.Visible = false;
-					dropValue.DataSource = StatusManager.GetStatusByProjectId(ProjectId);
+					dropValue.DataSource = StatusManager.GetByProjectId(ProjectId);
 					dropValue.DataTextField = "Name";
 					dropValue.DataValueField = "Id";
                     DateValue.Visible = false;
@@ -192,9 +192,9 @@ namespace BugNET.UserControls
                 case "CustomFieldName":
                     dropValue.Visible = false;
                     txtValue.Visible = true;  //show the text value field. Not needed.
-                    if (CustomFieldManager.GetCustomFieldsByProjectId(ProjectId).Count > 0 )
+                    if (CustomFieldManager.GetByProjectId(ProjectId).Count > 0 )
                     { 
-                        dropField.DataSource = CustomFieldManager.GetCustomFieldsByProjectId(ProjectId);
+                        dropField.DataSource = CustomFieldManager.GetByProjectId(ProjectId);
                         dropField.DataTextField = "Name";
                         dropField.DataValueField = "Name";
                         dropField.DataBind();// bind to the new datasource.
@@ -221,19 +221,19 @@ namespace BugNET.UserControls
                     else
                     {
                         //check the type of this custom field and load the appropriate values.
-                        CustomField cf = CustomFieldManager.GetCustomFieldsByProjectId(ProjectId).Find(delegate(CustomField  c) { return c.Name == dropField.SelectedValue; });
+                        CustomField cf = CustomFieldManager.GetByProjectId(ProjectId).Find(delegate(CustomField  c) { return c.Name == dropField.SelectedValue; });
                         if (cf == null)
                             return;
 
-                        if (cf.FieldType == CustomField.CustomFieldType.DropDownList)
+                        if (cf.FieldType == Common.CustomFieldType.DropDownList)
                         {
                             txtValue.Visible = false;
                             dropValue.Visible = true;
-                            dropValue.DataSource = CustomFieldSelectionManager.GetCustomFieldsSelectionsByCustomFieldId(cf.Id);
+                            dropValue.DataSource = CustomFieldSelectionManager.GetByCustomFieldId(cf.Id);
                             dropValue.DataTextField = "Name";
                             dropValue.DataValueField = "Value";
                         }
-                        else if (cf.FieldType == CustomField.CustomFieldType.Date)
+                        else if (cf.FieldType == Common.CustomFieldType.Date)
                         {
                             dropValue.Visible = false;
                             txtValue.Visible = false;
@@ -333,8 +333,8 @@ namespace BugNET.UserControls
 					default:
                         if (CustomFieldQuery)
                         {
-                            CustomField cf = CustomFieldManager.GetCustomFieldsByProjectId(ProjectId).Find(delegate(CustomField  c) { return c.Name == dropField.SelectedValue; });
-                            if (cf.FieldType == CustomField.CustomFieldType.DropDownList)
+                            CustomField cf = CustomFieldManager.GetByProjectId(ProjectId).Find(delegate(CustomField  c) { return c.Name == dropField.SelectedValue; });
+                            if (cf.FieldType == Common.CustomFieldType.DropDownList)
                                 return dropValue.SelectedValue;
                         }
                         return txtValue.Text;
@@ -402,7 +402,7 @@ namespace BugNET.UserControls
                 dropComparisonOperator.SelectedValue = value.ComparisonOperator;
                 if (value.CustomFieldQuery)
                 {
-                    dropField.DataSource = CustomFieldManager.GetCustomFieldsByProjectId(ProjectId);
+                    dropField.DataSource = CustomFieldManager.GetByProjectId(ProjectId);
                     dropField.DataTextField = "Name";
                     dropField.DataValueField = "Name";
                     dropField.DataBind();// bind to the new datasource.
@@ -450,7 +450,7 @@ namespace BugNET.UserControls
             if (!ProjectManager.GetProjectById(ProjectId).AllowIssueVoting)
                 dropField.Items.Remove(dropField.Items.FindByValue("IssueVotes"));
 
-            if(CustomFieldManager.GetCustomFieldsByProjectId(ProjectId).Count == 0)
+            if(CustomFieldManager.GetByProjectId(ProjectId).Count == 0)
                 dropField.Items.Remove("CustomFieldName");
 
         }

@@ -60,7 +60,7 @@ namespace BugNET.Issues.UserControls
 		/// </summary>
 		private void BindComments()
 		{
-			IList comments = IssueCommentManager.GetIssueCommentsByIssueId(IssueId);
+			IList comments = IssueCommentManager.GetByIssueId(IssueId);
 			if (comments.Count == 0)
 			{
 				lblComments.Text = GetLocalResourceObject("NoComments").ToString();
@@ -117,10 +117,10 @@ namespace BugNET.Issues.UserControls
 
 				LinkButton lnkDeleteComment = (LinkButton)e.Item.FindControl("lnkDeleteComment");
 
-				lnkDeleteComment.Attributes.Add("onclick", string.Format("return confirm('{0}');", GetLocalResourceObject("DeleteComment").ToString()));
+				lnkDeleteComment.Attributes.Add("onclick", string.Format("return confirm('{0}');", GetLocalResourceObject("DeleteComment")));
 
-				System.Web.UI.WebControls.Image Avatar = (System.Web.UI.WebControls.Image)e.Item.FindControl("Avatar");
-				if (HostSettingManager.GetHostSetting("EnableGravatar", true))
+				Image Avatar = (Image)e.Item.FindControl("Avatar");
+				if (HostSettingManager.Get(HostSettingNames.EnableGravatar, true))
 				{
 					MembershipUser user = Membership.GetUser(currentComment.CreatorUserName);
 					Avatar.Attributes.Add("src", GetGravatarImageURL(user.Email, 35));
@@ -203,9 +203,9 @@ namespace BugNET.Issues.UserControls
 				HiddenField commentNumber = (HiddenField)pnlEditComment.FindControl("commentNumber");
 				int commentID = Convert.ToInt32(commentNumber.Value);
 
-				IssueComment comment = IssueCommentManager.GetIssueCommentById(Convert.ToInt32(commentID));
+				IssueComment comment = IssueCommentManager.GetById(Convert.ToInt32(commentID));
 				comment.Comment = editor.Text.Trim();
-                IssueCommentManager.SaveIssueComment(comment);
+                IssueCommentManager.SaveOrUpdate(comment);
 
 				editor.Text = String.Empty;
 				pnlEditComment.Visible = false;
@@ -244,11 +244,11 @@ namespace BugNET.Issues.UserControls
 			switch (e.CommandName)
 			{
 				case "Delete":
-					IssueCommentManager.DeleteIssueCommentById(Convert.ToInt32(e.CommandArgument));
+					IssueCommentManager.Delete(Convert.ToInt32(e.CommandArgument));
 					BindComments();
 					break;
 				case "Edit":
-					IssueComment comment = IssueCommentManager.GetIssueCommentById(Convert.ToInt32(e.CommandArgument));
+					IssueComment comment = IssueCommentManager.GetById(Convert.ToInt32(e.CommandArgument));
 
 					// Show the edit comment panel for the comment
 					Panel pnlEditComment = (Panel)e.Item.FindControl("pnlEditComment");
@@ -276,13 +276,19 @@ namespace BugNET.Issues.UserControls
 		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
 		protected void cmdAddComment_Click(object sender, EventArgs e)
 		{
-			if (CommentHtmlEditor.Text.Trim().Length != 0)
-			{
-				IssueComment newComment = new IssueComment(IssueId, CommentHtmlEditor.Text.Trim(), Context.User.Identity.Name);
-                IssueCommentManager.SaveIssueComment(newComment);
-				CommentHtmlEditor.Text = String.Empty;
-				BindComments();
-			}
+		    if (CommentHtmlEditor.Text.Trim().Length == 0) return;
+
+		    var comment = new IssueComment
+		                      {
+		                          IssueId = IssueId,
+		                          Comment = CommentHtmlEditor.Text.Trim(),
+		                          CreatorUserName = Security.GetUserName(),
+		                          DateCreated = DateTime.Now
+		                      };
+
+		    IssueCommentManager.SaveOrUpdate(comment);
+		    CommentHtmlEditor.Text = String.Empty;
+		    BindComments();
 		}
 	}
 }

@@ -1,79 +1,50 @@
 using System.Data;
 
-namespace BugNET.Entities 
+namespace BugNET.Entities
 {
-
-
 
     /// <summary>
     /// Entity object for a custom issue query clause
     /// </summary>
-    public class QueryClause 
+    public class QueryClause
     {
-        private bool _isCustomControl;
-        private string _booleanOperator;
-        private string _fieldName;
-        private string _comparisonOperator;
-        private string _fieldValue;
-        private SqlDbType _dataType;
-
-
         /// <summary>
         /// Gets the boolean operator.
         /// </summary>
         /// <value>The boolean operator.</value>
-        public string BooleanOperator {
-            get { return _booleanOperator; }
-            set { _booleanOperator = value; }
-        }
+        public string BooleanOperator { get; set; }
 
         /// <summary>
         /// Gets the name of the field.
         /// </summary>
         /// <value>The name of the field.</value>
-        public string FieldName {
-            get { return _fieldName; }
-            set { _fieldName = value; }
-        }
+        public string FieldName { get; set; }
 
 
         /// <summary>
         /// Gets the comparison operator.
         /// </summary>
         /// <value>The comparison operator.</value>
-        public string ComparisonOperator {
-            get { return _comparisonOperator; }
-            set { _comparisonOperator = value; }
-        }
+        public string ComparisonOperator { get; set; }
 
 
         /// <summary>
         /// Gets the field value.
         /// </summary>
         /// <value>The field value.</value>
-        public string FieldValue {
-            get { return _fieldValue; }
-            set { _fieldValue = value; }
-        }
+        public string FieldValue { get; set; }
 
         /// <summary>
         /// Gets the type of the data.
         /// </summary>
         /// <value>The type of the data.</value>
-        public SqlDbType DataType {
-            get { return _dataType; }
-            set { _dataType = value; }
-        }
+        public SqlDbType DataType { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [custom field query].
         /// </summary>
         /// <value><c>true</c> if [custom field query]; otherwise, <c>false</c>.</value>
-        public bool CustomFieldQuery
-        {
-            get { return _isCustomControl; }
-            set { _isCustomControl = value; }
-        }
+        public bool CustomFieldQuery { get; set; }
 
 
         /// <summary>
@@ -84,13 +55,15 @@ namespace BugNET.Entities
         /// <param name="comparisonOperator">The comparison operator.</param>
         /// <param name="fieldValue">The field value.</param>
         /// <param name="dataType">Type of the data.</param>
-        public QueryClause(string booleanOperator, string fieldName, string comparisonOperator, string fieldValue, SqlDbType dataType,bool isCustomField) {
-            _booleanOperator = booleanOperator;
-            _fieldName = fieldName;
-            _comparisonOperator = comparisonOperator;
-            _fieldValue = fieldValue;
-            _dataType = dataType;
-            _isCustomControl = isCustomField;
+        /// <param name="isCustomField"></param>
+        public QueryClause(string booleanOperator, string fieldName, string comparisonOperator, string fieldValue, SqlDbType dataType, bool isCustomField)
+        {
+            BooleanOperator = booleanOperator;
+            FieldName = fieldName;
+            ComparisonOperator = comparisonOperator;
+            FieldValue = fieldValue;
+            DataType = dataType;
+            CustomFieldQuery = isCustomField;
         }
 
         /// <summary>

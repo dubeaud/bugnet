@@ -3,7 +3,7 @@
  <asp:label id="TimeEntryLabel" Font-Italic="true" runat="server"></asp:label>
 <asp:datagrid id="TimeEntriesDataGrid" runat="server" Width="100%"
     OnItemCommand="TimeEntriesDataGrid_ItemCommand"
-    OnItemDataBound="TimeEntriesDataGrid_ItemDataBound"  
+    OnItemDataBound="TimeEntriesDataGridItemDataBound"  
     ShowFooter="True" SkinID="DataGrid">  
     <Columns>
         <asp:BoundColumn DataField="WorkDate" HeaderText="Date" DataFormatString="{0:d}">

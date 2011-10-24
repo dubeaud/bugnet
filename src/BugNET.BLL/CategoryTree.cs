@@ -26,7 +26,7 @@ namespace BugNET.BLL
 		{
   
             _sortedCats = new List<Category>();
-			_unSortedCats = CategoryManager.GetCategoriesByProjectId(projectId);
+			_unSortedCats = CategoryManager.GetByProjectId(projectId);
 			foreach(var parentCat in GetTopLevelCategories() ) 
 			{
 				_sortedCats.Add( parentCat );
@@ -42,9 +42,10 @@ namespace BugNET.BLL
         /// <param name="parentId">The parent id.</param>
 		void BindSubCategories(int parentId) 
 		{
-			foreach(var childCat in GetChildCategories(parentId) ) 
+			foreach(var childCat in GetChildCategories(parentId) )
 			{
-				_sortedCats.Add( new Category( DisplayIndent() + childCat.Name, childCat.Id ) );
+			    var categoryName = string.Concat(DisplayIndent(), childCat.Name);
+                _sortedCats.Add(new Category { Name = categoryName, Id = childCat.Id });
 				_compIndent ++;
 				BindSubCategories(childCat.Id);
 				_compIndent --;

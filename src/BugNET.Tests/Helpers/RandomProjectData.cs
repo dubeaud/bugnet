@@ -44,7 +44,7 @@ namespace BugNET.Tests.Helpers
         /// <returns>category</returns>
         public Category GetCategory()
         {
-            List<Category> cats = CategoryManager.GetCategoriesByProjectId(p.Id);
+            List<Category> cats = CategoryManager.GetByProjectId(p.Id);
             return cats[rng.Next(0, cats.Count)];
         }
 
@@ -55,7 +55,7 @@ namespace BugNET.Tests.Helpers
         /// <returns>Random Milestone</returns>
         public Milestone GetMilestone()
         {
-            List<Milestone> miles = MilestoneManager.GetMilestoneByProjectId(p.Id);
+            List<Milestone> miles = MilestoneManager.GetByProjectId(p.Id);
             return miles[rng.Next(0, miles.Count)];
         }
 
@@ -66,7 +66,7 @@ namespace BugNET.Tests.Helpers
         /// <returns>Random Priority</returns>
         public Priority GetPriority()
         {
-            List<Priority> prs = PriorityManager.GetPrioritiesByProjectId(p.Id);
+            List<Priority> prs = PriorityManager.GetByProjectId(p.Id);
             return prs[rng.Next(0, prs.Count)];
         }
 
@@ -77,7 +77,7 @@ namespace BugNET.Tests.Helpers
         /// <returns>Random IssueType</returns>
         public IssueType GetIssueType()
         {
-            List<IssueType> IssueTypes = IssueTypeManager.GetIssueTypesByProjectId(p.Id);
+            List<IssueType> IssueTypes = IssueTypeManager.GetByProjectId(p.Id);
             return IssueTypes[rng.Next(0, IssueTypes.Count)];
         }
 
@@ -88,7 +88,7 @@ namespace BugNET.Tests.Helpers
         /// <returns>Random Resolution</returns>
         public Resolution GetResolution()
         {
-            List<Resolution> Resolutions = ResolutionManager.GetResolutionsByProjectId(p.Id);
+            List<Resolution> Resolutions = ResolutionManager.GetByProjectId(p.Id);
             return Resolutions[rng.Next(0, Resolutions.Count)];
         }
 
@@ -99,7 +99,7 @@ namespace BugNET.Tests.Helpers
         /// <returns>Random Status</returns>
         public Status GetStatus()
         {
-            List<Status> Statuses = StatusManager.GetStatusByProjectId(p.Id);
+            List<Status> Statuses = StatusManager.GetByProjectId(p.Id);
             return Statuses[rng.Next(0, Statuses.Count)];
         }
 

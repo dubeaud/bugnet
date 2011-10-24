@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using System.Web;
 using BugNET.BLL;
+using BugNET.Common;
 using log4net;
 
 namespace BugNET.HttpModules
@@ -9,29 +10,28 @@ namespace BugNET.HttpModules
     public class MailboxReaderModule : IHttpModule
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(MailboxReaderModule));
-        static System.Threading.Timer timer;
+        static Timer _timer;
 
         /// <summary>
         /// The smallest interval which is reasonable and will not cause
         /// system problems.
         /// Value is 10 seconds
         /// </summary>
-        int minInterval = 10000;
-        const int CNST_DefaultInterval = 120000;
-        int interval = CNST_DefaultInterval;
+        private const int MinInterval = 10000;
+
+        const int CnstDefaultInterval = 120000;
+        int _interval = CnstDefaultInterval;
 
         /// <summary>
         /// The amount of consecutive reader errors in a give time frame
         /// before the reader is disabled.        
         /// </summary>
-        const int CNST_MaxReaderErrors = 10;
-
-
+        const int CnstMaxReaderErrors = 10;
 
         /// <summary>
         /// Indicates the timer is running
         /// </summary>
-        bool isTimerRunning = false;
+        bool _isTimerRunning;
 
         /// <summary>
         /// Gets the name of the module.
@@ -49,51 +49,49 @@ namespace BugNET.HttpModules
         /// </summary>
         public void Dispose()
         {
-            timer = null;
+            _timer = null;
         }
 
         /// <summary>
         /// Initializes a module and prepares it to handle requests.
         /// </summary>
-        /// <param name="context">An <see cref="T:System.Web.HttpApplication"></see> that provides access to the methods, properties, and events common to all application objects within an ASP.NET application</param>
+        /// <param name="application"></param>
         public void Init(HttpApplication application)
         {
-            bool ReaderEnabled = Convert.ToBoolean(HostSettingManager.GetHostSetting("Pop3ReaderEnabled"));
+            var readerEnabled = Convert.ToBoolean(HostSettingManager.Get(HostSettingNames.Pop3ReaderEnabled));
 
             // only run the rest of the code if we need to
-            if (ReaderEnabled)
+            if (!readerEnabled) return;
+
+            if (!_isTimerRunning)
             {
-                if (!isTimerRunning)
+                try
                 {
-                    try
-                    {
-                        interval = Convert.ToInt32(HostSettingManager.GetHostSetting("Pop3Interval"));
-                    }
-                    catch
-                    {
-                        Log.Warn(string.Format("Error in BugNET setting 'Pop3Interval'. Expecting Integer, value read '{0}'. ", HostSettingManager.GetHostSetting("Pop3Interval")));
-                        interval = CNST_DefaultInterval;
-                        Log.Warn(string.Format("Using default setting for 'Pop3Interval' in milliseconds '{0}'. ", CNST_DefaultInterval.ToString()));
-                    }
+                    _interval = Convert.ToInt32(HostSettingManager.Get(HostSettingNames.Pop3Interval));
+                }
+                catch
+                {
+                    Log.Warn(string.Format("Error in BugNET setting 'Pop3Interval'. Expecting Integer, value read '{0}'. ", HostSettingManager.Get(HostSettingNames.Pop3Interval)));
+                    _interval = CnstDefaultInterval;
+                    Log.Warn(string.Format("Using default setting for 'Pop3Interval' in milliseconds '{0}'. ", CnstDefaultInterval.ToString()));
+                }
 
-                    if (interval < minInterval)
-                    {
-                        interval = minInterval;
-                        Log.Warn(string.Format("'Pop3Interval' is too small. Using minimun threshold of {0}ms. ", minInterval.ToString()));
-                    }
+                if (_interval < MinInterval)
+                {
+                    _interval = MinInterval;
+                    Log.Warn(string.Format("'Pop3Interval' is too small. Using minimun threshold of {0}ms. ", MinInterval.ToString()));
+                }
 
-                    Log.Info("Enabling POP3 Reader");
+                Log.Info("Enabling POP3 Reader");
 
-                    // Wire-up application events
-                    if (timer == null)
-                    {
-                        // Clear the number of consecutive errors we may have only when
-                        // creating the timer.
-                        ReaderErrors = 0;
+                // Wire-up application events
+                if (_timer == null)
+                {
+                    // Clear the number of consecutive errors we may have only when
+                    // creating the timer.
+                    _readerErrors = 0;
 
-                        timer = new System.Threading.Timer(new TimerCallback(ScheduledWorkCallback),
-                        application.Context, interval, interval);
-                    }
+                    _timer = new Timer(ScheduledWorkCallback, application.Context, _interval, _interval);
                 }
             }
         }
@@ -104,27 +102,27 @@ namespace BugNET.HttpModules
         /// <param name="sender">The sender.</param>
         private void ScheduledWorkCallback(object sender)
         {
-            if (timer != null)
+            if (_timer != null)
             {
                 //stop the timer
                 try
                 {
-                    timer.Change(Timeout.Infinite, Timeout.Infinite);
+                    _timer.Change(Timeout.Infinite, Timeout.Infinite);
 
-                    HttpContext context = (HttpContext)sender;
+                    var context = (HttpContext)sender;
                     Poll(context);
                 }
                 finally
                 {
                     // only restart the timer if all is ok
-                    if (isReaderErrorFree)
+                    if (_isReaderErrorFree)
                     {
-                        if (isTimerRunning)
+                        if (_isTimerRunning)
                         {
-                            if (timer != null)
+                            if (_timer != null)
                             {
                                 //start the timer 
-                                timer.Change(interval, interval);
+                                _timer.Change(_interval, _interval);
                             }
                         }
                     }
@@ -135,7 +133,7 @@ namespace BugNET.HttpModules
                 // TIMER == NULL ????
                 Log.Error("Mailbox reader timer is null!");
 
-                ReaderErrors++;
+                _readerErrors++;
                 // Are there too many errors?
                 CheckToDisableReader();
             }
@@ -151,26 +149,26 @@ namespace BugNET.HttpModules
             HttpContext.Current = context;
             try
             {
-                MailboxReader.MailboxReader mailboxReader = new MailboxReader.MailboxReader(HostSettingManager.GetHostSetting("Pop3Server"),
-                        Convert.ToInt32(HostSettingManager.GetHostSetting("PopPort")),
-                        Boolean.Parse(HostSettingManager.GetHostSetting("Pop3UseSSL")),
-                        HostSettingManager.GetHostSetting("Pop3Username"),
-                        HostSettingManager.GetHostSetting("Pop3Password"),
-                        Convert.ToBoolean(HostSettingManager.GetHostSetting("Pop3InlineAttachedPictures")),
-                        HostSettingManager.GetHostSetting("Pop3BodyTemplate"),
-                        Convert.ToBoolean(HostSettingManager.GetHostSetting("Pop3DeleteAllMessages")),
-                        HostSettingManager.GetHostSetting("Pop3ReportingUsername"),
-                        Convert.ToBoolean(HostSettingManager.GetHostSetting("Pop3ProcessAttachments")));
+                var mailboxReader = new MailboxReader.MailboxReader(HostSettingManager.Get(HostSettingNames.Pop3Server),
+                        Convert.ToInt32(HostSettingManager.Get(HostSettingNames.Pop3Port)),
+                        Boolean.Parse(HostSettingManager.Get(HostSettingNames.Pop3UseSSL)),
+                        HostSettingManager.Get(HostSettingNames.Pop3Username),
+                        HostSettingManager.Get(HostSettingNames.Pop3Password),
+                        Convert.ToBoolean(HostSettingManager.Get(HostSettingNames.Pop3InlineAttachedPictures)),
+                        HostSettingManager.Get(HostSettingNames.Pop3BodyTemplate),
+                        Convert.ToBoolean(HostSettingManager.Get(HostSettingNames.Pop3DeleteAllMessages)),
+                        HostSettingManager.Get(HostSettingNames.Pop3ReportingUsername),
+                        Convert.ToBoolean(HostSettingManager.Get(HostSettingNames.Pop3ProcessAttachments)));
                 mailboxReader.ReadMail();
 
                 // Clear the number of consecutive errors.
-                ReaderErrors = 0;
+                _readerErrors = 0;
             }
             catch (Exception ex)
             {
                 //   Log.Error("Mailbox reader failed", ex); // too many log entries
                 // Increment the number of consecutive errors.
-                ReaderErrors++;
+                _readerErrors++;
             }
 
             // Are there too many errors?
@@ -182,9 +180,9 @@ namespace BugNET.HttpModules
         /// <summary>
         /// Internal flag to indicate if the reader has had too many errors.
         /// </summary>
-        private bool isReaderErrorFree = true;
+        private bool _isReaderErrorFree = true;
 
-        private int ReaderErrors = 0;
+        private int _readerErrors;
 
 
 
@@ -195,7 +193,7 @@ namespace BugNET.HttpModules
         /// <returns>True, if the reader was disabled.</returns>
         private bool CheckToDisableReader()
         {
-            if (ReaderErrors >= CNST_MaxReaderErrors)
+            if (_readerErrors >= CnstMaxReaderErrors)
             {
                 DisableMailReaderWithLog();
                 return true;
@@ -211,9 +209,9 @@ namespace BugNET.HttpModules
             Log.Error("Too many consecutive errors using pop3 reader.");
             Log.Error("POP3 Reader Disabled.");
             // Set the internal flag to off
-            isReaderErrorFree = false;
-            isTimerRunning = false;
-            if (timer != null)
+            _isReaderErrorFree = false;
+            _isTimerRunning = false;
+            if (_timer != null)
             {
                 //try
                 //{
@@ -221,7 +219,7 @@ namespace BugNET.HttpModules
                 //}
                 //finally
                 //{
-                timer.Dispose();
+                _timer.Dispose();
                 //}
             }
         }

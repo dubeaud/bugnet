@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Web.UI.WebControls;
 using BugNET.BLL;
 using BugNET.BLL.Notifications;
+using BugNET.Common;
 using BugNET.UserInterfaceLayer;
 
 namespace BugNET.Administration.Host.UserControls
@@ -21,19 +23,13 @@ namespace BugNET.Administration.Host.UserControls
         public bool Update()
         {
           
-                string notificationTypes = string.Empty;
+            var notificationTypes = cblNotificationTypes.Items.Cast<ListItem>().Where(li => li.Selected).Aggregate(string.Empty, (current, li) => current + (li.Value + ";"));
 
-                foreach (ListItem li in cblNotificationTypes.Items)
-                {
-                    if (li.Selected)
-                        notificationTypes += li.Value + ";";
-
-                }
-                notificationTypes = notificationTypes.TrimEnd(';');
+            notificationTypes = notificationTypes.TrimEnd(';');
                 
-                HostSettingManager.UpdateHostSetting("EnabledNotificationTypes",notificationTypes);
-                HostSettingManager.UpdateHostSetting("AdminNotificationUsername", AdminNotificationUser.SelectedValue);
-                return true;
+            HostSettingManager.UpdateHostSetting(HostSettingNames.EnabledNotificationTypes,notificationTypes);
+            HostSettingManager.UpdateHostSetting(HostSettingNames.AdminNotificationUsername, AdminNotificationUser.SelectedValue);
+            return true;
         }
 
         /// <summary>
@@ -46,19 +42,17 @@ namespace BugNET.Administration.Host.UserControls
             cblNotificationTypes.DataValueField = "Name";
             cblNotificationTypes.DataBind();
 
-            string[] notificationTypes = HostSettingManager.GetHostSetting("EnabledNotificationTypes").Split(';');
-            foreach (string s in notificationTypes)
+            var notificationTypes = HostSettingManager.Get(HostSettingNames.EnabledNotificationTypes).Split(';');
+            foreach (var currentCheckBox in notificationTypes.Select(s => cblNotificationTypes.Items.FindByText(s)).Where(currentCheckBox => currentCheckBox != null))
             {
-                ListItem currentCheckBox = cblNotificationTypes.Items.FindByText(s);
-                if (currentCheckBox != null)
-                    currentCheckBox.Selected = true;
+                currentCheckBox.Selected = true;
             }
 
             AdminNotificationUser.DataSource = UserManager.GetAllUsers();
             AdminNotificationUser.DataTextField = "DisplayName";
             AdminNotificationUser.DataValueField = "UserName";
             AdminNotificationUser.DataBind();
-            AdminNotificationUser.SelectedValue = HostSettingManager.GetHostSetting("AdminNotificationUsername");
+            AdminNotificationUser.SelectedValue = HostSettingManager.Get(HostSettingNames.AdminNotificationUsername);
         }
 
         #endregion

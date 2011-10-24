@@ -1,5 +1,4 @@
 using System;
-using System.Data.SqlTypes;
 
 namespace BugNET.Common
 {
@@ -20,27 +19,19 @@ namespace BugNET.Common
         public const string UPLOAD_TOKEN = "UploadToken";
         public const int UPLOAD_FOLDER_LIMIT = 64;
 
-        /// <summary>
-        /// Constant assigned to value for new bugs
-        /// </summary>
-        public const int NEW_BUG_ASSIGNED_TO = 0;
-        public const int NEW_ISSUE_STATUS_ID = 1;
-        public const int NEW_ISSUE_RESOLUTION_ID = 1;
         public const string SKIP_PROJECT_INTRO = "skipprojectintro";
         public const string UNASSIGNED_DISPLAY_TEXT = "none";
         public const int NEW_ID = 0;
-        public const int DEFAULT_ID = -1;
 
         public const string SUPER_USER_ROLE = "Super Users";
 
         public static readonly string[] DefaultRoles = { "Project Administrators", "Read Only", "Reporter", "Developer", "Quality Assurance" };
         public static readonly string ProjectAdminRole = DefaultRoles[0];
 
-        public static DateTime GetDateTimeMinValue()
-        {
-            var minValue = (DateTime)SqlDateTime.MinValue;
-            return minValue.AddYears(1);
-        }
+        /// <summary>
+        /// The default length of short comments (if not specified).
+        /// </summary>
+        public const int DEFAULTSHORT_COMMENT_LENGTH = 100;
 
         /// <summary>
         /// Upgrade Status Enumeration
@@ -156,6 +147,7 @@ namespace BugNET.Common
         #endregion
 
         #region Public Enumerations
+
         public enum UserRegistration
         {
             None = 0,
@@ -218,8 +210,6 @@ namespace BugNET.Common
         }
         #endregion
 
-        #region Public Properties
-
         /// <summary>
         /// Parses the full issue id.
         /// </summary>
@@ -241,7 +231,5 @@ namespace BugNET.Common
                 return -1;
             }
         }
-        #endregion
-
     }
 }

@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Threading;
 using System.Web;
 using BugNET.BLL;
-
+using BugNET.Common;
 namespace BugNET.HttpModules
 {
     public class LocalizationModule : IHttpModule
@@ -60,7 +60,7 @@ namespace BugNET.HttpModules
             }
             else //use default selected culture
             {
-                culture = HostSettingManager.GetHostSetting("ApplicationDefaultLanguage");
+                culture = HostSettingManager.Get(HostSettingNames.ApplicationDefaultLanguage);
                 Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(culture);
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture);
             }

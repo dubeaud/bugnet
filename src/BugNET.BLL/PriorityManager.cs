@@ -12,89 +12,60 @@ namespace BugNET.BLL
         private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
-        /// Saves this instance.
+        /// Saves or updates the instance.
         /// </summary>
-        /// <param name="priorityToSave"></param>
+        /// <param name="entity">The Priority to save or update</param>
         /// <returns></returns>
-        public static bool SavePriority(Priority priorityToSave)
+        public static bool SaveOrUpdate(Priority entity)
         {
-            if (priorityToSave.Id > Globals.NEW_ID)
-            {
-                return DataProviderManager.Provider.UpdatePriority(priorityToSave);
-            }
-            var tempId = DataProviderManager.Provider.CreateNewPriority(priorityToSave);
-            if (tempId <= 0)
-                return false;
-            priorityToSave.Id = tempId;
+            if (entity == null) throw new ArgumentNullException("entity");
+            if (entity.ProjectId <= Globals.NEW_ID) throw (new ArgumentException("Cannot save priority, the project id is invalid"));
+            if (string.IsNullOrEmpty(entity.Name)) throw (new ArgumentException("The priority name cannot be empty or null"));
+
+            if (entity.Id > Globals.NEW_ID)
+                return DataProviderManager.Provider.UpdatePriority(entity);
+
+            var tempId = DataProviderManager.Provider.CreateNewPriority(entity);
+            if (tempId <= 0) return false;
+
+            entity.Id = tempId;
             return true;
         }
 
-        #region Static Methods
         /// <summary>
         /// Gets the priority by id.
         /// </summary>
         /// <param name="priorityId">The priority id.</param>
         /// <returns></returns>
-        public static Priority GetPriorityById(int priorityId)
+        public static Priority GetById(int priorityId)
         {
-            if (priorityId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("priorityId"));
+            if (priorityId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("priorityId"));
 
             return DataProviderManager.Provider.GetPriorityById(priorityId);
         }
-
-        /// <summary>
-        /// Creates the new priority.
-        /// </summary>
-        /// <param name="projectId">The project id.</param>
-        /// <param name="priorityName">Name of the priority.</param>
-        /// <returns></returns>
-        public static Priority CreateNewPriority(int projectId, string priorityName)
-        {
-            return (CreateNewPriority(projectId, priorityName, string.Empty));
-        }
-
-
-        /// <summary>
-        /// Creates the new priority.
-        /// </summary>
-        /// <param name="projectId">The project id.</param>
-        /// <param name="priorityName">Name of the priority.</param>
-        /// <param name="imageUrl">The image URL.</param>
-        /// <returns></returns>
-        public static Priority CreateNewPriority(int projectId, string priorityName, string imageUrl)
-        {
-            var newPriority = new Priority(projectId, priorityName, imageUrl);
-            return SavePriority(newPriority) ? newPriority : null;
-        }
-
 
         /// <summary>
         /// Deletes the priority.
         /// </summary>
         /// <param name="priorityId">The priority id.</param>
         /// <returns></returns>
-        public static bool DeletePriority(int priorityId)
+        public static bool Delete(int priorityId)
         {
-            if (priorityId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("priorityId"));
+            if (priorityId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("priorityId"));
 
             return (DataProviderManager.Provider.DeletePriority(priorityId));
         }
-
 
         /// <summary>
         /// Gets the priorities by project id.
         /// </summary>
         /// <param name="projectId">The project id.</param>
         /// <returns></returns>
-        public static List<Priority> GetPrioritiesByProjectId(int projectId)
+        public static List<Priority> GetByProjectId(int projectId)
         {
-            if (projectId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("projectId"));
+            if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
             return (DataProviderManager.Provider.GetPrioritiesByProjectId(projectId));
         }
-        #endregion
     }
 }

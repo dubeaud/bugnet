@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 using System.Web.UI.WebControls;
 using BugNET.BLL;
 using BugNET.Common;
@@ -10,9 +12,13 @@ namespace BugNET.Issues.UserControls
 {
     public partial class TimeTracking : System.Web.UI.UserControl, IIssueTab
     {
-        private double Total;
-        private int _IssueId = 0;
-        private int _ProjectId = 0;
+        private double _total;
+
+        protected TimeTracking()
+        {
+            ProjectId = 0;
+            IssueId = 0;
+        }
 
         /// <summary>
         /// Handles the Load event of the Page control.
@@ -27,24 +33,16 @@ namespace BugNET.Issues.UserControls
         #region IIssueTab Members
 
         /// <summary>
-        /// Gets or sets the bug id.
+        /// Gets or sets the issue id.
         /// </summary>
-        /// <value>The bug id.</value>
-        public int IssueId
-        {
-            get { return _IssueId; }
-            set { _IssueId = value; }
-        }
+        /// <value>The issue id.</value>
+        public int IssueId { get; set; }
 
         /// <summary>
         /// Gets or sets the project id.
         /// </summary>
         /// <value>The project id.</value>
-        public int ProjectId
-        {
-            get { return _ProjectId; }
-            set { _ProjectId = value; }
-        }
+        public int ProjectId { get; set; }
 
 
         /// <summary>
@@ -74,7 +72,7 @@ namespace BugNET.Issues.UserControls
         private void BindTimeEntries()
         {
             //System.Globalization.NumberFormatInfo nfi = System.Globalization.CultureInfo.CurrentCulture.NumberFormat;
-            double minimum = 0;
+            const double minimum = 0;
 
             RangeValidator1.MinimumValue = minimum.ToString();
             RangeValidator1.CultureInvariantValues = true;
@@ -82,8 +80,9 @@ namespace BugNET.Issues.UserControls
             TimeEntryDate.SelectedValue = DateTime.Today;
             cpTimeEntry.ValueToCompare = DateTime.Today.ToShortDateString();
 
-            List<IssueWorkReport> WorkReports = IssueWorkReportManager.GetWorkReportsByIssueId(IssueId);
-            if (WorkReports == null || WorkReports.Count == 0)
+            var workReports = IssueWorkReportManager.GetByIssueId(IssueId);
+
+            if (workReports == null || workReports.Count == 0)
             {
                 TimeEntryLabel.Text = GetLocalResourceObject("NoTimeEntries").ToString();
                 TimeEntryLabel.Visible = true;
@@ -91,9 +90,10 @@ namespace BugNET.Issues.UserControls
             }
             else
             {
+                _total = 0;
                 TimeEntriesDataGrid.Visible = true;
                 TimeEntryLabel.Visible = false;
-                TimeEntriesDataGrid.DataSource = WorkReports;
+                TimeEntriesDataGrid.DataSource = workReports;
                 TimeEntriesDataGrid.DataBind();
             }
         }
@@ -105,23 +105,45 @@ namespace BugNET.Issues.UserControls
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void AddTimeEntry_Click(object sender, EventArgs e)
         {
-            if (this.DurationTextBox.Text.Trim().Length != 0)
-            {
-                IssueWorkReport newWorkReport = new IssueWorkReport(IssueId, TimeEntryDate.SelectedValue == null ? DateTime.MinValue : (DateTime)TimeEntryDate.SelectedValue, Convert.ToDecimal(this.DurationTextBox.Text), CommentHtmlEditor.Text.Trim(), Context.User.Identity.Name);
-                IssueWorkReportManager.SaveIssueWorkReport(newWorkReport);
+            if (DurationTextBox.Text.Trim().Length == 0) return;
 
-                IssueHistory history = new IssueHistory(_IssueId, Security.GetUserName(), Resources.SharedResources.TimeLogged.ToString(), string.Empty, DurationTextBox.Text.Trim());
-                IssueHistoryManager.SaveIssueHistory(history);
+            var selectedWorkDate = TimeEntryDate.SelectedValue == null
+                                       ? DateTime.MinValue
+                                       : (DateTime) TimeEntryDate.SelectedValue;
+            var workDuration = Convert.ToDecimal(DurationTextBox.Text);
 
-                List<IssueHistory> changes = new List<IssueHistory>();
-                changes.Add(history);
+            var workReport = new IssueWorkReport
+                                 {
+                                     CommentText = CommentHtmlEditor.Text.Trim(), 
+                                     CreatorUserName = Context.User.Identity.Name, 
+                                     Duration = workDuration, 
+                                     IssueId = IssueId, 
+                                     WorkDate = selectedWorkDate
+                                 };
 
-                IssueNotificationManager.SendIssueNotifications(_IssueId, changes);
+            IssueWorkReportManager.SaveOrUpdate(workReport);
 
-                CommentHtmlEditor.Text = string.Empty;
-                DurationTextBox.Text = string.Empty;
-                BindTimeEntries();
-            }
+            var history = new IssueHistory
+                              {
+                                  IssueId = IssueId,
+                                  CreatedUserName = Security.GetUserName(),
+                                  DateChanged = DateTime.Now,
+                                  FieldChanged = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "TimeLogged", "Time Logged"),
+                                  OldValue = string.Empty,
+                                  NewValue = DurationTextBox.Text.Trim()
+                              };
+
+            IssueHistoryManager.SaveOrUpdate(history);
+
+            var changes = new List<IssueHistory> {history};
+
+            IssueNotificationManager.SendIssueNotifications(IssueId, changes);
+
+            CommentHtmlEditor.Text = string.Empty;
+
+            DurationTextBox.Text = string.Empty;
+
+            BindTimeEntries();
         }
 
         /// <summary>
@@ -131,19 +153,27 @@ namespace BugNET.Issues.UserControls
         /// <param name="e">The <see cref="T:System.Web.UI.WebControls.DataGridCommandEventArgs"/> instance containing the event data.</param>
         protected void TimeEntriesDataGrid_ItemCommand(object source, System.Web.UI.WebControls.DataGridCommandEventArgs e)
         {
-            int id = Convert.ToInt32(e.CommandArgument);
-            if (IssueWorkReportManager.DeleteIssueWorkReport(id))
-            {
-                IssueHistory history = new IssueHistory(_IssueId, Security.GetUserName(), Resources.SharedResources.TimeLogged.ToString(), string.Empty, Resources.SharedResources.Deleted);
-                IssueHistoryManager.SaveIssueHistory(history);
+            var id = Convert.ToInt32(e.CommandArgument);
 
-                List<IssueHistory> changes = new List<IssueHistory>();
-                changes.Add(history);
+            if (!IssueWorkReportManager.Delete(id)) return;
 
-                IssueNotificationManager.SendIssueNotifications(_IssueId, changes);
+            var history = new IssueHistory
+                              {
+                                  IssueId = IssueId,
+                                  CreatedUserName = Security.GetUserName(),
+                                  DateChanged = DateTime.Now,
+                                  FieldChanged = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "TimeLogged", "Time Logged"),
+                                  OldValue = string.Empty,
+                                  NewValue = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Deleted", "Deleted")
+                              };
 
-                BindTimeEntries();
-            }
+            IssueHistoryManager.SaveOrUpdate(history);
+
+            var changes = new List<IssueHistory> {history};
+
+            IssueNotificationManager.SendIssueNotifications(IssueId, changes);
+
+            BindTimeEntries();
         }
 
         /// <summary>
@@ -151,21 +181,21 @@ namespace BugNET.Issues.UserControls
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="T:System.Web.UI.WebControls.DataGridItemEventArgs"/> instance containing the event data.</param>
-        protected void TimeEntriesDataGrid_ItemDataBound(object sender, DataGridItemEventArgs e)
+        protected void TimeEntriesDataGridItemDataBound(object sender, DataGridItemEventArgs e)
         {
-            string delete = string.Format("return confirm('{0}');", GetLocalResourceObject("DeleteTimeEntry").ToString());
+            var delete = string.Format("return confirm('{0}');", GetLocalResourceObject("DeleteTimeEntry"));
+
             switch (e.Item.ItemType)
             {
-
                 case ListItemType.Item:
                 case ListItemType.AlternatingItem:
-                    Total += Convert.ToDouble(e.Item.Cells[1].Text);
+                    _total += Convert.ToDouble(e.Item.Cells[1].Text);
                     ((ImageButton)e.Item.FindControl("RemoveEntry")).OnClientClick = delete;
                     ((LinkButton)e.Item.FindControl("lnkDeleteTimeEntry")).OnClientClick = delete;
                     break;
                 case ListItemType.Footer:
                     //Use the footer to display the summary row.
-                    e.Item.Cells[0].Text = "Total Hours:";
+                    e.Item.Cells[0].Text = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "TotalHours", "Total Hours");
                     e.Item.Cells[0].Attributes.Add("align", "left");
                     e.Item.Cells[0].Style.Add("font-weight", "bold");
                     e.Item.Cells[0].Style.Add("padding-top", "10px");
@@ -173,7 +203,7 @@ namespace BugNET.Issues.UserControls
                     e.Item.Cells[1].Attributes.Add("align", "right");
                     e.Item.Cells[1].Style.Add("border-top", "1px solid #999");
                     e.Item.Cells[1].Style.Add("padding-top", "10px");
-                    e.Item.Cells[1].Text = Total.ToString();
+                    e.Item.Cells[1].Text = _total.ToString();
                     e.Item.Cells[2].Style.Add("border-top", "1px solid #999");
                     e.Item.Cells[3].Style.Add("border-top", "1px solid #999");
                     e.Item.Cells[4].Style.Add("border-top", "1px solid #999");

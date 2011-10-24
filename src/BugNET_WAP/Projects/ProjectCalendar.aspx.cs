@@ -111,7 +111,7 @@ namespace BugNET.Projects
                     QueryClause q = new QueryClause("AND", "IssueDueDate", "=", e.Day.Date.ToShortDateString(), SqlDbType.DateTime, false);
                     queryClauses.Add(q);
 
-                    List<Issue> issues = IssueManager.PerformQuery(ProjectId, queryClauses);
+                    List<Issue> issues = IssueManager.PerformQuery(queryClauses, ProjectId);
                     foreach (Issue issue in issues)
                     {
                         if (issue.Visibility == (int)Globals.IssueVisibility.Private && issue.AssignedDisplayName != Security.GetUserName() && issue.CreatorDisplayName != Security.GetUserName() && (!UserManager.IsInRole(Globals.SUPER_USER_ROLE) || !UserManager.IsInRole(Globals.ProjectAdminRole)))
@@ -132,7 +132,7 @@ namespace BugNET.Projects
                     }
                     break;
                 case "MilestoneDueDates":
-                    List<Milestone> milestones = MilestoneManager.GetMilestoneByProjectId(ProjectId).FindAll(m => m.DueDate == e.Day.Date);
+                    List<Milestone> milestones = MilestoneManager.GetByProjectId(ProjectId).FindAll(m => m.DueDate == e.Day.Date);
                     foreach (Milestone m in milestones)
                     {
                         string cssClass = string.Empty;

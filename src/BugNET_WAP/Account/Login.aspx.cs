@@ -16,7 +16,7 @@ namespace BugNET.Account
     public partial class Login : System.Web.UI.Page
     {
 
-        private bool isOpenIDEnabled = false;
+        private bool _isOpenIdEnabled;
 
         /// <summary>
         /// Handles the Load event of the Page control.
@@ -25,15 +25,15 @@ namespace BugNET.Account
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            Page.Title = string.Format("{0} - {1}", GetLocalResourceObject("Page.Title").ToString(), HostSettingManager.GetHostSetting("ApplicationTitle"));
+            Page.Title = string.Format("{0} - {1}", GetLocalResourceObject("Page.Title"), HostSettingManager.Get(HostSettingNames.ApplicationTitle));
 
             //hide the registration link if we have disabled registration
-            if (Convert.ToInt32(HostSettingManager.GetHostSetting("UserRegistration")) == (int)Globals.UserRegistration.None)
+            if (HostSettingManager.Get<int>(HostSettingNames.UserRegistration, 0) == (int)Globals.UserRegistration.None)
                 RegisterPanel.Visible = false;
 
             // check if OpenID is enabled
             // BGN-1356
-            isOpenIDEnabled = Boolean.Parse(HostSettingManager.GetHostSetting("OpenIdAuthentication"));
+            _isOpenIdEnabled = HostSettingManager.Get(HostSettingNames.OpenIdAuthentication, false);
 
             if (HttpContext.Current.User.Identity.IsAuthenticated)
             {
@@ -41,7 +41,7 @@ namespace BugNET.Account
             }
             else
             {
-                btnShowOpenID.Visible = isOpenIDEnabled;
+                btnShowOpenID.Visible = _isOpenIdEnabled;
                 if (Session["isDoingOpenIDLogin"] != null)
                     if (Session["isDoingOpenIDLogin"] == "true")
                     {
@@ -78,7 +78,7 @@ namespace BugNET.Account
                 //
                 // Added by smoss for security. 
                 // User shouldnt be able to use this method if OpenID is off.
-                if (!Boolean.Parse(HostSettingManager.GetHostSetting("OpenIdAuthentication")))
+                if (!HostSettingManager.Get(HostSettingNames.OpenIdAuthentication, false))
                 {
                     throw new UnauthorizedAccessException();
                 }
@@ -140,7 +140,7 @@ namespace BugNET.Account
                             {
 
                                 // Part of BGN-1860
-                                if (Convert.ToInt32(HostSettingManager.GetHostSetting("UserRegistration")) == (int)Globals.UserRegistration.None)
+                                if (Convert.ToInt32(HostSettingManager.Get(HostSettingNames.UserRegistration)) == (int)Globals.UserRegistration.None)
                                 {
                                     loginFailedLabel.Text += GetLocalResourceObject("RegistrationDisabled").ToString();
                                     loginFailedLabel.Visible = true;
@@ -168,11 +168,11 @@ namespace BugNET.Account
                                 Membership.UpdateUser(user);
 
                                 //auto assign user to roles
-                                List<Role> roles = RoleManager.GetAllRoles();
+                                List<Role> roles = RoleManager.GetAll();
                                 foreach (Role r in roles)
                                 {
                                     if (r.AutoAssign)
-                                        RoleManager.AddUserToRole(user.UserName, r.Id);
+                                        RoleManager.AddUser(user.UserName, r.Id);
                                 }
 
                                 //send notification this user was created
@@ -236,7 +236,7 @@ namespace BugNET.Account
             // Added by smoss for security. 
             // User shouldnt be able to use this method
             // if OpenID is off or they are logged in.
-            if ((!isOpenIDEnabled) || (HttpContext.Current.User.Identity.IsAuthenticated))
+            if ((!_isOpenIdEnabled) || (HttpContext.Current.User.Identity.IsAuthenticated))
             {
                 pnlOpenIDLogin.Visible = false;
                 pnlNormalLogin.Visible = true;

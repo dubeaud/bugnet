@@ -56,7 +56,7 @@ namespace BugNET.Administration.Users.UserControls
             {
                 RoleList.Items.Clear();
                 int projectId = dropProjects.SelectedValue;
-                List<Role> roles = RoleManager.GetRolesByProject(projectId);
+                List<Role> roles = RoleManager.GetByProjectId(projectId);
                 foreach (Role r in roles)
                 {
                     if (r.ProjectId != 0)
@@ -86,9 +86,9 @@ namespace BugNET.Administration.Users.UserControls
             string userName = lblUserName.Text;
 
             if (chkSuperUsers.Checked && !UserManager.IsInRole(userName, 0, Globals.SUPER_USER_ROLE))
-                RoleManager.AddUserToRole(userName, 1);
+                RoleManager.AddUser(userName, 1);
             else if (!chkSuperUsers.Checked && UserManager.IsInRole(userName, 0, Globals.SUPER_USER_ROLE))
-                RoleManager.RemoveUserFromRole(userName, 1);
+                RoleManager.RemoveUser(userName, 1);
         }
         /// <summary>
         /// CMDs the update roles.
@@ -118,7 +118,7 @@ namespace BugNET.Administration.Users.UserControls
             //if (chkSuperUsers.Visible && !ITUser.IsInRole(userName,0,Globals.SuperUserRole))
             //    Role.AddUserToRole(userName, 1);
             //else if (chkSuperUsers.Visible && !ITUser.IsInRole(userName, 0, Globals.SuperUserRole))
-            //    Role.RemoveUserFromRole(userName, 1);
+            //    Role.RemoveUser(userName, 1);
 
             foreach (ListItem roleListItem in RoleList.Items)
             {
@@ -127,11 +127,11 @@ namespace BugNET.Administration.Users.UserControls
 
                 if (enableRole && !UserManager.IsInRole(userName,dropProjects.SelectedValue, roleName))
                 {
-                    RoleManager.AddUserToRole(userName, Convert.ToInt32(roleListItem.Value));
+                    RoleManager.AddUser(userName, Convert.ToInt32(roleListItem.Value));
                 }
                 else if (!enableRole && UserManager.IsInRole(userName,dropProjects.SelectedValue, roleName))
                 {
-                    RoleManager.RemoveUserFromRole(userName, Convert.ToInt32(roleListItem.Value));
+                    RoleManager.RemoveUser(userName, Convert.ToInt32(roleListItem.Value));
                 }
             }
             lblError.Text = GetLocalResourceObject("UserRolesUpdateSuccess").ToString();

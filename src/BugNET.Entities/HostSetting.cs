@@ -5,38 +5,33 @@ namespace BugNET.Entities
     /// </summary>
     public class HostSetting
     {
-        private string _SettingName;
-        private string _SettingValue;
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:HostSettings"/> class.
+        /// Initializes a new instance of the <see cref="HostSetting"/> class.
         /// </summary>
         /// <param name="settingName">Name of the setting.</param>
         /// <param name="settingValue">The setting value.</param>
         public HostSetting(string settingName, string settingValue)
         {
-            _SettingName = settingName;
-            _SettingValue = settingValue;
+            SettingName = settingName;
+            SettingValue = settingValue;
+        }
+
+        public HostSetting()
+        {
+            SettingName = string.Empty;
+            SettingValue = string.Empty;
         }
 
         /// <summary>
         /// Gets the name of the setting.
         /// </summary>
         /// <value>The name of the setting.</value>
-        public string SettingName
-        {
-            get { return _SettingName; }
-        }
+        public string SettingName { get; set; }
+
         /// <summary>
         /// Gets the setting value.
         /// </summary>
         /// <value>The setting value.</value>
-        public string SettingValue
-        {
-            get { return _SettingValue; }
-        }
-
-        
-
+        public string SettingValue { get; set; }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Web.Security;
 using System.Web.UI.WebControls;
 using BugNET.BLL;
+using BugNET.Common;
 using log4net;
 
 
@@ -21,7 +22,7 @@ namespace BugNET.Account
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            Page.Title = string.Format("{0} - {1}", GetLocalResourceObject("Page.Title").ToString(), HostSettingManager.GetHostSetting("ApplicationTitle"));
+            Page.Title = string.Format("{0} - {1}", GetLocalResourceObject("Page.Title").ToString(), HostSettingManager.Get(HostSettingNames.ApplicationTitle));
         }
 
         /// <summary>

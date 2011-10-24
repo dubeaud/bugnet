@@ -57,7 +57,7 @@ namespace BugNET.Issues.UserControls
 
         private void BindIssueRevisions()
         {
-            List<IssueRevision> revisions = IssueRevisionManager.GetIssueRevisionsByIssueId(IssueId);
+            List<IssueRevision> revisions = IssueRevisionManager.GetByIssueId(IssueId);
             if (revisions.Count == 0)
             {
                 IssueRevisionsLabel.Text = GetLocalResourceObject("NoRevisions").ToString();

@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Security;
 using BugNET.BLL;
+using BugNET.Common;
 using BugNET.Entities;
 using log4net;
 
@@ -58,7 +59,7 @@ namespace BugNET.HttpModules
                return;
 
             //get host settings
-            bool enabled = HostSettingManager.GetHostSetting("UserAccountSource") == "ActiveDirectory" || HostSettingManager.GetHostSetting("UserAccountSource") == "WindowsSAM";
+            bool enabled = HostSettingManager.Get(HostSettingNames.UserAccountSource) == "ActiveDirectory" || HostSettingManager.Get(HostSettingNames.UserAccountSource) == "WindowsSAM";
 
             //check if windows authentication is enabled in the host settings
             if (enabled)
@@ -102,9 +103,9 @@ namespace BugNET.HttpModules
                                     Profile.Save();
 
                                     //auto assign user to roles
-                                    List<Role> roles = RoleManager.GetAllRoles().FindAll(r => r.AutoAssign == true);
+                                    List<Role> roles = RoleManager.GetAll().FindAll(r => r.AutoAssign == true);
                                     foreach (Role r in roles)
-                                        RoleManager.AddUserToRole(mu.UserName, r.Id);
+                                        RoleManager.AddUser(mu.UserName, r.Id);
                                 }
 
                                 user = Membership.GetUser(HttpContext.Current.User.Identity.Name);
@@ -177,10 +178,10 @@ namespace BugNET.HttpModules
             else if (HostSettingManager.UserAccountSource == "ActiveDirectory")
             {
                 DirectoryEntry entry;
-                if (string.IsNullOrEmpty(HostSettingManager.GetHostSetting("ADUserName")))
-                    entry = new DirectoryEntry(String.Format("{0}{1}", "GC://", HostSettingManager.GetHostSetting("ADPath")), null, null, AuthenticationTypes.ReadonlyServer);
+                if (string.IsNullOrEmpty(HostSettingManager.Get(HostSettingNames.ADUserName)))
+                    entry = new DirectoryEntry(String.Format("{0}{1}", "GC://", HostSettingManager.Get(HostSettingNames.ADPath)), null, null, AuthenticationTypes.ReadonlyServer);
                 else
-                    entry = new DirectoryEntry(String.Format("{0}{1}", "GC://", HostSettingManager.GetHostSetting("ADPath")), HostSettingManager.GetHostSetting("ADUserName"), HostSettingManager.GetHostSetting("ADPassword"), AuthenticationTypes.Secure);
+                    entry = new DirectoryEntry(String.Format("{0}{1}", "GC://", HostSettingManager.Get(HostSettingNames.ADPath)), HostSettingManager.Get(HostSettingNames.ADUserName), HostSettingManager.Get(HostSettingNames.ADPassword), AuthenticationTypes.Secure);
 
                 // Setup the filter
                 identification = identification.Substring(identification.LastIndexOf(@"\") + 1,

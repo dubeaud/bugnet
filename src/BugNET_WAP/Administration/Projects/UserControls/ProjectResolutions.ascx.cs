@@ -73,7 +73,7 @@ namespace BugNET.Administration.Projects.UserControls
             grdResolutions.Columns[2].HeaderText = GetGlobalResourceObject("SharedResources", "Image").ToString();
             grdResolutions.Columns[3].HeaderText = GetGlobalResourceObject("SharedResources", "Order").ToString();
 
-            grdResolutions.DataSource = ResolutionManager.GetResolutionsByProjectId(ProjectId);
+            grdResolutions.DataSource = ResolutionManager.GetByProjectId(ProjectId);
             grdResolutions.DataKeyField = "Id";
             grdResolutions.DataBind();
 
@@ -93,7 +93,7 @@ namespace BugNET.Administration.Projects.UserControls
         {
             int mileStoneId = (int)grdResolutions.DataKeys[e.Item.ItemIndex];
 
-            if (!ResolutionManager.DeleteResolution(mileStoneId))
+            if (!ResolutionManager.Delete(mileStoneId))
                 lblError.Text = LoggingManager.GetErrorMessageResource("DeleteResolutionError");
             else
                 BindResolutions();
@@ -117,7 +117,7 @@ namespace BugNET.Administration.Projects.UserControls
         protected void ResolutionValidation_Validate(object sender, ServerValidateEventArgs e)
         {
             //validate that at least one Resolution exists.
-            if (ResolutionManager.GetResolutionsByProjectId(ProjectId).Count > 0)
+            if (ResolutionManager.GetByProjectId(ProjectId).Count > 0)
             {
                 e.IsValid = true;
             }
@@ -155,10 +155,10 @@ namespace BugNET.Administration.Projects.UserControls
                 throw new ArgumentNullException("Resolution name is empty.");
             }
 
-            Resolution m = ResolutionManager.GetResolutionById(Convert.ToInt32(grdResolutions.DataKeys[e.Item.ItemIndex]));
+            Resolution m = ResolutionManager.GetById(Convert.ToInt32(grdResolutions.DataKeys[e.Item.ItemIndex]));
             m.Name = txtResolutionName.Text.Trim();
             m.ImageUrl = pickimg.SelectedValue;
-            ResolutionManager.SaveResolution(m);
+            ResolutionManager.SaveOrUpdate(m);
 
             grdResolutions.EditItemIndex = -1;
             BindResolutions();
@@ -234,8 +234,8 @@ namespace BugNET.Administration.Projects.UserControls
             if (newName == String.Empty)
                 return;
 
-            Resolution newResolution = new Resolution(ProjectId, newName, lstImages.SelectedValue);
-            if (ResolutionManager.SaveResolution(newResolution))
+            var newResolution = new Resolution { ProjectId = ProjectId, Name = newName, ImageUrl = lstImages.SelectedValue};
+            if (ResolutionManager.SaveOrUpdate(newResolution))
             {
                 txtName.Text = "";
                 BindResolutions();
@@ -263,17 +263,17 @@ namespace BugNET.Administration.Projects.UserControls
                     //move row up
                     if (itemIndex == 0)
                         return;
-                    m = ResolutionManager.GetResolutionById(Convert.ToInt32(e.CommandArgument));
+                    m = ResolutionManager.GetById(Convert.ToInt32(e.CommandArgument));
                     m.SortOrder -= 1;
-                    ResolutionManager.SaveResolution(m);
+                    ResolutionManager.SaveOrUpdate(m);
                     break;
                 case "down":
                     //move row down
                     if (itemIndex == grdResolutions.Items.Count - 1)
                         return;
-                    m = ResolutionManager.GetResolutionById(Convert.ToInt32(e.CommandArgument));
+                    m = ResolutionManager.GetById(Convert.ToInt32(e.CommandArgument));
                     m.SortOrder += 1;
-                    ResolutionManager.SaveResolution(m);
+                    ResolutionManager.SaveOrUpdate(m);
                     break;
             }
             BindResolutions();

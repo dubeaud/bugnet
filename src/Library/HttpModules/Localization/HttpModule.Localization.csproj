@@ -91,6 +91,10 @@
       <Project>{001B5C78-CC5E-4DB6-A03A-EAAE1D558D2C}</Project>
       <Name>BugNET.BLL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\BugNET.Common\BugNET.Common.csproj">
+      <Project>{69F2F661-AA9A-4C9F-8217-6A22E8C66FEB}</Project>
+      <Name>BugNET.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

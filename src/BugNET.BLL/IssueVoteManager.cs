@@ -13,19 +13,21 @@ namespace BugNET.BLL
         /// <summary>
         /// Saves this instance.
         /// </summary>
-        /// <param name="issueVoteToSave">The issue vote to save.</param>
+        /// <param name="entity">The issue vote to save.</param>
         /// <returns></returns>
-        public static bool SaveIssueVote(IssueVote issueVoteToSave)
+        public static bool SaveOrUpdate(IssueVote entity)
         {
-            var tempId = DataProviderManager.Provider.CreateNewIssueVote(issueVoteToSave);
+            if (entity == null) throw new ArgumentNullException("entity");
+            if (entity.IssueId <= Globals.NEW_ID) throw (new ArgumentException("Cannot save issue vote, the issue id is invalid"));
+            if (string.IsNullOrEmpty(entity.VoteUsername)) throw (new ArgumentException("Cannot save issue vote, the voters user name is null or empty"));
 
-            if (tempId <= 0)
-                return false;
+            var tempId = DataProviderManager.Provider.CreateNewIssueVote(entity);
 
-            issueVoteToSave.Id = tempId;
+            if (tempId <= 0) return false;
+
+            entity.Id = tempId;
             return true;
         }
-
 
         /// <summary>
         /// Determines whether [has user voted] [the specified issue id].
@@ -37,11 +39,8 @@ namespace BugNET.BLL
         /// </returns>
         public static bool HasUserVoted(int issueId, string username)
         {
-            if (issueId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("issueId"));
-
-            if (string.IsNullOrEmpty(username))
-                throw new ArgumentNullException("username");
+            if (issueId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("issueId"));
+            if (string.IsNullOrEmpty(username)) throw new ArgumentNullException("username");
 
             return DataProviderManager.Provider.HasUserVoted(issueId, username);
         }

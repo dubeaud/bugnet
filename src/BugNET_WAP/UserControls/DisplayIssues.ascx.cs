@@ -80,7 +80,7 @@ namespace BugNET.UserControls
             {
                 if (Int32.TryParse(Request.QueryString["pid"], out projectId))
                 {
-                    List<CustomField> customFields = CustomFieldManager.GetCustomFieldsByProjectId(projectId);
+                    List<CustomField> customFields = CustomFieldManager.GetByProjectId(projectId);
 
                     if (customFields.Count > 0)
                     {
@@ -134,7 +134,7 @@ namespace BugNET.UserControls
                     int projectId = ((Issue)_DataSource[0]).ProjectId;
 
 
-                      //foreach(CustomField cf in CustomField.GetCustomFieldsByProjectId(projectId))
+                      //foreach(CustomField cf in CustomField.GetByProjectId(projectId))
                       //{
 
                       //    TemplateField ckhColumn = new TemplateField();
@@ -167,21 +167,21 @@ namespace BugNET.UserControls
                     CategoryTree categories = new CategoryTree();
                     dropCategory.DataSource = categories.GetCategoryTreeByProjectId(projectId);
                     dropCategory.DataBind();
-                    dropMilestone.DataSource = MilestoneManager.GetMilestoneByProjectId(projectId);
+                    dropMilestone.DataSource = MilestoneManager.GetByProjectId(projectId);
                     dropMilestone.DataBind();
-                    dropAffectedMilestone.DataSource = MilestoneManager.GetMilestoneByProjectId(projectId);
+                    dropAffectedMilestone.DataSource = MilestoneManager.GetByProjectId(projectId);
                     dropAffectedMilestone.DataBind();
                     dropOwner.DataSource = UserManager.GetUsersByProjectId(projectId);
                     dropOwner.DataBind();
-                    dropPriority.DataSource = PriorityManager.GetPrioritiesByProjectId(projectId);
+                    dropPriority.DataSource = PriorityManager.GetByProjectId(projectId);
                     dropPriority.DataBind();
-                    dropStatus.DataSource = StatusManager.GetStatusByProjectId(projectId);
+                    dropStatus.DataSource = StatusManager.GetByProjectId(projectId);
                     dropStatus.DataBind();
-                    dropType.DataSource = IssueTypeManager.GetIssueTypesByProjectId(projectId);
+                    dropType.DataSource = IssueTypeManager.GetByProjectId(projectId);
                     dropType.DataBind();
                     dropAssigned.DataSource = UserManager.GetUsersByProjectId(projectId);
                     dropAssigned.DataBind();
-                    dropResolution.DataSource = ResolutionManager.GetResolutionsByProjectId(projectId);
+                    dropResolution.DataSource = ResolutionManager.GetByProjectId(projectId);
                     dropResolution.DataBind();
                 }
 
@@ -486,7 +486,7 @@ namespace BugNET.UserControls
                 //}
                 ((HtmlControl)e.Row.FindControl("ProgressBar")).Attributes.CssStyle.Add("width", b.Progress.ToString() + "%");
                 //CheckBox cb = e.Row.Cells[23].Controls[0] as CheckBox;
-                //string val = CustomField.GetCustomFieldsByIssueId(b.Id)[0].Value;
+                //string val = CustomField.GetByIssueId(b.Id)[0].Value;
                 //cb.Checked = true;
             }
         }
@@ -541,7 +541,7 @@ namespace BugNET.UserControls
             GridViewRow row = (GridViewRow)hpl.NamingContainer;
             //hpl.NavigateUrl = DataBinder.Eval(row.DataItem, _ColNameURL).ToString();
             Issue i = row.DataItem as Issue;
-            string value = CustomFieldManager.GetCustomFieldsByIssueId(i.Id).Find(cf => cf.Name == columnName).Value;
+            string value = CustomFieldManager.GetByIssueId(i.Id).Find(cf => cf.Name == columnName).Value;
             hpl.Text = "<div class=\"Post\"><div class=\"PostTitle\">" + value + "</div></div>";
         }
 

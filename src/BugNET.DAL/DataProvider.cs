@@ -124,7 +124,7 @@ namespace BugNET.DAL
 
         // Project
         public abstract int CreateNewProject(Project newProject);
-        public abstract bool DeleteProject(int projectID);
+        public abstract bool DeleteProject(int projectId);
         public abstract List<Project> GetAllProjects();
         public abstract Project GetProjectById(int projectId);
         public abstract List<Project> GetProjectsByMemberUserName(string username);

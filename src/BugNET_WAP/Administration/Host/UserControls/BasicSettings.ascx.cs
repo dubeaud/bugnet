@@ -1,5 +1,6 @@
 ﻿using System;
 using BugNET.BLL;
+using BugNET.Common;
 using BugNET.UserInterfaceLayer;
 
 namespace BugNET.Administration.Host.UserControls
@@ -25,10 +26,10 @@ namespace BugNET.Administration.Host.UserControls
         public bool Update()
         {
            
-                HostSettingManager.UpdateHostSetting("WelcomeMessage", WelcomeMessageHtmlEditor.Text.Trim());
-                HostSettingManager.UpdateHostSetting("ApplicationTitle", ApplicationTitle.Text.Trim());
-                HostSettingManager.UpdateHostSetting("DefaultUrl", DefaultUrl.Text);
-                HostSettingManager.UpdateHostSetting("EnableGravatar", EnableGravatar.Checked.ToString());
+                HostSettingManager.UpdateHostSetting(HostSettingNames.WelcomeMessage, WelcomeMessageHtmlEditor.Text.Trim());
+                HostSettingManager.UpdateHostSetting(HostSettingNames.ApplicationTitle, ApplicationTitle.Text.Trim());
+                HostSettingManager.UpdateHostSetting(HostSettingNames.DefaultUrl, DefaultUrl.Text);
+                HostSettingManager.UpdateHostSetting(HostSettingNames.EnableGravatar, EnableGravatar.Checked.ToString());
                 return true;
         }
 
@@ -38,10 +39,10 @@ namespace BugNET.Administration.Host.UserControls
         public void Initialize()
         {
             //get hostsettings for this control here and bind them to ctrls
-            ApplicationTitle.Text = HostSettingManager.GetHostSetting("ApplicationTitle");
-            WelcomeMessageHtmlEditor.Text = HostSettingManager.GetHostSetting("WelcomeMessage");
-            DefaultUrl.Text = HostSettingManager.GetHostSetting("DefaultUrl");
-            EnableGravatar.Checked = HostSettingManager.GetHostSetting("EnableGravatar",true);
+            ApplicationTitle.Text = HostSettingManager.Get(HostSettingNames.ApplicationTitle);
+            WelcomeMessageHtmlEditor.Text = HostSettingManager.Get(HostSettingNames.WelcomeMessage);
+            DefaultUrl.Text = HostSettingManager.Get(HostSettingNames.DefaultUrl);
+            EnableGravatar.Checked = HostSettingManager.Get(HostSettingNames.EnableGravatar,true);
         }
 
         #endregion

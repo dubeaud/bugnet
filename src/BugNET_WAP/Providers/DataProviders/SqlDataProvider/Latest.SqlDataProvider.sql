@@ -321,6 +321,40 @@ GO
 
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('ApplicationDefaultLanguage','en-US')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('Pop3ProcessAttachments','False')
+
+PRINT N'Updating Permission keys'
+UPDATE BugNet_Permissions SET PermissionKey = 'CloseIssue' WHERE PermissionId = 1
+UPDATE BugNet_Permissions SET PermissionKey = 'AddIssue' WHERE PermissionId = 2
+UPDATE BugNet_Permissions SET PermissionKey = 'AssignIssue' WHERE PermissionId = 3
+UPDATE BugNet_Permissions SET PermissionKey = 'EditIssue' WHERE PermissionId = 4
+UPDATE BugNet_Permissions SET PermissionKey = 'SubscribeIssue' WHERE PermissionId = 5
+UPDATE BugNet_Permissions SET PermissionKey = 'DeleteIssue' WHERE PermissionId = 6
+UPDATE BugNet_Permissions SET PermissionKey = 'AddComment' WHERE PermissionId = 7
+UPDATE BugNet_Permissions SET PermissionKey = 'EditComment' WHERE PermissionId = 8
+UPDATE BugNet_Permissions SET PermissionKey = 'DeleteComment' WHERE PermissionId = 9
+UPDATE BugNet_Permissions SET PermissionKey = 'AddAttachment' WHERE PermissionId = 10
+UPDATE BugNet_Permissions SET PermissionKey = 'DeleteAttachment' WHERE PermissionId = 11
+UPDATE BugNet_Permissions SET PermissionKey = 'AddRelated' WHERE PermissionId = 12
+UPDATE BugNet_Permissions SET PermissionKey = 'DeleteRelated' WHERE PermissionId = 13
+UPDATE BugNet_Permissions SET PermissionKey = 'ReopenIssue' WHERE PermissionId = 14
+UPDATE BugNet_Permissions SET PermissionKey = 'OwnerEditComment' WHERE PermissionId = 15
+UPDATE BugNet_Permissions SET PermissionKey = 'EditIssueDescription' WHERE PermissionId = 16
+UPDATE BugNet_Permissions SET PermissionKey = 'EditIssueTitle' WHERE PermissionId = 17
+UPDATE BugNet_Permissions SET PermissionKey = 'AdminEditProject' WHERE PermissionId = 18
+UPDATE BugNet_Permissions SET PermissionKey = 'AddTimeEntry' WHERE PermissionId = 19
+UPDATE BugNet_Permissions SET PermissionKey = 'DeleteTimeEntry' WHERE PermissionId = 20
+UPDATE BugNet_Permissions SET PermissionKey = 'AdminCreateProject' WHERE PermissionId = 21
+UPDATE BugNet_Permissions SET PermissionKey = 'AddQuery' WHERE PermissionId = 22
+UPDATE BugNet_Permissions SET PermissionKey = 'DeleteQuery' WHERE PermissionId = 23
+UPDATE BugNet_Permissions SET PermissionKey = 'AdminCloneProject' WHERE PermissionId = 24
+UPDATE BugNet_Permissions SET PermissionKey = 'AddSubIssue' WHERE PermissionId = 25
+UPDATE BugNet_Permissions SET PermissionKey = 'DeleteSubIssue' WHERE PermissionId = 26
+UPDATE BugNet_Permissions SET PermissionKey = 'AddParentIssue' WHERE PermissionId = 27
+UPDATE BugNet_Permissions SET PermissionKey = 'DeleteParentIssue' WHERE PermissionId = 28
+UPDATE BugNet_Permissions SET PermissionKey = 'AdminDeleteProject' WHERE PermissionId = 29
+UPDATE BugNet_Permissions SET PermissionKey = 'ViewProjectCalendar' WHERE PermissionId = 30
+UPDATE BugNet_Permissions SET PermissionKey = 'ChangeIssueStatus' WHERE PermissionId = 31
+UPDATE BugNet_Permissions SET PermissionKey = 'EditQuery' WHERE PermissionId = 32
 GO
 
 COMMIT

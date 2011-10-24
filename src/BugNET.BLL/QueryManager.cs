@@ -12,55 +12,21 @@ namespace BugNET.BLL
         private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
-        /// Saves the query.
+        /// Saves or updates the instance.
         /// </summary>
-        /// <param name="username">The username.</param>
-        /// <param name="projectId">The project id.</param>
-        /// <param name="queryName">Name of the query.</param>
-        /// <param name="isPublic"></param>
-        /// <param name="queryClauses">The query clauses.</param>
+        /// <param name="projectId">The current project id</param>
+        /// <param name="userName">The current user name</param>
+        /// <param name="entity">The query to save or update</param>
         /// <returns></returns>
-        public static bool SaveQuery(string username, int projectId, string queryName, bool isPublic, List<QueryClause> queryClauses)
+        public static bool SaveOrUpdate(string userName, int projectId, Query entity)
         {
-            //if username is null then query is global for all users on a project
+            if (entity == null) throw new ArgumentNullException("entity");
+            if (string.IsNullOrEmpty(entity.Name)) throw (new ArgumentException("The query name cannot be empty or null"));
+            if (entity.Clauses.Count == 0) throw new ArgumentException("The query must have at least one query clause");
 
-            if (projectId <= Globals.NEW_ID)
-                throw new ArgumentOutOfRangeException("projectId");
-
-            if (string.IsNullOrEmpty(queryName))
-                throw new ArgumentOutOfRangeException("queryName");
-
-            if (queryClauses.Count == 0)
-                throw new ArgumentOutOfRangeException("queryClauses");
-
-            return DataProviderManager.Provider.SaveQuery(username, projectId, queryName, isPublic, queryClauses);
-        }
-
-        /// <summary>
-        /// Updates the query.
-        /// </summary>
-        /// <param name="queryId">The query id.</param>
-        /// <param name="username">The username.</param>
-        /// <param name="projectId">The project id.</param>
-        /// <param name="queryName">Name of the query.</param>
-        /// <param name="isPublic">if set to <c>true</c> [is public].</param>
-        /// <param name="queryClauses">The query clauses.</param>
-        /// <returns></returns>
-        public static bool UpdateQuery(int queryId, string username, int projectId, string queryName, bool isPublic, List<QueryClause> queryClauses)
-        {
-            if (queryId <= 0)
-                throw new ArgumentOutOfRangeException("queryId");
-
-            if (projectId <= Globals.NEW_ID)
-                throw new ArgumentOutOfRangeException("projectId");
-
-            if (string.IsNullOrEmpty(queryName))
-                throw new ArgumentOutOfRangeException("queryName");
-
-            if (queryClauses.Count == 0)
-                throw new ArgumentOutOfRangeException("queryClauses");
-
-            return DataProviderManager.Provider.UpdateQuery(queryId, username, projectId, queryName, isPublic, queryClauses);
+            return entity.Id > Globals.NEW_ID ? 
+                DataProviderManager.Provider.SaveQuery(userName, projectId, entity.Name, entity.IsPublic, entity.Clauses) : 
+                DataProviderManager.Provider.UpdateQuery(entity.Id, userName, projectId, entity.Name, entity.IsPublic, entity.Clauses);
         }
 
         /// <summary>
@@ -68,10 +34,9 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="queryId">The query id.</param>
         /// <returns></returns>
-        public static bool DeleteQuery(int queryId)
+        public static bool Delete(int queryId)
         {
-            if (queryId <= Globals.NEW_ID)
-                throw new ArgumentOutOfRangeException("queryId");
+            if (queryId <= Globals.NEW_ID) throw new ArgumentOutOfRangeException("queryId");
 
             return DataProviderManager.Provider.DeleteQuery(queryId);
         }
@@ -81,8 +46,10 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="queryId">The query id.</param>
         /// <returns></returns>
-        public static Query GetQueryById(int queryId)
+        public static Query GetById(int queryId)
         {
+            if (queryId <= Globals.NEW_ID) throw new ArgumentOutOfRangeException("queryId");
+
             return DataProviderManager.Provider.GetQueryById(queryId);
         }
 
@@ -92,10 +59,9 @@ namespace BugNET.BLL
         /// <param name="username">The username.</param>
         /// <param name="projectId">The project id.</param>
         /// <returns></returns>
-        public static List<Query> GetQueriesByUsername(string username, int projectId)
+        public static List<Query> GetByUsername(string username, int projectId)
         {
-            if (projectId <= Globals.NEW_ID)
-                throw new ArgumentOutOfRangeException("projectId");
+            if (projectId <= Globals.NEW_ID) throw new ArgumentOutOfRangeException("projectId");
 
             return DataProviderManager.Provider.GetQueriesByUserName(username, projectId);
         }

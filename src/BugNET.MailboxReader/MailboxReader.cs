@@ -52,7 +52,7 @@ namespace BugNET.MailboxReader
         /// <param name="bodyTemplate">The body template.</param>
         /// <param name="deleteAllMessages">if set to <c>true</c> [delete all messages].</param>
         /// <param name="reportingUserName">Name of the reporting user.</param>
-        public MailboxReader(string server,int port,bool useSSL, string userName, string password, bool processInlineAttachedPictures, string bodyTemplate,
+        public MailboxReader(string server, int port, bool useSSL, string userName, string password, bool processInlineAttachedPictures, string bodyTemplate,
            bool deleteAllMessages, string reportingUserName, bool processAttachments)
         {
             _Server = server;
@@ -79,29 +79,34 @@ namespace BugNET.MailboxReader
                 string body = string.Format(this._BodyTemplate, entry.Content.ToString().Trim(), entry.From, entry.Date.ToString());
                 int projectId = entry.ProjectMailbox.ProjectId;
 
-                Issue MailIssue = IssueManager.GetDefaultIssueByProjectId(projectId, entry.Title.Trim(), body.Trim(), entry.ProjectMailbox.AssignToUserName, this._ReportingUserName);
+                var mailIssue = IssueManager.GetDefaultIssueByProjectId(projectId, entry.Title.Trim(), body.Trim(), entry.ProjectMailbox.AssignToUserName, this._ReportingUserName);
 
-                if (IssueManager.SaveIssue(MailIssue))
+                if (IssueManager.SaveIssue(mailIssue))
                 {
                     //If there is an attached file present then add it to the database 
                     //and copy it to the directory specified in the web.config file
                     foreach (Attachment attMail in entry.MailAttachments)
                     {
-                        byte[] attachmentBytes = new byte[attMail.ContentStream.Length];                        
-                        this.ReadWholeArray(attMail.ContentStream, attachmentBytes);
-                       
-                        IssueAttachment att = new IssueAttachment(0,
-                            MailIssue.Id,
-                            this._ReportingUserName,
-                            this._ReportingUserName,
-                            DateTime.Now,
-                            attMail.ContentDisposition.FileName,
-                            attMail.ContentType.ToString(),
-                            attachmentBytes,
-                            attachmentBytes.Length, "Attached via email");
-                        if (!IssueAttachmentManager.SaveIssueAttachment(att))
+                        var attachmentBytes = new byte[attMail.ContentStream.Length];
+                        ReadWholeArray(attMail.ContentStream, attachmentBytes);
+
+                        var attachment = new IssueAttachment()
+                                             {
+                                                 Id = 0,
+                                                 Attachment = attachmentBytes,
+                                                 Description = "Attached via email",
+                                                 DateCreated = DateTime.Now,
+                                                 ContentType = attMail.ContentType.ToString(),
+                                                 CreatorDisplayName = _ReportingUserName,
+                                                 CreatorUserName = _ReportingUserName,
+                                                 FileName = attMail.ContentDisposition.FileName, 
+                                                 IssueId = mailIssue.Id,
+                                                 Size = attachmentBytes.Length
+                                             };
+
+                        if (!IssueAttachmentManager.SaveOrUpdate(attachment))
                             if (Log.IsWarnEnabled) Log.Warn("Attachment was not added via mailbox reader");
-                    }                    
+                    }
                 }
             }
             catch (Exception ex)
@@ -142,7 +147,7 @@ namespace BugNET.MailboxReader
                 mailClient.Connect();
                 List<int> messageIds;
                 mailClient.GetEmailIdList(out messageIds);
-            
+
                 for (int i = 0; i < messageIds.Count; i++)
                 {
                     bool messageWasProcessed = false;
@@ -159,7 +164,7 @@ namespace BugNET.MailboxReader
 
                         List<string> recipients = new List<string>();
 
-                        foreach(MailAddress address in message.To)
+                        foreach (MailAddress address in message.To)
                             recipients.Add(address.Address);
                         foreach (MailAddress address in message.CC)
                             recipients.Add(address.Address);
@@ -168,7 +173,7 @@ namespace BugNET.MailboxReader
 
                         foreach (string mailbox in recipients)
                         {
-                            ProjectMailbox pmbox = ProjectMailboxManager.GetProjectByMailbox(mailbox);
+                            ProjectMailbox pmbox = ProjectMailboxManager.GetByMailbox(mailbox);
                             if (pmbox != null)
                             {
                                 MailboxEntry entry = new MailboxEntry();
@@ -187,7 +192,7 @@ namespace BugNET.MailboxReader
                                     if (message.Entities.FindAll(m => m.IsBodyHtml).Count > 0)
                                     {
                                         List<RxMailMessage> htmlMessages = message.Entities.FindAll(m => m.IsBodyHtml);
-                                        if(htmlMessages.Count > 0)
+                                        if (htmlMessages.Count > 0)
                                             message = htmlMessages[0];
                                     }
 
@@ -210,7 +215,7 @@ namespace BugNET.MailboxReader
                                 }
 
                                 if (_ProcessAttachments)
-                                { 
+                                {
                                     foreach (Attachment attachment in message.Attachments)
                                     {
                                         if (attachment.ContentStream != null && attachment.ContentDisposition.FileName != null && attachment.ContentDisposition.FileName.Length > 0)
@@ -235,7 +240,7 @@ namespace BugNET.MailboxReader
                             }
                         }
                     }
-                   
+
 
                 }
             }
@@ -245,13 +250,13 @@ namespace BugNET.MailboxReader
                     Log.Error("Mailbox Reader Error", ex);
             }
             finally
-            {            
+            {
                 try
                 {
                     mailClient.Disconnect();
                 }
                 catch
-                {}
+                { }
             }
         }
 

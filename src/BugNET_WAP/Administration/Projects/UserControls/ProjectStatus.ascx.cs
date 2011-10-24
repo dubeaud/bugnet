@@ -1,12 +1,12 @@
+using System;
+using System.Web.UI.WebControls;
+using BugNET.BLL;
+using BugNET.Entities;
+using BugNET.UserInterfaceLayer;
+using BugNET.UserControls;
+
 namespace BugNET.Administration.Projects.UserControls
 {
-    using System;
-    using System.Web.UI.WebControls;
-    using BugNET.BLL;
-    using BugNET.Entities;
-    using BugNET.UserControls;
-    using BugNET.UserInterfaceLayer;
-
     /// <summary>
 	///		Summary description for Status.
 	/// </summary>
@@ -104,7 +104,7 @@ namespace BugNET.Administration.Projects.UserControls
             grdStatus.Columns[3].HeaderText = GetLocalResourceObject("IsClosedState.Text").ToString();
             grdStatus.Columns[4].HeaderText = GetGlobalResourceObject("SharedResources", "Order").ToString();
 
-			grdStatus.DataSource = StatusManager.GetStatusByProjectId(ProjectId);
+			grdStatus.DataSource = StatusManager.GetByProjectId(ProjectId);
 			grdStatus.DataKeyField="Id";
 			grdStatus.DataBind();
 
@@ -130,17 +130,17 @@ namespace BugNET.Administration.Projects.UserControls
                     //move row up
                     if (itemIndex == 0)
                         return;
-                    s = StatusManager.GetStatusById(Convert.ToInt32(grdStatus.DataKeys[e.Item.ItemIndex]));
+                    s = StatusManager.GetById(Convert.ToInt32(grdStatus.DataKeys[e.Item.ItemIndex]));
                     s.SortOrder -= 1;
-                    StatusManager.SaveStatus(s);
+                    StatusManager.SaveOrUpdate(s);
                     break;
                 case "down":
                     //move row down
                     if (itemIndex == grdStatus.Items.Count - 1)
                         return;
-                    s = StatusManager.GetStatusById(Convert.ToInt32(grdStatus.DataKeys[e.Item.ItemIndex]));
+                    s = StatusManager.GetById(Convert.ToInt32(grdStatus.DataKeys[e.Item.ItemIndex]));
                     s.SortOrder += 1;
-                    StatusManager.SaveStatus(s);
+                    StatusManager.SaveOrUpdate(s);
                     break;
             }
             BindStatus();
@@ -158,8 +158,9 @@ namespace BugNET.Administration.Projects.UserControls
 			if (newName == String.Empty)
 				return;
 
-			Status newStatus = new Status(ProjectId, newName, lstImages.SelectedValue,chkClosedState.Checked);
-			if (StatusManager.SaveStatus(newStatus)) 
+			var newStatus = new Status { ProjectId = ProjectId, Name = newName, ImageUrl = lstImages.SelectedValue, IsClosedState = chkClosedState.Checked };
+
+			if (StatusManager.SaveOrUpdate(newStatus)) 
 			{
 				txtName.Text = "";
 				BindStatus();
@@ -180,9 +181,9 @@ namespace BugNET.Administration.Projects.UserControls
         /// <param name="e">The <see cref="System.Web.UI.WebControls.DataGridCommandEventArgs"/> instance containing the event data.</param>
 		void DeleteStatus(Object s, DataGridCommandEventArgs e) 
 		{
-			int statusId = (int)grdStatus.DataKeys[e.Item.ItemIndex];
+			var statusId = (int)grdStatus.DataKeys[e.Item.ItemIndex];
 
-			if (!StatusManager.DeleteStatus(statusId))
+			if (!StatusManager.Delete(statusId))
                 lblError.Text = LoggingManager.GetErrorMessageResource("DeleteStatusError");
 			else
 				BindStatus();
@@ -217,11 +218,11 @@ namespace BugNET.Administration.Projects.UserControls
                 throw new ArgumentNullException("Status Name empty");
             }
 
-            Status s = StatusManager.GetStatusById(Convert.ToInt32(grdStatus.DataKeys[e.Item.ItemIndex]));
+            Status s = StatusManager.GetById(Convert.ToInt32(grdStatus.DataKeys[e.Item.ItemIndex]));
             s.IsClosedState = chkClosed.Checked;
             s.Name = txtStatusName.Text.Trim();
             s.ImageUrl = pickimg.SelectedValue;
-            StatusManager.SaveStatus(s);
+            StatusManager.SaveOrUpdate(s);
 
             grdStatus.EditItemIndex = -1;
             BindStatus();

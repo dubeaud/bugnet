@@ -2,6 +2,7 @@ using System;
 using System.Net.Mail;
 using System.Net;
 using System.Web;
+using BugNET.Common;
 using log4net;
 
 namespace BugNET.BLL.Notifications
@@ -73,11 +74,11 @@ namespace BugNET.BLL.Notifications
                 //check if this user had this notifiction type enabled in their profile.
                 if (user != null && UserManager.IsNotificationTypeEnabled(context.Username, Name))
                 {                                   
-                    var from = HostSettingManager.GetHostSetting("HostEmailAddress");
-                    var smtpServer = HostSettingManager.GetHostSetting("SMTPServer");
-                    var smtpPort = int.Parse(HostSettingManager.GetHostSetting("SMTPPort"));
-                    var smtpAuthentictation = Convert.ToBoolean(HostSettingManager.GetHostSetting("SMTPAuthentication"));
-                    var smtpUseSSL = Boolean.Parse(HostSettingManager.GetHostSetting("SMTPUseSSL"));
+                    var from = HostSettingManager.HostEmailAddress;
+                    var smtpServer = HostSettingManager.SmtpServer;
+                    var smtpPort = int.Parse(HostSettingManager.Get(HostSettingNames.SMTPPort));
+                    var smtpAuthentictation = Convert.ToBoolean(HostSettingManager.Get(HostSettingNames.SMTPAuthentication));
+                    var smtpUseSSL = Boolean.Parse(HostSettingManager.Get(HostSettingNames.SMTPUseSSL));
                     
 
                     // Security Bugfix by SMOSS
@@ -88,9 +89,9 @@ namespace BugNET.BLL.Notifications
 
                     if (smtpAuthentictation)
                     {
-                        smtpUsername = HostSettingManager.GetHostSetting("SMTPUsername", string.Empty);
-                        smtpPassword = HostSettingManager.GetHostSetting("SMTPPassword", string.Empty);
-                        smtpDomain = HostSettingManager.GetHostSetting("SMTPDomain", string.Empty);
+                        smtpUsername = HostSettingManager.Get(HostSettingNames.SMTPUsername, string.Empty);
+                        smtpPassword = HostSettingManager.Get(HostSettingNames.SMTPPassword, string.Empty);
+                        smtpDomain = HostSettingManager.Get(HostSettingNames.SMTPDomain, string.Empty);
                     }
 
                     using(var smtp = new SmtpClient())

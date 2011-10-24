@@ -1,16 +1,17 @@
 ﻿
-namespace BugNET.Entities
+namespace BugNET.Common
 {
    
     /// <summary>
     /// Enumeration for the storage type of attachments
     /// </summary>
-    public enum IssueAttachmentStorageType
+    public enum IssueAttachmentStorageTypes
     {
         /// <summary>
         /// File System
         /// </summary>
         FileSystem = 1,
+
         /// <summary>
         /// Database
         /// </summary>

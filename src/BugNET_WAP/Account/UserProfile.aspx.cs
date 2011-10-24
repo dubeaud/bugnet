@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI.WebControls;
@@ -52,13 +53,8 @@ namespace BugNET.Account
                     UserName.Text =objUser.UserName;
                     Email.Text = objUser.Email;
                 }
-
-                objUser = null;
             }
-
         }
-
-       
 
         /// <summary>
         /// Adds the user.
@@ -69,21 +65,20 @@ namespace BugNET.Account
         {
             //The users must be added to a list first because the collection can not
             //be modified while we iterate through it.
-            var usersToAdd = new List<ListItem>();
-
-            foreach (ListItem item in lstAllProjects.Items)
-                if (item.Selected)
-                    usersToAdd.Add(item);
-
+            var usersToAdd = lstAllProjects.Items.Cast<ListItem>().Where(item => item.Selected).ToList();
 
             foreach (var item in usersToAdd)
             {
-                ProjectNotification pn = new ProjectNotification(Convert.ToInt32(item.Value),Security.GetUserName());
-                if (ProjectNotificationManager.SaveProjectNotification(pn))
-                {
-                    lstSelectedProjects.Items.Add(item);
-                    lstAllProjects.Items.Remove(item);
-                }
+                var notification = new ProjectNotification
+                        {
+                            ProjectId = Convert.ToInt32(item.Value),
+                            NotificationUsername = Security.GetUserName()
+                        };
+
+                if (!ProjectNotificationManager.SaveOrUpdate(notification)) continue;
+
+                lstSelectedProjects.Items.Add(item);
+                lstAllProjects.Items.Remove(item);
             }
 
             lstSelectedProjects.SelectedIndex = -1;
@@ -98,20 +93,13 @@ namespace BugNET.Account
         {
             //The users must be added to a list first because the collection can not
             //be modified while we iterate through it.
-            var usersToRemove = new List<ListItem>();
-
-            foreach (ListItem item in lstSelectedProjects.Items)
-                if (item.Selected)
-                    usersToRemove.Add(item);
-
+            var usersToRemove = lstSelectedProjects.Items.Cast<ListItem>().Where(item => item.Selected).ToList();
 
             foreach (var item in usersToRemove)
             {
-                if (ProjectNotificationManager.DeleteProjectNotification(Convert.ToInt32(item.Value),Security.GetUserName()))
-                {
-                    lstAllProjects.Items.Add(item);
-                    lstSelectedProjects.Items.Remove(item);
-                }
+                if (!ProjectNotificationManager.Delete(Convert.ToInt32(item.Value), Security.GetUserName())) continue;
+                lstAllProjects.Items.Add(item);
+                lstSelectedProjects.Items.Remove(item);
             }
 
             lstAllProjects.SelectedIndex = -1;
@@ -199,7 +187,7 @@ namespace BugNET.Account
                     lstAllProjects.DataBind();
 
                     // Copy selected users into Selected Users List Box
-                    List<ProjectNotification> projectNotifications = ProjectNotificationManager.GetProjectNotificationsByUsername(Security.GetUserName());
+                    List<ProjectNotification> projectNotifications = ProjectNotificationManager.GetByUsername(Security.GetUserName());
                     foreach (ProjectNotification currentNotification in projectNotifications)
                     {
                         ListItem matchItem = lstAllProjects.Items.FindByValue(currentNotification.ProjectId.ToString());

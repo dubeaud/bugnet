@@ -420,4 +420,16 @@
   <data name="Size" xml:space="preserve">
     <value>Size</value>
   </data>
+  <data name="False" xml:space="preserve">
+    <value>False</value>
+  </data>
+  <data name="True" xml:space="preserve">
+    <value>True</value>
+  </data>
+  <data name="Empty" xml:space="preserve">
+    <value>Empty</value>
+  </data>
+  <data name="TotalHours" xml:space="preserve">
+    <value>Total Hours</value>
+  </data>
 </root>

@@ -102,7 +102,7 @@ namespace BugNET.Administration.Projects.UserControls
             grdPriorities.Columns[2].HeaderText = GetGlobalResourceObject("SharedResources", "Image").ToString();
             grdPriorities.Columns[3].HeaderText = GetGlobalResourceObject("SharedResources", "Order").ToString();
 
-			grdPriorities.DataSource = PriorityManager.GetPrioritiesByProjectId(ProjectId);
+			grdPriorities.DataSource = PriorityManager.GetByProjectId(ProjectId);
 			grdPriorities.DataKeyField="Id";
 			grdPriorities.DataBind();
 
@@ -127,17 +127,17 @@ namespace BugNET.Administration.Projects.UserControls
                     //move row up
                     if (itemIndex == 0)
                         return;
-                    p = PriorityManager.GetPriorityById(Convert.ToInt32(grdPriorities.DataKeys[e.Item.ItemIndex]));
+                    p = PriorityManager.GetById(Convert.ToInt32(grdPriorities.DataKeys[e.Item.ItemIndex]));
                     p.SortOrder -= 1;
-                    PriorityManager.SavePriority(p);
+                    PriorityManager.SaveOrUpdate(p);
                     break;
                 case "down":
                     //move row down
                     if (itemIndex == grdPriorities.Items.Count - 1)
                         return;
-                    p = PriorityManager.GetPriorityById(Convert.ToInt32(grdPriorities.DataKeys[e.Item.ItemIndex]));
+                    p = PriorityManager.GetById(Convert.ToInt32(grdPriorities.DataKeys[e.Item.ItemIndex]));
                     p.SortOrder += 1;
-                    PriorityManager.SavePriority(p);
+                    PriorityManager.SaveOrUpdate(p);
                     break;
             }
             BindPriorities();
@@ -170,10 +170,10 @@ namespace BugNET.Administration.Projects.UserControls
                 throw new ArgumentNullException("Priorty Name is empty.");
             }
 
-            Priority p = PriorityManager.GetPriorityById(Convert.ToInt32(grdPriorities.DataKeys[e.Item.ItemIndex]));
+            Priority p = PriorityManager.GetById(Convert.ToInt32(grdPriorities.DataKeys[e.Item.ItemIndex]));
             p.Name = txtPriorityName.Text.Trim();
             p.ImageUrl = pickimg.SelectedValue;
-            PriorityManager.SavePriority(p);
+            PriorityManager.SaveOrUpdate(p);
 
             grdPriorities.EditItemIndex = -1;
             BindPriorities();
@@ -209,13 +209,14 @@ namespace BugNET.Administration.Projects.UserControls
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
 		protected void AddPriority(Object s, EventArgs e) 
 		{
-			string newName = txtName.Text.Trim();
+			var newName = txtName.Text.Trim();
 
 			if (newName == String.Empty)
 				return;
 
-			Priority newPriority = new Priority(ProjectId, newName, lstImages.SelectedValue);
-			if (PriorityManager.SavePriority(newPriority)) 
+			var newPriority = new Priority { ProjectId = ProjectId, Name = newName, ImageUrl = lstImages.SelectedValue };
+
+			if (PriorityManager.SaveOrUpdate(newPriority)) 
 			{
 				txtName.Text = "";
 				lstImages.SelectedValue = String.Empty;
@@ -237,7 +238,7 @@ namespace BugNET.Administration.Projects.UserControls
 		{
 			int priorityId = (int)grdPriorities.DataKeys[e.Item.ItemIndex];
 
-			if (!PriorityManager.DeletePriority(priorityId))
+			if (!PriorityManager.Delete(priorityId))
 				lblError.Text =  LoggingManager.GetErrorMessageResource("DeletePriorityError");
 			else
 				BindPriorities();

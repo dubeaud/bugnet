@@ -6,7 +6,7 @@ namespace BugNET.UserInterfaceLayer
     /// This class gives the programmer access to quick and easy redirects when 
     /// errors happen.
     /// </summary>
-    public class ErrorRedirector
+    public static class ErrorRedirector
     {
         /// <summary>
         /// Transfers to error page.

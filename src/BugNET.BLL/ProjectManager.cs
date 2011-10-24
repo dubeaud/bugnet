@@ -45,7 +45,7 @@ namespace BugNET.BLL
             }
 
             //create attachment directory
-            if (projectToSave.AttachmentStorageType == IssueAttachmentStorageType.FileSystem)
+            if (projectToSave.AttachmentStorageType == IssueAttachmentStorageTypes.FileSystem)
             {
                 try
                 {
@@ -85,7 +85,7 @@ namespace BugNET.BLL
         private static bool UpdateProject(Project projectToUpdate)
         {
             var p = GetProjectById(projectToUpdate.Id);
-            if (projectToUpdate.AttachmentStorageType == IssueAttachmentStorageType.FileSystem && p.UploadPath != projectToUpdate.UploadPath)
+            if (projectToUpdate.AttachmentStorageType == IssueAttachmentStorageTypes.FileSystem && p.UploadPath != projectToUpdate.UploadPath)
             {
                 // BGN-1909
                 // Better santization of Upload Paths
@@ -271,11 +271,11 @@ namespace BugNET.BLL
             if (DataProviderManager.Provider.RemoveUserFromProject(userName, projectId))
             {
                 //Remove the user from any project notifications.
-                List<ProjectNotification> notifications = ProjectNotificationManager.GetProjectNotificationsByUsername(userName);
+                List<ProjectNotification> notifications = ProjectNotificationManager.GetByUsername(userName);
                 if (notifications.Count > 0)
                 {
                     foreach (ProjectNotification notify in notifications)
-                        ProjectNotificationManager.DeleteProjectNotification(notify.ProjectId, userName);
+                        ProjectNotificationManager.Delete(notify.ProjectId, userName);
                 }
             }
             return true;
@@ -347,7 +347,7 @@ namespace BugNET.BLL
                 var newProject = GetProjectById(newProjectId);
                 try
                 {
-                    if (newProject.AllowAttachments && newProject.AttachmentStorageType == IssueAttachmentStorageType.FileSystem)
+                    if (newProject.AllowAttachments && newProject.AttachmentStorageType == IssueAttachmentStorageTypes.FileSystem)
                     {
                         // Old bugfix which wasn't carried forward.
                         newProject.UploadPath = Guid.NewGuid().ToString();

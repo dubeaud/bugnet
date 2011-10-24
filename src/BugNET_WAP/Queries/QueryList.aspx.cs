@@ -132,7 +132,7 @@ namespace BugNET.Queries
 		/// </summary>
 		void BindQueries() 
 		{         
-			dropQueries.DataSource = QueryManager.GetQueriesByUsername(User.Identity.Name,ProjectId);
+			dropQueries.DataSource = QueryManager.GetByUsername(User.Identity.Name,ProjectId);
 			dropQueries.DataBind();
 
 			if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.DeleteQuery.ToString()))
@@ -216,7 +216,7 @@ namespace BugNET.Queries
 			if (dropQueries.SelectedValue == 0)
 				return;
 
-			QueryManager.DeleteQuery(dropQueries.SelectedValue);
+			QueryManager.Delete(dropQueries.SelectedValue);
 			BindQueries();
 		}
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.UI.WebControls;
 using BugNET.BLL;
 using BugNET.Entities;
@@ -58,7 +59,7 @@ namespace BugNET.Administration.Projects.UserControls
             lstAllUsers.DataBind();
 
             // Copy selected users into Selected Users List Box
-            IEnumerable<ProjectNotification> projectNotifications = ProjectNotificationManager.GetProjectNotificationsByProjectId(ProjectId);
+            IEnumerable<ProjectNotification> projectNotifications = ProjectNotificationManager.GetByProjectId(ProjectId);
             foreach (ProjectNotification currentNotification in projectNotifications)
             {
                 ListItem matchItem = lstAllUsers.Items.FindByValue(currentNotification.NotificationUsername);
@@ -93,21 +94,20 @@ namespace BugNET.Administration.Projects.UserControls
         {
             //The users must be added to a list first becuase the collection can not
             //be modified while we iterate through it.
-            var usersToAdd = new List<ListItem>();
-
-            foreach (ListItem item in lstAllUsers.Items)
-                if (item.Selected)
-                    usersToAdd.Add(item);
-
+            var usersToAdd = lstAllUsers.Items.Cast<ListItem>().Where(item => item.Selected).ToList();
 
             foreach (var item in usersToAdd)
             {
-                ProjectNotification pn = new ProjectNotification(ProjectId,item.Value);
-                if (ProjectNotificationManager.SaveProjectNotification(pn))
-                {
-                    lstSelectedUsers.Items.Add(item);
-                    lstAllUsers.Items.Remove(item);
-                }
+                var notification = new ProjectNotification
+                                       {
+                                           ProjectId = ProjectId,
+                                           NotificationUsername = item.Value
+                                       };
+
+                if (!ProjectNotificationManager.SaveOrUpdate(notification)) continue;
+
+                lstSelectedUsers.Items.Add(item);
+                lstAllUsers.Items.Remove(item);
             }
 
             lstSelectedUsers.SelectedIndex = -1;
@@ -122,16 +122,11 @@ namespace BugNET.Administration.Projects.UserControls
         {
             //The users must be added to a list first becuase the collection can not
             //be modified while we iterate through it.
-            var usersToRemove = new List<ListItem>();
-
-            foreach (ListItem item in lstSelectedUsers.Items)
-                if (item.Selected)
-                    usersToRemove.Add(item);
-
+            var usersToRemove = lstSelectedUsers.Items.Cast<ListItem>().Where(item => item.Selected).ToList();
 
             foreach (var item in usersToRemove)
             {             
-                if (ProjectNotificationManager.DeleteProjectNotification(ProjectId,item.Value))
+                if (ProjectNotificationManager.Delete(ProjectId,item.Value))
                 {
                     lstAllUsers.Items.Add(item);
                     lstSelectedUsers.Items.Remove(item);

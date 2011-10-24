@@ -14,7 +14,7 @@
     </div>
 	<asp:DataGrid id="dgProjects"  Width="100%" SkinID="DataGrid"  AllowSorting="true" runat="server">
 		<columns>
-			<asp:hyperlinkcolumn DataNavigateUrlField="Id" DataNavigateUrlFormatString="EditProject.aspx?id={0}&amp;tid=1"
+			<asp:hyperlinkcolumn DataNavigateUrlField="Id" DataNavigateUrlFormatString="EditProject.aspx?pid={0}&amp;tid=1"
 				DataTextField="Name"  HeaderText="<%$ Resources:Project %>" SortExpression="Name" />
 			<asp:BoundColumn HeaderText="<%$ Resources:SharedResources, Description %>" DataField ="Description" SortExpression="Description" />
 			<asp:BoundColumn HeaderText="<%$ Resources:ProjectManager %>" DataField="ManagerDisplayName" SortExpression="Manager"/>

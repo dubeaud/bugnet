@@ -1,5 +1,7 @@
 <%@ Control Language="c#" Inherits="BugNET.Administration.Projects.UserControls.ProjectRoles" Codebehind="ProjectRoles.ascx.cs" %>
 
+    <asp:HiddenField runat="server" ID="txtProjectID" Value="0"/>
+
     <asp:Label id="lblError" ForeColor="red" EnableViewState="false" runat="Server" />
     <h2><asp:literal ID="RolesTitle" runat="Server" meta:resourcekey="RolesTitle" /></h2>
 	<asp:panel id="Roles" Visible="True" CssClass="myform" runat="server">
@@ -8,7 +10,7 @@
 	         <asp:label ID="DescriptionLabel" runat="server" meta:resourcekey="DescriptionLabel" />
 	    </p>    
         <br />
-	    <asp:GridView OnRowCommand="gvRoles_RowCommand" SkinID="GridView" ID="gvRoles" runat="server"  AutoGenerateColumns="False" DataSourceID="SecurityRoles">
+	    <asp:GridView HorizontalAlign="Left" OnRowCommand="gvRoles_RowCommand" SkinID="GridView" ID="gvRoles" runat="server" AutoGenerateColumns="False" DataSourceID="SecurityRoles">
             <Columns>
                 <asp:TemplateField>
                     <ItemStyle Width="20px" />
@@ -17,17 +19,19 @@
                           ImageAlign="Top" />
                     </ItemTemplate>
                </asp:TemplateField>
-               <asp:BoundField DataField="Name" ItemStyle-Width="150px" HeaderText="<%$ Resources:SharedResources, Name %>"   />
-               <asp:BoundField DataField="Description" ItemStyle-Width="200px"  HeaderText="<%$ Resources:SharedResources, Description %>"  />
-               <asp:CheckBoxField DataField="AutoAssign" HeaderText="Auto Assignment" meta:resourcekey="AutoAssignmentColumnHeader"  />
+               <asp:BoundField HeaderStyle-HorizontalAlign="Left" ItemStyle-Width="200px" DataField="Name" HeaderText="<%$ Resources:SharedResources, Name %>" />
+               <asp:BoundField HeaderStyle-HorizontalAlign="Left" ItemStyle-Width="200px" DataField="Description" HeaderText="<%$ Resources:SharedResources, Description %>"  />
+               <asp:CheckBoxField HeaderStyle-HorizontalAlign="Left" DataField="AutoAssign" HeaderText="Auto Assignment" meta:resourcekey="AutoAssignmentColumnHeader" />
             </Columns>
         </asp:GridView>
         <div style="margin-top:1em">
             <asp:ImageButton runat="server" OnClick="AddRole_Click" ImageUrl="~/Images/shield_add.gif" CssClass="icon" meta:resourcekey="AddNewRole" AlternateText="Add Role" ID="add" />
             <asp:LinkButton ID="cmdAddRole" OnClick="AddRole_Click" runat="server" meta:resourcekey="AddNewRole" Text="Add New Role" />
         </div>
-    <asp:ObjectDataSource ID="SecurityRoles" runat="server" SelectMethod="GetRolesByProject"
-        TypeName="BugNET.BLL.RoleManager">
+    <asp:ObjectDataSource ID="SecurityRoles" runat="server" SelectMethod="GetByProjectId" TypeName="BugNET.BLL.RoleManager">
+        <SelectParameters>
+              <asp:ControlParameter ControlID="txtProjectID" Name="projectId" PropertyName="Value" Type="Int32" />
+          </SelectParameters>
     </asp:ObjectDataSource>
 
  </asp:panel>

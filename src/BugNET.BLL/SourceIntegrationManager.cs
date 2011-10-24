@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using BugNET.Common;
 using BugNET.Entities;
 using log4net;
 
@@ -23,7 +24,7 @@ namespace BugNET.BLL
         {
             var sb = new StringBuilder();
 
-            var repoPath = HostSettingManager.GetHostSetting("RepositoryRootPath") + repositoryName;
+            var repoPath = HostSettingManager.Get(HostSettingNames.RepositoryRootPath) + repositoryName;
 
             var repoCheckoutPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) +
                 Path.DirectorySeparatorChar + Guid.NewGuid().ToString();
@@ -53,7 +54,7 @@ namespace BugNET.BLL
                 sb.AppendLine();
 
                 // Add Issue tracker properties
-                var url = HostSettingManager.GetHostSetting("DefaultUrl").Trim();
+                var url = HostSettingManager.Get(HostSettingNames.DefaultUrl).Trim();
                 if (!url.EndsWith("/"))
                     url += "/";
 
@@ -89,10 +90,10 @@ namespace BugNET.BLL
                 if (!repoPath.EndsWith(Path.DirectorySeparatorChar.ToString()))
                     repoPath += Path.DirectorySeparatorChar;
 
-                if (!String.IsNullOrEmpty(HostSettingManager.GetHostSetting("SvnHookPath")))
+                if (!String.IsNullOrEmpty(HostSettingManager.Get(HostSettingNames.SvnHookPath)))
                 {
                     using (var sw = File.CreateText(repoPath + "hooks" + Path.DirectorySeparatorChar + "post-commit.bat"))
-                        sw.WriteLine(HostSettingManager.GetHostSetting("SvnHookPath") + @" post-commit %1 %2");
+                        sw.WriteLine(HostSettingManager.Get(HostSettingNames.SvnHookPath) + @" post-commit %1 %2");
                 }
 
                 return sb.ToString();

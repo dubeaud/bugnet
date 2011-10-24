@@ -1,27 +1,30 @@
+using System;
+using System.Collections.Generic;
+using System.Web.UI.WebControls;
+using BugNET.BLL;
+using BugNET.Common;
+using BugNET.Entities;
+using BugNET.UserInterfaceLayer;
+
 namespace BugNET.Issues.UserControls
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Web.UI.WebControls;
-    using BugNET.BLL;
-    using BugNET.Common;
-    using BugNET.Entities;
-    using BugNET.UserInterfaceLayer;
     /// <summary>
 	///		Summary description for SubIssues.
 	/// </summary>
 	public partial class SubIssues : System.Web.UI.UserControl, IIssueTab
 	{
-		
-		private int _IssueId = 0;
-        private int _ProjectId = 0;
+        protected SubIssues()
+        {
+            ProjectId = 0;
+            IssueId = 0;
+        }
 
         /// <summary>
         /// Binds the related.
         /// </summary>
-		protected void BindRelated() 
+        private void BindRelated() 
 		{
-			grdIssues.DataSource = RelatedIssueManager.GetChildIssues(_IssueId);
+			grdIssues.DataSource = RelatedIssueManager.GetChildIssues(IssueId);
 			grdIssues.DataKeyField = "IssueId";
 			grdIssues.DataBind();
 		}
@@ -32,19 +35,20 @@ namespace BugNET.Issues.UserControls
         /// </summary>
         /// <param name="s">The s.</param>
         /// <param name="e">The <see cref="System.Web.UI.WebControls.DataGridItemEventArgs"/> instance containing the event data.</param>
-		protected void grdIssuesItemDataBound(Object s, DataGridItemEventArgs e) 
+		protected void GrdIssuesItemDataBound(Object s, DataGridItemEventArgs e) 
 		{
-			if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem) 
-			{
-				RelatedIssue currentIssue = (RelatedIssue)e.Item.DataItem;
+            if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem) return;
 
-				Label lblIssueId = (Label)e.Item.FindControl( "lblIssueId" );
-				lblIssueId.Text = currentIssue.IssueId.ToString();
-                Label lblIssueStatus = (Label)e.Item.FindControl("IssueStatusLabel");
-                lblIssueStatus.Text = currentIssue.Status;
-                Label lblIssueResolution = (Label)e.Item.FindControl("IssueResolutionLabel");
-                lblIssueResolution.Text = currentIssue.Resolution;
-			}
+            var currentIssue = (RelatedIssue)e.Item.DataItem;
+
+            var labelIssueId = (Label)e.Item.FindControl( "lblIssueId" );
+            labelIssueId.Text = currentIssue.IssueId.ToString();
+
+            var lblIssueStatus = (Label)e.Item.FindControl("IssueStatusLabel");
+            lblIssueStatus.Text = currentIssue.Status;
+
+            var lblIssueResolution = (Label)e.Item.FindControl("IssueResolutionLabel");
+            lblIssueResolution.Text = currentIssue.Resolution;
 		}
 
         /// <summary>
@@ -52,47 +56,61 @@ namespace BugNET.Issues.UserControls
         /// </summary>
         /// <param name="s">The s.</param>
         /// <param name="e">The <see cref="System.Web.UI.WebControls.DataGridCommandEventArgs"/> instance containing the event data.</param>
-		protected void grdIssuesItemCommand(Object s, DataGridCommandEventArgs e) 
+		protected void GrdIssuesItemCommand(Object s, DataGridCommandEventArgs e) 
 		{
-			int IssueId = (int)grdIssues.DataKeys[e.Item.ItemIndex];
-			RelatedIssueManager.DeleteChildIssue(_IssueId, IssueId);
+			var issueId = (int)grdIssues.DataKeys[e.Item.ItemIndex];
+			RelatedIssueManager.DeleteChildIssue(IssueId, issueId);
 
-            IssueHistory history = new IssueHistory(_IssueId, Security.GetUserName(), Resources.SharedResources.ChildIssue.ToString(), string.Empty, Resources.SharedResources.Deleted);
-            IssueHistoryManager.SaveIssueHistory(history);
+            var history = new IssueHistory
+                              {
+                                  IssueId = IssueId,
+                                  DateChanged = DateTime.Now,
+                                  CreatedUserName = Security.GetUserName(),
+                                  FieldChanged = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "ChildIssue", "Child Issue"),
+                                  OldValue = string.Empty,
+                                  NewValue = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Deleted", "Deleted")
+                              };
 
-            List<IssueHistory> changes = new List<IssueHistory>();
-            changes.Add(history);
+            IssueHistoryManager.SaveOrUpdate(history);
 
-            IssueNotificationManager.SendIssueNotifications(_IssueId, changes);
+            var changes = new List<IssueHistory> {history};
+
+            IssueNotificationManager.SendIssueNotifications(IssueId, changes);
 
 			BindRelated();
 		}
 
         /// <summary>
-        /// Adds the related bug.
+        /// Adds the related issue.
         /// </summary>
         /// <param name="s">The s.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
 		protected void AddRelatedIssue(Object s, EventArgs e) 
 		{
-			if (txtIssueId.Text == String.Empty)
-				return;
+			if (txtIssueId.Text == String.Empty) return;
 
-			if (Page.IsValid) 
-			{
-				RelatedIssueManager.CreateNewChildIssue(_IssueId, Int32.Parse(txtIssueId.Text) );
+            if (!Page.IsValid) return;
 
-                IssueHistory history = new IssueHistory(_IssueId, Security.GetUserName(), Resources.SharedResources.ChildIssue.ToString(), string.Empty, Resources.SharedResources.Added);
-                IssueHistoryManager.SaveIssueHistory(history);
+            RelatedIssueManager.CreateNewChildIssue(IssueId, Int32.Parse(txtIssueId.Text) );
 
-                List<IssueHistory> changes = new List<IssueHistory>();
-                changes.Add(history);
+            var history = new IssueHistory
+            {
+                IssueId = IssueId,
+                DateChanged = DateTime.Now,
+                CreatedUserName = Security.GetUserName(),
+                FieldChanged = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "ChildIssue", "Child Issue"),
+                OldValue = string.Empty,
+                NewValue = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Added", "Added")
+            };
 
-                IssueNotificationManager.SendIssueNotifications(_IssueId, changes);
+            IssueHistoryManager.SaveOrUpdate(history);
 
-				txtIssueId.Text = String.Empty;
-				BindRelated();
-			}
+            var changes = new List<IssueHistory> {history};
+
+            IssueNotificationManager.SendIssueNotifications(IssueId, changes);
+
+            txtIssueId.Text = String.Empty;
+            BindRelated();
 		}
 
 
@@ -100,25 +118,17 @@ namespace BugNET.Issues.UserControls
         #region IIssueTab Members
 
         /// <summary>
-        /// Gets or sets the bug id.
+        /// Gets or sets the issue id.
         /// </summary>
-        /// <value>The bug id.</value>
-        public int IssueId
-        {
-            get { return _IssueId; }
-            set { _IssueId = value; }
-        }
+        /// <value>The issue id.</value>
+        public int IssueId { get; set; }
 
 
         /// <summary>
         /// Gets or sets the project id.
         /// </summary>
         /// <value>The project id.</value>
-        public int ProjectId
-        {
-            get { return _ProjectId; }
-            set { _ProjectId = value; }
-        }
+        public int ProjectId { get; set; }
 
 
         /// <summary>

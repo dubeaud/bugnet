@@ -178,8 +178,7 @@ namespace BugNET.BLL
         /// <param name="user">The user.</param>
         public static void UpdateUser(MembershipUser user)
         {
-            if (user == null)
-                throw new ArgumentNullException("user");
+            if (user == null) throw new ArgumentNullException("user");
 
             Membership.UpdateUser(user);
         }
@@ -194,10 +193,8 @@ namespace BugNET.BLL
         /// </returns>
         public static bool IsInRole(int projectId, string roleName)
         {
-            if (projectId <= Globals.NEW_ID)
-                throw new ArgumentOutOfRangeException("projectId");
-            if (String.IsNullOrEmpty(roleName))
-                throw new ArgumentNullException("roleName");
+            if (projectId <= Globals.NEW_ID) throw new ArgumentOutOfRangeException("projectId");
+            if (String.IsNullOrEmpty(roleName)) throw new ArgumentNullException("roleName");
 
             return IsInRole(HttpContext.Current.User.Identity.Name, projectId, roleName);
         }
@@ -211,12 +208,10 @@ namespace BugNET.BLL
         /// </returns>
         public static bool IsInRole(string roleName)
         {
-            if (String.IsNullOrEmpty(roleName))
-                throw new ArgumentNullException("roleName");
-            if (HttpContext.Current.User.Identity.Name.Length == 0)
-                return false;
+            if (String.IsNullOrEmpty(roleName)) throw new ArgumentNullException("roleName");
+            if (HttpContext.Current.User.Identity.Name.Length == 0) return false;
 
-            var roles = RoleManager.GetRolesForUser(HttpContext.Current.User.Identity.Name);
+            var roles = RoleManager.GetForUser(HttpContext.Current.User.Identity.Name);
             return roles.Exists(r => r.Name == roleName);
         }
 
@@ -231,12 +226,11 @@ namespace BugNET.BLL
         /// </returns>
         public static bool IsInRole(string userName, int projectId, string roleName)
         {
-            if (String.IsNullOrEmpty(roleName))
-                throw new ArgumentNullException("roleName");
-            if (String.IsNullOrEmpty(userName))
-                throw new ArgumentNullException("userName");
+            if (String.IsNullOrEmpty(roleName)) throw new ArgumentNullException("roleName");
+            if (String.IsNullOrEmpty(userName)) throw new ArgumentNullException("userName");
+            //if (projectId <= Globals.NEW_ID) throw new ArgumentNullException("projectId");
 
-            var roles = RoleManager.GetRolesForUser(userName, projectId);
+            var roles = RoleManager.GetForUser(userName, projectId);
 
             var role = roles.Find(r => r.Name == roleName);
             return role != null;
@@ -252,11 +246,9 @@ namespace BugNET.BLL
         /// </returns>
         public static bool HasPermission(int projectId, string permissionKey)
         {
-            if (string.IsNullOrEmpty(permissionKey))
-                throw new ArgumentNullException("permissionKey");
+            if (string.IsNullOrEmpty(permissionKey)) throw new ArgumentNullException("permissionKey");
 
             return HasPermission(Security.GetUserName(), projectId, permissionKey);
-
         }
 
         /// <summary>
@@ -270,18 +262,16 @@ namespace BugNET.BLL
         /// </returns>
         public static bool HasPermission(string userName, int projectId, string permissionKey)
         {
-            if (string.IsNullOrEmpty(userName))
-                return false;
-            if (string.IsNullOrEmpty(permissionKey))
-                throw new ArgumentNullException("permissionKey");
+            if (string.IsNullOrEmpty(userName)) return false;
+            if (string.IsNullOrEmpty(permissionKey)) throw new ArgumentNullException("permissionKey");
+            //if (projectId <= Globals.NEW_ID) throw new ArgumentNullException("projectId");
 
             //return true for all permission checks if the user is in the super users role.
-            if (IsInRole(Globals.SUPER_USER_ROLE))
-                return true;
+            if (IsInRole(Globals.SUPER_USER_ROLE)) return true;
 
-            var roles = RoleManager.GetRolesForUser(userName, projectId);
+            var roles = RoleManager.GetForUser(userName, projectId);
 
-            return roles.Any(r => RoleManager.RoleHasPermission(projectId, r.Name, permissionKey));
+            return roles.Any(r => RoleManager.HasPermission(projectId, r.Name, permissionKey));
         }
 
         /// <summary>
@@ -291,8 +281,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static string GetUserDisplayName(string userName)
         {
-            if (string.IsNullOrEmpty(userName))
-                throw new ArgumentNullException("userName");
+            if (string.IsNullOrEmpty(userName)) throw new ArgumentNullException("userName");
 
             var displayName = new WebProfile().GetProfile(userName).DisplayName;
             return !string.IsNullOrEmpty(displayName) ? displayName : userName;
@@ -316,8 +305,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static void SendUserPasswordReminderNotification(MembershipUser user, string passwordAnswer)
         {
-            if (user == null)
-                throw new ArgumentNullException("user");
+            if (user == null) throw new ArgumentNullException("user");
 
             //TODO: Move this to xslt notification
             //load template and replace the tokens
@@ -325,8 +313,16 @@ namespace BugNET.BLL
             var subject = NotificationManager.Instance.LoadNotificationTemplate("PasswordReminderSubject");
             var displayname = GetUserDisplayName(user.UserName);
 
-            NotificationManager.Instance.SendNotification(user.UserName, subject, String.Format(template, HostSettingManager.GetHostSetting("ApplicationTitle"), user.GetPassword(passwordAnswer)), displayname);
+            var context = new NotificationContext
+                              {
+                                  BodyText = String.Format(template, HostSettingManager.Get(HostSettingNames.ApplicationTitle)),
+                                  EmailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text), 
+                                  Subject = subject, 
+                                  UserDisplayName = displayname, 
+                                  Username = user.UserName
+                              };
 
+            NotificationManager.Instance.SendNotification(context);
         }
 
         /// <summary>
@@ -335,15 +331,13 @@ namespace BugNET.BLL
         /// <param name="user">The user.</param>
         public static void SendUserVerificationNotification(MembershipUser user)
         {
-            if (user == null)
-                throw new ArgumentNullException("user");
+            if (user == null) throw new ArgumentNullException("user");
 
-            var type = (EmailFormatType)HostSettingManager.GetHostSetting("SMTPEMailFormat", (int)EmailFormatType.Text);
+            var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
 
             //load template and replace the tokens
-            var template = NotificationManager.Instance.LoadEmailNotificationTemplate("UserVerification", type);
+            var template = NotificationManager.Instance.LoadEmailNotificationTemplate("UserVerification", emailFormatType);
             var subject = NotificationManager.Instance.LoadNotificationTemplate("UserVerification");
-            var displayname = GetUserDisplayName(user.UserName);
 
             var data = new Dictionary<string, object>();
 
@@ -361,9 +355,18 @@ namespace BugNET.BLL
 
                 data.Add("User", u);
             }
-            template = NotificationManager.Instance.GenerateNotificationContent(template, data);
-            NotificationManager.Instance.SendNotification(user.UserName, subject, template, displayname);
+            template = NotificationManager.GenerateNotificationContent(template, data);
 
+            var context = new NotificationContext
+            {
+                BodyText = template,
+                EmailFormatType = emailFormatType,
+                Subject = subject,
+                UserDisplayName = GetUserDisplayName(user.UserName),
+                Username = user.UserName
+            };
+
+            NotificationManager.Instance.SendNotification(context);
         }
 
         /// <summary>
@@ -373,15 +376,14 @@ namespace BugNET.BLL
         /// <param name="newPassword">The new password.</param>
         public static void SendUserNewPasswordNotification(MembershipUser user, string newPassword)
         {
-            if (user == null)
-                throw new ArgumentNullException("user");
+            if (user == null) throw new ArgumentNullException("user");
+            if (string.IsNullOrEmpty(newPassword)) throw new ArgumentNullException("newPassword");
 
-            var type = (EmailFormatType)HostSettingManager.GetHostSetting("SMTPEMailFormat", (int)EmailFormatType.Text);
+            var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
 
             //load template and replace the tokens
-            var template = NotificationManager.Instance.LoadEmailNotificationTemplate("PasswordReset", type);
+            var template = NotificationManager.Instance.LoadEmailNotificationTemplate("PasswordReset", emailFormatType);
             var subject = NotificationManager.Instance.LoadNotificationTemplate("PasswordResetSubject");
-            var displayname = GetUserDisplayName(user.UserName);
             var data = new Dictionary<string, object>();
 
             var u = new ITUser
@@ -395,9 +397,18 @@ namespace BugNET.BLL
 
             data.Add("User", u);
             data.Add("Password", newPassword);
-            template = NotificationManager.Instance.GenerateNotificationContent(template, data);
-            NotificationManager.Instance.SendNotification(user.UserName, subject, template, displayname);
+            template = NotificationManager.GenerateNotificationContent(template, data);
 
+            var context = new NotificationContext
+            {
+                BodyText = template,
+                EmailFormatType = emailFormatType,
+                Subject = subject,
+                UserDisplayName = UserManager.GetUserDisplayName(user.UserName),
+                Username = user.UserName
+            };
+
+            NotificationManager.Instance.SendNotification(context);
         }
 
         /// <summary>
@@ -406,14 +417,13 @@ namespace BugNET.BLL
         /// <param name="userName">The user.</param>
         public static void SendUserRegisteredNotification(string userName)
         {
-            if (userName == "")
-                throw new ArgumentNullException("userName");
+            if (userName == "") throw new ArgumentNullException("userName");
 
-            var type = (EmailFormatType)HostSettingManager.GetHostSetting("SMTPEMailFormat", (int)EmailFormatType.Text);
             var user = GetUser(userName);
+            var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
 
             //load template and replace the tokens
-            var template = NotificationManager.Instance.LoadEmailNotificationTemplate("UserRegistered", type);
+            var template = NotificationManager.Instance.LoadEmailNotificationTemplate("UserRegistered", emailFormatType);
             var subject = NotificationManager.Instance.LoadNotificationTemplate("UserRegisteredSubject");
             var data = new Dictionary<string, object>();
 
@@ -427,12 +437,21 @@ namespace BugNET.BLL
                 };
 
             data.Add("User", u);
-            template = NotificationManager.Instance.GenerateNotificationContent(template, data);
+            template = NotificationManager.GenerateNotificationContent(template, data);
 
             //all admin notifications sent to admin user defined in host settings, 
-            var adminNotificationUsername = HostSettingManager.GetHostSetting("AdminNotificationUsername");
+            var adminNotificationUsername = HostSettingManager.Get(HostSettingNames.AdminNotificationUsername);
 
-            NotificationManager.Instance.SendNotification(adminNotificationUsername, subject, template);
+            var context = new NotificationContext
+            {
+                BodyText = template,
+                EmailFormatType = emailFormatType,
+                Subject = subject,
+                UserDisplayName = GetUserDisplayName(adminNotificationUsername),
+                Username = adminNotificationUsername
+            };
+
+            NotificationManager.Instance.SendNotification(context);
         }
 
         /// <summary>
@@ -445,10 +464,8 @@ namespace BugNET.BLL
         /// </returns>
         public static bool IsNotificationTypeEnabled(string username, string notificationType)
         {
-            if (string.IsNullOrEmpty(username))
-                throw new ArgumentNullException("username");
-            if (string.IsNullOrEmpty(notificationType))
-                throw new ArgumentNullException("notificationType");
+            if (string.IsNullOrEmpty(username)) throw new ArgumentNullException("username");
+            if (string.IsNullOrEmpty(notificationType)) throw new ArgumentNullException("notificationType");
 
             var profile = new WebProfile().GetProfile(username);
 
@@ -460,6 +477,5 @@ namespace BugNET.BLL
             return false;
         }
         #endregion
-
     }
 }

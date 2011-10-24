@@ -1,5 +1,6 @@
 ﻿using System;
 using BugNET.BLL;
+using BugNET.Common;
 using BugNET.UserInterfaceLayer;
 
 namespace BugNET.Administration.Host.UserControls
@@ -29,8 +30,8 @@ namespace BugNET.Administration.Host.UserControls
             else
                 LoggingManager.RemoveEmailLoggingAppender();
 
-            HostSettingManager.UpdateHostSetting("ErrorLoggingEmailAddress", ErrorLoggingEmail.Text);
-            HostSettingManager.UpdateHostSetting("EmailErrors", EmailErrors.Checked.ToString());
+            HostSettingManager.UpdateHostSetting(HostSettingNames.ErrorLoggingEmailAddress, ErrorLoggingEmail.Text);
+            HostSettingManager.UpdateHostSetting(HostSettingNames.EmailErrors, EmailErrors.Checked.ToString());
             return true;
         }
 
@@ -39,8 +40,8 @@ namespace BugNET.Administration.Host.UserControls
         /// </summary>
         public void Initialize()
         {
-            ErrorLoggingEmail.Text = HostSettingManager.GetHostSetting("ErrorLoggingEmailAddress");
-            EmailErrors.Checked = Boolean.Parse(HostSettingManager.GetHostSetting("EmailErrors"));
+            ErrorLoggingEmail.Text = HostSettingManager.Get(HostSettingNames.ErrorLoggingEmailAddress);
+            EmailErrors.Checked = Boolean.Parse(HostSettingManager.Get(HostSettingNames.EmailErrors));
         }
 
         #endregion

@@ -16,23 +16,29 @@ namespace BugNET.BLL
         /// <summary>
         /// Saves this instance.
         /// </summary>
-        /// <param name="issueWorkReportToSave">The issue work report to save.</param>
+        /// <param name="entity">The issue work report to save.</param>
         /// <returns></returns>
-        public static bool SaveIssueWorkReport(IssueWorkReport issueWorkReportToSave)
+        public static bool SaveOrUpdate(IssueWorkReport entity)
         {
-            if (issueWorkReportToSave.Id <= Globals.NEW_ID)
+            if (entity == null) throw new ArgumentNullException("entity");
+            if (entity.IssueId <= Globals.NEW_ID) throw (new ArgumentException("Cannot save issue work report, the issue id is invalid"));
+
+            if (!string.IsNullOrEmpty(entity.CommentText))
+                entity.CommentId = DataProviderManager.Provider.CreateNewIssueComment(
+                    new IssueComment
+                    {
+                        IssueId = entity.IssueId,
+                        Comment = entity.CommentText,
+                        CreatorUserName = entity.CreatorUserName,
+                        DateCreated = DateTime.Now
+                    });
+
+            var tempId = DataProviderManager.Provider.CreateNewIssueWorkReport(entity);
+
+            if (tempId > Globals.NEW_ID)
             {
-                if (!String.IsNullOrEmpty(issueWorkReportToSave.CommentText))
-                    issueWorkReportToSave.CommentId = DataProviderManager.Provider.CreateNewIssueComment(new IssueComment(issueWorkReportToSave.IssueId, issueWorkReportToSave.CommentText, issueWorkReportToSave.CreatorUserName));
-
-                var tempId = DataProviderManager.Provider.CreateNewIssueWorkReport(issueWorkReportToSave);
-                if (tempId > Globals.NEW_ID)
-                {
-                    issueWorkReportToSave.Id = tempId;
-                    return true;
-                }
-
-                return false;
+                entity.Id = tempId;
+                return true;
             }
 
             return false;
@@ -41,11 +47,13 @@ namespace BugNET.BLL
         /// <summary>
         /// Gets all WorkReports for an issue
         /// </summary>
-        /// <param name="bugId"></param>
+        /// <param name="issueId"></param>
         /// <returns>List of WorkReport Objects</returns>
-        public static List<IssueWorkReport> GetWorkReportsByIssueId(int bugId)
+        public static List<IssueWorkReport> GetByIssueId(int issueId)
         {
-            return DataProviderManager.Provider.GetIssueWorkReportsByIssueId(bugId);
+            if (issueId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("issueId"));
+
+            return DataProviderManager.Provider.GetIssueWorkReportsByIssueId(issueId);
         }
 
         /// <summary>
@@ -53,10 +61,9 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="issueWorkReportId">The time entry id.</param>
         /// <returns></returns>
-        public static bool DeleteIssueWorkReport(int issueWorkReportId)
+        public static bool Delete(int issueWorkReportId)
         {
-            if (issueWorkReportId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("issueWorkReportId"));
+            if (issueWorkReportId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("issueWorkReportId"));
 
             return (DataProviderManager.Provider.DeleteIssueWorkReport(issueWorkReportId));
         }

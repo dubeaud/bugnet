@@ -450,7 +450,7 @@ namespace BugNET
             //exclude all closed status's
             if (!isStatus)
             {
-                List<Status> status = StatusManager.GetStatusByProjectId(ProjectId).FindAll(delegate(Status s) { return s.IsClosedState == true; });
+                List<Status> status = StatusManager.GetByProjectId(ProjectId).FindAll(delegate(Status s) { return s.IsClosedState == true; });
                 foreach (Status st in status)
                 {
                     q = new QueryClause(BooleanOperator, "IssueStatusId", "<>", st.Id.ToString(), SqlDbType.Int, false);
@@ -459,7 +459,7 @@ namespace BugNET
             }
             //q = new QueryClause(BooleanOperator, "new", "=", "another one", SqlDbType.NVarChar, true);
             //queryClauses.Add(q);
-            List<Issue> issueList = IssueManager.PerformQuery(ProjectId, queryClauses);
+            List<Issue> issueList = IssueManager.PerformQuery(queryClauses, ProjectId);
             List<SyndicationItem> feedItems = CreateSyndicationItemsFromIssueList(issueList);
             Project p = ProjectManager.GetProjectById(ProjectId);
 

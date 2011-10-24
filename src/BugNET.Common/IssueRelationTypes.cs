@@ -1,10 +1,10 @@
 
-namespace BugNET.Entities
+namespace BugNET.Common
 {
     /// <summary>
     /// 
     /// </summary>
-    public enum IssueRelationType
+    public enum IssueRelationTypes
     {
         /// <summary>
         /// 

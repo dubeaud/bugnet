@@ -25,13 +25,13 @@ namespace BugNET.Administration.Host.UserControls
         /// </summary>
         public bool Update()
         {         
-            HostSettingManager.UpdateHostSetting("UserAccountSource", UserAccountSource.SelectedValue);
-            HostSettingManager.UpdateHostSetting("ADUserName", ADUserName.Text);
-            HostSettingManager.UpdateHostSetting("ADPath", ADPath.Text);
-            HostSettingManager.UpdateHostSetting("UserRegistration", UserRegistration.SelectedValue);
-            HostSettingManager.UpdateHostSetting("AnonymousAccess", AnonymousAccess.SelectedValue);
-            HostSettingManager.UpdateHostSetting("OpenIdAuthentication", OpenIdAuthentication.SelectedValue);
-            HostSettingManager.UpdateHostSetting("ADPassword", ADPassword.Text);
+            HostSettingManager.UpdateHostSetting(HostSettingNames.UserAccountSource, UserAccountSource.SelectedValue);
+            HostSettingManager.UpdateHostSetting(HostSettingNames.ADUserName, ADUserName.Text);
+            HostSettingManager.UpdateHostSetting(HostSettingNames.ADPath, ADPath.Text);
+            HostSettingManager.UpdateHostSetting(HostSettingNames.UserRegistration, UserRegistration.SelectedValue);
+            HostSettingManager.UpdateHostSetting(HostSettingNames.AnonymousAccess, AnonymousAccess.SelectedValue);
+            HostSettingManager.UpdateHostSetting(HostSettingNames.OpenIdAuthentication, OpenIdAuthentication.SelectedValue);
+            HostSettingManager.UpdateHostSetting(HostSettingNames.ADPassword, ADPassword.Text);
             return true;
         }
 
@@ -40,13 +40,13 @@ namespace BugNET.Administration.Host.UserControls
         /// </summary>
         public void Initialize()
         {
-            UserAccountSource.SelectedValue = HostSettingManager.GetHostSetting("UserAccountSource");
-            ADUserName.Text = HostSettingManager.GetHostSetting("ADUserName");
-            ADPath.Text = HostSettingManager.GetHostSetting("ADPath");
-            UserRegistration.SelectedValue = HostSettingManager.GetHostSetting("UserRegistration",(int)Globals.UserRegistration.Public).ToString();
-            AnonymousAccess.SelectedValue = HostSettingManager.GetHostSetting("AnonymousAccess", true).ToString();
-            OpenIdAuthentication.SelectedValue = HostSettingManager.GetHostSetting("OpenIdAuthentication");
-            ADPassword.Attributes.Add("value", HostSettingManager.GetHostSetting("ADPassword"));
+            UserAccountSource.SelectedValue = HostSettingManager.Get(HostSettingNames.UserAccountSource);
+            ADUserName.Text = HostSettingManager.Get(HostSettingNames.ADUserName);
+            ADPath.Text = HostSettingManager.Get(HostSettingNames.ADPath);
+            UserRegistration.SelectedValue = HostSettingManager.Get(HostSettingNames.UserRegistration,(int)Globals.UserRegistration.Public).ToString();
+            AnonymousAccess.SelectedValue = HostSettingManager.Get(HostSettingNames.AnonymousAccess, true).ToString();
+            OpenIdAuthentication.SelectedValue = HostSettingManager.Get(HostSettingNames.OpenIdAuthentication);
+            ADPassword.Attributes.Add("value", HostSettingManager.Get(HostSettingNames.ADPassword));
             ShowHideUserAccountSourceCredentials();
            
         }

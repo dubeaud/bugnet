@@ -152,7 +152,7 @@ namespace BugNET.Administration.Projects.UserControls
             //check if we are editing the subgrid - needed to fire updatecommand on the nested grid.
             if (ViewState["EditingSubGrid"] == null)
             {
-                grdCustomFields.DataSource = CustomFieldManager.GetCustomFieldsByProjectId(ProjectId);
+                grdCustomFields.DataSource = CustomFieldManager.GetByProjectId(ProjectId);
                 grdCustomFields.DataKeyField = "Id";
                 grdCustomFields.DataBind();
 
@@ -256,7 +256,7 @@ namespace BugNET.Administration.Projects.UserControls
         protected void grdSelectionValues_ItemCommand(object source, System.Web.UI.WebControls.DataGridCommandEventArgs e)
         {
             CustomFieldSelection  cfs;
-            int itemIndex = e.Item.ItemIndex;
+            var itemIndex = e.Item.ItemIndex;
             int itemId;
             switch (e.CommandName)
             {
@@ -265,29 +265,33 @@ namespace BugNET.Administration.Projects.UserControls
                     if (itemIndex == 0)
                         return;
                     itemId = Convert.ToInt32(e.Item.Cells[0].Text);
-                    cfs = CustomFieldSelectionManager.GetCustomFieldSelectionById(itemId);
+                    cfs = CustomFieldSelectionManager.GetById(itemId);
                     cfs.SortOrder -= 1;
-                    CustomFieldSelectionManager.SaveCustomFieldSelection(cfs);
+                    CustomFieldSelectionManager.SaveOrUpdate(cfs);
                     break;
                 case "down":
                     //move row down
                     if (itemIndex == ((DataGrid)source).Items.Count - 1)
                         return;
                     itemId = Convert.ToInt32(e.Item.Cells[0].Text);
-                    cfs = CustomFieldSelectionManager.GetCustomFieldSelectionById(itemId);
+                    cfs = CustomFieldSelectionManager.GetById(itemId);
                     cfs.SortOrder += 1;
-                    CustomFieldSelectionManager.SaveCustomFieldSelection(cfs);
+                    CustomFieldSelectionManager.SaveOrUpdate(cfs);
                     break;
                 case "add":
                     if (Page.IsValid)
                     {
-                        TextBox txtAddSelectionName = (TextBox)e.Item.FindControl("txtAddSelectionName");
-                        TextBox txtAddSelectionValue = (TextBox)e.Item.FindControl("txtAddSelectionValue");
-                       
-                        cfs = new CustomFieldSelection(Convert.ToInt32(e.CommandArgument),
-                            txtAddSelectionName.Text.Trim(), 
-                            txtAddSelectionValue.Text.Trim());
-                        CustomFieldSelectionManager.SaveCustomFieldSelection(cfs);
+                        var txtAddSelectionName = (TextBox)e.Item.FindControl("txtAddSelectionName");
+                        var txtAddSelectionValue = (TextBox)e.Item.FindControl("txtAddSelectionValue");
+
+                        cfs = new CustomFieldSelection
+                                  {
+                                      CustomFieldId = Convert.ToInt32(e.CommandArgument),
+                                      Name = txtAddSelectionName.Text.Trim(),
+                                      Value = txtAddSelectionValue.Text.Trim()
+                                  };
+
+                        CustomFieldSelectionManager.SaveOrUpdate(cfs);
                        
                     }
                     break;
@@ -334,10 +338,10 @@ namespace BugNET.Administration.Projects.UserControls
                 {
                     int customFieldSelectionId = (int)((DataGrid)source).DataKeys[e.Item.ItemIndex];
                     
-                    CustomFieldSelection cfs = CustomFieldSelectionManager.GetCustomFieldSelectionById(customFieldSelectionId);
+                    CustomFieldSelection cfs = CustomFieldSelectionManager.GetById(customFieldSelectionId);
                     cfs.Name = txtName.Text.Trim();
                     cfs.Value = txtValue.Text.Trim();
-                    CustomFieldSelectionManager.SaveCustomFieldSelection(cfs);
+                    CustomFieldSelectionManager.SaveOrUpdate(cfs);
 
                     lblError.Text = String.Empty;
 
@@ -403,7 +407,7 @@ namespace BugNET.Administration.Projects.UserControls
         /// <returns></returns>
         protected List<CustomFieldSelection> GetCustomFieldSelections(int customFieldId)
         {
-            return CustomFieldSelectionManager.GetCustomFieldsSelectionsByCustomFieldId(customFieldId);
+            return CustomFieldSelectionManager.GetByCustomFieldId(customFieldId);
         }
 
         /// <summary>
@@ -413,17 +417,17 @@ namespace BugNET.Administration.Projects.UserControls
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
         protected void lnkAddCustomField_Click(object sender, EventArgs e)
         {
-            string NewName = txtName.Text.Trim();
+            string newName = txtName.Text.Trim();
 
-            if (NewName == String.Empty)
+            if (newName == String.Empty)
                 return;
 
-            ValidationDataType DataType = (ValidationDataType)Enum.Parse(typeof(ValidationDataType), dropDataType.SelectedValue);
-            CustomField.CustomFieldType FieldType = (CustomField.CustomFieldType)Enum.Parse(typeof(CustomField.CustomFieldType), rblCustomFieldType.SelectedValue);
-            bool required = chkRequired.Checked;
+            var dataType = (ValidationDataType)Enum.Parse(typeof(ValidationDataType), dropDataType.SelectedValue);
+            var fieldType = (Common.CustomFieldType)Enum.Parse(typeof(Common.CustomFieldType), rblCustomFieldType.SelectedValue);
+            var required = chkRequired.Checked;
 
-            CustomField newCustomField = new CustomField(ProjectId, NewName, DataType, required, FieldType);
-            if (CustomFieldManager.SaveCustomField(newCustomField))
+            var newCustomField = new CustomField { ProjectId = ProjectId, Name = newName, DataType = dataType, Required = required, FieldType = fieldType};
+            if (CustomFieldManager.SaveOrUpdate(newCustomField))
             {
                 txtName.Text = "";
                 dropDataType.SelectedIndex = 0;
@@ -445,7 +449,7 @@ namespace BugNET.Administration.Projects.UserControls
         {
             int customFieldId = (int)grdCustomFields.DataKeys[e.Item.ItemIndex];
 
-            if (!CustomFieldManager.DeleteCustomField(customFieldId))
+            if (!CustomFieldManager.Delete(customFieldId))
                 lblError.Text = LoggingManager.GetErrorMessageResource("DeleteCustomFieldError");
             else
                 BindCustomFields();
@@ -458,7 +462,7 @@ namespace BugNET.Administration.Projects.UserControls
         /// <param name="e">The <see cref="System.Web.UI.WebControls.DataGridCommandEventArgs"/> instance containing the event data.</param>
         protected void grdCustomFields_Update(object sender, DataGridCommandEventArgs e)
         {
-            CustomField cf = CustomFieldManager.GetCustomFieldById(Convert.ToInt32(grdCustomFields.DataKeys[e.Item.ItemIndex]));
+            CustomField cf = CustomFieldManager.GetById(Convert.ToInt32(grdCustomFields.DataKeys[e.Item.ItemIndex]));
             TextBox txtCustomFieldName = (TextBox)e.Item.FindControl("txtCustomFieldName");
             DropDownList customFieldType = (DropDownList)e.Item.FindControl("dropCustomFieldType");
             DropDownList dataType = (DropDownList)e.Item.FindControl("dropEditDataType");
@@ -467,11 +471,11 @@ namespace BugNET.Administration.Projects.UserControls
             cf.Name = txtCustomFieldName.Text;
 
             ValidationDataType DataType = (ValidationDataType)Enum.Parse(typeof(ValidationDataType),  dataType.SelectedValue);
-            CustomField.CustomFieldType FieldType = (CustomField.CustomFieldType)Enum.Parse(typeof(CustomField.CustomFieldType), customFieldType.SelectedValue);
+            Common.CustomFieldType FieldType = (Common.CustomFieldType)Enum.Parse(typeof(Common.CustomFieldType), customFieldType.SelectedValue);
             cf.FieldType = FieldType;
             cf.DataType = DataType;
             cf.Required = required.Checked;
-            CustomFieldManager.SaveCustomField(cf);
+            CustomFieldManager.SaveOrUpdate(cf);
 
             grdCustomFields.EditItemIndex = -1;
             BindCustomFields();
@@ -519,7 +523,7 @@ namespace BugNET.Administration.Projects.UserControls
                 btnDelete.Attributes.Add("onclick", String.Format("return confirm('{0}');", message));
 
                 //only drop down list fields have selection values.
-                if (currentCustomField.FieldType == CustomField.CustomFieldType.DropDownList)
+                if (currentCustomField.FieldType == Common.CustomFieldType.DropDownList)
                 {
                     DataGrid grid = (DataGrid)e.Item.Cells[grdCustomFields.Columns.Count - 1].FindControl("grdSelectionValues");
                     if (grid != null)
@@ -648,6 +652,11 @@ namespace BugNET.Administration.Projects.UserControls
         protected void cmdCancel_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Administration/Projects/EditProject.aspx?id=" + ProjectId.ToString());
+        }
+
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            //delete
         }
 
 

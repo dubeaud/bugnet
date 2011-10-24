@@ -11,41 +11,38 @@ namespace BugNET.BLL
     {
         private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        #region Instance Methods
         /// <summary>
         /// Saves this instance.
         /// </summary>
-        /// <param name="milestoneToSave">The milestone to save.</param>
+        /// <param name="entity">The milestone to save.</param>
         /// <returns></returns>
-        public static bool SaveMilestone(Milestone milestoneToSave)
+        public static bool SaveOrUpdate(Milestone entity)
         {
-            if (milestoneToSave.Id > Globals.NEW_ID)
-            {
-                return DataProviderManager.Provider.UpdateMilestone(milestoneToSave);
-            }
-            var tempId = DataProviderManager.Provider.CreateNewMilestone(milestoneToSave);
-            if (tempId <= 0)
-                return false;
-            milestoneToSave.Id = tempId;
+            if (entity == null) throw new ArgumentNullException("entity");
+            if (entity.ProjectId <= Globals.NEW_ID) throw (new ArgumentException("Cannot save milestone, the project id is invalid"));
+            if (string.IsNullOrEmpty(entity.Name)) throw (new ArgumentException("The milestone name cannot be empty or null"));
+
+            if (entity.Id > Globals.NEW_ID)
+                return DataProviderManager.Provider.UpdateMilestone(entity);
+
+            var tempId = DataProviderManager.Provider.CreateNewMilestone(entity);
+            if (tempId <= 0) return false;
+
+            entity.Id = tempId;
             return true;
         }
 
-        #endregion
-
-        #region Static Methods
         /// <summary>
         /// Deletes the Milestone.
         /// </summary>
-        /// <param name="originalId">The original_id.</param>
+        /// <param name="id">The id for the item to be deleted.</param>
         /// <returns></returns>
-        public static bool DeleteMilestone(int originalId)
+        public static bool Delete(int id)
         {
-            if (originalId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("originalId"));
+            if (id <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("id"));
 
-            return DataProviderManager.Provider.DeleteMilestone(originalId);
+            return DataProviderManager.Provider.DeleteMilestone(id);
         }
-
 
         /// <summary>
         /// Gets the Milestone by project id.
@@ -53,7 +50,7 @@ namespace BugNET.BLL
         /// <param name="projectId">The project id.</param>
         /// <param name="milestoneCompleted">if set to <c>true</c> [milestone completed].</param>
         /// <returns></returns>
-        public static List<Milestone> GetMilestoneByProjectId(int projectId, bool milestoneCompleted = true)
+        public static List<Milestone> GetByProjectId(int projectId, bool milestoneCompleted = true)
         {
             return projectId <= Globals.NEW_ID ? new List<Milestone>() : 
                 DataProviderManager.Provider.GetMilestonesByProjectId(projectId, milestoneCompleted);
@@ -64,34 +61,11 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="milestoneId">The Milestone id.</param>
         /// <returns></returns>
-        public static Milestone GetMilestoneById(int milestoneId)
+        public static Milestone GetById(int milestoneId)
         {
-            if (milestoneId < Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("milestoneId"));
-
+            if (milestoneId < Globals.NEW_ID) throw (new ArgumentOutOfRangeException("milestoneId"));
 
             return DataProviderManager.Provider.GetMilestoneById(milestoneId);
         }
-
-
-
-        /// <summary>
-        /// Updates the Milestone.
-        /// </summary>
-        /// <param name="name">The name.</param>
-        /// <param name="sortOrder">The sort order.</param>
-        /// <param name="originalId">The original id.</param>
-        /// <returns></returns>
-        public static bool UpdateMilestone(string name, int sortOrder, int originalId)
-        {
-            var v = GetMilestoneById(originalId);
-
-            v.Name = name;
-            v.SortOrder = sortOrder;
-
-            return (DataProviderManager.Provider.UpdateMilestone(v));
-        }
-
-        #endregion
     }
 }

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.ServiceModel.Activation;
 using BugNET.BLL;
+using BugNET.Common;
 using BugNET.Entities;
 using BugNET.Services.DataContracts;
 using BugNET.Services.Translators;
-using System.Security.Permissions;
 
 namespace BugNET.Services
 {
@@ -30,7 +31,7 @@ namespace BugNET.Services
 
             //TODO: Check authorization
             
-            Issue i = IssueManager.GetIssueById(id);
+            var i = IssueManager.GetIssueById(id);
             return IssueTranslator.ToIssueContract(i);
         }
 
@@ -47,13 +48,9 @@ namespace BugNET.Services
 
             //TODO: Check authorization
 
-            List<IssueContract> returnIssues = new List<IssueContract>();
+            var issues = IssueManager.GetIssuesByProjectId(projectId);
 
-            List<Issue> issues = IssueManager.GetIssuesByProjectId(projectId);
-            foreach (Issue i in issues)
-                returnIssues.Add(IssueTranslator.ToIssueContract(i));
-
-            return returnIssues;
+            return issues.Select(IssueTranslator.ToIssueContract).ToList();
         }
 
         /// <summary>
@@ -68,7 +65,7 @@ namespace BugNET.Services
 
             //TODO: Check authorization
 
-            Issue issueToSave = IssueTranslator.ToIssue(issue);
+            var issueToSave = IssueTranslator.ToIssue(issue);
             return IssueManager.SaveIssue(issueToSave);
         }
 
@@ -83,7 +80,6 @@ namespace BugNET.Services
                 throw new ArgumentOutOfRangeException("issueId");
 
             //TODO: Check the users security to perform this action
-            System.ServiceModel.ServiceSecurityContext securityContext = System.ServiceModel.ServiceSecurityContext.Current;
             //securityContext.PrimaryIdentity.Name
 
             //IPrincipal principal = Thread.CurrentPrincipal.Identity.Name; 
@@ -102,19 +98,17 @@ namespace BugNET.Services
         /// <returns></returns>
         public List<JsTreeNode> GetCategoriesByProjectId(string projectId)
         {
-            if (string.IsNullOrEmpty(projectId))
-                throw new ArgumentNullException("projectId");
+            if (string.IsNullOrEmpty(projectId)) throw new ArgumentNullException("projectId");
+            if (!projectId.Is<int>()) throw new ArgumentNullException("projectId");
 
-            //TODO: Check authorization
-
-            int ProjectId = int.Parse(projectId);
-            List<Category> categories = CategoryManager.GetRootCategoriesByProjectId(ProjectId);
-
-            //if (context.User.Identity == null || !context.User.Identity.IsAuthenticated || (!ITUser.HasPermission(context.User.Identity.Name, ProjectId, Globals.Permission.ADMIN_EDIT_PROJECT.ToString()) && !ITUser.IsInRole(context.User.Identity.Name, 0, Globals.SuperUserRole)))
+            // TODO: Check authorization
+            // if (context.User.Identity == null || !context.User.Identity.IsAuthenticated || (!ITUser.HasPermission(context.User.Identity.Name, ProjectId, Globals.Permission.ADMIN_EDIT_PROJECT.ToString()) && !ITUser.IsInRole(context.User.Identity.Name, 0, Globals.SuperUserRole)))
             //    throw new System.Security.SecurityException("Access Denied");
 
+            var validProjectId = int.Parse(projectId);
+            var categories = CategoryManager.GetRootCategoriesByProjectId(validProjectId);
 
-            List<JsTreeNode> nodes = new List<JsTreeNode>();
+            var nodes = new List<JsTreeNode>();
             PopulateNodes(categories, nodes);
  
             return nodes;
@@ -125,25 +119,24 @@ namespace BugNET.Services
         /// </summary>
         /// <param name="list">The list.</param>
         /// <param name="nodes">The nodes.</param>
-        private void PopulateNodes(List<Category> list, List<JsTreeNode> nodes)
+        private void PopulateNodes(IEnumerable<Category> list, ICollection<JsTreeNode> nodes)
         {
 
-            foreach (Category c in list)
+            foreach (var c in list)
             {
-                JsTreeNode cnode = new JsTreeNode();
-                cnode.attr = new Attributes();
-                cnode.attr.id = Convert.ToString(c.Id);
-                cnode.attr.rel = "cat" + Convert.ToString(c.Id);
-                cnode.data = new Data();
-                cnode.data.title = Convert.ToString(c.Name);
-                cnode.data.icon = "../../images/plugin.gif";
+                var cnode = new JsTreeNode
+                                {
+                                    attr =
+                                        new Attributes
+                                            {id = Convert.ToString(c.Id), rel = "cat" + Convert.ToString(c.Id)},
+                                    data = new Data {title = Convert.ToString(c.Name), icon = "../../images/plugin.gif"}
+                                };
                 //cnode.attributes.mdata = "{ draggable : true, max_children : 100, max_depth : 100 }";
 
                 nodes.Add(cnode);
 
                 if (c.ChildCount > 0)
                 {
-
                     PopulateSubLevel(c.Id, cnode);
                 }
             }

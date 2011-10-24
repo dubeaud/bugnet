@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Web;
+using BugNET.Common;
 using log4net;
 
 namespace BugNET.BLL.Notifications
@@ -10,20 +12,14 @@ namespace BugNET.BLL.Notifications
     /// <summary>
     /// 
     /// </summary>
-    public sealed class NotificationManager
+    public class NotificationManager
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(NotificationManager));
-        private static readonly NotificationManager instance = new NotificationManager();       
-        private List<INotificationType> _NotificationPlugins = null;
-        private string _Username;
-        private string _UserDisplayName;
-        private string _Subject;
-        private string _BodyText;
-		private EmailFormatType _EmailFormatType;
+        private static NotificationManager _instance;       
+        private List<INotificationType> _notificationPlugins;
 
         // What is being currently notified, and what is awaiting notification.  
-        private static Queue<NotificationContext> _NotificationQueue = new Queue<NotificationContext>();
-
+        private static readonly Queue<NotificationContext> NotificationQueue = new Queue<NotificationContext>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NotificationManager"/> class.
@@ -39,91 +35,64 @@ namespace BugNET.BLL.Notifications
         /// <value>The instance.</value>
         public static NotificationManager Instance
         {
-            get
-            {
-                return instance;
-            }
+            get { return _instance ?? (_instance = new NotificationManager()); }
         }
 
         /// <summary>
         /// Gets the notification types.
         /// </summary>
         /// <value>The notification types.</value>
-        public List<INotificationType> GetNotificationTypes() { return _NotificationPlugins; }
+        public List<INotificationType> GetNotificationTypes() { return _notificationPlugins; }
 
         /// <summary>
         /// Loads the notification types from the current assembly.
         /// </summary>
         private void LoadNotificationTypes()
         {
-            _NotificationPlugins = new List<INotificationType>();
-            Assembly asm = this.GetType().Assembly;
+            _notificationPlugins = new List<INotificationType>();
+            var asm = GetType().Assembly;
 
-            foreach (Type t in asm.GetTypes())
+            foreach (var t in asm.GetTypes())
             {
-                foreach (Type iface in t.GetInterfaces())
+                foreach (var iface in t.GetInterfaces())
                 {
-                    if (iface.Equals(typeof(INotificationType)))
+                    if (!iface.Equals(typeof (INotificationType))) continue;
+
+                    try
                     {
-                        try
-                        {
-                            INotificationType notificationType = (INotificationType)Activator.CreateInstance(t);
-                            _NotificationPlugins.Add(notificationType);
-                            if (Log.IsDebugEnabled) Log.DebugFormat("Type: {0} Enabled: {1}", notificationType.Name, notificationType.Enabled);      
-                            break;
-                        }
-                        catch (Exception ex) 
-                        {
-                            if (Log.IsErrorEnabled) Log.Error(string.Format(LoggingManager.GetErrorMessageResource("CouldNotLoadNotificationType"), t.FullName),ex);
-                        }
+                        var notificationType = (INotificationType)Activator.CreateInstance(t);
+                        _notificationPlugins.Add(notificationType);
+                        if (Log.IsDebugEnabled) Log.DebugFormat("Type: {0} Enabled: {1}", notificationType.Name, notificationType.Enabled);      
+                        break;
+                    }
+                    catch (Exception ex) 
+                    {
+                        if (Log.IsErrorEnabled) Log.Error(string.Format(LoggingManager.GetErrorMessageResource("CouldNotLoadNotificationType"), t.FullName),ex);
                     }
                 }
             }
         }
 
-        /// <summary>
-        /// Recurses the loaded notification plugins and if enabled will send the notifications using the plugin.
-        /// </summary>
-        /// <param name="username">The username.</param>
-        /// <param name="subject">The subject.</param>
-        /// <param name="bodyText">The body text.</param>
-        public void SendNotification(string username, string subject, string bodyText)
-        {
-            SendNotification(username, subject, bodyText, string.Empty);
-        }
-
+        ///public void SendNotification(string username, string subject, string bodyText, string userDisplayName)
         /// <summary>
         /// Sends the notification.
         /// </summary>
-        /// <param name="username">The username.</param>
-        /// <param name="subject">The subject.</param>
-        /// <param name="bodyText">The body text.</param>
-        /// <param name="userDisplayName">Display name of the user.</param>
-        public void SendNotification(string username, string subject, string bodyText, string userDisplayName)
+        /// <param name="notificationContext"></param>
+        public void SendNotification(NotificationContext notificationContext)
         {
-            if (string.IsNullOrEmpty(username))
-                throw new ArgumentNullException("username");
-
-            if (string.IsNullOrEmpty(subject))
-                throw new ArgumentNullException("subject");
-
-            if (string.IsNullOrEmpty(bodyText))
-                throw new ArgumentNullException("bodyText");
-
-            _UserDisplayName = userDisplayName;
-            _Username = username;
-            _Subject = subject;
-            _BodyText = bodyText;
+            if (string.IsNullOrEmpty(notificationContext.Username)) throw new ArgumentException("Unable send notification username cannot be null or empty.");
+            if (string.IsNullOrEmpty(notificationContext.Subject)) throw new ArgumentException("Unable send notification subject cannot be null or empty.");
+            if (string.IsNullOrEmpty(notificationContext.BodyText)) throw new ArgumentException("Unable send notification body text cannot be null or empty.");
 
             // _NotificationQueue must be protected with Locks
-            lock (_NotificationQueue)
+            lock (NotificationQueue)
             {
 
                 // En-queue notification into the send queue
-                _NotificationQueue.Enqueue(new NotificationContext(_Username, _Subject, _BodyText, _EmailFormatType, _UserDisplayName));
+                NotificationQueue.Enqueue(notificationContext);
 
                 // If we only have one notification in the queue we will need to start a new thread
-                if (_NotificationQueue.Count > 1)
+                if (NotificationQueue.Count > 1)
                 {
 
                     // Create and Start a New Thread
@@ -131,41 +100,33 @@ namespace BugNET.BLL.Notifications
                     {
 
                         // Get the First Notification that need sending from the queue
-                        NotificationContext NotificationToSend = null;
-                        lock (_NotificationQueue)
+                        NotificationContext notificationToSend;
+                        lock (NotificationQueue)
                         {
-                            NotificationToSend = _NotificationQueue.Dequeue();
+                            notificationToSend = NotificationQueue.Dequeue();
                         }
 
                         // Whilst we still have queued notifications to send, we stay in this thread sending them
-                        while (NotificationToSend != null)
+                        while (notificationToSend != null)
                         {
-
                             // In The Thread Send The Notification
-                            foreach (INotificationType nt in _NotificationPlugins)
+                            foreach (var nt in _notificationPlugins.Where(nt => nt.Enabled))
                             {
-                                //if plugin is enabled globally though application settings
-                                if (nt.Enabled)
-                                    nt.SendNotification(NotificationToSend);
+                                nt.SendNotification(notificationToSend);
                             }
 
                             // Sleep for 10 seconds, enable the line below to test the queuing of notifications is working correctly
                             //Thread.Sleep(10000);
 
                             // We attempt to get the next Notification that need sending from the queue
-                            lock (_NotificationQueue)
+                            lock (NotificationQueue)
                             {
 
                                 // Get a new NotificationToSend if we can, otherwise reset
-                                if (_NotificationQueue.Count > 0)
-                                    NotificationToSend = _NotificationQueue.Dequeue();
-                                else
-                                    NotificationToSend = null;
+                                notificationToSend = NotificationQueue.Count > 0 ? NotificationQueue.Dequeue() : null;
 
                             }
-
                         }
-
                     }
                     )).Start();
 
@@ -178,20 +139,17 @@ namespace BugNET.BLL.Notifications
         /// Loads the notification template.
         /// </summary>
         /// <param name="templateName">Name of the template.</param>
-        /// <param name="emailFormatType">Type of the email format.</param>
-        /// <param name="path">The path.</param>
+        /// <param name="emailFormat"></param>
         /// <returns></returns>
-        public string LoadEmailNotificationTemplate(string templateName, EmailFormatType emailFormatType)
+        public string LoadEmailNotificationTemplate(string templateName, EmailFormatType emailFormat)
         {
-            string templateKey = (_EmailFormatType == EmailFormatType.Text) ? "" : "HTML";
-
-            string template = LoadNotificationTemplate(string.Concat(templateName, templateKey));
+            var templateKey = (emailFormat == EmailFormatType.Text) ? "" : "HTML";
+            var template = LoadNotificationTemplate(string.Concat(templateName, templateKey));
             
             //load template path from host settings
-            HostSettingManager mgr = new HostSettingManager();
-            string path = HostSettingManager.TemplatePath;
+            var path = HostSettingManager.TemplatePath;
 
-            return XmlXslTransform.LoadEmailXslTemplate(template,path);
+            return XmlXslTransform.LoadEmailXslTemplate(template, path);
         }
 
         /// <summary>
@@ -210,36 +168,37 @@ namespace BugNET.BLL.Notifications
         /// <param name="template">The template.</param>
         /// <param name="data">The data.</param>
         /// <returns></returns>
-        public string GenerateNotificationContent(string template, Dictionary<string, object> data)
+        public static string GenerateNotificationContent(string template, Dictionary<string, object> data)
         {
-            System.IO.StringWriter writer = new System.IO.StringWriter();
-            using (System.Xml.XmlWriter xml = new System.Xml.XmlTextWriter(writer))
+            using(var writer = new System.IO.StringWriter())
             {
-                xml.WriteStartElement("root");
-
-                foreach (DictionaryEntry de in HostSettingManager.GetHostSettings())
-                    xml.WriteElementString(string.Concat("HostSetting_", de.Key), de.Value.ToString());
-
-                foreach (var item in data.Keys)
+                using (System.Xml.XmlWriter xml = new System.Xml.XmlTextWriter(writer))
                 {
-                    if (typeof(IToXml).IsAssignableFrom(data[item].GetType()))
-                    {
-                        IToXml iXml = (IToXml)data[item];
-                        xml.WriteRaw(iXml.ToXml());
-                    }
-                    else if (item.StartsWith("RawXml"))
-                    {
-                        xml.WriteRaw(data[item].ToString());
-                    }
-                    else
-                    {
-                        xml.WriteElementString(item,data[item].ToString());
-                    }
-                }
+                    xml.WriteStartElement("root");
 
-                xml.WriteEndElement();
+                    foreach (DictionaryEntry de in HostSettingManager.GetHostSettings())
+                        xml.WriteElementString(string.Concat("HostSetting_", de.Key), de.Value.ToString());
 
-                return XmlXslTransform.Transform(writer.ToString(), template);
+                    foreach (var item in data.Keys)
+                    {
+                        if (item.StartsWith("RawXml"))
+                        {
+                            xml.WriteRaw(data[item].ToString());
+                        }
+                        else if (item.GetType().IsClass)
+                        {
+                            xml.WriteRaw(data[item].ToXml());
+                        }
+                        else
+                        {
+                            xml.WriteElementString(item, data[item].ToString());
+                        }
+                    }
+
+                    xml.WriteEndElement();
+
+                    return XmlXslTransform.Transform(writer.ToString(), template);
+                }   
             }
         }
 		
@@ -252,16 +211,10 @@ namespace BugNET.BLL.Notifications
         /// </returns>
         public static bool IsNotificationTypeEnabled(string notificationType)
         {
-            if (string.IsNullOrEmpty(notificationType))
-                throw new ArgumentNullException("notificationType");
+            if (string.IsNullOrEmpty(notificationType)) throw new ArgumentNullException("notificationType");
 
-            string[] notificationTypes = HostSettingManager.GetHostSetting("EnabledNotificationTypes").Split(';');
-            foreach (string s in notificationTypes)
-            {
-                if (s.Equals(notificationType))
-                    return true;
-            }
-            return false;
+            var notificationTypes = HostSettingManager.Get(HostSettingNames.EnabledNotificationTypes).Split(';');
+		    return notificationTypes.Any(s => s.Equals(notificationType));
         }
     }
 }

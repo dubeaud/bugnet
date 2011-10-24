@@ -16,22 +16,20 @@
         /// </returns>
         public virtual bool IsCurrent(SuckerMenuItem oItem)
         {
-            if (System.Web.HttpContext.Current.Request.Url.ToString().ToLower().IndexOf(oItem.Link.ToLower()) >= 0)
-                return true;
-            return false;
+            return System.Web.HttpContext.Current.Request.Url.ToString().ToLower().IndexOf(oItem.Link.ToLower()) >= 0;
         }
-   
+
         /// <summary>
         /// Gets the HTML.
         /// </summary>
         /// <returns></returns>
         public string GetHtml()
         {
-            System.Text.StringBuilder oBuilder = new System.Text.StringBuilder();
+            var oBuilder = new System.Text.StringBuilder();
             oBuilder.Append("<ul ");
             oBuilder.Append(ULDecoration);
             oBuilder.Append(">");
-            foreach (SuckerMenuItem oItem in Items)
+            foreach (var oItem in Items)
                 oBuilder.Append(oItem.GetHtml());
             oBuilder.Append("</ul");
             return oBuilder.ToString();
