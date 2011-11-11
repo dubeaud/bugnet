@@ -30,7 +30,7 @@ namespace BugNET.Administration.Projects
 
 			if (!Page.IsPostBack)
 			{
-				litProjectName.Text = ProjectManager.GetProjectById(ProjectId).Name;
+				litProjectName.Text = ProjectManager.GetById(ProjectId).Name;
 
                 var message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), litProjectName.Text);
                 Image1.OnClientClick = String.Format("return confirm('{0}');", message);
@@ -44,7 +44,7 @@ namespace BugNET.Administration.Projects
                     Image1.Visible = false;
                 }
 
-                var p = ProjectManager.GetProjectById(ProjectId);
+                var p = ProjectManager.GetById(ProjectId);
                 ProjectDisableEnable(p.Disabled);
 			}
 
@@ -208,9 +208,9 @@ namespace BugNET.Administration.Projects
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
 		protected void DisableButton_Click(Object s, EventArgs e) 
 		{
-            var p = ProjectManager.GetProjectById(ProjectId);
+            var p = ProjectManager.GetById(ProjectId);
             p.Disabled = true;
-            ProjectManager.SaveProject(p);
+            ProjectManager.SaveOrUpdate(p);
 
             ProjectDisableEnable(true);
 		}
@@ -222,7 +222,7 @@ namespace BugNET.Administration.Projects
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
         protected void DeleteButton_Click(Object s, EventArgs e)
         {
-            ProjectManager.DeleteProject(ProjectId);
+            ProjectManager.Delete(ProjectId);
             Response.Redirect("~/Administration/Projects/ProjectList.aspx");
         }
 
@@ -233,9 +233,9 @@ namespace BugNET.Administration.Projects
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void RestoreButton_Click(Object s, EventArgs e)
         {
-            var p = ProjectManager.GetProjectById(ProjectId);
+            var p = ProjectManager.GetById(ProjectId);
             p.Disabled = false;
-            ProjectManager.SaveProject(p);
+            ProjectManager.SaveOrUpdate(p);
 
             ProjectDisableEnable(false);
         }

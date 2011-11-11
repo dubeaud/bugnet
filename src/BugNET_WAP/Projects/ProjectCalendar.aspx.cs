@@ -142,7 +142,7 @@ namespace BugNET.Projects
                         else
                             cssClass = "calIssue";
 
-                        string projectName = ProjectManager.GetProjectById(ProjectId).Name;
+                        string projectName = ProjectManager.GetById(ProjectId).Name;
                         string title = string.Format(@"<div id=""issue"" class=""{4}""><a href=""../Issues/IssueList.aspx?pid={2}&m={3}"">{1} - {0} </a><br/>{5}</div>",m.Name,projectName,m.ProjectId,m.Id, cssClass,m.Notes);
                         e.Cell.Controls.Add(new LiteralControl(title));
                     }

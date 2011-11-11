@@ -105,7 +105,7 @@ namespace BugNET.Administration.Projects
             //delete any project that has already been created to prevent bad project data.
             if (ProjectId != -1)
             {
-                if (!ProjectManager.DeleteProject(ProjectId))
+                if (!ProjectManager.Delete(ProjectId))
                     Log.Error("Error Deleting Project");
             }
             Response.Redirect("ProjectList.aspx");

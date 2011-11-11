@@ -96,7 +96,7 @@ namespace BugNET.Administration.Projects.UserControls
         /// </summary>
 		public void Initialize()
 		{
-           Project projectToUpdate = ProjectManager.GetProjectById(ProjectId);
+           Project projectToUpdate = ProjectManager.GetById(ProjectId);
             svnUrl.Text = projectToUpdate.SvnRepositoryUrl;
 
            bool svnAdminEnabled = bool.Parse(HostSettingManager.Get(HostSettingNames.EnableRepositoryCreation));
@@ -124,11 +124,11 @@ namespace BugNET.Administration.Projects.UserControls
 		{
 			if (Page.IsValid) 
 			{
-                Project projectToUpdate = ProjectManager.GetProjectById(ProjectId);
+                Project projectToUpdate = ProjectManager.GetById(ProjectId);
                 projectToUpdate.SvnRepositoryUrl = svnUrl.Text;
 
             
-                if (ProjectManager.SaveProject(projectToUpdate)) 
+                if (ProjectManager.SaveOrUpdate(projectToUpdate)) 
 				{
                     ProjectId = projectToUpdate.Id;
 					return true;

@@ -21,7 +21,9 @@ namespace BugNET.Common
 
         public const string SKIP_PROJECT_INTRO = "skipprojectintro";
         public const string UNASSIGNED_DISPLAY_TEXT = "none";
+
         public const int NEW_ID = 0;
+        public const string EMPTY_GUID = "00000000-0000-0000-0000-000000000000";
 
         public const string SUPER_USER_ROLE = "Super Users";
 

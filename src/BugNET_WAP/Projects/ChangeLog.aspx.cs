@@ -41,7 +41,7 @@ namespace BugNET.Projects
                 }
 
 
-                Project p = ProjectManager.GetProjectById(ProjectId);
+                Project p = ProjectManager.GetById(ProjectId);
                 ltProject.Text = p.Name;
                 litProjectCode.Text = p.Code;
                 PreviousMilestones.ForeColor = Color.Black;

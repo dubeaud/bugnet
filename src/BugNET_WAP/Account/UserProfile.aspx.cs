@@ -181,7 +181,7 @@ namespace BugNET.Account
                 case 3:
                     lstAllProjects.Items.Clear();
                     lstSelectedProjects.Items.Clear();
-                    lstAllProjects.DataSource = ProjectManager.GetProjectsByMemberUserName(Security.GetUserName());
+                    lstAllProjects.DataSource = ProjectManager.GetByMemberUserName(Security.GetUserName());
                     lstAllProjects.DataTextField = "Name";
                     lstAllProjects.DataValueField = "Id";
                     lstAllProjects.DataBind();

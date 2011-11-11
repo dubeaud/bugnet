@@ -90,7 +90,7 @@ namespace BugNET.Projects
            
             rptType.DataBind();
 
-            Project p = ProjectManager.GetProjectById(ProjectId);
+            Project p = ProjectManager.GetById(ProjectId);
             litProject.Text = p.Name;
             litProjectCode.Text = p.Code;
             //DataBind();

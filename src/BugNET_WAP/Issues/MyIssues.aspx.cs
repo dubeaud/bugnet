@@ -30,7 +30,7 @@ namespace BugNET.Issues
 
                 DisplayNameLabel.Text = string.Format(this.GetLocalResourceObject("MyIssuesPage_Title.Text").ToString(), Security.GetDisplayName());
 
-                ProjectListBoxFilter.DataSource = ProjectManager.GetProjectsByMemberUserName(Context.User.Identity.Name);
+                ProjectListBoxFilter.DataSource = ProjectManager.GetByMemberUserName(Context.User.Identity.Name);
                 ProjectListBoxFilter.DataTextField = "Name";
                 ProjectListBoxFilter.DataValueField = "Id";
                 ProjectListBoxFilter.DataBind();
@@ -120,7 +120,7 @@ namespace BugNET.Issues
             MembershipUser user = Membership.GetUser();
             List<QueryClause> queryClauses = new List<QueryClause>();
             queryClauses.Add(new QueryClause(BooleanOperator, "IssueAssignedUserId", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
-            foreach (Project p in ProjectManager.GetProjectsByMemberUserName(Context.User.Identity.Name))
+            foreach (Project p in ProjectManager.GetByMemberUserName(Context.User.Identity.Name))
             {
                 List<Status> status = StatusManager.GetByProjectId(p.Id).FindAll(s => !s.IsClosedState);
                 foreach (Status st in status)
@@ -176,7 +176,7 @@ namespace BugNET.Issues
                         break;
                     case "Closed":
                         queryClauses.Add(new QueryClause(BooleanOperator, "IssueAssignedUserId", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
-                        foreach (Project p in ProjectManager.GetProjectsByMemberUserName(Context.User.Identity.Name))
+                        foreach (Project p in ProjectManager.GetByMemberUserName(Context.User.Identity.Name))
                         {
                             List<Status> status = StatusManager.GetByProjectId(p.Id).FindAll(s => !s.IsClosedState);
                             foreach (Status st in status)
@@ -198,7 +198,7 @@ namespace BugNET.Issues
 
                 if (ExcludeClosedIssuesFilter.Checked && ViewIssuesDropDownFilter.SelectedValue != "Closed")
                 {
-                    foreach (Project p in ProjectManager.GetProjectsByMemberUserName(Context.User.Identity.Name))
+                    foreach (Project p in ProjectManager.GetByMemberUserName(Context.User.Identity.Name))
                     {
                         var status = StatusManager.GetByProjectId(p.Id).FindAll(s => s.IsClosedState);
                         queryClauses.AddRange(status.Select(st => new QueryClause(BooleanOperator, "IssueStatusId", "<>", st.Id.ToString(), SqlDbType.Int, false)));

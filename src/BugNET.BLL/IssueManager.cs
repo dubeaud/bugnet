@@ -439,7 +439,7 @@ namespace BugNET.BLL
         {
             if (projectId < Globals.NEW_ID) throw new ArgumentOutOfRangeException(string.Format("ProjectID must be {0} or larger.", Globals.NEW_ID));
 
-            var curProject = ProjectManager.GetProjectById(projectId);
+            var curProject = ProjectManager.GetById(projectId);
 
             if (curProject == null) throw new ArgumentException("Project not found for ProjectID.");
 

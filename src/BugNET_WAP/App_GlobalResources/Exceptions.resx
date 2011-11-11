@@ -129,6 +129,9 @@
   <data name="CloneProjectError" xml:space="preserve">
     <value>Could not clone project</value>
   </data>
+  <data name="CreateProjectUploadFolderError" xml:space="preserve">
+    <value>Could not create new upload folder {0} for project {1}</value>
+  </data>
   <data name="DatabaseError" xml:space="preserve">
     <value>An error has occured accessing the database</value>
   </data>
@@ -143,6 +146,9 @@
   </data>
   <data name="DeletePriorityError" xml:space="preserve">
     <value>Could not delete priority</value>
+  </data>
+  <data name="DeleteProjectUploadFolderError" xml:space="preserve">
+    <value>Could not delete upload folder {0} for project id {1}</value>
   </data>
   <data name="DeleteResolutionError" xml:space="preserve">
     <value>Could not delete resolution</value>
@@ -224,6 +230,9 @@
   </data>
   <data name="UpdateUserError" xml:space="preserve">
     <value>There was an error updating this user.</value>
+  </data>
+  <data name="UploadPathInvalid" xml:space="preserve">
+    <value>Upload path is invalid.</value>
   </data>
   <data name="UploadPathNotDefined" xml:space="preserve">
     <value>Project upload path has not been defined for project {0}.</value>

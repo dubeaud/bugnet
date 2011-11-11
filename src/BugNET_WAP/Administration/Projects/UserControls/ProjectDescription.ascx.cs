@@ -1,14 +1,15 @@
+using System.Linq;
+using System;
+using System.IO;
+using System.Web.UI.WebControls;
+using BugNET.BLL;
+using BugNET.Common;
+using BugNET.Entities;
+using BugNET.UserInterfaceLayer;
+using log4net;
+
 namespace BugNET.Administration.Projects.UserControls
 {
-    using System;
-    using System.IO;
-    using System.Web;
-    using System.Web.UI.WebControls;
-    using BugNET.BLL;
-    using BugNET.Common;
-    using BugNET.Entities;
-    using BugNET.UserInterfaceLayer;
-    using log4net;
 
     /// <summary>
 	///		Summary description for ProjectDescription.
@@ -22,7 +23,7 @@ namespace BugNET.Administration.Projects.UserControls
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		protected void Page_Load(object sender, System.EventArgs e)
+		protected void Page_Load(object sender, EventArgs e)
 		{
 		}
 
@@ -34,11 +35,7 @@ namespace BugNET.Administration.Projects.UserControls
         /// <value>The project id.</value>
 		public int ProjectId
 		{
-            get
-            {
-                return ((BasePage)Page).ProjectId;
-            }
-
+            get { return ((BasePage)Page).ProjectId; }
             set { ((BasePage)Page).ProjectId = value; }
 		}
 
@@ -61,9 +58,9 @@ namespace BugNET.Administration.Projects.UserControls
 			ProjectManager.DataBind();
             ProjectManager.Items.Insert(0, new ListItem(GetLocalResourceObject("SelectUser").ToString(), ""));
 
-			if (ProjectId != -1) 
+			if (ProjectId > Globals.NEW_ID) 
 			{
-				Project projectToUpdate = BugNET.BLL.ProjectManager.GetProjectById(ProjectId);
+				var projectToUpdate = BLL.ProjectManager.GetById(ProjectId);
 
 				if (projectToUpdate != null) 
 				{
@@ -100,7 +97,7 @@ namespace BugNET.Administration.Projects.UserControls
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void RemoveProjectImage_Click(object sender, EventArgs e)
         {
-            BugNET.BLL.ProjectManager.DeleteProjectImage(ProjectId);
+            BLL.ProjectManager.DeleteProjectImageById(ProjectId);
         }
 
         /// <summary>
@@ -111,27 +108,25 @@ namespace BugNET.Administration.Projects.UserControls
 		{
 			if (Page.IsValid) 
 			{
-                Globals.ProjectAccessType at = (rblAccessType.SelectedValue == "Public") ? Globals.ProjectAccessType.Public : Globals.ProjectAccessType.Private;
-                IssueAttachmentStorageTypes attachmentStorageType = (AttachmentStorageType.SelectedValue == "2") ? IssueAttachmentStorageTypes.Database : IssueAttachmentStorageTypes.FileSystem;
-                Project newProject = null; 
+                var at = (rblAccessType.SelectedValue == "Public") ? Globals.ProjectAccessType.Public : Globals.ProjectAccessType.Private;
+                var attachmentStorageType = (AttachmentStorageType.SelectedValue == "2") ? IssueAttachmentStorageTypes.Database : IssueAttachmentStorageTypes.FileSystem;
+
+			    ProjectImage projectImage = null;
 
                 // get the current file
-                HttpPostedFile uploadFile = ProjectImageUploadFile.PostedFile;
-                HttpContext context = HttpContext.Current;
+                var uploadFile = ProjectImageUploadFile.PostedFile;
 
                 // if there was a file uploaded
                 if (uploadFile.ContentLength > 0)
                 {
-                    bool isFileOk = false;
-                    string[] AllowedFileTypes = new string[3] { ".gif", ".png", ".jpg" };
-                    string fileExt = System.IO.Path.GetExtension(uploadFile.FileName);
-                    string uploadedFileName = Path.GetFileName(uploadFile.FileName);
+                    var isFileOk = false;
+                    var allowedFileTypes = new string[3] { ".gif", ".png", ".jpg" };
+                    var fileExt = Path.GetExtension(uploadFile.FileName);
+                    var uploadedFileName = Path.GetFileName(uploadFile.FileName);
 
-                    foreach (string fileType in AllowedFileTypes)
+                    foreach (var newfileType in allowedFileTypes.Select(fileType => fileType.Substring(fileType.LastIndexOf("."))).Where(newfileType => newfileType.CompareTo(fileExt) == 0))
                     {
-                        string newfileType = fileType.Substring(fileType.LastIndexOf("."));
-                        if (newfileType.CompareTo(fileExt) == 0)
-                            isFileOk = true;
+                        isFileOk = true;
                     }
 
                     //file type is not valid
@@ -142,43 +137,49 @@ namespace BugNET.Administration.Projects.UserControls
                     }
 
                     //check for illegal filename characters
-                    if (uploadedFileName.IndexOfAny(System.IO.Path.GetInvalidFileNameChars()) != -1)
+                    if (uploadedFileName.IndexOfAny(Path.GetInvalidFileNameChars()) != -1)
                     {
                         if (Log.IsErrorEnabled) Log.Error(string.Format(LoggingManager.GetErrorMessageResource("InvalidFileName"), uploadedFileName));
                         return false;
                     }
 
-                    //if the file is ok save it.
-                    if (isFileOk)
-                    {
-                            int fileSize = uploadFile.ContentLength;
-                            byte[] fileBytes = new byte[fileSize];
-                            System.IO.Stream myStream = uploadFile.InputStream;
-                            myStream.Read(fileBytes, 0, fileSize);
+                    var fileSize = uploadFile.ContentLength;
+                    var fileBytes = new byte[fileSize];
+                    var myStream = uploadFile.InputStream;
+                    myStream.Read(fileBytes, 0, fileSize);
 
-                            ProjectImage projectImage = new ProjectImage(ProjectId, fileBytes, uploadedFileName, fileSize, uploadFile.ContentType);
-
-                            newProject = new Project(ProjectId, txtName.Text.Trim(), ProjectCode.Text.Trim(), ProjectDescriptionHtmlEditor.Text.Trim(), ProjectManager.SelectedValue, string.Empty,
-                            Page.User.Identity.Name, string.Empty, txtUploadPath.Text.Trim(), at, false, AllowAttachments.Checked, attachmentStorageType, string.Empty, chkAllowIssueVoting.Checked,
-                            projectImage);
-                    }
-                }
-                else
-                {
-                    newProject = new Project(ProjectId, txtName.Text.Trim(), ProjectCode.Text.Trim(), ProjectDescriptionHtmlEditor.Text.Trim(), ProjectManager.SelectedValue, string.Empty,
-                        Page.User.Identity.Name, string.Empty, txtUploadPath.Text.Trim(), at, false, AllowAttachments.Checked, attachmentStorageType, string.Empty, chkAllowIssueVoting.Checked);
-                   
+                    projectImage = new ProjectImage(ProjectId, fileBytes, uploadedFileName, fileSize, uploadFile.ContentType);
                 }
 
-                if (BugNET.BLL.ProjectManager.SaveProject(newProject))
+                var project = new Project
+                                      {
+                                          AccessType = at,
+                                          Name = txtName.Text.Trim(),
+                                          Id = ProjectId,
+                                          CreatorUserName = Page.User.Identity.Name,
+                                          CreatorDisplayName = string.Empty, 
+                                          Description = ProjectDescriptionHtmlEditor.Text.Trim(),
+                                          AllowAttachments = AllowAttachments.Checked,
+                                          AllowIssueVoting = chkAllowIssueVoting.Checked,
+                                          AttachmentStorageType = attachmentStorageType,
+                                          Code = ProjectCode.Text.Trim(),
+                                          Disabled = false,
+                                          Image = projectImage,
+                                          ManagerDisplayName = string.Empty,
+                                          ManagerUserName = ProjectManager.SelectedValue,
+                                          SvnRepositoryUrl = string.Empty,
+                                          UploadPath = txtUploadPath.Text.Trim()
+                                      };
+
+                if (BLL.ProjectManager.SaveOrUpdate(project))
                 {
-                    ProjectId = newProject.Id;
+                    ProjectId = project.Id;
                     return true;
                 }
-                else
-                    lblError.Text = LoggingManager.GetErrorMessageResource("SaveProjectError");
 
+			    lblError.Text = LoggingManager.GetErrorMessageResource("SaveProjectError");
 			}
+
 			return false;
 		}
       
@@ -194,6 +195,7 @@ namespace BugNET.Administration.Projects.UserControls
         {
             if (!AllowAttachments.Checked)
                 txtUploadPath.Text = string.Empty;
+
             AttachmentStorageTypeRow.Visible = AllowAttachments.Checked;
             AttachmentUploadPathRow.Visible = AllowAttachments.Checked && AttachmentStorageType.SelectedValue == "1";        
         }
@@ -207,6 +209,7 @@ namespace BugNET.Administration.Projects.UserControls
         {
             if (AttachmentStorageType.SelectedValue != "1")
                 txtUploadPath.Text = string.Empty;
+
             AttachmentUploadPathRow.Visible = AllowAttachments.Checked && AttachmentStorageType.SelectedValue == "1"; 
          
         }
@@ -214,14 +217,7 @@ namespace BugNET.Administration.Projects.UserControls
         protected void validUploadPath_ServerValidate(object source, ServerValidateEventArgs args)
         {
             // BGN-1909
-            if (BugNET.BLL.ProjectManager.CheckUploadPath("~" + Globals.UPLOAD_FOLDER + txtUploadPath.Text))
-            {
-                args.IsValid = true;
-            }
-            else
-            {
-                args.IsValid = false;
-            }  
+            args.IsValid = Utilities.CheckUploadPath("~" + Globals.UPLOAD_FOLDER + txtUploadPath.Text);
         }
 	}
 }

@@ -51,7 +51,7 @@ namespace BugNET.UserInterfaceLayer
             {
                 var projectId = context.Request.QueryString.Get("id", Globals.NEW_ID);
 
-                var projectImage = ProjectManager.GetProjectImage(projectId);
+                var projectImage = ProjectManager.GetProjectImageById(projectId);
 
                 if (projectImage != null)
                 {
@@ -97,7 +97,7 @@ namespace BugNET.UserInterfaceLayer
                 else
                 {
 
-                    var p = ProjectManager.GetProjectById(IssueManager.GetIssueById(attachment.IssueId).ProjectId);
+                    var p = ProjectManager.GetById(IssueManager.GetIssueById(attachment.IssueId).ProjectId);
 
                     var fileName = attachment.FileName;
                     var projectPath = p.UploadPath;

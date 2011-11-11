@@ -124,7 +124,7 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static string CreateTag(int projectId, string tagName, string comment, string userName, string password)
         {
-            Project proj = ProjectManager.GetProjectById(projectId);
+            Project proj = ProjectManager.GetById(projectId);
 
             string repoUrl = proj.SvnRepositoryUrl;
 

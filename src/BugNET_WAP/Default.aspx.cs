@@ -47,7 +47,7 @@ namespace BugNET
 			}
 			else
 			{
-				rptProject.DataSource = ProjectManager.GetProjectsByMemberUserName(User.Identity.Name);	
+				rptProject.DataSource = ProjectManager.GetByMemberUserName(User.Identity.Name);	
 			}
 
 			rptProject.DataBind();

@@ -34,7 +34,7 @@ namespace BugNET.Tests
         [Test]
         public void TestGetProjectById()
         {
-            Project p = ProjectManager.GetProjectById(ProjectId);
+            Project p = ProjectManager.GetById(ProjectId);
             Assert.IsNotNull(p);
         }
 

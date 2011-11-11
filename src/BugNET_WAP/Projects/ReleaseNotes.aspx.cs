@@ -20,7 +20,7 @@ namespace BugNET.Projects
             ProjectId = Convert.ToInt32(Request.QueryString["pid"]);
             MilestoneId = Convert.ToInt32(Request.QueryString["m"]);
             litMilestone.Text = MilestoneManager.GetById(MilestoneId).Name;
-            litProject.Text = ProjectManager.GetProjectById(ProjectId).Name;
+            litProject.Text = ProjectManager.GetById(ProjectId).Name;
 
             rptReleaseNotes.DataSource = IssueTypeManager.GetByProjectId(ProjectId);
             rptReleaseNotes.DataBind();

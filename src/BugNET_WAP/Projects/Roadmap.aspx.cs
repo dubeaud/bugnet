@@ -40,7 +40,7 @@ namespace BugNET.Projects
                     catch { }
                 }
 
-                Project p = ProjectManager.GetProjectById(ProjectId);
+                Project p = ProjectManager.GetById(ProjectId);
                 ltProject.Text = p.Name;
                 litProjectCode.Text = p.Code;
 

@@ -177,7 +177,7 @@ namespace BugNET.MailboxReader
                             if (pmbox != null)
                             {
                                 MailboxEntry entry = new MailboxEntry();
-                                Project project = ProjectManager.GetProjectById(pmbox.ProjectId);
+                                Project project = ProjectManager.GetById(pmbox.ProjectId);
 
                                 //TODO: Enhancements could include regex / string matching or not matching 
                                 //for particular strings values in the subject or body.

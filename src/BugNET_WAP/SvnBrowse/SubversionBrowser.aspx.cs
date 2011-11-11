@@ -30,7 +30,7 @@ namespace BugNET.SvnBrowse
                 if (Request.QueryString["pid"] != null)
                 {
                     ProjectId = Convert.ToInt32(Request.QueryString["pid"]);
-                    Project proj = ProjectManager.GetProjectById(ProjectId);
+                    Project proj = ProjectManager.GetById(ProjectId);
                     RepoUrl = proj.SvnRepositoryUrl;
 
                     if (string.IsNullOrEmpty(RepoUrl))

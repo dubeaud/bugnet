@@ -447,7 +447,7 @@ namespace BugNET.UserControls
         protected void Page_PreRender(object sender, System.EventArgs e)
         {
             //hide votes column if issue voting is disabled
-            if (!ProjectManager.GetProjectById(ProjectId).AllowIssueVoting)
+            if (!ProjectManager.GetById(ProjectId).AllowIssueVoting)
                 dropField.Items.Remove(dropField.Items.FindByValue("IssueVotes"));
 
             if(CustomFieldManager.GetByProjectId(ProjectId).Count == 0)

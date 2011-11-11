@@ -148,7 +148,7 @@ namespace BugNET.UserControls
                       //}
 
                     //hide votes column if issue voting is disabled
-                    if (!ProjectManager.GetProjectById(projectId).AllowIssueVoting)
+                    if (!ProjectManager.GetById(projectId).AllowIssueVoting)
                     {
                         gvIssues.Columns[4].Visible = false;
                         lstIssueColumns.Items.Remove(lstIssueColumns.Items.FindByValue("4"));

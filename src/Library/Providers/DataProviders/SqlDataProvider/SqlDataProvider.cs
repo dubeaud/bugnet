@@ -1629,7 +1629,7 @@ namespace BugNET.Providers.DataProviders
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_PROJECT_GETALLPROJECTS);
 
             List<Project> projectList = new List<Project>();
-            TExecuteReaderCmd<Project>(sqlCmd, TGenerateProjectListFromReader<Project>, ref projectList);
+            TExecuteReaderCmd<Project>(sqlCmd, GenerateProjectListFromReader, ref projectList);
 
             return projectList;
         }
@@ -1649,7 +1649,7 @@ namespace BugNET.Providers.DataProviders
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_PROJECT_GETPROJECTBYID);
 
             List<Project> projectList = new List<Project>();
-            TExecuteReaderCmd<Project>(sqlCmd, TGenerateProjectListFromReader<Project>, ref projectList);
+            TExecuteReaderCmd<Project>(sqlCmd, GenerateProjectListFromReader, ref projectList);
 
             if (projectList.Count > 0)
                 return projectList[0];
@@ -1688,7 +1688,7 @@ namespace BugNET.Providers.DataProviders
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_PROJECT_GETPROJECTSBYMEMBERUSERNAME);
 
                 List<Project> projectList = new List<Project>();
-                TExecuteReaderCmd<Project>(sqlCmd, TGenerateProjectListFromReader<Project>, ref projectList);
+                TExecuteReaderCmd<Project>(sqlCmd, GenerateProjectListFromReader, ref projectList);
 
                 return projectList;
             }
@@ -1843,7 +1843,7 @@ namespace BugNET.Providers.DataProviders
                 AddParamToSQLCmd(sqlCmd, "@ProjectCode", SqlDbType.NVarChar, 0, ParameterDirection.Input, projectCode);
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_PROJECT_GETPROJECTBYCODE);
                 List<Project> projectList = new List<Project>();
-                TExecuteReaderCmd<Project>(sqlCmd, TGenerateProjectListFromReader<Project>, ref projectList);
+                TExecuteReaderCmd<Project>(sqlCmd, GenerateProjectListFromReader, ref projectList);
                 if (projectList.Count > 0)
                     return projectList[0];
                 else
@@ -1865,7 +1865,7 @@ namespace BugNET.Providers.DataProviders
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_PROJECT_GETPUBLICPROJECTS);
 
             List<Project> projectList = new List<Project>();
-            TExecuteReaderCmd<Project>(sqlCmd, TGenerateProjectListFromReader<Project>, ref projectList);
+            TExecuteReaderCmd<Project>(sqlCmd, GenerateProjectListFromReader, ref projectList);
 
             return projectList;
         }
@@ -5387,22 +5387,32 @@ namespace BugNET.Providers.DataProviders
         /// <summary>
         /// Ts the generate project list from reader.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="returnData">The return data.</param>
         /// <param name="projectList">The project list.</param>
-        private void TGenerateProjectListFromReader<T>(SqlDataReader returnData, ref List<Project> projectList)
+        private static void GenerateProjectListFromReader(IDataReader returnData, ref List<Project> projectList)
         {
             while (returnData.Read())
             {
-                Project project = new Project((int)returnData["ProjectId"], (string)returnData["ProjectName"],
-                    (string)returnData["ProjectCode"], (string)returnData["ProjectDescription"], (string)returnData["ManagerUserName"],
-                    (string)returnData["ManagerDisplayName"], (string)returnData["ManagerUserName"], (string)returnData["CreatorDisplayName"],
-                    (string)returnData["AttachmentUploadPath"], (DateTime)returnData["DateCreated"],
-                    (Globals.ProjectAccessType)returnData["ProjectAccessType"], (bool)returnData["ProjectDisabled"],
-                    (bool)returnData["AllowAttachments"], (Guid)returnData["ProjectManagerUserId"],
-                    (IssueAttachmentStorageTypes)returnData["AttachmentStorageType"], returnData["SvnRepositoryUrl"].ToString(), (bool)returnData["AllowIssueVoting"],
-                    null);
-                projectList.Add(project);
+                projectList.Add(new Project
+                {
+                    Id = returnData.GetInt32(returnData.GetOrdinal("ProjectId")),
+                    Name = returnData.GetString(returnData.GetOrdinal("ProjectName")),
+                    Description = returnData.GetString(returnData.GetOrdinal("ProjectDescription")),
+                    CreatorUserName = returnData.GetString(returnData.GetOrdinal("CreatorUserName")),
+                    CreatorDisplayName = returnData.GetString(returnData.GetOrdinal("CreatorDisplayName")),
+                    AllowAttachments = returnData.GetBoolean(returnData.GetOrdinal("AllowAttachments")),
+                    AccessType = (Globals.ProjectAccessType)returnData["ProjectAccessType"],
+                    AllowIssueVoting = returnData.GetBoolean(returnData.GetOrdinal("AllowIssueVoting")),
+                    AttachmentStorageType = (IssueAttachmentStorageTypes)returnData["AttachmentStorageType"], 
+                    Code = returnData.GetString(returnData.GetOrdinal("ProjectCode")),
+                    Disabled = returnData.GetBoolean(returnData.GetOrdinal("ProjectDisabled")), 
+                    ManagerDisplayName = returnData.GetString(returnData.GetOrdinal("ManagerDisplayName")),
+                    ManagerId = returnData.GetGuid(returnData.GetOrdinal("ProjectManagerUserId")),
+                    ManagerUserName = returnData.GetString(returnData.GetOrdinal("ManagerUserName")),
+                    SvnRepositoryUrl = returnData.GetString(returnData.GetOrdinal("SvnRepositoryUrl")),
+                    UploadPath = returnData.GetString(returnData.GetOrdinal("AttachmentUploadPath")),
+                    DateCreated = returnData.GetDateTime(returnData.GetOrdinal("DateCreated"))
+                });
             }
         }
 

@@ -116,7 +116,7 @@ namespace BugNET.Issues
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_PreRender(object sender, EventArgs e)
         {
-            Project p = ProjectManager.GetProjectById(ProjectId);
+            Project p = ProjectManager.GetById(ProjectId);
 
             if (p == null)
                 ErrorRedirector.TransferToNotFoundPage(Page);

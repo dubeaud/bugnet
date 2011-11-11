@@ -1,13 +1,72 @@
 ﻿using System;
 using System.Configuration;
 using System.Data;
+using System.IO;
 using System.Text.RegularExpressions;
-using System.Web;
 
 namespace BugNET.Common
 {
     public static class Utilities
     {
+
+        /// <summary>
+        /// This checks the Project upload path within the context of the 
+        /// BugNET application.
+        /// 
+        /// Plugs numerous security holes.
+        /// 
+        /// BGN-1909
+        /// BGN-1905
+        /// BGN-1904
+        /// </summary>
+        /// <param name="sPath"></param>
+        /// <returns></returns>
+        public static bool CheckUploadPath(string sPath)
+        {
+            var isPathNorty = false;
+            var tmpPath = sPath; // dont even trim it!
+
+            // BGN-1904
+            // Check the length of the upload path
+            // 64 characters are allows            
+            if ((tmpPath.Length > Globals.UPLOAD_FOLDER_LIMIT))
+            {
+                isPathNorty = true;
+            }
+
+            // Now check for funny characters but there is a slight problem.
+
+            // The string paths are "~\Uploads\Project1\"
+            // The "\\" is seen as a UNC path and marked invalid
+            // However our encoding defines a UNC path as "\\"
+            // So we have to do some magic first
+
+            // Reject any UNC paths
+            if (tmpPath.Contains(@"\\"))
+            {
+                isPathNorty = true;
+            }
+
+            // Reject attempts to traverse directories
+            if ((tmpPath.Contains(@"\..")) ||
+                (tmpPath.Contains(@"..\")) || (tmpPath.Contains(@"\.\")))
+            {
+                isPathNorty = true;
+            }
+
+            // Now that there are just folders left, remove the "\" character
+            tmpPath = tmpPath.Replace(@"\", " ");
+
+            //check for illegal filename characters
+            if (tmpPath.IndexOfAny(Path.GetInvalidFileNameChars()) != -1)
+            {
+                isPathNorty = true;
+            }
+
+            // Return the opposite of norty
+            return !isPathNorty;
+        }
+
         public enum AppSettingKeys
         {
                 InstallationDate,
@@ -25,7 +84,7 @@ namespace BugNET.Common
 
         public static string GetBooleanAsString(bool value)
         {
-            var boolString = (value) ? bool.TrueString : bool.FalseString;
+            var boolString = (value) ? Boolean.TrueString : Boolean.FalseString;
             return ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, boolString);
         }
 

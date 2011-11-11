@@ -91,7 +91,7 @@ namespace BugNET.UserInterfaceLayer
             if (projectId <= Globals.NEW_ID) return;
 
             // Security check: Ensure the project exists (ie PID is valid project)
-            var myProj = ProjectManager.GetProjectById(projectId);
+            var myProj = ProjectManager.GetById(projectId);
 
             if (myProj == null)
             {

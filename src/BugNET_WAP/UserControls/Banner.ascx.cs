@@ -48,7 +48,7 @@ namespace BugNET.UserControls
             { 
                 if (Page.User.Identity.IsAuthenticated)
                 {
-                    ddlProject.DataSource = ProjectManager.GetProjectsByMemberUserName(Security.GetUserName(), true);
+                    ddlProject.DataSource = ProjectManager.GetByMemberUserName(Security.GetUserName(), true);
                     ddlProject.DataBind();
                     ddlProject.Items.Insert(0, new ListItem(GetLocalResourceObject("SelectProject").ToString()));
                 }

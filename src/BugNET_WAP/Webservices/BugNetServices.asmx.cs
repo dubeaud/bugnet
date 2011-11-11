@@ -41,7 +41,7 @@ namespace BugNET.Webservices
             var projectId = IssueManager.GetIssueById(issueId).ProjectId;
 
             //authentication checks against user access to project
-            if (ProjectManager.GetProjectById(projectId).AccessType == Globals.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(UserName, projectId))
+            if (ProjectManager.GetById(projectId).AccessType == Globals.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(UserName, projectId))
                 throw new UnauthorizedAccessException(string.Format(LoggingManager.GetErrorMessageResource("ProjectAccessDenied"), UserName)); 
 
             var issueRevision = new IssueRevision() 
@@ -73,7 +73,7 @@ namespace BugNET.Webservices
             var projectId = IssueManager.GetIssueById(issueId).ProjectId;
 
             //authentication checks against user access to project
-            if (ProjectManager.GetProjectById(projectId).AccessType == Globals.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(UserName, projectId))
+            if (ProjectManager.GetById(projectId).AccessType == Globals.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(UserName, projectId))
                 throw new UnauthorizedAccessException(string.Format(LoggingManager.GetErrorMessageResource("ProjectAccessDenied"), UserName));
 
             var issueAttachment = new IssueAttachment
@@ -309,7 +309,7 @@ namespace BugNET.Webservices
         [WebMethod(EnableSession = true)]
         public String[] GetResolutions(int ProjectId)
         {
-            if (ProjectManager.GetProjectById(ProjectId).AccessType == Globals.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(UserName, ProjectId))
+            if (ProjectManager.GetById(ProjectId).AccessType == Globals.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(UserName, ProjectId))
                 throw new UnauthorizedAccessException(string.Format(LoggingManager.GetErrorMessageResource("ProjectAccessDenied"), UserName)); 
 
             List<Resolution> resolutions = ResolutionManager.GetByProjectId(ProjectId);
@@ -330,7 +330,7 @@ namespace BugNET.Webservices
         [WebMethod(EnableSession = true)]
         public String[] GetMilestones(int ProjectId)
         {
-            if (ProjectManager.GetProjectById(ProjectId).AccessType == Globals.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(UserName, ProjectId))
+            if (ProjectManager.GetById(ProjectId).AccessType == Globals.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(UserName, ProjectId))
                 throw new UnauthorizedAccessException(string.Format(LoggingManager.GetErrorMessageResource("ProjectAccessDenied"), UserName)); 
 
             List<Milestone> milestones = MilestoneManager.GetByProjectId(ProjectId);
@@ -352,7 +352,7 @@ namespace BugNET.Webservices
         [WebMethod(EnableSession = true)]
         public String[] GetIssueTypes(int ProjectId)
         {
-            if (ProjectManager.GetProjectById(ProjectId).AccessType == Globals.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(UserName, ProjectId))
+            if (ProjectManager.GetById(ProjectId).AccessType == Globals.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(UserName, ProjectId))
                 throw new UnauthorizedAccessException(string.Format(LoggingManager.GetErrorMessageResource("ProjectAccessDenied"), UserName));
 
             List<IssueType> issuetypes = IssueTypeManager.GetByProjectId(ProjectId);
@@ -373,7 +373,7 @@ namespace BugNET.Webservices
         [WebMethod(EnableSession = true)]
         public String[] GetPriorities(int ProjectId)
         {
-            if (ProjectManager.GetProjectById(ProjectId).AccessType == Globals.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(UserName, ProjectId))
+            if (ProjectManager.GetById(ProjectId).AccessType == Globals.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(UserName, ProjectId))
                 throw new UnauthorizedAccessException(string.Format(LoggingManager.GetErrorMessageResource("ProjectAccessDenied"), UserName)); 
 
             List<Priority> priorites = PriorityManager.GetByProjectId(ProjectId);
@@ -394,7 +394,7 @@ namespace BugNET.Webservices
         //[WebMethod(EnableSession = true)]
         //public String[] GetCategories(int projectId)
         //{
-        //    if (Project.GetProjectById(projectId).AccessType == Globals.ProjectAccessType.Private && !Project.IsUserProjectMember(UserName, projectId))
+        //    if (Project.GetById(projectId).AccessType == Globals.ProjectAccessType.Private && !Project.IsUserProjectMember(UserName, projectId))
         //        throw new UnauthorizedAccessException(string.Format(Logging.GetErrorMessageResource("ProjectAccessDenied"), UserName)); 
 
         //    CategoryTree categoriyTree = new CategoryTree();
@@ -416,7 +416,7 @@ namespace BugNET.Webservices
         [WebMethod(EnableSession = true)]
         public String[] GetStatus(int ProjectId)
         {
-            if (ProjectManager.GetProjectById(ProjectId).AccessType == Globals.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(UserName, ProjectId))
+            if (ProjectManager.GetById(ProjectId).AccessType == Globals.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(UserName, ProjectId))
                 throw new UnauthorizedAccessException(string.Format(LoggingManager.GetErrorMessageResource("ProjectAccessDenied"), UserName)); 
 
             List<Status> statuslist = StatusManager.GetByProjectId(ProjectId);
@@ -438,7 +438,7 @@ namespace BugNET.Webservices
         [WebMethod(EnableSession = true)]
         public int GetProjectId(string ProjectCode)
         {
-            Project project = ProjectManager.GetProjectByCode(ProjectCode);
+            Project project = ProjectManager.GetByCode(ProjectCode);
             if (project.AccessType == Globals.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(UserName, project.Id))
                 throw new UnauthorizedAccessException(string.Format(LoggingManager.GetErrorMessageResource("ProjectAccessDenied"), UserName)); 
 
@@ -455,7 +455,7 @@ namespace BugNET.Webservices
         [WebMethod(EnableSession = true)]
         public object[] GetProjectIssues(int ProjectId, string Filter)
         {
-            if (ProjectManager.GetProjectById(ProjectId).AccessType == Globals.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(UserName, ProjectId))
+            if (ProjectManager.GetById(ProjectId).AccessType == Globals.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(UserName, ProjectId))
                 throw new UnauthorizedAccessException(string.Format(LoggingManager.GetErrorMessageResource("ProjectAccessDenied"), UserName)); 
 
             List<Issue> issues;

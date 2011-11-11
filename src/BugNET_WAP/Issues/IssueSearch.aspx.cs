@@ -135,7 +135,7 @@ namespace BugNET
             // are we logged in ?
             searchProjects = String.IsNullOrEmpty(Context.User.Identity.Name) ? 
                 ProjectManager.GetPublicProjects() : 
-                ProjectManager.GetProjectsByMemberUserName(Context.User.Identity.Name);
+                ProjectManager.GetByMemberUserName(Context.User.Identity.Name);
 
             searchProjects.Sort(new ProjectComparer("Name", false));
 

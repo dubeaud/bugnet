@@ -111,9 +111,9 @@ namespace BugNET.Queries
 			{
                 
                 
-                lblProjectName.Text = ProjectManager.GetProjectById(ProjectId).Name;
+                lblProjectName.Text = ProjectManager.GetById(ProjectId).Name;
 
-                //dropProjects.DataSource = Project.GetProjectsByMemberUserName(User.Identity.Name);
+                //dropProjects.DataSource = Project.GetByMemberUserName(User.Identity.Name);
                 //dropProjects.DataBind();
 
                 //if (dropProjects.SelectedValue == 0)

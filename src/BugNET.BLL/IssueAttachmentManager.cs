@@ -38,7 +38,7 @@ namespace BugNET.BLL
             {
                 // save the file to the upload directory
                 var projectId = IssueManager.GetIssueById(entity.IssueId).ProjectId;
-                var p = ProjectManager.GetProjectById(projectId);
+                var p = ProjectManager.GetById(projectId);
 
                 if (p.AllowAttachments)
                 {
@@ -162,7 +162,7 @@ namespace BugNET.BLL
         {
             var att = GetById(issueAttachmentId);
             var b = IssueManager.GetIssueById(att.IssueId);
-            var p = ProjectManager.GetProjectById(b.ProjectId);
+            var p = ProjectManager.GetById(b.ProjectId);
 
             if (DataProviderManager.Provider.DeleteIssueAttachment(issueAttachmentId))
             {
@@ -374,7 +374,7 @@ namespace BugNET.BLL
         //        {
         //            // save the file to the upload directory
         //            int projectId = IssueManager.GetIssueById(issueId).ProjectId;
-        //            Project p = Project.GetProjectById(projectId);
+        //            Project p = Project.GetById(projectId);
 
         //            if (p.AllowAttachments)
         //            {
