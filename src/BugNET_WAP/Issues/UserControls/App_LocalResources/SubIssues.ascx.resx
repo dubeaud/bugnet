@@ -126,4 +126,10 @@
   <data name="lblDescription.Text" xml:space="preserve">
     <value>List all Issues that are dependent on the current issue. Enter the ID of the issue in the text box below and click the Add Sub Issue button.</value>
   </data>
+  <data name="RemoveSubIssue" xml:space="preserve">
+    <value>Are you sure you want to remove this sub issue?</value>
+  </data>
+  <data name="NoSubIssues" xml:space="preserve">
+    <value>There are no sub issues.</value>
+  </data>
 </root>

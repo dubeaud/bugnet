@@ -126,4 +126,10 @@
   <data name="lblDescription.Text" xml:space="preserve">
     <value>List all issues on which this issue depends. Enter the ID of the issue in the text box below and click the Add Parent Issue button.</value>
   </data>
+  <data name="RemoveParentIssue" xml:space="preserve">
+    <value>Are you sure you want to remove this parent issue?</value>
+  </data>
+  <data name="NoParentIssues" xml:space="preserve">
+    <value>There are no parent issues.</value>
+  </data>
 </root>

@@ -36,14 +36,21 @@ namespace BugNET.Issues.UserControls
         /// Gets or sets the issue id.
         /// </summary>
         /// <value>The issue id.</value>
-        public int IssueId { get; set; }
+        public int IssueId
+        {
+            get { return ViewState.Get("IssueId", 0); }
+            set { ViewState.Set("IssueId", value); }
+        }
 
         /// <summary>
         /// Gets or sets the project id.
         /// </summary>
         /// <value>The project id.</value>
-        public int ProjectId { get; set; }
-
+        public int ProjectId
+        {
+            get { return ViewState.Get("ProjectId", 0); }
+            set { ViewState.Set("ProjectId", value); }
+        }
 
         /// <summary>
         /// Initializes this instance.
@@ -190,8 +197,7 @@ namespace BugNET.Issues.UserControls
                 case ListItemType.Item:
                 case ListItemType.AlternatingItem:
                     _total += Convert.ToDouble(e.Item.Cells[1].Text);
-                    ((ImageButton)e.Item.FindControl("RemoveEntry")).OnClientClick = delete;
-                    ((LinkButton)e.Item.FindControl("lnkDeleteTimeEntry")).OnClientClick = delete;
+                    ((ImageButton)e.Item.FindControl("cmdDelete")).OnClientClick = delete;
                     break;
                 case ListItemType.Footer:
                     //Use the footer to display the summary row.

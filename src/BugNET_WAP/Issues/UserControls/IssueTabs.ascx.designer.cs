@@ -31,12 +31,84 @@ namespace BugNET.Issues.UserControls {
         protected global::System.Web.UI.WebControls.Menu IssueTabsMenu;
         
         /// <summary>
-        /// plhContent control.
+        /// TabNotifications control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder plhContent;
+        protected global::BugNET.Issues.UserControls.Notifications TabNotifications;
+        
+        /// <summary>
+        /// TabHistory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::BugNET.Issues.UserControls.History TabHistory;
+        
+        /// <summary>
+        /// TabAttachments control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::BugNET.Issues.UserControls.Attachments TabAttachments;
+        
+        /// <summary>
+        /// TabComments control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::BugNET.Issues.UserControls.Comments TabComments;
+        
+        /// <summary>
+        /// TabParentIssues control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::BugNET.Issues.UserControls.ParentIssues TabParentIssues;
+        
+        /// <summary>
+        /// TabRelatedIssues control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::BugNET.Issues.UserControls.RelatedIssues TabRelatedIssues;
+        
+        /// <summary>
+        /// TabRevisions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::BugNET.Issues.UserControls.Revisions TabRevisions;
+        
+        /// <summary>
+        /// TabSubIssues control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::BugNET.Issues.UserControls.SubIssues TabSubIssues;
+        
+        /// <summary>
+        /// TabTimeTracking control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::BugNET.Issues.UserControls.TimeTracking TabTimeTracking;
     }
 }

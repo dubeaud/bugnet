@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using BugNET.BLL;
+using BugNET.Common;
 using BugNET.Entities;
 using BugNET.UserInterfaceLayer;
 
@@ -8,10 +9,6 @@ namespace BugNET.Issues.UserControls
 {
     public partial class History : System.Web.UI.UserControl, IIssueTab
     {
-        private int _IssueId = 0;
-        private int _ProjectId = 0;
-
-      
         /// <summary>
         /// Handles the Load event of the Page control.
         /// </summary>
@@ -25,13 +22,13 @@ namespace BugNET.Issues.UserControls
         #region IIssueTab Members
 
         /// <summary>
-        /// Gets or sets the bug id.
+        /// Gets or sets the issue id.
         /// </summary>
-        /// <value>The bug id.</value>
+        /// <value>The issue id.</value>
         public int IssueId
         {
-            get { return _IssueId; }
-            set { _IssueId = value; }
+            get { return ViewState.Get("IssueId", 0); }
+            set { ViewState.Set("IssueId", value); }
         }
 
         /// <summary>
@@ -40,8 +37,8 @@ namespace BugNET.Issues.UserControls
         /// <value>The project id.</value>
         public int ProjectId
         {
-            get { return _ProjectId; }
-            set { _ProjectId = value; }
+            get { return ViewState.Get("ProjectId", 0); }
+            set { ViewState.Set("ProjectId", value); }
         }
 
         /// <summary>

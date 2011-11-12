@@ -20,12 +20,10 @@
         <asp:BoundColumn HeaderText="<%$ Resources:SharedResources, Creator %>" DataField="CreatorDisplayName" />
         <asp:BoundColumn HeaderText="<%$ Resources:SharedResources, Created %>" DataField="DateCreated" DataFormatString="{0:g}" />
         <asp:TemplateColumn>
-            <ItemStyle Width="70px" />
+            <ItemStyle Width="16px" />
             <ItemTemplate>
-                <asp:ImageButton AlternateText="<%$ Resources:SharedResources, Delete %>" CssClass="icon" ID="lnkDeleteAttachment" ImageUrl="~/images/cross.gif"
+                <asp:ImageButton ToolTip="<%$ Resources:SharedResources, Delete %>" AlternateText="<%$ Resources:SharedResources, Delete %>" CssClass="icon" ID="lnkDeleteAttachment" ImageUrl="~/images/cross.gif"
                     BorderWidth="0px" CommandName="Delete" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>' runat="server" />
-                <asp:LinkButton ID="cmdDeleteAttachment" CommandName="Delete" runat="server" CausesValidation="false" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
-                    Text="<%$ Resources:SharedResources, Delete %>">Delete</asp:LinkButton>
             </ItemTemplate>
         </asp:TemplateColumn>
     </Columns>

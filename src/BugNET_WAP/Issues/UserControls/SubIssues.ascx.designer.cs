@@ -22,6 +22,15 @@ namespace BugNET.Issues.UserControls {
         protected global::System.Web.UI.WebControls.Label lblDescription;
         
         /// <summary>
+        /// NoIssuesLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label NoIssuesLabel;
+        
+        /// <summary>
         /// grdIssues control.
         /// </summary>
         /// <remarks>
@@ -40,22 +49,22 @@ namespace BugNET.Issues.UserControls {
         protected global::System.Web.UI.WebControls.Panel AddSubIssuePanel;
         
         /// <summary>
-        /// lblIssueId control.
+        /// IssueIdLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblIssueId;
+        protected global::System.Web.UI.WebControls.Label IssueIdLabel;
         
         /// <summary>
-        /// txtIssueId control.
+        /// IssueIdTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIssueId;
+        protected global::System.Web.UI.WebControls.TextBox IssueIdTextBox;
         
         /// <summary>
         /// CompareValidator1 control.

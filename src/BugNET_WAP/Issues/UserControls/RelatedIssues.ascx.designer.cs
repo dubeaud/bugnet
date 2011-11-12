@@ -31,22 +31,22 @@ namespace BugNET.Issues.UserControls {
         protected global::BugNET.UserControls.Message RelatedIssuesMessage;
         
         /// <summary>
-        /// RelatedIssuesLabel control.
+        /// NoIssuesLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label RelatedIssuesLabel;
+        protected global::System.Web.UI.WebControls.Label NoIssuesLabel;
         
         /// <summary>
-        /// RelatedIssuesDataGrid control.
+        /// grdIssueItems control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DataGrid RelatedIssuesDataGrid;
+        protected global::System.Web.UI.WebControls.DataGrid grdIssueItems;
         
         /// <summary>
         /// AddRelatedIssuePanel control.
@@ -76,22 +76,22 @@ namespace BugNET.Issues.UserControls {
         protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
-        /// lblRelatedIssue control.
+        /// IssueIdLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblRelatedIssue;
+        protected global::System.Web.UI.WebControls.Label IssueIdLabel;
         
         /// <summary>
-        /// txtRelatedIssue control.
+        /// IssueIdTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtRelatedIssue;
+        protected global::System.Web.UI.WebControls.TextBox IssueIdTextBox;
         
         /// <summary>
         /// RequiredFieldValidator3 control.

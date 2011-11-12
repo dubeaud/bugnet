@@ -22,7 +22,7 @@ namespace BugNET.Issues
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void Page_Load(object sender, System.EventArgs e)
+        protected void Page_Load(object sender, EventArgs e)
         {
 
             if (!Page.IsPostBack)
@@ -30,31 +30,8 @@ namespace BugNET.Issues
                 lnkDelete.Attributes.Add("onclick", string.Format("return confirm('{0}');", GetLocalResourceObject("DeleteIssue")));
                 imgDelete.Attributes.Add("onclick", string.Format("return confirm('{0}');", GetLocalResourceObject("DeleteIssue")));
 
-                // Get Issue Id from Query String
-                if (Request.QueryString["id"] != null)
-                { 
-                    try
-                    {
-                        IssueId = Int32.Parse(Request.QueryString["id"]);
-                    }
-                    catch
-                    {
-                        ErrorRedirector.TransferToNotFoundPage(Page);
-                    }
-                }
-
-                // Get Project Id from Query String
-                if (Request.QueryString["pid"] != null)
-                { 
-                    try
-                    {
-                        ProjectId = Int32.Parse(Request.QueryString["pid"]);
-                    }
-                    catch
-                    {
-                        ErrorRedirector.TransferToNotFoundPage(Page);
-                    }
-                }
+                IssueId = Request.QueryString.Get("id", 0);
+                ProjectId = Request.QueryString.Get("pid", 0);
 
                 // If don't know project or issue then redirect to something missing page
                 if (ProjectId == 0 && IssueId == 0)
@@ -70,8 +47,7 @@ namespace BugNET.Issues
                     Description.Visible = false;
                     TitleLabel.Visible = false;
                     DisplayTitleLabel.Visible = false;
-                    string test = GetLocalResourceObject("PageTitleNewIssue").ToString();
-                    Page.Title = test;
+                    Page.Title = GetLocalResourceObject("PageTitleNewIssue").ToString();
                     lblIssueNumber.Text = "N/A";
                     VoteButton.Visible = false;
                 }
@@ -102,11 +78,10 @@ namespace BugNET.Issues
 
             // The ExpandIssuePaths method is called to handle
             // the SiteMapResolve event.
-            SiteMap.SiteMapResolve += new SiteMapResolveEventHandler(this.ExpandIssuePaths);
+            SiteMap.SiteMapResolve += ExpandIssuePaths;
 
             ctlIssueTabs.IssueId = IssueId;
             ctlIssueTabs.ProjectId = ProjectId;
-
         }
 
         /// <summary>
@@ -198,7 +173,7 @@ namespace BugNET.Issues
             {
                 string title = (TitleTextBox.Text.Length >= 30) ? TitleTextBox.Text.Substring(0, 30) + " ..." : TitleTextBox.Text;
                 tempNode.Title = string.Format("{0}: {1}", lblIssueNumber.Text, title);
-                tempNode.Url = tempNode.Url + "?id=" + IssueId.ToString();
+                tempNode.Url = string.Concat(tempNode.Url, "?id=", IssueId);
             }
             else
                 tempNode.Title = "New Issue";
@@ -216,7 +191,7 @@ namespace BugNET.Issues
         /// </summary>
         private void BindValues()
         {
-            Issue currentIssue = IssueManager.GetById(IssueId);
+            var currentIssue = IssueManager.GetById(IssueId);
 
             if (currentIssue == null)
             {
@@ -264,7 +239,7 @@ namespace BugNET.Issues
                 lblLoggedTime.Text = currentIssue.TimeLogged.ToString();
                 txtEstimation.Text = currentIssue.Estimation == 0 ? string.Empty : currentIssue.Estimation.ToString();
                 DueDatePicker.SelectedValue = currentIssue.DueDate == DateTime.MinValue ? null : (DateTime?)currentIssue.DueDate;
-                chkPrivate.Checked = currentIssue.Visibility == 0 ? false : true;
+                chkPrivate.Checked = currentIssue.Visibility != 0;
                 ProgressSlider.Text = currentIssue.Progress.ToString();
                 IssueVoteCount.Text = currentIssue.Votes.ToString();
 
@@ -354,7 +329,7 @@ namespace BugNET.Issues
         }
 
         /// <summary>
-        /// Saves the bug.
+        /// Saves the issue.
         /// </summary>
         /// <returns></returns>
         private bool SaveIssue()
@@ -643,9 +618,9 @@ namespace BugNET.Issues
                 //remove closed status' if user does not have access
                 if (!UserManager.HasPermission(ProjectId, Globals.Permission.CloseIssue.ToString()))
                 {
-                    List<Status> status = StatusManager.GetByProjectId(ProjectId).FindAll(st => st.IsClosedState == true);
-                    DropDownList stat = (DropDownList)DropStatus.FindControl("dropStatus");
-                    foreach (Status s in status)
+                    var status = StatusManager.GetByProjectId(ProjectId).FindAll(st => st.IsClosedState);
+                    var stat = (DropDownList)DropStatus.FindControl("dropStatus");
+                    foreach (var s in status)
                         stat.Items.Remove(stat.Items.FindByValue(s.Id.ToString()));
                 }
 
@@ -706,14 +681,8 @@ namespace BugNET.Issues
         /// <value>The issue id.</value>
         int IssueId
         {
-            get
-            {
-                if (ViewState["IssueId"] == null)
-                    return 0;
-                else
-                    return (int)ViewState["IssueId"];
-            }
-            set { ViewState["IssueId"] = value; }
+            get { return ViewState.Get("IssueId", 0); }
+            set { ViewState.Set("IssueId", value); }
         }
 
         /// <summary>
@@ -722,14 +691,8 @@ namespace BugNET.Issues
         /// <value>The project id.</value>
         public override int ProjectId
         {
-            get
-            {
-                if (ViewState["ProjectId"] == null)
-                    return 0;
-                else
-                    return (int)ViewState["ProjectId"];
-            }
-            set { ViewState["ProjectId"] = value; }
+            get { return ViewState.Get("ProjectId", 0); }
+            set { ViewState.Set("ProjectId", value); }
         }
 
         #endregion

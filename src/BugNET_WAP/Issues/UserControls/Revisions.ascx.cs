@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BugNET.BLL;
+using BugNET.Common;
 using BugNET.Entities;
 using BugNET.UserInterfaceLayer;
 
@@ -8,9 +9,6 @@ namespace BugNET.Issues.UserControls
 {
     public partial class Revisions : System.Web.UI.UserControl, IIssueTab
     {
-        private int _IssueId = 0;
-        private int _ProjectId = 0;
-
         /// <summary>
         /// Handles the Load event of the Page control.
         /// </summary>
@@ -23,10 +21,14 @@ namespace BugNET.Issues.UserControls
 
         #region IIssueTab Members
 
+        /// <summary>
+        /// Gets or sets the issue id.
+        /// </summary>
+        /// <value>The issue id.</value>
         public int IssueId
         {
-            get { return _IssueId; }
-            set { _IssueId = value; }
+            get { return ViewState.Get("IssueId", 0); }
+            set { ViewState.Set("IssueId", value); }
         }
 
         /// <summary>
@@ -35,8 +37,8 @@ namespace BugNET.Issues.UserControls
         /// <value>The project id.</value>
         public int ProjectId
         {
-            get { return _ProjectId; }
-            set { _ProjectId = value; }
+            get { return ViewState.Get("ProjectId", 0); }
+            set { ViewState.Set("ProjectId", value); }
         }
 
         /// <summary>
@@ -44,11 +46,11 @@ namespace BugNET.Issues.UserControls
         /// </summary>
         public void Initialize()
         {
-            IssueRevisionsDataGrid.Columns[0].HeaderText = GetLocalResourceObject("IssueRevisionsDataGrid.RevisionHeader.Text").ToString();
-            IssueRevisionsDataGrid.Columns[1].HeaderText = GetLocalResourceObject("IssueRevisionsDataGrid.AuthorHeader.Text").ToString();
-            IssueRevisionsDataGrid.Columns[2].HeaderText = GetLocalResourceObject("IssueRevisionsDataGrid.RevisionDateHeader.Text").ToString();
-            IssueRevisionsDataGrid.Columns[3].HeaderText = GetLocalResourceObject("IssueRevisionsDataGrid.RepositoryHeader.Text").ToString();
-            IssueRevisionsDataGrid.Columns[4].HeaderText = GetLocalResourceObject("IssueRevisionsDataGrid.MessageHeader.Text").ToString();
+            //IssueRevisionsDataGrid.Columns[0].HeaderText = GetLocalResourceObject("IssueRevisionsDataGrid.RevisionHeader.Text").ToString();
+            //IssueRevisionsDataGrid.Columns[1].HeaderText = GetLocalResourceObject("IssueRevisionsDataGrid.AuthorHeader.Text").ToString();
+            //IssueRevisionsDataGrid.Columns[2].HeaderText = GetLocalResourceObject("IssueRevisionsDataGrid.RevisionDateHeader.Text").ToString();
+            //IssueRevisionsDataGrid.Columns[3].HeaderText = GetLocalResourceObject("IssueRevisionsDataGrid.RepositoryHeader.Text").ToString();
+            //IssueRevisionsDataGrid.Columns[4].HeaderText = GetLocalResourceObject("IssueRevisionsDataGrid.MessageHeader.Text").ToString();
 
             BindIssueRevisions();
         }

@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Web;
-using System.Linq;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -20,8 +18,6 @@ namespace BugNET.Issues.UserControls
     public partial class Attachments : UserControl, IIssueTab
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(Attachments));
-        private int _issueId;
-        private int _projectId;
 
         /// <summary>
         /// Handles the Load event of the Page control.
@@ -37,13 +33,13 @@ namespace BugNET.Issues.UserControls
         #region IIssueTab Members
 
         /// <summary>
-        /// Gets or sets the bug id.
+        /// Gets or sets the issue id.
         /// </summary>
-        /// <value>The bug id.</value>
+        /// <value>The issue id.</value>
         public int IssueId
         {
-            get { return _issueId; }
-            set { _issueId = value; }
+            get { return ViewState.Get("IssueId", 0); }
+            set { ViewState.Set("IssueId", value); }
         }
 
         /// <summary>
@@ -52,8 +48,8 @@ namespace BugNET.Issues.UserControls
         /// <value>The project id.</value>
         public int ProjectId
         {
-            get { return _projectId; }
-            set { _projectId = value; }
+            get { return ViewState.Get("ProjectId", 0); }
+            set { ViewState.Set("ProjectId", value); }
         }
 
         /// <summary>
@@ -85,7 +81,7 @@ namespace BugNET.Issues.UserControls
             //Fix tab names after adding or deleting a record.
            //IssueTabs tabs = this.Parent as Issues.UserControls.IssueTabs;
            //tabs.RefreshTabNames();
-            List<IssueAttachment> attachments = IssueAttachmentManager.GetByIssueId(_issueId);
+            List<IssueAttachment> attachments = IssueAttachmentManager.GetByIssueId(IssueId);
 
             if (attachments.Count == 0)
             {
@@ -153,7 +149,7 @@ namespace BugNET.Issues.UserControls
                     //add history record and send notifications
                     var history = new IssueHistory
                                       {
-                                          IssueId = _issueId,
+                                          IssueId = IssueId,
                                           CreatedUserName = Security.GetUserName(),
                                           DateChanged = DateTime.Now,
                                           FieldChanged = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Attachment", "Attachment"),
@@ -165,7 +161,7 @@ namespace BugNET.Issues.UserControls
 
                     var changes = new List<IssueHistory> {history};
 
-                    IssueNotificationManager.SendIssueNotifications(_issueId, changes);
+                    IssueNotificationManager.SendIssueNotifications(IssueId, changes);
 
                     BindAttachments();
                 }
@@ -181,31 +177,41 @@ namespace BugNET.Issues.UserControls
         /// <param name="e">The <see cref="System.Web.UI.WebControls.DataGridItemEventArgs"/> instance containing the event data.</param>
         protected void AttachmentsDataGrid_ItemDataBound(object sender, DataGridItemEventArgs e)
         {
-            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem) return;
+
+            var currentAttachment = (IssueAttachment)e.Item.DataItem;
+            var lnkAttachment = e.Item.FindControl("lnkAttachment") as HtmlAnchor;
+
+            if (lnkAttachment != null)
             {
-
-                IssueAttachment currentAttachment = (IssueAttachment)e.Item.DataItem;
-                ((HtmlAnchor)e.Item.FindControl("lnkAttachment")).InnerText = currentAttachment.FileName;
-                ((HtmlAnchor)e.Item.FindControl("lnkAttachment")).HRef = "DownloadAttachment.axd?id=" + currentAttachment.Id.ToString();
-                ImageButton lnkDeleteAttachment = (ImageButton)e.Item.FindControl("lnkDeleteAttachment");
-                lnkDeleteAttachment.OnClientClick = string.Format("return confirm('{0}');", GetLocalResourceObject("DeleteAttachment").ToString());
-                LinkButton cmdDeleteAttachment = (LinkButton)e.Item.FindControl("cmdDeleteAttachment");
-                cmdDeleteAttachment.OnClientClick = string.Format("return confirm('{0}');", GetLocalResourceObject("DeleteAttachment").ToString());
-
-                float size;
-                string label;
-                if (currentAttachment.Size > 1000)
-                {
-                    size = currentAttachment.Size / 1000f;
-                    label = string.Format("{0} kb", size.ToString("##,##"));
-                }
-                else
-                {
-                    size = currentAttachment.Size;
-                    label = string.Format("{0} b", size.ToString("##,##"));
-                }
-                ((Label)e.Item.FindControl("lblSize")).Text = label;
+                lnkAttachment.InnerText = currentAttachment.FileName;
+                lnkAttachment.HRef = string.Concat("DownloadAttachment.axd?id=", currentAttachment.Id.ToString());
             }
+
+            var lnkDeleteAttachment = e.Item.FindControl("lnkDeleteAttachment") as ImageButton;
+            if (lnkDeleteAttachment != null)
+                lnkDeleteAttachment.OnClientClick = string.Format("return confirm('{0}');", GetLocalResourceObject("DeleteAttachment"));
+
+            var lblSize = e.Item.FindControl("lblSize") as Label;
+
+            if (lblSize == null) return;
+
+            float size;
+            string label;
+
+            if (currentAttachment.Size > 1000)
+            {
+                size = currentAttachment.Size / 1000f;
+                label = string.Format("{0} kb", size.ToString("##,##"));
+            }
+            else
+            {
+                size = currentAttachment.Size;
+                label = string.Format("{0} b", size.ToString("##,##"));
+            }
+
+            lblSize.Text = label;
+            
         }
 
         /// <summary>

@@ -3,11 +3,11 @@
 <asp:Datagrid  runat="server" Id="IssueRevisionsDataGrid" EnableViewState="true"  SkinID="DataGrid"
     AllowPaging="false"  Width="100%"
     AllowSorting="false">
-    <Columns>
-        <asp:BoundColumn HeaderText="Revision" DataField="Revision"></asp:BoundColumn>
-        <asp:BoundColumn HeaderText="Author" DataField="Author"></asp:BoundColumn>
-        <asp:BoundColumn HeaderText="RevisionDate" DataField="RevisionDate"></asp:BoundColumn>
-        <asp:BoundColumn HeaderText="Repository" DataField="Repository"></asp:BoundColumn>
-        <asp:BoundColumn HeaderText="Message" DataField="Message"></asp:BoundColumn>
+    <Columns> 
+        <asp:BoundColumn HeaderText="<%$ Resources:IssueRevisionsDataGrid.RevisionHeader.Text %>" DataField="Revision"></asp:BoundColumn>
+        <asp:BoundColumn HeaderText="<%$ Resources:IssueRevisionsDataGrid.AuthorHeader.Text %>" DataField="Author"></asp:BoundColumn>
+        <asp:BoundColumn HeaderText="<%$ Resources:IssueRevisionsDataGrid.RevisionDateHeader.Text %>" DataField="RevisionDate"></asp:BoundColumn>
+        <asp:BoundColumn HeaderText="<%$ Resources:IssueRevisionsDataGrid.RepositoryHeader.Text %>" DataField="Repository"></asp:BoundColumn>
+        <asp:BoundColumn HeaderText="<%$ Resources:IssueRevisionsDataGrid.MessageHeader.Text %>" DataField="Message"></asp:BoundColumn>
     </Columns>
 </asp:Datagrid>

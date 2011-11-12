@@ -19,13 +19,12 @@
         <asp:BoundColumn DataField="CommentText" HeaderText="Comment">
         </asp:BoundColumn>
         <asp:TemplateColumn>
-            <ItemStyle width="70px" />
+            <ItemStyle width="16px" />
             <ItemTemplate>
-	            <asp:ImageButton AlternateText="Delete" id="RemoveEntry"  ImageUrl="~/images/cross.gif" CssClass="icon"
-		            BorderWidth="0px" CommandName="Delete" CausesValidation="false" CommandArgument='<%#DataBinder.Eval(Container.DataItem, "Id") %>' runat="server"/> 
-		            <asp:linkbutton id="lnkDeleteTimeEntry" CommandArgument='<%#DataBinder.Eval(Container.DataItem, "Id") %>' CausesValidation="false" Text="<%$ Resources:SharedResources, Delete %>" runat="server" />
+                <asp:ImageButton ToolTip="<%$ Resources:SharedResources, Remove %>" AlternateText="<%$ Resources:SharedResources, Remove %>" CssClass="icon" ID="cmdDelete" ImageUrl="~/images/cross.gif"
+                    BorderWidth="0px" CommandName="Delete" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>' runat="server" />
             </ItemTemplate>
-        </asp:TemplateColumn>		
+        </asp:TemplateColumn>
     </Columns>
     <PagerStyle HorizontalAlign="Center"></PagerStyle>
 </asp:datagrid>

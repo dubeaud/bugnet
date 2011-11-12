@@ -964,20 +964,19 @@ namespace BugNET.Providers.DataProviders
         /// <summary>
         /// Gets the issue comments by issue id.
         /// </summary>
-        /// <param name="IssueId">The issue id.</param>
+        /// <param name="issueId">The issue id.</param>
         /// <returns></returns>
-        public override System.Collections.Generic.List<IssueComment> GetIssueCommentsByIssueId(int issueId)
+        public override List<IssueComment> GetIssueCommentsByIssueId(int issueId)
         {
-            if (issueId <= 0)
-                throw (new ArgumentOutOfRangeException("issueId"));
+            if (issueId <= 0) throw (new ArgumentOutOfRangeException("issueId"));
 
             try
             {
-                SqlCommand sqlCmd = new SqlCommand();
+                var sqlCmd = new SqlCommand();
                 AddParamToSQLCmd(sqlCmd, "@IssueId", SqlDbType.Int, 0, ParameterDirection.Input, issueId);
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUECOMMENT_GETISSUECOMMENTSBYISSUEID);
 
-                List<IssueComment> issueCommentList = new List<IssueComment>();
+                var issueCommentList = new List<IssueComment>();
                 TExecuteReaderCmd<IssueComment>(sqlCmd, GenerateIssueCommentListFromReader, ref issueCommentList);
 
                 return issueCommentList;

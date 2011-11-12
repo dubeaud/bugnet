@@ -24,9 +24,22 @@ namespace BugNET.Issues.UserControls
         /// </summary>
         private void BindRelated() 
 		{
-			grdIssues.DataSource = RelatedIssueManager.GetChildIssues(IssueId);
-			grdIssues.DataKeyField = "IssueId";
-			grdIssues.DataBind();
+            var issues = RelatedIssueManager.GetChildIssues(IssueId);
+
+            if (issues.Count == 0)
+            {
+                NoIssuesLabel.Text = GetLocalResourceObject("NoSubIssues").ToString();
+                NoIssuesLabel.Visible = true;
+                grdIssues.Visible = false;
+            }
+            else
+            {
+                grdIssues.DataSource = issues;
+                grdIssues.DataKeyField = "IssueId";
+                grdIssues.DataBind();
+                NoIssuesLabel.Visible = false;
+                grdIssues.Visible = true;
+            }
 		}
 
 
@@ -39,16 +52,9 @@ namespace BugNET.Issues.UserControls
 		{
             if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem) return;
 
-            var currentIssue = (RelatedIssue)e.Item.DataItem;
-
-            var labelIssueId = (Label)e.Item.FindControl( "lblIssueId" );
-            labelIssueId.Text = currentIssue.IssueId.ToString();
-
-            var lblIssueStatus = (Label)e.Item.FindControl("IssueStatusLabel");
-            lblIssueStatus.Text = currentIssue.Status;
-
-            var lblIssueResolution = (Label)e.Item.FindControl("IssueResolutionLabel");
-            lblIssueResolution.Text = currentIssue.Resolution;
+            var cmdDelete = e.Item.FindControl("cmdDelete") as ImageButton;
+            if (cmdDelete != null)
+                cmdDelete.OnClientClick = string.Format("return confirm('{0}');", GetLocalResourceObject("RemoveSubIssue"));
 		}
 
         /// <summary>
@@ -56,26 +62,38 @@ namespace BugNET.Issues.UserControls
         /// </summary>
         /// <param name="s">The s.</param>
         /// <param name="e">The <see cref="System.Web.UI.WebControls.DataGridCommandEventArgs"/> instance containing the event data.</param>
-		protected void GrdIssuesItemCommand(Object s, DataGridCommandEventArgs e) 
-		{
-			var issueId = (int)grdIssues.DataKeys[e.Item.ItemIndex];
-			RelatedIssueManager.DeleteChildIssue(IssueId, issueId);
+		protected void GrdIssuesItemCommand(Object s, DataGridCommandEventArgs e)
+        {
+            var commandArgument = e.CommandArgument.ToString();
+            var commandName = e.CommandName.ToLower().Trim();
+            var currentIssueId = Globals.NEW_ID;
 
-            var history = new IssueHistory
-                              {
-                                  IssueId = IssueId,
-                                  DateChanged = DateTime.Now,
-                                  CreatedUserName = Security.GetUserName(),
-                                  FieldChanged = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "ChildIssue", "Child Issue"),
-                                  OldValue = string.Empty,
-                                  NewValue = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Deleted", "Deleted")
-                              };
+            switch (commandName)
+            {
+                case "delete":
+                    currentIssueId = int.Parse(commandArgument);
+                    RelatedIssueManager.DeleteChildIssue(IssueId, currentIssueId);
+                    break;
+            }
 
-            IssueHistoryManager.SaveOrUpdate(history);
+            if (currentIssueId > Globals.NEW_ID)
+            {
+                var history = new IssueHistory
+                {
+                    IssueId = IssueId,
+                    DateChanged = DateTime.Now,
+                    CreatedUserName = Security.GetUserName(),
+                    FieldChanged = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "ChildIssue", "Child Issue"),
+                    OldValue = string.Empty,
+                    NewValue = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Deleted", "Deleted")
+                };
 
-            var changes = new List<IssueHistory> {history};
+                IssueHistoryManager.SaveOrUpdate(history);
 
-            IssueNotificationManager.SendIssueNotifications(IssueId, changes);
+                var changes = new List<IssueHistory> { history };
+
+                IssueNotificationManager.SendIssueNotifications(IssueId, changes);
+            }
 
 			BindRelated();
 		}
@@ -87,11 +105,11 @@ namespace BugNET.Issues.UserControls
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
 		protected void AddRelatedIssue(Object s, EventArgs e) 
 		{
-			if (txtIssueId.Text == String.Empty) return;
+            if (IssueIdTextBox.Text == String.Empty) return;
 
             if (!Page.IsValid) return;
 
-            RelatedIssueManager.CreateNewChildIssue(IssueId, Int32.Parse(txtIssueId.Text) );
+            RelatedIssueManager.CreateNewChildIssue(IssueId, Int32.Parse(IssueIdTextBox.Text));
 
             var history = new IssueHistory
             {
@@ -109,7 +127,7 @@ namespace BugNET.Issues.UserControls
 
             IssueNotificationManager.SendIssueNotifications(IssueId, changes);
 
-            txtIssueId.Text = String.Empty;
+            IssueIdTextBox.Text = String.Empty;
             BindRelated();
 		}
 
@@ -121,15 +139,21 @@ namespace BugNET.Issues.UserControls
         /// Gets or sets the issue id.
         /// </summary>
         /// <value>The issue id.</value>
-        public int IssueId { get; set; }
-
+        public int IssueId
+        {
+            get { return ViewState.Get("IssueId", 0); }
+            set { ViewState.Set("IssueId", value); }
+        }
 
         /// <summary>
         /// Gets or sets the project id.
         /// </summary>
         /// <value>The project id.</value>
-        public int ProjectId { get; set; }
-
+        public int ProjectId
+        {
+            get { return ViewState.Get("ProjectId", 0); }
+            set { ViewState.Set("ProjectId", value); }
+        }
 
         /// <summary>
         /// Initializes this instance.

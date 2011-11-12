@@ -129,4 +129,7 @@
   <data name="NoRelatedIssues" xml:space="preserve">
     <value>There are no related issues.</value>
   </data>
+  <data name="RemoveRelatedIssue" xml:space="preserve">
+    <value>Are you sure you want to remove this related issue?</value>
+  </data>
 </root>
