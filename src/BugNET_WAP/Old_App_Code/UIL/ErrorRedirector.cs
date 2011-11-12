@@ -13,7 +13,7 @@ namespace BugNET.UserInterfaceLayer
         /// </summary>
         public static void TransferToLoginPage(Page webPage)
         {
-            webPage.Response.Redirect(string.Format("~/Login.aspx?returnurl={0}", webPage.Request.RawUrl), true);     
+            webPage.Response.Redirect(string.Format("~/Account/Login.aspx?returnurl={0}", webPage.Request.RawUrl), true);     
         }
 
         /// <summary>

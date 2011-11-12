@@ -46,7 +46,7 @@ INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'ApplicationTitle', N'BugNET Issue Tracker')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'DefaultUrl', N'http://localhost/BugNet/')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'AnonymousAccess', N'False')
-INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'UserRegistration', N'False')
+INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'UserRegistration', N'0')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'EmailErrors', N'False')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'EnabledNotificationTypes', N'Email;MSN')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'EnableRepositoryCreation', N'True')

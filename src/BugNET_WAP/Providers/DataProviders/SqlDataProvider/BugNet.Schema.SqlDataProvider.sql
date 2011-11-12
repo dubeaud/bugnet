@@ -573,26 +573,6 @@ CREATE TABLE [dbo].[BugNet_ProjectIssueTypes](
 ) ON [PRIMARY]
 GO
 
-/****** Object:  Table [dbo].[BugNet_ProjectIssueFields]    Script Date: 11/12/2011 09:59:00 
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[BugNet_ProjectIssueFields](
-	[ProjectIssueFieldId] [int] IDENTITY(1,1) NOT NULL,
-	[ProjectId] [int] NOT NULL,
-	[IssueFieldId] [nvarchar](50) NOT NULL,
-	[IssueFieldRequired] [bit] NOT NULL,
-	[IssueFieldShowOnNewIssue] [bit] NOT NULL,
-	[IssueFieldShowOnEditIssue] [bit] NOT NULL,
-	[SortOrder] [int] NOT NULL,
- CONSTRAINT [PK_BugNet_ProjectIssueFields] PRIMARY KEY CLUSTERED 
-(
-	[ProjectIssueFieldId] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO******/
-
 /****** Object:  Table [dbo].[BugNet_ProjectPriorities]    Script Date: 11/12/2011 09:59:00 ******/
 SET ANSI_NULLS ON
 GO
@@ -4986,12 +4966,7 @@ REFERENCES [dbo].[BugNet_ProjectCustomFields] ([CustomFieldId])
 GO
 ALTER TABLE [dbo].[BugNet_ProjectCustomFieldValues] CHECK CONSTRAINT [FK_BugNet_ProjectCustomFieldValues_BugNet_ProjectCustomFields]
 GO
-/****** Object:  ForeignKey [FK_BugNet_ProjectIssueFields_BugNet_Projects]    Script Date: 11/12/2011 09:59:00 ******/
-ALTER TABLE [dbo].[BugNet_ProjectIssueFields]  WITH CHECK ADD  CONSTRAINT [FK_BugNet_ProjectIssueFields_BugNet_Projects] FOREIGN KEY([ProjectId])
-REFERENCES [dbo].[BugNet_Projects] ([ProjectId])
-GO
-ALTER TABLE [dbo].[BugNet_ProjectIssueFields] CHECK CONSTRAINT [FK_BugNet_ProjectIssueFields_BugNet_Projects]
-GO
+
 /****** Object:  ForeignKey [FK_BugNet_ProjectIssueTypes_BugNet_Projects]    Script Date: 11/12/2011 09:59:00 ******/
 ALTER TABLE [dbo].[BugNet_ProjectIssueTypes]  WITH CHECK ADD  CONSTRAINT [FK_BugNet_ProjectIssueTypes_BugNet_Projects] FOREIGN KEY([ProjectId])
 REFERENCES [dbo].[BugNet_Projects] ([ProjectId])

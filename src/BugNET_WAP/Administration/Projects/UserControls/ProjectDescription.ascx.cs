@@ -52,7 +52,7 @@ namespace BugNET.Administration.Projects.UserControls
         }
 
         /// <summary>
-        /// Inits this instance.
+        /// Initializes this instance.
         /// </summary>
 		public void Initialize()
 		{
@@ -61,7 +61,7 @@ namespace BugNET.Administration.Projects.UserControls
 			ProjectManager.DataBind();
             ProjectManager.Items.Insert(0, new ListItem(GetLocalResourceObject("SelectUser").ToString(), ""));
 
-			if (ProjectId != -1) 
+			if (ProjectId != 0) 
 			{
 				Project projectToUpdate = BugNET.BLL.ProjectManager.GetProjectById(ProjectId);
 

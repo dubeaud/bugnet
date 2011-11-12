@@ -245,7 +245,9 @@ WHERE ProjectMailboxId = @ProjectMailboxId
 GO
 
 UPDATE BugNet_HostSettings SET SettingName = 'UserRegistration' WHERE SettingName = 'DisableUserRegistration'
+UPDATE BugNet_HostSettings SET SettingValue = '0' WHERE SettingName ='UserRegistration'
 UPDATE BugNet_HostSettings SET SettingName = 'AnonymousAccess' WHERE SettingName = 'DisableAnonymousAccess'
+UPDATE BugNet_HostSettings SET SettingValue = 'False' WHERE SettingName ='AnonymousAccess'
 GO
 
 DROP TABLE BugNet_StringResources 
