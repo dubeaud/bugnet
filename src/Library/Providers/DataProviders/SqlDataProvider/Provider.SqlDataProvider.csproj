@@ -25,10 +25,11 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\..\..\build\output\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\..\..\build\output\BugNET.Providers.SqlDataProvider.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net">
@@ -73,7 +74,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-    <PropertyGroup>
-        <PostBuildEvent Condition="'$(Configuration)' == 'Debug'">copy "$(ProjectDir)bin\$(ConfigurationName)\*.*" "$(SolutionDir)BugNET_WAP\bin\"</PostBuildEvent>
-    </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent Condition="'$(Configuration)' == 'Debug'">copy "$(ProjectDir)bin\$(ConfigurationName)\*.*" "$(SolutionDir)BugNET_WAP\bin\"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
