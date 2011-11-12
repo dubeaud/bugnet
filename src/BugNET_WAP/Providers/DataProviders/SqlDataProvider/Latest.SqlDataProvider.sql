@@ -287,40 +287,6 @@ GO
 DROP PROCEDURE BugNet_StringResources_GetInstalledLanguageResources
 GO
 
-
-
-/****** Object:  Table [dbo].[BugNet_ProjectIssueFields]    Script Date: 04/27/2011 14:33:13 
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-CREATE TABLE [dbo].[BugNet_ProjectIssueFields](
-	[ProjectIssueFieldId] [int] IDENTITY(1,1) NOT NULL,
-	[ProjectId] [int] NOT NULL,
-	[IssueFieldId] [nvarchar](50) NOT NULL,
-	[Required] [bit] NOT NULL,
-	[ShowOnNewIssue] [bit] NOT NULL,
-	[ShowOnEditIssue] [bit] NOT NULL,
-	[SortOrder] [int] NOT NULL,
- CONSTRAINT [PK_BugNet_ProjectIssueFields] PRIMARY KEY CLUSTERED 
-(
-	[ProjectIssueFieldId] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-
-ALTER TABLE [dbo].[BugNet_ProjectIssueFields]  WITH CHECK ADD  CONSTRAINT [FK_BugNet_ProjectIssueFields_BugNet_Projects] FOREIGN KEY([ProjectId])
-REFERENCES [dbo].[BugNet_Projects] ([ProjectId])
-GO
-
-ALTER TABLE [dbo].[BugNet_ProjectIssueFields] CHECK CONSTRAINT [FK_BugNet_ProjectIssueFields_BugNet_Projects]
-GO
-******/
-
-
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('ApplicationDefaultLanguage','en-US')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('Pop3ProcessAttachments','False')
 INSERT INTO [dbo].[BugNet_Languages] ([CultureCode], [CultureName], [FallbackCulture]) VALUES('en-US', 'English (United States)', 'en')

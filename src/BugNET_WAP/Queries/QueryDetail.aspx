@@ -45,7 +45,7 @@
 			</td>
 		</tr>
 	</table>
-	<table id="Results" runat="server" width="100%" >
+	<table id="Results" runat="server" style="width:100%">
 		<tr>
 			<td class="contentCell">
                 <hr />
