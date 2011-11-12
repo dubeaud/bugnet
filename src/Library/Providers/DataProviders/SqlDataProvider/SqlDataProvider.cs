@@ -5882,7 +5882,7 @@ namespace BugNET.Providers.DataProviders
 
         private static T DefaultIfNull<T>(object value, T defaultValue)
         {
-            if (value == null) return defaultValue;
+            if (value == DBNull.Value) return defaultValue;
 
             return (T)value;
         }
