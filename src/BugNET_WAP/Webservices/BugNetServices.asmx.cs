@@ -38,7 +38,7 @@ namespace BugNET.Webservices
         {
             if (issueId <= 0) throw new ArgumentOutOfRangeException("issueId");
 
-            var projectId = IssueManager.GetIssueById(issueId).ProjectId;
+            var projectId = IssueManager.GetById(issueId).ProjectId;
 
             //authentication checks against user access to project
             if (ProjectManager.GetById(projectId).AccessType == Globals.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(UserName, projectId))
@@ -70,7 +70,7 @@ namespace BugNET.Webservices
         {
             if (issueId <= 0) throw new ArgumentOutOfRangeException("issueId");
 
-            var projectId = IssueManager.GetIssueById(issueId).ProjectId;
+            var projectId = IssueManager.GetById(issueId).ProjectId;
 
             //authentication checks against user access to project
             if (ProjectManager.GetById(projectId).AccessType == Globals.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(UserName, projectId))
@@ -466,7 +466,7 @@ namespace BugNET.Webservices
             if (Filter.Trim() == "")
             {
                 // Return all Issues
-                issues = IssueManager.GetIssuesByProjectId(ProjectId);
+                issues = IssueManager.GetByProjectId(ProjectId);
             }
             else
             {

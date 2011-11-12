@@ -288,7 +288,7 @@ namespace BugNET
                 //    // selects multiple options.
 
                 //    // we need to search the projects again becuase bc only contains our search results
-                //    Issues = Issue.GetIssuesByProjectId(p.Id);
+                //    Issues = Issue.GetByProjectId(p.Id);
                 //}
 
                 // ---------------------------------------------------------------
@@ -313,7 +313,7 @@ namespace BugNET
 
                         // get list of open issues with matching history items for the project using LINQ                 
                         var tmpIssues = from hist in lstprjHistory
-                                        join iss1 in Issue.GetIssuesByProjectId(p.Id)
+                                        join iss1 in Issue.GetByProjectId(p.Id)
                                         on hist.Id equals iss1.Id
                                         join st in Status.GetByProjectId(p.Id)
                                         on iss1.StatusId equals st.Id
@@ -343,7 +343,7 @@ namespace BugNET
                     foundComments.Clear();
 
                     // Get ALL issues
-                    issues = IssueManager.GetIssuesByProjectId(p.Id);
+                    issues = IssueManager.GetByProjectId(p.Id);
 
                     // Now filter out the Closed issues if we need to
                     if (srchOpenIssues)

@@ -36,7 +36,7 @@ namespace BugNET.Tests
         [Test]
         public void TestGetIssueById()
         {
-            Issue i = IssueManager.GetIssueById(IssueId);
+            Issue i = IssueManager.GetById(IssueId);
             Assert.IsNotNull(i);
         }
 
@@ -46,7 +46,7 @@ namespace BugNET.Tests
         [Test]
         public void TestGetIssuesByProjectId()
         {
-            List<Issue> issues = IssueManager.GetIssuesByProjectId(ProjectId);
+            List<Issue> issues = IssueManager.GetByProjectId(ProjectId);
             Assert.IsTrue(issues.Count > 0);  
         }
 
@@ -56,10 +56,10 @@ namespace BugNET.Tests
         [Test]
         public void TestDeleteIssue()
         {
-            bool result = IssueManager.DeleteIssue(IssueId);
+            bool result = IssueManager.Delete(IssueId);
             Assert.IsTrue(result,"No changes were made to the issue");
 
-            Issue issue = IssueManager.GetIssueById(IssueId);
+            Issue issue = IssueManager.GetById(IssueId);
             Assert.IsTrue(issue.Disabled);
         }
 
@@ -118,9 +118,9 @@ namespace BugNET.Tests
             //    0, 0, DateTime.MinValue, DateTime.MinValue, "admin", "Davin Dubeau",
             //    25, false, 0);
 
-            IssueManager.SaveIssue(issue);
+            IssueManager.SaveOrUpdate(issue);
             Assert.IsTrue(issue.Id != 0);
-            Issue FetchedIssue = IssueManager.GetIssueById(issue.Id);
+            Issue FetchedIssue = IssueManager.GetById(issue.Id);
             Assert.IsNotNull(FetchedIssue);
 
         }
@@ -131,7 +131,7 @@ namespace BugNET.Tests
         [Test]
         public void TestGetIssueCountByProjectAndCategory()
         {
-            Assert.IsTrue(IssueManager.GetIssueCountByProjectAndCategory(ProjectId, CategoryId) == 31);
+            Assert.IsTrue(IssueManager.GetCountByProjectAndCategoryId(ProjectId, CategoryId) == 31);
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace BugNET.Tests
         [Test]
         public void TestGetIssueTypeCountByProject()
         {
-            Assert.IsTrue(IssueManager.GetIssueTypeCountByProject(ProjectId).Count > 0);
+            Assert.IsTrue(IssueManager.GetTypeCountByProjectId(ProjectId).Count > 0);
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace BugNET.Tests
         [Test]
         public void TestGetIssueUnscheduledMilestoneCountByProject()
         {
-            Assert.IsTrue(IssueManager.GetIssueUnscheduledMilestoneCountByProject(ProjectId) > 0);
+            Assert.IsTrue(IssueManager.GetUnscheduledMilestoneCountByProjectId(ProjectId) > 0);
         }
 
         /// <summary>
@@ -167,8 +167,8 @@ namespace BugNET.Tests
         [Test]
         public void TestGetIssueChanges()
         {
-            Issue issue1 = IssueManager.GetIssueById(IssueId);
-            Issue issue2 = IssueManager.GetIssueById(IssueId);
+            Issue issue1 = IssueManager.GetById(IssueId);
+            Issue issue2 = IssueManager.GetById(IssueId);
             issue1.Title = "this title has changed";
             issue1.CategoryId = 476;
 

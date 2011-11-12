@@ -64,15 +64,15 @@ namespace BugNET.Projects
             lnkRSSIssuesByPriority.NavigateUrl = string.Format("~/Feed.aspx?pid={0}&channel=4",ProjectId);
             lnkRSSIssuesByType.NavigateUrl = string.Format("~/Feed.aspx?pid={0}&channel=5",ProjectId);
             //Milestone
-            List<IssueCount> lsVersion = IssueManager.GetIssueMilestoneCountByProject(ProjectId);
+            List<IssueCount> lsVersion = IssueManager.GetMilestoneCountByProjectId(ProjectId);
             //Status
-            List<IssueCount> lsStatus = IssueManager.GetIssueStatusCountByProject(ProjectId);
+            List<IssueCount> lsStatus = IssueManager.GetStatusCountByProjectId(ProjectId);
             //Priority
-            List<IssueCount> lsPriority = IssueManager.GetIssuePriorityCountByProject(ProjectId);
+            List<IssueCount> lsPriority = IssueManager.GetPriorityCountByProjectId(ProjectId);
             //User
-            List<IssueCount> lsUser = IssueManager.GetIssueUserCountByProject(ProjectId);
+            List<IssueCount> lsUser = IssueManager.GetUserCountByProjectId(ProjectId);
             //Type
-            List<IssueCount> lsType = IssueManager.GetIssueTypeCountByProject(ProjectId);
+            List<IssueCount> lsType = IssueManager.GetTypeCountByProjectId(ProjectId);
 
             CategoryTreeView1.ProjectId = ProjectId;
             CategoryTreeView1.BindData();
@@ -145,7 +145,7 @@ namespace BugNET.Projects
             }
             else if (e.Item.ItemType == ListItemType.Footer)
             {
-                ((Label)e.Item.FindControl("lblUnscheduledCount")).Text = IssueManager.GetIssueUnscheduledMilestoneCountByProject(ProjectId).ToString();
+                ((Label)e.Item.FindControl("lblUnscheduledCount")).Text = IssueManager.GetUnscheduledMilestoneCountByProjectId(ProjectId).ToString();
                 //((Label)e.Item.FindControl("lblPercent")).Text = String.Format("({0}%)", bc.Percentage.ToString());
             }
 		}
@@ -203,7 +203,7 @@ namespace BugNET.Projects
 			}
 			else if(e.Item.ItemType == ListItemType.Footer)
 			{
-				((Label)e.Item.FindControl("lblUnassignedCount")).Text = IssueManager.GetIssueUnassignedCountByProject(ProjectId).ToString();
+				((Label)e.Item.FindControl("lblUnassignedCount")).Text = IssueManager.GetUnassignedCountByProjectId(ProjectId).ToString();
 			}
 		}
 

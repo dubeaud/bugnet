@@ -357,6 +357,230 @@ UPDATE BugNet_Permissions SET PermissionKey = 'ChangeIssueStatus' WHERE Permissi
 UPDATE BugNet_Permissions SET PermissionKey = 'EditQuery' WHERE PermissionId = 32
 GO
 
+IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[BugNet_GetIssuesByProjectIdAndCustomFieldView]'))
+DROP VIEW [BugNet_GetIssuesByProjectIdAndCustomFieldView]
+GO
+
+IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[BugNet_IssuesView]'))
+DROP VIEW [BugNet_IssuesView]
+GO
+
+CREATE VIEW [BugNet_GetIssuesByProjectIdAndCustomFieldView]
+AS
+SELECT     
+	dbo.BugNet_Issues.IssueId, 
+	dbo.BugNet_Issues.Disabled, 
+	dbo.BugNet_Issues.IssueTitle, 
+	dbo.BugNet_Issues.IssueDescription, 
+	dbo.BugNet_Issues.IssueStatusId,
+	dbo.BugNet_Issues.IssuePriorityId, 
+	dbo.BugNet_Issues.IssueTypeId, 
+	dbo.BugNet_Issues.IssueCategoryId, 
+	dbo.BugNet_Issues.ProjectId, 
+	dbo.BugNet_Issues.IssueResolutionId, 
+	dbo.BugNet_Issues.IssueCreatorUserId, 
+	dbo.BugNet_Issues.IssueAssignedUserId, 
+	dbo.BugNet_Issues.IssueAffectedMilestoneId, 
+	dbo.BugNet_Issues.IssueOwnerUserId, 
+	dbo.BugNet_Issues.IssueDueDate, 
+	dbo.BugNet_Issues.IssueMilestoneId, 
+	dbo.BugNet_Issues.IssueVisibility, 
+	dbo.BugNet_Issues.IssueEstimation, 
+	dbo.BugNet_Issues.DateCreated, 
+	dbo.BugNet_Issues.LastUpdate, 
+	dbo.BugNet_Issues.LastUpdateUserId, 
+	dbo.BugNet_Projects.ProjectName, 
+	dbo.BugNet_Projects.ProjectCode, 
+	dbo.BugNet_ProjectPriorities.PriorityName, 
+	dbo.BugNet_ProjectIssueTypes.IssueTypeName, 
+	ISNULL(dbo.BugNet_ProjectCategories.CategoryName, N'none') AS CategoryName, 
+	dbo.BugNet_ProjectStatus.StatusName, 
+	ISNULL(dbo.BugNet_ProjectMilestones.MilestoneName, N'none') AS MilestoneName, 
+	ISNULL(AffectedMilestone.MilestoneName, N'none') AS AffectedMilestoneName, 
+	ISNULL(dbo.BugNet_ProjectResolutions.ResolutionName, 'none') AS ResolutionName, 
+	LastUpdateUsers.UserName AS LastUpdateUserName, 
+	ISNULL(AssignedUsers.UserName, N'none') AS AssignedUsername, 
+	ISNULL(AssignedUsersProfile.DisplayName, N'none') AS AssignedDisplayName, 
+	CreatorUsers.UserName AS CreatorUserName, 
+	ISNULL(CreatorUsersProfile.DisplayName, N'none') AS CreatorDisplayName, 
+	ISNULL(OwnerUsers.UserName, 'none') AS OwnerUserName, 
+	ISNULL(OwnerUsersProfile.DisplayName, N'none') AS OwnerDisplayName, 
+	ISNULL(LastUpdateUsersProfile.DisplayName, 'none') AS LastUpdateDisplayName, 
+	ISNULL(dbo.BugNet_ProjectPriorities.PriorityImageUrl, '') AS PriorityImageUrl, 
+	ISNULL(dbo.BugNet_ProjectIssueTypes.IssueTypeImageUrl, '') AS IssueTypeImageUrl, 
+	ISNULL(dbo.BugNet_ProjectStatus.StatusImageUrl, '') AS StatusImageUrl, 
+	ISNULL(dbo.BugNet_ProjectMilestones.MilestoneImageUrl, '') AS MilestoneImageUrl, 
+	ISNULL(dbo.BugNet_ProjectResolutions.ResolutionImageUrl, '') AS ResolutionImageUrl, 
+	ISNULL(AffectedMilestone.MilestoneImageUrl, '') 
+	AS AffectedMilestoneImageUrl, ISNULL
+		((SELECT     SUM(Duration) AS Expr1
+			FROM         dbo.BugNet_IssueWorkReports AS WR
+			WHERE     (IssueId = dbo.BugNet_Issues.IssueId)), 0.00) AS TimeLogged, ISNULL
+		((SELECT     COUNT(IssueId) AS Expr1
+			FROM         dbo.BugNet_IssueVotes AS V
+			WHERE     (IssueId = dbo.BugNet_Issues.IssueId)), 0) AS IssueVotes,
+	dbo.BugNet_ProjectCustomFields.CustomFieldName, 
+	dbo.BugNet_ProjectCustomFieldValues.CustomFieldValue, 
+	dbo.BugNet_Issues.IssueProgress, 
+	dbo.BugNet_ProjectMilestones.MilestoneDueDate, 
+	dbo.BugNet_Projects.ProjectDisabled, 
+	CAST(COALESCE (dbo.BugNet_ProjectStatus.IsClosedState, 0) AS BIT) AS IsClosed
+FROM         
+	dbo.BugNet_ProjectCustomFields 
+INNER JOIN
+	dbo.BugNet_ProjectCustomFieldValues ON dbo.BugNet_ProjectCustomFields.CustomFieldId = dbo.BugNet_ProjectCustomFieldValues.CustomFieldId 
+RIGHT OUTER JOIN
+	dbo.BugNet_Issues ON dbo.BugNet_ProjectCustomFieldValues.IssueId = dbo.BugNet_Issues.IssueId 
+LEFT OUTER JOIN
+    dbo.BugNet_ProjectIssueTypes ON dbo.BugNet_Issues.IssueTypeId = dbo.BugNet_ProjectIssueTypes.IssueTypeId 
+LEFT OUTER JOIN
+    dbo.BugNet_ProjectPriorities ON dbo.BugNet_Issues.IssuePriorityId = dbo.BugNet_ProjectPriorities.PriorityId 
+LEFT OUTER JOIN
+    dbo.BugNet_ProjectCategories ON dbo.BugNet_Issues.IssueCategoryId = dbo.BugNet_ProjectCategories.CategoryId 
+LEFT OUTER JOIN
+    dbo.BugNet_ProjectStatus ON dbo.BugNet_Issues.IssueStatusId = dbo.BugNet_ProjectStatus.StatusId 
+LEFT OUTER JOIN
+    dbo.BugNet_ProjectMilestones AS AffectedMilestone ON dbo.BugNet_Issues.IssueAffectedMilestoneId = AffectedMilestone.MilestoneId 
+LEFT OUTER JOIN
+    dbo.BugNet_ProjectMilestones ON dbo.BugNet_Issues.IssueMilestoneId = dbo.BugNet_ProjectMilestones.MilestoneId 
+LEFT OUTER JOIN
+    dbo.BugNet_ProjectResolutions ON dbo.BugNet_Issues.IssueResolutionId = dbo.BugNet_ProjectResolutions.ResolutionId 
+LEFT OUTER JOIN
+    dbo.aspnet_Users AS AssignedUsers ON dbo.BugNet_Issues.IssueAssignedUserId = AssignedUsers.UserId 
+LEFT OUTER JOIN
+    dbo.aspnet_Users AS LastUpdateUsers ON dbo.BugNet_Issues.LastUpdateUserId = LastUpdateUsers.UserId 
+LEFT OUTER JOIN
+    dbo.aspnet_Users AS CreatorUsers ON dbo.BugNet_Issues.IssueCreatorUserId = CreatorUsers.UserId 
+LEFT OUTER JOIN
+    dbo.aspnet_Users AS OwnerUsers ON dbo.BugNet_Issues.IssueOwnerUserId = OwnerUsers.UserId 
+LEFT OUTER JOIN
+    dbo.BugNet_UserProfiles AS CreatorUsersProfile ON CreatorUsers.UserName = CreatorUsersProfile.UserName 
+LEFT OUTER JOIN
+    dbo.BugNet_UserProfiles AS AssignedUsersProfile ON AssignedUsers.UserName = AssignedUsersProfile.UserName 
+LEFT OUTER JOIN
+    dbo.BugNet_UserProfiles AS OwnerUsersProfile ON OwnerUsers.UserName = OwnerUsersProfile.UserName 
+LEFT OUTER JOIN
+    dbo.BugNet_UserProfiles AS LastUpdateUsersProfile ON LastUpdateUsers.UserName = LastUpdateUsersProfile.UserName 
+LEFT OUTER JOIN
+    dbo.BugNet_Projects ON dbo.BugNet_Issues.ProjectId = dbo.BugNet_Projects.ProjectId
+
+GO
+
+CREATE VIEW [BugNet_IssuesView]
+AS
+SELECT     dbo.BugNet_Issues.IssueId, dbo.BugNet_Issues.IssueTitle, dbo.BugNet_Issues.IssueDescription, dbo.BugNet_Issues.IssueStatusId, 
+                      dbo.BugNet_Issues.IssuePriorityId, dbo.BugNet_Issues.IssueTypeId, dbo.BugNet_Issues.IssueCategoryId, dbo.BugNet_Issues.ProjectId, 
+                      dbo.BugNet_Issues.IssueResolutionId, dbo.BugNet_Issues.IssueCreatorUserId, dbo.BugNet_Issues.IssueAssignedUserId, dbo.BugNet_Issues.IssueOwnerUserId, 
+                      dbo.BugNet_Issues.IssueDueDate, dbo.BugNet_Issues.IssueMilestoneId, dbo.BugNet_Issues.IssueAffectedMilestoneId, dbo.BugNet_Issues.IssueVisibility, 
+                      dbo.BugNet_Issues.IssueEstimation, dbo.BugNet_Issues.DateCreated, dbo.BugNet_Issues.LastUpdate, dbo.BugNet_Issues.LastUpdateUserId, 
+                      dbo.BugNet_Projects.ProjectName, dbo.BugNet_Projects.ProjectCode, dbo.BugNet_ProjectPriorities.PriorityName, dbo.BugNet_ProjectIssueTypes.IssueTypeName, 
+                      ISNULL(dbo.BugNet_ProjectCategories.CategoryName, N'none') AS CategoryName, dbo.BugNet_ProjectStatus.StatusName, 
+                      ISNULL(dbo.BugNet_ProjectMilestones.MilestoneName, N'none') AS MilestoneName, ISNULL(AffectedMilestone.MilestoneName, N'none') AS AffectedMilestoneName, 
+                      ISNULL(dbo.BugNet_ProjectResolutions.ResolutionName, 'none') AS ResolutionName, LastUpdateUsers.UserName AS LastUpdateUserName, 
+                      ISNULL(AssignedUsers.UserName, N'none') AS AssignedUsername, ISNULL(AssignedUsersProfile.DisplayName, N'none') AS AssignedDisplayName, 
+                      CreatorUsers.UserName AS CreatorUserName, ISNULL(CreatorUsersProfile.DisplayName, N'none') AS CreatorDisplayName, ISNULL(OwnerUsers.UserName, 'none') 
+                      AS OwnerUserName, ISNULL(OwnerUsersProfile.DisplayName, N'none') AS OwnerDisplayName, ISNULL(LastUpdateUsersProfile.DisplayName, 'none') 
+                      AS LastUpdateDisplayName, ISNULL(dbo.BugNet_ProjectPriorities.PriorityImageUrl, '') AS PriorityImageUrl, 
+                      ISNULL(dbo.BugNet_ProjectIssueTypes.IssueTypeImageUrl, '') AS IssueTypeImageUrl, ISNULL(dbo.BugNet_ProjectStatus.StatusImageUrl, '') AS StatusImageUrl, 
+                      ISNULL(dbo.BugNet_ProjectMilestones.MilestoneImageUrl, '') AS MilestoneImageUrl, ISNULL(dbo.BugNet_ProjectResolutions.ResolutionImageUrl, '') 
+                      AS ResolutionImageUrl, ISNULL(AffectedMilestone.MilestoneImageUrl, '') AS AffectedMilestoneImageUrl, ISNULL
+                          ((SELECT     SUM(Duration) AS Expr1
+                              FROM         dbo.BugNet_IssueWorkReports AS WR
+                              WHERE     (IssueId = dbo.BugNet_Issues.IssueId)), 0.00) AS TimeLogged, ISNULL
+                          ((SELECT     COUNT(IssueId) AS Expr1
+                              FROM         dbo.BugNet_IssueVotes AS V
+                              WHERE     (IssueId = dbo.BugNet_Issues.IssueId)), 0) AS IssueVotes, dbo.BugNet_Issues.Disabled, dbo.BugNet_Issues.IssueProgress, 
+                      dbo.BugNet_ProjectMilestones.MilestoneDueDate, 
+					  dbo.BugNet_Projects.ProjectDisabled, 
+					  CAST(COALESCE (dbo.BugNet_ProjectStatus.IsClosedState, 0) AS BIT) AS IsClosed
+FROM         dbo.BugNet_Issues INNER JOIN
+                      dbo.BugNet_ProjectIssueTypes ON dbo.BugNet_Issues.IssueTypeId = dbo.BugNet_ProjectIssueTypes.IssueTypeId LEFT OUTER JOIN
+                      dbo.BugNet_ProjectPriorities ON dbo.BugNet_Issues.IssuePriorityId = dbo.BugNet_ProjectPriorities.PriorityId LEFT OUTER JOIN
+                      dbo.BugNet_ProjectCategories ON dbo.BugNet_Issues.IssueCategoryId = dbo.BugNet_ProjectCategories.CategoryId LEFT OUTER JOIN
+                      dbo.BugNet_ProjectStatus ON dbo.BugNet_Issues.IssueStatusId = dbo.BugNet_ProjectStatus.StatusId LEFT OUTER JOIN
+                      dbo.BugNet_ProjectMilestones AS AffectedMilestone ON dbo.BugNet_Issues.IssueAffectedMilestoneId = AffectedMilestone.MilestoneId LEFT OUTER JOIN
+                      dbo.BugNet_ProjectMilestones ON dbo.BugNet_Issues.IssueMilestoneId = dbo.BugNet_ProjectMilestones.MilestoneId LEFT OUTER JOIN
+                      dbo.BugNet_ProjectResolutions ON dbo.BugNet_Issues.IssueResolutionId = dbo.BugNet_ProjectResolutions.ResolutionId LEFT OUTER JOIN
+                      dbo.aspnet_Users AS AssignedUsers ON dbo.BugNet_Issues.IssueAssignedUserId = AssignedUsers.UserId LEFT OUTER JOIN
+                      dbo.aspnet_Users AS LastUpdateUsers ON dbo.BugNet_Issues.LastUpdateUserId = LastUpdateUsers.UserId LEFT OUTER JOIN
+                      dbo.aspnet_Users AS CreatorUsers ON dbo.BugNet_Issues.IssueCreatorUserId = CreatorUsers.UserId LEFT OUTER JOIN
+                      dbo.aspnet_Users AS OwnerUsers ON dbo.BugNet_Issues.IssueOwnerUserId = OwnerUsers.UserId LEFT OUTER JOIN
+                      dbo.BugNet_UserProfiles AS CreatorUsersProfile ON CreatorUsers.UserName = CreatorUsersProfile.UserName LEFT OUTER JOIN
+                      dbo.BugNet_UserProfiles AS AssignedUsersProfile ON AssignedUsers.UserName = AssignedUsersProfile.UserName LEFT OUTER JOIN
+                      dbo.BugNet_UserProfiles AS OwnerUsersProfile ON OwnerUsers.UserName = OwnerUsersProfile.UserName LEFT OUTER JOIN
+                      dbo.BugNet_UserProfiles AS LastUpdateUsersProfile ON LastUpdateUsers.UserName = LastUpdateUsersProfile.UserName LEFT OUTER JOIN
+                      dbo.BugNet_Projects ON dbo.BugNet_Issues.ProjectId = dbo.BugNet_Projects.ProjectId
+
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[BugNet_Project_GetRoadMap]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [BugNet_Project_GetRoadMap]
+GO
+
+CREATE PROCEDURE [BugNet_Project_GetRoadMap]
+	@ProjectId int
+AS
+SELECT 
+	PM.SortOrder AS MilestoneSortOrder,
+	IssueId, 
+	IssueTitle, 
+	IssueDescription, 
+	IssueStatusId, 
+	IssuePriorityId, 
+	IssueTypeId, 
+	IssueCategoryId, 
+	BugNet_IssuesView.ProjectId, 
+	IssueResolutionId, 
+	IssueCreatorUserId, 
+	IssueAssignedUserId, 
+	IssueOwnerUserId, 
+	IssueDueDate, 
+	BugNet_IssuesView.IssueMilestoneId, 
+	IssueVisibility, 
+	BugNet_IssuesView.DateCreated, 
+	IssueEstimation, 
+	LastUpdate, 
+	LastUpdateUserId, 
+	ProjectName, 
+	ProjectCode, 
+	PriorityName, 
+	IssueTypeName, 
+	CategoryName, 
+	StatusName, 
+	ResolutionName, 
+	BugNet_IssuesView.MilestoneName, 
+	BugNet_IssuesView.MilestoneDueDate,
+	IssueAffectedMilestoneId, 
+	AffectedMilestoneName,
+	AffectedMilestoneImageUrl,
+	LastUpdateUserName, 
+	AssignedUserName, 
+	AssignedDisplayName, 
+	CreatorUserName, 
+	CreatorDisplayName, 
+	OwnerUserName, 
+	OwnerDisplayName, 
+	LastUpdateDisplayName, 
+	PriorityImageUrl, 
+	IssueTypeImageUrl, 
+	StatusImageUrl, 
+	BugNet_IssuesView.MilestoneImageUrl, 
+	ResolutionImageUrl, 
+	TimeLogged, 
+	IssueProgress, 
+	[Disabled], 
+	IssueVotes,
+	IsClosed
+FROM 
+	BugNet_IssuesView JOIN BugNet_ProjectMilestones PM on IssueMilestoneId = MilestoneId 
+WHERE 
+	BugNet_IssuesView.ProjectId = @ProjectId AND BugNet_IssuesView.Disabled = 0
+AND 
+	IssueMilestoneId IN (SELECT DISTINCT IssueMilestoneId FROM BugNet_IssuesView WHERE BugNet_IssuesView.Disabled = 0 AND IssueStatusId IN(SELECT StatusId FROM BugNet_ProjectStatus WHERE IsClosedState = 0 AND ProjectId = @ProjectId))
+ORDER BY 
+	(CASE WHEN PM.SortOrder IS NULL THEN 1 ELSE 0 END),PM.SortOrder , IssueStatusId ASC, IssueTypeId ASC,IssueCategoryId ASC, AssignedUserName ASC
+GO
+
 COMMIT
 
 SET NOEXEC OFF

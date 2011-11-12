@@ -69,7 +69,7 @@ namespace BugNET.Issues.UserControls
 			}
 			else
 			{
-				_IssueOwnerUserId = IssueManager.GetIssueById(IssueId).OwnerUserId;
+				_IssueOwnerUserId = IssueManager.GetById(IssueId).OwnerUserId;
 				lblComments.Visible = false;
 				rptComments.DataSource = comments;
 				rptComments.DataBind();

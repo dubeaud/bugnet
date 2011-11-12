@@ -31,7 +31,7 @@ namespace BugNET.Services
 
             //TODO: Check authorization
             
-            var i = IssueManager.GetIssueById(id);
+            var i = IssueManager.GetById(id);
             return IssueTranslator.ToIssueContract(i);
         }
 
@@ -48,7 +48,7 @@ namespace BugNET.Services
 
             //TODO: Check authorization
 
-            var issues = IssueManager.GetIssuesByProjectId(projectId);
+            var issues = IssueManager.GetByProjectId(projectId);
 
             return issues.Select(IssueTranslator.ToIssueContract).ToList();
         }
@@ -66,7 +66,7 @@ namespace BugNET.Services
             //TODO: Check authorization
 
             var issueToSave = IssueTranslator.ToIssue(issue);
-            return IssueManager.SaveIssue(issueToSave);
+            return IssueManager.SaveOrUpdate(issueToSave);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace BugNET.Services
             //IPrincipal principal = Thread.CurrentPrincipal.Identity.Name; 
             //principal.Identity.Name;
 
-            return IssueManager.DeleteIssue(issueId);
+            return IssueManager.Delete(issueId);
         }
 
         #endregion

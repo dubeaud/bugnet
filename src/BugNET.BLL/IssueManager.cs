@@ -19,46 +19,51 @@ namespace BugNET.BLL
         /// <summary>
         /// Saves the issue
         /// </summary>
-        /// <param name="issueToSave">The issue to save.</param>
+        /// <param name="entity">The issue to save.</param>
         /// <returns></returns>
-        public static bool SaveIssue(Issue issueToSave)
+        public static bool SaveOrUpdate(Issue entity)
         {
-            if (issueToSave.Id <= Globals.NEW_ID)
+            if (entity == null) throw new ArgumentNullException("entity");
+            if (entity.ProjectId <= Globals.NEW_ID) throw (new ArgumentException("The issue project id is invalid"));
+            if (string.IsNullOrEmpty(entity.Title)) throw (new ArgumentException("The issue title cannot be empty or null"));
+
+            if (entity.Id <= Globals.NEW_ID)
             {
-                var tempId = DataProviderManager.Provider.CreateNewIssue(issueToSave);
+                var tempId = DataProviderManager.Provider.CreateNewIssue(entity);
 
                 if (tempId > 0)
                 {
-                    issueToSave.Id = tempId;
+                    entity.Id = tempId;
 
                     //add vote
-                    var vote = new IssueVote { IssueId = issueToSave.Id, VoteUsername = issueToSave.CreatorUserName};
+                    var vote = new IssueVote { IssueId = entity.Id, VoteUsername = entity.CreatorUserName };
                     IssueVoteManager.SaveOrUpdate(vote);
 
                     //TOOD: handle adding an attachment for new issue.
 
                     //send notifications for add issue
-                    IssueNotificationManager.SendIssueAddNotifications(issueToSave.Id);
+                    IssueNotificationManager.SendIssueAddNotifications(entity.Id);
 
                     return true;
                 }
+
                 return false;
             }
 
-            var issueChanges = GetIssueChanges(GetIssueById(issueToSave.Id), issueToSave);
+            var issueChanges = GetIssueChanges(GetById(entity.Id), entity);
 
             if (issueChanges.Count > 0)
             {
-                var result = DataProviderManager.Provider.UpdateIssue(issueToSave);
+                var result = DataProviderManager.Provider.UpdateIssue(entity);
                 if (result)
                 {
-                    UpdateIssueHistory(issueChanges);
+                    UpdateHistory(issueChanges);
 
-                    IssueNotificationManager.SendIssueNotifications(issueToSave.Id, issueChanges);
-                    if (issueToSave.SendNewAssigneeNotification)
+                    IssueNotificationManager.SendIssueNotifications(entity.Id, issueChanges);
+                    if (entity.SendNewAssigneeNotification)
                     {
                         //add this user to notifications and send them a notification
-                        var notification = new IssueNotification() { IssueId = issueToSave.Id, NotificationUsername = issueToSave.AssignedUserName };
+                        var notification = new IssueNotification() { IssueId = entity.Id, NotificationUsername = entity.AssignedUserName };
 
                         IssueNotificationManager.SaveOrUpdate(notification);
                         IssueNotificationManager.SendNewAssigneeNotification(notification);
@@ -74,7 +79,7 @@ namespace BugNET.BLL
         /// Updates the IssueHistory objects in the changes array list
         /// </summary>
         /// <param name="issueChanges">The issue changes.</param>
-        private static void UpdateIssueHistory(IEnumerable<IssueHistory> issueChanges)
+        private static void UpdateHistory(IEnumerable<IssueHistory> issueChanges)
         {
             foreach (var issueHistory in issueChanges)
                 IssueHistoryManager.SaveOrUpdate(issueHistory);
@@ -203,7 +208,7 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="issueId">The issue id.</param>
         /// <returns></returns>
-        public static Issue GetIssueById(int issueId)
+        public static Issue GetById(int issueId)
         {
             if (issueId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("issueId"));
 
@@ -215,7 +220,7 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="projectId">The project id.</param>
         /// <returns></returns>
-        public static List<Issue> GetIssuesByProjectId(int projectId)
+        public static List<Issue> GetByProjectId(int projectId)
         {
             if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
@@ -227,7 +232,7 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="projectId">The project id.</param>
         /// <returns></returns>
-        public static List<IssueCount> GetIssueStatusCountByProject(int projectId)
+        public static List<IssueCount> GetStatusCountByProjectId(int projectId)
         {
             if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
@@ -239,7 +244,7 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="projectId">The project id.</param>
         /// <returns></returns>
-        public static List<IssueCount> GetIssueMilestoneCountByProject(int projectId)
+        public static List<IssueCount> GetMilestoneCountByProjectId(int projectId)
         {
             if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
@@ -250,7 +255,7 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="projectId">The project id.</param>
         /// <returns></returns>
-        public static List<IssueCount> GetIssuePriorityCountByProject(int projectId)
+        public static List<IssueCount> GetPriorityCountByProjectId(int projectId)
         {
             if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
@@ -261,7 +266,7 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="projectId">The project id.</param>
         /// <returns></returns>
-        public static List<IssueCount> GetIssueUserCountByProject(int projectId)
+        public static List<IssueCount> GetUserCountByProjectId(int projectId)
         {
             if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
@@ -273,7 +278,7 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="projectId">The project id.</param>
         /// <returns></returns>
-        public static int GetIssueUnassignedCountByProject(int projectId)
+        public static int GetUnassignedCountByProjectId(int projectId)
         {
             if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
@@ -285,7 +290,7 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="projectId">The project id.</param>
         /// <returns></returns>
-        public static int GetIssueUnscheduledMilestoneCountByProject(int projectId)
+        public static int GetUnscheduledMilestoneCountByProjectId(int projectId)
         {
             if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
@@ -297,7 +302,7 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="projectId">The project id.</param>
         /// <returns></returns>
-        public static List<IssueCount> GetIssueTypeCountByProject(int projectId)
+        public static List<IssueCount> GetTypeCountByProjectId(int projectId)
         {
             if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
@@ -310,7 +315,7 @@ namespace BugNET.BLL
         /// <param name="projectId">The project id.</param>
         /// <param name="categoryId">The category id.</param>
         /// <returns></returns>
-        public static int GetIssueCountByProjectAndCategory(int projectId, int categoryId = 0)
+        public static int GetCountByProjectAndCategoryId(int projectId, int categoryId = 0)
         {
             if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
@@ -350,7 +355,7 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="issueId">The issue id.</param>
         /// <returns></returns>
-        public static bool DeleteIssue(int issueId)
+        public static bool Delete(int issueId)
         {
             if (issueId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("issueId"));
 
@@ -363,7 +368,7 @@ namespace BugNET.BLL
         /// <param name="projectId">The project id.</param>
         /// <param name="username">The username.</param>
         /// <returns></returns>
-        public static List<Issue> GetIssuesByAssignedUserName(int projectId, string username)
+        public static List<Issue> GetByAssignedUserName(int projectId, string username)
         {
             if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
             if (string.IsNullOrEmpty(username)) throw (new ArgumentOutOfRangeException("username"));
@@ -377,7 +382,7 @@ namespace BugNET.BLL
         /// <param name="projectId">The project id.</param>
         /// <param name="username">The username.</param>
         /// <returns></returns>
-        public static List<Issue> GetIssuesByCreatorUserName(int projectId, string username)
+        public static List<Issue> GetByCreatorUserName(int projectId, string username)
         {
             if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
             if (string.IsNullOrEmpty(username)) throw (new ArgumentOutOfRangeException("username"));
@@ -391,7 +396,7 @@ namespace BugNET.BLL
         /// <param name="projectId">The project id.</param>
         /// <param name="username">The username.</param>
         /// <returns></returns>
-        public static List<Issue> GetIssuesByOwnerUserName(int projectId, string username)
+        public static List<Issue> GetByOwnerUserName(int projectId, string username)
         {
             if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
             if (string.IsNullOrEmpty(username)) throw (new ArgumentOutOfRangeException("username"));
@@ -405,7 +410,7 @@ namespace BugNET.BLL
         /// <param name="projectId">The project id.</param>
         /// <param name="username">The username.</param>
         /// <returns></returns>
-        public static List<Issue> GetIssuesByRelevancy(int projectId, string username)
+        public static List<Issue> GetByRelevancy(int projectId, string username)
         {
             if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
             if (string.IsNullOrEmpty(username)) throw (new ArgumentOutOfRangeException("username"));
@@ -437,11 +442,14 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static Issue GetDefaultIssueByProjectId(int projectId, string title, string description, string assignedName, string ownerName)
         {
-            if (projectId < Globals.NEW_ID) throw new ArgumentOutOfRangeException(string.Format("ProjectID must be {0} or larger.", Globals.NEW_ID));
+
+            if (projectId <= Globals.NEW_ID)
+                throw new ArgumentException(string.Format(LoggingManager.GetErrorMessageResource("InvalidProjectId"), projectId));
 
             var curProject = ProjectManager.GetById(projectId);
 
-            if (curProject == null) throw new ArgumentException("Project not found for ProjectID.");
+            if (curProject == null) 
+                throw new ArgumentException(string.Format(LoggingManager.GetErrorMessageResource("ProjectNotFoundError"), projectId));
 
             var cats = CategoryManager.GetByProjectId(projectId);
             var statuses = StatusManager.GetByProjectId(projectId);
@@ -460,12 +468,30 @@ namespace BugNET.BLL
             var defAffectedMilestone = affectedMilestones[0];
             var defMilestone = milestones[0];
 
-            // Now create an issue                
-            var iss = new Issue(0, projectId, title, description, defCat.Id, defPriority.Id, defStatus.Id,
-                defIssueType.Id, defMilestone.Id, defAffectedMilestone.Id, defResolution.Id,
-                ownerName, assignedName, ownerName, 0, 0, DateTime.MinValue);
+            // Now create an issue   
+            var issue = new Issue
+                            {
+                                ProjectId = projectId,
+                                Id = Globals.NEW_ID, 
+                                Title = title,
+                                CreatorUserName = ownerName,
+                                DateCreated = DateTime.Now,
+                                Description = description, 
+                                DueDate = DateTime.MinValue, 
+                                IssueTypeId = defIssueType.Id, 
+                                AffectedMilestoneId = defAffectedMilestone.Id, 
+                                AssignedUserName = assignedName, 
+                                CategoryId = defCat.Id, 
+                                MilestoneId = defMilestone.Id, 
+                                OwnerUserName = ownerName, 
+                                PriorityId = defPriority.Id,
+                                ResolutionId = defResolution.Id,
+                                StatusId = defStatus.Id,
+                                Estimation = 0,
+                                Visibility = 1
+                            };
 
-            return iss;
+            return issue;
         }
 
         /// <summary>

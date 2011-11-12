@@ -319,12 +319,12 @@ namespace BugNET.Providers.DataProviders
             if (projectId <= 0)
                 throw (new ArgumentOutOfRangeException("projectId"));
 
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
             AddParamToSQLCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETISSUESBYPROJECTID);
 
-            List<Issue> issueList = new List<Issue>();
-            TExecuteReaderCmd<Issue>(sqlCmd, TGenerateIssueListFromReader<Issue>, ref issueList);
+            var issueList = new List<Issue>();
+            TExecuteReaderCmd(sqlCmd, GenerateIssueListFromReader, ref issueList);
 
             return issueList;
         }
@@ -339,12 +339,12 @@ namespace BugNET.Providers.DataProviders
             if (issueId <= 0)
                 throw (new ArgumentOutOfRangeException("issueId"));
 
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
             AddParamToSQLCmd(sqlCmd, "@IssueId", SqlDbType.Int, 0, ParameterDirection.Input, issueId);
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETISSUEBYID);
 
-            List<Issue> issueList = new List<Issue>();
-            TExecuteReaderCmd<Issue>(sqlCmd, TGenerateIssueListFromReader<Issue>, ref issueList);
+            var issueList = new List<Issue>();
+            TExecuteReaderCmd(sqlCmd, GenerateIssueListFromReader, ref issueList);
 
             if (issueList.Count > 0)
                 return issueList[0];
@@ -443,13 +443,13 @@ namespace BugNET.Providers.DataProviders
             if (projectId <= 0)
                 throw (new ArgumentOutOfRangeException("projectId"));
 
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
             AddParamToSQLCmd(sqlCmd, "@UserName", SqlDbType.NVarChar, 255, ParameterDirection.Input, userName);
             AddParamToSQLCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETISSUESBYRELEVANCY);
 
-            List<Issue> issueList = new List<Issue>();
-            TExecuteReaderCmd<Issue>(sqlCmd, TGenerateIssueListFromReader<Issue>, ref issueList);
+            var issueList = new List<Issue>();
+            TExecuteReaderCmd(sqlCmd, GenerateIssueListFromReader, ref issueList);
 
             return issueList;
         }
@@ -467,13 +467,13 @@ namespace BugNET.Providers.DataProviders
             if (projectId <= 0)
                 throw (new ArgumentOutOfRangeException("projectId"));
 
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
             AddParamToSQLCmd(sqlCmd, "@UserName", SqlDbType.NVarChar, 255, ParameterDirection.Input, assignedUserName);
             AddParamToSQLCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETISSUESBYASSIGNEDUSERNAME);
 
-            List<Issue> issueList = new List<Issue>();
-            TExecuteReaderCmd<Issue>(sqlCmd, TGenerateIssueListFromReader<Issue>, ref issueList);
+            var issueList = new List<Issue>();
+            TExecuteReaderCmd(sqlCmd, GenerateIssueListFromReader, ref issueList);
 
             return issueList;
         }
@@ -488,12 +488,12 @@ namespace BugNET.Providers.DataProviders
             if (projectId <= 0)
                 throw (new ArgumentOutOfRangeException("projectId"));
 
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
             AddParamToSQLCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETOPENISSUES);
 
-            List<Issue> issueList = new List<Issue>();
-            TExecuteReaderCmd<Issue>(sqlCmd, TGenerateIssueListFromReader<Issue>, ref issueList);
+            var issueList = new List<Issue>();
+            TExecuteReaderCmd(sqlCmd, GenerateIssueListFromReader, ref issueList);
 
             return issueList;
         }
@@ -511,13 +511,13 @@ namespace BugNET.Providers.DataProviders
             if (projectId <= 0)
                 throw (new ArgumentOutOfRangeException("projectId"));
 
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
             AddParamToSQLCmd(sqlCmd, "@UserName", SqlDbType.NVarChar, 255, ParameterDirection.Input, userName);
             AddParamToSQLCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETISSUESBYCREATORUSERNAME);
 
-            List<Issue> issueList = new List<Issue>();
-            TExecuteReaderCmd<Issue>(sqlCmd, TGenerateIssueListFromReader<Issue>, ref issueList);
+            var issueList = new List<Issue>();
+            TExecuteReaderCmd(sqlCmd, GenerateIssueListFromReader, ref issueList);
 
             return issueList;
         }
@@ -535,13 +535,13 @@ namespace BugNET.Providers.DataProviders
             if (projectId <= 0)
                 throw (new ArgumentOutOfRangeException("projectId"));
 
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
             AddParamToSQLCmd(sqlCmd, "@UserName", SqlDbType.NVarChar, 255, ParameterDirection.Input, userName);
             AddParamToSQLCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETISSUESBYOWNERUSERNAME);
 
-            List<Issue> issueList = new List<Issue>();
-            TExecuteReaderCmd<Issue>(sqlCmd, TGenerateIssueListFromReader<Issue>, ref issueList);
+            var issueList = new List<Issue>();
+            TExecuteReaderCmd(sqlCmd, GenerateIssueListFromReader, ref issueList);
 
             return issueList;
         }
@@ -557,13 +557,13 @@ namespace BugNET.Providers.DataProviders
             if (userName == null)
                 throw (new ArgumentNullException("userName"));
 
-            SqlCommand sqlCmd = new SqlCommand();
+            var sqlCmd = new SqlCommand();
             AddParamToSQLCmd(sqlCmd, "@UserName", SqlDbType.NVarChar, 255, ParameterDirection.Input, userName);
             AddParamToSQLCmd(sqlCmd, "@ExcludeClosedStatus", SqlDbType.Bit, 0, ParameterDirection.Input, excludeClosedStatus);
             SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETMONITOREDISSUESBYUSERNAME);
 
-            List<Issue> issueList = new List<Issue>();
-            TExecuteReaderCmd<Issue>(sqlCmd, TGenerateIssueListFromReader<Issue>, ref issueList);
+            var issueList = new List<Issue>();
+            TExecuteReaderCmd(sqlCmd, GenerateIssueListFromReader, ref issueList);
 
             return issueList;
         }
@@ -588,7 +588,7 @@ namespace BugNET.Providers.DataProviders
 
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETISSUESTATUSCOUNTBYPROJECT);
                 List<IssueCount> issueCountList = new List<IssueCount>();
-                TExecuteReaderCmd<IssueCount>(sqlCmd, TGenerateIssueCountListFromReader<IssueCount>, ref issueCountList);
+                TExecuteReaderCmd<IssueCount>(sqlCmd, GenerateIssueCountListFromReader, ref issueCountList);
                 return issueCountList;
             }
             catch (Exception ex)
@@ -617,7 +617,7 @@ namespace BugNET.Providers.DataProviders
 
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETISSUEMILESTONECOUNTBYPROJECT);
                 List<IssueCount> issueCountList = new List<IssueCount>();
-                TExecuteReaderCmd<IssueCount>(sqlCmd, TGenerateIssueCountListFromReader<IssueCount>, ref issueCountList);
+                TExecuteReaderCmd<IssueCount>(sqlCmd, GenerateIssueCountListFromReader, ref issueCountList);
                 return issueCountList;
             }
             catch (Exception ex)
@@ -646,7 +646,7 @@ namespace BugNET.Providers.DataProviders
 
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETISSUEUSERCOUNTBYPROJECT);
                 List<IssueCount> issueCountList = new List<IssueCount>();
-                TExecuteReaderCmd<IssueCount>(sqlCmd, TGenerateIssueCountListFromReader<IssueCount>, ref issueCountList);
+                TExecuteReaderCmd<IssueCount>(sqlCmd, GenerateIssueCountListFromReader, ref issueCountList);
                 return issueCountList;
             }
             catch (Exception ex)
@@ -760,7 +760,7 @@ namespace BugNET.Providers.DataProviders
 
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETISSUETYPECOUNTBYPROJECT);
                 List<IssueCount> issueCountList = new List<IssueCount>();
-                TExecuteReaderCmd<IssueCount>(sqlCmd, TGenerateIssueCountListFromReader<IssueCount>, ref issueCountList);
+                TExecuteReaderCmd<IssueCount>(sqlCmd, GenerateIssueCountListFromReader, ref issueCountList);
                 return issueCountList;
             }
             catch (Exception ex)
@@ -789,7 +789,7 @@ namespace BugNET.Providers.DataProviders
 
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETISSUEPRIORITYCOUNTBYPROJECT);
                 List<IssueCount> issueCountList = new List<IssueCount>();
-                TExecuteReaderCmd<IssueCount>(sqlCmd, TGenerateIssueCountListFromReader<IssueCount>, ref issueCountList);
+                TExecuteReaderCmd<IssueCount>(sqlCmd, GenerateIssueCountListFromReader, ref issueCountList);
                 return issueCountList;
             }
             catch (Exception ex)
@@ -2017,14 +2017,14 @@ namespace BugNET.Providers.DataProviders
             try
             {
                 // Execute SQL Command
-                SqlCommand sqlCmd = new SqlCommand();
+                var sqlCmd = new SqlCommand();
 
                 AddParamToSQLCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
                 AddParamToSQLCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
 
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_PROJECT_GETROADMAP);
-                List<RoadMapIssue> issueList = new List<RoadMapIssue>();
-                TExecuteReaderCmd<RoadMapIssue>(sqlCmd, TGenerateRoadmapIssueListFromReader<RoadMapIssue>, ref issueList);
+                var issueList = new List<RoadMapIssue>();
+                TExecuteReaderCmd(sqlCmd, GenerateRoadmapIssueListFromReader, ref issueList);
                 return issueList;
             }
             catch (Exception ex)
@@ -2092,14 +2092,14 @@ namespace BugNET.Providers.DataProviders
             try
             {
                 // Execute SQL Command
-                SqlCommand sqlCmd = new SqlCommand();
+                var sqlCmd = new SqlCommand();
 
                 AddParamToSQLCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
                 AddParamToSQLCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
 
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_PROJECT_GETCHANGELOG);
-                List<Issue> issueList = new List<Issue>();
-                TExecuteReaderCmd<Issue>(sqlCmd, TGenerateIssueListFromReader<Issue>, ref issueList);
+                var issueList = new List<Issue>();
+                TExecuteReaderCmd(sqlCmd, GenerateIssueListFromReader, ref issueList);
                 return issueList;
             }
             catch (Exception ex)
@@ -2783,7 +2783,7 @@ namespace BugNET.Providers.DataProviders
 
             }
 
-            TExecuteReaderCmd<Issue>(sqlCmd, TGenerateIssueListFromReader<Issue>, ref issueList2);
+            TExecuteReaderCmd(sqlCmd, GenerateIssueListFromReader, ref issueList2);
 
             // RW Generate a collection
             //GenerateCollectionFromReader sqlData = new GenerateCollectionFromReader(GenerateIssueCollectionFromReader);
@@ -2994,17 +2994,17 @@ namespace BugNET.Providers.DataProviders
                 }
 
                 //RW create a new issue collection here
-                List<Issue> issueList = new List<Issue>();
+                var issueList = new List<Issue>();
 
                 //more queries, but they are not custom.
                 //So, populate the collection with what we have.
                 if (i > 0 && i <= queryClauseCount)
                 {
-                    TExecuteReaderCmd<Issue>(sqlCmd, TGenerateIssueListFromReader<Issue>, ref issueList);
+                    TExecuteReaderCmd(sqlCmd, GenerateIssueListFromReader, ref issueList);
                 }
 
                 //return distinct issues
-                List<Issue> distinctIssueList = issueList.Distinct(new DistinctIssueComparer()).ToList();
+                var distinctIssueList = issueList.Distinct(new DistinctIssueComparer()).ToList();
                 return distinctIssueList;
             }
             catch (Exception ex)
@@ -3020,7 +3020,7 @@ namespace BugNET.Providers.DataProviders
         /// <param name="projectId">The project id.</param>
         /// <param name="queryId">The query id.</param>
         /// <returns></returns>
-        public override System.Collections.Generic.List<Issue> PerformSavedQuery(int projectId, int queryId)
+        public override List<Issue> PerformSavedQuery(int projectId, int queryId)
         {
             // Validate Parameters
             if (queryId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("queryId"));
@@ -5092,19 +5092,19 @@ namespace BugNET.Providers.DataProviders
         /// <typeparam name="T"></typeparam>
         /// <param name="sqlCmd">The SQL CMD.</param>
         /// <param name="gcfr">The GCFR.</param>
-        /// <param name="List">The list.</param>
-        private void TExecuteReaderCmd<T>(SqlCommand sqlCmd, TGenerateListFromReader<T> gcfr, ref List<T> List)
+        /// <param name="list">The list.</param>
+        private void TExecuteReaderCmd<T>(SqlCommand sqlCmd, TGenerateListFromReader<T> gcfr, ref List<T> list)
         {
             if (_connectionString == string.Empty)
                 throw (new ArgumentOutOfRangeException("_connectionString"));
             if (sqlCmd == null)
                 throw (new ArgumentNullException("sqlCmd"));
 
-            using (SqlConnection cn = new SqlConnection(this._connectionString))
+            using (var cn = new SqlConnection(_connectionString))
             {
                 sqlCmd.Connection = cn;
                 cn.Open();
-                gcfr(sqlCmd.ExecuteReader(), ref List);
+                gcfr(sqlCmd.ExecuteReader(), ref list);
             }
         }
 
@@ -5114,7 +5114,7 @@ namespace BugNET.Providers.DataProviders
         /// <param name="sqlCmd">The SQL CMD.</param>
         /// <param name="cmdType">Type of the CMD.</param>
         /// <param name="cmdText">The CMD text.</param>
-        private void SetCommandType(SqlCommand sqlCmd, CommandType cmdType, string cmdText)
+        private static void SetCommandType(IDbCommand sqlCmd, CommandType cmdType, string cmdText)
         {
             sqlCmd.CommandType = cmdType;
             sqlCmd.CommandText = cmdText;
@@ -5129,12 +5129,11 @@ namespace BugNET.Providers.DataProviders
             if (sql == null)
                 throw new ArgumentNullException("sql");
 
-            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (var conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
-                foreach (string stmt in sql)
+                foreach (var command in sql.Select(stmt => new SqlCommand(stmt, conn)))
                 {
-                    SqlCommand command = new SqlCommand(stmt, conn);
                     command.ExecuteNonQuery();
                 }
                 conn.Close();
@@ -5170,10 +5169,9 @@ namespace BugNET.Providers.DataProviders
         /// <summary>
         /// Ts the generate issue count list from reader.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="returnData">The return data.</param>
         /// <param name="issueCountList">The issue count list.</param>
-        private void TGenerateIssueCountListFromReader<T>(SqlDataReader returnData, ref List<IssueCount> issueCountList)
+        private static void GenerateIssueCountListFromReader(IDataReader returnData, ref List<IssueCount> issueCountList)
         {
             while (returnData.Read())
             {
@@ -5182,66 +5180,16 @@ namespace BugNET.Providers.DataProviders
             }
         }
 
-
         /// <summary>
         /// Ts the generate issue list from reader.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="returnData">The return data.</param>
         /// <param name="issueList">The issue list.</param>
-        public void TGenerateIssueListFromReader<T>(SqlDataReader returnData, ref List<Issue> issueList)
+        private static void GenerateIssueListFromReader(IDataReader returnData, ref List<Issue> issueList)
         {
             while (returnData.Read())
             {
-                Issue issue = new Issue((int)returnData["IssueId"],
-                    (int)returnData["ProjectId"],
-                    (string)returnData["ProjectName"],
-                    (string)returnData["ProjectCode"],
-                    (string)returnData["IssueTitle"],
-                    (string)returnData["IssueDescription"],
-                    returnData["IssueCategoryId"] == DBNull.Value ? 0 : (int)returnData["IssueCategoryId"],
-                    (string)returnData["CategoryName"],
-                    (int)returnData["IssuePriorityId"],
-                    (string)returnData["PriorityName"],
-                    (string)returnData["PriorityImageUrl"],
-                    (int)returnData["IssueStatusId"],
-                    (string)returnData["StatusName"],
-                    (string)returnData["StatusImageUrl"],
-                    (int)returnData["IssueTypeId"],
-                    (string)returnData["IssueTypeName"],
-                    (string)returnData["IssueTypeImageUrl"],
-                    returnData["IssueResolutionId"] == DBNull.Value ? 0 : (int)returnData["IssueResolutionId"],
-                    (string)returnData["ResolutionName"],
-                    (string)returnData["ResolutionImageUrl"],
-                    (string)returnData["AssignedDisplayName"],
-                    (string)returnData["AssignedUserName"],
-                    returnData["IssueAssignedUserId"] == DBNull.Value ? Guid.Empty : (Guid)returnData["IssueAssignedUserId"],
-                    (string)returnData["CreatorDisplayName"],
-                    (string)returnData["CreatorUserName"],
-                    (Guid)returnData["IssueCreatorUserId"],
-                    (string)returnData["OwnerDisplayName"],
-                    (string)returnData["OwnerUserName"],
-                    returnData["IssueOwnerUserId"] == DBNull.Value ? Guid.Empty : (Guid)returnData["IssueOwnerUserId"],
-                    returnData["IssueDueDate"] == DBNull.Value ? DateTime.MinValue : (DateTime)returnData["IssueDueDate"],
-                    returnData["IssueMilestoneId"] == DBNull.Value ? 0 : (int)returnData["IssueMilestoneId"],
-                    (string)returnData["MilestoneName"],
-                    (string)returnData["MilestoneImageUrl"],
-                     returnData["MilestoneDueDate"] == DBNull.Value ? null : (DateTime?)returnData["MilestoneDueDate"],
-                      returnData["IssueAffectedMilestoneId"] == DBNull.Value ? 0 : (int)returnData["IssueAffectedMilestoneId"],
-                    (string)returnData["AffectedMilestoneName"],
-                    (string)returnData["AffectedMilestoneImageUrl"],
-                    (int)returnData["IssueVisibility"],
-                    Convert.ToDouble(returnData["TimeLogged"].ToString()),
-                    Convert.ToDecimal(returnData["IssueEstimation"].ToString()),
-                    (DateTime)returnData["DateCreated"],
-                    (DateTime)returnData["LastUpdate"],
-                    (string)returnData["LastUpdateUserName"],
-                    (string)returnData["LastUpdateDisplayName"],
-                    (int)returnData["IssueProgress"],
-                    (bool)returnData["Disabled"],
-                    (int)returnData["IssueVotes"]);
-
-                issueList.Add(issue);
+                issueList.Add(MapIssue(returnData));
             }
         }
 
@@ -5447,62 +5395,18 @@ namespace BugNET.Providers.DataProviders
         /// <summary>
         /// Ts the generate roadmap issue list from reader.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="returnData">The return data.</param>
         /// <param name="issueList">The issue list.</param>
-        private void TGenerateRoadmapIssueListFromReader<T>(SqlDataReader returnData, ref List<RoadMapIssue> issueList)
+        private static void GenerateRoadmapIssueListFromReader(IDataReader returnData, ref List<RoadMapIssue> issueList)
         {
             while (returnData.Read())
             {
-                RoadMapIssue issue = new RoadMapIssue((int)returnData["MilestoneSortOrder"], (int)returnData["IssueId"],
-                    (int)returnData["ProjectId"],
-                    (string)returnData["ProjectName"],
-                    (string)returnData["ProjectCode"],
-                    (string)returnData["IssueTitle"],
-                    (string)returnData["IssueDescription"],
-                    returnData["IssueCategoryId"] == DBNull.Value ? 0 : (int)returnData["IssueCategoryId"],
-                    (string)returnData["CategoryName"],
-                    (int)returnData["IssuePriorityId"],
-                    (string)returnData["PriorityName"],
-                    (string)returnData["PriorityImageUrl"],
-                    (int)returnData["IssueStatusId"],
-                    (string)returnData["StatusName"],
-                    (string)returnData["StatusImageUrl"],
-                    (int)returnData["IssueTypeId"],
-                    (string)returnData["IssueTypeName"],
-                    (string)returnData["IssueTypeImageUrl"],
-                    returnData["IssueResolutionId"] == DBNull.Value ? 0 : (int)returnData["IssueResolutionId"],
-                    (string)returnData["ResolutionName"],
-                    (string)returnData["ResolutionImageUrl"],
-                    (string)returnData["AssignedDisplayName"],
-                    (string)returnData["AssignedUserName"],
-                    returnData["IssueAssignedUserId"] == DBNull.Value ? Guid.Empty : (Guid)returnData["IssueAssignedUserId"],
-                    (string)returnData["CreatorDisplayName"],
-                    (string)returnData["CreatorUserName"],
-                    (Guid)returnData["IssueCreatorUserId"],
-                    (string)returnData["OwnerDisplayName"],
-                    (string)returnData["OwnerUserName"],
-                    returnData["IssueOwnerUserId"] == DBNull.Value ? Guid.Empty : (Guid)returnData["IssueOwnerUserId"],
-                    returnData["IssueDueDate"] == DBNull.Value ? DateTime.MinValue : (DateTime)returnData["IssueDueDate"],
-                    returnData["IssueMilestoneId"] == DBNull.Value ? 0 : (int)returnData["IssueMilestoneId"],
-                    (string)returnData["MilestoneName"],
-                    (string)returnData["MilestoneImageUrl"],
-                     returnData["MilestoneDueDate"] == DBNull.Value ? null : (DateTime?)returnData["MilestoneDueDate"],
-                      returnData["IssueAffectedMilestoneId"] == DBNull.Value ? 0 : (int)returnData["IssueAffectedMilestoneId"],
-                    (string)returnData["AffectedMilestoneName"],
-                    (string)returnData["AffectedMilestoneImageUrl"],
-                    (int)returnData["IssueVisibility"],
-                    Convert.ToDouble(returnData["TimeLogged"].ToString()),
-                    Convert.ToDecimal(returnData["IssueEstimation"].ToString()),
-                    (DateTime)returnData["DateCreated"],
-                    (DateTime)returnData["LastUpdate"],
-                    (string)returnData["LastUpdateUserName"],
-                    (string)returnData["LastUpdateDisplayName"],
-                    (int)returnData["IssueProgress"],
-                    (bool)returnData["Disabled"],
-                    (int)returnData["IssueVotes"]);
+                var issue = MapIssue(returnData);
 
-                issueList.Add(issue);
+                if(issue == null) continue;
+
+                var rmIssue = new RoadMapIssue(issue, returnData.GetInt32(returnData.GetOrdinal("MilestoneSortOrder")));
+                issueList.Add(rmIssue);
             }
         }
 
@@ -5618,7 +5522,7 @@ namespace BugNET.Providers.DataProviders
         {
             while (returnData.Read())
             {
-                RequiredField newRequiredField = new RequiredField(returnData["FieldName"].ToString(), returnData["FieldValue"].ToString());
+                var newRequiredField = new RequiredField(returnData["FieldName"].ToString(), returnData["FieldValue"].ToString());
                 requiredFieldList.Add(newRequiredField);
             }
         }
@@ -5890,9 +5794,82 @@ namespace BugNET.Providers.DataProviders
             }
         }
 
+        private static Issue MapIssue(IDataRecord returnData)
+        {
+            var time = returnData["TimeLogged"].ToString();
+            double timeLogged;
+            double.TryParse(time, out timeLogged);
+
+            return new Issue
+            {
+                AffectedMilestoneId = DefaultIfNull(returnData["IssueAffectedMilestoneId"], 0),
+                AffectedMilestoneImageUrl = returnData.GetString(returnData.GetOrdinal("AffectedMilestoneImageUrl")),
+                AffectedMilestoneName = returnData.GetString(returnData.GetOrdinal("AffectedMilestoneName")),
+
+                AssignedDisplayName = returnData.GetString(returnData.GetOrdinal("AssignedDisplayName")),
+                AssignedUserId = DefaultIfNull(returnData["IssueAssignedUserId"], Guid.Empty),
+                AssignedUserName = returnData.GetString(returnData.GetOrdinal("AssignedUserName")),
+
+                CategoryId = DefaultIfNull(returnData["IssueCategoryId"], 0),
+                CategoryName = returnData.GetString(returnData.GetOrdinal("CategoryName")),
+
+                CreatorDisplayName = returnData.GetString(returnData.GetOrdinal("CreatorDisplayName")),
+                CreatorUserId = DefaultIfNull(returnData["IssueCreatorUserId"], Guid.Empty),
+                CreatorUserName = returnData.GetString(returnData.GetOrdinal("CreatorUserName")),
+
+                DateCreated = returnData.GetDateTime(returnData.GetOrdinal("DateCreated")),
+                Description = returnData.GetString(returnData.GetOrdinal("IssueDescription")),
+                Disabled = returnData.GetBoolean(returnData.GetOrdinal("Disabled")),
+                DueDate = DefaultIfNull(returnData["IssueDueDate"], DateTime.MinValue),
+                Estimation = returnData.GetDecimal(returnData.GetOrdinal("IssueEstimation")),
+                Id = returnData.GetInt32(returnData.GetOrdinal("IssueId")),
+                IsClosed = returnData.GetBoolean(returnData.GetOrdinal("IsClosed")),
+
+                IssueTypeId = DefaultIfNull(returnData["IssueTypeId"], 0),
+                IssueTypeName = returnData.GetString(returnData.GetOrdinal("IssueTypeName")),
+                IssueTypeImageUrl = returnData.GetString(returnData.GetOrdinal("IssueTypeImageUrl")),
+
+                LastUpdate = returnData.GetDateTime(returnData.GetOrdinal("LastUpdate")),
+                LastUpdateDisplayName = returnData.GetString(returnData.GetOrdinal("LastUpdateDisplayName")),
+                LastUpdateUserName = returnData.GetString(returnData.GetOrdinal("LastUpdateUserName")),
+
+                MilestoneDueDate = DefaultIfNull(returnData["MilestoneDueDate"], DateTime.MinValue),
+                MilestoneId = DefaultIfNull(returnData["IssueMilestoneId"], 0),
+                MilestoneImageUrl = returnData.GetString(returnData.GetOrdinal("MilestoneImageUrl")),
+                MilestoneName = returnData.GetString(returnData.GetOrdinal("MilestoneName")),
+
+                OwnerDisplayName = returnData.GetString(returnData.GetOrdinal("OwnerDisplayName")),
+                OwnerUserId = DefaultIfNull(returnData["IssueOwnerUserId"], Guid.Empty),
+                OwnerUserName = returnData.GetString(returnData.GetOrdinal("OwnerUserName")),
+
+                PriorityId = DefaultIfNull(returnData["IssuePriorityId"], 0),
+                PriorityImageUrl = returnData.GetString(returnData.GetOrdinal("PriorityImageUrl")),
+                PriorityName = returnData.GetString(returnData.GetOrdinal("PriorityName")),
+
+                Progress = returnData.GetInt32(returnData.GetOrdinal("IssueProgress")),
+
+                ProjectId = returnData.GetInt32(returnData.GetOrdinal("ProjectId")),
+                ProjectCode = returnData.GetString(returnData.GetOrdinal("ProjectCode")),
+                ProjectName = returnData.GetString(returnData.GetOrdinal("ProjectName")),
+
+                ResolutionId = DefaultIfNull(returnData["IssueResolutionId"], 0),
+                ResolutionImageUrl = returnData.GetString(returnData.GetOrdinal("ResolutionImageUrl")),
+                ResolutionName = returnData.GetString(returnData.GetOrdinal("ResolutionName")),
+
+                StatusId = DefaultIfNull(returnData["IssueStatusId"], 0),
+                StatusImageUrl = returnData.GetString(returnData.GetOrdinal("StatusImageUrl")),
+                StatusName = returnData.GetString(returnData.GetOrdinal("StatusName")),
+
+                Title = returnData.GetString(returnData.GetOrdinal("IssueTitle")),
+                TimeLogged = timeLogged,
+                Visibility = returnData.GetInt32(returnData.GetOrdinal("IssueVisibility")),
+                Votes = returnData.GetInt32(returnData.GetOrdinal("IssueVotes"))
+            };
+        }
+
         private static T DefaultIfNull<T>(object value, T defaultValue)
         {
-            if (value == null) return defaultValue;
+            if (value == DBNull.Value) return defaultValue;
 
             return (T)value;
         }

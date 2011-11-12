@@ -52,8 +52,7 @@ namespace BugNET.Administration.Projects.UserControls
         /// Inits this instance.
         /// </summary>
 		public void Initialize()
-		{
-           
+        {
 			ProjectManager.DataSource = UserManager.GetAllUsers();
 			ProjectManager.DataBind();
             ProjectManager.Items.Insert(0, new ListItem(GetLocalResourceObject("SelectUser").ToString(), ""));

@@ -205,6 +205,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The supplied IssueId [{0}] is not valid..
+        /// </summary>
+        internal static string InvalidIssueId {
+            get {
+                return ResourceManager.GetString("InvalidIssueId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The supplied ProjectId [{0}] is not valid..
+        /// </summary>
+        internal static string InvalidProjectId {
+            get {
+                return ResourceManager.GetString("InvalidProjectId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The repository name was not formated correctlly. Only alpha-numeric charaters, \&quot;-\&quot;, and \&quot;_\&quot; are allowed..
         /// </summary>
         internal static string InvalidRepositoryName {
@@ -264,6 +282,15 @@ namespace Resources {
         internal static string ProjectAccessDenied {
             get {
                 return ResourceManager.GetString("ProjectAccessDenied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project not found for ProjectId [{0}]..
+        /// </summary>
+        internal static string ProjectNotFoundError {
+            get {
+                return ResourceManager.GetString("ProjectNotFoundError", resourceCulture);
             }
         }
         

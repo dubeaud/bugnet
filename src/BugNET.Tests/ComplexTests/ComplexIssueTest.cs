@@ -41,7 +41,7 @@ namespace BugNET.Tests
             // Now get the number of issues in the first project so we can test this later
             // asset passed so we dont need an "if (ps.count > 0)"
             Project p = ps[0];
-            StartIssueCount = IssueManager.GetIssuesByProjectId(p.Id).Count;
+            StartIssueCount = IssueManager.GetByProjectId(p.Id).Count;
 
             // Now generate CNST_NumIssues random issues and return them
             TestIssues = RandomIssueCreator.CreateRandomIssues("From Unit Test ", DateTime.Now.ToString() + " Unit Test TestCreateRandomNewIssueVerifyThenDelete() Random Data=", CNST_NumIssues);
@@ -56,7 +56,7 @@ namespace BugNET.Tests
             int pid = TestIssues[0].ProjectId;
 
             // Get the number of issues in the first project now.
-            int EndIssueCount = IssueManager.GetIssuesByProjectId(pid).Count;
+            int EndIssueCount = IssueManager.GetByProjectId(pid).Count;
 
             // Sub Test
             // Did we create only CNST_SmallIssues issues?
@@ -68,7 +68,7 @@ namespace BugNET.Tests
             foreach (Issue iss in TestIssues)
             {
                 // Retrieve the same Issue.ID from the database
-                tstIssue = IssueManager.GetIssueById(iss.Id);
+                tstIssue = IssueManager.GetById(iss.Id);
 
                 // Sub Tests
                 // Now check it
@@ -99,12 +99,12 @@ namespace BugNET.Tests
             // Delete Issues
             foreach (Issue iss in TestIssues)
             {
-                IssueManager.DeleteIssue(iss.Id);
+                IssueManager.Delete(iss.Id);
             }
 
 
             // Get the number of issues in the first project now.
-            int AfterDeleteIssueCount = IssueManager.GetIssuesByProjectId(pid).Count;
+            int AfterDeleteIssueCount = IssueManager.GetByProjectId(pid).Count;
 
             // Sub Test
             // Are they gone?

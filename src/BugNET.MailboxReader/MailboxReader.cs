@@ -81,7 +81,7 @@ namespace BugNET.MailboxReader
 
                 var mailIssue = IssueManager.GetDefaultIssueByProjectId(projectId, entry.Title.Trim(), body.Trim(), entry.ProjectMailbox.AssignToUserName, this._ReportingUserName);
 
-                if (IssueManager.SaveIssue(mailIssue))
+                if (IssueManager.SaveOrUpdate(mailIssue))
                 {
                     //If there is an attached file present then add it to the database 
                     //and copy it to the directory specified in the web.config file

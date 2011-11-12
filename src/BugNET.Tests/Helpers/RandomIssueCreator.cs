@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BugNET.BLL;
+using BugNET.Common;
 using BugNET.Entities;
 
 namespace BugNET.Tests.Helpers
@@ -16,7 +17,7 @@ namespace BugNET.Tests.Helpers
 
                 Project p = ps[0];
 
-                int StartIssueCount = IssueManager.GetIssuesByProjectId(p.Id).Count;
+                int StartIssueCount = IssueManager.GetByProjectId(p.Id).Count;
 
                 RandomProjectData prand = new RandomProjectData(p);
 
@@ -34,12 +35,32 @@ namespace BugNET.Tests.Helpers
                     // creator is also the owner
                     string createdby = prand.GetUsername();
 
-                    Issue iss = new Issue(0, p.Id, preTitle + RandomStrings.RandomString(30), preDescription + RandomStrings.RandomString(250), c.Id, pr.Id, st.Id, isst.Id,
-                        ms.Id, ms.Id, res.Id, createdby, assigned, createdby, 0, 1, DateTime.MinValue);
-                    IssueManager.SaveIssue(iss);
+                    var issue = new Issue
+                    {
+                        ProjectId = p.Id,
+                        Id = Globals.NEW_ID,
+                        Title = preTitle + RandomStrings.RandomString(30),
+                        CreatorUserName = createdby,
+                        DateCreated = DateTime.Now,
+                        Description = preDescription + RandomStrings.RandomString(250),
+                        DueDate = DateTime.MinValue,
+                        IssueTypeId = isst.Id,
+                        AffectedMilestoneId = ms.Id,
+                        AssignedUserName = assigned,
+                        CategoryId = c.Id,
+                        MilestoneId = ms.Id,
+                        OwnerUserName = createdby,
+                        PriorityId = pr.Id,
+                        ResolutionId = res.Id,
+                        StatusId = st.Id,
+                        Estimation = 0,
+                        Visibility = 1
+                    };
+
+                    IssueManager.SaveOrUpdate(issue);
 
                     // To return to the unit tests
-                    outputIssues.Add(iss);
+                    outputIssues.Add(issue);
                 }
 
             }

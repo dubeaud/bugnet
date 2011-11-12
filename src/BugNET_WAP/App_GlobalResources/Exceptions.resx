@@ -165,6 +165,12 @@
   <data name="InvalidFileType" xml:space="preserve">
     <value>{0} does not meet the allowed file types.</value>
   </data>
+  <data name="InvalidIssueId" xml:space="preserve">
+    <value>The supplied IssueId [{0}] is not valid.</value>
+  </data>
+  <data name="InvalidProjectId" xml:space="preserve">
+    <value>The supplied ProjectId [{0}] is not valid.</value>
+  </data>
   <data name="InvalidRepositoryName" xml:space="preserve">
     <value>The repository name was not formated correctlly. Only alpha-numeric charaters, \"-\", and \"_\" are allowed.</value>
   </data>
@@ -185,6 +191,9 @@
   </data>
   <data name="ProjectAccessDenied" xml:space="preserve">
     <value>The user {0} does not have permission to this project.</value>
+  </data>
+  <data name="ProjectNotFoundError" xml:space="preserve">
+    <value>Project not found for ProjectId [{0}].</value>
   </data>
   <data name="QueryStringError" xml:space="preserve">
     <value>The user querystring parameter is not properly formed</value>

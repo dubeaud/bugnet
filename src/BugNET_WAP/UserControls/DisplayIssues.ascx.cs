@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace BugNET.UserControls
 {
     using System;
@@ -222,11 +224,11 @@ namespace BugNET.UserControls
         private void DisplayColumns()
         {
             // Hide all the DataGrid columns
-            for (int index = 4; index < gvIssues.Columns.Count; index++)
+            for (var index = 4; index < gvIssues.Columns.Count; index++)
                 gvIssues.Columns[index].Visible = false;
 
             // Display columns based on the _arrIssueColumns array (retrieved from cookie)
-            foreach (string colIndex in _arrIssueColumns)
+            foreach (var colIndex in _arrIssueColumns)
                 gvIssues.Columns[Int32.Parse(colIndex)].Visible = true;
         }
 
@@ -238,12 +240,14 @@ namespace BugNET.UserControls
         protected void SaveIssues_Click(object sender, EventArgs e)
         {
             //TODO: Ajax progress bar when this is running;
-            string ids = GetSelectedIssueIds();
+            var ids = GetSelectedIssueIds();
+
             if (ids.Length > 0)
             {
                  //prune out all values that must not change
                 var customFieldValues = ctlCustomFields.Values;
-                for (int i = customFieldValues.Count - 1; i >= 0; i--)
+
+                for (var i = customFieldValues.Count - 1; i >= 0; i--)
                 {
                     var value = customFieldValues[i];
                     if (string.IsNullOrEmpty(value.Value))
@@ -252,36 +256,57 @@ namespace BugNET.UserControls
                     }
                 }
 
-                foreach (string s in ids.Split(new char[] { ',' }))
+                foreach (var s in ids.Split(new[] { ',' }))
                 {
-                    Issue issue = IssueManager.GetIssueById(Convert.ToInt32(s));
-                    if (issue != null)
-                    {
-                        DateTime dueDate = (DateTime)DueDate.SelectedValue;
-                  
-                        Issue newIssue = new Issue(issue.Id, issue.ProjectId, string.Empty, string.Empty,issue.Title, issue.Description,
-                            dropCategory.SelectedValue != 0 ? dropCategory.SelectedValue : issue.CategoryId, dropCategory.SelectedValue != 0 ? dropCategory.SelectedText : issue.CategoryName,
-                            dropPriority.SelectedValue != 0 ? dropPriority.SelectedValue : issue.PriorityId, dropPriority.SelectedValue != 0 ? dropPriority.SelectedText : issue.PriorityName,
-                            string.Empty,
-                            dropStatus.SelectedValue != 0 ? dropStatus.SelectedValue : issue.StatusId,
-                            dropStatus.SelectedValue != 0 ? dropStatus.SelectedText : issue.StatusName, string.Empty,
-                            dropType.SelectedValue != 0 ? dropType.SelectedValue : issue.IssueTypeId,
-                            dropType.SelectedValue != 0 ? dropType.SelectedText : issue.IssueTypeName, string.Empty,
-                            dropResolution.SelectedValue != 0 ? dropResolution.SelectedValue : issue.ResolutionId,
-                            dropResolution.SelectedValue != 0 ? dropResolution.SelectedText : issue.ResolutionName, string.Empty,
-                            dropAssigned.SelectedValue != string.Empty ? dropAssigned.SelectedText : issue.AssignedDisplayName,
-                            dropAssigned.SelectedValue != string.Empty ? dropAssigned.SelectedValue : issue.AssignedUserName, 
-                            Guid.Empty, Security.GetDisplayName(),Security.GetUserName(), Guid.Empty,
-                            dropOwner.SelectedValue !=string.Empty ? dropOwner.SelectedText : issue.OwnerDisplayName,
-                            dropOwner.SelectedValue != string.Empty ? dropOwner.SelectedValue : issue.OwnerUserName, Guid.Empty, dueDate != DateTime.MinValue ? dueDate : issue.DueDate,
-                            dropMilestone.SelectedValue != 0 ? dropMilestone.SelectedValue : issue.MilestoneId, dropMilestone.SelectedValue != 0 ? dropMilestone.SelectedText : issue.MilestoneName, string.Empty, null, 
-                            dropAffectedMilestone.SelectedValue != 0 ? dropAffectedMilestone.SelectedValue : issue.AffectedMilestoneId, dropAffectedMilestone.SelectedValue != 0 ? dropAffectedMilestone.SelectedText : issue.AffectedMilestoneName,
-                            string.Empty, issue.Visibility,0, issue.Estimation, DateTime.MinValue, DateTime.MinValue, Security.GetUserName(), Security.GetDisplayName(),
-                            issue.Progress, false, 0);
+                    int issueId;
 
-                        IssueManager.SaveIssue(newIssue);
-                        CustomFieldManager.SaveCustomFieldValues(issue.Id, customFieldValues);
-                    }
+                    if(!int.TryParse(s, out issueId))
+                        throw new Exception(string.Format(LoggingManager.GetErrorMessageResource("InvalidIssueId"), s));
+
+                    var issue = IssueManager.GetById(issueId);
+
+                    if (issue == null) continue;
+
+                    var dueDate = DateTime.MinValue;
+
+                    if(DueDate.SelectedValue != null)
+                        dueDate = (DateTime)DueDate.SelectedValue;
+
+                    issue.CategoryId = dropCategory.SelectedValue != 0 ? dropCategory.SelectedValue : issue.CategoryId;
+                    issue.CategoryName = dropCategory.SelectedValue != 0 ? dropCategory.SelectedText : issue.CategoryName;
+
+                    issue.MilestoneId = dropMilestone.SelectedValue != 0 ? dropMilestone.SelectedValue : issue.MilestoneId;
+                    issue.MilestoneName = dropMilestone.SelectedValue != 0 ? dropMilestone.SelectedText : issue.MilestoneName;
+
+                    issue.IssueTypeId = dropType.SelectedValue != 0 ? dropType.SelectedValue : issue.IssueTypeId;
+                    issue.IssueTypeName = dropType.SelectedValue != 0 ? dropType.SelectedText : issue.IssueTypeName;
+
+                    issue.PriorityId = dropPriority.SelectedValue != 0 ? dropPriority.SelectedValue : issue.PriorityId;
+                    issue.PriorityName = dropPriority.SelectedValue != 0 ? dropPriority.SelectedText : issue.PriorityName;
+
+                    issue.AssignedDisplayName = dropAssigned.SelectedValue != string.Empty ? dropAssigned.SelectedText : issue.AssignedDisplayName;
+                    issue.AssignedUserName = dropAssigned.SelectedValue != string.Empty ? dropAssigned.SelectedValue : issue.AssignedUserName;
+
+                    issue.OwnerDisplayName = dropOwner.SelectedValue != string.Empty ? dropOwner.SelectedText : issue.OwnerDisplayName;
+                    issue.OwnerUserName = dropOwner.SelectedValue != string.Empty ? dropOwner.SelectedValue : issue.OwnerUserName;
+
+                    issue.AffectedMilestoneId = dropAffectedMilestone.SelectedValue != 0 ? dropAffectedMilestone.SelectedValue : issue.AffectedMilestoneId;
+                    issue.AffectedMilestoneName = dropAffectedMilestone.SelectedValue != 0 ? dropAffectedMilestone.SelectedText : issue.AffectedMilestoneName;
+
+                    issue.ResolutionId = dropResolution.SelectedValue != 0 ? dropResolution.SelectedValue : issue.ResolutionId;
+                    issue.ResolutionName = dropResolution.SelectedValue != 0 ? dropResolution.SelectedText : issue.ResolutionName;
+
+                    issue.StatusId = dropStatus.SelectedValue != 0 ? dropStatus.SelectedValue : issue.StatusId;
+                    issue.StatusName = dropStatus.SelectedValue != 0 ? dropStatus.SelectedText : issue.StatusName;
+
+                    issue.DueDate = dueDate;
+
+                    issue.LastUpdateDisplayName = Security.GetDisplayName();
+                    issue.LastUpdateUserName = Security.GetUserName();
+                    issue.LastUpdate = DateTime.Now;
+
+                    IssueManager.SaveOrUpdate(issue);
+                    CustomFieldManager.SaveCustomFieldValues(issue.Id, customFieldValues);
                 }
             }
 
@@ -293,16 +318,18 @@ namespace BugNET.UserControls
         /// <returns></returns>
         private string GetSelectedIssueIds()
         {
-            string ids = string.Empty;
+            var ids = string.Empty;
              foreach (GridViewRow gvr in gvIssues.Rows)
-            {
-                if (gvr.RowType == DataControlRowType.DataRow)
-                {
-                    if (((CheckBox)gvr.Cells[0].Controls[1]).Checked)
-                        ids += gvIssues.DataKeys[gvr.RowIndex].Value.ToString() + ",";
-                }
-            }
-             return ids.EndsWith(",") == true ? ids.TrimEnd(new char[] { ',' }) : ids;
+             {
+                 if (gvr.RowType != DataControlRowType.DataRow) continue;
+
+                 if (((CheckBox)gvr.Cells[0].Controls[1]).Checked)
+                 {
+                     var dataKey = gvIssues.DataKeys[gvr.RowIndex];
+                     if (dataKey != null) ids += dataKey.Value + ",";
+                 }
+             }
+            return ids.EndsWith(",") ? ids.TrimEnd(new[] { ',' }) : ids;
         }
        
         /// <summary>
@@ -312,10 +339,8 @@ namespace BugNET.UserControls
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void SaveClick(Object s, EventArgs e)
         {
-            string strIssueColumns = " 0";
-            foreach (ListItem item in lstIssueColumns.Items)
-                if (item.Selected)
-                    strIssueColumns += " " + item.Value;
+            var strIssueColumns = lstIssueColumns.Items.Cast<ListItem>().Where(item => item.Selected).Aggregate(" 0", (current, item) => current + (" " + item.Value));
+
             strIssueColumns = strIssueColumns.Trim();
 
             _arrIssueColumns = strIssueColumns.Split();

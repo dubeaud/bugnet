@@ -405,23 +405,23 @@ namespace BugNET.Issues
                switch (dropView.SelectedValue)
                {
                    case "Relevant":
-                       colIssues = IssueManager.GetIssuesByRelevancy(ProjectId, User.Identity.Name);
+                       colIssues = IssueManager.GetByRelevancy(ProjectId, User.Identity.Name);
                        ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?pid={0}&channel=8", ProjectId);
                        break;
                    case "Assigned":
-                       colIssues = IssueManager.GetIssuesByAssignedUserName(ProjectId, User.Identity.Name);
+                       colIssues = IssueManager.GetByAssignedUserName(ProjectId, User.Identity.Name);
                        ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?pid={0}&channel=9", ProjectId);
                        break;
                    case "Owned":
-                       colIssues = IssueManager.GetIssuesByOwnerUserName(ProjectId, User.Identity.Name);
+                       colIssues = IssueManager.GetByOwnerUserName(ProjectId, User.Identity.Name);
                        ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?pid={0}&channel=10", ProjectId);
                        break;
                    case "Created":
-                       colIssues = IssueManager.GetIssuesByCreatorUserName(ProjectId, User.Identity.Name);
+                       colIssues = IssueManager.GetByCreatorUserName(ProjectId, User.Identity.Name);
                        ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?pid={0}&channel=11", ProjectId);
                        break;
                    case "All":
-                       colIssues = IssueManager.GetIssuesByProjectId(ProjectId);
+                       colIssues = IssueManager.GetByProjectId(ProjectId);
                        ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?pid={0}&channel=12", ProjectId);
                        break;
                    case "Open":

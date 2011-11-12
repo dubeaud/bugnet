@@ -124,7 +124,7 @@ namespace BugNET.Administration.Projects.UserControls
                     {
                         issue.CategoryName = DropCategory.SelectedText;
                         issue.CategoryId = DropCategory.SelectedValue;
-                        IssueManager.SaveIssue(issue);
+                        IssueManager.SaveOrUpdate(issue);
                     }
 
                     //delete the category.
@@ -145,7 +145,7 @@ namespace BugNET.Administration.Projects.UserControls
                     {
                         issue.CategoryName = NewCategoryTextBox.Text;
                         issue.CategoryId = c.Id;
-                        IssueManager.SaveIssue(issue);
+                        IssueManager.SaveOrUpdate(issue);
                     }
                     //delete the category.
                     CategoryManager.Delete(OldCategoryId);

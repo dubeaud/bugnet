@@ -97,7 +97,7 @@ namespace BugNET.UserInterfaceLayer
                 else
                 {
 
-                    var p = ProjectManager.GetById(IssueManager.GetIssueById(attachment.IssueId).ProjectId);
+                    var p = ProjectManager.GetById(IssueManager.GetById(attachment.IssueId).ProjectId);
 
                     var fileName = attachment.FileName;
                     var projectPath = p.UploadPath;
