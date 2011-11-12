@@ -323,6 +323,7 @@ GO
 
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('ApplicationDefaultLanguage','en-US')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('Pop3ProcessAttachments','False')
+INSERT INTO [dbo].[BugNet_Languages] ([CultureCode], [CultureName], [FallbackCulture]) VALUES('en-US', 'English (United States)', 'en')
 
 PRINT N'Updating Permission keys'
 UPDATE BugNet_Permissions SET PermissionKey = 'CloseIssue' WHERE PermissionId = 1

@@ -113,6 +113,8 @@ INSERT [BugNet_RequiredFieldList] ([RequiredFieldId], [FieldName], [FieldValue])
 INSERT [BugNet_RequiredFieldList] ([RequiredFieldId], [FieldName], [FieldValue]) VALUES (17, N'Due Date', N'IssueDueDate')
 INSERT [BugNet_RequiredFieldList] ([RequiredFieldId], [FieldName], [FieldValue]) VALUES (18, N'Custom Fields', N'CustomFieldName')
 
+INSERT INTO [dbo].[BugNet_Languages] ([CultureCode], [CultureName], [FallbackCulture]) VALUES('en-US', 'English (United States)', 'en')
+
 -- Roles and Permissions 
 PRINT 'Add Default Roles & Permissions'
 EXEC BugNet_Role_CreateNewRole @ProjectId = NULL, @RoleName = 'Super Users', @RoleDescription = 'A role for application super users', @AutoAssign = 0
