@@ -486,12 +486,12 @@ namespace BugNET.UserControls
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                e.Row.Attributes.Add("onmouseover", "this.style.background='#F7F7EC'");
+                //e.Row.Attributes.Add("onmouseover", "this.style.background='#F7F7EC'");
 
-                if( e.Row.RowState == DataControlRowState.Normal)
-                    e.Row.Attributes.Add("onmouseout", "this.style.background=''");
-                else if( e.Row.RowState == DataControlRowState.Alternate)
-                    e.Row.Attributes.Add("onmouseout", "this.style.background='#fafafa'");
+                //if( e.Row.RowState == DataControlRowState.Normal)
+                //    e.Row.Attributes.Add("onmouseout", "this.style.background=''");
+                //else if( e.Row.RowState == DataControlRowState.Alternate)
+                //    e.Row.Attributes.Add("onmouseout", "this.style.background='#fafafa'");
  
                 Issue b = ((Issue)e.Row.DataItem);
 

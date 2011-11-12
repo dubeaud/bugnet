@@ -976,6 +976,7 @@
     <Content Include="Images\Resolution\page_white_delete.png" />
     <Content Include="Images\Resolution\page_white_remove.png" />
     <Content Include="Images\sBg.gif" />
+    <Content Include="Images\shadow.png" />
     <Content Include="Images\shield.gif" />
     <Content Include="Images\shield_add.gif" />
     <Content Include="Images\shield_delete.gif" />

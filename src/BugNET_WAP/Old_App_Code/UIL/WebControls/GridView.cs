@@ -3,6 +3,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using BugNET.Common;
 
 namespace BugNET.UserInterfaceLayer.WebControls
 {
@@ -10,40 +11,29 @@ namespace BugNET.UserInterfaceLayer.WebControls
     /// 
     /// </summary>
     [ToolboxData("<{0}:GridView runat=\"server\"></{0}:GridView>")]
-    public class GridView : System.Web.UI.WebControls.GridView, IPageableItemContainer
+    public sealed class GridView : System.Web.UI.WebControls.GridView, IPageableItemContainer
     {
         /// <summary>
         /// TotalRowCountAvailable event key
         /// </summary>
         private static readonly object EventTotalRowCountAvailable = new object();
-        bool _ShowSortSequence = false;
-        bool _EnableMultiColumnSorting = false;
-        string _SortAscImageUrl = string.Empty;
-        string _SortDescImageUrl = string.Empty;
+
+        bool _enableMultiColumnSorting;
+
+        public GridView()
+        {
+            SortAscImageUrl = string.Empty;
+            SortDescImageUrl = string.Empty;
+        }
 
         #region Multi-Column Sorting
+
         public string SortField
         {
-            get
-            {
-                object o = ViewState["SortField"];
-                if (o == null)
-                {
-                    return String.Empty;
-                }
-                return (string)o;
-            }
-
-            set
-            {
-                if (value == SortField)
-                {
-                    // same as current sort file, toggle sort direction
-                    //SortAscending = !SortAscending;
-                }
-                ViewState["SortField"] = value;
-            }
+            get { return ViewState.Get("SortField", string.Empty); }
+            set { ViewState.Set("SortField", value); }
         }
+
         /// <summary>
         /// Enable/Disable MultiColumn Sorting.
         /// </summary>
@@ -54,52 +44,28 @@ namespace BugNET.UserInterfaceLayer.WebControls
         ]
         public bool EnableMultiColumnSorting
         {
-            get { return  _EnableMultiColumnSorting; }
-            set { AllowSorting = true; _EnableMultiColumnSorting = value; }
+            get { return  _enableMultiColumnSorting; }
+            set { AllowSorting = true; _enableMultiColumnSorting = value; }
         }
+
         /// <summary>
         /// Enable/Disable Sort Sequence visibility.
         /// </summary>
-        [
-        Description("Show Sort Sequence or not"),
-        Category("Behavior"),
-        DefaultValue("false"),
-        ]
-        public bool ShowSortSequence
-        {
-            get { return _ShowSortSequence; }
-            set { _ShowSortSequence = value; }
-        }
+        [Description("Show Sort Sequence or not"), Category("Behavior"), DefaultValue("false")]
+        public bool ShowSortSequence { get; set; }
+
         /// <summary>
         /// Get/Set Image for displaying Ascending Sort order.
         /// </summary>
         /// <value>The sort asc image URL.</value>
-        [
-        Description("Image to display for Ascending Sort"),
-        Category("Misc"),
-        Editor("System.Web.UI.Design.UrlEditor", typeof(System.Drawing.Design.UITypeEditor)),
-        DefaultValue(""),
-        ]
-        public string SortAscImageUrl
-        {
-            get { return _SortAscImageUrl; }
-            set { _SortAscImageUrl = value; }
-        }
+        [Description("Image to display for Ascending Sort"), Category("Misc"), Editor("System.Web.UI.Design.UrlEditor", typeof(System.Drawing.Design.UITypeEditor)), DefaultValue("")]
+        public string SortAscImageUrl { get; set; }
 
         /// <summary>
         /// Get/Set Image for displaying Descending Sort order.
         /// </summary>
-        [
-        Description("Image to display for Descending Sort"),
-        Category("Misc"),
-        Editor("System.Web.UI.Design.UrlEditor", typeof(System.Drawing.Design.UITypeEditor)),
-        DefaultValue(""),
-        ]
-        public string SortDescImageUrl
-        {
-            get { return _SortDescImageUrl; }
-            set { _SortDescImageUrl = value; }
-        }
+        [Description("Image to display for Descending Sort"), Category("Misc"), Editor("System.Web.UI.Design.UrlEditor", typeof(System.Drawing.Design.UITypeEditor)), DefaultValue("")]
+        public string SortDescImageUrl { get; set; }
 
         /// <summary>
         /// Raises the <see cref="E:System.Web.UI.WebControls.GridView.Sorting"/> event.
@@ -110,8 +76,7 @@ namespace BugNET.UserInterfaceLayer.WebControls
         /// </exception>
         protected override void OnSorting(GridViewSortEventArgs e)
         {
-            if (EnableMultiColumnSorting)
-                e.SortExpression = GetSortExpression(e);
+            if (EnableMultiColumnSorting) e.SortExpression = GetSortExpression(e);
             base.OnSorting(e);
         }
 
@@ -123,18 +88,19 @@ namespace BugNET.UserInterfaceLayer.WebControls
         {
             if (e.Row.RowType == DataControlRowType.Header)
             {
-                if (this.SortField != String.Empty)
-                    ShowSortOrderImages(this.SortField, e.Row);
+                if (SortField != String.Empty)
+                    ShowSortOrderImages(SortField, e.Row);
             }
             base.OnRowCreated(e);
         }
+
         /// <summary>
         ///  Get Sort Expression from existing Grid View Sort Expression 
         /// </summary>
-        protected string GetSortExpression(GridViewSortEventArgs e)
+        private string GetSortExpression(GridViewSortEventArgs e)
         {
             string[] sortColumns = null;
-            string sortAttribute = SortField;
+            var sortAttribute = SortField;
             if (sortAttribute != String.Empty)
             {
                 sortColumns = sortAttribute.Split(",".ToCharArray());
@@ -150,7 +116,7 @@ namespace BugNET.UserInterfaceLayer.WebControls
         /// <summary>
         ///  Toggle the sort order or remove the column from sort
         /// </summary>
-        protected string UpdateSortExpression(string[] sortColumns, string sortExpression)
+        private static string UpdateSortExpression(string[] sortColumns, string sortExpression)
         {
             string ascSortExpression = String.Concat(sortExpression, " ASC ");
             string descSortExpression = String.Concat(sortExpression, " DESC ");
@@ -167,7 +133,7 @@ namespace BugNET.UserInterfaceLayer.WebControls
         /// <summary>
         ///  Lookup the Current Sort Expression to determine the Order of a specific item.
         /// </summary>
-        protected void SearchSortExpression(string[] sortColumns, string sortColumn, out string sortOrder, out int sortOrderNo)
+        private void SearchSortExpression(string[] sortColumns, string sortColumn, out string sortOrder, out int sortOrderNo)
         {
             sortOrder = "";
             sortOrderNo = -1;
@@ -187,7 +153,7 @@ namespace BugNET.UserInterfaceLayer.WebControls
         /// <summary>
         ///  Show an image for the Sort Order with sort sequence no.
         /// </summary>
-        protected void ShowSortOrderImages(string sortExpression, GridViewRow dgItem)
+        private void ShowSortOrderImages(string sortExpression, GridViewRow dgItem)
         {
             string[] sortColumns = sortExpression.Split(",".ToCharArray());
             for (int i = 0; i < dgItem.Cells.Count; i++)
@@ -207,7 +173,7 @@ namespace BugNET.UserInterfaceLayer.WebControls
                             Image imgSortDirection = new Image();
                             imgSortDirection.ImageUrl = sortImgLoc;
                             dgItem.Cells[i].Controls.Add(imgSortDirection);
-                            if (EnableMultiColumnSorting && _ShowSortSequence)
+                            if (EnableMultiColumnSorting && ShowSortSequence)
                             {
                                 Label lblSortOrder = new Label();
                                 lblSortOrder.Font.Size = FontUnit.XSmall;
@@ -225,7 +191,7 @@ namespace BugNET.UserInterfaceLayer.WebControls
                             lblSortDirection.EnableTheming = false;
                             lblSortDirection.Text = (sortOrder.Equals("ASC") ? "^" : "v");
                             dgItem.Cells[i].Controls.Add(lblSortDirection);
-                            if (EnableMultiColumnSorting && _ShowSortSequence)
+                            if (EnableMultiColumnSorting && ShowSortSequence)
                             {
                                 Literal litSortSeq = new Literal();
                                 litSortSeq.Text = sortOrderNo.ToString();
@@ -303,7 +269,7 @@ namespace BugNET.UserInterfaceLayer.WebControls
                 {
                     //  create the event args and raise the event
                     GridViewPageEventArgs args = new GridViewPageEventArgs(newPageIndex);
-                    this.OnPageIndexChanging(args);
+                    OnPageIndexChanging(args);
 
                     isCanceled = args.Cancel;
                     newPageIndex = args.NewPageIndex;
@@ -359,7 +325,7 @@ namespace BugNET.UserInterfaceLayer.WebControls
         /// 
         /// </summary>
         /// <param name="e"></param>
-        protected virtual void OnTotalRowCountAvailable(PageEventArgs e)
+        private void OnTotalRowCountAvailable(PageEventArgs e)
         {
             EventHandler<PageEventArgs> handler = (EventHandler<PageEventArgs>)base.Events[GridView.EventTotalRowCountAvailable];
             if (handler != null)
