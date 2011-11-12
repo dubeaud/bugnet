@@ -49,7 +49,7 @@ namespace BugNET.Administration.Projects.UserControls
         }
 
         /// <summary>
-        /// Inits this instance.
+        /// Initializes this instance.
         /// </summary>
 		public void Initialize()
         {

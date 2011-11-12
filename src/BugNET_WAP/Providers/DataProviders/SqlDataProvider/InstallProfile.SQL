@@ -30,7 +30,6 @@ GO
 /*************************************************************/
 /*************************************************************/
 
-
 IF (NOT EXISTS (SELECT name
                 FROM sysobjects
                 WHERE (name = N'aspnet_Applications')

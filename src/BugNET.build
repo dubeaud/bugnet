@@ -1,22 +1,28 @@
 <?xml version="1.0" ?>
-<project name="BugNET" default="ci" xmlns="http://nant.sf.net/schemas/nant.xsd">
-	<!-- include common properties and paths -->
-	<include buildfile="C:\Build\Common.build" />
-	
+<project name="BugNET" default="ci" xmlns="http://nant.sf.net/schemas/nant.xsd">	
 	<!-- Setup properties -->
 	<property name="nant.settings.currentframework" value="net-4.0" />
 	<property name="configuration" value="release" />
 	<property name="project.name" value="BugNET" />
 	<property name="project.version" value="0.9" />
+	<property name="publishdirectory" value="C:\Projects\BugNET\publish" />
+	<property name="build.dir" value="C:\Projects\bugnet\src\build" />
+	<property name="outputdirectory" value="C:\Projects\bugnet\src\build\output"/>
 	
 	<!-- Options -->
 	<property name="publish.enabled" value="true" />
 	<property name="archive.enabled" value="true" />
 	<property name="unittest.enabled" value="false" />
-	<property name="sandcastle.enabled" value="false" />
+		
+	<target name="ci" depends="clean, version, build, unittest, publish, archive" />
 	
-	<target name="version" description="Creates assembly information file with the updated build number">
-        <!-- create c# solutioninfo file --> 
+	<target name="clean" description="Cleans the build folder.">
+		<delete dir="${build.dir}"  if="${directory::exists(build.dir)}" />
+		<delete dir="${publishdirectory}"  if="${directory::exists(publishdirectory)}" />
+	</target>
+	
+	<target name="version" description="Creates assembly information file with the updated build number">	
+		<!-- create c# solutioninfo file --> 
         <asminfo output="Common/GlobalAssemblyInfo.cs" language="CSharp">
 			<imports>
                 <import namespace="System" />
@@ -38,6 +44,9 @@
 	
 	<target name="build" description="Compiles using the release configuration">
 		<echo message="Building solution via msbuild task." />
+		
+		<loadtasks assembly="C:\Tools\nantcontrib-0.91-bin\nantcontrib-0.91\bin\NAnt.Contrib.Tasks.dll" />
+		
 		<msbuild project=".\BugNET.sln">
 			<arg value="/p:Configuration=Release"/>
 		</msbuild>
@@ -49,23 +58,10 @@
 		</if>
 		<if test="${unittest.enabled}">
 	        <echo message="Performing Unit Testing." />	    
-			<exec program="${toolsdirectory}\NUnit\${nunit.version}\bin\net-2.0\nunit-console.exe" workingdir="${outputdirectory}" failonerror="false" commandline="BugNet.Tests.dll /xml:..\results\nunit_results.xml /nologo"/>
+			<exec program="C:\Tools\NUnit-2.5.10.11092\bin\net-2.0\nunit-console.exe" workingdir="${outputdirectory}" failonerror="false" commandline="BugNet.Tests.dll /xml:..\results\unit-test-results.xml /nologo"/>
 		</if>
     </target>
-		
-	<target name="document" description="build code documentation">
-		<if test="${not sandcastle.enabled}">
-	        <echo message="Not building code documentation - Sandcastle." />			
-		</if>
-   		<if test="${sandcastle.enabled}">
-	        <echo message="Building code documentation - Sandcastle." />
-			<property name="sandcastle.input" value="C:\Projects\BugNET_CI\doc\BugNET.shfb" />			
-			<exec program="${toolsdirectory}\Sandcastle Help File Builder\${sandcastlebuilder.version}\SandcastleBuilderConsole.exe" failonerror="false">
-		      <arg value="${sandcastle.input}" />
-		    </exec>		
-		</if>
-    </target>
-	
+			
 	 <target name="publish" description="Zip up deployable files and place package in publish folder.">
 		<if test="${not publish.enabled}">
 	        <echo message="Not publishing zipped deployables." />			

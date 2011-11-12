@@ -58,7 +58,7 @@
                 <div class="labelgroup">
                     <asp:radiobuttonlist cssclass="checkboxlist" id="rblAccessType" RepeatDirection="Horizontal" runat="server">
 	                    <asp:listitem value="Public" />
-	                    <asp:listitem value="Private" />
+	                    <asp:listitem value="Private" Selected="True" />
                     </asp:radiobuttonlist>
                 </div>
             </li>

@@ -22,7 +22,6 @@ GO
 SET ANSI_NULL_DFLT_ON ON
 GO
 
-
 /*************************************************************/
 /*************************************************************/
 /*************************************************************/
@@ -49,7 +48,7 @@ CREATE TABLE #aspnet_Permissions
     Grantee   sysname,
     Grantor   sysname,
     ProtectType char(10),
-    [Action]    varchar(20),
+    [Action]    varchar(60),
     [Column]    sysname
 )
 
@@ -69,7 +68,7 @@ AS
 BEGIN
     DECLARE @object sysname
     DECLARE @protectType char(10)
-    DECLARE @action varchar(20)
+    DECLARE @action varchar(60)
     DECLARE @grantee sysname
     DECLARE @cmd nvarchar(500)
     DECLARE c1 cursor FORWARD_ONLY FOR
