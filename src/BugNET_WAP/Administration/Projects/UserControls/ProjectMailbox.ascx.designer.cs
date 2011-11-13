@@ -22,22 +22,40 @@ namespace BugNET.Administration.Projects.UserControls {
         protected global::System.Web.UI.WebControls.Label lblMailboxes;
         
         /// <summary>
-        /// dtgMailboxes control.
+        /// lblError control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DataGrid dtgMailboxes;
+        protected global::System.Web.UI.WebControls.Label lblError;
         
         /// <summary>
-        /// label1 control.
+        /// grdMailboxes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label label1;
+        protected global::System.Web.UI.WebControls.DataGrid grdMailboxes;
+        
+        /// <summary>
+        /// NewMailboxText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal NewMailboxText;
+        
+        /// <summary>
+        /// EmailAddressLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label EmailAddressLabel;
         
         /// <summary>
         /// txtMailbox control.
@@ -67,13 +85,13 @@ namespace BugNET.Administration.Projects.UserControls {
         protected global::System.Web.UI.WebControls.RegularExpressionValidator regexEmailValid;
         
         /// <summary>
-        /// label2 control.
+        /// IssueAssignedUserLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label label2;
+        protected global::System.Web.UI.WebControls.Label IssueAssignedUserLabel;
         
         /// <summary>
         /// IssueAssignedUser control.
@@ -85,13 +103,13 @@ namespace BugNET.Administration.Projects.UserControls {
         protected global::BugNET.UserControls.PickSingleUser IssueAssignedUser;
         
         /// <summary>
-        /// label3 control.
+        /// IssueTypeLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label label3;
+        protected global::System.Web.UI.WebControls.Label IssueTypeLabel;
         
         /// <summary>
         /// IssueAssignedType control.
@@ -103,12 +121,12 @@ namespace BugNET.Administration.Projects.UserControls {
         protected global::BugNET.UserControls.PickType IssueAssignedType;
         
         /// <summary>
-        /// Button1 control.
+        /// btnAddMailbox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button btnAddMailbox;
     }
 }

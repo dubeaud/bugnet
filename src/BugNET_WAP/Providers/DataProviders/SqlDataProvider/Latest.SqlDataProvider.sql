@@ -550,6 +550,78 @@ ORDER BY
 	(CASE WHEN PM.SortOrder IS NULL THEN 1 ELSE 0 END),PM.SortOrder , IssueStatusId ASC, IssueTypeId ASC,IssueCategoryId ASC, AssignedUserName ASC
 GO
 
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[BugNet_ProjectMailbox_GetMailboxById]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [BugNet_ProjectMailbox_GetMailboxById]
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[BugNet_ProjectMailbox_GetMailboxByProjectId]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [BugNet_ProjectMailbox_GetMailboxByProjectId]
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[BugNet_ProjectMailbox_GetProjectByMailbox]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [BugNet_ProjectMailbox_GetProjectByMailbox]
+GO
+
+CREATE PROCEDURE [BugNet_ProjectMailbox_GetMailboxById]
+    @ProjectMailboxId int
+AS
+
+SET NOCOUNT ON
+    
+SELECT 
+	BugNet_ProjectMailboxes.*,
+	u.Username AssignToUserName,
+	p.DisplayName AssignToDisplayName,
+	BugNet_ProjectIssueTypes.IssueTypeName
+FROM 
+	BugNet_ProjectMailBoxes
+	INNER JOIN aspnet_Users u ON u.UserId = AssignToUserId
+	INNER JOIN BugNet_UserProfiles p ON u.UserName = p.UserName
+	INNER JOIN BugNet_ProjectIssueTypes ON BugNet_ProjectIssueTypes.IssueTypeId = BugNet_ProjectMailboxes.IssueTypeId	
+WHERE
+	BugNet_ProjectMailBoxes.ProjectMailboxId = @ProjectMailboxId
+GO
+
+CREATE  PROCEDURE [BugNet_ProjectMailbox_GetMailboxByProjectId]
+	@ProjectId int
+AS
+
+SET NOCOUNT ON
+
+SELECT 
+	BugNet_ProjectMailboxes.*,
+	u.Username AssignToUserName,
+	p.DisplayName AssignToDisplayName,
+	pit.IssueTypeName
+FROM 
+	BugNet_ProjectMailBoxes
+	INNER JOIN aspnet_Users u ON u.UserId = AssignToUserId
+	INNER JOIN BugNet_UserProfiles p ON u.UserName = p.UserName
+	INNER JOIN BugNet_ProjectIssueTypes pit ON pit.IssueTypeId = BugNet_ProjectMailboxes.IssueTypeId		
+WHERE
+	BugNet_ProjectMailBoxes.ProjectId = @ProjectId
+GO
+
+CREATE PROCEDURE [BugNet_ProjectMailbox_GetProjectByMailbox]
+    @mailbox nvarchar(100) 
+AS
+
+SET NOCOUNT ON
+
+SELECT 
+	BugNet_ProjectMailboxes.*,
+	u.Username AssignToUserName,
+	p.DisplayName AssignToDisplayName,
+	pit.IssueTypeName
+FROM 
+	BugNet_ProjectMailBoxes
+	INNER JOIN aspnet_Users u ON u.UserId = AssignToUserId
+	INNER JOIN BugNet_UserProfiles p ON u.UserName = p.UserName
+	INNER JOIN BugNet_ProjectIssueTypes pit ON pit.IssueTypeId = BugNet_ProjectMailboxes.IssueTypeId	
+WHERE
+	BugNet_ProjectMailBoxes.MailBox = @mailbox
+GO
+
 COMMIT
 
 SET NOEXEC OFF

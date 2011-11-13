@@ -3,58 +3,18 @@ namespace BugNET.UserControls
     using System;
     using System.Collections.Generic;
     using System.Web.UI.WebControls;
-    using BugNET.Entities;
+    using Entities;
 
     /// <summary>
     /// Summary description for PickStatus.
     /// </summary>
 	public partial class PickStatus : System.Web.UI.UserControl
 	{
-
-
-		#region Web Form Designer generated code
-		override protected void OnInit(EventArgs e)
-		{
-			//
-			// CODEGEN: This call is required by the ASP.NET Web Form Designer.
-			//
-			InitializeComponent();
-			base.OnInit(e);
-		}
-		
-		/// <summary>
-		///		Required method for Designer support - do not modify
-		///		the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
-
-		}
-		#endregion
-
-		//*********************************************************************
-		//
-		// PickStatus.ascx
-		//
-		// This user control displays a dropdown list of status values.
-		//
-		//*********************************************************************
-
-
-		private List<Status> _DataSource;
-		private bool _DisplayDefault = false;
-
-
-
         /// <summary>
         /// Gets or sets a value indicating whether [display default].
         /// </summary>
         /// <value><c>true</c> if [display default]; otherwise, <c>false</c>.</value>
-		public bool DisplayDefault 
-		{
-			get { return _DisplayDefault; }
-			set { _DisplayDefault = value; }
-		}
+        public bool DisplayDefault { get; set; }
 
         /// <summary>
         /// Gets the selected text.
@@ -96,11 +56,7 @@ namespace BugNET.UserControls
         /// Gets or sets the data source.
         /// </summary>
         /// <value>The data source.</value>
-        public List<Status> DataSource 
-		{
-			get { return _DataSource; }
-			set { _DataSource = value; }
-		}
+        public List<Status> DataSource { get; set; }
 
         /// <summary>
         /// Binds a data source to the invoked server control and all its child controls.
@@ -108,11 +64,11 @@ namespace BugNET.UserControls
 		public override void DataBind() 
 		{
 			dropStatus.Items.Clear();
-			dropStatus.DataSource = _DataSource;
+			dropStatus.DataSource = DataSource;
 			dropStatus.DataTextField = "Name";
 			dropStatus.DataValueField = "Id";
 			dropStatus.DataBind();
-			if (_DisplayDefault)
+			if (DisplayDefault)
                 dropStatus.Items.Insert(0, new ListItem(GetLocalResourceObject("SelectStatus").ToString(), "0"));
 		}
 

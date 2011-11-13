@@ -81,6 +81,7 @@ namespace BugNET.Providers.DataProviders
         private const string SP_PROJECT_ISUSERPROJECTMEMBER = "BugNet_Project_IsUserProjectMember";
 
         private const string SP_PROJECTMAILBOX_GETPROJECTBYMAILBOX = "BugNet_ProjectMailbox_GetProjectByMailbox";
+        private const string SP_PROJECTMAILBOX_GETMAILBOXBYID = "BugNet_ProjectMailbox_GetMailboxById";
         private const string SP_PROJECTMAILBOX_GETMAILBYPROJECTID = "BugNet_ProjectMailbox_GetMailboxByProjectId";
         private const string SP_PROJECTMAILBOX_CREATEPROJECTMAILBOX = "BugNet_ProjectMailbox_CreateProjectMailbox";
         private const string SP_PROJECTMAILBOX_DELETEPROJECTMAILBOX = "BugNet_ProjectMailbox_DeleteProjectMailbox";
@@ -4002,6 +4003,28 @@ namespace BugNET.Providers.DataProviders
         #endregion
 
         #region Project mailbox methods
+
+        /// <summary>
+        /// Gets the project by mailbox.
+        /// </summary>
+        /// <param name="projectMailboxId">The mailbox id.</param>
+        /// <returns></returns>
+        public override ProjectMailbox GetProjectMailboxByMailboxId(int projectMailboxId)
+        {
+            // validate input
+            if (projectMailboxId <= 0) throw (new ArgumentOutOfRangeException("projectMailboxId"));
+
+            var sqlCmd = new SqlCommand();
+            SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_PROJECTMAILBOX_GETMAILBOXBYID);
+
+            AddParamToSQLCmd(sqlCmd, "@ProjectMailboxId", SqlDbType.Int, 0, ParameterDirection.Input, projectMailboxId);
+
+            var projectList = new List<ProjectMailbox>();
+            TExecuteReaderCmd(sqlCmd, GenerateProjectMailboxListFromReader, ref projectList);
+
+            return projectList.Count > 0 ? projectList[0] : null;
+        }
+
         /// <summary>
         /// Gets the project by mailbox.
         /// </summary>

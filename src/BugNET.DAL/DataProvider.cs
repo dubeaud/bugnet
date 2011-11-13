@@ -154,6 +154,7 @@ namespace BugNET.DAL
 
         // Project Mailbox
         public abstract ProjectMailbox GetProjectByMailbox(string mailbox);
+        public abstract ProjectMailbox GetProjectMailboxByMailboxId(int projectMailboxId);
         public abstract List<ProjectMailbox> GetMailboxsByProjectId(int projectId);
         public abstract int CreateProjectMailbox(ProjectMailbox mailboxToUpdate);
         public abstract bool DeleteProjectMailbox(int mailboxId);

@@ -35,6 +35,24 @@ namespace BugNET.UserControls
 		}
 
         /// <summary>
+        /// Gets or sets the field of the data source that provides the text content of the list items.
+        /// </summary>
+	    public string DataTextField
+	    {
+	        get { return ddlUsers.DataTextField; }
+            set { ddlUsers.DataTextField = value; }
+	    }
+
+        /// <summary>
+        /// Gets or sets the field of the data source that provides the value of each list item.
+        /// </summary>
+        public string DataValueField
+	    {
+	        get { return ddlUsers.DataValueField; }
+            set { ddlUsers.DataValueField = value; }
+	    }
+
+        /// <summary>
         /// Gets or sets a value indicating whether [display unassigned].
         /// </summary>
         /// <value><c>true</c> if [display unassigned]; otherwise, <c>false</c>.</value>

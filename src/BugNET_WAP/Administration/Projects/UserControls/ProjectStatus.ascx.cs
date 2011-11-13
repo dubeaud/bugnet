@@ -1,6 +1,7 @@
 using System;
 using System.Web.UI.WebControls;
 using BugNET.BLL;
+using BugNET.Common;
 using BugNET.Entities;
 using BugNET.UserInterfaceLayer;
 using BugNET.UserControls;
@@ -12,68 +13,31 @@ namespace BugNET.Administration.Projects.UserControls
 	/// </summary>
 	public partial class ProjectStatus : System.Web.UI.UserControl, IEditProjectControl
 	{
-		
-		#region Web Form Designer generated code
-		override protected void OnInit(EventArgs e)
-		{
-			//
-			// CODEGEN: This call is required by the ASP.NET Web Form Designer.
-			//
-			InitializeComponent();
-			base.OnInit(e);
-		}
-		
-		/// <summary>
-		///		Required method for Designer support - do not modify
-		///		the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
-			Trace.Warn("Initializing");
-			this.grdStatus.DeleteCommand += new System.Web.UI.WebControls.DataGridCommandEventHandler(this.DeleteStatus);
-			this.grdStatus.ItemDataBound += new System.Web.UI.WebControls.DataGridItemEventHandler(this.grdStatus_ItemDataBound);
-
-		}
-		#endregion
-
-	
 		//*********************************************************************
-		//
-		// Status.ascx
 		//
 		// This user control is used by both the new project wizard and update
 		// project page.
 		//
 		//*********************************************************************
 
-
-		private int _ProjectId = -1;
-
-
         /// <summary>
         /// Gets or sets the project id.
         /// </summary>
         /// <value>The project id.</value>
-		public int ProjectId 
-		{
-			get { return _ProjectId; }
-			set { _ProjectId = value; }
-		}
-
+        public int ProjectId
+        {
+            get { return ViewState.Get("ProjectId", 0); }
+            set { ViewState.Set("ProjectId", value); }
+        }
 
         /// <summary>
         /// Updates this instance.
         /// </summary>
         /// <returns></returns>
-		public bool Update() 
-		{
-			if (Page.IsValid)
-				return true;
-			else
-				return false;
-		}
-
-
+		public bool Update()
+        {
+            return Page.IsValid;
+        }
 
         /// <summary>
         /// Inits this instance.
@@ -108,10 +72,7 @@ namespace BugNET.Administration.Projects.UserControls
 			grdStatus.DataKeyField="Id";
 			grdStatus.DataBind();
 
-			if (grdStatus.Items.Count == 0)
-				grdStatus.Visible = false;
-			else
-				grdStatus.Visible = true;
+			grdStatus.Visible = grdStatus.Items.Count != 0;
 		}
 
 
@@ -123,7 +84,7 @@ namespace BugNET.Administration.Projects.UserControls
         protected void grdStatus_ItemCommand(object sender, DataGridCommandEventArgs e)
         {
             Status s;
-            int itemIndex = e.Item.ItemIndex;
+            var itemIndex = e.Item.ItemIndex;
             switch (e.CommandName)
             {
                 case "up":
@@ -179,7 +140,7 @@ namespace BugNET.Administration.Projects.UserControls
         /// </summary>
         /// <param name="s">The s.</param>
         /// <param name="e">The <see cref="System.Web.UI.WebControls.DataGridCommandEventArgs"/> instance containing the event data.</param>
-		void DeleteStatus(Object s, DataGridCommandEventArgs e) 
+        protected void grdStatus_Delete(Object s, DataGridCommandEventArgs e) 
 		{
 			var statusId = (int)grdStatus.DataKeys[e.Item.ItemIndex];
 
@@ -187,7 +148,6 @@ namespace BugNET.Administration.Projects.UserControls
                 lblError.Text = LoggingManager.GetErrorMessageResource("DeleteStatusError");
 			else
 				BindStatus();
-
 		}
 
         /// <summary>
@@ -209,9 +169,9 @@ namespace BugNET.Administration.Projects.UserControls
         protected void grdStatus_Update(object sender, DataGridCommandEventArgs e)
         {
             
-            TextBox txtStatusName = (TextBox)e.Item.FindControl("txtStatusName");
-            PickImage pickimg = (PickImage)e.Item.FindControl("lstEditImages");
-            CheckBox chkClosed = (CheckBox)e.Item.FindControl("chkEditClosedState");
+            var txtStatusName = (TextBox)e.Item.FindControl("txtStatusName");
+            var pickimg = (PickImage)e.Item.FindControl("lstEditImages");
+            var chkClosed = (CheckBox)e.Item.FindControl("chkEditClosedState");
 
             if (txtStatusName.Text.Trim() == "")
             {
@@ -246,16 +206,16 @@ namespace BugNET.Administration.Projects.UserControls
         /// </summary>
         /// <param name="s">The source of the event.</param>
         /// <param name="e">The <see cref="System.Web.UI.WebControls.DataGridItemEventArgs"/> instance containing the event data.</param>
-		void grdStatus_ItemDataBound(Object s, DataGridItemEventArgs e) 
+        protected void grdStatus_ItemDataBound(Object s, DataGridItemEventArgs e) 
 		{
 			if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem) 
 			{
-				Status currentStatus = (Status)e.Item.DataItem;
+				var currentStatus = (Status)e.Item.DataItem;
 
-				Label lblStatusName = (Label)e.Item.FindControl("lblStatusName");
+				var lblStatusName = (Label)e.Item.FindControl("lblStatusName");
 				lblStatusName.Text = currentStatus.Name;
 
-				Image imgStatus = (Image)e.Item.FindControl("imgStatus");
+				var imgStatus = (Image)e.Item.FindControl("imgStatus");
 				if (currentStatus.ImageUrl == String.Empty) 
 				{
 					imgStatus.Visible = false;
@@ -265,24 +225,25 @@ namespace BugNET.Administration.Projects.UserControls
 					imgStatus.ImageUrl = "~/Images/Status/" + currentStatus.ImageUrl;
 					imgStatus.AlternateText = currentStatus.Name;
 				}
-                CheckBox ClosedState = (CheckBox)e.Item.FindControl("chkClosedState");
-                ClosedState.Checked = currentStatus.IsClosedState;
+                var closedState = (CheckBox)e.Item.FindControl("chkClosedState");
+                closedState.Checked = currentStatus.IsClosedState;
 
-				Button btnDelete = (Button)e.Item.FindControl("btnDelete");
-                string message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(),currentStatus.Name);
-                btnDelete.Attributes.Add("onclick", String.Format("return confirm('{0}');", message));
+                var cmdDelete = (ImageButton)e.Item.FindControl("cmdDelete");
+                var message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(),currentStatus.Name);
+                cmdDelete.Attributes.Add("onclick", String.Format("return confirm('{0}');", message));
 			}
+
             if (e.Item.ItemType == ListItemType.EditItem)
             {
-                Status currentStatus = (Status)e.Item.DataItem;
-                TextBox txtStatusName = (TextBox)e.Item.FindControl("txtStatusName");
-                PickImage pickimg = (PickImage)e.Item.FindControl("lstEditImages");
-                CheckBox ClosedState = (CheckBox)e.Item.FindControl("chkEditClosedState");
+                var currentStatus = (Status)e.Item.DataItem;
+                var txtStatusName = (TextBox)e.Item.FindControl("txtStatusName");
+                var pickimg = (PickImage)e.Item.FindControl("lstEditImages");
+                var closedState = (CheckBox)e.Item.FindControl("chkEditClosedState");
 
                 txtStatusName.Text = currentStatus.Name;
                 pickimg.Initialize();
                 pickimg.SelectedValue = currentStatus.ImageUrl;
-                ClosedState.Checked = currentStatus.IsClosedState;
+                closedState.Checked = currentStatus.IsClosedState;
             }
 		}
 
@@ -292,16 +253,9 @@ namespace BugNET.Administration.Projects.UserControls
         /// </summary>
         /// <param name="s">The s.</param>
         /// <param name="e">The <see cref="System.Web.UI.WebControls.ServerValidateEventArgs"/> instance containing the event data.</param>
-		protected void ValidateStatus(Object s, ServerValidateEventArgs e) 
-		{
-			if (grdStatus.Items.Count > 0)
-				e.IsValid = true;
-			else
-				e.IsValid = false;
-		}
-
-
-	
-	
+		protected void ValidateStatus(Object s, ServerValidateEventArgs e)
+        {
+            e.IsValid = grdStatus.Items.Count > 0;
+        }
 	}
 }

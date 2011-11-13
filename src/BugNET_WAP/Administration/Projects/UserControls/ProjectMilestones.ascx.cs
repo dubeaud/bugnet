@@ -1,30 +1,25 @@
+using System;
+using System.Web.UI.WebControls;
+using BugNET.BLL;
+using BugNET.Common;
+using BugNET.Entities;
+using BugNET.UserControls;
+using BugNET.UserInterfaceLayer;
+
 namespace BugNET.Administration.Projects.UserControls
 {
-    using System;
-    using System.Web.UI.WebControls;
-    using BugNET.BLL;
-    using BugNET.Entities;
-    using BugNET.UserControls;
-    using BugNET.UserInterfaceLayer;
-
     /// <summary>
 	///	Summary description for ProjectMilestones.
 	/// </summary>
 	public partial class ProjectMilestones : System.Web.UI.UserControl,IEditProjectControl
 	{
 
-        /// <summary>
-        /// Handles the Load event of the Page control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		protected void Page_Load(object sender, System.EventArgs e)
-		{}
-
-		#region IEditProjectControl Members
-
-        private int _ProjectId = -1;
-
+        //*********************************************************************
+        //
+        // This user control is used by both the new project wizard and update
+        // project page.
+        //
+        //*********************************************************************
 
         /// <summary>
         /// Gets or sets the project id.
@@ -32,8 +27,8 @@ namespace BugNET.Administration.Projects.UserControls
         /// <value>The project id.</value>
         public int ProjectId
         {
-            get { return _ProjectId; }
-            set { _ProjectId = value; }
+            get { return ViewState.Get("ProjectId", 0); }
+            set { ViewState.Set("ProjectId", value); }
         }
 
         /// <summary>
@@ -50,12 +45,9 @@ namespace BugNET.Administration.Projects.UserControls
         /// </summary>
         /// <returns></returns>
 		public bool Update()
-		{
-			if (Page.IsValid)
-				return true;
-			else
-				return false;
-		}
+        {
+            return Page.IsValid;
+        }
 
         /// <summary>
         /// Gets a value indicating whether [show save button].
@@ -65,8 +57,6 @@ namespace BugNET.Administration.Projects.UserControls
         {
             get { return false; }
         }
-
-		#endregion
 
         /// <summary>
         /// Binds the milestones.
@@ -86,10 +76,7 @@ namespace BugNET.Administration.Projects.UserControls
             grdMilestones.DataKeyField = "Id";
             grdMilestones.DataBind();
 
-            if (grdMilestones.Items.Count == 0)
-                grdMilestones.Visible = false;
-            else
-                grdMilestones.Visible = true;
+            grdMilestones.Visible = grdMilestones.Items.Count != 0;
         }
 
 
@@ -98,24 +85,14 @@ namespace BugNET.Administration.Projects.UserControls
         /// </summary>
         /// <param name="s">The s.</param>
         /// <param name="e">The <see cref="System.Web.UI.WebControls.DataGridCommandEventArgs"/> instance containing the event data.</param>
-        protected void DeleteMilestone(Object s, DataGridCommandEventArgs e)
+        protected void grdMilestones_Delete(Object s, DataGridCommandEventArgs e)
         {
-            int mileStoneId = (int)grdMilestones.DataKeys[e.Item.ItemIndex];
+            var mileStoneId = (int)grdMilestones.DataKeys[e.Item.ItemIndex];
 
             if (!MilestoneManager.Delete(mileStoneId))
                 lblError.Text = "Could not delete Milestone";
             else
                 BindMilestones();
-        }
-
-        /// <summary>
-        /// Handles the Click event of the cmdCancel control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
-        protected void cmdCancel_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("~/Administration/Projects/EditProject.aspx?id=" + ProjectId.ToString());
         }
 
         /// <summary>
@@ -126,15 +103,7 @@ namespace BugNET.Administration.Projects.UserControls
         protected void MilestoneValidation_Validate(object sender, ServerValidateEventArgs e)
         {
             //validate that at least one Milestone exists.
-            if (MilestoneManager.GetByProjectId(ProjectId).Count > 0)
-            {
-                e.IsValid = true;
-            }
-            else
-            {
-                e.IsValid = false;
-            }
-           
+            e.IsValid = MilestoneManager.GetByProjectId(ProjectId).Count > 0;
         }
 
         /// <summary>
@@ -155,30 +124,29 @@ namespace BugNET.Administration.Projects.UserControls
         /// <param name="e">The <see cref="System.Web.UI.WebControls.DataGridCommandEventArgs"/> instance containing the event data.</param>
         protected void grdMilestones_Update(object sender, DataGridCommandEventArgs e)
         {
-            TextBox txtMilestoneName = (TextBox)e.Item.FindControl("txtMilestoneName");
+            var txtMilestoneName = (TextBox)e.Item.FindControl("txtMilestoneName");
             if (txtMilestoneName.Text.Trim()=="")
             {
                 throw new ArgumentNullException("Milestone Name is empty");
             }
 
-            PickImage pickimg = (PickImage)e.Item.FindControl("lstEditImages");
-            PickDate MilestoneDueDate = (PickDate)e.Item.FindControl("MilestoneDueDate");
-            PickDate MilestoneReleaseDate = (PickDate)e.Item.FindControl("MilestoneReleaseDate");
-            CheckBox IsCompletedMilestone = (CheckBox)e.Item.FindControl("chkEditCompletedMilestone");
-            TextBox txtMilestoneNotes = (TextBox)e.Item.FindControl("txtMilestoneNotes");
+            var pickimg = (PickImage)e.Item.FindControl("lstEditImages");
+            var milestoneDueDate = (PickDate)e.Item.FindControl("MilestoneDueDate");
+            var milestoneReleaseDate = (PickDate)e.Item.FindControl("MilestoneReleaseDate");
+            var isCompletedMilestone = (CheckBox)e.Item.FindControl("chkEditCompletedMilestone");
+            var milestoneNotes = (TextBox)e.Item.FindControl("txtMilestoneNotes");
 
-            Milestone m = MilestoneManager.GetById(Convert.ToInt32(grdMilestones.DataKeys[e.Item.ItemIndex]));
+            var m = MilestoneManager.GetById(Convert.ToInt32(grdMilestones.DataKeys[e.Item.ItemIndex]));
             m.Name = txtMilestoneName.Text.Trim();
             m.ImageUrl = pickimg.SelectedValue;
-            m.DueDate = MilestoneDueDate.SelectedValue;
-            m.ReleaseDate = MilestoneReleaseDate.SelectedValue;
-            m.IsCompleted = IsCompletedMilestone.Checked;
-            m.Notes = txtMilestoneNotes.Text;
+            m.DueDate = milestoneDueDate.SelectedValue;
+            m.ReleaseDate = milestoneReleaseDate.SelectedValue;
+            m.IsCompleted = isCompletedMilestone.Checked;
+            m.Notes = milestoneNotes.Text;
             MilestoneManager.SaveOrUpdate(m);
 
             grdMilestones.EditItemIndex = -1;
             BindMilestones();
-          
         }
 
         /// <summary>
@@ -200,29 +168,29 @@ namespace BugNET.Administration.Projects.UserControls
         {
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
-                Milestone currentMilestone = (Milestone)e.Item.DataItem;
+                var currentMilestone = (Milestone)e.Item.DataItem;
 
-                Label lblMilestoneName = (Label)e.Item.FindControl("lblMilestoneName");
+                var lblMilestoneName = (Label)e.Item.FindControl("lblMilestoneName");
                 lblMilestoneName.Text = currentMilestone.Name;
 
-                Label lblMilestoneDueDate = (Label)e.Item.FindControl("lblMilestoneDueDate");
+                var lblMilestoneDueDate = (Label)e.Item.FindControl("lblMilestoneDueDate");
                 lblMilestoneDueDate.Text = (currentMilestone.DueDate != null ? ((DateTime)currentMilestone.DueDate).ToShortDateString(): string.Empty);
 
-                Label lblMilestoneReleaseDate = (Label)e.Item.FindControl("lblMilestoneReleaseDate");
+                var lblMilestoneReleaseDate = (Label)e.Item.FindControl("lblMilestoneReleaseDate");
                 lblMilestoneReleaseDate.Text = (currentMilestone.ReleaseDate != null ? ((DateTime)currentMilestone.ReleaseDate).ToShortDateString() : string.Empty);
 
-                Label lblMilestoneNotes = (Label)e.Item.FindControl("lblMilestoneNotes");
+                var lblMilestoneNotes = (Label)e.Item.FindControl("lblMilestoneNotes");
                 lblMilestoneNotes.Text = currentMilestone.Notes;
 
-                CheckBox IsCompletedMilestone = (CheckBox)e.Item.FindControl("chkCompletedMilestone");
-                IsCompletedMilestone.Checked = currentMilestone.IsCompleted;
+                var isCompletedMilestone = (CheckBox)e.Item.FindControl("chkCompletedMilestone");
+                isCompletedMilestone.Checked = currentMilestone.IsCompleted;
 
-                ImageButton UpButton = (ImageButton)e.Item.FindControl("MoveUp");
-                ImageButton DownButton = (ImageButton)e.Item.FindControl("MoveDown");
-                UpButton.CommandArgument = currentMilestone.Id.ToString();
-                DownButton.CommandArgument = currentMilestone.Id.ToString();
+                var upButton = (ImageButton)e.Item.FindControl("MoveUp");
+                var downButton = (ImageButton)e.Item.FindControl("MoveDown");
+                upButton.CommandArgument = currentMilestone.Id.ToString();
+                downButton.CommandArgument = currentMilestone.Id.ToString();
 
-                System.Web.UI.WebControls.Image imgMilestone = (System.Web.UI.WebControls.Image)e.Item.FindControl("imgMilestone");
+                var imgMilestone = (Image)e.Item.FindControl("imgMilestone");
                 if (currentMilestone.ImageUrl == String.Empty)
                 {
                     imgMilestone.Visible = false;
@@ -233,25 +201,26 @@ namespace BugNET.Administration.Projects.UserControls
                     imgMilestone.AlternateText = currentMilestone.Name;
                 }
 
-                Button btnDelete = (Button)e.Item.FindControl("btnDelete");
-                string message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), currentMilestone.Name);
-                btnDelete.Attributes.Add("onclick", String.Format("return confirm('{0}');", message));
+                var cmdDelete = (ImageButton)e.Item.FindControl("cmdDelete");
+                var message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), currentMilestone.Name);
+                cmdDelete.Attributes.Add("onclick", String.Format("return confirm('{0}');", message));
             }
+
             if (e.Item.ItemType == ListItemType.EditItem)
             {
-                Milestone currentMilestone = (Milestone)e.Item.DataItem;
-                TextBox txtMilestoneName = (TextBox)e.Item.FindControl("txtMilestoneName");
-                PickImage pickimg = (PickImage)e.Item.FindControl("lstEditImages");
-                PickDate MilestoneDueDate = (PickDate)e.Item.FindControl("MilestoneDueDate");
-                PickDate MilestoneReleaseDate = (PickDate)e.Item.FindControl("MilestoneReleaseDate");
-                TextBox txtMilestoneNotes = (TextBox)e.Item.FindControl("txtMilestoneNotes");
-                CheckBox IsCompletedMilestone = (CheckBox)e.Item.FindControl("chkEditCompletedMilestone");
-                IsCompletedMilestone.Checked = currentMilestone.IsCompleted;
+                var currentMilestone = (Milestone)e.Item.DataItem;
+                var milestoneName = (TextBox)e.Item.FindControl("txtMilestoneName");
+                var pickimg = (PickImage)e.Item.FindControl("lstEditImages");
+                var milestoneDueDate = (PickDate)e.Item.FindControl("MilestoneDueDate");
+                var milestoneReleaseDate = (PickDate)e.Item.FindControl("MilestoneReleaseDate");
+                var milestoneNotes = (TextBox)e.Item.FindControl("txtMilestoneNotes");
+                var isCompletedMilestone = (CheckBox)e.Item.FindControl("chkEditCompletedMilestone");
+                isCompletedMilestone.Checked = currentMilestone.IsCompleted;
 
-                txtMilestoneNotes.Text = currentMilestone.Notes;
-                txtMilestoneName.Text = currentMilestone.Name;
-                MilestoneDueDate.SelectedValue = currentMilestone.DueDate;
-                MilestoneReleaseDate.SelectedValue = currentMilestone.ReleaseDate;
+                milestoneNotes.Text = currentMilestone.Notes;
+                milestoneName.Text = currentMilestone.Name;
+                milestoneDueDate.SelectedValue = currentMilestone.DueDate;
+                milestoneReleaseDate.SelectedValue = currentMilestone.ReleaseDate;
                 pickimg.Initialize();
                 pickimg.SelectedValue = currentMilestone.ImageUrl;
             }
@@ -264,7 +233,7 @@ namespace BugNET.Administration.Projects.UserControls
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void AddMilestone(Object s, EventArgs e)
         {
-            string newName = txtName.Text.Trim();
+            var newName = txtName.Text.Trim();
 
             if (newName == String.Empty)
                 return;
@@ -305,7 +274,7 @@ namespace BugNET.Administration.Projects.UserControls
         protected void grdMilestones_ItemCommand(object sender, DataGridCommandEventArgs e)
         {
             Milestone m;
-            int itemIndex = e.Item.ItemIndex;
+            var itemIndex = e.Item.ItemIndex;
             switch (e.CommandName)
             {
                 case "up":

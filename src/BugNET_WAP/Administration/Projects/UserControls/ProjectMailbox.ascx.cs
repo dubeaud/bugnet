@@ -1,77 +1,89 @@
+using System;
+using System.Web.UI.WebControls;
+using BugNET.BLL;
+using BugNET.Common;
+using BugNET.Entities;
+using BugNET.UserControls;
+using BugNET.UserInterfaceLayer;
+
 namespace BugNET.Administration.Projects.UserControls
 {
-    using System;
-    using System.Collections;
-    using System.Web.UI.WebControls;
-    using BugNET.BLL;
-    using BugNET.Entities;
-    using BugNET.UserControls;
-    using BugNET.UserInterfaceLayer;
-
     /// <summary>
-    ///		Summary description for Mailboxes.
+    /// Summary description for Mailboxes.
     /// </summary>
     public partial class Mailboxes : System.Web.UI.UserControl, IEditProjectControl
     {
-        IList _mailboxes;
+        //*********************************************************************
+        //
+        // This user control is used by both the new project wizard and update
+        // project page.
+        //
+        //*********************************************************************
 
-        public Mailboxes()
-        {
-            ProjectId = -1;
-        }
-
-        #region Web Form Designer generated code
         /// <summary>
-        /// Raises the <see cref="E:System.Web.UI.Control.Init"></see> event.
+        /// Gets or sets the project id.
         /// </summary>
-        /// <param name="e">An <see cref="T:System.EventArgs"></see> object that contains the event data.</param>
-        override protected void OnInit(EventArgs e)
+        /// <value>The project id.</value>
+        public int ProjectId
         {
-            //
-            // CODEGEN: This call is required by the ASP.NET Web Form Designer.
-            //
-            InitializeComponent();
-            base.OnInit(e);
+            get { return ViewState.Get("ProjectId", 0); }
+            set { ViewState.Set("ProjectId", value); }
         }
 
         /// <summary>
-        ///		Required method for Designer support - do not modify
-        ///		the contents of this method with the code editor.
+        /// Gets a value indicating whether [show save button].
         /// </summary>
-        private void InitializeComponent()
+        /// <value><c>true</c> if [show save button]; otherwise, <c>false</c>.</value>
+        public bool ShowSaveButton
         {
-            this.dtgMailboxes.DeleteCommand += new System.Web.UI.WebControls.DataGridCommandEventHandler(this.dtgMailboxes_DeleteCommand);
-
+            get { return false; }
         }
-        #endregion
+
+        /// <summary>
+        /// Inits this instance.
+        /// </summary>
+        public void Initialize()
+        {
+            BindMailboxes();
+
+            IssueAssignedUser.DataSource = UserManager.GetUsersByProjectId(ProjectId);
+            IssueAssignedUser.DataTextField = "DisplayName";
+            IssueAssignedUser.DataValueField = "UserName";
+            IssueAssignedUser.DataBind();
+
+            IssueAssignedType.DataSource = IssueTypeManager.GetByProjectId(ProjectId);
+            IssueAssignedType.DataBind();
+        }
+
+        /// <summary>
+        /// Updates this instance.
+        /// </summary>
+        /// <returns></returns>
+        public bool Update()
+        {
+            return Page.IsValid;
+        }
 
         /// <summary>
         /// Binds the mailboxes.
         /// </summary>
         private void BindMailboxes()
         {
-            _mailboxes = ProjectMailboxManager.GetByProjectId(ProjectId);
+            grdMailboxes.Columns[1].HeaderText = GetLocalResourceObject("EmailAddressLabel.Text").ToString();
+            grdMailboxes.Columns[2].HeaderText = GetLocalResourceObject("IssueAssignedUserLabel.Text").ToString();
+            grdMailboxes.Columns[3].HeaderText = GetLocalResourceObject("IssueTypeLabel.Text").ToString();
 
-            if (_mailboxes.Count == 0)
-            {
-                lblMailboxes.Text = GetLocalResourceObject("NoConfiguredMailBoxes").ToString();
-                lblMailboxes.Visible = true;
-                dtgMailboxes.Visible = false;
-            }
-            else
-            {
-                dtgMailboxes.Visible = true;
-                lblMailboxes.Visible = false;
-                dtgMailboxes.DataSource = _mailboxes;
-                dtgMailboxes.DataBind();
-            }
+            grdMailboxes.DataSource = ProjectMailboxManager.GetByProjectId(ProjectId);
+            grdMailboxes.DataKeyField = "Id";
+            grdMailboxes.DataBind();
 
-            txtMailbox.Text = String.Empty;
-            //			IssueAssignedUser.SelectedValue = -1;
-            //			IssueAssignedType.SelectedValue = 0;
+            grdMailboxes.Visible = grdMailboxes.Items.Count != 0;
 
-            //			if(Security.GetUserRole().Equals(Globals.ReadOnlyRole))
-            //				AddMailbox.Visible=false;
+            //IssueAssignedUser.SelectedValue = -1;
+            //IssueAssignedType.SelectedValue = 0;
+
+            //if (Security.GetUserRole().Equals(Globals.ReadOnlyRole))
+            //    AddMailbox.Visible = false;
 
         }
 
@@ -95,64 +107,23 @@ namespace BugNET.Administration.Projects.UserControls
             if (ProjectMailboxManager.SaveOrUpdate(mailbox)) BindMailboxes();
         }
 
-        #region IEditProjectControl Members
-
         /// <summary>
-        /// Gets or sets the project id.
-        /// </summary>
-        /// <value>The project id.</value>
-        public int ProjectId { get; set; }
-
-        /// <summary>
-        /// Gets a value indicating whether [show save button].
-        /// </summary>
-        /// <value><c>true</c> if [show save button]; otherwise, <c>false</c>.</value>
-        public bool ShowSaveButton
-        {
-            get { return false; }
-        }
-
-        /// <summary>
-        /// Inits this instance.
-        /// </summary>
-        public void Initialize()
-        {
-            BindMailboxes();
-
-            IssueAssignedUser.DataSource = UserManager.GetUsersByProjectId(ProjectId);
-            IssueAssignedUser.DataBind();
-
-            IssueAssignedType.DataSource = IssueTypeManager.GetByProjectId(ProjectId);
-            IssueAssignedType.DataBind();
-        }
-
-        /// <summary>
-        /// Updates this instance.
-        /// </summary>
-        /// <returns></returns>
-        public bool Update()
-        {
-            return Page.IsValid;
-        }
-
-        #endregion
-
-        /// <summary>
-        /// Handles the DeleteCommand event of the dtgMailboxes control.
+        /// Handles the DeleteCommand event of the grdMailboxes control.
         /// </summary>
         /// <param name="source">The source of the event.</param>
         /// <param name="e">The <see cref="T:System.Web.UI.WebControls.DataGridCommandEventArgs"/> instance containing the event data.</param>
-        private void dtgMailboxes_DeleteCommand(object source, System.Web.UI.WebControls.DataGridCommandEventArgs e)
+        protected void dtgMailboxes_Delete(object source, System.Web.UI.WebControls.DataGridCommandEventArgs e)
         {
-            _mailboxes = ProjectMailboxManager.GetByProjectId(ProjectId);
-            var mb = _mailboxes[e.Item.DataSetIndex] as ProjectMailbox;
+            var id = (int)grdMailboxes.DataKeys[e.Item.ItemIndex];
 
-            if (mb != null && ProjectMailboxManager.Delete(mb.Id))
+            if (!ProjectMailboxManager.Delete(id))
+                lblError.Text = LoggingManager.GetErrorMessageResource("DeleteMailboxError");
+            else
                 BindMailboxes();
         }
 
         /// <summary>
-        /// Handles the ItemDataBound event of the dtgMailboxes control.
+        /// Handles the ItemDataBound event of the grdMailboxes control.
         /// </summary>
         /// <param name="s">The source of the event.</param>
         /// <param name="e">The <see cref="System.Web.UI.WebControls.DataGridItemEventArgs"/> instance containing the event data.</param>
@@ -173,9 +144,9 @@ namespace BugNET.Administration.Projects.UserControls
                 var issueTypeName = (Label)e.Item.FindControl("IssueTypeName");
                 issueTypeName.Text = currentMailbox.IssueTypeName;
 
-                var btnDelete = (Button)e.Item.FindControl("btnDelete");
+                var cmdDelete = (ImageButton)e.Item.FindControl("cmdDelete");
                 var message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), currentMailbox.Mailbox);
-                btnDelete.Attributes.Add("onclick", String.Format("return confirm('{0}');", message));
+                cmdDelete.Attributes.Add("onclick", String.Format("return confirm('{0}');", message));
             }
 
             if (e.Item.ItemType != ListItemType.EditItem) return;
@@ -197,18 +168,18 @@ namespace BugNET.Administration.Projects.UserControls
         }
 
         /// <summary>
-        /// Handles the Edit event of the dtgMailboxes control.
+        /// Handles the Edit event of the grdMailboxes control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Web.UI.WebControls.DataGridCommandEventArgs"/> instance containing the event data.</param>
         protected void dtgMailboxes_Edit(object sender, DataGridCommandEventArgs e)
         {
-            dtgMailboxes.EditItemIndex = e.Item.ItemIndex;
-            dtgMailboxes.DataBind();
+            grdMailboxes.EditItemIndex = e.Item.ItemIndex;
+            grdMailboxes.DataBind();
         }
 
         /// <summary>
-        /// Handles the Update event of the dtgMailboxes control.
+        /// Handles the Update event of the grdMailboxes control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Web.UI.WebControls.DataGridCommandEventArgs"/> instance containing the event data.</param>
@@ -217,55 +188,37 @@ namespace BugNET.Administration.Projects.UserControls
             var emailAddress = (TextBox)e.Item.FindControl("txtEmailAddress");
             var pickUser = (PickSingleUser)e.Item.FindControl("IssueAssignedUser");
             var pickType = (PickType)e.Item.FindControl("IssueType");
+            var id = Convert.ToInt32(grdMailboxes.DataKeys[e.Item.ItemIndex]);
 
-            _mailboxes = ProjectMailboxManager.GetByProjectId(ProjectId);
-            var mb = _mailboxes[e.Item.DataSetIndex] as ProjectMailbox;
-
-            if (mb != null)
+            if (emailAddress.Text.Trim() == "")
             {
-                mb.Mailbox = emailAddress.Text;
-                mb.IssueTypeId = pickType.SelectedValue;
-                mb.AssignToUserName = pickUser.SelectedValue;
-
-                ProjectMailboxManager.SaveOrUpdate(mb);
+                throw new ArgumentNullException("Email Address empty");
             }
 
-            //TextBox txtIssueTypeName = (TextBox)e.Item.FindControl("txtIssueTypeName");
-            //PickImage pickimg = (PickImage)e.Item.FindControl("lstEditImages");
+            var mailbox = ProjectMailboxManager.GetById(id);
 
-            //if (txtIssueTypeName.Text.Trim() == "")
-            //{
-            //    throw new ArgumentNullException("Issue Type name empty");
-            //}
+            if (mailbox != null)
+            {
+                mailbox.Mailbox = emailAddress.Text;
+                mailbox.IssueTypeId = pickType.SelectedValue;
+                mailbox.AssignToUserName = pickUser.SelectedValue;
 
-            //IssueType s = IssueType.GetById(Convert.ToInt32(grdIssueTypes.DataKeys[e.Item.ItemIndex]));
-            //s.Name = txtIssueTypeName.Text.Trim();
-            //s.ImageUrl = pickimg.SelectedValue;
-            //s.Save();
+                ProjectMailboxManager.SaveOrUpdate(mailbox);
+            }
 
-            dtgMailboxes.EditItemIndex = -1;
+            grdMailboxes.EditItemIndex = -1;
             BindMailboxes();
         }
 
         /// <summary>
-        /// Handles the Cancel event of the dtgMailboxes control.
+        /// Handles the Cancel event of the grdMailboxes control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Web.UI.WebControls.DataGridCommandEventArgs"/> instance containing the event data.</param>
         protected void dtgMailboxes_Cancel(object sender, DataGridCommandEventArgs e)
         {
-            dtgMailboxes.EditItemIndex = -1;
-            dtgMailboxes.DataBind();
-        }
-
-        /// <summary>
-        /// Handles the Click event of the cmdCancel control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
-        protected void cmdCancel_Click(object sender, EventArgs e)
-        {
-            Response.Redirect(string.Concat("~/Administration/Projects/EditProject.aspx?id=", ProjectId));
+            grdMailboxes.EditItemIndex = -1;
+            grdMailboxes.DataBind();
         }
     }
 }

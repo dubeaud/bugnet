@@ -123,4 +123,19 @@
   <data name="NoConfiguredMailBoxes" xml:space="preserve">
     <value>There are no Mailboxes for this project.</value>
   </data>
+  <data name="NewMailboxText.Text" xml:space="preserve">
+    <value>New Mailbox</value>
+  </data>
+  <data name="EmailAddressLabel.Text" xml:space="preserve">
+    <value>Email Address</value>
+  </data>
+  <data name="IssueAssignedUserLabel.Text" xml:space="preserve">
+    <value>Assign To</value>
+  </data>
+  <data name="IssueTypeLabel.Text" xml:space="preserve">
+    <value>Issue Type</value>
+  </data>
+  <data name="btnAddMailbox.Text" xml:space="preserve">
+    <value>Add Mailbox</value>
+  </data>
 </root>

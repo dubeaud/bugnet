@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.UI.WebControls;
 using BugNET.BLL;
+using BugNET.Common;
 using BugNET.Entities;
 using BugNET.UserControls;
 using BugNET.UserInterfaceLayer;
@@ -9,18 +10,12 @@ namespace BugNET.Administration.Projects.UserControls
 {
     public partial class ProjectResolutions : System.Web.UI.UserControl, IEditProjectControl
     {
-        /// <summary>
-        /// Handles the Load event of the Page control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void Page_Load(object sender, System.EventArgs e)
-        { }
-
-        #region IEditProjectControl Members
-
-        private int _ProjectId = -1;
-
+        //*********************************************************************
+        //
+        // This user control is used by both the new project wizard and update
+        // project page.
+        //
+        //*********************************************************************
 
         /// <summary>
         /// Gets or sets the project id.
@@ -28,8 +23,8 @@ namespace BugNET.Administration.Projects.UserControls
         /// <value>The project id.</value>
         public int ProjectId
         {
-            get { return _ProjectId; }
-            set { _ProjectId = value; }
+            get { return ViewState.Get("ProjectId", 0); }
+            set { ViewState.Set("ProjectId", value); }
         }
 
         /// <summary>
@@ -47,10 +42,7 @@ namespace BugNET.Administration.Projects.UserControls
         /// <returns></returns>
         public bool Update()
         {
-            if (Page.IsValid)
-                return true;
-            else
-                return false;
+            return Page.IsValid;
         }
 
         /// <summary>
@@ -61,8 +53,6 @@ namespace BugNET.Administration.Projects.UserControls
         {
             get { return false; }
         }
-
-        #endregion
 
         /// <summary>
         /// Binds the milestones.
@@ -77,10 +67,7 @@ namespace BugNET.Administration.Projects.UserControls
             grdResolutions.DataKeyField = "Id";
             grdResolutions.DataBind();
 
-            if (grdResolutions.Items.Count == 0)
-                grdResolutions.Visible = false;
-            else
-                grdResolutions.Visible = true;
+            grdResolutions.Visible = grdResolutions.Items.Count != 0;
         }
 
 
@@ -89,24 +76,14 @@ namespace BugNET.Administration.Projects.UserControls
         /// </summary>
         /// <param name="s">The s.</param>
         /// <param name="e">The <see cref="System.Web.UI.WebControls.DataGridCommandEventArgs"/> instance containing the event data.</param>
-        protected void DeleteResolution(Object s, DataGridCommandEventArgs e)
+        protected void grdResolutions_Delete(Object s, DataGridCommandEventArgs e)
         {
-            int mileStoneId = (int)grdResolutions.DataKeys[e.Item.ItemIndex];
+            var mileStoneId = (int)grdResolutions.DataKeys[e.Item.ItemIndex];
 
             if (!ResolutionManager.Delete(mileStoneId))
                 lblError.Text = LoggingManager.GetErrorMessageResource("DeleteResolutionError");
             else
                 BindResolutions();
-        }
-
-        /// <summary>
-        /// Handles the Click event of the cmdCancel control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
-        protected void cmdCancel_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("~/Administration/Projects/EditProject.aspx?id=" + ProjectId.ToString());
         }
 
         /// <summary>
@@ -117,15 +94,7 @@ namespace BugNET.Administration.Projects.UserControls
         protected void ResolutionValidation_Validate(object sender, ServerValidateEventArgs e)
         {
             //validate that at least one Resolution exists.
-            if (ResolutionManager.GetByProjectId(ProjectId).Count > 0)
-            {
-                e.IsValid = true;
-            }
-            else
-            {
-                e.IsValid = false;
-            }
-
+            e.IsValid = ResolutionManager.GetByProjectId(ProjectId).Count > 0;
         }
 
         /// <summary>
@@ -147,15 +116,15 @@ namespace BugNET.Administration.Projects.UserControls
         protected void grdResolutions_Update(object sender, DataGridCommandEventArgs e)
         {
             
-            TextBox txtResolutionName = (TextBox)e.Item.FindControl("txtResolutionName");
-            PickImage pickimg = (PickImage)e.Item.FindControl("lstEditImages");
+            var txtResolutionName = (TextBox)e.Item.FindControl("txtResolutionName");
+            var pickimg = (PickImage)e.Item.FindControl("lstEditImages");
 
             if (txtResolutionName.Text.Trim() == "")
             {
                 throw new ArgumentNullException("Resolution name is empty.");
             }
 
-            Resolution m = ResolutionManager.GetById(Convert.ToInt32(grdResolutions.DataKeys[e.Item.ItemIndex]));
+            var m = ResolutionManager.GetById(Convert.ToInt32(grdResolutions.DataKeys[e.Item.ItemIndex]));
             m.Name = txtResolutionName.Text.Trim();
             m.ImageUrl = pickimg.SelectedValue;
             ResolutionManager.SaveOrUpdate(m);
@@ -184,17 +153,17 @@ namespace BugNET.Administration.Projects.UserControls
         {
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
-                Resolution currentResolution = (Resolution)e.Item.DataItem;
+                var currentResolution = (Resolution)e.Item.DataItem;
 
-                Label lblResolutionName = (Label)e.Item.FindControl("lblResolutionName");
+                var lblResolutionName = (Label)e.Item.FindControl("lblResolutionName");
                 lblResolutionName.Text = currentResolution.Name;
 
-                ImageButton UpButton = (ImageButton)e.Item.FindControl("MoveUp");
-                ImageButton DownButton = (ImageButton)e.Item.FindControl("MoveDown");
-                UpButton.CommandArgument = currentResolution.Id.ToString();
-                DownButton.CommandArgument = currentResolution.Id.ToString();
+                var upButton = (ImageButton)e.Item.FindControl("MoveUp");
+                var downButton = (ImageButton)e.Item.FindControl("MoveDown");
+                upButton.CommandArgument = currentResolution.Id.ToString();
+                downButton.CommandArgument = currentResolution.Id.ToString();
 
-                System.Web.UI.WebControls.Image imgResolution = (System.Web.UI.WebControls.Image)e.Item.FindControl("imgResolution");
+                var imgResolution = (Image)e.Item.FindControl("imgResolution");
                 if (currentResolution.ImageUrl == String.Empty)
                 {
                     imgResolution.Visible = false;
@@ -204,16 +173,17 @@ namespace BugNET.Administration.Projects.UserControls
                     imgResolution.ImageUrl = "~/Images/Resolution/" + currentResolution.ImageUrl;
                     imgResolution.AlternateText = currentResolution.Name;
                 }
-              
-                Button btnDelete = (Button)e.Item.FindControl("btnDelete");
-                string message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), currentResolution.Name);
-                btnDelete.Attributes.Add("onclick", String.Format("return confirm('{0}');", message));
+
+                var cmdDelete = (ImageButton)e.Item.FindControl("cmdDelete");
+                var message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), currentResolution.Name);
+                cmdDelete.Attributes.Add("onclick", String.Format("return confirm('{0}');", message));
             }
+
             if (e.Item.ItemType == ListItemType.EditItem)
             {
-                Resolution currentResolution = (Resolution)e.Item.DataItem;
-                TextBox txtResolutionName = (TextBox)e.Item.FindControl("txtResolutionName");
-                PickImage pickimg = (PickImage)e.Item.FindControl("lstEditImages");
+                var currentResolution = (Resolution)e.Item.DataItem;
+                var txtResolutionName = (TextBox)e.Item.FindControl("txtResolutionName");
+                var pickimg = (PickImage)e.Item.FindControl("lstEditImages");
 
                 txtResolutionName.Text = currentResolution.Name;
                 pickimg.Initialize();
@@ -229,7 +199,7 @@ namespace BugNET.Administration.Projects.UserControls
         protected void AddResolution(Object s, EventArgs e)
         {
 
-            string newName = txtName.Text.Trim();
+            var newName = txtName.Text.Trim();
 
             if (newName == String.Empty)
                 return;
@@ -256,7 +226,7 @@ namespace BugNET.Administration.Projects.UserControls
         protected void grdResolutions_ItemCommand(object sender, DataGridCommandEventArgs e)
         {
             Resolution m;
-            int itemIndex = e.Item.ItemIndex;
+            var itemIndex = e.Item.ItemIndex;
             switch (e.CommandName)
             {
                 case "up":

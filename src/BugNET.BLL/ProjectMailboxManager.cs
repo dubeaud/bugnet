@@ -38,6 +38,18 @@ namespace BugNET.BLL
         /// <summary>
         /// Gets the project by mailbox.
         /// </summary>
+        /// <param name="projectMailboxId">The mailbox id.</param>
+        /// <returns></returns>
+        public static ProjectMailbox GetById(int projectMailboxId)
+        {
+            if (projectMailboxId <= 0) throw new ArgumentOutOfRangeException("projectMailboxId");
+
+            return DataProviderManager.Provider.GetProjectMailboxByMailboxId(projectMailboxId);
+        }
+
+        /// <summary>
+        /// Gets the project by mailbox.
+        /// </summary>
         /// <param name="mailbox">The mailbox.</param>
         /// <returns></returns>
         public static ProjectMailbox GetByMailbox(string mailbox)

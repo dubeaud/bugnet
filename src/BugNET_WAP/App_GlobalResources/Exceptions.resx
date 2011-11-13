@@ -141,6 +141,9 @@
   <data name="DeleteIssueTypeError" xml:space="preserve">
     <value>Could not delete issue type</value>
   </data>
+  <data name="DeleteMailboxError" xml:space="preserve">
+    <value>Could not delete mailbox</value>
+  </data>
   <data name="DeleteMilestoneError" xml:space="preserve">
     <value>Could not delete milestone</value>
   </data>

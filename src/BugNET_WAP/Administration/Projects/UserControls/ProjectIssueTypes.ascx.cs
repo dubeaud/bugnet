@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.UI.WebControls;
 using BugNET.BLL;
+using BugNET.Common;
 using BugNET.Entities;
 using BugNET.UserControls;
 using BugNET.UserInterfaceLayer;
@@ -9,32 +10,13 @@ namespace BugNET.Administration.Projects.UserControls
 {
     public partial class ProjectIssueTypes : System.Web.UI.UserControl, IEditProjectControl
     {
-        #region Web Form Designer generated code
-        override protected void OnInit(EventArgs e)
-        {
-            //
-            // CODEGEN: This call is required by the ASP.NET Web Form Designer.
-            //
-            InitializeComponent();
-            base.OnInit(e);
-        }
 
-        /// <summary>
-        ///		Required method for Designer support - do not modify
-        ///		the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
-            Trace.Warn("Initializing");
-            this.grdIssueTypes.DeleteCommand += new System.Web.UI.WebControls.DataGridCommandEventHandler(this.DeleteIssueType);
-            this.grdIssueTypes.ItemDataBound += new System.Web.UI.WebControls.DataGridItemEventHandler(this.grdIssueTypes_ItemDataBound);
-
-        }
-        #endregion
-
-
-        private int _ProjectId = -1;
-
+        //*********************************************************************
+        //
+        // This user control is used by both the new project wizard and update
+        // project page.
+        //
+        //*********************************************************************
 
         /// <summary>
         /// Gets or sets the project id.
@@ -42,10 +24,9 @@ namespace BugNET.Administration.Projects.UserControls
         /// <value>The project id.</value>
         public int ProjectId
         {
-            get { return _ProjectId; }
-            set { _ProjectId = value; }
+            get { return ViewState.Get("ProjectId", 0); }
+            set { ViewState.Set("ProjectId", value); }
         }
-
 
         /// <summary>
         /// Updates this instance.
@@ -53,10 +34,7 @@ namespace BugNET.Administration.Projects.UserControls
         /// <returns></returns>
         public bool Update()
         {
-            if (Page.IsValid)
-                return true;
-            else
-                return false;
+            return Page.IsValid;
         }
 
         /// <summary>
@@ -67,7 +45,6 @@ namespace BugNET.Administration.Projects.UserControls
         {
             get { return false; }
         }
-
 
         /// <summary>
         /// Inits this instance.
@@ -92,10 +69,7 @@ namespace BugNET.Administration.Projects.UserControls
             grdIssueTypes.DataKeyField = "Id";
             grdIssueTypes.DataBind();
 
-            if (grdIssueTypes.Items.Count == 0)
-                grdIssueTypes.Visible = false;
-            else
-                grdIssueTypes.Visible = true;
+            grdIssueTypes.Visible = grdIssueTypes.Items.Count != 0;
         }
 
 
@@ -107,7 +81,7 @@ namespace BugNET.Administration.Projects.UserControls
         protected void grdIssueTypes_ItemCommand(object sender, DataGridCommandEventArgs e)
         {
             IssueType s;
-            int itemIndex = e.Item.ItemIndex;
+            var itemIndex = e.Item.ItemIndex;
             switch (e.CommandName)
             {
                 case "up":
@@ -137,7 +111,7 @@ namespace BugNET.Administration.Projects.UserControls
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void AddIssueType(Object s, EventArgs e)
         {
-            string newName = txtName.Text.Trim();
+            var newName = txtName.Text.Trim();
 
             if (newName == String.Empty)
                 return;
@@ -156,15 +130,14 @@ namespace BugNET.Administration.Projects.UserControls
             }
         }
 
-
         /// <summary>
         /// Deletes the status.
         /// </summary>
         /// <param name="s">The s.</param>
         /// <param name="e">The <see cref="System.Web.UI.WebControls.DataGridCommandEventArgs"/> instance containing the event data.</param>
-        void DeleteIssueType(Object s, DataGridCommandEventArgs e)
+        protected void grdIssueTypes_Delete(Object s, DataGridCommandEventArgs e)
         {
-            int statusId = (int)grdIssueTypes.DataKeys[e.Item.ItemIndex];
+            var statusId = (int)grdIssueTypes.DataKeys[e.Item.ItemIndex];
 
             if (!IssueTypeManager.DeleteIssueType(statusId))
                 lblError.Text = LoggingManager.GetErrorMessageResource("DeleteIssueTypeError");
@@ -192,15 +165,15 @@ namespace BugNET.Administration.Projects.UserControls
         protected void grdIssueTypes_Update(object sender, DataGridCommandEventArgs e)
         {
             
-            TextBox txtIssueTypeName = (TextBox)e.Item.FindControl("txtIssueTypeName");
-            PickImage pickimg = (PickImage)e.Item.FindControl("lstEditImages");
+            var txtIssueTypeName = (TextBox)e.Item.FindControl("txtIssueTypeName");
+            var pickimg = (PickImage)e.Item.FindControl("lstEditImages");
 
             if (txtIssueTypeName.Text.Trim() == "")
             {
                 throw new ArgumentNullException("Issue Type name empty");
             }
 
-            IssueType s = IssueTypeManager.GetById(Convert.ToInt32(grdIssueTypes.DataKeys[e.Item.ItemIndex]));
+            var s = IssueTypeManager.GetById(Convert.ToInt32(grdIssueTypes.DataKeys[e.Item.ItemIndex]));
             s.Name = txtIssueTypeName.Text.Trim();
             s.ImageUrl = pickimg.SelectedValue;
             IssueTypeManager.SaveOrUpdate(s);
@@ -221,22 +194,21 @@ namespace BugNET.Administration.Projects.UserControls
             grdIssueTypes.DataBind();
         }
 
-
         /// <summary>
         /// Handles the ItemDataBound event of the grdIssueTypes control.
         /// </summary>
         /// <param name="s">The source of the event.</param>
         /// <param name="e">The <see cref="System.Web.UI.WebControls.DataGridItemEventArgs"/> instance containing the event data.</param>
-        void grdIssueTypes_ItemDataBound(Object s, DataGridItemEventArgs e)
+        protected void grdIssueTypes_ItemDataBound(Object s, DataGridItemEventArgs e)
         {
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
-                IssueType currentIssueType = (IssueType)e.Item.DataItem;
+                var currentIssueType = (IssueType)e.Item.DataItem;
 
-                Label lblIssueTypeName = (Label)e.Item.FindControl("lblIssueTypeName");
+                var lblIssueTypeName = (Label)e.Item.FindControl("lblIssueTypeName");
                 lblIssueTypeName.Text = currentIssueType.Name;
 
-                Image imgIssueType = (Image)e.Item.FindControl("imgIssueType");
+                var imgIssueType = (Image)e.Item.FindControl("imgIssueType");
                 if (currentIssueType.ImageUrl == String.Empty)
                 {
                     imgIssueType.Visible = false;
@@ -247,22 +219,22 @@ namespace BugNET.Administration.Projects.UserControls
                     imgIssueType.AlternateText = currentIssueType.Name;
                 }
 
-                Button btnDelete = (Button)e.Item.FindControl("btnDelete");
-                string message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), currentIssueType.Name);
-                btnDelete.Attributes.Add("onclick", String.Format("return confirm('{0}');", message));
+                var cmdDelete = (ImageButton)e.Item.FindControl("cmdDelete");
+                var message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), currentIssueType.Name);
+                cmdDelete.Attributes.Add("onclick", String.Format("return confirm('{0}');", message));
             }
+
             if (e.Item.ItemType == ListItemType.EditItem)
             {
-                IssueType currentIssueType = (IssueType)e.Item.DataItem;
-                TextBox txtIssueTypeName = (TextBox)e.Item.FindControl("txtIssueTypeName");
-                PickImage pickimg = (PickImage)e.Item.FindControl("lstEditImages");
+                var currentIssueType = (IssueType)e.Item.DataItem;
+                var txtIssueTypeName = (TextBox)e.Item.FindControl("txtIssueTypeName");
+                var pickimg = (PickImage)e.Item.FindControl("lstEditImages");
 
                 txtIssueTypeName.Text = currentIssueType.Name;
                 pickimg.Initialize();
                 pickimg.SelectedValue = currentIssueType.ImageUrl;
             }
         }
-
 
         /// <summary>
         /// Validates the status.
@@ -271,10 +243,7 @@ namespace BugNET.Administration.Projects.UserControls
         /// <param name="e">The <see cref="System.Web.UI.WebControls.ServerValidateEventArgs"/> instance containing the event data.</param>
         protected void ValidateIssueType(Object s, ServerValidateEventArgs e)
         {
-            if (grdIssueTypes.Items.Count > 0)
-                e.IsValid = true;
-            else
-                e.IsValid = false;
+            e.IsValid = grdIssueTypes.Items.Count > 0;
         }
     }
 }

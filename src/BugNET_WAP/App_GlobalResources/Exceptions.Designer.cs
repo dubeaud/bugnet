@@ -133,6 +133,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not delete mailbox.
+        /// </summary>
+        internal static string DeleteMailboxError {
+            get {
+                return ResourceManager.GetString("DeleteMailboxError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could not delete milestone.
         /// </summary>
         internal static string DeleteMilestoneError {

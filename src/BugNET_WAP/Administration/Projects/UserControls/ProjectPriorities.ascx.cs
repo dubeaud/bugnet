@@ -1,78 +1,44 @@
+using BugNET.Common;
+using System;
+using System.Web.UI.WebControls;
+using BugNET.BLL;
+using BugNET.Entities;
+using BugNET.UserControls;
+using BugNET.UserInterfaceLayer;
+
 namespace BugNET.Administration.Projects.UserControls
 {
-    using System;
-    using System.Web.UI.WebControls;
-    using BugNET.BLL;
-    using BugNET.Entities;
-    using BugNET.UserControls;
-    using BugNET.UserInterfaceLayer;
     /// <summary>
     /// Summary description for Priority.
     /// </summary>
 	public partial class ProjectPriorities : System.Web.UI.UserControl, IEditProjectControl
 	{
-		
 
-		#region Web Form Designer generated code
-		override protected void OnInit(EventArgs e)
-		{
-			//
-			// CODEGEN: This call is required by the ASP.NET Web Form Designer.
-			//
-			InitializeComponent();
-			base.OnInit(e);
-		}
-		
-		/// <summary>
-		///		Required method for Designer support - do not modify
-		///		the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
-			this.grdPriorities.DeleteCommand += new System.Web.UI.WebControls.DataGridCommandEventHandler(this.DeletePriority);
-			this.grdPriorities.ItemDataBound += new System.Web.UI.WebControls.DataGridItemEventHandler(this.grdPriorities_ItemDataBound);
-
-		}
-		#endregion
-
-	
-		//*********************************************************************
-		//
-		// Priority.ascx
-		//
-		// This user control is used by both the new project wizard and update
-		// project page.
-		//
-		//*********************************************************************
-
-
-		private int _ProjectId = -1;
-
+        //*********************************************************************
+        //
+        // This user control is used by both the new project wizard and update
+        // project page.
+        //
+        //*********************************************************************
 
         /// <summary>
         /// Gets or sets the project id.
         /// </summary>
         /// <value>The project id.</value>
-		public int ProjectId 
-		{
-			get { return _ProjectId; }
-			set { _ProjectId = value; }
-		}
-
+        public int ProjectId
+        {
+            get { return ViewState.Get("ProjectId", 0); }
+            set { ViewState.Set("ProjectId", value); }
+        }
 
         /// <summary>
         /// Updates this instance.
         /// </summary>
         /// <returns></returns>
-		public bool Update() 
-		{
-			if (Page.IsValid)
-				return true;
-			else
-				return false;
-		}
-
-
+		public bool Update()
+        {
+            return Page.IsValid;
+        }
 
         /// <summary>
         /// Inits this instance.
@@ -92,7 +58,6 @@ namespace BugNET.Administration.Projects.UserControls
             get { return false; }
         }
 
-
         /// <summary>
         /// Binds the priorities.
         /// </summary>
@@ -106,10 +71,7 @@ namespace BugNET.Administration.Projects.UserControls
 			grdPriorities.DataKeyField="Id";
 			grdPriorities.DataBind();
 
-			if (grdPriorities.Items.Count == 0)
-				grdPriorities.Visible = false;
-			else
-				grdPriorities.Visible = true;
+			grdPriorities.Visible = grdPriorities.Items.Count != 0;
 		}
 
         /// <summary>
@@ -120,7 +82,7 @@ namespace BugNET.Administration.Projects.UserControls
         protected void grdPriorities_ItemCommand(object sender, DataGridCommandEventArgs e)
         {
             Priority p;
-            int itemIndex = e.Item.ItemIndex;
+            var itemIndex = e.Item.ItemIndex;
             switch (e.CommandName)
             {
                 case "up":
@@ -144,17 +106,6 @@ namespace BugNET.Administration.Projects.UserControls
         }
 
         /// <summary>
-        /// Handles the Edit event of the grdPriority control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Web.UI.WebControls.DataGridCommandEventArgs"/> instance containing the event data.</param>
-        protected void grdPriority_Edit(object sender, DataGridCommandEventArgs e)
-        {
-            grdPriorities.EditItemIndex = e.Item.ItemIndex;
-            grdPriorities.DataBind();
-        }
-
-        /// <summary>
         /// Handles the Update event of the grdPriority control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -162,15 +113,15 @@ namespace BugNET.Administration.Projects.UserControls
         protected void grdPriorities_Update(object sender, DataGridCommandEventArgs e)
         {
             
-            TextBox txtPriorityName = (TextBox)e.Item.FindControl("txtPriorityName");
-            PickImage pickimg = (PickImage)e.Item.FindControl("lstEditImages");
+            var txtPriorityName = (TextBox)e.Item.FindControl("txtPriorityName");
+            var pickimg = (PickImage)e.Item.FindControl("lstEditImages");
 
             if (txtPriorityName.Text.Trim() == "")
             {
                 throw new ArgumentNullException("Priorty Name is empty.");
             }
 
-            Priority p = PriorityManager.GetById(Convert.ToInt32(grdPriorities.DataKeys[e.Item.ItemIndex]));
+            var p = PriorityManager.GetById(Convert.ToInt32(grdPriorities.DataKeys[e.Item.ItemIndex]));
             p.Name = txtPriorityName.Text.Trim();
             p.ImageUrl = pickimg.SelectedValue;
             PriorityManager.SaveOrUpdate(p);
@@ -234,9 +185,9 @@ namespace BugNET.Administration.Projects.UserControls
         /// </summary>
         /// <param name="s">The s.</param>
         /// <param name="e">The <see cref="System.Web.UI.WebControls.DataGridCommandEventArgs"/> instance containing the event data.</param>
-		void DeletePriority(Object s, DataGridCommandEventArgs e) 
+        protected void grdPriorities_Delete(Object s, DataGridCommandEventArgs e) 
 		{
-			int priorityId = (int)grdPriorities.DataKeys[e.Item.ItemIndex];
+			var priorityId = (int)grdPriorities.DataKeys[e.Item.ItemIndex];
 
 			if (!PriorityManager.Delete(priorityId))
 				lblError.Text =  LoggingManager.GetErrorMessageResource("DeletePriorityError");
@@ -250,16 +201,16 @@ namespace BugNET.Administration.Projects.UserControls
         /// </summary>
         /// <param name="s">The source of the event.</param>
         /// <param name="e">The <see cref="System.Web.UI.WebControls.DataGridItemEventArgs"/> instance containing the event data.</param>
-		void grdPriorities_ItemDataBound(Object s, DataGridItemEventArgs e) 
+		protected void grdPriorities_ItemDataBound(Object s, DataGridItemEventArgs e) 
 		{
 			if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem) 
 			{
-				Priority currentPriority = (Priority)e.Item.DataItem;
+				var currentPriority = (Priority)e.Item.DataItem;
 
-				Label lblPriorityName = (Label)e.Item.FindControl("lblPriorityName");
+				var lblPriorityName = (Label)e.Item.FindControl("lblPriorityName");
 				lblPriorityName.Text = currentPriority.Name;
 
-				Image imgPriority = (Image)e.Item.FindControl("imgPriority");
+				var imgPriority = (Image)e.Item.FindControl("imgPriority");
 				if (currentPriority.ImageUrl == String.Empty) 
 				{
 					imgPriority.Visible = false;
@@ -269,16 +220,17 @@ namespace BugNET.Administration.Projects.UserControls
 					imgPriority.ImageUrl = "~/Images/Priority/" + currentPriority.ImageUrl;
 					imgPriority.AlternateText = currentPriority.Name;
 				}
-                
-				Button btnDelete = (Button)e.Item.FindControl("btnDelete");
-                string message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), currentPriority.Name);
-                btnDelete.Attributes.Add("onclick", String.Format("return confirm('{0}');", message));
+
+                var cmdDelete = (ImageButton)e.Item.FindControl("cmdDelete");
+                var message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), currentPriority.Name);
+                cmdDelete.Attributes.Add("onclick", String.Format("return confirm('{0}');", message));
 			}
+
             if (e.Item.ItemType == ListItemType.EditItem)
             {
-                Priority currentPriority = (Priority)e.Item.DataItem;
-                TextBox txtPriorityName = (TextBox)e.Item.FindControl("txtPriorityName");
-                PickImage pickimg = (PickImage)e.Item.FindControl("lstEditImages");
+                var currentPriority = (Priority)e.Item.DataItem;
+                var txtPriorityName = (TextBox)e.Item.FindControl("txtPriorityName");
+                var pickimg = (PickImage)e.Item.FindControl("lstEditImages");
 
                 txtPriorityName.Text = currentPriority.Name;
                 pickimg.Initialize();
@@ -292,16 +244,9 @@ namespace BugNET.Administration.Projects.UserControls
         /// </summary>
         /// <param name="s">The s.</param>
         /// <param name="e">The <see cref="System.Web.UI.WebControls.ServerValidateEventArgs"/> instance containing the event data.</param>
-		protected void ValidatePriority(Object s, ServerValidateEventArgs e) 
-		{
-			if (grdPriorities.Items.Count > 0)
-				e.IsValid = true;
-			else
-				e.IsValid = false;
-		}
-
-	
-	
-	
+		protected void ValidatePriority(Object s, ServerValidateEventArgs e)
+        {
+            e.IsValid = grdPriorities.Items.Count > 0;
+        }
 	}
 }
