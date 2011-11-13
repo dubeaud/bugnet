@@ -1442,7 +1442,7 @@ ul.permissions li
 	z-index: 666;
 	zoom: 1;
 	overflow: hidden;
-	white-space: nowrap;
+	/*white-space: nowrap;*/
 }
 .scrollableDiv
 {

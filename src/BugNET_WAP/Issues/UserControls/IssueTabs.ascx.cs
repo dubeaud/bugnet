@@ -55,7 +55,10 @@ namespace BugNET.Issues.UserControls
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         void Page_Load(object sender, EventArgs e)
-        {   
+        {
+            if (IssueId == 0)
+                return;
+
             if (!Page.IsPostBack)
             {
 
