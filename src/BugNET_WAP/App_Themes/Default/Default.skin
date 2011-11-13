@@ -19,14 +19,21 @@ Default skin template. The following skins are provided as examples only.
 
 <asp:TextBox runat="Server" CssClass="textInput" />
 
-<BNWC:GridView runat="server" SkinID="GridView" CssClass="grid" BorderWidth="1px" BorderStyle="Solid" GridLines="None" CellPadding="2" AutoGenerateColumns="False">
+<BNWC:GridView 
+    runat="server" 
+    SkinID="GridView" 
+    CssClass="grid" 
+    BorderWidth="1px" 
+    BorderStyle="Solid" 
+    GridLines="None" 
+    CellPadding="0" 
+    AutoGenerateColumns="False">
     <FooterStyle CssClass="gridFooter" />
     <PagerStyle CssClass="gridPager" />
     <SelectedRowStyle CssClass="gridSelectedRow" />
     <HeaderStyle CssClass="gridHeader" />
     <AlternatingRowStyle CssClass="gridAltRow" />
-    <PagerSettings FirstPageImageUrl="Images/resultset_first.gif" LastPageImageUrl="Images/resultset_last.gif" 
-        PreviousPageImageUrl="Images/resultset_previous.gif" Mode="NumericFirstLast" NextPageImageUrl="Images/resultset_next.gif" />
+    <PagerSettings FirstPageImageUrl="Images/resultset_first.gif" LastPageImageUrl="Images/resultset_last.gif" PreviousPageImageUrl="Images/resultset_previous.gif" Mode="NumericFirstLast" NextPageImageUrl="Images/resultset_next.gif" />
 </BNWC:GridView>
 
 <asp:GridView runat="server" SkinID="GridView" CssClass="grid" BorderWidth="1px" BorderStyle="Solid" GridLines="None" CellPadding="2" AutoGenerateColumns="False">

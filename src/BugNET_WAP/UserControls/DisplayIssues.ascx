@@ -24,24 +24,7 @@
         });
         $('#showColumns').click(function () {
             $('#ChangeColumns').slideToggle('fast');
-        });
-
-//        $("table[id$='gvIssues'] > tbody > tr").each(function () {
-//            $(this).mouseover(function () { $(this).css("background-color", "#F7F7EC"); });
-//        });
-//        $("table[id$='gvIssues'] > tbody > tr:odd").each(function () {
-//            $(this).onmouseout(function () { $(this).css("background-color", "#fff"); });
-//        });
-//        $("table[id$='gvIssues'] > tbody > tr:even").each(function () {
-//            $(this).onmouseout(function () { $(this).css("background-color", "#fafafa"); });
-//        });
-        
-        //        e.Row.Attributes.Add("onmouseover", "this.style.background='#F7F7EC'");
-
-        //        if (e.Row.RowState == DataControlRowState.Normal)
-        //            e.Row.Attributes.Add("onmouseout", "this.style.background=''");
-        //        else if (e.Row.RowState == DataControlRowState.Alternate)
-        //            e.Row.Attributes.Add("onmouseout", "this.style.background='#fafafa'");        
+        });       
     });
 </script>
 
