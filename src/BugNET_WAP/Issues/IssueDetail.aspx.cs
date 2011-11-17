@@ -258,7 +258,7 @@ namespace BugNET.Issues
                     VotedLabel.Visible = false;
                 }
 
-                if (StatusManager.GetById(currentIssue.StatusId).IsClosedState)
+                if (currentIssue.StatusId != 0 && StatusManager.GetById(currentIssue.StatusId).IsClosedState)
                 {
                     VoteButton.Visible = false;
                     VotedLabel.Visible = false;

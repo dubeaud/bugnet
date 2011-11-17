@@ -78,7 +78,7 @@
                                                 meta:resourcekey="TitleLabel"></asp:Label>
                                             <asp:TextBox ID="TitleTextBox" Visible="False" Width="95%" runat="server" />
                                             <asp:RequiredFieldValidator ControlToValidate="TitleTextBox" ErrorMessage="<%$ Resources:IssueTitleRequiredErrorMessage %>"
-                                                Text="<%$ Resources:SharedResources, Required %>" Display="Dynamic" runat="server"
+                                                Text="<%$ Resources:SharedResources, Required %>" Display="Dynamic"  CssClass="req" runat="server"
                                                 ID="TitleRequired" />
                                             <ajaxToolkit:TextBoxWatermarkExtender ID="TBWE2" runat="server" TargetControlID="TitleTextBox"
                                                 WatermarkText="<%$ Resources:IssueTitleWaterMark %>" WatermarkCssClass="issueTitleWatermarked" />
@@ -115,14 +115,14 @@
                     <asp:Label ID="StatusLabel" runat="server" AssociatedControlID="DropStatus" meta:resourcekey="StatusLabel" />
                 </td>
                 <td style="width: 35%;">
-                    <it:PickStatus ID="DropStatus" runat="Server" Required="True" DisplayDefault="true" />
+                    <it:PickStatus ID="DropStatus" runat="Server" DisplayDefault="true" />
                 </td>
                 <td style="width: 15%;">
                     <asp:Label ID="OwnerLabel" runat="server" AssociatedControlID="DropOwned" meta:resourcekey="OwnedByLabel"
                         Text="Owned By:" />
                 </td>
                 <td style="width: 35%;">
-                    <it:PickSingleUser ID="DropOwned" DisplayDefault="True" Required="True" runat="Server" />
+                    <it:PickSingleUser ID="DropOwned" DisplayDefault="True" Required="false"  runat="Server" />
                     <asp:CheckBox ID="chkNotifyOwner" runat="server" Text="Notify" Checked="True"></asp:CheckBox>
                 </td>
             </tr>
@@ -132,7 +132,7 @@
                         Text="Priority:" />
                 </td>
                 <td style="width: 35%;">
-                    <it:PickPriority ID="DropPriority" DisplayDefault="true" Required="True" runat="Server" />
+                    <it:PickPriority ID="DropPriority" DisplayDefault="true" runat="Server" />
                 </td>
                 <td>
                     <asp:Label ID="Label4" AssociatedControlID="DropAffectedMilestone" meta:resourcekey="AffectedMilestoneLabel"
@@ -183,7 +183,7 @@
                         meta:resourcekey="IssueTypeLabel" />
                 </td>
                 <td>
-                    <it:PickType ID="DropIssueType" DisplayDefault="True" Required="True" runat="Server" />
+                    <it:PickType ID="DropIssueType" DisplayDefault="True"  runat="Server" />
                 </td>
                 <td style="width: 15%;">
                     <asp:Label ID="Label3" runat="server" AssociatedControlID="DropOwned" meta:resourcekey="ProgressLabel"
