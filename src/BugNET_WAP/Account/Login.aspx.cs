@@ -43,10 +43,10 @@ namespace BugNET.Account
             {
                 btnShowOpenID.Visible = _isOpenIdEnabled;
                 if (Session["isDoingOpenIDLogin"] != null)
-                    if (Session["isDoingOpenIDLogin"] == "true")
+                    if (Session["isDoingOpenIDLogin"].ToString() == "true")
                     {
                         // Call the logic as if we clicked on the OpenID button
-                        btnShowOpenID_Click(sender, new EventArgs() );
+                        btnShowOpenID_Click(sender, new EventArgs());
                     }
 
             }
@@ -215,7 +215,7 @@ namespace BugNET.Account
 
             }
             finally
-            { 
+            {
                 // This finally block covers all the code
                 if (e.Cancel)
                 {

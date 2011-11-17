@@ -14,7 +14,7 @@ using System.IO;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
-
+using System.Linq;
 
 namespace BugNET.MailboxReader.POP3Client
 {
@@ -190,7 +190,7 @@ namespace BugNET.MailboxReader.POP3Client
             }
 
             //set media main and sub type
-            if (ContentType.MediaType == null || ContentType.MediaType.Length < 1)
+            if (string.IsNullOrEmpty(ContentType.MediaType))
             {
                 //no mediatype found
                 ContentType.MediaType = "text/plain";
@@ -249,36 +249,36 @@ namespace BugNET.MailboxReader.POP3Client
         /// </summary>
         public RxMailMessage CreateChildEntity()
         {
-            RxMailMessage child = new RxMailMessage();
-            child.Parent = this;
-            child.TopParent = this.TopParent;
-            child.ContentTransferEncoding = this.ContentTransferEncoding;
+            var child = new RxMailMessage
+                            {
+                                Parent = this,
+                                TopParent = TopParent,
+                                ContentTransferEncoding = ContentTransferEncoding
+                            };
             return child;
         }
 
 
-        private StringBuilder mailStructure;
+        private StringBuilder _mailStructure;
 
         private void AppendLine(string format, object arg)
         {
-            if (arg != null)
+            if (arg == null) return;
+            string argString = arg.ToString();
+            if (argString.Length > 0)
             {
-                string argString = arg.ToString();
-                if (argString.Length > 0)
-                {
-                    mailStructure.AppendLine(string.Format(format, argString));
-                }
+                _mailStructure.AppendLine(string.Format(format, argString));
             }
         }
 
 
-        private void decodeEntity(RxMailMessage entity)
+        private void DecodeEntity(RxMailMessage entity)
         {
             AppendLine("From  : {0}", entity.From);
             AppendLine("Sender: {0}", entity.Sender);
             AppendLine("To    : {0}", entity.To);
             AppendLine("CC    : {0}", entity.CC);
-            AppendLine("ReplyT: {0}", entity.ReplyTo);
+            AppendLine("ReplyT: {0}", string.Join(";", Array.ConvertAll(entity.ReplyToList.ToArray(), i => i.Address)));
             AppendLine("Sub   : {0}", entity.Subject);
             AppendLine("S-Enco: {0}", entity.SubjectEncoding);
             if (entity.DeliveryDate > DateTime.MinValue)
@@ -316,8 +316,8 @@ namespace BugNET.MailboxReader.POP3Client
             //decode all shild MIME entities
             foreach (RxMailMessage child in entity.Entities)
             {
-                mailStructure.AppendLine("------------------------------------");
-                decodeEntity(child);
+                _mailStructure.AppendLine("------------------------------------");
+                DecodeEntity(child);
             }
 
             if (entity.ContentType != null && entity.ContentType.MediaType != null && entity.ContentType.MediaType.StartsWith("multipart"))
@@ -333,10 +333,10 @@ namespace BugNET.MailboxReader.POP3Client
         /// <returns></returns>
         public string MailStructure()
         {
-            mailStructure = new StringBuilder(1000);
-            decodeEntity(this);
-            mailStructure.AppendLine("====================================");
-            return mailStructure.ToString();
+            _mailStructure = new StringBuilder(1000);
+            DecodeEntity(this);
+            _mailStructure.AppendLine("====================================");
+            return _mailStructure.ToString();
         }
     }
 

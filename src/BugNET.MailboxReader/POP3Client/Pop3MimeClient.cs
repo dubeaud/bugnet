@@ -483,7 +483,7 @@ namespace BugNET.MailboxReader.POP3Client
                         //throw mail routing information away
                         break;
                     case "reply-to":
-                        message.ReplyTo = ConvertToMailAddress(headerLineContent);
+                        message.ReplyToList.Add(ConvertToMailAddress(headerLineContent));
                         break;
                     case "return-path":
                         message.ReturnPath = ConvertToMailAddress(headerLineContent);
