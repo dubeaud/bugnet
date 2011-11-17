@@ -122,7 +122,7 @@
                         Text="Owned By:" />
                 </td>
                 <td style="width: 35%;">
-                    <it:PickSingleUser ID="DropOwned" DisplayDefault="True"  runat="Server" />
+                    <it:PickSingleUser ID="DropOwned" DisplayDefault="True" Required="false"  runat="Server" />
                     <asp:CheckBox ID="chkNotifyOwner" runat="server" Text="Notify" Checked="True"></asp:CheckBox>
                 </td>
             </tr>
