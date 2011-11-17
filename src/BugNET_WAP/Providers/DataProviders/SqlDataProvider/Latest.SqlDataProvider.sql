@@ -20,6 +20,16 @@ GO
 ALTER TABLE [dbo].[BugNet_ProjectCategories] ADD [Disabled] [bit] DEFAULT 0 NOT NULL
 GO
 
+ALTER TABLE [dbo].[BugNet_Issues] ALTER COLUMN [IssueStatusId] [int] NULL
+GO
+
+ALTER TABLE [dbo].[BugNet_Issues] ALTER COLUMN [IssuePriorityId] [int] NULL
+GO
+
+ALTER TABLE [dbo].[BugNet_Issues] ALTER COLUMN [IssueTypeId] [int] NULL
+GO
+
+
 /****** Object:  StoredProcedure [dbo].[BugNet_ProjectCategories_DeleteCategory]    Script Date: 02/16/2011 13:01:23 ******/
 SET ANSI_NULLS ON
 GO
@@ -360,10 +370,10 @@ SELECT
 	dbo.BugNet_Issues.LastUpdateUserId, 
 	dbo.BugNet_Projects.ProjectName, 
 	dbo.BugNet_Projects.ProjectCode, 
-	dbo.BugNet_ProjectPriorities.PriorityName, 
-	dbo.BugNet_ProjectIssueTypes.IssueTypeName, 
+	ISNULL(dbo.BugNet_ProjectPriorities.PriorityName, N'none') AS PriorityName, 
+	ISNULL(dbo.BugNet_ProjectIssueTypes.IssueTypeName,N'none') AS IssueTypeName, 
 	ISNULL(dbo.BugNet_ProjectCategories.CategoryName, N'none') AS CategoryName, 
-	dbo.BugNet_ProjectStatus.StatusName, 
+	ISNULL(dbo.BugNet_ProjectStatus.StatusName, N'none') AS StatusName ,
 	ISNULL(dbo.BugNet_ProjectMilestones.MilestoneName, N'none') AS MilestoneName, 
 	ISNULL(AffectedMilestone.MilestoneName, N'none') AS AffectedMilestoneName, 
 	ISNULL(dbo.BugNet_ProjectResolutions.ResolutionName, 'none') AS ResolutionName, 
@@ -442,8 +452,9 @@ SELECT     dbo.BugNet_Issues.IssueId, dbo.BugNet_Issues.IssueTitle, dbo.BugNet_I
                       dbo.BugNet_Issues.IssueResolutionId, dbo.BugNet_Issues.IssueCreatorUserId, dbo.BugNet_Issues.IssueAssignedUserId, dbo.BugNet_Issues.IssueOwnerUserId, 
                       dbo.BugNet_Issues.IssueDueDate, dbo.BugNet_Issues.IssueMilestoneId, dbo.BugNet_Issues.IssueAffectedMilestoneId, dbo.BugNet_Issues.IssueVisibility, 
                       dbo.BugNet_Issues.IssueEstimation, dbo.BugNet_Issues.DateCreated, dbo.BugNet_Issues.LastUpdate, dbo.BugNet_Issues.LastUpdateUserId, 
-                      dbo.BugNet_Projects.ProjectName, dbo.BugNet_Projects.ProjectCode, dbo.BugNet_ProjectPriorities.PriorityName, dbo.BugNet_ProjectIssueTypes.IssueTypeName, 
-                      ISNULL(dbo.BugNet_ProjectCategories.CategoryName, N'none') AS CategoryName, dbo.BugNet_ProjectStatus.StatusName, 
+                      dbo.BugNet_Projects.ProjectName, dbo.BugNet_Projects.ProjectCode, ISNULL(dbo.BugNet_ProjectPriorities.PriorityName, N'none') AS PriorityName, 
+					  ISNULL(dbo.BugNet_ProjectIssueTypes.IssueTypeName,N'none') AS IssueTypeName, 
+                      ISNULL(dbo.BugNet_ProjectCategories.CategoryName, N'none') AS CategoryName, ISNULL(dbo.BugNet_ProjectStatus.StatusName, N'none') AS StatusName, 
                       ISNULL(dbo.BugNet_ProjectMilestones.MilestoneName, N'none') AS MilestoneName, ISNULL(AffectedMilestone.MilestoneName, N'none') AS AffectedMilestoneName, 
                       ISNULL(dbo.BugNet_ProjectResolutions.ResolutionName, 'none') AS ResolutionName, LastUpdateUsers.UserName AS LastUpdateUserName, 
                       ISNULL(AssignedUsers.UserName, N'none') AS AssignedUsername, ISNULL(AssignedUsersProfile.DisplayName, N'none') AS AssignedDisplayName, 
@@ -462,7 +473,7 @@ SELECT     dbo.BugNet_Issues.IssueId, dbo.BugNet_Issues.IssueTitle, dbo.BugNet_I
                       dbo.BugNet_ProjectMilestones.MilestoneDueDate, 
 					  dbo.BugNet_Projects.ProjectDisabled, 
 					  CAST(COALESCE (dbo.BugNet_ProjectStatus.IsClosedState, 0) AS BIT) AS IsClosed
-FROM         dbo.BugNet_Issues INNER JOIN
+FROM         dbo.BugNet_Issues LEFT OUTER JOIN
                       dbo.BugNet_ProjectIssueTypes ON dbo.BugNet_Issues.IssueTypeId = dbo.BugNet_ProjectIssueTypes.IssueTypeId LEFT OUTER JOIN
                       dbo.BugNet_ProjectPriorities ON dbo.BugNet_Issues.IssuePriorityId = dbo.BugNet_ProjectPriorities.PriorityId LEFT OUTER JOIN
                       dbo.BugNet_ProjectCategories ON dbo.BugNet_Issues.IssueCategoryId = dbo.BugNet_ProjectCategories.CategoryId LEFT OUTER JOIN

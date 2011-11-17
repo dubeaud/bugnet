@@ -126,7 +126,7 @@ namespace BugNET.BLL
                 if (originalIssue.ResolutionId != issueToCompare.ResolutionId)
                     issueChanges.Add(GetNewIssueHistory(history, "Resolution", originalIssue.ResolutionName, issueToCompare.ResolutionName));
 
-                var newAssignedUserName = String.IsNullOrEmpty(originalIssue.AssignedUserName) ? Globals.UNASSIGNED_DISPLAY_TEXT : issueToCompare.AssignedUserName;
+                var newAssignedUserName = String.IsNullOrEmpty(issueToCompare.AssignedUserName) ? Globals.UNASSIGNED_DISPLAY_TEXT : issueToCompare.AssignedUserName;
 
                 if ((originalIssue.AssignedUserName != newAssignedUserName))
                 {
