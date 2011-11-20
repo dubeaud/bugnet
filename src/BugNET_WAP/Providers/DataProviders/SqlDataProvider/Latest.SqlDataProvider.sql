@@ -263,7 +263,7 @@ GO
 DROP TABLE BugNet_StringResources 
 GO
 
-CREATE TABLE [BugNet_Languages] (
+CREATE TABLE [dbo].[BugNet_Languages] (
 		[LanguageId]          int NOT NULL IDENTITY(1, 1),
 		[CultureCode]         nvarchar(50) NOT NULL,
 		[CultureName]         nvarchar(200) NOT NULL,
@@ -271,14 +271,14 @@ CREATE TABLE [BugNet_Languages] (
 )
 GO
 
-ALTER TABLE [BugNet_Languages]
+ALTER TABLE [dbo].[BugNet_Languages]
 	ADD
 	CONSTRAINT [PK_BugNet_Languages]
 	PRIMARY KEY
 	([LanguageId])
 GO
 
-CREATE UNIQUE NONCLUSTERED INDEX IX_BugNet_Languages ON BugNet_Languages ( CultureCode )
+CREATE UNIQUE NONCLUSTERED INDEX IX_BugNet_Languages ON [dbo].[BugNet_Languages] ( CultureCode )
 GO
 
 /****** Object:  StoredProcedure [dbo].[BugNet_Languages_GetInstalledLanguages]    Script Date: 04/15/2011 12:01:09 ******/
