@@ -84,7 +84,7 @@ namespace BugNET.UserControls
         /// </summary>
         private void BindMenuOptions()
         {
-            SuckerFishMenuHelper oHelper = new SuckerFishMenuHelper();
+            SuckerFishMenuHelper oHelper = new SuckerFishMenuHelper(ProjectId);
             litSucker.Text = oHelper.GetHtml();
         }
 
@@ -95,12 +95,6 @@ namespace BugNET.UserControls
         {
             get
             {
-                //if (Request.QueryString["pid"] != null)
-                //{
-                //    return Int32.Parse(Request.QueryString["pid"]);
-                //}
-                //else
-                //    return 0;
                 try
                 {
                     // do the as test to to see if the basepage is the same as page
