@@ -70,7 +70,7 @@ namespace BugNET.DAL
         public abstract bool UpdateQuery(int queryId, string username, int projectId, string queryName, bool isPublic, List<QueryClause> queryClauses);
         public abstract bool DeleteQuery(int queryId);
         public abstract List<RequiredField> GetRequiredFieldsForIssues();
-        public abstract void PerformGenericQuery<T>(ref List<T> list, List<QueryClause> queryClauses, string sql, string strOrderBy);
+        public abstract void PerformGenericQuery<T>(ref List<T> list, List<QueryClause> queryClauses, string sql, string orderBy);
         public abstract List<Issue> PerformQuery(int projectId, List<QueryClause> queryClauses);
         public abstract List<Issue> PerformSavedQuery(int projectId, int queryId);
         public abstract List<QueryClause> GetQueryClausesByQueryId(int queryId);
@@ -114,6 +114,7 @@ namespace BugNET.DAL
         public abstract List<Milestone> GetMilestonesByProjectId(int projectId);
         public abstract Milestone GetMilestoneById(int milestoneId);
         public abstract bool UpdateMilestone(Milestone milestoneToUpdate);
+        public abstract bool CanDeleteMilestone(int milestoneId);
 
         // Priority
         public abstract int CreateNewPriority(Priority newPriority);

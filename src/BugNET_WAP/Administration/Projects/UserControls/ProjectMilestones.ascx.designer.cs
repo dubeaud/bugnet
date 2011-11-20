@@ -58,6 +58,15 @@ namespace BugNET.Administration.Projects.UserControls {
         protected global::System.Web.UI.UpdatePanel updatepanel1;
         
         /// <summary>
+        /// ActionMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::BugNET.UserControls.Message ActionMessage;
+        
+        /// <summary>
         /// grdMilestones control.
         /// </summary>
         /// <remarks>

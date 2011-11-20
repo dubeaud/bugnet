@@ -133,6 +133,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; cannot be deleted because it is assigned to one or more issues.  You will need to re-assign these issues to a different {1} before it can be deleted!.
+        /// </summary>
+        internal static string DeleteItemAssignedToIssueError {
+            get {
+                return ResourceManager.GetString("DeleteItemAssignedToIssueError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could not delete mailbox.
         /// </summary>
         internal static string DeleteMailboxError {

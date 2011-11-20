@@ -88,11 +88,16 @@ namespace BugNET.Administration.Projects.UserControls
         protected void grdMilestones_Delete(Object s, DataGridCommandEventArgs e)
         {
             var mileStoneId = (int)grdMilestones.DataKeys[e.Item.ItemIndex];
+            string cannotDeleteMessage;
 
-            if (!MilestoneManager.Delete(mileStoneId))
-                lblError.Text = "Could not delete Milestone";
-            else
-                BindMilestones();
+            if (!MilestoneManager.Delete(mileStoneId, out cannotDeleteMessage))
+            {
+                ActionMessage.ShowErrorMessage(cannotDeleteMessage);
+                return;
+            }
+
+            lblError.Visible = false;
+            BindMilestones();
         }
 
         /// <summary>

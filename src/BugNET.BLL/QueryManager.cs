@@ -24,9 +24,9 @@ namespace BugNET.BLL
             if (string.IsNullOrEmpty(entity.Name)) throw (new ArgumentException("The query name cannot be empty or null"));
             if (entity.Clauses.Count == 0) throw new ArgumentException("The query must have at least one query clause");
 
-            return entity.Id > Globals.NEW_ID ? 
-                DataProviderManager.Provider.SaveQuery(userName, projectId, entity.Name, entity.IsPublic, entity.Clauses) : 
-                DataProviderManager.Provider.UpdateQuery(entity.Id, userName, projectId, entity.Name, entity.IsPublic, entity.Clauses);
+            return entity.Id > Globals.NEW_ID ?  
+                DataProviderManager.Provider.UpdateQuery(entity.Id, userName, projectId, entity.Name, entity.IsPublic, entity.Clauses) :
+            DataProviderManager.Provider.SaveQuery(userName, projectId, entity.Name, entity.IsPublic, entity.Clauses);
         }
 
         /// <summary>

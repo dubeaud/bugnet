@@ -141,6 +141,10 @@
   <data name="DeleteIssueTypeError" xml:space="preserve">
     <value>Could not delete issue type</value>
   </data>
+  <data name="DeleteItemAssignedToIssueError" xml:space="preserve">
+    <value>'{0}' cannot be deleted because it is assigned to one or more issues.  You will need to re-assign these issues to a different {1} before it can be deleted!</value>
+    <comment>{0} is the name of the item, {1} is a context specific name ie. milestone</comment>
+  </data>
   <data name="DeleteMailboxError" xml:space="preserve">
     <value>Could not delete mailbox</value>
   </data>

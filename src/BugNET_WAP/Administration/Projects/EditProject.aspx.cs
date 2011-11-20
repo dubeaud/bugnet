@@ -15,7 +15,7 @@ namespace BugNET.Administration.Projects
 	public partial class EditProject : BasePage 
 	{
 		private Control _contentControl;
-	    readonly Dictionary<string, string> _menuItems = new Dictionary<string, string>();
+	    private readonly Dictionary<string, string> _menuItems = new Dictionary<string, string>();
 
         /// <summary>
         /// Handles the Load event of the Page control.
