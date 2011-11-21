@@ -1,0 +1,2 @@
+This is a placeholder file, please do not remove it. 
+It helps your webserver maintain file level security when the folder is empty.

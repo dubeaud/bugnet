@@ -260,10 +260,10 @@ UPDATE BugNet_HostSettings SET SettingName = 'AnonymousAccess' WHERE SettingName
 UPDATE BugNet_HostSettings SET SettingValue = 'False' WHERE SettingName ='AnonymousAccess'
 GO
 
-DROP TABLE BugNet_StringResources 
+DROP TABLE [dbo].[BugNet_StringResources]
 GO
 
-CREATE TABLE [BugNet_Languages] (
+CREATE TABLE [dbo].[BugNet_Languages] (
 		[LanguageId]          int NOT NULL IDENTITY(1, 1),
 		[CultureCode]         nvarchar(50) NOT NULL,
 		[CultureName]         nvarchar(200) NOT NULL,
@@ -271,14 +271,14 @@ CREATE TABLE [BugNet_Languages] (
 )
 GO
 
-ALTER TABLE [BugNet_Languages]
+ALTER TABLE [dbo].[BugNet_Languages]
 	ADD
 	CONSTRAINT [PK_BugNet_Languages]
 	PRIMARY KEY
 	([LanguageId])
 GO
 
-CREATE UNIQUE NONCLUSTERED INDEX IX_BugNet_Languages ON BugNet_Languages ( CultureCode )
+CREATE UNIQUE NONCLUSTERED INDEX IX_BugNet_Languages ON [dbo].[BugNet_Languages] ( CultureCode )
 GO
 
 /****** Object:  StoredProcedure [dbo].[BugNet_Languages_GetInstalledLanguages]    Script Date: 04/15/2011 12:01:09 ******/
@@ -294,7 +294,7 @@ BEGIN
 END
 GO
 
-DROP PROCEDURE BugNet_StringResources_GetInstalledLanguageResources
+DROP PROCEDURE [dbo].[BugNet_StringResources_GetInstalledLanguageResources]
 GO
 
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('ApplicationDefaultLanguage','en-US')
@@ -337,14 +337,14 @@ UPDATE BugNet_Permissions SET PermissionKey = 'EditQuery' WHERE PermissionId = 3
 GO
 
 IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[BugNet_GetIssuesByProjectIdAndCustomFieldView]'))
-DROP VIEW [BugNet_GetIssuesByProjectIdAndCustomFieldView]
+DROP VIEW [dbo].[BugNet_GetIssuesByProjectIdAndCustomFieldView]
 GO
 
 IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[BugNet_IssuesView]'))
-DROP VIEW [BugNet_IssuesView]
+DROP VIEW [dbo].[BugNet_IssuesView]
 GO
 
-CREATE VIEW [BugNet_GetIssuesByProjectIdAndCustomFieldView]
+CREATE VIEW [dbo].[BugNet_GetIssuesByProjectIdAndCustomFieldView]
 AS
 SELECT     
 	dbo.BugNet_Issues.IssueId, 
@@ -445,7 +445,7 @@ LEFT OUTER JOIN
 
 GO
 
-CREATE VIEW [BugNet_IssuesView]
+CREATE VIEW [dbo].[BugNet_IssuesView]
 AS
 SELECT     dbo.BugNet_Issues.IssueId, dbo.BugNet_Issues.IssueTitle, dbo.BugNet_Issues.IssueDescription, dbo.BugNet_Issues.IssueStatusId, 
                       dbo.BugNet_Issues.IssuePriorityId, dbo.BugNet_Issues.IssueTypeId, dbo.BugNet_Issues.IssueCategoryId, dbo.BugNet_Issues.ProjectId, 
@@ -494,10 +494,10 @@ FROM         dbo.BugNet_Issues LEFT OUTER JOIN
 GO
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[BugNet_Project_GetRoadMap]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [BugNet_Project_GetRoadMap]
+DROP PROCEDURE [dbo].[BugNet_Project_GetRoadMap]
 GO
 
-CREATE PROCEDURE [BugNet_Project_GetRoadMap]
+CREATE PROCEDURE [dbo].[BugNet_Project_GetRoadMap]
 	@ProjectId int
 AS
 SELECT 
@@ -562,18 +562,18 @@ ORDER BY
 GO
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[BugNet_ProjectMailbox_GetMailboxById]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [BugNet_ProjectMailbox_GetMailboxById]
+DROP PROCEDURE [dbo].[BugNet_ProjectMailbox_GetMailboxById]
 GO
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[BugNet_ProjectMailbox_GetMailboxByProjectId]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [BugNet_ProjectMailbox_GetMailboxByProjectId]
+DROP PROCEDURE [dbo].[BugNet_ProjectMailbox_GetMailboxByProjectId]
 GO
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[BugNet_ProjectMailbox_GetProjectByMailbox]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [BugNet_ProjectMailbox_GetProjectByMailbox]
+DROP PROCEDURE [dbo].[BugNet_ProjectMailbox_GetProjectByMailbox]
 GO
 
-CREATE PROCEDURE [BugNet_ProjectMailbox_GetMailboxById]
+CREATE PROCEDURE [dbo].[BugNet_ProjectMailbox_GetMailboxById]
     @ProjectMailboxId int
 AS
 
@@ -593,7 +593,7 @@ WHERE
 	BugNet_ProjectMailBoxes.ProjectMailboxId = @ProjectMailboxId
 GO
 
-CREATE  PROCEDURE [BugNet_ProjectMailbox_GetMailboxByProjectId]
+CREATE  PROCEDURE [dbo].[BugNet_ProjectMailbox_GetMailboxByProjectId]
 	@ProjectId int
 AS
 
@@ -613,7 +613,7 @@ WHERE
 	BugNet_ProjectMailBoxes.ProjectId = @ProjectId
 GO
 
-CREATE PROCEDURE [BugNet_ProjectMailbox_GetProjectByMailbox]
+CREATE PROCEDURE [dbo].[BugNet_ProjectMailbox_GetProjectByMailbox]
     @mailbox nvarchar(100) 
 AS
 
