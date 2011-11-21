@@ -89,13 +89,11 @@ namespace BugNET.Providers.DataProviders
         private const string SP_USER_GETUSERSBYPROJECTID = "BugNet_User_GetUsersByProjectId";
         private const string SP_PROJECT_GETMEMBERROLESBYPROJECTID = "BugNET_Project_GetMemberRolesByProjectId";
 
-
         private const string SP_PERMISSION_GETALLPERMISSIONS = "BugNet_Permission_GetAllPermissions";
         private const string SP_PERMISSION_GETROLEPERMISSIONS = "BugNet_Permission_GetRolePermission";
         private const string SP_PERMISSION_GETPERMISSIONSBYROLE = "BugNet_Permission_GetPermissionsByRole";
         private const string SP_PERMISSION_DELETEROLEPERMISSION = "BugNet_Permission_DeleteRolePermission";
         private const string SP_PERMISSION_ADDROLEPERMISSION = "BugNet_Permission_AddRolePermission";
-
 
         private const string SP_ROLE_GETPROJECTROLESBYUSER = "BugNet_Role_GetProjectRolesByUser";
         private const string SP_ROLE_GETROLESBYUSER = "BugNet_Role_GetRolesByUser";
@@ -173,6 +171,9 @@ namespace BugNET.Providers.DataProviders
         private const string SP_ISSUEVOTE_CREATE = "BugNet_IssueVote_CreateNewIssueVote";
         private const string SP_ISSUEVOTE_HASUSERVOTED = "BugNet_IssueVote_HasUserVoted";
 
+        //History Stored Procs
+        private const string SP_ISSUEHISTORY_CREATENEWISSUEHISTORY = "BugNet_IssueHistory_CreateNewIssueHistory";
+        private const string SP_ISSUEHISTORY_GETISSUEHISTORYBYISSUEID = "BugNet_IssueHistory_GetIssueHistoryByIssueId";
 
         //Milestone Stored Procs
         private const string SP_MILESTONE_CREATE = "BugNet_ProjectMilestones_CreateNewMilestone";
@@ -197,10 +198,7 @@ namespace BugNET.Providers.DataProviders
         private const string SP_STATUS_UPDATE = "BugNet_ProjectStatus_UpdateStatus";
         private const string SP_STATUS_GETSTATUSBYID = "BugNet_ProjectStatus_GetStatusById";
         private const string SP_STATUS_DELETE = "BugNet_ProjectStatus_DeleteStatus";
-
-        //History Stored Procs
-        private const string SP_ISSUEHISTORY_CREATENEWISSUEHISTORY = "BugNet_IssueHistory_CreateNewIssueHistory";
-        private const string SP_ISSUEHISTORY_GETISSUEHISTORYBYISSUEID = "BugNet_IssueHistory_GetIssueHistoryByIssueId";
+        private const string SP_STATUS_CANDELETE = "BugNet_ProjectStatus_CanDeleteStatus";
 
         //Issue Type Stored Procs
         private const string SP_ISSUETYPE_GETISSUETYPEBYID = "BugNet_ProjectIssueTypes_GetIssueTypeById";
@@ -208,6 +206,7 @@ namespace BugNET.Providers.DataProviders
         private const string SP_ISSUETYPE_CREATE = "BugNet_ProjectIssueTypes_CreateNewIssueType";
         private const string SP_ISSUETYPE_DELETE = "BugNet_ProjectIssueTypes_DeleteIssueType";
         private const string SP_ISSUETYPE_UPDATE = "BugNet_ProjectIssueTypes_UpdateIssueType";
+        private const string SP_ISSUETYPE_CANDELETE = "BugNet_ProjectIssueTypes_CanDeleteIssueType";
 
         //Resolution Stored Procs
         private const string SP_RESOLUTION_GETRESOLUTIONBYID = "BugNet_ProjectResolutions_GetResolutionById";
@@ -215,6 +214,7 @@ namespace BugNET.Providers.DataProviders
         private const string SP_RESOLUTION_CREATE = "BugNet_ProjectResolutions_CreateNewResolution";
         private const string SP_RESOLUTION_DELETE = "BugNet_ProjectResolutions_DeleteResolution";
         private const string SP_RESOLUTION_UPDATE = "BugNet_ProjectResolutions_UpdateResolution";
+        private const string SP_RESOLUTION_CANDELETE = "BugNet_ProjectResolutions_CanDeleteResolution";
 
         //Priority Stored Procs
         private const string SP_PRIORITY_GETPRIORITYBYID = "BugNet_ProjectPriorities_GetPriorityById";
@@ -222,6 +222,7 @@ namespace BugNET.Providers.DataProviders
         private const string SP_PRIORITY_CREATE = "BugNet_ProjectPriorities_CreateNewPriority";
         private const string SP_PRIORITY_DELETE = "BugNet_ProjectPriorities_DeletePriority";
         private const string SP_PRIORITY_UPDATE = "BugNet_ProjectPriorities_UpdatePriority";
+        private const string SP_PRIORITY_CANDELETE = "BugNet_ProjectPriorities_CanDeletePriority";
 
         //Notification Stored Procs
         private const string SP_ISSUENOTIFICATION_CREATE = "BugNet_IssueNotification_CreateNewIssueNotification";
@@ -3682,6 +3683,28 @@ namespace BugNET.Providers.DataProviders
         }
 
         /// <summary>
+        /// Checks if the priority can be deleted.
+        /// </summary>
+        /// <param name="priorityId">The priority id.</param>
+        /// <returns></returns>
+        public override bool CanDeletePriority(int priorityId)
+        {
+            // Validate Parameters
+            if (priorityId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("priorityId"));
+
+            using (var sqlCmd = new SqlCommand())
+            {
+                AddParamToSqlCmd(sqlCmd, "@PriorityId", SqlDbType.Int, 4, ParameterDirection.Input, priorityId);
+                AddParamToSqlCmd(sqlCmd, "@ResultValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
+
+                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_PRIORITY_CANDELETE);
+                ExecuteScalarCmd(sqlCmd);
+                var resultValue = (int)sqlCmd.Parameters["@ResultValue"].Value;
+                return (resultValue == 1);
+            }
+        }
+
+        /// <summary>
         /// Gets the priorities by project id.
         /// </summary>
         /// <param name="projectId">The project id.</param>
@@ -3933,6 +3956,28 @@ namespace BugNET.Providers.DataProviders
                 ExecuteScalarCmd(sqlCmd);
                 var returnValue = (int)sqlCmd.Parameters["@ReturnValue"].Value;
                 return (returnValue == 0);   
+            }
+        }
+
+        /// <summary>
+        /// Checks if the status can be deleted.
+        /// </summary>
+        /// <param name="statusId">The status id.</param>
+        /// <returns></returns>
+        public override bool CanDeleteStatus(int statusId)
+        {
+            // Validate Parameters
+            if (statusId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("statusId"));
+
+            using (var sqlCmd = new SqlCommand())
+            {
+                AddParamToSqlCmd(sqlCmd, "@StatusId", SqlDbType.Int, 4, ParameterDirection.Input, statusId);
+                AddParamToSqlCmd(sqlCmd, "@ResultValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
+
+                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_STATUS_CANDELETE);
+                ExecuteScalarCmd(sqlCmd);
+                var resultValue = (int)sqlCmd.Parameters["@ResultValue"].Value;
+                return (resultValue == 1);
             }
         }
 
@@ -4359,6 +4404,28 @@ namespace BugNET.Providers.DataProviders
         }
 
         /// <summary>
+        /// Checks if the issue type can be deleted.
+        /// </summary>
+        /// <param name="issueTypeId">The issue type id.</param>
+        /// <returns></returns>
+        public override bool CanDeleteIssueType(int issueTypeId)
+        {
+            // Validate Parameters
+            if (issueTypeId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("issueTypeId"));
+
+            using (var sqlCmd = new SqlCommand())
+            {
+                AddParamToSqlCmd(sqlCmd, "@IssueTypeId", SqlDbType.Int, 4, ParameterDirection.Input, issueTypeId);
+                AddParamToSqlCmd(sqlCmd, "@ResultValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
+
+                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUETYPE_CANDELETE);
+                ExecuteScalarCmd(sqlCmd);
+                var resultValue = (int)sqlCmd.Parameters["@ResultValue"].Value;
+                return (resultValue == 1);
+            }
+        }
+
+        /// <summary>
         /// Updates the type of the issue.
         /// </summary>
         /// <param name="issueTypeToUpdate">The issue type to update.</param>
@@ -4470,6 +4537,28 @@ namespace BugNET.Providers.DataProviders
                 ExecuteScalarCmd(sqlCmd);
                 var returnValue = (int)sqlCmd.Parameters["@ReturnValue"].Value;
                 return (returnValue == 0);   
+            }
+        }
+
+        /// <summary>
+        /// Checks if the resolution can be deleted.
+        /// </summary>
+        /// <param name="resolutionId">The resolution id.</param>
+        /// <returns></returns>
+        public override bool CanDeleteResolution(int resolutionId)
+        {
+            // Validate Parameters
+            if (resolutionId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("resolutionId"));
+
+            using (var sqlCmd = new SqlCommand())
+            {
+                AddParamToSqlCmd(sqlCmd, "@ResolutionId", SqlDbType.Int, 4, ParameterDirection.Input, resolutionId);
+                AddParamToSqlCmd(sqlCmd, "@ResultValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
+
+                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_RESOLUTION_CANDELETE);
+                ExecuteScalarCmd(sqlCmd);
+                var resultValue = (int)sqlCmd.Parameters["@ResultValue"].Value;
+                return (resultValue == 1);
             }
         }
 

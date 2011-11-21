@@ -1,9 +1,7 @@
 <%@ Control Language="c#" CodeBehind="ProjectPriorities.ascx.cs" AutoEventWireup="True" Inherits="BugNET.Administration.Projects.UserControls.ProjectPriorities" %>
 <%@ Register TagPrefix="IT" TagName="PickImage" Src="~/UserControls/PickImage.ascx" %>
 <div>
-    <h2>
-        <asp:Literal ID="PrioritiesTitle" runat="Server" meta:resourcekey="PrioritiesTitle" /></h2>
-    <asp:Label ID="lblError" ForeColor="red" EnableViewState="false" runat="Server" />
+    <h2><asp:Literal ID="PrioritiesTitle" runat="Server" meta:resourcekey="PrioritiesTitle" /></h2>
     <asp:CustomValidator Text="You must add at least one priority" meta:resourcekey="PriorityValidator" Display="dynamic" runat="server"
         ID="CustomValidator1" OnServerValidate="ValidatePriority" />
     <p>
@@ -11,6 +9,7 @@
     <br />
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
+            <BN:Message ID="ActionMessage" runat="server" Visible="False"  />
             <asp:DataGrid 
                 ID="grdPriorities" 
                 SkinID="DataGrid" 

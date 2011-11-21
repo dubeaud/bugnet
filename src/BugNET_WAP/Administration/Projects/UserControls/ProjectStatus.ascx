@@ -2,18 +2,15 @@
 <%@ Register TagPrefix="IT" TagName="PickImage" Src="~/UserControls/PickImage.ascx" %>
 <div>
     <h2><asp:Literal ID="StatusTitle" runat="Server" Text="<%$ Resources:SharedResources, Status %>" /></h2>
-    <asp:Label ID="lblError" ForeColor="red" EnableViewState="false" runat="Server" />
     <asp:CustomValidator Text="You must add at least one status" meta:resourcekey="StatusValidator" Display="Dynamic" runat="server"
         ID="CustomValidator1" OnServerValidate="ValidateStatus" />
     <p>
         <asp:Label ID="DescriptionLabel" runat="server" meta:resourcekey="DescriptionLabel" />
     </p>
     <br />
-    <script type="text/javascript">
-        
-    </script>
     <asp:UpdatePanel runat="server" ID="UpdatePanel1">
         <ContentTemplate>
+            <BN:Message ID="ActionMessage" runat="server" Visible="False"  />
             <asp:DataGrid 
                 ID="grdStatus" 
                 SkinID="DataGrid" 

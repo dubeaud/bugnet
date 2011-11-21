@@ -117,7 +117,7 @@ namespace BugNET.Administration.Projects.UserControls
             var id = (int)grdMailboxes.DataKeys[e.Item.ItemIndex];
 
             if (!ProjectMailboxManager.Delete(id))
-                lblError.Text = LoggingManager.GetErrorMessageResource("DeleteMailboxError");
+                ActionMessage.ShowErrorMessage(LoggingManager.GetErrorMessageResource("DeleteMailboxError"));
             else
                 BindMailboxes();
         }

@@ -78,12 +78,16 @@ namespace BugNET.Administration.Projects.UserControls
         /// <param name="e">The <see cref="System.Web.UI.WebControls.DataGridCommandEventArgs"/> instance containing the event data.</param>
         protected void grdResolutions_Delete(Object s, DataGridCommandEventArgs e)
         {
-            var mileStoneId = (int)grdResolutions.DataKeys[e.Item.ItemIndex];
+            var id = (int)grdResolutions.DataKeys[e.Item.ItemIndex];
+            string cannotDeleteMessage;
 
-            if (!ResolutionManager.Delete(mileStoneId))
-                lblError.Text = LoggingManager.GetErrorMessageResource("DeleteResolutionError");
-            else
-                BindResolutions();
+            if (!ResolutionManager.Delete(id, out cannotDeleteMessage))
+            {
+                ActionMessage.ShowErrorMessage(cannotDeleteMessage);
+                return;
+            }
+
+            BindResolutions();
         }
 
         /// <summary>
@@ -175,7 +179,7 @@ namespace BugNET.Administration.Projects.UserControls
                 }
 
                 var cmdDelete = (ImageButton)e.Item.FindControl("cmdDelete");
-                var message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), currentResolution.Name);
+                var message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), currentResolution.Name.Replace("'", "\\'"));
                 cmdDelete.Attributes.Add("onclick", String.Format("return confirm('{0}');", message));
             }
 
@@ -213,7 +217,7 @@ namespace BugNET.Administration.Projects.UserControls
             }
             else
             {
-                lblError.Text = LoggingManager.GetErrorMessageResource("SaveResolutionError");
+                ActionMessage.ShowErrorMessage(LoggingManager.GetErrorMessageResource("SaveResolutionError"));
             }
         }
 

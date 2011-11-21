@@ -2,7 +2,6 @@
 <%@ Register TagPrefix="IT" TagName="PickImage" Src="~/UserControls/PickImage.ascx" %>
 <div>
     <h2><asp:Literal ID="MilestonesTitle" runat="Server" meta:resourcekey="MilestonesTitle" /></h2>
-    <asp:Label ID="lblError" ForeColor="red" EnableViewState="false" runat="Server" />
     <asp:CustomValidator Text="You must add at least one milestone" meta:resourcekey="MilestoneValidator" Display="dynamic" runat="server"
         ID="MilestoneValidation" OnServerValidate="MilestoneValidation_Validate" />
     <p>

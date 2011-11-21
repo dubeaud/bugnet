@@ -87,16 +87,15 @@ namespace BugNET.Administration.Projects.UserControls
         /// <param name="e">The <see cref="System.Web.UI.WebControls.DataGridCommandEventArgs"/> instance containing the event data.</param>
         protected void grdMilestones_Delete(Object s, DataGridCommandEventArgs e)
         {
-            var mileStoneId = (int)grdMilestones.DataKeys[e.Item.ItemIndex];
+            var id = (int)grdMilestones.DataKeys[e.Item.ItemIndex];
             string cannotDeleteMessage;
 
-            if (!MilestoneManager.Delete(mileStoneId, out cannotDeleteMessage))
+            if (!MilestoneManager.Delete(id, out cannotDeleteMessage))
             {
                 ActionMessage.ShowErrorMessage(cannotDeleteMessage);
                 return;
             }
 
-            lblError.Visible = false;
             BindMilestones();
         }
 
@@ -207,7 +206,7 @@ namespace BugNET.Administration.Projects.UserControls
                 }
 
                 var cmdDelete = (ImageButton)e.Item.FindControl("cmdDelete");
-                var message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), currentMilestone.Name);
+                var message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), currentMilestone.Name.Replace("'", "\\'"));
                 cmdDelete.Attributes.Add("onclick", String.Format("return confirm('{0}');", message));
             }
 
@@ -266,7 +265,7 @@ namespace BugNET.Administration.Projects.UserControls
             }
             else
             {
-                lblError.Text = LoggingManager.GetErrorMessageResource("SaveMilestoneError");
+                ActionMessage.ShowErrorMessage(LoggingManager.GetErrorMessageResource("SaveMilestoneError"));
             }
         }
 

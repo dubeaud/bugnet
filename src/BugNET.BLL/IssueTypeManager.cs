@@ -47,15 +47,30 @@ namespace BugNET.BLL
         }
 
         /// <summary>
-        /// Deletes the type of the issue.
+        /// Deletes the Issue Type.
         /// </summary>
-        /// <param name="issueTypeId">The issue type id.</param>
+        /// <param name="id">The id for the item to be deleted.</param>
+        /// <param name="cannotDeleteMessage">If</param>
         /// <returns></returns>
-        public static bool DeleteIssueType(int issueTypeId)
+        public static bool Delete(int id, out string cannotDeleteMessage)
         {
-            if (issueTypeId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("issueTypeId"));
+            if (id <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("id"));
 
-            return DataProviderManager.Provider.DeleteIssueType(issueTypeId);
+            var entity = GetById(id);
+
+            cannotDeleteMessage = string.Empty;
+
+            if (entity == null) return true;
+
+            var canBeDeleted = DataProviderManager.Provider.CanDeleteIssueType(entity.Id);
+
+            if (canBeDeleted)
+                return DataProviderManager.Provider.DeleteIssueType(entity.Id);
+
+            cannotDeleteMessage = ResourceStrings.GetGlobalResource(GlobalResources.Exceptions, "DeleteItemAssignedToIssueError");
+            cannotDeleteMessage = string.Format(cannotDeleteMessage, entity.Name, "issue type");
+
+            return false;
         }
 
         /// <summary>
