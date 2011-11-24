@@ -315,7 +315,7 @@ namespace BugNET.BLL
 
             var context = new NotificationContext
                               {
-                                  BodyText = String.Format(template, HostSettingManager.Get(HostSettingNames.ApplicationTitle)),
+                                  BodyText = String.Format(template, HostSettingManager.Get(HostSettingNames.ApplicationTitle),user.GetPassword()),
                                   EmailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text), 
                                   Subject = subject, 
                                   UserDisplayName = displayname, 
