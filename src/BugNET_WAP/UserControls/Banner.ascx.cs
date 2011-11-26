@@ -99,16 +99,13 @@ namespace BugNET.UserControls
                 {
                     // do the as test to to see if the basepage is the same as page
                     // if not the page parameter will be null and no exception will bethrown
-                    BugNET.UserInterfaceLayer.BasePage page = this.Page as BugNET.UserInterfaceLayer.BasePage;
+                    var page = Page as UserInterfaceLayer.BasePage;
 
                     if (page != null)
                     {
                         return page.ProjectId;
                     }
-                    else
-                    {
-                        return -1;
-                    }
+                    return -1;
                 }
                 catch
                 {
@@ -166,15 +163,18 @@ namespace BugNET.UserControls
             // eg "AGN-123 or BUGNET-12 or B-9912"
             var issueIdString = txtIssueId.Text.Trim();
             QuickError.Visible = false;
-            var invalidMessage = string.Format(GetGlobalResourceObject("Exceptions", "InvalidBugNetId").ToString(), issueIdString);
+
+            //MissingQuickSearchText
+            string invalidMessage;
 
             if (issueIdString.Length == 0)
             {
-                invalidMessage = string.Format(invalidMessage, issueIdString);
+                invalidMessage = GetGlobalResourceObject("Exceptions", "MissingQuickSearchText").ToString();
             }
             else
             {
                 var issueId = Utilities.ParseFullIssueId(issueIdString);
+                invalidMessage = GetGlobalResourceObject("Exceptions", "InvalidQuickSearchText").ToString();
 
                 if (issueId > Globals.NEW_ID)
                 {
@@ -183,8 +183,6 @@ namespace BugNET.UserControls
                         Response.Redirect(string.Format("~/Issues/IssueDetail.aspx?&id={0}", issueId), true);
                         return;
                     }
-
-                    invalidMessage = string.Format(GetGlobalResourceObject("Exceptions", "InvalidIssueId").ToString(), issueIdString);
                 }
             }
 

@@ -205,15 +205,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The supplied BugNET ID [{0}] is not valid or the wrong format.
-        /// </summary>
-        internal static string InvalidBugNetId {
-            get {
-                return ResourceManager.GetString("InvalidBugNetId", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The name of the file you have selected is invalid..
         /// </summary>
         internal static string InvalidFileName {
@@ -232,7 +223,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The supplied IssueId [{0}] is not valid..
+        ///   Looks up a localized string similar to The supplied issue id [{0}] is not valid..
         /// </summary>
         internal static string InvalidIssueId {
             get {
@@ -241,11 +232,20 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The supplied ProjectId [{0}] is not valid..
+        ///   Looks up a localized string similar to The supplied project id [{0}] is not valid..
         /// </summary>
         internal static string InvalidProjectId {
             get {
                 return ResourceManager.GetString("InvalidProjectId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The supplied issue id or BugNET id is invalid.
+        /// </summary>
+        internal static string InvalidQuickSearchText {
+            get {
+                return ResourceManager.GetString("InvalidQuickSearchText", resourceCulture);
             }
         }
         
@@ -273,6 +273,15 @@ namespace Resources {
         internal static string MailboxReaderError {
             get {
                 return ResourceManager.GetString("MailboxReaderError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The search value cannot be blank, please enter either an issue id or a BugNET id.
+        /// </summary>
+        internal static string MissingQuickSearchText {
+            get {
+                return ResourceManager.GetString("MissingQuickSearchText", resourceCulture);
             }
         }
         
@@ -313,7 +322,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Project not found for ProjectId [{0}]..
+        ///   Looks up a localized string similar to Project not found for project id [{0}]..
         /// </summary>
         internal static string ProjectNotFoundError {
             get {

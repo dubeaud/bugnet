@@ -130,7 +130,7 @@ namespace BugNET.Issues
                 if (issue.Visibility == (int)Globals.IssueVisibility.Private && issue.AssignedDisplayName != Security.GetUserName() && issue.CreatorDisplayName != Security.GetUserName() && !UserManager.IsInRole(Globals.SUPER_USER_ROLE) && !UserManager.IsInRole(Globals.ProjectAdminRole))
                     ErrorRedirector.TransferToLoginPage(Page);
 
-                Page.Title = string.Concat(issue.FullId, ": ", issue.Title);
+                Page.Title = string.Concat(issue.FullId, ": ", Server.HtmlDecode(issue.Title));
                 lblIssueNumber.Text = string.Format("{0}-{1}", p.Code, IssueId);
                 ctlIssueTabs.Visible = true;
                 TimeLogged.Visible = true;
