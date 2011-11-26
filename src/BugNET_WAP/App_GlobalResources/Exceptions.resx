@@ -166,6 +166,9 @@
   <data name="DeleteStatusError" xml:space="preserve">
     <value>Could not delete status</value>
   </data>
+  <data name="InvalidBugNetId" xml:space="preserve">
+    <value>The supplied BugNET ID [{0}] is not valid or the wrong format</value>
+  </data>
   <data name="InvalidFileName" xml:space="preserve">
     <value>The name of the file you have selected is invalid.</value>
   </data>

@@ -205,6 +205,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The supplied BugNET ID [{0}] is not valid or the wrong format.
+        /// </summary>
+        internal static string InvalidBugNetId {
+            get {
+                return ResourceManager.GetString("InvalidBugNetId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The name of the file you have selected is invalid..
         /// </summary>
         internal static string InvalidFileName {

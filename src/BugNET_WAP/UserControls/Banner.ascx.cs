@@ -164,71 +164,33 @@ namespace BugNET.UserControls
             // Some code improvements to reduce errors on searching using the quick find box.
             // Also new feature to recognize a BugNet IssueID and try to search on that.
             // eg "AGN-123 or BUGNET-12 or B-9912"
+            var issueIdString = txtIssueId.Text.Trim();
+            QuickError.Visible = false;
+            var invalidMessage = string.Format(GetGlobalResourceObject("Exceptions", "InvalidBugNetId").ToString(), issueIdString);
 
-            string strsearch = txtIssueId.Text.Trim();
-            bool validflag = false;
-            if (strsearch.Length != 0)
+            if (issueIdString.Length == 0)
             {
-                // turn off the error message
-                this.QuickError.Visible = false;
-                int IssueId = -1;
-                try
-                {
-                    // First check.. Is this an integer?
-                   IssueId= int.Parse(strsearch);
-                    validflag = true;
-                }
-                catch
-                {
-                    // Not an integer.
-                    //
-                    // Test if the search box contain a valid BUGNET reference number 
-                    // eg "AGN-123 or BUGNET-12 or B-9912"
+                invalidMessage = string.Format(invalidMessage, issueIdString);
+            }
+            else
+            {
+                var issueId = Utilities.ParseFullIssueId(issueIdString);
 
-                    if (strsearch.Contains("-"))
+                if (issueId > Globals.NEW_ID)
+                {
+                    if (IssueManager.IsValidId(issueId))
                     {
-                        try
-                        {
-                            IssueId= int.Parse(strsearch.Substring(strsearch.IndexOf('-')+1));
-                            validflag = true;
-                        }
-                        catch
-                        {
-                            // the invalid flag is already set
-                        }
-                    }
-
-                    if (!validflag)
-                    {
-                        // Display secondary search error
-                        this.QuickError.Visible = true;
-                        this.QuickError.Text = "Enter a number or a BugNet ID.";
+                        Response.Redirect(string.Format("~/Issues/IssueDetail.aspx?&id={0}", issueId), true);
                         return;
                     }
-                }
 
-                // zero is a reserved ID
-                if (IssueId == 0)
-                {                    
-                    validflag = false;
-                }
-
-                if (validflag)
-                {
-                    //if (IssueManager.IsValidId(IssueId))
-                    //{
-                    //    Response.Redirect(string.Format("~/Issues/IssueDetail.aspx?&id={0}", IssueId.ToString()));
-                    //}
-                    //else validflag = false;
-                }
-
-                if (!validflag)
-                {
-                    // Display primary search error
-                    this.QuickError.Visible = true;
-                    this.QuickError.Text = "Invalid Issue ID";
+                    invalidMessage = string.Format(GetGlobalResourceObject("Exceptions", "InvalidIssueId").ToString(), issueIdString);
                 }
             }
+
+            // Display secondary search error
+            QuickError.Visible = true;
+            QuickError.Text = invalidMessage;
         }
     }
 }

@@ -211,27 +211,5 @@ namespace BugNET.Common
             EditQuery = 32
         }
         #endregion
-
-        /// <summary>
-        /// Parses the full issue id.
-        /// </summary>
-        /// <param name="fullId">The full id.</param>
-        /// <returns></returns>
-        public static int ParseFullIssueId(string fullId)
-        {
-            var split = fullId.Split('-');
-
-            if (split.Length > 1)
-                return Convert.ToInt32(split[1]);
-
-            try
-            {
-                return Convert.ToInt32(split[0]);
-            }
-            catch
-            {
-                return -1;
-            }
-        }
     }
 }

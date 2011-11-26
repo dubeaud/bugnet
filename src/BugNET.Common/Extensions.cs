@@ -29,7 +29,7 @@ namespace BugNET.Common
         /// <returns>A string that represents Xml, empty oterwise</returns>
         public static string ToXml<T>(this T obj) where T : class
         {
-            var settings = new XmlWriterSettings {OmitXmlDeclaration = true};
+            var settings = new XmlWriterSettings { OmitXmlDeclaration = true };
             var builder = new StringBuilder();
             var xmlnsEmpty = new XmlSerializerNamespaces();
             xmlnsEmpty.Add("", ""); // kill any namespaces
@@ -58,6 +58,35 @@ namespace BugNET.Common
         #endregion
 
         #region To X conversions
+
+        public static T To<T>(this IConvertible obj)
+        {
+            var t = typeof(T);
+
+            if (!t.IsGenericType || (t.GetGenericTypeDefinition() != typeof (Nullable<>)))
+            {
+                return (T) Convert.ChangeType(obj, t);
+            }
+
+            if (obj == null)
+            {
+                return (T)(object)null;
+            }
+
+            return (T) Convert.ChangeType(obj, Nullable.GetUnderlyingType(t));
+        }
+
+        public static T ToOrDefault<T>(this IConvertible obj, T defaultValue)
+        {
+            try
+            {
+                return To<T>(obj);
+            }
+            catch
+            {
+                return defaultValue;
+            }
+        }
 
         /// <summary>
         /// Checks to see if an int is a valid bool, used when the number 1 is stored as a true value
@@ -257,19 +286,19 @@ namespace BugNET.Common
                     var value0 = Boolean.Parse(inputs[0]);
                     var value1 = Boolean.Parse(inputs[1]);
 
-                    value = (T) Convert.ChangeType(value0 || value1, typeof (T));
+                    value = (T)Convert.ChangeType(value0 || value1, typeof(T));
                 }
                 else
                 {
-                    if (typeof (T).IsEnum)
+                    if (typeof(T).IsEnum)
                     {
                         int v;
                         if (int.TryParse(input.ToString(), out v))
-                            value = (T) Convert.ChangeType(input, typeof (int));
+                            value = (T)Convert.ChangeType(input, typeof(int));
                         else
-                            value = (T) Enum.Parse(typeof (T), input.ToString());
+                            value = (T)Enum.Parse(typeof(T), input.ToString());
                     }
-                    else if (typeof (T) == typeof (bool))
+                    else if (typeof(T) == typeof(bool))
                     {
                         var v = input.ToString().ToLower();
 
@@ -277,29 +306,29 @@ namespace BugNET.Common
                         {
                             case "true":
                             case "1":
-                                value = (T) Convert.ChangeType("true", typeof (bool));
+                                value = (T)Convert.ChangeType("true", typeof(bool));
                                 break;
                             case "false":
                             case "0":
-                                value = (T) Convert.ChangeType("false", typeof (bool));
+                                value = (T)Convert.ChangeType("false", typeof(bool));
                                 break;
                         }
                     }
-                    else if (typeof (T).IsGenericType &&
-                             typeof (T).GetGenericTypeDefinition().Equals(typeof (Nullable<>)))
+                    else if (typeof(T).IsGenericType &&
+                             typeof(T).GetGenericTypeDefinition().Equals(typeof(Nullable<>)))
                     {
-                        var nc = new NullableConverter(typeof (T));
+                        var nc = new NullableConverter(typeof(T));
                         var underlyingType = nc.UnderlyingType;
 
                         if (underlyingType.IsEnum)
                         {
                             int v;
                             if (int.TryParse(input.ToString(), out v))
-                                value = (T) Convert.ChangeType(input, typeof (int));
+                                value = (T)Convert.ChangeType(input, typeof(int));
                             else
-                                value = (T) Enum.Parse(typeof (T), input.ToString());
+                                value = (T)Enum.Parse(typeof(T), input.ToString());
                         }
-                        else if (underlyingType == typeof (bool))
+                        else if (underlyingType == typeof(bool))
                         {
                             var v = input.ToString().ToLower();
 
@@ -307,21 +336,21 @@ namespace BugNET.Common
                             {
                                 case "true":
                                 case "1":
-                                    value = (T) Convert.ChangeType("true", typeof (bool));
+                                    value = (T)Convert.ChangeType("true", typeof(bool));
                                     break;
                                 case "false":
                                 case "0":
-                                    value = (T) Convert.ChangeType("false", typeof (bool));
+                                    value = (T)Convert.ChangeType("false", typeof(bool));
                                     break;
                             }
                         }
                         else
                         {
-                            value = (T) Convert.ChangeType(input, underlyingType);
+                            value = (T)Convert.ChangeType(input, underlyingType);
                         }
                     }
                     else
-                        value = (T) Convert.ChangeType(input, typeof (T));
+                        value = (T)Convert.ChangeType(input, typeof(T));
                 }
             }
             return value;

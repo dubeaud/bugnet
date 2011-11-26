@@ -8,6 +8,20 @@ namespace BugNET.Common
 {
     public static class Utilities
     {
+        /// <summary>
+        /// Parses the full issue id.
+        /// </summary>
+        /// <param name="fullId">The full id.</param>
+        /// <returns></returns>
+        public static int ParseFullIssueId(string fullId)
+        {
+            var lastDashPos = fullId.LastIndexOf("-");
+
+            if (lastDashPos > 0) 
+                fullId = fullId.Substring(lastDashPos+1);
+
+            return fullId.ToOrDefault(-1);
+        }
 
         /// <summary>
         /// This checks the Project upload path within the context of the 

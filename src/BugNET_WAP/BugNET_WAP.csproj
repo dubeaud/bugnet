@@ -1353,7 +1353,9 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.sitemap" />
+    <Content Include="Web.sitemap">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Account\Web.config" />
     <Content Include="Administration\Web.config" />
     <None Include="Providers\HtmlEditorProviders\CKEditor\ckeditor.pack" />
