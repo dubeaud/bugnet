@@ -23,7 +23,7 @@
             <ItemStyle Width="16px" />
             <ItemTemplate>
                 <asp:ImageButton ToolTip="<%$ Resources:SharedResources, Delete %>" AlternateText="<%$ Resources:SharedResources, Delete %>" CssClass="icon" ID="lnkDeleteAttachment" ImageUrl="~/images/cross.gif"
-                    BorderWidth="0px" CommandName="Delete" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>' runat="server" />
+                    BorderWidth="0px" CommandName="Delete" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>' runat="server" Visible="false" />
             </ItemTemplate>
         </asp:TemplateColumn>
     </Columns>

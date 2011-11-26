@@ -36,10 +36,10 @@
                 <p class="commentTitle" style="margin-left: 60px;">
                     <span style="float: right;">&nbsp;
                         <asp:ImageButton ID="cmdEditComment" ToolTip="<%$ Resources:SharedResources, Edit %>" AlternateText="<%$ Resources:SharedResources, Edit %>" CssClass="icon" ImageUrl="~/images/pencil.gif"
-                            BorderWidth="0px" CommandName="Edit" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>' runat="server" />
+                            BorderWidth="0px" CommandName="Edit" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>' runat="server" Visible="false" />
                         &nbsp;
                         <asp:ImageButton ID="cmdDeleteComment" ToolTip="<%$ Resources:SharedResources, Delete %>" AlternateText="<%$ Resources:SharedResources, Delete %>" CssClass="icon" ImageUrl="~/images/cross.gif"
-                            BorderWidth="0px" CommandName="Delete" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>' runat="server" />
+                            BorderWidth="0px" CommandName="Delete" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>' runat="server" Visible="false" />
                     </span>
                     <span>
                         <asp:Label CssClass="commentAuthor" ID="CreatorDisplayName" runat="server" />
@@ -71,10 +71,10 @@
                 <p class="commentTitle" style="margin-left: 60px;">
                     <span style="float: right;">&nbsp;
                         <asp:ImageButton ID="cmdEditComment" ToolTip="<%$ Resources:SharedResources, Edit %>" AlternateText="<%$ Resources:SharedResources, Edit %>" CssClass="icon" ImageUrl="~/images/pencil.gif"
-                            BorderWidth="0px" CommandName="Edit" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>' runat="server" />
+                            BorderWidth="0px" CommandName="Edit" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>' runat="server" Visible="false" />
                         &nbsp;
                         <asp:ImageButton ID="cmdDeleteComment" ToolTip="<%$ Resources:SharedResources, Delete %>" AlternateText="<%$ Resources:SharedResources, Delete %>" CssClass="icon" ImageUrl="~/images/cross.gif"
-                            BorderWidth="0px" CommandName="Delete" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>' runat="server" />
+                            BorderWidth="0px" CommandName="Delete" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>' runat="server" Visible="false" />
                     </span>
                     <span>
                         <asp:Label CssClass="commentAuthor" ID="CreatorDisplayName" runat="server" />

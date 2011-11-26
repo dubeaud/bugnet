@@ -131,28 +131,28 @@ namespace BugNET.Issues.UserControls
             hlPermaLink.NavigateUrl = String.Format("{0}#{1}", HttpContext.Current.Request.Url, currentComment.Id);
 
 
-            var lnkEditComment = e.Item.FindControl("lnkEditComment") as LinkButton;
+            var cmdEditComment = e.Item.FindControl("cmdEditComment") as ImageButton;
 
             // Check if the current user is Authenticated and has permission to edit a comment.
-            if (lnkEditComment != null)
+            if (cmdEditComment != null)
             {
-                lnkEditComment.Visible = false;
+                cmdEditComment.Visible = false;
 
                 // Check if the current user is Authenticated and has permission to edit a comment.//If user can edit comments
                 if (Page.User.Identity.IsAuthenticated && UserManager.HasPermission(ProjectId, Globals.Permission.EditComment.ToString()))
-                    lnkEditComment.Visible = true;
+                    cmdEditComment.Visible = true;
                     // Check if the project admin or a super user trying to edit the comment.
                 else if ((Page.User.Identity.IsAuthenticated && UserManager.IsInRole(Globals.SUPER_USER_ROLE)) || (Page.User.Identity.IsAuthenticated && UserManager.IsInRole(this.ProjectId, Globals.ProjectAdminRole)))
-                    lnkEditComment.Visible = true;
+                    cmdEditComment.Visible = true;
                     // Check if it is the original user, the project admin or a super user trying to edit the comment.
                 else if (currentComment.CreatorUserName.ToLower() == Context.User.Identity.Name.ToLower() && UserManager.HasPermission(ProjectId, Globals.Permission.OwnerEditComment.ToString()))
-                    lnkEditComment.Visible = true;
+                    cmdEditComment.Visible = true;
             }
+
+            var cmdDeleteComment = e.Item.FindControl("cmdDeleteComment") as ImageButton;
 
             // Check if the current user is Authenticated and has the permission to delete a comment			
             if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.DeleteComment.ToString())) return;
-
-            var cmdDeleteComment = e.Item.FindControl("cmdDeleteComment") as ImageButton;
 
             if (cmdDeleteComment == null) return;
 
