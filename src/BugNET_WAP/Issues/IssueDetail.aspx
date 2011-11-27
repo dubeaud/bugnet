@@ -15,23 +15,35 @@
         CssClass="validationSummary" runat="server" />
     <bn:Message ID="Message1" runat="server" Width="100%" Visible="False" />
     <asp:Panel ID="pnlBugNavigation" Style="height: 25px;" runat="server">
-        <div style="float: right; text-align: right;">
-            <span style="padding-right: 5px;">
-                <asp:ImageButton ID="imgSave" OnClick="lnkSave_Click" runat="server" CssClass="icon" ImageUrl="~\images\disk.gif" />
-                <asp:LinkButton ID="lnkSave" OnClick="lnkSave_Click" runat="server" Text="<%$ Resources:SharedResources, Save %>" />
-            </span><span style="padding-right: 5px; padding-left: 10px; border-left: 1px dotted #ccc">
-                <asp:ImageButton ID="imgDone" OnClick="lnkDone_Click" runat="server" CssClass="icon" ImageUrl="~\images\disk.gif" />
-                <asp:LinkButton ID="lnkDone" OnClick="lnkDone_Click" runat="server" meta:resourcekey="SaveReturn" Text="Save &amp; Return" />
-            </span><span style="padding-right: 5px; padding-left: 10px; border-left: 1px dotted #ccc">
-                <asp:ImageButton ID="Imagebutton1" OnClick="CancelButtonClick" CausesValidation="false" runat="server" CssClass="icon" ImageUrl="~\images\lt.gif" />
-                <asp:LinkButton ID="LinkButton1" OnClick="CancelButtonClick" CausesValidation="false" runat="server" Text="<%$ Resources:SharedResources, Cancel %>" />
-            </span><span style="padding-left: 10px; padding-right: 5px; border-left: 1px dotted #ccc" runat="server" id="DeleteButton"
-                visible="False">
-                <asp:ImageButton ID="imgDelete" OnClick="lnkDelete_Click" runat="server" CssClass="icon" ImageUrl="~\images\cross.gif" />
-                <asp:LinkButton ID="lnkDelete" OnClick="lnkDelete_Click" CausesValidation="false" runat="server" Text="<%$ Resources:SharedResources, Delete %>" />
-            </span>
+        <div class="float-right">
+            <ul id="horizontal-list">
+                <li id="IssueActionSave" runat="server">
+                    <span style="padding-right: 5px; border-right: 1px dotted #ccc">
+                        <asp:ImageButton ID="imgSave" OnClick="LnkSaveClick" runat="server" CssClass="icon" ImageUrl="~\images\disk.gif" />
+                        <asp:LinkButton ID="lnkSave" OnClick="LnkSaveClick" runat="server" Text="<%$ Resources:SharedResources, Save %>" />
+                    </span>
+                </li>
+                <li id="IssueActionSaveAndReturn" runat="server">
+                    <span style="padding-right: 5px; padding-left: 10px; border-right: 1px dotted #ccc">
+                        <asp:ImageButton ID="imgDone" OnClick="LnkDoneClick" runat="server" CssClass="icon" ImageUrl="~\images\disk.gif" />
+                        <asp:LinkButton ID="lnkDone" OnClick="LnkDoneClick" runat="server" meta:resourcekey="SaveReturn" Text="Save &amp; Return" />
+                    </span>                
+                </li>
+                <li id="IssueActionDelete" runat="server">
+                    <span style="padding-left: 10px; padding-right: 5px; border-right: 1px dotted #ccc">
+                        <asp:ImageButton ID="imgDelete" OnClick="LnkDeleteClick" runat="server" CssClass="icon" ImageUrl="~\images\cross.gif" />
+                        <asp:LinkButton ID="lnkDelete" OnClick="LnkDeleteClick" CausesValidation="false" runat="server" Text="<%$ Resources:SharedResources, Delete %>" />
+                    </span>                   
+                </li>
+                <li id="IssueActionCancel" runat="server">
+                    <span style="padding-right: 5px; padding-left: 10px;">
+                        <asp:ImageButton ID="imgCancel" OnClick="CancelButtonClick" CausesValidation="false" runat="server" CssClass="icon" ImageUrl="~\images\lt.gif" />
+                        <asp:LinkButton ID="lnkCancel" OnClick="CancelButtonClick" CausesValidation="false" runat="server" Text="<%$ Resources:SharedResources, Cancel %>" />
+                    </span>                  
+                </li>
+            </ul>
         </div>
-        <div style="float: left; font-weight: bold;">
+        <div class="float-left text-bold">
             <asp:Label ID="Label5" Font-Size="12px" runat="server" Text="Issue:" />
             <asp:Label ID="lblIssueNumber" Font-Size="12px" runat="server"></asp:Label>
         </div>
@@ -52,7 +64,7 @@
                                             <asp:Label ID="Votes" runat="server" Text="vote" CssClass="votes" />
                                         </div>
                                         <div class="bottom">
-                                            <asp:LinkButton ID="VoteButton" OnClick="VoteButton_Click" CausesValidation="false" runat="server" Text="vote" />
+                                            <asp:LinkButton ID="VoteButton" OnClick="VoteButtonClick" CausesValidation="false" runat="server" Text="vote" />
                                             <asp:Label ID="VotedLabel" runat="Server" Text="voted" />
                                         </div>
                                     </div>
@@ -61,7 +73,7 @@
                                     <asp:UpdatePanel ID="UpdatePanel2" runat="server">
                                         <ContentTemplate>
                                             <asp:ImageButton ID="EditTitle" Style="float: left; margin: 5px;" Visible="false" CssClass="icon" CommandName="Edit" CausesValidation="False"
-                                                OnClick="EditTitle_Click" ImageAlign="middle" ImageUrl="~/images/pencil.gif" BorderWidth="0px" runat="server" />
+                                                OnClick="EditTitleClick" ImageAlign="middle" ImageUrl="~/images/pencil.gif" BorderWidth="0px" runat="server" />
                                             <asp:Label ID="TitleLabel" Visible="false" runat="server" AssociatedControlID="TitleTextBox" meta:resourcekey="TitleLabel"></asp:Label>
                                             <asp:TextBox ID="TitleTextBox" Visible="False" Width="95%" runat="server" />
                                             <asp:RequiredFieldValidator ControlToValidate="TitleTextBox" ErrorMessage="<%$ Resources:IssueTitleRequiredErrorMessage %>"
@@ -84,7 +96,7 @@
                     <asp:Label ID="ByLabel" runat="server" meta:resourcekey="ByLabel" Text="By" />
                     <asp:Label ID="lblReporter" runat="server" />
                     on
-                    <asp:Label CssClass="small" ID="lblDateCreated" runat="server" />
+                    <asp:Label ID="lblDateCreated" runat="server" />
                 </td>
                 <td colspan="2" style="padding-bottom: 13px;">
                     <asp:Label ID="LastModifiedLabel" runat="server" meta:resourcekey="LastUpdateLabel"></asp:Label>
@@ -206,7 +218,7 @@
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>
                 <p style="margin-top: 8px; padding: 8px 0 8px 0; border-top: 1px solid #CCCCCC; overflow: auto;">
-                    <asp:ImageButton ID="EditDescription" Visible="false" CssClass="icon" OnClick="EditDescription_Click" CausesValidation="False"
+                    <asp:ImageButton ID="EditDescription" Visible="false" CssClass="icon" OnClick="EditDescriptionClick" CausesValidation="False"
                         CommandName="Edit" ImageUrl="~/images/pencil.gif" BorderWidth="0px" runat="server" />&nbsp;<strong><asp:Label ID="DescriptionLabel"
                             runat="server" Text="<%$ Resources:SharedResources, Description %>"></asp:Label></strong>
                 </p>

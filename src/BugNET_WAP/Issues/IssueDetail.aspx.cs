@@ -48,7 +48,7 @@ namespace BugNET.Issues
                     TitleLabel.Visible = false;
                     DisplayTitleLabel.Visible = false;
                     Page.Title = GetLocalResourceObject("PageTitleNewIssue").ToString();
-                    lblIssueNumber.Text = "N/A";
+                    lblIssueNumber.Text = GetGlobalResourceObject("SharedResources", "NotAvailableAbbr").ToString();
                     VoteButton.Visible = false;
                 }
                 else
@@ -70,8 +70,8 @@ namespace BugNET.Issues
             }
 
             //need to rebind these on every postback because of dynamic controls
-            ctlCustomFields.DataSource = IssueId == 0 ? 
-                CustomFieldManager.GetByProjectId(ProjectId) : 
+            ctlCustomFields.DataSource = IssueId == 0 ?
+                CustomFieldManager.GetByProjectId(ProjectId) :
                 CustomFieldManager.GetByIssueId(IssueId);
 
             ctlCustomFields.DataBind();
@@ -148,11 +148,10 @@ namespace BugNET.Issues
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void Page_Unload(object sender, System.EventArgs e)
+        protected void Page_Unload(object sender, EventArgs e)
         {
             //remove the event handler
-            SiteMap.SiteMapResolve -=
-             new SiteMapResolveEventHandler(this.ExpandIssuePaths);
+            SiteMap.SiteMapResolve -= ExpandIssuePaths;
         }
 
         /// <summary>
@@ -163,8 +162,8 @@ namespace BugNET.Issues
         /// <returns></returns>
         private SiteMapNode ExpandIssuePaths(Object sender, SiteMapResolveEventArgs e)
         {
-            SiteMapNode currentNode = SiteMap.CurrentNode.Clone(true);
-            SiteMapNode tempNode = currentNode;
+            var currentNode = SiteMap.CurrentNode.Clone(true);
+            var tempNode = currentNode;
 
             // The current node, and its parents, can be modified to include
             // dynamic query string information relevant to the currently
@@ -176,7 +175,7 @@ namespace BugNET.Issues
                 tempNode.Url = string.Concat(tempNode.Url, "?id=", IssueId);
             }
             else
-                tempNode.Title = "New Issue";
+                tempNode.Title = GetGlobalResourceObject("SharedResources", "NewIssue").ToString();
 
             if ((null != (tempNode = tempNode.ParentNode)))
             {
@@ -288,19 +287,15 @@ namespace BugNET.Issues
             DropResolution.DataBind();
 
             //Get categories
-            CategoryTree categories = new CategoryTree();
+            var categories = new CategoryTree();
             DropCategory.DataSource = categories.GetCategoryTreeByProjectId(ProjectId);
             DropCategory.DataBind();
 
             //Get milestones
-            if (IssueId == 0)
-            {
-                DropMilestone.DataSource = MilestoneManager.GetByProjectId(ProjectId, false);
-            }
-            else
-            {
-                DropMilestone.DataSource = MilestoneManager.GetByProjectId(ProjectId);
-            }
+            DropMilestone.DataSource = (IssueId == 0) ?
+                MilestoneManager.GetByProjectId(ProjectId, false) :
+                MilestoneManager.GetByProjectId(ProjectId);
+
             DropMilestone.DataBind();
 
             DropAffectedMilestone.DataSource = MilestoneManager.GetByProjectId(ProjectId);
@@ -320,12 +315,10 @@ namespace BugNET.Issues
             lblDateCreated.Text = DateTime.Now.ToString("f");
             lblLastModified.Text = DateTime.Now.ToString("f");
 
-            if (User.Identity.IsAuthenticated)
-            {
-                lblReporter.Text = Security.GetDisplayName();
-                lblLastUpdateUser.Text = Security.GetDisplayName();
-            }
+            if (!User.Identity.IsAuthenticated) return;
 
+            lblReporter.Text = Security.GetDisplayName();
+            lblLastUpdateUser.Text = Security.GetDisplayName();
         }
 
         /// <summary>
@@ -336,7 +329,7 @@ namespace BugNET.Issues
         {
             decimal estimation;
             decimal.TryParse(txtEstimation.Text.Trim(), out estimation);
-            var dueDate = DueDatePicker.SelectedValue == null ?  DateTime.MinValue : (DateTime)DueDatePicker.SelectedValue;
+            var dueDate = DueDatePicker.SelectedValue == null ? DateTime.MinValue : (DateTime)DueDatePicker.SelectedValue;
 
             var isNewIssue = (IssueId <= 0);
 
@@ -408,7 +401,7 @@ namespace BugNET.Issues
 
             if (!CustomFieldManager.SaveCustomFieldValues(IssueId, ctlCustomFields.Values))
             {
-                Message1.ShowErrorMessage(Resources.Exceptions.SaveCustomFieldValuesError); 
+                Message1.ShowErrorMessage(Resources.Exceptions.SaveCustomFieldValuesError);
                 return false;
             }
 
@@ -451,17 +444,17 @@ namespace BugNET.Issues
 
                         if (!IssueAttachmentManager.SaveOrUpdate(issueAttachment))
                         {
-                            Message1.ShowErrorMessage(string.Format(GetGlobalResourceObject("Exceptions","SaveAttachmentError").ToString(), uploadFile.FileName)); 
+                            Message1.ShowErrorMessage(string.Format(GetGlobalResourceObject("Exceptions", "SaveAttachmentError").ToString(), uploadFile.FileName));
                         }
                     }
 
                 }
                 else
-                    Message1.ShowErrorMessage(inValidReason); 
+                    Message1.ShowErrorMessage(inValidReason);
 
 
                 //create a vote for the new issue
-                var vote = new IssueVote { IssueId = IssueId, VoteUsername = Security.GetUserName()};
+                var vote = new IssueVote { IssueId = IssueId, VoteUsername = Security.GetUserName() };
 
                 if (!IssueVoteManager.SaveOrUpdate(vote))
                     Message1.ShowErrorMessage(Resources.Exceptions.SaveIssueVoteError);
@@ -471,9 +464,9 @@ namespace BugNET.Issues
                     var oUser = UserManager.GetUser(issue.OwnerUserName);
                     if (oUser != null)
                     {
-                        var notify = new IssueNotification { IssueId = IssueId, NotificationUsername = oUser.UserName};
+                        var notify = new IssueNotification { IssueId = IssueId, NotificationUsername = oUser.UserName };
                         IssueNotificationManager.SaveOrUpdate(notify);
-                       
+
                     }
                 }
                 if (chkNotifyAssignedTo.Checked && !string.IsNullOrEmpty(issue.AssignedUserName))
@@ -496,7 +489,7 @@ namespace BugNET.Issues
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void lnkSave_Click(object sender, EventArgs e)
+        protected void LnkSaveClick(object sender, EventArgs e)
         {
             if (!Page.IsValid) return;
 
@@ -509,10 +502,10 @@ namespace BugNET.Issues
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void VoteButton_Click(object sender, EventArgs e)
+        protected void VoteButtonClick(object sender, EventArgs e)
         {
             if (!User.Identity.IsAuthenticated)
-                Response.Redirect(string.Format("~/Login.aspx?ReturnUrl={0}", Server.UrlEncode(Request.RawUrl)));
+                Response.Redirect(string.Format("~/Account/Login.aspx?ReturnUrl={0}", Server.UrlEncode(Request.RawUrl)));
 
             var vote = new IssueVote { IssueId = IssueId, VoteUsername = Security.GetUserName() };
             IssueVoteManager.SaveOrUpdate(vote);
@@ -531,7 +524,7 @@ namespace BugNET.Issues
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void lnkDone_Click(object sender, EventArgs e)
+        protected void LnkDoneClick(object sender, EventArgs e)
         {
             if (Page.IsValid && SaveIssue())
                 ReturnToPreviousPage();
@@ -542,7 +535,7 @@ namespace BugNET.Issues
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
-        protected void lnkDelete_Click(object sender, EventArgs e)
+        protected void LnkDeleteClick(object sender, EventArgs e)
         {
             IssueManager.Delete(IssueId);
             ReturnToPreviousPage();
@@ -566,7 +559,7 @@ namespace BugNET.Issues
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Web.UI.ImageClickEventArgs"/> instance containing the event data.</param>
-        protected void EditTitle_Click(object sender, ImageClickEventArgs e)
+        protected void EditTitleClick(object sender, ImageClickEventArgs e)
         {
             EditTitle.Visible = false;
             TitleTextBox.Visible = !TitleTextBox.Visible;
@@ -578,7 +571,7 @@ namespace BugNET.Issues
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void EditDescription_Click(object sender, ImageClickEventArgs e)
+        protected void EditDescriptionClick(object sender, ImageClickEventArgs e)
         {
             EditDescription.Visible = false;
             DescriptionHtmlEditor.Visible = !DescriptionHtmlEditor.Visible;
@@ -610,7 +603,7 @@ namespace BugNET.Issues
 
                 //delete issue
                 if (UserManager.HasPermission(ProjectId, Globals.Permission.DeleteIssue.ToString()))
-                    DeleteButton.Visible = true;
+                    IssueActionDelete.Visible = true;
 
                 if (!UserManager.HasPermission(ProjectId, Globals.Permission.ChangeIssueStatus.ToString()))
                     DropStatus.Enabled = false;
@@ -645,15 +638,13 @@ namespace BugNET.Issues
         /// </summary>
         private void LockFields()
         {
-            lnkDone.Visible = false;
-            imgDone.Visible = false;
-            //lnkSave.Visible = false;
-            //imgSave.Visible = false;
-            imgDelete.Visible = false;
-            lnkDelete.Visible = false;
-           // DescriptionHtmlEditor.Visible = false;
+            IssueActionCancel.Visible = true;
+
+            IssueActionSave.Visible = false;
+            IssueActionSaveAndReturn.Visible = false;
+            IssueActionDelete.Visible = false;
+
             Description.Visible = true;
-            //TitleTextBox.Visible = false;
             DisplayTitleLabel.Visible = true;
             DropOwned.Enabled = false;
             DropCategory.Enabled = false;
