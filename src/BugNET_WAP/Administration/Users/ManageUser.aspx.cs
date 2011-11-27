@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using BugNET.UserInterfaceLayer;
 
 namespace BugNET.Administration.Users
@@ -12,13 +13,12 @@ namespace BugNET.Administration.Users
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!this.IsPostBack)
-            {
-                if (TabId == 2)
-                    ShowRolesPanel(this, new EventArgs());
-                else
-                    ShowMembershipPanel(this, new EventArgs());
-            }
+            if (IsPostBack) return;
+
+            if (TabId == 2)
+                ShowRolesPanel(this, new EventArgs());
+            else
+                ShowMembershipPanel(this, new EventArgs());
         }
 
         /// <summary>

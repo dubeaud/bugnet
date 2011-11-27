@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.UI.WebControls;
 using BugNET.BLL;
 using BugNET.Common;
@@ -15,153 +16,6 @@ namespace BugNET.Administration.Users
 	{
 
         /// <summary>
-        /// Handles the Load event of the Page control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		protected void Page_Load(object sender, System.EventArgs e)
-		{
-            if (!UserManager.IsInRole(Globals.SUPER_USER_ROLE) && !UserManager.IsInRole("Project Administrators"))
-                Response.Redirect("~/Errors/AccessDenied.aspx");
-
-            if (!IsPostBack)
-            {
-                CreateLetterSearch();
-                BindData(string.Empty);
-            }
-		}
-
-
-        /// <summary>
-        /// Creates the letter search.
-        /// </summary>
-        private void CreateLetterSearch()
-        {
-            string[] Alphabet = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "All", "Unauthorized" };
-            LetterSearch.DataSource = Alphabet;
-            LetterSearch.DataBind();
-        }
-
-        /// <summary>
-        /// Handles the RowCommand event of the gvUsers control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="T:System.Web.UI.WebControls.GridViewCommandEventArgs"/> instance containing the event data.</param>
-        protected void gvUsers_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            switch (e.CommandName)
-            {
-                case "Edit":
-                    Response.Redirect(string.Format("~/Administration/Users/ManageUser.aspx?user={0}", e.CommandArgument.ToString()));
-                    break;
-                case "ManageRoles":
-                    Response.Redirect(string.Format("~/Administration/Users/ManageUser.aspx?user={0}&tabid=2", e.CommandArgument.ToString()));
-                    break;
-                case "Delete":
-                    Response.Redirect(string.Format("~/Administration/Users/ManageUser.aspx?user={0}&tabid=4", e.CommandArgument.ToString()));
-                    break;
-            }
-
-        }
-
-        /// <summary>
-        /// Gets or sets the search filter.
-        /// </summary>
-        /// <value>The search filter.</value>
-        protected string SearchFilter
-        {
-            get { return (string)ViewState["SearchFilter"]; }
-            set { ViewState["SearchFilter"] = value; }
-        }
-
-        /// <summary>
-        /// Binds the data.
-        /// </summary>
-        /// <param name="filter">The filter.</param>
-        private void BindData(string filter)
-        {
-            SearchFilter = filter;
-            string SearchText = SearchFilter;
-            switch (filter)
-            {
-                case "All":
-                    SearchText = string.Empty;
-                    break;
-                case "Unauthorized":
-                    SearchText = string.Empty;
-                    break;
-                default:
-                    SearchText = filter + "%";
-                    break;
-            }
-            List<CustomMembershipUser> users;
-            if (String.IsNullOrEmpty(SearchText))
-            {
-                users = UserManager.GetAllUsers();
-            }
-            else
-            {
-                users = UserManager.FindUsersByName(SearchText);
-            }
-
-            if (filter == "Unauthorized")
-            {
-                List<CustomMembershipUser> UnauthenticatedUsers = new List<CustomMembershipUser>();
-                foreach (CustomMembershipUser user in users)
-                {
-                    if (!user.IsApproved || user.LastLoginDate == DateTime.MinValue)
-                        UnauthenticatedUsers.Add(user);
-                }
-                users = UnauthenticatedUsers;
-            }
-
-            //users.Sort(new UserComparer(SortField, SortAscending)); //TODO Fix this.
-            gvUsers.DataSource = users;
-            gvUsers.DataBind();
-
-        }
-        /// <summary>
-        /// Filters the URL.
-        /// </summary>
-        /// <param name="filter">The filter.</param>
-        /// <param name="currentPage">The current page.</param>
-        protected string FilterUrl(object filter, string currentPage)
-        {
-            string f = (string)filter;
-            string url = Page.TemplateControl.AppRelativeVirtualPath;
-            if (!String.IsNullOrEmpty(f))
-            {
-                url = string.Format("{0}?Filter={1}", url, f);
-            }
-            return this.ResolveUrl(url);
-        }
-
-        /// <summary>
-        /// Handles the Click event of the FilterButton control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
-        protected void FilterButton_Click(object sender, EventArgs e)
-        {
-            LinkButton lb = (LinkButton)sender;
-            BindData(lb.CommandArgument.ToString());
-        }
-
-        /// <summary>
-        /// Handles the RowCreated event of the gvUsers control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Web.UI.WebControls.GridViewRowEventArgs"/> instance containing the event data.</param>
-        protected void gvUsers_RowCreated(object sender, GridViewRowEventArgs e)
-        {
-            if (e.Row.RowType == DataControlRowType.Header)
-            {
-                PresentationUtils.SetSortImageStates(gvUsers, e.Row, 1, SortField, SortAscending);
-            }
-        }
-       
-
-        /// <summary>
         /// Gets or sets the sort field.
         /// </summary>
         /// <value>The sort field.</value>
@@ -169,14 +23,8 @@ namespace BugNET.Administration.Users
         {
             get
             {
-                object o = ViewState["SortField"];
-                if (o == null)
-                {
-                    return String.Empty;
-                }
-                return (string)o;
+                return ViewState.Get("SortField", String.Empty);
             }
-
             set
             {
                 if (value == SortField)
@@ -184,7 +32,7 @@ namespace BugNET.Administration.Users
                     // same as current sort file, toggle sort direction
                     SortAscending = !SortAscending;
                 }
-                ViewState["SortField"] = value;
+                ViewState.Set("SortField", value);
             }
         }
 
@@ -196,27 +44,155 @@ namespace BugNET.Administration.Users
         {
             get
             {
-                object o = ViewState["SortAscending"];
-                if (o == null)
-                {
-                    return true;
-                }
-                return (bool)o;
+                return ViewState.Get("SortAscending", true);
             }
-
             set
             {
-                ViewState["SortAscending"] = value;
+                ViewState.Set("SortAscending", value);
             }
         }
 
+        /// <summary>
+        /// Creates the letter search.
+        /// </summary>
+        void CreateLetterSearch()
+        {
+            string[] alphabet = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "All", "Unauthorized" };
+            LetterSearch.DataSource = alphabet;
+            LetterSearch.DataBind();
+        }
+
+        /// <summary>
+        /// Gets or sets the search filter.
+        /// </summary>
+        /// <value>The search filter.</value>
+        string SearchFilter
+        {
+            get { return ViewState.Get("SearchFilter", String.Empty); }
+            set { ViewState.Set("SearchFilter", value); }
+        }
+
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+		protected void Page_Load(object sender, EventArgs e)
+		{
+            if (!UserManager.IsInRole(Globals.SUPER_USER_ROLE) && !UserManager.IsInRole("Project Administrators"))
+                Response.Redirect("~/Errors/AccessDenied.aspx");
+
+            if (IsPostBack) return;
+
+            CreateLetterSearch();
+            BindData(string.Empty);
+		}
+
+        /// <summary>
+        /// Handles the RowCommand event of the gvUsers control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="T:System.Web.UI.WebControls.GridViewCommandEventArgs"/> instance containing the event data.</param>
+        protected void GvUsersRowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            switch (e.CommandName)
+            {
+                case "Edit":
+                    Response.Redirect(string.Format("~/Administration/Users/ManageUser.aspx?user={0}", e.CommandArgument));
+                    break;
+                case "ManageRoles":
+                    Response.Redirect(string.Format("~/Administration/Users/ManageUser.aspx?user={0}&tabid=2", e.CommandArgument));
+                    break;
+                case "Delete":
+                    Response.Redirect(string.Format("~/Administration/Users/ManageUser.aspx?user={0}&tabid=4", e.CommandArgument));
+                    break;
+            }
+
+        }
+
+        /// <summary>
+        /// Binds the data.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        private void BindData(string filter)
+        {
+            SearchFilter = filter;
+            string searchText;
+
+            switch (filter)
+            {
+                case "All":
+                    searchText = string.Empty;
+                    break;
+                case "Unauthorized":
+                    searchText = string.Empty;
+                    break;
+                default:
+                    searchText = string.Concat(filter, "%");
+                    break;
+            }
+
+            var users = String.IsNullOrEmpty(searchText) ? 
+                UserManager.GetAllUsers() : 
+                UserManager.FindUsersByName(searchText);
+
+            if (filter == "Unauthorized")
+            {
+                users = users.Where(user => !user.IsApproved || user.LastLoginDate == DateTime.MinValue).ToList();
+            }
+
+            var sort = string.Format("{0} {1}", SortField, ((SortAscending) ? "asc" : "desc"));
+
+            gvUsers.DataSource = users.Sort(sort).ToList();
+            gvUsers.DataBind();
+        }
+
+        /// <summary>
+        /// Filters the URL.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <param name="currentPage">The current page.</param>
+        protected string FilterUrl(object filter, string currentPage)
+        {
+            var f = (string)filter;
+            var url = Page.TemplateControl.AppRelativeVirtualPath;
+            if (!String.IsNullOrEmpty(f))
+            {
+                url = string.Format("{0}?Filter={1}", url, f);
+            }
+            return ResolveUrl(url);
+        }
+
+        /// <summary>
+        /// Handles the Click event of the FilterButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
+        protected void FilterButtonClick(object sender, EventArgs e)
+        {
+            var lb = (LinkButton)sender;
+            BindData(lb.CommandArgument);
+        }
+
+        /// <summary>
+        /// Handles the RowCreated event of the gvUsers control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Web.UI.WebControls.GridViewRowEventArgs"/> instance containing the event data.</param>
+        protected void GvUsersRowCreated(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.Header)
+            {
+                PresentationUtils.SetSortImageStates(gvUsers, e.Row, 1, SortField, SortAscending);
+            }
+        }
 
         /// <summary>
         /// Handles the Sorting event of the gvUsers control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Web.UI.WebControls.GridViewSortEventArgs"/> instance containing the event data.</param>
-        protected void gvUsers_Sorting(object sender, GridViewSortEventArgs e)
+        protected void GvUsersSorting(object sender, GridViewSortEventArgs e)
         {
             SortField = e.SortExpression;
             BindData(SearchFilter);
@@ -227,7 +203,7 @@ namespace BugNET.Administration.Users
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
-        protected void AddUser_Click(object sender, EventArgs e)
+        protected void AddUserClick(object sender, EventArgs e)
         {
             Response.Redirect("~/Administration/Users/AddUser.aspx");
         }
@@ -237,17 +213,12 @@ namespace BugNET.Administration.Users
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
-        protected void ibSearch_Click(object sender, EventArgs e)
+        protected void IbSearchClick(object sender, EventArgs e)
         {
-            List<CustomMembershipUser> users;
-            if (SearchField.SelectedValue == "Email")
-            {
-                users = UserManager.FindUsersByEmail(txtSearch.Text + "%");
-            }
-            else
-            {
-                users = UserManager.FindUsersByName(txtSearch.Text + "%");
-            }
+            var users = SearchField.SelectedValue == "Email" ? 
+                UserManager.FindUsersByEmail(txtSearch.Text + "%") : 
+                UserManager.FindUsersByName(txtSearch.Text + "%");
+
             gvUsers.DataSource = users;
             gvUsers.DataBind();
         }
@@ -257,7 +228,7 @@ namespace BugNET.Administration.Users
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="T:System.Web.UI.WebControls.GridViewPageEventArgs"/> instance containing the event data.</param>
-        protected void gvUsers_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        protected void GvUsersPageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvUsers.PageIndex = e.NewPageIndex;
             BindData(SearchFilter);

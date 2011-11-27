@@ -94,70 +94,78 @@ namespace BugNET.BLL
         public static List<CustomMembershipUser> FindUsersByName(string userNameToMatch)
         {
             var userList = new Dictionary<string, CustomMembershipUser>();
+
+            // find standard usernames
             foreach (CustomMembershipUser u in Membership.FindUsersByName(userNameToMatch))
-            {
                 userList[u.UserName] = u;
-            }
 
-            foreach (CustomMembershipUser u in Membership.FindUsersByName("%\\" + userNameToMatch))
-            {
+            // find windows user names [domain\username] pattern
+            foreach (CustomMembershipUser u in Membership.FindUsersByName(string.Concat("%\\", userNameToMatch)))
                 userList[u.UserName] = u;
-            }
 
-            var sb = new StringBuilder();
-            foreach (var c in userNameToMatch)
-            {
-                switch (c)
-                {
-                    case '_':
-                        sb.Append("?");
-                        break;
-                    case '%':
-                        sb.Append(".*");
-                        break;
-                    case '[':
-                    case '{':
-                    case '\\':
-                    case '|':
-                    case '>':
-                    case '^':
-                    case '$':
-                    case '(':
-                    case ')':
-                    case '<':
-                    case '.':
-                    case '*':
-                    case '+':
-                    case '?':
-                        sb.Append('\\');
-                        sb.Append(c);
-                        break;
-                    default:
-                        sb.Append(c);
-                        break;
-                }
-            }
+            // find open id user names [http://username] pattern
+            foreach (CustomMembershipUser u in Membership.FindUsersByName(string.Concat("%//", userNameToMatch)))
+                userList[u.UserName] = u;
 
-            var regex = new Regex(sb.ToString());
-            var invalidUsernames = new List<string>();
-            foreach (var u in userList.Values)
-            {
-                var username = u.UserName;
-                var pos = username.IndexOf('\\');
-                if ((pos >= 0) && (username.Length > pos))
-                {
-                    username = username.Substring(pos + 1);
-                }
-                if (!regex.IsMatch(username))
-                {
-                    invalidUsernames.Add(username);
-                }
-            }
+            // wrhighfield
+            // removed 2011-11-26 due to the aggressive removing of the usernames, the patterns above will return some
+            // false matches when it dealing with openid and windows user names, however it does seem to work a bit better
+            // than the code below...
 
-            foreach (var invalidUsername in invalidUsernames)
-            {
-                userList.Remove(invalidUsername);
-            }
+            //var sb = new StringBuilder();
+            //foreach (var c in userNameToMatch)
+            //{
+            //    switch (c)
+            //    {
+            //        case '_':
+            //            sb.Append("?");
+            //            break;
+            //        case '%':
+            //            sb.Append(".*");
+            //            break;
+            //        case '[':
+            //        case '{':
+            //        case '\\':
+            //        case '|':
+            //        case '>':
+            //        case '^':
+            //        case '$':
+            //        case '(':
+            //        case ')':
+            //        case '<':
+            //        case '.':
+            //        case '*':
+            //        case '+':
+            //        case '?':
+            //            sb.Append('\\');
+            //            sb.Append(c);
+            //            break;
+            //        default:
+            //            sb.Append(c);
+            //            break;
+            //    }
+            //}
+
+            //var regex = new Regex(sb.ToString());
+            //var invalidUsernames = new List<string>();
+            //foreach (var u in userList.Values)
+            //{
+            //    var username = u.UserName;
+            //    var pos = username.IndexOf('\\');
+            //    if ((pos >= 0) && (username.Length > pos))
+            //    {
+            //        username = username.Substring(pos + 1);
+            //    }
+            //    if (!regex.IsMatch(username))
+            //    {
+            //        invalidUsernames.Add(username);
+            //    }
+            //}
+
+            //foreach (var invalidUsername in invalidUsernames)
+            //{
+            //    userList.Remove(invalidUsername);
+            //}
 
             return new List<CustomMembershipUser>(userList.Values);
         }
