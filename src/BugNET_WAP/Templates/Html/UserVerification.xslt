@@ -15,8 +15,8 @@
 		a new account at <xsl:value-of select="User/DisplayName" disable-output-escaping="yes" />. Before you can login, however, you need to first visit the following link 
 		to confirm your account: </p>
 		<p>
-			<a href="{HostSetting_DefaultUrl}Verify.aspx?ID={User/Id}" target="_blank">
-                <xsl:value-of select="HostSetting_DefaultUrl" />Verify.aspx?ID=<xsl:value-of select="User/Id" />
+			<a href="{HostSetting_DefaultUrl}Account/Verify.aspx?ID={User/Id}" target="_blank">
+                <xsl:value-of select="HostSetting_DefaultUrl" />Account/Verify.aspx?ID=<xsl:value-of select="User/Id" />
             </a>
 		</p>
 		<p>After visiting the above link you can log into the site!</p>
