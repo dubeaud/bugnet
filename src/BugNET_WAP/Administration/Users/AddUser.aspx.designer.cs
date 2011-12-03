@@ -31,13 +31,13 @@ namespace BugNET.Administration.Users {
         protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary1;
         
         /// <summary>
-        /// Message1 control.
+        /// MessageContainer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::BugNET.UserControls.Message Message1;
+        protected global::BugNET.UserControls.Message MessageContainer;
         
         /// <summary>
         /// DescriptionLabel control.
@@ -391,22 +391,22 @@ namespace BugNET.Administration.Users {
         protected global::System.Web.UI.WebControls.CheckBox ActiveUser;
         
         /// <summary>
-        /// ImageButton2 control.
+        /// AddNewUserButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton ImageButton2;
+        protected global::System.Web.UI.WebControls.ImageButton AddNewUserButton;
         
         /// <summary>
-        /// LinkButton2 control.
+        /// AddNewUserLink control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LinkButton2;
+        protected global::System.Web.UI.WebControls.LinkButton AddNewUserLink;
         
         /// <summary>
         /// ImageButton3 control.

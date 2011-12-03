@@ -135,4 +135,7 @@
   <data name="ManageUserDetails" xml:space="preserve">
     <value>Manage User Details</value>
   </data>
+  <data name="BackToUserList" xml:space="preserve">
+    <value>Back to user list</value>
+  </data>
 </root>

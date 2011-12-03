@@ -22,7 +22,14 @@
 	        </ItemTemplate>
         </asp:Repeater>
     </asp:Panel>
-    <br />
+
+    <div style="padding:0px 0 10px 0;">
+        <span style="padding-right:5px;" id="CreateNewUserAction" runat="server">
+            <asp:ImageButton runat="server" OnClick="AddUserClick" ImageUrl="~/Images/user_add.gif" CssClass="icon"  AlternateText="<%$ Resources:CreateNewUser %>" ID="add" />
+            <asp:LinkButton ID="AddUser" OnClick="AddUserClick" runat="server" Text="<%$ Resources:CreateNewUser %>" />
+        </span>
+    </div>
+
     <BNWC:GridView ID="gvUsers" runat="server" Width="100%" SkinID="GridView"
         OnRowCommand="GvUsersRowCommand" 
         AutoGenerateColumns="False"  
@@ -93,11 +100,5 @@
             </Fields>                            
         </asp:DataPager>
     </div> 
-    <div style="padding:15px 0 10px 0;">
-        <span >
-            <asp:ImageButton runat="server" OnClick="AddUserClick" ImageUrl="~/Images/user_add.gif" CssClass="icon"  AlternateText="<%$ Resources:CreateNewUser %>" ID="add" />
-            <asp:LinkButton ID="AddUser" OnClick="AddUserClick" runat="server" Text="<%$ Resources:CreateNewUser %>" />
-        </span>
-    </div>
 </asp:Content>
 

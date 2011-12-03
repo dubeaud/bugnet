@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using BugNET.Common;
 using BugNET.UserInterfaceLayer;
 
 namespace BugNET.Administration.Users
@@ -25,16 +25,9 @@ namespace BugNET.Administration.Users
         /// Gets the tab id.
         /// </summary>
         /// <value>The tab id.</value>
-        public int TabId
+        private int TabId
         {
-
-            get
-            {
-                if (Request.QueryString["tabid"] != null && Request.QueryString["tabid"].Length > 0)
-                    return Convert.ToInt32(Request.QueryString["tabid"]);
-                else
-                    return 0;
-            }
+            get { return Request.QueryString.Get("tabid", 0); }
         }
 
         /// <summary>
@@ -175,7 +168,7 @@ namespace BugNET.Administration.Users
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void cmdCancel_Click(object sender, EventArgs e)
+        protected void CmdCancelClick(object sender, EventArgs e)
         {
             Response.Redirect("~/Administration/Users/UserList.aspx");
         }
@@ -185,7 +178,7 @@ namespace BugNET.Administration.Users
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void AddUser_Click(object sender, EventArgs e)
+        protected void AddNewUserClick(object sender, EventArgs e)
         {
             Response.Redirect("~/Administration/Users/AddUser.aspx");
         }

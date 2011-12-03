@@ -211,22 +211,22 @@ namespace BugNET.Administration.Users {
         protected global::BugNET.Administration.Users.UserControls.DeleteUser ctlDeleteUser;
         
         /// <summary>
-        /// ImageButton2 control.
+        /// AddNewUserButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton ImageButton2;
+        protected global::System.Web.UI.WebControls.ImageButton AddNewUserButton;
         
         /// <summary>
-        /// LinkButton2 control.
+        /// AddNewUserLink control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LinkButton2;
+        protected global::System.Web.UI.WebControls.LinkButton AddNewUserLink;
         
         /// <summary>
         /// ImageButton3 control.
@@ -238,12 +238,12 @@ namespace BugNET.Administration.Users {
         protected global::System.Web.UI.WebControls.ImageButton ImageButton3;
         
         /// <summary>
-        /// LinkButton3 control.
+        /// ReturnLink control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LinkButton3;
+        protected global::System.Web.UI.WebControls.HyperLink ReturnLink;
     }
 }

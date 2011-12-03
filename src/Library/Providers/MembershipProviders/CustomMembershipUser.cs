@@ -35,12 +35,8 @@ namespace BugNET.Providers.MembershipProviders
         /// <value>The display name.</value>
         public string DisplayName
         {
-            get
-            {
-                if (string.IsNullOrEmpty(_DisplayName))
-                    return base.UserName;
-                else
-                    return _DisplayName;
+            get {
+                return string.IsNullOrEmpty(_DisplayName) ? base.UserName : _DisplayName;
             }
             set { _DisplayName = value; }
         }
