@@ -102,9 +102,7 @@ namespace BugNET.UserControls
 			{
                 if (!string.IsNullOrEmpty(gvIssues.SortField))
                 {
-                    //_DataSource.Sort(gvIssues.SortField);
-                    _DataSource.Sort(new IssueComparer(SortField, SortAscending));
-                   //_DataSource.Sort(new ObjectComparer<Issue>(gvIssues.SortField, true));
+                   _DataSource.Sort(new ObjectComparer<Issue>(gvIssues.SortField, true));
                 }
 
 				gvIssues.Visible = true;

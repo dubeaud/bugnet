@@ -23,7 +23,7 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="sortEx">The sort ex.</param>
         /// <param name="ascending">The ascending.</param>
-        public IssueComparer(string sortEx,bool ascending) {
+        public IssueComparer(string sortEx, bool ascending) {
           if (!String.IsNullOrEmpty(sortEx))
           {
               _reverse = ascending;      
