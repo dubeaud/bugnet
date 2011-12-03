@@ -194,10 +194,11 @@ namespace BugNET.Issues
                 }
                 return Request.QueryString["s"].ToString(); }
         }
+
         /// <summary>
         /// Returns the assigned to user Id from the query string
         /// </summary>
-        public string AssignedUserName
+        public string AssignedUserId
         {
             get
             {
@@ -354,13 +355,13 @@ namespace BugNET.Issues
                    //q = new QueryClause(BooleanOperator, "IssueStatusId", "=", IssueStatusId.ToString(), SqlDbType.Int, false);
                    //queryClauses.Add(q);
                }
-               if (!string.IsNullOrEmpty(AssignedUserName))
+               if (!string.IsNullOrEmpty(AssignedUserId))
                {
-                   if (AssignedUserName == "0")
-                       q = new QueryClause(BooleanOperator, "IssueAssignedUserId", "IS", null, SqlDbType.NVarChar, false); 
+                   if (AssignedUserId == "0")
+                       q = new QueryClause(BooleanOperator, "IssueAssignedUserId", "IS", null, SqlDbType.NVarChar, false);
                    else
-                       q = new QueryClause(BooleanOperator, "AssignedUsername", "=", AssignedUserName, SqlDbType.NVarChar, false);
-                  
+                       q = new QueryClause(BooleanOperator, "IssueAssignedUserId", "=", AssignedUserId, SqlDbType.NVarChar, false);
+
                    queryClauses.Add(q);
                }
 
