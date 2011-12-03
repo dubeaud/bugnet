@@ -30,8 +30,6 @@ CREATE TABLE dbo.Tmp_BugNet_UserProfiles
 	SelectedIssueColumns nvarchar(50) NULL
 	)  ON [PRIMARY]
 GO
-ALTER TABLE dbo.Tmp_BugNet_UserProfiles SET (LOCK_ESCALATION = TABLE)
-GO
 IF EXISTS(SELECT * FROM dbo.BugNet_UserProfiles)
 	 EXEC('INSERT INTO dbo.Tmp_BugNet_UserProfiles (UserName, FirstName, LastName, DisplayName, IssuesPageSize, NotificationTypes, PreferredLocale, LastUpdate, SelectedIssueColumns)
 		SELECT UserName, FirstName, LastName, DisplayName, IssuesPageSize, NotificationTypes, PreferredLocale, LastUpdate, SelectedIssueColumns FROM dbo.BugNet_UserProfiles WITH (HOLDLOCK TABLOCKX)')
