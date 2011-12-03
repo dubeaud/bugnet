@@ -19,6 +19,16 @@ namespace BugNET.Issues.UserControls
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(Attachments));
 
+        static string CleanFileName(string fileName)
+        {
+            var guidLength = Globals.EMPTY_GUID.Length;
+            var guidEnd = fileName.LastIndexOf(".");
+            var guidStart = guidEnd - guidLength;
+
+            fileName = string.Concat(fileName.Substring(0, guidStart), fileName.Substring(guidEnd + 1));
+            return fileName;
+        }
+
         /// <summary>
         /// Handles the Load event of the Page control.
         /// </summary>
@@ -82,6 +92,8 @@ namespace BugNET.Issues.UserControls
            //IssueTabs tabs = this.Parent as Issues.UserControls.IssueTabs;
            //tabs.RefreshTabNames();
             List<IssueAttachment> attachments = IssueAttachmentManager.GetByIssueId(IssueId);
+
+            AttachmentDescription.Text = string.Empty;
 
             if (attachments.Count == 0)
             {
@@ -157,11 +169,12 @@ namespace BugNET.Issues.UserControls
                                           NewValue = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Added", "Added")
                                       };
 
-                    IssueHistoryManager.SaveOrUpdate(history);
+                    if(IssueHistoryManager.SaveOrUpdate(history))
+                    {
+                        var changes = new List<IssueHistory> { history };
 
-                    var changes = new List<IssueHistory> {history};
-
-                    IssueNotificationManager.SendIssueNotifications(IssueId, changes);
+                        IssueNotificationManager.SendIssueNotifications(IssueId, changes);
+                    }
 
                     BindAttachments();
                 }
@@ -175,7 +188,7 @@ namespace BugNET.Issues.UserControls
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Web.UI.WebControls.DataGridItemEventArgs"/> instance containing the event data.</param>
-        protected void AttachmentsDataGrid_ItemDataBound(object sender, DataGridItemEventArgs e)
+        protected void AttachmentsDataGridItemDataBound(object sender, DataGridItemEventArgs e)
         {
             if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem) return;
 
@@ -184,13 +197,9 @@ namespace BugNET.Issues.UserControls
 
             if (lnkAttachment != null)
             {
-                lnkAttachment.InnerText = currentAttachment.FileName;
+                lnkAttachment.InnerText = CleanFileName(currentAttachment.FileName);
                 lnkAttachment.HRef = string.Concat("DownloadAttachment.axd?id=", currentAttachment.Id.ToString());
             }
-
-            var lnkDeleteAttachment = e.Item.FindControl("lnkDeleteAttachment") as ImageButton;
-            if (lnkDeleteAttachment != null)
-                lnkDeleteAttachment.OnClientClick = string.Format("return confirm('{0}');", GetLocalResourceObject("DeleteAttachment"));
 
             var lblSize = e.Item.FindControl("lblSize") as Label;
 
@@ -211,7 +220,22 @@ namespace BugNET.Issues.UserControls
             }
 
             lblSize.Text = label;
-            
+
+            var cmdDelete = e.Item.FindControl("cmdDelete") as ImageButton;
+
+            // Check if the current user is Authenticated and has the permission to delete a comment			
+            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.DeleteAttachment.ToString())) return;
+
+            if (cmdDelete == null) return;
+
+            cmdDelete.Attributes.Add("onclick", string.Format("return confirm('{0}');", GetLocalResourceObject("DeleteAttachment")));
+            cmdDelete.Visible = false;
+
+            // Check if it is the original user, the project admin or a super user trying to delete the comment.
+            if (currentAttachment.CreatorUserName.ToLower() == Context.User.Identity.Name.ToLower() || UserManager.IsInRole(Globals.SUPER_USER_ROLE) || UserManager.IsInRole(ProjectId, Globals.ProjectAdminRole))
+            {
+                cmdDelete.Visible = true;
+            }
         }
 
         /// <summary>
@@ -219,7 +243,7 @@ namespace BugNET.Issues.UserControls
         /// </summary>
         /// <param name="source">The source of the event.</param>
         /// <param name="e">The <see cref="T:System.Web.UI.WebControls.DataGridCommandEventArgs"/> instance containing the event data.</param>
-        protected void AttachmentsDataGrid_ItemCommand(object source, DataGridCommandEventArgs e)
+        protected void AttachmentsDataGridItemCommand(object source, DataGridCommandEventArgs e)
         {
             switch (e.CommandName)
             {
