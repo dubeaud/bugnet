@@ -404,7 +404,7 @@ namespace BugNET.BLL
                 };
 
             data.Add("User", u);
-            data.Add("Password", newPassword);
+            data.Add("RawXml_Password", string.Format("<Password>{0}</Password>", newPassword));
             template = NotificationManager.GenerateNotificationContent(template, data);
 
             var context = new NotificationContext
