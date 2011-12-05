@@ -1,29 +1,26 @@
 using System;
-using System.Web.Security;
+using System.Web.UI;
 using BugNET.BLL;
+using BugNET.Common;
 using BugNET.Providers.MembershipProviders;
+using BugNET.UserInterfaceLayer;
+using log4net;
 
 namespace BugNET.Administration.Users.UserControls
 {
-    public partial class Membership : System.Web.UI.UserControl
+    public partial class Membership : BaseUserControlUserAdmin, IEditUserControl
     {
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        /// <summary>
-        /// Handles the Load event of the Page control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void Page_Load(object sender, EventArgs e)
+        public Guid UserId
         {
-           
+            get { return ViewState.Get("UserId", Guid.Empty); }
+            set { ViewState.Set("UserId", value); }
         }
 
-        /// <summary>
-        /// Binds a data source to the invoked server control and all its child controls.
-        /// </summary>
-        public override void DataBind()
+        public void Initialize()
         {
-            base.DataBind();
+            BindUserData(UserId);
             BindData();
         }
 
@@ -32,56 +29,33 @@ namespace BugNET.Administration.Users.UserControls
         /// </summary>
         private void BindData()
         {
+            if (UserId == Guid.Empty) return;
 
-            if (UserId != Guid.Empty)
-            {
-                //get this user and bind the data
-                CustomMembershipUser user = (CustomMembershipUser)UserManager.GetUser(UserId);
-                if (user != null)
-                {
-                    //if (user.IsLockedOut)
-                       //lblError"This user is currently locked out");
+            //get this user and bind the data
+            var user = (CustomMembershipUser)MembershipData;
 
-                    lblUserName.Text = user.UserName;
-                    UserName.Text = user.UserName;
-                    Email.Text = user.Email;
-                    CreatedDate.Text = user.CreationDate.ToString("g");
-                    LastActivityDate.Text = user.LastActivityDate.ToString("g");
-                    LastLoginDate.Text = user.LastLoginDate.ToString("g");
-                    LockedOut.Checked = user.IsLockedOut;
-                    Authorized.Checked = user.IsApproved;
-                    Online.Checked = user.IsOnline;
-                    FirstName.Text = user.FirstName; 
-                    LastName.Text = user.LastName;
-                    DisplayName.Text = user.DisplayName;
-                    cmdAuthorize.Visible = !user.IsApproved;
-                    ibAuthorize.Visible = !user.IsApproved;
-                    cmdUnAuthorize.Visible = user.IsApproved;
-                    ibUnAuthorize.Visible = user.IsApproved;
-                    ibUnLock.Visible = user.IsLockedOut ? true :false;
-                    cmdUnLock.Visible = user.IsLockedOut ? true : false;       
-                }
-            }
-        }
-        /// <summary>
-        /// Gets the user id.
-        /// </summary>
-        /// <value>The user id.</value>
-        public Guid UserId
-        {
-            get {
-                if (Request.QueryString["user"] != null && Request.QueryString["user"].Length != 0)
-                    try
-                    {
-                        return new Guid(Request.QueryString["user"].ToString());
-                    }
-                    catch
-                    {
-                        throw new Exception(LoggingManager.GetErrorMessageResource("QueryStringError"));
-                    }
-                else
-                    return Guid.Empty; 
-            }
+            if (user == null) return;
+
+            // this is to fix the UI if no data is present
+            // stops the ol / li from shifting to the right under IE 
+            CreatedDate.Text = string.Concat(user.CreationDate.ToString("g"), "&nbsp;");
+            LastActivityDate.Text = string.Concat(user.LastActivityDate.ToString("g"), "&nbsp;");
+            LastLoginDate.Text = string.Concat(user.LastLoginDate.ToString("g"), "&nbsp;");
+
+            UserName.Text = user.UserName;
+            Email.Text = user.Email;
+            LockedOut.Checked = user.IsLockedOut;
+            Authorized.Checked = user.IsApproved;
+            Online.Checked = user.IsOnline;
+            FirstName.Text = user.FirstName; 
+            LastName.Text = user.LastName;
+            DisplayName.Text = user.DisplayName;
+            cmdAuthorize.Visible = !user.IsApproved;
+            ibAuthorize.Visible = !user.IsApproved;
+            cmdUnAuthorize.Visible = user.IsApproved;
+            ibUnAuthorize.Visible = user.IsApproved;
+            ibUnLock.Visible = user.IsLockedOut;
+            cmdUnLock.Visible = user.IsLockedOut;
         }
 
         /// <summary>
@@ -89,11 +63,12 @@ namespace BugNET.Administration.Users.UserControls
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void cmdUpdate_Click(object sender, EventArgs e)
+        protected void CmdUpdateClick(object sender, EventArgs e)
         {
             try
             {
-                CustomMembershipUser user = (CustomMembershipUser)UserManager.GetUser(UserId);
+                var user = (CustomMembershipUser)MembershipData;
+
                 if (user != null)
                 {
                     //user.IsApproved = Authorized.Checked;
@@ -102,13 +77,13 @@ namespace BugNET.Administration.Users.UserControls
                     user.FirstName = FirstName.Text;
                     user.LastName =  LastName.Text;
                     UserManager.UpdateUser(user);
+                    OnAction(new ActionEventArgs { Trigger = Globals.ActionTriggers.Save });
                 }
-                lblError.Text = GetLocalResourceObject("UpdateUserMessage").ToString();
+                ActionMessage.ShowSuccessMessage(GetLocalResourceObject("UpdateUserMessage").ToString());
             }
             catch
             {
-                lblError.Text = LoggingManager.GetErrorMessageResource("UpdateUserError");
-                lblError.Visible = true;
+                ActionMessage.ShowErrorMessage(LoggingManager.GetErrorMessageResource("UpdateUserError"));
             }
         }
 
@@ -118,16 +93,16 @@ namespace BugNET.Administration.Users.UserControls
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void AuthorizeUser_Click(object sender, EventArgs e)
+        protected void AuthorizeUserClick(object sender, EventArgs e)
         {
             try
             {
                 AuthorizeUser(true);
-                lblError.Text = GetLocalResourceObject("UserAuthorizedMessage").ToString();
+                ActionMessage.ShowSuccessMessage(GetLocalResourceObject("UserAuthorizedMessage").ToString());
             }
             catch
             {
-                lblError.Text = GetLocalResourceObject("UserAuthorizedError").ToString();
+                ActionMessage.ShowErrorMessage(GetLocalResourceObject("UserAuthorizedError").ToString());
             }
         }
 
@@ -136,12 +111,11 @@ namespace BugNET.Administration.Users.UserControls
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void UnLockUser_Click(object sender, EventArgs e)
+        protected void UnLockUserClick(object sender, EventArgs e)
         {
-            MembershipUser user = UserManager.GetUser(UserId);
-            if(user!=null)
+            if (MembershipData != null)
             {
-                user.UnlockUser();
+                MembershipData.UnlockUser();
             }
         }
 
@@ -150,16 +124,16 @@ namespace BugNET.Administration.Users.UserControls
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void UnAuthorizeUser_Click(object sender, EventArgs e)
+        protected void UnAuthorizeUserClick(object sender, EventArgs e)
         {
             try
             {
                 AuthorizeUser(false);
-                lblError.Text = GetLocalResourceObject("UserUnAuthorizedMessage").ToString(); 
+                ActionMessage.ShowSuccessMessage(GetLocalResourceObject("UserUnAuthorizedMessage").ToString());
             }
             catch
             {
-                lblError.Text = GetLocalResourceObject("UserUnAuthorizedError").ToString();
+                ActionMessage.ShowErrorMessage(GetLocalResourceObject("UserUnAuthorizedError").ToString());
             }
         }
 
@@ -170,19 +144,21 @@ namespace BugNET.Administration.Users.UserControls
         /// <param name="isAuthorized">if set to <c>true</c> [is authorized].</param>
         private void AuthorizeUser(bool isAuthorized)
         {
-            MembershipUser user = UserManager.GetUser(UserId);
-            if (user != null)
-            {
-                user.IsApproved = isAuthorized;
-                Authorized.Checked = isAuthorized;
-                UserManager.UpdateUser(user);
-                cmdAuthorize.Visible = !isAuthorized;
-                ibAuthorize.Visible = !isAuthorized;
-                cmdUnAuthorize.Visible = isAuthorized;
-                ibUnAuthorize.Visible = isAuthorized;
-            }
+            if (MembershipData == null) return;
+
+            MembershipData.IsApproved = isAuthorized;
+            Authorized.Checked = isAuthorized;
+            UserManager.UpdateUser(MembershipData);
+
+            cmdAuthorize.Visible = !isAuthorized;
+            ibAuthorize.Visible = !isAuthorized;
+            cmdUnAuthorize.Visible = isAuthorized;
+            ibUnAuthorize.Visible = isAuthorized;
         }
 
-      
+        protected void CmdCancelClick(object sender, ImageClickEventArgs e)
+        {
+            Response.Redirect("~/Administration/Users/UserList.aspx");
+        }
     }
 }

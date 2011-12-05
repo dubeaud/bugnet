@@ -13,22 +13,58 @@ namespace BugNET.Administration.Users.UserControls {
     public partial class DeleteUser {
         
         /// <summary>
-        /// lblError control.
+        /// ControlTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblError;
+        protected global::System.Web.UI.WebControls.Literal ControlTitle;
         
         /// <summary>
-        /// Image4 control.
+        /// ControlDescription control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton Image4;
+        protected global::System.Web.UI.WebControls.Literal ControlDescription;
+        
+        /// <summary>
+        /// DeleteUserText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal DeleteUserText;
+        
+        /// <summary>
+        /// DeleteUserText2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal DeleteUserText2;
+        
+        /// <summary>
+        /// ActionMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::BugNET.UserControls.Message ActionMessage;
+        
+        /// <summary>
+        /// imgUnauthorizeAccount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton imgUnauthorizeAccount;
         
         /// <summary>
         /// cmdUnauthorizeAccount control.
@@ -40,13 +76,13 @@ namespace BugNET.Administration.Users.UserControls {
         protected global::System.Web.UI.WebControls.LinkButton cmdUnauthorizeAccount;
         
         /// <summary>
-        /// Image6 control.
+        /// imgDeleteUser control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton Image6;
+        protected global::System.Web.UI.WebControls.ImageButton imgDeleteUser;
         
         /// <summary>
         /// cmdDeleteUser control.
@@ -56,5 +92,23 @@ namespace BugNET.Administration.Users.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton cmdDeleteUser;
+        
+        /// <summary>
+        /// ImageButton3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton ImageButton3;
+        
+        /// <summary>
+        /// ReturnLink control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink ReturnLink;
     }
 }

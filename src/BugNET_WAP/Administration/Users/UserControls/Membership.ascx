@@ -1,7 +1,10 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Membership.ascx.cs" Inherits="BugNET.Administration.Users.UserControls.Membership" %>
-<asp:Label ID="lblError" runat="server"  ForeColor="Red" />
-<div class="fieldgroup">
-    <h3><asp:Label id="lblTitle" runat="server" Text="<%$ Resources:UserDetails %>" /> - <asp:Label id="lblUserName" runat="server"/></h3>
+<div>
+	<h2><asp:Literal ID="ControlTitle" runat="server" Text="<%$ Resources:ControlTitle %>" /></h2>
+    <asp:Literal ID="ControlDescription" runat="server" Text="<%$ Resources:ControlDescription %>" />
+</div>
+<BN:Message ID="ActionMessage" runat="server" Visible="False"  />
+<div class="fieldgroup" style="border:none"> 
     <ol>
         <li>
             <asp:Label ID="Label2" AssociatedControlID="UserName" runat="server" Text="<%$ Resources:SharedResources, Username %>" />
@@ -24,16 +27,16 @@
             <asp:TextBox ID="Email" runat="server" />
         </li>
         <li>
-            <asp:Label ID="Label6" AssociatedControlID="CreatedDate" runat="server" Text="<%$ Resources:CreatedDate %>" />
-            <asp:Label ID="CreatedDate" runat="server" Text="" />
+            <label><asp:Literal ID="CreatedDateLabel" runat="server" Text="<%$ Resources:CreatedDate %>" /></label>
+            <span><asp:Literal ID="CreatedDate" runat="server" /></span>
         </li>
         <li>
-            <asp:Label ID="Label7" runat="server" AssociatedControlID="LastLoginDate" Text="<%$ Resources:LastLoginDate %>" />
-            <asp:Label ID="LastLoginDate" runat="server" Text="" />
+            <label><asp:Literal ID="LastLoginDateLabel" runat="server" Text="<%$ Resources:LastLoginDate %>" /></label>
+            <span><asp:Literal ID="LastLoginDate" runat="server" /></span>
         </li>
         <li>
-            <asp:Label ID="Label8" AssociatedControlID="LastActivityDate" runat="server" Text="<%$ Resources:LastActivityDate %>" />
-            <asp:Label ID="LastActivityDate" runat="server" Text="" />
+            <label><asp:Literal ID="LastActivityDateLabel" runat="server" Text="<%$ Resources:LastActivityDate %>" /></label>
+            <span><asp:Literal ID="LastActivityDate" runat="server" /></span>
         </li>
         <li>
             <asp:Label ID="Label9" AssociatedControlID="LockedOut" runat="server" Text="<%$ Resources:LockedOut %>" />
@@ -49,16 +52,19 @@
         </li>
     </ol>
 </div>
-<div class="submit">
-    <asp:ImageButton OnClick="cmdUpdate_Click" runat="server" id="save" CssClass="icon" AlternateText="<%$ Resources:SharedResources, Update %>" ImageUrl="~/Images/disk.gif" />
-    <asp:LinkButton ID="cmdUpdate" OnClick="cmdUpdate_Click" runat="server" Text="<%$ Resources:SharedResources, Update %>"></asp:LinkButton>
-    &nbsp;&nbsp;
-    <asp:ImageButton runat="server" id="ibAuthorize" OnClick="AuthorizeUser_Click" CssClass="icon" AlternateText="<%$ Resources:AuthorizeUser %>" causesvalidation="False" ImageUrl="~/Images/shield.gif" />
-	<asp:linkbutton id="cmdAuthorize" runat="server" OnClick="AuthorizeUser_Click" Text="<%$ Resources:AuthorizeUser %>" causesvalidation="False" />
-    &nbsp;&nbsp;
-    <asp:ImageButton runat="server" id="ibUnAuthorize"  OnClick="UnAuthorizeUser_Click" CssClass="icon"  AlternateText="<%$ Resources:UnAuthorizeUser %>" ImageUrl="~/Images/shield.gif" />
-	<asp:linkbutton id="cmdUnAuthorize" causesvalidation="False" OnClick="UnAuthorizeUser_Click" runat="server" Text="<%$ Resources:UnAuthorizeUser %>"></asp:linkbutton>	 
-	&nbsp;&nbsp;
-	<asp:ImageButton runat="server" id="ibUnLock"  OnClick="UnLockUser_Click" causesvalidation="False" AlternateText="<%$ Resources:UnlockUser %>" CssClass="icon" ImageUrl="~/Images/shield.gif" />
-	<asp:linkbutton id="cmdUnLock" runat="server" OnClick="UnLockUser_Click" causesvalidation="False" Text="<%$ Resources:UnlockUser %>" />
+<div style="margin:2em 0 0 0; border-top:1px solid #ddd; padding-top:5px; clear:both;">
+    <asp:ImageButton OnClick="CmdUpdateClick" runat="server" id="save" CssClass="icon" AlternateText="<%$ Resources:SharedResources, Save %>" ImageUrl="~/Images/disk.gif" />
+    <asp:LinkButton ID="cmdUpdate" OnClick="CmdUpdateClick" runat="server" Text="<%$ Resources:SharedResources, Save %>"></asp:LinkButton>
+    &nbsp;
+    <asp:ImageButton runat="server" id="ibAuthorize" OnClick="AuthorizeUserClick" CssClass="icon" AlternateText="<%$ Resources:AuthorizeUser %>" causesvalidation="False" ImageUrl="~/Images/shield.gif" />
+	<asp:linkbutton id="cmdAuthorize" runat="server" OnClick="AuthorizeUserClick" Text="<%$ Resources:AuthorizeUser %>" causesvalidation="False" />
+    &nbsp;
+    <asp:ImageButton runat="server" id="ibUnAuthorize"  OnClick="UnAuthorizeUserClick" CssClass="icon"  AlternateText="<%$ Resources:UnAuthorizeUser %>" ImageUrl="~/Images/shield.gif" />
+	<asp:linkbutton id="cmdUnAuthorize" causesvalidation="False" OnClick="UnAuthorizeUserClick" runat="server" Text="<%$ Resources:UnAuthorizeUser %>"></asp:linkbutton>	 
+	&nbsp;
+	<asp:ImageButton runat="server" id="ibUnLock"  OnClick="UnLockUserClick" causesvalidation="False" AlternateText="<%$ Resources:UnlockUser %>" CssClass="icon" ImageUrl="~/Images/shield.gif" />
+	<asp:linkbutton id="cmdUnLock" runat="server" OnClick="UnLockUserClick" causesvalidation="False" Text="<%$ Resources:UnlockUser %>" />
+    &nbsp;
+    <asp:ImageButton runat="server" ImageUrl="~/Images/lt.gif" CssClass="icon" CausesValidation="false" AlternateText="<%$ Resources:BackToUserList %>" ID="ImageButton3" OnClick="CmdCancelClick" />
+    <asp:HyperLink ID="ReturnLink" runat="server" NavigateUrl="~/Administration/Users/UserList.aspx" Text="<%$ Resources:BackToUserList %>"></asp:HyperLink>
 </div>

@@ -117,19 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ManageRoles" xml:space="preserve">
+  <data name="UserDetails" xml:space="preserve">
+    <value>Manage User Details</value>
+  </data>
+  <data name="UserRoles" xml:space="preserve">
     <value>Manage Roles For This User</value>
   </data>
-  <data name="SuperUsers" xml:space="preserve">
-    <value>Super Users</value>
+  <data name="UserPassword" xml:space="preserve">
+    <value>Manage Password</value>
   </data>
-  <data name="UserRolesUpdateSuccess" xml:space="preserve">
-    <value>The users roles have been updated successfully.</value>
+  <data name="UserProfile" xml:space="preserve">
+    <value>Manage Profile</value>
   </data>
-  <data name="ManageRolesDescription" xml:space="preserve">
-    <value>Select the project you wish to modify the users roles for, then select one or more roles for the project.</value>
+  <data name="UserDelete" xml:space="preserve">
+    <value>Delete User</value>
   </data>
-  <data name="BackToUserList" xml:space="preserve">
-    <value>Back to User List</value>
+  <data name="SectionTitle.Text" xml:space="preserve">
+    <value>User Administration</value>
   </data>
 </root>

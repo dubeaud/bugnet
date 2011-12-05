@@ -166,6 +166,9 @@
   <data name="DeleteStatusError" xml:space="preserve">
     <value>Could not delete status</value>
   </data>
+  <data name="DeleteUserError" xml:space="preserve">
+    <value>There was an error deleting this user.</value>
+  </data>
   <data name="InvalidFileName" xml:space="preserve">
     <value>The name of the file you have selected is invalid.</value>
   </data>

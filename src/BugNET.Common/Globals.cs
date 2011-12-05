@@ -2,6 +2,8 @@ using System;
 
 namespace BugNET.Common
 {
+    public delegate void ActionEventHandler(object sender, ActionEventArgs args);
+
     /// <summary>
     /// Global constants, enumerations and properties
     /// </summary>
@@ -149,6 +151,15 @@ namespace BugNET.Common
         #endregion
 
         #region Public Enumerations
+
+        public enum ActionTriggers
+        {
+            None = 0,
+            Save = 1,
+            Delete = 2,
+            Close = 3,
+            Cancel = 4
+        }
 
         public enum UserRegistration
         {

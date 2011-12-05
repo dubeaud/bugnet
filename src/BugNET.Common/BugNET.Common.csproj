@@ -48,6 +48,7 @@
     <Compile Include="..\Common\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ActionEventArgs.cs" />
     <Compile Include="NotificationTypes.cs" />
     <Compile Include="CustomFieldTypes.cs" />
     <Compile Include="Extensions.cs" />

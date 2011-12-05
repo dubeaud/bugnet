@@ -1,19 +1,26 @@
 using System;
-using System.Web.Security;
+using System.Web.UI;
 using BugNET.BLL;
+using BugNET.Common;
+using BugNET.UserInterfaceLayer;
+using log4net;
 
 namespace BugNET.Administration.Users.UserControls
 {
-    public partial class Profile : System.Web.UI.UserControl
+    public partial class Profile : BaseUserControlUserAdmin, IEditUserControl
     {
-        /// <summary>
-        /// Handles the Load event of the Page control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void Page_Load(object sender, EventArgs e)
-        {
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        public Guid UserId
+        {
+            get { return ViewState.Get("UserId", Guid.Empty); }
+            set { ViewState.Set("UserId", value); }
+        }
+
+        public void Initialize()
+        {
+            BindUserData(UserId);
+            DataBind();
         }
 
         /// <summary>
@@ -21,42 +28,13 @@ namespace BugNET.Administration.Users.UserControls
         /// </summary>
         public override void DataBind()
         {
-            //get this user and bind the data
-            MembershipUser user = UserManager.GetUser(UserId);
-            if (user != null)
-            {
-                lblUserName.Text = user.UserName;
-                WebProfile Profile = new WebProfile().GetProfile(user.UserName);
-                FirstName.Text = Profile.FirstName;
-                LastName.Text = Profile.LastName;
-                DisplayName.Text = Profile.DisplayName;
-                //Fax.Text = Profile.ContactInfo.Fax;
-                //Mobile.Text = Profile.ContactInfo.Mobile;
-                //Telephone.Text = Profile.ContactInfo.Telephone;
-            }
-        }
-      
+            if (MembershipData == null) return;
 
-        /// <summary>
-        /// Gets the user id.
-        /// </summary>
-        /// <value>The user id.</value>
-        public Guid UserId
-        {
-            get
-            {
-                if (Request.QueryString["user"] != null || Request.QueryString["user"].Length != 0)
-                    try
-                    {
-                        return new Guid(Request.QueryString["user"].ToString());
-                    }
-                    catch
-                    {
-                        throw new Exception(LoggingManager.GetErrorMessageResource("QueryStringError"));
-                    }
-                else
-                    return Guid.Empty;
-            }
+            var profile = new WebProfile().GetProfile(MembershipData.UserName);
+
+            FirstName.Text = profile.FirstName;
+            LastName.Text = profile.LastName;
+            DisplayName.Text = profile.DisplayName;
         }
 
         /// <summary>
@@ -64,27 +42,31 @@ namespace BugNET.Administration.Users.UserControls
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void cmdUpdate_Click(object sender, EventArgs e)
+        protected void CmdUpdateClick(object sender, EventArgs e)
         {
             try
             {
-                MembershipUser user = UserManager.GetUser(UserId);
-                if (user != null)
+                if (MembershipData != null)
                 {
-                    WebProfile Profile = new WebProfile().GetProfile(user.UserName);
-                    Profile.DisplayName = DisplayName.Text;
-                    Profile.FirstName = FirstName.Text;
-                    Profile.LastName = LastName.Text;
-                    //Profile.ContactInfo.Fax = Fax.Text;
-                    //Profile.ContactInfo.Mobile = Mobile.Text;
-                    //Profile.ContactInfo.Telephone = Telephone.Text;
-                    Profile.Save();
+                    var profile = new WebProfile().GetProfile(MembershipData.UserName);
+                    profile.DisplayName = DisplayName.Text;
+                    profile.FirstName = FirstName.Text;
+                    profile.LastName = LastName.Text;
+                    profile.Save();
+
+                    ActionMessage.ShowSuccessMessage(GetLocalResourceObject("UpdateProfile").ToString());
+                    OnAction(new ActionEventArgs { Trigger = Globals.ActionTriggers.Save });
                 }
             }
             catch
             {
-                lblError.Text = LoggingManager.GetErrorMessageResource("ProfileUpdateError");
+                ActionMessage.ShowErrorMessage(LoggingManager.GetErrorMessageResource("ProfileUpdateError"));
             }
+        }
+
+        protected void CmdCancelClick(object sender, ImageClickEventArgs e)
+        {
+            Response.Redirect("~/Administration/Users/UserList.aspx");
         }
     }
 }

@@ -1350,14 +1350,8 @@ ul.sideMenu li a
 	color: #4A7728 !important; /* background: #BFF38F;*/
 	background: #C4EFA1;
 }
-ul.sideMenu li span
-{
-	/*background: #BFF38F;*/
-	background: #C4EFA1;
-}
 ul.sideMenu li a:hover
 {
-	background: #BFF38F;
 	background: #C4EFA1;
 }
 ul.sideMenu li span

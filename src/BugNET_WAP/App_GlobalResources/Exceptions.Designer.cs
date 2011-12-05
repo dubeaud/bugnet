@@ -205,6 +205,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was an error deleting this user..
+        /// </summary>
+        internal static string DeleteUserError {
+            get {
+                return ResourceManager.GetString("DeleteUserError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The name of the file you have selected is invalid..
         /// </summary>
         internal static string InvalidFileName {
