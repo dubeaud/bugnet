@@ -1,14 +1,38 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Web.Security;
 using BugNET.BLL;
-using BugNET.Entities;
 using BugNET.UserInterfaceLayer;
 
 namespace BugNET.Administration.Users
 {
     public partial class AddUser : BasePage
     {
+        void ResetForNewUser()
+        {
+            UserName.Text = string.Empty;
+            FirstName.Text = string.Empty;
+            LastName.Text = string.Empty;
+            DisplayName.Text = string.Empty;
+            Email.Text = string.Empty;
+            Password.Text = string.Empty;
+            ConfirmPassword.Text = string.Empty;
+
+            chkRandomPassword.Checked = false;
+            RandomPasswordCheckChanged(null, null);
+
+            SecretQuestion.Text = string.Empty;
+            SecretAnswer.Text = string.Empty;
+
+            SecretQuestionRow.Visible = Membership.RequiresQuestionAndAnswer;
+            SecretAnswerRow.Visible = Membership.RequiresQuestionAndAnswer;
+
+            if (Membership.RequiresQuestionAndAnswer) return;
+
+            ActiveUser.Checked = true;
+            ActiveUser.Enabled = false;
+        }
+
         /// <summary>
         /// Handles the Load event of the Page control.
         /// </summary>
@@ -16,17 +40,9 @@ namespace BugNET.Administration.Users
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
-            {
-                SecretQuestionRow.Visible = Membership.RequiresQuestionAndAnswer ? true : false;
-                SecretAnswerRow.Visible = Membership.RequiresQuestionAndAnswer ? true : false;
-                if (!Membership.RequiresQuestionAndAnswer)
-                {
-                    ActiveUser.Checked = true;
-                    ActiveUser.Enabled = false;
-                }
-                //this.Validate();
-            }
+            if (Page.IsPostBack) return;
+
+            ResetForNewUser();
         }
 
         /// <summary>
@@ -34,7 +50,7 @@ namespace BugNET.Administration.Users
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void RandomPassword_CheckChanged(object sender, EventArgs e)
+        protected void RandomPasswordCheckChanged(object sender, EventArgs e)
         {
             if (chkRandomPassword.Checked)
             {
@@ -58,49 +74,22 @@ namespace BugNET.Administration.Users
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void AddNewUser_Click(object sender, EventArgs e)
+        protected void AddNewUserClick(object sender, EventArgs e)
         {
-            string password;
-           
-            //if (chkRandomPassword.Checked)
-            //{
-            //    cvPassword.Enabled = false;
-            //    rvConfirmPassword.Enabled = false;
-            //    rvPassword.Enabled = false;
-            //    password = Membership.GeneratePassword(7, 0);
-            //}
-            //else
-            //{
-            //    rvConfirmPassword.Enabled = true;
-            //    rvPassword.Enabled = true;
-            //    password = Password.Text;
-            //}
+            if (!Page.IsValid) { return; }
 
-            if (!Page.IsValid)
-            {
-                return;
-            }
+            var password = chkRandomPassword.Checked ? Membership.GeneratePassword(7, 0) : Password.Text;
 
-            if (chkRandomPassword.Checked)
-            {
-                password = Membership.GeneratePassword(7, 0);
-            }
-            else
-            {
-                password = Password.Text;
+            var createStatus = MembershipCreateStatus.Success;
+            string resultMsg;
 
-            }
+            var userIdText = UserName.Text;
+            var emailText = Email.Text;
+            var isActive = ActiveUser.Checked;
             
+            var question = "";
+            var answer = "";
 
-            MembershipCreateStatus createStatus = MembershipCreateStatus.Success;
-            string resultMsg = "";
-
-            string userIDText = UserName.Text;
-            string emailText = Email.Text;
-            bool isActive = ActiveUser.Checked;
-            
-            string question = "";
-            string answer = "";
             if (Membership.RequiresQuestionAndAnswer)
             {
                 question = SecretQuestion.Text;
@@ -109,49 +98,40 @@ namespace BugNET.Administration.Users
 
             try
             {
-                MembershipUser mu = null;
-
-                if (Membership.RequiresQuestionAndAnswer)
-                {
-                    mu = Membership.CreateUser(userIDText, password, emailText, question, answer, isActive, out createStatus);
-                }
-                else
-                {
-                    mu = Membership.CreateUser(userIDText, password, emailText);
-                }
+                var mu = Membership.RequiresQuestionAndAnswer ?                                                          
+                    Membership.CreateUser(userIdText, password, emailText, question, answer, isActive, out createStatus) :
+                    Membership.CreateUser(userIdText, password, emailText);
 
                 if (createStatus == MembershipCreateStatus.Success && mu != null)
                 {
-                    WebProfile Profile = new WebProfile().GetProfile(mu.UserName);
-                    Profile.DisplayName = DisplayName.Text;
-                    Profile.FirstName = FirstName.Text;
-                    Profile.LastName = LastName.Text;
-                    Profile.Save();
+                    var profile = new WebProfile().GetProfile(mu.UserName);
+                    profile.DisplayName = DisplayName.Text;
+                    profile.FirstName = FirstName.Text;
+                    profile.LastName = LastName.Text;
+                    profile.Save();
 
                     //auto assign user to roles
-                    List<Role> roles = RoleManager.GetAll();
-                    foreach (Role r in roles)
+                    var roles = RoleManager.GetAll();
+                    foreach (var r in roles.Where(r => r.AutoAssign))
                     {
-                        if (r.AutoAssign)
-                            RoleManager.AddUser(mu.UserName, r.Id);
+                        RoleManager.AddUser(mu.UserName, r.Id);
                     }
                 }
 
-                ImageButton2.Enabled = false;
-                LinkButton2.Enabled = false;
+                ResetForNewUser();
   
                 resultMsg = GetLocalResourceObject("UserCreated").ToString();
-                Message1.IconType = BugNET.UserControls.Message.MessageType.Information;
+                MessageContainer.IconType = BugNET.UserControls.Message.MessageType.Information;
                 
             }
             catch (Exception ex)
             {
-                resultMsg = GetLocalResourceObject("UserCreatedError").ToString() + "<br/>" + ex.Message;
-                Message1.IconType = BugNET.UserControls.Message.MessageType.Error;
+                resultMsg = GetLocalResourceObject("UserCreatedError") + "<br/>" + ex.Message;
+                MessageContainer.IconType = BugNET.UserControls.Message.MessageType.Error;
             }
 
-            Message1.Text = resultMsg;
-            Message1.Visible = true;
+            MessageContainer.Text = resultMsg;
+            MessageContainer.Visible = true;
         }
 
         /// <summary>
@@ -159,9 +139,9 @@ namespace BugNET.Administration.Users
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void cmdCancel_Click(object sender, EventArgs e)
+        protected void CmdCancelClick(object sender, EventArgs e)
         {
-            Response.Redirect("~/Host/Users/Users.aspx");
+            Response.Redirect("~/Administration/Users/UserList.aspx");
         }
     }
 }

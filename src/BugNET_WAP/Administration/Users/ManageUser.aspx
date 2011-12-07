@@ -44,13 +44,13 @@
         	            <BN:Delete id="ctlDeleteUser" runat="server" />
                     </asp:panel>          
                 </div>
-                <p style="margin: 2em 0pt 0pt; border-top: 1px solid rgb(221, 221, 221); padding-top: 5px;">
-                    <asp:ImageButton runat="server"  ImageUrl="~/Images/add.gif" CssClass="icon" OnClick="AddUser_Click"  AlternateText="Add New User" ID="ImageButton2" />
-                    <asp:LinkButton ID="LinkButton2" runat="server" OnClick="AddUser_Click" Text="<%$ Resources:AddNewUser %>" />
-                    &nbsp;
-                    <asp:ImageButton runat="server"  ImageUrl="~/Images/lt.gif" CssClass="icon"  AlternateText="<%$ Resources:SharedResources, Return %>" ID="ImageButton3" OnClick="cmdCancel_Click" />
-                    <asp:LinkButton ID="LinkButton3" runat="server" Text="<%$ Resources:SharedResources, Return %>" OnClick="cmdCancel_Click"/>
-                </p>
+            <p style="margin:2em 1em 1em 0;clear:both;border-top: 1px solid #cccccc;padding-top: 10px;">
+                <asp:ImageButton runat="server" ImageUrl="~/Images/disk.gif" CssClass="icon" AlternateText="<%$ Resources:AddNewUser %>" OnClick="AddNewUserClick" ID="AddNewUserButton" />
+                <asp:LinkButton ID="AddNewUserLink" runat="server" Text="<%$ Resources:AddNewUser %>" OnClick="AddNewUserClick" />
+                &nbsp;
+                <asp:ImageButton runat="server" ImageUrl="~/Images/lt.gif" CssClass="icon" CausesValidation="false" AlternateText="<%$ Resources:BackToUserList %>" ID="ImageButton3" OnClick="CmdCancelClick" />
+                <asp:HyperLink ID="ReturnLink" runat="server" NavigateUrl="~/Administration/Users/UserList.aspx" Text="<%$ Resources:BackToUserList %>"></asp:HyperLink>
+            </p>
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

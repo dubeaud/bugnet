@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI.WebControls;
 using BugNET.BLL;
 using BugNET.Common;
-using BugNET.Providers.MembershipProviders;
 using BugNET.UserInterfaceLayer;
 
 namespace BugNET.Administration.Users
@@ -21,10 +19,7 @@ namespace BugNET.Administration.Users
         /// <value>The sort field.</value>
         string SortField
         {
-            get
-            {
-                return ViewState.Get("SortField", String.Empty);
-            }
+            get { return ViewState.Get("SortField", "UserName"); }
             set
             {
                 if (value == SortField)

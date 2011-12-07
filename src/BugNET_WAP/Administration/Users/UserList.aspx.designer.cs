@@ -85,22 +85,13 @@ namespace BugNET.Administration.Users {
         protected global::System.Web.UI.WebControls.Repeater LetterSearch;
         
         /// <summary>
-        /// gvUsers control.
+        /// CreateNewUserAction control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::BugNET.UserInterfaceLayer.WebControls.GridView gvUsers;
-        
-        /// <summary>
-        /// pager control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DataPager pager;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl CreateNewUserAction;
         
         /// <summary>
         /// add control.
@@ -119,5 +110,23 @@ namespace BugNET.Administration.Users {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton AddUser;
+        
+        /// <summary>
+        /// gvUsers control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::BugNET.UserInterfaceLayer.WebControls.GridView gvUsers;
+        
+        /// <summary>
+        /// pager control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DataPager pager;
     }
 }

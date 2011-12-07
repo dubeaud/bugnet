@@ -6,7 +6,7 @@
         <asp:Localize ID="Localize1" runat="server" Text="<%$ Resources:AddUser %>"></asp:Localize>
     </h1>
     <asp:ValidationSummary ID="ValidationSummary1" runat="server" DisplayMode="BulletList" HeaderText="<%$ Resources:SharedResources, ValidationSummaryHeaderText %>"  CssClass="validationSummary"/>
-    <bn:Message ID="Message1" runat="server" Visible="false" />
+    <bn:Message ID="MessageContainer" runat="server" Visible="false" />
     <div class="fieldgroup">
         <ol>
             <li> <asp:Label ID="DescriptionLabel" runat="server" meta:resourcekey="DescriptionLabel" /></li>
@@ -67,7 +67,7 @@
             </li>
             <li>
                 <asp:Label ID="Label10" AssociatedControlID="chkRandomPassword"  runat="server" Text="<%$ Resources:RandomPassword %>" />
-                <asp:CheckBox ID="chkRandomPassword" runat="server" AutoPostBack="true" OnCheckedChanged="RandomPassword_CheckChanged" />
+                <asp:CheckBox ID="chkRandomPassword" runat="server" AutoPostBack="true" OnCheckedChanged="RandomPasswordCheckChanged" />
             </li>
             <li>
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
@@ -103,14 +103,10 @@
         </ol>
     </div>
     <p style="margin:2em 1em 1em 0;clear:both;border-top: 1px solid #cccccc;padding-top: 10px;">
-        <asp:ImageButton runat="server" ImageUrl="~/Images/disk.gif" CssClass="icon" AlternateText="<%$ Resources:AddNewUser %>"
-            OnClick="AddNewUser_Click" ID="ImageButton2" />
-        <asp:LinkButton ID="LinkButton2" runat="server" Text="<%$ Resources:AddNewUser %>"
-            OnClick="AddNewUser_Click" />
+        <asp:ImageButton runat="server" ImageUrl="~/Images/disk.gif" CssClass="icon" AlternateText="<%$ Resources:AddNewUser %>" OnClick="AddNewUserClick" ID="AddNewUserButton" />
+        <asp:LinkButton ID="AddNewUserLink" runat="server" Text="<%$ Resources:AddNewUser %>" OnClick="AddNewUserClick" />
         &nbsp;
-        <asp:ImageButton runat="server" ImageUrl="~/Images/lt.gif" CssClass="icon" CausesValidation="false"
-            AlternateText="<%$ Resources:BackToUserList %>" ID="ImageButton3" OnClick="cmdCancel_Click" />
-        <asp:HyperLink ID="ReturnLink" runat="server" NavigateUrl="~/Administration/Users/UserList.aspx"
-            Text="<%$ Resources:BackToUserList %>"></asp:HyperLink>
+        <asp:ImageButton runat="server" ImageUrl="~/Images/lt.gif" CssClass="icon" CausesValidation="false" AlternateText="<%$ Resources:BackToUserList %>" ID="ImageButton3" OnClick="CmdCancelClick" />
+        <asp:HyperLink ID="ReturnLink" runat="server" NavigateUrl="~/Administration/Users/UserList.aspx" Text="<%$ Resources:BackToUserList %>"></asp:HyperLink>
     </p>
 </asp:Content>

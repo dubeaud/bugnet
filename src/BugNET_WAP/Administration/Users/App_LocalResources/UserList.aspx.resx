@@ -121,7 +121,7 @@
     <value>Authorized</value>
   </data>
   <data name="CreateNewUser" xml:space="preserve">
-    <value>Create new user</value>
+    <value>Create New User</value>
   </data>
   <data name="ManageRoles" xml:space="preserve">
     <value>Manage Roles</value>
