@@ -130,7 +130,7 @@
                         <it:DisplayCustomFields ID="ctlCustomFields" runat="server" />
                         <br />
                         <asp:Button ID="SaveIssues" runat="server" OnClick="SaveIssues_Click" Text="<%$ Resources:SharedResources, Save %>" />
-                        <input type="button" id="CancelEditProperties" onclick="$('#SetProperties').toggle();" runat="server" value="<%$ Resources:SharedResources, Cancel%>" />
+                        <input type="button"  id="CancelEditProperties" onclick="$('#SetProperties').toggle();" runat="server" value="<%$ Resources:SharedResources, Cancel%>" />
                     </div>
                 </div>
                 <asp:Panel ID="SelectColumnsPanel" Visible="False" runat="Server">
@@ -160,7 +160,7 @@
                                 <asp:ListItem Text="<%$ Resources:SharedResources, LastUpdateUser %>" Value="22" />
                             </asp:CheckBoxList>
                             <br />
-                            <asp:Button ID="SaveButton" runat="server" Text="<%$ Resources:SharedResources, Save %>" CssClass="standardText" OnClick="SaveClick">
+                            <asp:Button ID="SaveButton" runat="server" Text="<%$ Resources:SharedResources, Save %>" OnClick="SaveClick">
                             </asp:Button>&nbsp;&nbsp;
                             <input type="button" id="Button1" onclick="$('#ChangeColumns').toggle();" runat="server" value="<%$ Resources:SharedResources, Cancel%>" />
                         </div>

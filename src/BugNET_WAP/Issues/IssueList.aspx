@@ -1,5 +1,5 @@
 <%@ Page Language="c#" Inherits="BugNET.Issues.IssueList" MasterPageFile="~/Shared/SingleColumn.master" Title="Issue List"
-    CodeBehind="IssueList.aspx.cs" AutoEventWireup="True" meta:resourcekey="Page" %>
+    CodeBehind="IssueList.aspx.cs" AutoEventWireup="True"  meta:resourcekey="Page" %>
 
 <%@ Register TagPrefix="it" TagName="DisplayIssues" Src="~/UserControls/DisplayIssues.ascx" %>
 <asp:Content ID="Content3" runat="server" ContentPlaceHolderID="PageTitle">
@@ -14,9 +14,9 @@
     </div>
 </asp:Content>
 <asp:Content ID="Content1" ContentPlaceHolderID="Content" runat="server">
-    <table width="100%">
+    <table style="width:100%;">
         <tr>
-            <td align="left">
+            <td style="text-align:left;">
                 <asp:Label ID="ViewIssuesLabel" runat="server" Text="View Issues:" meta:resourcekey="ViewIssuesLabel"></asp:Label>
                 <asp:DropDownList ID="dropView" CssClass="standardText" AutoPostBack="True" runat="Server" OnSelectedIndexChanged="ViewSelectedIndexChanged">
                     <asp:ListItem Text="-- Select a View --" Value="" meta:resourcekey="ListItem6" />
