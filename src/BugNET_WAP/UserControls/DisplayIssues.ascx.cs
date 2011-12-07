@@ -11,6 +11,7 @@ namespace BugNET.UserControls
     using BugNET.Common;
     using BugNET.Entities;
     using BugNET.UserInterfaceLayer;
+
     /// <summary>
 	///	Display Issues grid
 	/// </summary>
@@ -43,8 +44,21 @@ namespace BugNET.UserControls
         {
             if (Page.User.Identity.IsAuthenticated)
             {
-                if (!string.IsNullOrEmpty(WebProfile.Current.SelectedIssueColumns))
+                string columns = null;
+                int projectId;
+                if (Int32.TryParse(Request.QueryString["pid"], out projectId))
+                {
+                    columns = UserManager.GetSelectedIssueColumnsByUserName(Security.GetUserName(), projectId);
+
+                    if (!string.IsNullOrEmpty(columns))
+                        _arrIssueColumns = columns.Trim().Split();
+                }
+                //if it is myIssues and not a specific project
+                else
+                {
+                    if (!string.IsNullOrEmpty(WebProfile.Current.SelectedIssueColumns))
                     _arrIssueColumns = WebProfile.Current.SelectedIssueColumns.Trim().Split();
+                }
             }
             else
             {
@@ -79,24 +93,42 @@ namespace BugNET.UserControls
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, System.EventArgs e)
         {
-            //need to rebind these on every postback because of dynamic controls
-            int projectId;
-            if (Request.QueryString["pid"] != null)
-            {
+  
+        }
 
-
-                if (Int32.TryParse(Request.QueryString["pid"], out projectId))
+        /// <summary>
+        /// Binds a data source to the invoked server control and all its child controls.
+        /// </summary>
+        public override void DataBind() 
+		{
+			if(this.DataSource.Count > 0)
+			{
+                if (!string.IsNullOrEmpty(gvIssues.SortField))
                 {
-                    List<CustomField> customFields = CustomFieldManager.GetByProjectId(projectId);
+                   _DataSource.Sort(new ObjectComparer<Issue>(gvIssues.SortField, true));
+                }
 
-                    if (customFields.Count > 0)
+				gvIssues.Visible = true;
+                pager.Visible = true;
+                ScrollPanel.Visible = true;
+                
+                int pId = -1;
+                if (Request.QueryString["pid"] != null)
+                    pId = Int32.Parse(Request.QueryString["pid"]);
+
+                //get custom fields for project
+                if (pId != -1)
+                {
+                    List<CustomField> customFields = CustomFieldManager.GetByProjectId(pId);
+
+                    //checks if its initial load to add custom controls and checkboxes
+                    if (gvIssues.Columns.Count <= nrColumns + 1)
                     {
-                        ctlCustomFields.DataSource = customFields;
-                        ctlCustomFields.DataBind();
-
-                        //checks if its initial load to add custom controls and checkboxes
-                        if (gvIssues.Columns.Count <= nrColumns + 1)
+                        //if there is custom fields add them
+                        if (customFields.Count > 0)
                         {
+                            //ctlCustomFields.DataSource = customFields;
+                           // ctlCustomFields.DataBind();
 
                             foreach (CustomField value in customFields)
                             {
@@ -120,28 +152,11 @@ namespace BugNET.UserControls
                                 //tf.SortExpression = value.Name;
                                 gvIssues.Columns.Add(tf);
 
-                            }                           
+                            }
                         }
+
                     }
                 }
-            }
-        }
-
-        /// <summary>
-        /// Binds a data source to the invoked server control and all its child controls.
-        /// </summary>
-        public override void DataBind() 
-		{
-			if(this.DataSource.Count > 0)
-			{
-                if (!string.IsNullOrEmpty(gvIssues.SortField))
-                {
-                   _DataSource.Sort(new ObjectComparer<Issue>(gvIssues.SortField, true));
-                }
-
-				gvIssues.Visible = true;
-                pager.Visible = true;
-                ScrollPanel.Visible = true;
 
                 DisplayColumns();
                 SelectColumnsPanel.Visible = true;
@@ -261,8 +276,8 @@ namespace BugNET.UserControls
         private void DisplayColumns()
         {
             // Hide all the DataGrid columns
-            //for (var index = 4; index < gvIssues.Columns.Count; index++)
-            //    gvIssues.Columns[index].Visible = false;
+            for (var index = 4; index < gvIssues.Columns.Count; index++)
+                gvIssues.Columns[index].Visible = false;
 
             // Display columns based on the _arrIssueColumns array (retrieved from cookie)
             //foreach (var colIndex in _arrIssueColumns)
@@ -390,8 +405,16 @@ namespace BugNET.UserControls
 
             if (Page.User.Identity.IsAuthenticated)
             {
-                WebProfile.Current.SelectedIssueColumns = strIssueColumns.Trim();
-                WebProfile.Current.Save();
+                int projectId;
+                if (Int32.TryParse(Request.QueryString["pid"], out projectId))
+                {
+                    UserManager.SetSelectedIssueColumnsByUserName(Security.GetUserName(), projectId, strIssueColumns.Trim());
+                }
+                else //if it is MyIssue and not a specific project
+                {
+                    WebProfile.Current.SelectedIssueColumns = strIssueColumns.Trim();
+                    WebProfile.Current.Save();
+                }
             }
             else
             {

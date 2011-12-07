@@ -8,7 +8,7 @@ namespace BugNET.DAL
     /// <summary>
     /// Data Provider Abstract Class
     /// </summary>
-    public abstract class DataProvider : ProviderBase
+    public abstract partial class DataProvider : ProviderBase
     {
         /*** Abstract Properties ***/
         public abstract bool SupportsProjectCloning { get; }
@@ -51,6 +51,8 @@ namespace BugNET.DAL
         public abstract int GetIssueUnassignedCountByProject(int projectId);
         public abstract int GetIssueCountByProjectAndCategory(int projectId, int categoryId);
         public abstract int GetIssueUnscheduledMilestoneCountByProject(int projectId);
+        public abstract string GetSelectedIssueColumnsByUserName(string userName, int projectId);
+        public abstract void SetSelectedIssueColumnsByUserName(string userName, int projectId, string columns);
 
 
         // Related Issues

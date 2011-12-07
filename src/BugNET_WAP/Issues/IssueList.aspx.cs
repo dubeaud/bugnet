@@ -54,7 +54,7 @@ namespace BugNET.Issues
                 }
                 else
                 {
-                    ctlDisplayIssues.PageSize = WebProfile.Current.IssuesPageSize;
+                   // ctlDisplayIssues.PageSize = WebProfile.Current.IssuesPageSize;
                 }
 
                 IssueListState state = (IssueListState)Session[ISSUELISTSTATE];

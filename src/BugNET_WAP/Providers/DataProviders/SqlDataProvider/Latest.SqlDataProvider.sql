@@ -17,174 +17,51 @@ GO
 BEGIN TRAN
 GO
 
-CREATE PROCEDURE [BugNet_ProjectStatus_CanDeleteStatus]
-	@StatusId INT
-AS
-
-SET NOCOUNT ON
-
-DECLARE
-	@ProjectId INT,
-	@Count INT
-	
-SET @ProjectId = (SELECT ProjectId FROM BugNet_ProjectStatus WHERE StatusId = @StatusId)
-
-SET @Count = 
-(
-	SELECT COUNT(*)
-	FROM BugNet_Issues
-	WHERE (IssueStatusId = @StatusId)
-	AND ProjectId = @ProjectId
-)
-
-IF(@Count = 0)
-	RETURN 1
-ELSE
-	RETURN 0
-
-
-
+ALTER TABLE [dbo].[BugNet_UserProjects]
+ADD   [SelectedIssueColumns] nvarchar(255) NULL  
+DEFAULT(0)
 GO
 
 SET ANSI_NULLS ON
 GO
-
 SET QUOTED_IDENTIFIER ON
 GO
 
-
-CREATE PROCEDURE [BugNet_ProjectPriorities_CanDeletePriority]
-	@PriorityId INT
+CREATE PROCEDURE [dbo].[BugNet_GetProjectSelectedColumnsWithUserIdAndProjectId]
+	@Username	nvarchar(255),
+ 	@ProjectId	int,
+ 	@ReturnValue nvarchar(255) OUT
 AS
-
-SET NOCOUNT ON
-
-DECLARE
-	@ProjectId INT,
-	@Count INT
+DECLARE 
+	@UserId UNIQUEIDENTIFIER	
+SELECT @UserId = UserId FROM aspnet_users WHERE Username = @Username
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;	
+	SET @ReturnValue = (SELECT [SelectedIssueColumns] FROM BugNet_UserProjects WHERE UserId = @UserId AND ProjectId = @ProjectId);
 	
-SET @ProjectId = (SELECT ProjectId FROM BugNet_ProjectPriorities WHERE PriorityId = @PriorityId)
-
-SET @Count = 
-(
-	SELECT COUNT(*)
-	FROM BugNet_Issues
-	WHERE (IssuePriorityId = @PriorityId)
-	AND ProjectId = @ProjectId
-)
-
-IF(@Count = 0)
-	RETURN 1
-ELSE
-	RETURN 0
-
-
-
+END
 GO
 
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-
-CREATE PROCEDURE [BugNet_ProjectResolutions_CanDeleteResolution]
-	@ResolutionId INT
+CREATE PROCEDURE [dbo].[BugNet_SetProjectSelectedColumnsWithUserIdAndProjectId]
+	@Username	nvarchar(255),
+ 	@ProjectId	int,
+ 	@Columns nvarchar(255)
 AS
-
-SET NOCOUNT ON
-
-DECLARE
-	@ProjectId INT,
-	@Count INT
+DECLARE 
+	@UserId UNIQUEIDENTIFIER	
+SELECT @UserId = UserId FROM aspnet_users WHERE Username = @Username
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
 	
-SET @ProjectId = (SELECT ProjectId FROM BugNet_ProjectResolutions WHERE ResolutionId = @ResolutionId)
-
-SET @Count = 
-(
-	SELECT COUNT(*)
-	FROM BugNet_Issues
-	WHERE (IssueResolutionId = @ResolutionId)
-	AND ProjectId = @ProjectId
-)
-
-IF(@Count = 0)
-	RETURN 1
-ELSE
-	RETURN 0
-
-
-GO
-
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-
-CREATE PROCEDURE [BugNet_ProjectIssueTypes_CanDeleteIssueType]
-	@IssueTypeId INT
-AS
-
-SET NOCOUNT ON
-
-DECLARE
-	@ProjectId INT,
-	@Count INT
+	UPDATE BugNet_UserProjects
+	SET [SelectedIssueColumns] = @Columns 
+	WHERE UserId = @UserId AND ProjectId = @ProjectId;
 	
-SET @ProjectId = (SELECT ProjectId FROM BugNet_ProjectIssueTypes WHERE IssueTypeId = @IssueTypeId)
-
-SET @Count = 
-(
-	SELECT COUNT(*)
-	FROM BugNet_Issues
-	WHERE (IssueTypeId = @IssueTypeId)
-	AND ProjectId = @ProjectId
-)
-
-IF(@Count = 0)
-	RETURN 1
-ELSE
-	RETURN 0
-
-
-GO
-
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-
-CREATE PROCEDURE [BugNet_ProjectMilestones_CanDeleteMilestone]
-	@MilestoneId INT
-AS
-
-SET NOCOUNT ON
-
-DECLARE
-	@ProjectId INT,
-	@Count INT
-	
-SET @ProjectId = (SELECT ProjectId FROM BugNet_ProjectMilestones WHERE MilestoneId = @MilestoneId)
-
-SET @Count = 
-(
-	SELECT COUNT(*)
-	FROM BugNet_Issues
-	WHERE ((IssueMilestoneId = @MilestoneId) OR (IssueAffectedMilestoneId = @MilestoneId))
-	AND ProjectId = @ProjectId
-)
-
-IF(@Count = 0)
-	RETURN 1
-ELSE
-	RETURN 0
-
-
+END
 GO
 
 COMMIT

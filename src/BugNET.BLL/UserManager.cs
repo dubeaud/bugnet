@@ -484,6 +484,33 @@ namespace BugNET.BLL
             }
             return false;
         }
+
+        /// <summary>
+        /// Gets the name of the selected issue columns by user.
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="projectId">The project id.</param>
+        /// <returns></returns>
+        public static string GetSelectedIssueColumnsByUserName(string userName, int projectId)
+        {
+            if (userName == "") throw new ArgumentNullException("userName");
+
+            return  DataProviderManager.Provider.GetSelectedIssueColumnsByUserName(userName, projectId);
+
+        }
+
+        /// <summary>
+        /// Sets the name of the selected issue columns by user.
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="projectId">The project id.</param>
+        /// <param name="columns">The columns.</param>
+        public static void SetSelectedIssueColumnsByUserName(string userName,int projectId, string columns)
+        {
+            if (userName == "") throw new ArgumentNullException("userName");
+
+            DataProviderManager.Provider.SetSelectedIssueColumnsByUserName(userName, projectId, columns);
+        }
         #endregion
     }
 }

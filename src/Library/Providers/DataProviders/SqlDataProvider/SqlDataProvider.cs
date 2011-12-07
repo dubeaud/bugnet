@@ -20,7 +20,7 @@ namespace BugNET.Providers.DataProviders
     /// <summary>
     /// 
     /// </summary>
-    public class SqlDataProvider : DataProvider
+    public partial class SqlDataProvider : DataProvider
     {
         /*** DELEGATE ***/
         private delegate void GenerateListFromReader<T>(SqlDataReader returnData, ref List<T> tempList);
@@ -267,6 +267,9 @@ namespace BugNET.Providers.DataProviders
 
         //String Resources
         private const string SP_LANGUAGES_GETINSTALLEDLANGUAGES = "BugNet_Languages_GetInstalledLanguages";
+
+        private const string SP_GETSELECTEDISSUECOLUMNS = "BugNet_GetProjectSelectedColumnsWithUserIdAndProjectId";
+        private const string SP_SETSELECTEDISSUECOLUMNS = "BugNet_SetProjectSelectedColumnsWithUserIdAndProjectId";
         #endregion
 
         /// <summary>
@@ -791,6 +794,71 @@ namespace BugNET.Providers.DataProviders
         }
 
         #endregion
+
+        /// <summary>
+        /// Gets the issue columns for a user for a specific project
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="projectId">The project id.</param>
+        /// <returns></returns>
+        public override string GetSelectedIssueColumnsByUserName(string userName, int projectId)
+        {
+            if (projectId <= Globals.NEW_ID)
+                throw (new ArgumentNullException("projectId"));
+            if (string.IsNullOrEmpty(userName))
+                throw (new ArgumentNullException("userName"));
+            try
+            {
+                // Execute SQL Command
+                SqlCommand sqlCmd = new SqlCommand();
+                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_GETSELECTEDISSUECOLUMNS);
+
+                AddParamToSqlCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
+                AddParamToSqlCmd(sqlCmd, "@UserName", SqlDbType.NVarChar, 255, ParameterDirection.Input, userName);
+                AddParamToSqlCmd(sqlCmd, "@ReturnValue", SqlDbType.NVarChar, 255, ParameterDirection.Output, null);
+
+                ExecuteScalarCmd(sqlCmd);
+                return ((string)sqlCmd.Parameters["@ReturnValue"].Value.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw ProcessException(ex);
+            }
+        }
+
+
+        /// <summary>
+        /// Sets the issue columns for a user for a specific project
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="projectId">The project id.</param>
+        /// <param name="columns">The columns selected to be displayed for specific project.</param>
+        /// <returns></returns>
+        public override void SetSelectedIssueColumnsByUserName(string userName, int projectId, string columns)
+        {
+            if (projectId <= Globals.NEW_ID)
+                throw (new ArgumentNullException("projectId"));
+            if (string.IsNullOrEmpty(userName))
+                throw (new ArgumentNullException("userName"));
+            if (string.IsNullOrEmpty(columns))
+                columns = "";
+            try
+            {
+                // Execute SQL Command
+                SqlCommand sqlCmd = new SqlCommand();
+                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_SETSELECTEDISSUECOLUMNS);
+
+                AddParamToSqlCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
+                AddParamToSqlCmd(sqlCmd, "@UserName", SqlDbType.NVarChar, 255, ParameterDirection.Input, userName);
+                AddParamToSqlCmd(sqlCmd, "@Columns", SqlDbType.NVarChar, 255, ParameterDirection.Input, columns);
+
+                ExecuteScalarCmd(sqlCmd);
+            }
+            catch (Exception ex)
+            {
+                throw ProcessException(ex);
+            }
+        }
 
         #region Issue history methods
         /// <summary>
