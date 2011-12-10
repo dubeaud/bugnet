@@ -93,13 +93,13 @@ namespace BugNET.Administration.Users
             switch (e.CommandName)
             {
                 case "Edit":
-                    Response.Redirect(string.Format("~/Administration/Users/ManageUser.aspx?user={0}", e.CommandArgument));
+                    Response.Redirect(string.Format("~/Administration/Users/EditUser.aspx?user={0}", e.CommandArgument));
                     break;
                 case "ManageRoles":
-                    Response.Redirect(string.Format("~/Administration/Users/ManageUser.aspx?user={0}&tabid=2", e.CommandArgument));
+                    Response.Redirect(string.Format("~/Administration/Users/EditUser.aspx?user={0}&tabid=2", e.CommandArgument));
                     break;
                 case "Delete":
-                    Response.Redirect(string.Format("~/Administration/Users/ManageUser.aspx?user={0}&tabid=4", e.CommandArgument));
+                    Response.Redirect(string.Format("~/Administration/Users/EditUser.aspx?user={0}&tabid=4", e.CommandArgument));
                     break;
             }
 

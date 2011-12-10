@@ -13,40 +13,31 @@ namespace BugNET.Administration.Users.UserControls {
     public partial class Password {
         
         /// <summary>
-        /// Message1 control.
+        /// ControlTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::BugNET.UserControls.Message Message1;
+        protected global::System.Web.UI.WebControls.Literal ControlTitle;
         
         /// <summary>
-        /// lblTitle control.
+        /// ActionMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTitle;
+        protected global::BugNET.UserControls.Message ActionMessage;
         
         /// <summary>
-        /// lblUserName control.
+        /// PasswordLastChangedLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblUserName;
-        
-        /// <summary>
-        /// Label16 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label16;
+        protected global::System.Web.UI.WebControls.Literal PasswordLastChangedLabel;
         
         /// <summary>
         /// PasswordLastChanged control.
@@ -55,7 +46,7 @@ namespace BugNET.Administration.Users.UserControls {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label PasswordLastChanged;
+        protected global::System.Web.UI.WebControls.Literal PasswordLastChanged;
         
         /// <summary>
         /// ChangePassword control.
@@ -121,6 +112,15 @@ namespace BugNET.Administration.Users.UserControls {
         protected global::System.Web.UI.WebControls.CompareValidator cvPasswords;
         
         /// <summary>
+        /// ImageButton1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton ImageButton1;
+        
+        /// <summary>
         /// cmdChangePassword control.
         /// </summary>
         /// <remarks>
@@ -173,5 +173,23 @@ namespace BugNET.Administration.Users.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton cmdResetPassword;
+        
+        /// <summary>
+        /// ImageButton3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton ImageButton3;
+        
+        /// <summary>
+        /// ReturnLink control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink ReturnLink;
     }
 }

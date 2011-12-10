@@ -7,108 +7,90 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BugNET.Administration.Users.UserControls {
+namespace BugNET.Administration.Users {
     
     
-    public partial class DeleteUser {
+    public partial class EditUser {
         
         /// <summary>
-        /// ControlTitle control.
+        /// SectionTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ControlTitle;
+        protected global::System.Web.UI.WebControls.Literal SectionTitle;
         
         /// <summary>
-        /// ControlDescription control.
+        /// litUserTitleName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ControlDescription;
+        protected global::System.Web.UI.WebControls.Literal litUserTitleName;
         
         /// <summary>
-        /// DeleteUserText control.
+        /// AdminMenu control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal DeleteUserText;
+        protected global::System.Web.UI.WebControls.Repeater AdminMenu;
         
         /// <summary>
-        /// DeleteUserText2 control.
+        /// pnlAdminControls control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal DeleteUserText2;
+        protected global::System.Web.UI.WebControls.Panel pnlAdminControls;
         
         /// <summary>
-        /// ActionMessage control.
+        /// UserDetails control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::BugNET.UserControls.Message ActionMessage;
+        protected global::BugNET.Administration.Users.UserControls.Membership UserDetails;
         
         /// <summary>
-        /// imgUnauthorizeAccount control.
+        /// UserRoles control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton imgUnauthorizeAccount;
+        protected global::BugNET.Administration.Users.UserControls.Roles UserRoles;
         
         /// <summary>
-        /// cmdUnauthorizeAccount control.
+        /// UserPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton cmdUnauthorizeAccount;
+        protected global::BugNET.Administration.Users.UserControls.Password UserPassword;
         
         /// <summary>
-        /// imgDeleteUser control.
+        /// UserProfile control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton imgDeleteUser;
+        protected global::BugNET.Administration.Users.UserControls.Profile UserProfile;
         
         /// <summary>
-        /// cmdDeleteUser control.
+        /// UserDelete control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton cmdDeleteUser;
-        
-        /// <summary>
-        /// ImageButton3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton ImageButton3;
-        
-        /// <summary>
-        /// ReturnLink control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink ReturnLink;
+        protected global::BugNET.Administration.Users.UserControls.DeleteUser UserDelete;
     }
 }

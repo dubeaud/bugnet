@@ -30,7 +30,7 @@
             <siteMapNode url="~/Administration/Host/LogViewer.aspx" title="Log Viewer" description="Log Viewer" />
             <siteMapNode url="~/Administration/Host/Settings.aspx" title="Application Configuration" description="Application Configuration" />
             <siteMapNode url="~/Administration/Users/UserList.aspx" title="Users" description="Users" >
-                <siteMapNode url="~/Administration/Users/ManageUser.aspx" title="Edit User Account" description="Edit User Account"  Visible="False" />
+                <siteMapNode url="~/Administration/Users/EditUser.aspx" title="Edit User" description="Edit User" Visible="False" />
                 <siteMapNode url="~/Administration/Users/AddUser.aspx" title="Add User" description="Add User" />
             </siteMapNode>
         </siteMapNode>

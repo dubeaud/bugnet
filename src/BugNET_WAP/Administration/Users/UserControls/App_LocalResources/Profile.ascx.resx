@@ -120,4 +120,13 @@
   <data name="ManageProfile" xml:space="preserve">
     <value>Manage Profile</value>
   </data>
+  <data name="ManageProfileDescription" xml:space="preserve">
+    <value>Manage the users profile</value>
+  </data>
+  <data name="UpdateProfile" xml:space="preserve">
+    <value>The users profile has been updated successfully.</value>
+  </data>
+  <data name="BackToUserList" xml:space="preserve">
+    <value>Back to User List</value>
+  </data>
 </root>

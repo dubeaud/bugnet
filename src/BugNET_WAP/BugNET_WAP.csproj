@@ -362,6 +362,16 @@
     <Compile Include="Administration\Users\AddUser.aspx.designer.cs">
       <DependentUpon>AddUser.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Administration\Users\BaseUserControlUserAdmin.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\Users\EditUser.aspx.cs">
+      <DependentUpon>EditUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\Users\EditUser.aspx.designer.cs">
+      <DependentUpon>EditUser.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Administration\Users\ManageUser.aspx.cs">
       <DependentUpon>ManageUser.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -564,6 +574,7 @@
     </Compile>
     <Compile Include="Old_App_Code\UIL\GridViewExportUtil.cs" />
     <Compile Include="Old_App_Code\UIL\IEditHostSettingControl.cs" />
+    <Compile Include="Old_App_Code\UIL\IEditUserControl.cs" />
     <Compile Include="Old_App_Code\UIL\IssueListState.cs" />
     <Compile Include="Old_App_Code\UIL\PresentationUtils.cs" />
     <Compile Include="Old_App_Code\UIL\QueryListState.cs" />
@@ -881,6 +892,7 @@
     <Content Include="Administration\Projects\UserControls\ProjectMembers.ascx" />
     <Content Include="Administration\Projects\UserControls\ProjectRoles.ascx" />
     <Content Include="Administration\Projects\UserControls\ProjectMilestones.ascx" />
+    <Content Include="Administration\Users\EditUser.aspx" />
     <Content Include="Administration\Users\UserList.aspx" />
     <Content Include="App_Themes\Default\superfish.css" />
     <Content Include="Default.aspx" />
@@ -1578,6 +1590,8 @@
     <Content Include="UserControls\App_LocalResources\PickImage.ascx.resx" />
     <Content Include="UserControls\App_LocalResources\CategoryTreeView.ascx.resx" />
     <Content Include="Errors\App_LocalResources\AccessDenied.aspx.resx" />
+    <Content Include="Administration\Users\App_LocalResources\EditUser.aspx.resx" />
+    <Content Include="Administration\Users\UserControls\App_LocalResources\DeleteUser.ascx.resx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BugNET.BLL\BugNET.BLL.csproj">
