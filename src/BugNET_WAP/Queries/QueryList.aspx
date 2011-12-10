@@ -26,9 +26,9 @@
     </div>
 	<asp:Label id="lblError" ForeColor="red" EnableViewState="false" Runat="Server" />
 	<asp:panel ID="Results" runat="server">
-        <table>
+        <table style="width:100%;">
 	        <tr>
-		        <td class="contentCell">
+		        <td>
 			        <h1><asp:Literal ID="Literal1" runat="server" meta:resourcekey="Results" /></h1>
 			        <it:DisplayIssues id="ctlDisplayIssues" Runat="Server" />
 		        </td>

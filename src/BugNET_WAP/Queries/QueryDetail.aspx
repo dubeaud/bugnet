@@ -47,7 +47,7 @@
 	</table>
 	<table id="Results" runat="server" style="width:100%">
 		<tr>
-			<td class="contentCell">
+			<td>
                 <hr />
 				<h1>Results</h1>
 				<it:DisplayIssues id="ctlDisplayIssues" Runat="Server" />

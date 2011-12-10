@@ -64,6 +64,9 @@ BEGIN
 END
 GO
 
+UPDATE BugNet_HostSettings SET SettingValue = '2'  WHERE SettingName = 'SMTPEmailFormat'
+GO
+
 COMMIT
 
 SET NOEXEC OFF
