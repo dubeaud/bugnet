@@ -41,11 +41,9 @@ namespace BugNET.Account
                             //User is valid, approve them
                             userInfo.IsApproved = true;
                             Membership.UpdateUser(userInfo);
-                            //Log the user in and redirect
-                            FormsAuthentication.RedirectFromLoginPage(userInfo.UserName, false);
-
+                      
                             //Display a message
-                            //InformationLabel.Text = "Your account has been verified and you can now log into the site.";
+                            InformationLabel.Text =  GetLocalResourceObject("AccountVerified").ToString();
                         }
                         else
                         {
