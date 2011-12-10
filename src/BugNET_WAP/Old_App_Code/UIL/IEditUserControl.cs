@@ -21,5 +21,7 @@ namespace BugNET.UserInterfaceLayer
         /// Initializes this instance.
         /// </summary>
         void Initialize();
+
+        bool Visible { get; set; }
     }
 }

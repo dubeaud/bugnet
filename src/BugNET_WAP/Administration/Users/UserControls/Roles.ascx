@@ -4,7 +4,7 @@
     <asp:Literal ID="ControlDescription" runat="server" Text="<%$ Resources:ManageRolesDescription %>" />
 </div>
 <BN:Message ID="ActionMessage" runat="server" Visible="False"  />
-<div class="fieldgroup" style="border:none"> 
+<div class="fieldgroup" style="border: none"> 
     <ol>
         <li>
             <asp:Label ID="lblSuperUsers" AssociatedControlID="chkSuperUsers" runat="server" Text="<%$ Resources:SuperUsers %>" />

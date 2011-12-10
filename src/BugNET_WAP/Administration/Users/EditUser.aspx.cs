@@ -11,17 +11,16 @@ namespace BugNET.Administration.Users
 {
     public partial class EditUser : BasePage
     {
-        private Control _contentControl;
-        private static readonly Dictionary<string, string> MenuItems = new Dictionary<string, string>();
+        private static readonly List<AdminMenuItem> MenuItems = new List<AdminMenuItem>();
 
         /// <summary>
-        /// Gets or sets the tab id.
+        /// Gets or sets the admin menu id.
         /// </summary>
-        /// <value>The tab id.</value>
-        int TabId
+        /// <value>The admin menu id.</value>
+        int AdminMenuId
         {
-            get { return ViewState.Get("TabId", 0); }
-            set { ViewState.Set("TabId", value); }
+            get { return ViewState.Get("AdminMenuId", 0); }
+            set { ViewState.Set("AdminMenuId", value); }
         }
 
         /// <summary>
@@ -58,57 +57,39 @@ namespace BugNET.Administration.Users
         }
 
         /// <summary>
-        /// Loads the tab.
+        /// Loads the admin control.
         /// </summary>
-        /// <param name="selectedTab">The selected tab.</param>
-        void LoadTab(int selectedTab)
+        /// <param name="selectedMenuItem">The selected menu item id.</param>
+        /// <param name="loadControl">Flag to indicate if the control should be loaded or not</param>
+        void DisplayAdminControl(int selectedMenuItem, bool loadControl = true)
         {
-            var controlName = "Membership.ascx";
-            TabId = selectedTab;
+            AdminMenuId = selectedMenuItem;
 
-            switch (TabId)
+            foreach (var adminMenuItem in MenuItems)
             {
-                case 0:
-                    controlName = "Membership.ascx";
-                    break;
-                case 1:
-                    controlName = "Roles.ascx";
-                    break;
-                case 2:
-                    controlName = "Password.ascx";
-                    break;
-                case 3:
-                    controlName = "Profile.ascx";
-                    break;
-                case 4:
-                    controlName = "DeleteUser.ascx";
-                    break;
+                var control = pnlAdminControls.FindControl(adminMenuItem.Argument) as IEditUserControl;
+
+                if (control == null) continue;
+
+                control.Action += EditUserAction;
+
+                if (!loadControl) continue;
+
+                control.Visible = false;
+                var htmlControl = AdminMenu.Items[adminMenuItem.Id].FindControl("ListItem") as HtmlGenericControl;
+
+                if (htmlControl != null) 
+                    htmlControl.Attributes.Add("class", "off");
+
+                if (selectedMenuItem != adminMenuItem.Id) continue;
+
+                if (htmlControl != null)
+                    htmlControl.Attributes.Add("class", "on");
+
+                control.Visible = true;
+                control.UserId = UserId;
+                control.Initialize();
             }
-
-            LoadAdminMenuItems();
-
-            for (var i = 0; i < MenuItems.Count; i++)
-            {
-                if (i == selectedTab)
-                    ((HtmlGenericControl)AdminMenu.Items[i].FindControl("ListItem")).Attributes.Add("class", "on");
-                else
-                    ((HtmlGenericControl)AdminMenu.Items[i].FindControl("ListItem")).Attributes.Add("class", "off");
-            }
-
-            var controlPath = string.Format("~/Administration/Users/UserControls/{0}", controlName);
-
-            _contentControl = Page.LoadControl(controlPath);
-            _contentControl.ID = "ctlContent";
-            plhContent.Controls.Clear();
-            plhContent.Controls.Add(_contentControl);
-            plhContent.Visible = true;
-
-            var controlInterface = _contentControl as IEditUserControl;
-            if (controlInterface == null) return;
-
-            controlInterface.UserId = UserId;
-            controlInterface.Initialize();
-            controlInterface.Action += EditUserAction;
         }
 
         /// <summary>
@@ -134,11 +115,11 @@ namespace BugNET.Administration.Users
         {
             MenuItems.Clear();
 
-            MenuItems.Add(GetLocalResourceObject("UserDetails").ToString(), "vcard.gif");
-            MenuItems.Add(GetLocalResourceObject("UserRoles").ToString(), "shield.gif");
-            MenuItems.Add(GetLocalResourceObject("UserPassword").ToString(), "key.gif");
-            MenuItems.Add(GetLocalResourceObject("UserProfile").ToString(), "user.gif");
-            MenuItems.Add(GetLocalResourceObject("UserDelete").ToString(), "user_delete.gif");
+            MenuItems.Add(new AdminMenuItem { Id = 0, Text = GetLocalResourceObject("UserDetails").ToString(), Argument = "UserDetails", ImageUrl = "vcard.gif" });
+            MenuItems.Add(new AdminMenuItem { Id = 1, Text = GetLocalResourceObject("UserRoles").ToString(), Argument = "UserRoles", ImageUrl = "shield.gif" });
+            MenuItems.Add(new AdminMenuItem { Id = 2, Text = GetLocalResourceObject("UserPassword").ToString(), Argument = "UserPassword", ImageUrl = "key.gif" });
+            MenuItems.Add(new AdminMenuItem { Id = 3, Text = GetLocalResourceObject("UserProfile").ToString(), Argument = "UserProfile", ImageUrl = "user.gif" });
+            MenuItems.Add(new AdminMenuItem { Id = 4, Text = GetLocalResourceObject("UserDelete").ToString(), Argument = "UserDelete", ImageUrl = "user_delete.gif" });
 
             AdminMenu.DataSource = MenuItems;
             AdminMenu.DataBind();
@@ -157,29 +138,43 @@ namespace BugNET.Administration.Users
 
             if (!Page.IsPostBack)
             {
-                LoadTab(QueryTabId);
+                LoadAdminMenuItems();
+                DisplayAdminControl(QueryTabId);
                 return;
             }
 
-            LoadTab(TabId);
+            DisplayAdminControl(AdminMenuId, false);
         }
 
         protected void AdminMenuItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem) return;
 
-            var dataItem = (KeyValuePair<string, string>)e.Item.DataItem;
+            var menuItem = e.Item.DataItem as AdminMenuItem;
+
             var listItem = e.Item.FindControl("ListItem") as HtmlGenericControl;
-            var lb = e.Item.FindControl("MenuButton") as LinkButton;
+            var menuButton = e.Item.FindControl("MenuButton") as LinkButton;
+
+            if (menuItem == null) return;
+
             if (listItem != null)
-                listItem.Attributes.Add("style", string.Format("background: #C4EFA1 url(../../images/{0}) no-repeat 5px 4px;", dataItem.Value));
-            if (lb != null) lb.Text = dataItem.Key;
+                listItem.Attributes.Add("style", string.Format("background: #C4EFA1 url(../../images/{0}) no-repeat 5px 4px;", menuItem.ImageUrl));
+
+            if (menuButton != null)
+            {
+                menuButton.Text = menuItem.Text;
+                menuButton.Attributes.Add("data-menu-id", menuItem.Id.ToString());
+            }
         }
 
         protected void AdminMenuItemCommand(object source, RepeaterCommandEventArgs e)
         {
-            TabId = e.Item.ItemIndex;
-            LoadTab(TabId);
+            var menuButton = e.Item.FindControl("MenuButton") as LinkButton;
+
+            if (menuButton != null)
+            {
+                DisplayAdminControl(menuButton.Attributes["data-menu-id"].To<int>());
+            } 
         }
     }
 }

@@ -40,12 +40,57 @@ namespace BugNET.Administration.Users {
         protected global::System.Web.UI.WebControls.Repeater AdminMenu;
         
         /// <summary>
-        /// plhContent control.
+        /// pnlAdminControls control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder plhContent;
+        protected global::System.Web.UI.WebControls.Panel pnlAdminControls;
+        
+        /// <summary>
+        /// UserDetails control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::BugNET.Administration.Users.UserControls.Membership UserDetails;
+        
+        /// <summary>
+        /// UserRoles control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::BugNET.Administration.Users.UserControls.Roles UserRoles;
+        
+        /// <summary>
+        /// UserPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::BugNET.Administration.Users.UserControls.Password UserPassword;
+        
+        /// <summary>
+        /// UserProfile control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::BugNET.Administration.Users.UserControls.Profile UserProfile;
+        
+        /// <summary>
+        /// UserDelete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::BugNET.Administration.Users.UserControls.DeleteUser UserDelete;
     }
 }

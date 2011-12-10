@@ -11,6 +11,14 @@ namespace BugNET.Administration.Users.UserControls
     {
         private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        public event ActionEventHandler Action;
+
+        void OnAction(ActionEventArgs args)
+        {
+            if (Action != null)
+                Action(this, args);
+        }
+
         public Guid UserId
         {
             get { return ViewState.Get("UserId", Guid.Empty); }
@@ -19,7 +27,7 @@ namespace BugNET.Administration.Users.UserControls
 
         public void Initialize()
         {
-            BindUserData(UserId);
+            GetMembershipData(UserId);
             DataBind();
         }
 
@@ -46,6 +54,8 @@ namespace BugNET.Administration.Users.UserControls
         {
             try
             {
+                GetMembershipData(UserId);
+
                 if (MembershipData != null)
                 {
                     var profile = new WebProfile().GetProfile(MembershipData.UserName);

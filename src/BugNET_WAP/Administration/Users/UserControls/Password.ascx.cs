@@ -13,6 +13,14 @@ namespace BugNET.Administration.Users.UserControls
     {
         private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        public event ActionEventHandler Action;
+
+        void OnAction(ActionEventArgs args)
+        {
+            if (Action != null)
+                Action(this, args);
+        }
+
         public Guid UserId
         {
             get { return ViewState.Get("UserId", Guid.Empty); }
@@ -21,7 +29,7 @@ namespace BugNET.Administration.Users.UserControls
 
         public void Initialize()
         {
-            BindUserData(UserId);
+            GetMembershipData(UserId);
             DataBind();
 
             if (System.Web.Security.Membership.RequiresQuestionAndAnswer || !System.Web.Security.Membership.EnablePasswordRetrieval)
@@ -57,13 +65,15 @@ namespace BugNET.Administration.Users.UserControls
         {
             if (!cvPasswords.IsValid) return;
 
+            GetMembershipData(UserId);
+
             if (MembershipData == null) return;
 
             try
             {
                 MembershipData.ChangePassword(MembershipData.ResetPassword(), NewPassword.Text);
                 ActionMessage.ShowSuccessMessage(GetLocalResourceObject("PasswordChangeSuccess").ToString());
-                BindUserData(UserId);
+                GetMembershipData(UserId);
                 DataBind();
             }
             catch (Exception ex)
@@ -88,12 +98,14 @@ namespace BugNET.Administration.Users.UserControls
         {
             try
             {
+                GetMembershipData(UserId);
+
                 var newPassword = MembershipData.ResetPassword();
                 ActionMessage.ShowSuccessMessage(GetLocalResourceObject("PasswordResetSuccess").ToString());
 
                 //Email the password to the user.
                 UserManager.SendUserNewPasswordNotification(MembershipData, newPassword);
-                BindUserData(UserId);
+                GetMembershipData(UserId);
                 DataBind();
 
                 if(Log.IsInfoEnabled)

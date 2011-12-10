@@ -11,6 +11,14 @@ namespace BugNET.Administration.Users.UserControls
     {
         private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        public event ActionEventHandler Action;
+
+        void OnAction(ActionEventArgs args)
+        {
+            if (Action != null)
+                Action(this, args);
+        }
+
         public Guid UserId
         {
             get { return ViewState.Get("UserId", Guid.Empty); }
@@ -19,7 +27,7 @@ namespace BugNET.Administration.Users.UserControls
 
         public void Initialize()
         {
-            BindUserData(UserId);
+            GetMembershipData(UserId);
             cmdDeleteUser.Attributes.Add("onclick", string.Format("return confirm('{0}');", GetLocalResourceObject("ConfirmDeleteUser")));
             cmdUnauthorizeAccount.Attributes.Add("onclick", string.Format("return confirm('{0}');", GetLocalResourceObject("ConfirmUnauthorizeUser")));
         }
@@ -32,9 +40,11 @@ namespace BugNET.Administration.Users.UserControls
         protected void UnauthorizeAccountClick(object sender, EventArgs e)
         {
             try
-            {           
+            {
+                GetMembershipData(UserId); 
                 MembershipData.IsApproved = false;
                 UserManager.UpdateUser(MembershipData);
+                Response.Redirect("~/Administration/Users/UserList.aspx");
             }
             catch (Exception)
             {
@@ -51,6 +61,7 @@ namespace BugNET.Administration.Users.UserControls
         {
             try
             {
+                GetMembershipData(UserId);
                 System.Web.Security.Membership.DeleteUser(MembershipData.UserName);
                 Response.Redirect("~/Administration/Users/UserList.aspx");
             }

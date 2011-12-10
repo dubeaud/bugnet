@@ -12,6 +12,14 @@ namespace BugNET.Administration.Users.UserControls
     {
         private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        public event ActionEventHandler Action;
+
+        void OnAction(ActionEventArgs args)
+        {
+            if (Action != null)
+                Action(this, args);
+        }
+
         public Guid UserId
         {
             get { return ViewState.Get("UserId", Guid.Empty); }
@@ -20,16 +28,17 @@ namespace BugNET.Administration.Users.UserControls
 
         public void Initialize()
         {
-            BindUserData(UserId);
             BindData();
         }
 
         /// <summary>
         /// Binds the data.
         /// </summary>
-        private void BindData()
+        void BindData()
         {
             if (UserId == Guid.Empty) return;
+
+            GetMembershipData(UserId);
 
             //get this user and bind the data
             var user = (CustomMembershipUser)MembershipData;
@@ -67,6 +76,8 @@ namespace BugNET.Administration.Users.UserControls
         {
             try
             {
+                GetMembershipData(UserId);
+
                 var user = (CustomMembershipUser)MembershipData;
 
                 if (user != null)
@@ -86,7 +97,6 @@ namespace BugNET.Administration.Users.UserControls
                 ActionMessage.ShowErrorMessage(LoggingManager.GetErrorMessageResource("UpdateUserError"));
             }
         }
-
 
         /// <summary>
         /// Handles the Click event of the AuthorizeUser control.
@@ -142,8 +152,10 @@ namespace BugNET.Administration.Users.UserControls
         /// Authorizes the user.
         /// </summary>
         /// <param name="isAuthorized">if set to <c>true</c> [is authorized].</param>
-        private void AuthorizeUser(bool isAuthorized)
+        void AuthorizeUser(bool isAuthorized)
         {
+            GetMembershipData(UserId);
+
             if (MembershipData == null) return;
 
             MembershipData.IsApproved = isAuthorized;

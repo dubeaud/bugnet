@@ -12,6 +12,14 @@ namespace BugNET.Administration.Users.UserControls
     {
         private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        public event ActionEventHandler Action;
+
+        void OnAction(ActionEventArgs args)
+        {
+            if (Action != null)
+                Action(this, args);
+        }
+
         public Guid UserId
         {
             get { return ViewState.Get("UserId", Guid.Empty); }
@@ -20,19 +28,24 @@ namespace BugNET.Administration.Users.UserControls
 
         public void Initialize()
         {
-            BindUserData(UserId);
-            DataBind();
+            LoadControlData();
+            RoleList.Items.Clear();
         }
 
         /// <summary>
         /// Binds the data.
         /// </summary>
-        private void BindData()
+        private void LoadControlData(bool loadProjects = true)
         {
+            GetMembershipData(UserId);
+
             if (MembershipData == null) return;
 
-            dropProjects.DataSource = ProjectManager.GetAllProjects();
-            dropProjects.DataBind();
+            if (loadProjects)
+            {
+                dropProjects.DataSource = ProjectManager.GetAllProjects();
+                dropProjects.DataBind();
+            }
 
             if (!UserManager.IsInRole(Globals.SUPER_USER_ROLE)) return;
 
@@ -49,9 +62,12 @@ namespace BugNET.Administration.Users.UserControls
         {
             if (dropProjects.SelectedValue != 0)
             {
+                GetMembershipData(UserId);
+
                 RoleList.Items.Clear();
                 var projectId = dropProjects.SelectedValue;
                 var roles = RoleManager.GetByProjectId(projectId);
+
                 foreach (var r in roles)
                 {
                     if (r.ProjectId == 0) continue;
@@ -78,10 +94,13 @@ namespace BugNET.Administration.Users.UserControls
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void ChkSuperUsersCheckChanged(object sender, EventArgs e)
         {
+            GetMembershipData(UserId);
+
             var userName = MembershipData.UserName;
 
             if (chkSuperUsers.Checked && !UserManager.IsInRole(userName, 0, Globals.SUPER_USER_ROLE))
                 RoleManager.AddUser(userName, 1);
+
             else if (!chkSuperUsers.Checked && UserManager.IsInRole(userName, 0, Globals.SUPER_USER_ROLE))
                 RoleManager.RemoveUser(userName, 1);
         }
@@ -93,21 +112,16 @@ namespace BugNET.Administration.Users.UserControls
         protected void CmdUpdateRolesClick(object sender, EventArgs e)
         {
             UpdateRolesFromList();
-            BindData();
+            LoadControlData(false);
         }
 
-        /// <summary>
-        /// Binds a data source to the invoked server control and all its child controls.
-        /// </summary>
-        public override void DataBind()
-        {
-            BindData();
-        }
         /// <summary>
         /// Updates the roles from list.
         /// </summary>
         private void UpdateRolesFromList()
         {
+            GetMembershipData(UserId);
+
             var userName = MembershipData.UserName;
 
             //if (chkSuperUsers.Visible && !ITUser.IsInRole(userName,0,Globals.SuperUserRole))
