@@ -372,13 +372,6 @@
     <Compile Include="Administration\Users\EditUser.aspx.designer.cs">
       <DependentUpon>EditUser.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Administration\Users\ManageUser.aspx.cs">
-      <DependentUpon>ManageUser.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Administration\Users\ManageUser.aspx.designer.cs">
-      <DependentUpon>ManageUser.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Administration\Users\UserControls\DeleteUser.ascx.cs">
       <DependentUpon>DeleteUser.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1443,7 +1436,6 @@
     <Content Include="Administration\Projects\UserControls\ProjectNotifications.ascx" />
     <Content Include="Administration\Projects\UserControls\ProjectSubversion.ascx" />
     <Content Include="Administration\Users\AddUser.aspx" />
-    <Content Include="Administration\Users\ManageUser.aspx" />
     <Content Include="Administration\Users\UserControls\DeleteUser.ascx" />
     <Content Include="Administration\Users\UserControls\Membership.ascx" />
     <Content Include="Administration\Users\UserControls\Password.ascx" />

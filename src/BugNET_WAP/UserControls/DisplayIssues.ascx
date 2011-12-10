@@ -168,7 +168,7 @@
                 </asp:Panel>
             </asp:Panel>
             <asp:Panel ID="ScrollPanel" runat="server" ScrollBars="Horizontal" Width="100%">
-                <BNWC:GridView ID="gvIssues" SkinID="GridView" AllowPaging="True" AllowSorting="True" BorderWidth="1px" BorderStyle="Solid"
+                <BNWC:GridView ID="gvIssues" ClientIDMode="Predictable" SkinID="GridView" AllowPaging="True" AllowSorting="True" BorderWidth="1px" BorderStyle="Solid"
                     GridLines="None" DataKeyNames="Id" UseAccessibleHeader="true" EnableMultiColumnSorting="True" ShowSortSequence="True"
                     PagerStyle-HorizontalAlign="right" SortAscImageUrl="~/images/bullet_arrow_up.png" SortDescImageUrl="~/images/bullet_arrow_down.png"
                     OnRowDataBound="gvIssues_RowDataBound" OnSorting="gvIssues_Sorting" Width="100%" OnPageIndexChanging="gvIssues_PageIndexChanging"
