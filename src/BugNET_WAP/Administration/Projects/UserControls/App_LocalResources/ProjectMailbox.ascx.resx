@@ -138,4 +138,10 @@
   <data name="btnAddMailbox.Text" xml:space="preserve">
     <value>Add Mailbox</value>
   </data>
+  <data name="DescriptionLabel.Text" xml:space="preserve">
+    <value>Mailboxes are utilized by enabling the POP3 Mailbox feature in the Application Configuration section.  When this feature is enabled you can send emails to the mailboxes listed below and issues will be automatically created, assigned an issue type and assigned to an user (when configured).</value>
+  </data>
+  <data name="MailboxesTitle.Text" xml:space="preserve">
+    <value>Mailboxes</value>
+  </data>
 </root>

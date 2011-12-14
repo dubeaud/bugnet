@@ -432,7 +432,13 @@
   <data name="TotalHours" xml:space="preserve">
     <value>Total Hours</value>
   </data>
-  <data name="Remove">
-    <value xml:space="preserve">Remove</value>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="NotAvailable" xml:space="preserve">
+    <value>Not Available</value>
+  </data>
+  <data name="NotAvailableAbbr" xml:space="preserve">
+    <value>N/A</value>
   </data>
 </root>

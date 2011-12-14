@@ -79,7 +79,7 @@ INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'WelcomeMessage', N'Welcome to your new BugNET installation! Log in as <br/><br/> Username: admin <br/>Password: password')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'OpenIdAuthentication', N'False')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('SMTPEmailTemplateRoot', '~/templates')
-INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('SMTPEMailFormat','HTML')
+INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('SMTPEMailFormat','2')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('SMTPDomain','')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('ApplicationDefaultLanguage','en-US')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('Pop3ProcessAttachments','False')

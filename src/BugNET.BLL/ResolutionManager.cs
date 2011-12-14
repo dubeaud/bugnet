@@ -45,15 +45,29 @@ namespace BugNET.BLL
         /// <summary>
         /// Deletes the resolution.
         /// </summary>
-        /// <param name="resolutionId">The resolution id.</param>
+        /// <param name="id">The id for the item to be deleted.</param>
+        /// <param name="cannotDeleteMessage">If</param>
         /// <returns></returns>
-        public static bool Delete(int resolutionId)
+        public static bool Delete(int id, out string cannotDeleteMessage)
         {
-            if (resolutionId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("resolutionId"));
+            if (id <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("id"));
 
-            return DataProviderManager.Provider.DeleteResolution(resolutionId);
+            var entity = GetById(id);
+
+            cannotDeleteMessage = string.Empty;
+
+            if (entity == null) return true;
+
+            var canBeDeleted = DataProviderManager.Provider.CanDeleteResolution(entity.Id);
+
+            if (canBeDeleted)
+                return DataProviderManager.Provider.DeleteResolution(entity.Id);
+
+            cannotDeleteMessage = ResourceStrings.GetGlobalResource(GlobalResources.Exceptions, "DeleteItemAssignedToIssueError");
+            cannotDeleteMessage = string.Format(cannotDeleteMessage, entity.Name, "resolution");
+
+            return false;
         }
-
 
         /// <summary>
         /// Gets the resolutions by project id.

@@ -17,35 +17,51 @@ namespace BugNET.Account
             if (string.IsNullOrEmpty(Request.QueryString["ID"]) || !Regex.IsMatch(Request.QueryString["ID"].ToLower(), "[0-9a-f]{8}\\-([0-9a-f]{4}\\-){3}[0-9a-f]{12}"))
             {
                 InformationLabel.Text = GetLocalResourceObject("InvalidUserAccountID").ToString();
+                return;
             }
             else
             {
-                //ID exists and is kosher, see if this user is already approved
-                //Get the ID sent in the querystring
-                Guid userId = new Guid(Request.QueryString["ID"]);
-
-                //Get information about the user
-                MembershipUser userInfo = Membership.GetUser(userId);
-                if (userInfo == null)
+                try
                 {
-                    //Could not find user!
-                    InformationLabel.Text = GetLocalResourceObject("UserAccountCouldNotBeFound").ToString();
-                }
-                else
-                {
-                    if (userInfo.CreationDate.AddDays(7) <= DateTime.Now)
-                    { 
-                        //User is valid, approve them
-                        userInfo.IsApproved = true;
-                        Membership.UpdateUser(userInfo);
-                        //Log the user in and redirect
-                        FormsAuthentication.RedirectFromLoginPage(userInfo.UserName,false); 
+                    //ID exists and is kosher, see if this user is already approved
+                    //Get the ID sent in the querystring
+                    Guid userId = new Guid(Request.QueryString["ID"]);
 
-                        //Display a message
-                        //InformationLabel.Text = "Your account has been verified and you can now log into the site.";
+                    //Get information about the user
+                    MembershipUser userInfo = Membership.GetUser(userId);
+                    if (userInfo == null)
+                    {
+                        //Could not find user!
+                        InformationLabel.Text = GetLocalResourceObject("UserAccountCouldNotBeFound").ToString();
+                    }
+                    else
+                    {
+                        if (userInfo.CreationDate.AddDays(7) >= DateTime.Now)
+                        {
+                            //User is valid, approve them
+                            userInfo.IsApproved = true;
+                            Membership.UpdateUser(userInfo);
+                      
+                            //Display a message
+                            InformationLabel.Text =  GetLocalResourceObject("AccountVerified").ToString();
+                        }
+                        else
+                        {
+                            //Display a message
+                            InformationLabel.Text = GetLocalResourceObject("AccountDeactivated").ToString();
+                            return;
+                        }
                     }
                 }
+                catch
+                {
+                    // Error. Redirect some where
+                    Response.Redirect("~/Errors/Error.aspx");
+                }
             }
+
+            // We should never reach here. Just in case redirect some where
+            Response.Redirect("~/Default.aspx", true);
             
         }
     }

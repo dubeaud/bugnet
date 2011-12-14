@@ -94,70 +94,78 @@ namespace BugNET.BLL
         public static List<CustomMembershipUser> FindUsersByName(string userNameToMatch)
         {
             var userList = new Dictionary<string, CustomMembershipUser>();
+
+            // find standard usernames
             foreach (CustomMembershipUser u in Membership.FindUsersByName(userNameToMatch))
-            {
                 userList[u.UserName] = u;
-            }
 
-            foreach (CustomMembershipUser u in Membership.FindUsersByName("%\\" + userNameToMatch))
-            {
+            // find windows user names [domain\username] pattern
+            foreach (CustomMembershipUser u in Membership.FindUsersByName(string.Concat("%\\", userNameToMatch)))
                 userList[u.UserName] = u;
-            }
 
-            var sb = new StringBuilder();
-            foreach (var c in userNameToMatch)
-            {
-                switch (c)
-                {
-                    case '_':
-                        sb.Append("?");
-                        break;
-                    case '%':
-                        sb.Append(".*");
-                        break;
-                    case '[':
-                    case '{':
-                    case '\\':
-                    case '|':
-                    case '>':
-                    case '^':
-                    case '$':
-                    case '(':
-                    case ')':
-                    case '<':
-                    case '.':
-                    case '*':
-                    case '+':
-                    case '?':
-                        sb.Append('\\');
-                        sb.Append(c);
-                        break;
-                    default:
-                        sb.Append(c);
-                        break;
-                }
-            }
+            // find open id user names [http://username] pattern
+            foreach (CustomMembershipUser u in Membership.FindUsersByName(string.Concat("%//", userNameToMatch)))
+                userList[u.UserName] = u;
 
-            var regex = new Regex(sb.ToString());
-            var invalidUsernames = new List<string>();
-            foreach (var u in userList.Values)
-            {
-                var username = u.UserName;
-                var pos = username.IndexOf('\\');
-                if ((pos >= 0) && (username.Length > pos))
-                {
-                    username = username.Substring(pos + 1);
-                }
-                if (!regex.IsMatch(username))
-                {
-                    invalidUsernames.Add(username);
-                }
-            }
+            // wrhighfield
+            // removed 2011-11-26 due to the aggressive removing of the usernames, the patterns above will return some
+            // false matches when it dealing with openid and windows user names, however it does seem to work a bit better
+            // than the code below...
 
-            foreach (var invalidUsername in invalidUsernames)
-            {
-                userList.Remove(invalidUsername);
-            }
+            //var sb = new StringBuilder();
+            //foreach (var c in userNameToMatch)
+            //{
+            //    switch (c)
+            //    {
+            //        case '_':
+            //            sb.Append("?");
+            //            break;
+            //        case '%':
+            //            sb.Append(".*");
+            //            break;
+            //        case '[':
+            //        case '{':
+            //        case '\\':
+            //        case '|':
+            //        case '>':
+            //        case '^':
+            //        case '$':
+            //        case '(':
+            //        case ')':
+            //        case '<':
+            //        case '.':
+            //        case '*':
+            //        case '+':
+            //        case '?':
+            //            sb.Append('\\');
+            //            sb.Append(c);
+            //            break;
+            //        default:
+            //            sb.Append(c);
+            //            break;
+            //    }
+            //}
+
+            //var regex = new Regex(sb.ToString());
+            //var invalidUsernames = new List<string>();
+            //foreach (var u in userList.Values)
+            //{
+            //    var username = u.UserName;
+            //    var pos = username.IndexOf('\\');
+            //    if ((pos >= 0) && (username.Length > pos))
+            //    {
+            //        username = username.Substring(pos + 1);
+            //    }
+            //    if (!regex.IsMatch(username))
+            //    {
+            //        invalidUsernames.Add(username);
+            //    }
+            //}
+
+            //foreach (var invalidUsername in invalidUsernames)
+            //{
+            //    userList.Remove(invalidUsername);
+            //}
 
             return new List<CustomMembershipUser>(userList.Values);
         }
@@ -315,7 +323,7 @@ namespace BugNET.BLL
 
             var context = new NotificationContext
                               {
-                                  BodyText = String.Format(template, HostSettingManager.Get(HostSettingNames.ApplicationTitle)),
+                                  BodyText = String.Format(template, HostSettingManager.Get(HostSettingNames.ApplicationTitle),user.GetPassword()),
                                   EmailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text), 
                                   Subject = subject, 
                                   UserDisplayName = displayname, 
@@ -396,7 +404,7 @@ namespace BugNET.BLL
                 };
 
             data.Add("User", u);
-            data.Add("Password", newPassword);
+            data.Add("RawXml_Password", string.Format("<Password>{0}</Password>", newPassword));
             template = NotificationManager.GenerateNotificationContent(template, data);
 
             var context = new NotificationContext
@@ -475,6 +483,33 @@ namespace BugNET.BLL
                 return notificationTypes.Any(s => s.Equals(notificationType));
             }
             return false;
+        }
+
+        /// <summary>
+        /// Gets the name of the selected issue columns by user.
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="projectId">The project id.</param>
+        /// <returns></returns>
+        public static string GetSelectedIssueColumnsByUserName(string userName, int projectId)
+        {
+            if (userName == "") throw new ArgumentNullException("userName");
+
+            return  DataProviderManager.Provider.GetSelectedIssueColumnsByUserName(userName, projectId);
+
+        }
+
+        /// <summary>
+        /// Sets the name of the selected issue columns by user.
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="projectId">The project id.</param>
+        /// <param name="columns">The columns.</param>
+        public static void SetSelectedIssueColumnsByUserName(string userName,int projectId, string columns)
+        {
+            if (userName == "") throw new ArgumentNullException("userName");
+
+            DataProviderManager.Provider.SetSelectedIssueColumnsByUserName(userName, projectId, columns);
         }
         #endregion
     }

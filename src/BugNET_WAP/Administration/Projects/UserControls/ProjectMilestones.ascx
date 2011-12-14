@@ -1,10 +1,7 @@
 <%@ Control Language="c#" Inherits="BugNET.Administration.Projects.UserControls.ProjectMilestones" CodeBehind="ProjectMilestones.ascx.cs" %>
-<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 <%@ Register TagPrefix="IT" TagName="PickImage" Src="~/UserControls/PickImage.ascx" %>
 <div>
-    <h2>
-        <asp:Literal ID="MilestonesTitle" runat="Server" meta:resourcekey="MilestonesTitle" /></h2>
-    <asp:Label ID="lblError" ForeColor="red" EnableViewState="false" runat="Server" />
+    <h2><asp:Literal ID="MilestonesTitle" runat="Server" meta:resourcekey="MilestonesTitle" /></h2>
     <asp:CustomValidator Text="You must add at least one milestone" meta:resourcekey="MilestoneValidator" Display="dynamic" runat="server"
         ID="MilestoneValidation" OnServerValidate="MilestoneValidation_Validate" />
     <p>
@@ -13,6 +10,7 @@
     <br />
     <asp:UpdatePanel ID="updatepanel1" runat="server">
         <ContentTemplate>
+            <BN:Message ID="ActionMessage" runat="server" Visible="False"  />
             <asp:DataGrid 
                 ID="grdMilestones" 
                 SkinID="DataGrid" 

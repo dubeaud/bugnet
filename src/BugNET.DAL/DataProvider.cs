@@ -8,7 +8,7 @@ namespace BugNET.DAL
     /// <summary>
     /// Data Provider Abstract Class
     /// </summary>
-    public abstract class DataProvider : ProviderBase
+    public abstract partial class DataProvider : ProviderBase
     {
         /*** Abstract Properties ***/
         public abstract bool SupportsProjectCloning { get; }
@@ -51,6 +51,8 @@ namespace BugNET.DAL
         public abstract int GetIssueUnassignedCountByProject(int projectId);
         public abstract int GetIssueCountByProjectAndCategory(int projectId, int categoryId);
         public abstract int GetIssueUnscheduledMilestoneCountByProject(int projectId);
+        public abstract string GetSelectedIssueColumnsByUserName(string userName, int projectId);
+        public abstract void SetSelectedIssueColumnsByUserName(string userName, int projectId, string columns);
 
 
         // Related Issues
@@ -70,7 +72,7 @@ namespace BugNET.DAL
         public abstract bool UpdateQuery(int queryId, string username, int projectId, string queryName, bool isPublic, List<QueryClause> queryClauses);
         public abstract bool DeleteQuery(int queryId);
         public abstract List<RequiredField> GetRequiredFieldsForIssues();
-        public abstract void PerformGenericQuery<T>(ref List<T> list, List<QueryClause> queryClauses, string sql, string strOrderBy);
+        public abstract void PerformGenericQuery<T>(ref List<T> list, List<QueryClause> queryClauses, string sql, string orderBy);
         public abstract List<Issue> PerformQuery(int projectId, List<QueryClause> queryClauses);
         public abstract List<Issue> PerformSavedQuery(int projectId, int queryId);
         public abstract List<QueryClause> GetQueryClausesByQueryId(int queryId);
@@ -107,21 +109,6 @@ namespace BugNET.DAL
         public abstract int CreateNewIssueVote(IssueVote newIssueVote);
         public abstract bool HasUserVoted(int issueId, string username);
 
-        // Milestone
-        public abstract int CreateNewMilestone(Milestone newMileStone);
-        public abstract bool DeleteMilestone(int milestoneId);
-        public abstract List<Milestone> GetMilestonesByProjectId(int projectId, bool notCompleted);
-        public abstract List<Milestone> GetMilestonesByProjectId(int projectId);
-        public abstract Milestone GetMilestoneById(int milestoneId);
-        public abstract bool UpdateMilestone(Milestone milestoneToUpdate);
-
-        // Priority
-        public abstract int CreateNewPriority(Priority newPriority);
-        public abstract bool DeletePriority(int priorityId);
-        public abstract List<Priority> GetPrioritiesByProjectId(int projectId);
-        public abstract Priority GetPriorityById(int priorityId);
-        public abstract bool UpdatePriority(Priority priorityToUpdate);
-
         // Project
         public abstract int CreateNewProject(Project newProject);
         public abstract bool DeleteProject(int projectId);
@@ -143,14 +130,14 @@ namespace BugNET.DAL
         public abstract ProjectImage GetProjectImageById(int projectId);
         public abstract bool DeleteProjectImage(int projectId);
 
-        //Project Notifications
-        public abstract int CreateNewProjectNotification(ProjectNotification newProjectNotification);
-        public abstract List<ProjectNotification> GetProjectNotificationsByProjectId(int projectId);
-        public abstract bool DeleteProjectNotification(int projectId, string username);
-        public abstract List<ProjectNotification> GetProjectNotificationsByUsername(string username);
-
-        //Users
-        public abstract List<ITUser> GetUsersByProjectId(int projectId);
+        // Milestone
+        public abstract int CreateNewMilestone(Milestone newMileStone);
+        public abstract bool DeleteMilestone(int milestoneId);
+        public abstract List<Milestone> GetMilestonesByProjectId(int projectId, bool notCompleted);
+        public abstract List<Milestone> GetMilestonesByProjectId(int projectId);
+        public abstract Milestone GetMilestoneById(int milestoneId);
+        public abstract bool UpdateMilestone(Milestone milestoneToUpdate);
+        public abstract bool CanDeleteMilestone(int milestoneId);
 
         // Project Mailbox
         public abstract ProjectMailbox GetProjectByMailbox(string mailbox);
@@ -166,6 +153,40 @@ namespace BugNET.DAL
         public abstract bool DeleteStatus(int statusId);
         public abstract List<Status> GetStatusByProjectId(int projectId);
         public abstract Status GetStatusById(int statusId);
+        public abstract bool CanDeleteStatus(int statusId);
+
+        // Priority
+        public abstract int CreateNewPriority(Priority newPriority);
+        public abstract bool DeletePriority(int priorityId);
+        public abstract List<Priority> GetPrioritiesByProjectId(int projectId);
+        public abstract Priority GetPriorityById(int priorityId);
+        public abstract bool UpdatePriority(Priority priorityToUpdate);
+        public abstract bool CanDeletePriority(int priorityId);
+
+        // Issue Type
+        public abstract IssueType GetIssueTypeById(int issueTypeId);
+        public abstract int CreateNewIssueType(IssueType issueTypeToCreate);
+        public abstract bool DeleteIssueType(int issueTypeId);
+        public abstract bool UpdateIssueType(IssueType issueTypeToUpdate);
+        public abstract List<IssueType> GetIssueTypesByProjectId(int projectId);
+        public abstract bool CanDeleteIssueType(int issueTypeId);
+
+        // Resolution
+        public abstract int CreateNewResolution(Resolution resolutionToCreate);
+        public abstract bool DeleteResolution(int resolutionId);
+        public abstract bool UpdateResolution(Resolution resolutionToUpdate);
+        public abstract Resolution GetResolutionById(int resolutionId);
+        public abstract List<Resolution> GetResolutionsByProjectId(int projectId);
+        public abstract bool CanDeleteResolution(int ResolutionId);
+
+        //Project Notifications
+        public abstract int CreateNewProjectNotification(ProjectNotification newProjectNotification);
+        public abstract List<ProjectNotification> GetProjectNotificationsByProjectId(int projectId);
+        public abstract bool DeleteProjectNotification(int projectId, string username);
+        public abstract List<ProjectNotification> GetProjectNotificationsByUsername(string username);
+
+        //Users
+        public abstract List<ITUser> GetUsersByProjectId(int projectId);
 
         // Role
         public abstract List<Role> GetAllRoles();
@@ -202,20 +223,6 @@ namespace BugNET.DAL
         public abstract List<CustomFieldSelection> GetCustomFieldSelectionsByCustomFieldId(int customFieldId);
         public abstract CustomFieldSelection GetCustomFieldSelectionById(int customFieldSelectionId);
         public abstract bool UpdateCustomFieldSelection(CustomFieldSelection customFieldSelectionToUpdate);
-
-        // Issue Type
-        public abstract IssueType GetIssueTypeById(int issueTypeId);
-        public abstract int CreateNewIssueType(IssueType issueTypeToCreate);
-        public abstract bool DeleteIssueType(int issueTypeId);
-        public abstract bool UpdateIssueType(IssueType issueTypeToUpdate);
-        public abstract List<IssueType> GetIssueTypesByProjectId(int projectId);
-
-        // Resolution
-        public abstract int CreateNewResolution(Resolution resolutionToCreate);
-        public abstract bool DeleteResolution(int resolutionId);
-        public abstract bool UpdateResolution(Resolution resolutionToUpdate);
-        public abstract Resolution GetResolutionById(int resolutionId);
-        public abstract List<Resolution> GetResolutionsByProjectId(int projectId);
 
         // Host Settings
         public abstract List<HostSetting> GetHostSettings();

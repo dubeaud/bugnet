@@ -126,4 +126,10 @@
   <data name="LoginLabel.Text" xml:space="preserve">
     <value>Verify Your Account</value>
   </data>
+  <data name="AccountDeactivated" xml:space="preserve">
+    <value>Your account has not been verified within the 7 day limit or has been deactivated. If you feel this is in error please contact the owner of this site.</value>
+  </data>
+  <data name="AccountVerified" xml:space="preserve">
+    <value>Your account has been verified and you can now &lt;a href="Login.aspx"&gt;log into&lt;/a&gt; the site.</value>
+  </data>
 </root>

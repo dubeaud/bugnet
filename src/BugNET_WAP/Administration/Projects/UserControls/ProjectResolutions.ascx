@@ -1,9 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ProjectResolutions.ascx.cs" Inherits="BugNET.Administration.Projects.UserControls.ProjectResolutions" %>
 <%@ Register TagPrefix="IT" TagName="PickImage" Src="~/UserControls/PickImage.ascx" %>
 <div>
-    <h2>
-        <asp:Literal ID="ResolutionsTitle" runat="Server" meta:resourcekey="ResolutionsTitle" /></h2>
-    <asp:Label ID="lblError" ForeColor="red" EnableViewState="false" runat="Server" />
+    <h2><asp:Literal ID="ResolutionsTitle" runat="Server" meta:resourcekey="ResolutionsTitle" /></h2>
     <asp:CustomValidator Text="You must add at least one resolution" Display="dynamic" runat="server" ID="ResolutionValidation"
         OnServerValidate="ResolutionValidation_Validate" />
     <p>
@@ -12,6 +10,7 @@
     <br />
     <asp:UpdatePanel ID="updatepanel1" runat="server">
         <ContentTemplate>
+            <BN:Message ID="ActionMessage" runat="server" Visible="False"  />
             <asp:DataGrid 
                 ID="grdResolutions" 
                 SkinID="DataGrid" 

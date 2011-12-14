@@ -15,7 +15,7 @@ namespace BugNET.Administration.Projects
 	public partial class EditProject : BasePage 
 	{
 		private Control _contentControl;
-	    readonly Dictionary<string, string> _menuItems = new Dictionary<string, string>();
+	    private readonly Dictionary<string, string> _menuItems = new Dictionary<string, string>();
 
         /// <summary>
         /// Handles the Load event of the Page control.
@@ -73,7 +73,7 @@ namespace BugNET.Administration.Projects
         /// Changes the Enabled/Disabled Icon
         /// </summary>
         /// <param name="disabled"></param>
-        private void ProjectDisableEnable(bool disabled)
+        void ProjectDisableEnable(bool disabled)
         {
             if (disabled)
             {
@@ -134,9 +134,9 @@ namespace BugNET.Administration.Projects
         /// Loads the tab.
         /// </summary>
         /// <param name="selectedTab">The selected tab.</param>
-		private void LoadTab(int selectedTab) 
+		void LoadTab(int selectedTab) 
 		{
-			string controlName = "ProjectDescription.ascx";
+			var controlName = "ProjectDescription.ascx";
 
 			switch (selectedTab) 
 			{

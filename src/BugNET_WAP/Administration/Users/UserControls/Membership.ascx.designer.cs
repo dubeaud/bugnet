@@ -13,31 +13,31 @@ namespace BugNET.Administration.Users.UserControls {
     public partial class Membership {
         
         /// <summary>
-        /// lblError control.
+        /// ControlTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblError;
+        protected global::System.Web.UI.WebControls.Literal ControlTitle;
         
         /// <summary>
-        /// lblTitle control.
+        /// ControlDescription control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTitle;
+        protected global::System.Web.UI.WebControls.Literal ControlDescription;
         
         /// <summary>
-        /// lblUserName control.
+        /// ActionMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblUserName;
+        protected global::BugNET.UserControls.Message ActionMessage;
         
         /// <summary>
         /// Label2 control.
@@ -130,13 +130,13 @@ namespace BugNET.Administration.Users.UserControls {
         protected global::System.Web.UI.WebControls.TextBox Email;
         
         /// <summary>
-        /// Label6 control.
+        /// CreatedDateLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label6;
+        protected global::System.Web.UI.WebControls.Literal CreatedDateLabel;
         
         /// <summary>
         /// CreatedDate control.
@@ -145,16 +145,16 @@ namespace BugNET.Administration.Users.UserControls {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label CreatedDate;
+        protected global::System.Web.UI.WebControls.Literal CreatedDate;
         
         /// <summary>
-        /// Label7 control.
+        /// LastLoginDateLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label7;
+        protected global::System.Web.UI.WebControls.Literal LastLoginDateLabel;
         
         /// <summary>
         /// LastLoginDate control.
@@ -163,16 +163,16 @@ namespace BugNET.Administration.Users.UserControls {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LastLoginDate;
+        protected global::System.Web.UI.WebControls.Literal LastLoginDate;
         
         /// <summary>
-        /// Label8 control.
+        /// LastActivityDateLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label8;
+        protected global::System.Web.UI.WebControls.Literal LastActivityDateLabel;
         
         /// <summary>
         /// LastActivityDate control.
@@ -181,7 +181,7 @@ namespace BugNET.Administration.Users.UserControls {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LastActivityDate;
+        protected global::System.Web.UI.WebControls.Literal LastActivityDate;
         
         /// <summary>
         /// Label9 control.
@@ -308,5 +308,23 @@ namespace BugNET.Administration.Users.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton cmdUnLock;
+        
+        /// <summary>
+        /// ImageButton3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton ImageButton3;
+        
+        /// <summary>
+        /// ReturnLink control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink ReturnLink;
     }
 }

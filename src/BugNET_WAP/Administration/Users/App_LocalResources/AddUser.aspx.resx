@@ -127,7 +127,7 @@
     <value>Add User</value>
   </data>
   <data name="BackToUserList" xml:space="preserve">
-    <value>Back to user list</value>
+    <value>Back to User List</value>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>Confirm Password</value>

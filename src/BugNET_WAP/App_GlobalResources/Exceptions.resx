@@ -141,6 +141,10 @@
   <data name="DeleteIssueTypeError" xml:space="preserve">
     <value>Could not delete issue type</value>
   </data>
+  <data name="DeleteItemAssignedToIssueError" xml:space="preserve">
+    <value>'{0}' cannot be deleted because it is assigned to one or more issues.  You will need to re-assign these issues to a different {1} before it can be deleted!</value>
+    <comment>{0} is the name of the item, {1} is a context specific name ie. milestone</comment>
+  </data>
   <data name="DeleteMailboxError" xml:space="preserve">
     <value>Could not delete mailbox</value>
   </data>
@@ -162,6 +166,9 @@
   <data name="DeleteStatusError" xml:space="preserve">
     <value>Could not delete status</value>
   </data>
+  <data name="DeleteUserError" xml:space="preserve">
+    <value>There was an error deleting this user.</value>
+  </data>
   <data name="InvalidFileName" xml:space="preserve">
     <value>The name of the file you have selected is invalid.</value>
   </data>
@@ -169,10 +176,13 @@
     <value>{0} does not meet the allowed file types.</value>
   </data>
   <data name="InvalidIssueId" xml:space="preserve">
-    <value>The supplied IssueId [{0}] is not valid.</value>
+    <value>The supplied issue id [{0}] is not valid.</value>
   </data>
   <data name="InvalidProjectId" xml:space="preserve">
-    <value>The supplied ProjectId [{0}] is not valid.</value>
+    <value>The supplied project id [{0}] is not valid.</value>
+  </data>
+  <data name="InvalidQuickSearchText" xml:space="preserve">
+    <value>The supplied issue id or BugNET id is invalid</value>
   </data>
   <data name="InvalidRepositoryName" xml:space="preserve">
     <value>The repository name was not formated correctlly. Only alpha-numeric charaters, \"-\", and \"_\" are allowed.</value>
@@ -182,6 +192,9 @@
   </data>
   <data name="MailboxReaderError" xml:space="preserve">
     <value>An error has occured in processing the mailbox reader.</value>
+  </data>
+  <data name="MissingQuickSearchText" xml:space="preserve">
+    <value>The search value cannot be blank, please enter either an issue id or a BugNET id</value>
   </data>
   <data name="PasswordChangeError" xml:space="preserve">
     <value>The password could not be changed, please verify that the password meets the password requirements.</value>
@@ -196,7 +209,7 @@
     <value>The user {0} does not have permission to this project.</value>
   </data>
   <data name="ProjectNotFoundError" xml:space="preserve">
-    <value>Project not found for ProjectId [{0}].</value>
+    <value>Project not found for project id [{0}].</value>
   </data>
   <data name="QueryStringError" xml:space="preserve">
     <value>The user querystring parameter is not properly formed</value>

@@ -47,13 +47,28 @@ namespace BugNET.BLL
         /// <summary>
         /// Deletes the status.
         /// </summary>
-        /// <param name="statusId">The status id.</param>
+        /// <param name="id">The id for the item to be deleted.</param>
+        /// <param name="cannotDeleteMessage">If</param>
         /// <returns></returns>
-        public static bool Delete(int statusId)
+        public static bool Delete(int id, out string cannotDeleteMessage)
         {
-            if (statusId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("statusId"));
+            if (id <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("id"));
 
-            return (DataProviderManager.Provider.DeleteStatus(statusId));
+            var entity = GetById(id);
+
+            cannotDeleteMessage = string.Empty;
+
+            if (entity == null) return true;
+
+            var canBeDeleted = DataProviderManager.Provider.CanDeleteStatus(entity.Id);
+
+            if (canBeDeleted)
+                return DataProviderManager.Provider.DeleteStatus(entity.Id);
+
+            cannotDeleteMessage = ResourceStrings.GetGlobalResource(GlobalResources.Exceptions, "DeleteItemAssignedToIssueError");
+            cannotDeleteMessage = string.Format(cannotDeleteMessage, entity.Name, "status");
+
+            return false;
         }
 
 

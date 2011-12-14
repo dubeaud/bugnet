@@ -391,13 +391,15 @@ namespace BugNET.UserControls
 			{
 				if (dropField.SelectedValue == "0" && BooleanOperator.Trim().Equals(")"))
                     return new QueryClause(BooleanOperator, "", "", "", SqlDbType.NVarChar, false);
-                else if (dropField.SelectedValue == "0")
-                    return null;
 
-                return new QueryClause(BooleanOperator, FieldName, ComparisonOperator, FieldValue, DataType, CustomFieldQuery);
+			    return dropField.SelectedValue == "0" ? 
+                    null : 
+                    new QueryClause(BooleanOperator, FieldName, ComparisonOperator, FieldValue, DataType, CustomFieldQuery);
 			}
             set
             {
+                if (value == null) return;
+
                 dropBooleanOperator.SelectedValue = value.BooleanOperator;
                 dropComparisonOperator.SelectedValue = value.ComparisonOperator;
                 if (value.CustomFieldQuery)

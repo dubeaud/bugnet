@@ -126,7 +126,7 @@ namespace BugNET.Administration.Projects.UserControls
             }
             else
             {
-                lblError.Text = LoggingManager.GetErrorMessageResource("SaveIssueTypeError");
+                ActionMessage.ShowErrorMessage(LoggingManager.GetErrorMessageResource("SaveIssueTypeError"));
             }
         }
 
@@ -137,13 +137,16 @@ namespace BugNET.Administration.Projects.UserControls
         /// <param name="e">The <see cref="System.Web.UI.WebControls.DataGridCommandEventArgs"/> instance containing the event data.</param>
         protected void grdIssueTypes_Delete(Object s, DataGridCommandEventArgs e)
         {
-            var statusId = (int)grdIssueTypes.DataKeys[e.Item.ItemIndex];
+            var id = (int)grdIssueTypes.DataKeys[e.Item.ItemIndex];
+            string cannotDeleteMessage;
 
-            if (!IssueTypeManager.DeleteIssueType(statusId))
-                lblError.Text = LoggingManager.GetErrorMessageResource("DeleteIssueTypeError");
-            else
-                BindIssueType();
+            if (!IssueTypeManager.Delete(id, out cannotDeleteMessage))
+            {
+                ActionMessage.ShowErrorMessage(cannotDeleteMessage);
+                return;
+            }
 
+            BindIssueType();
         }
 
         /// <summary>
@@ -220,7 +223,7 @@ namespace BugNET.Administration.Projects.UserControls
                 }
 
                 var cmdDelete = (ImageButton)e.Item.FindControl("cmdDelete");
-                var message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), currentIssueType.Name);
+                var message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), currentIssueType.Name.Replace("'", "\\'"));
                 cmdDelete.Attributes.Add("onclick", String.Format("return confirm('{0}');", message));
             }
 

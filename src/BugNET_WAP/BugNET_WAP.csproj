@@ -362,12 +362,15 @@
     <Compile Include="Administration\Users\AddUser.aspx.designer.cs">
       <DependentUpon>AddUser.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Administration\Users\ManageUser.aspx.cs">
-      <DependentUpon>ManageUser.aspx</DependentUpon>
+    <Compile Include="Administration\Users\BaseUserControlUserAdmin.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Administration\Users\ManageUser.aspx.designer.cs">
-      <DependentUpon>ManageUser.aspx</DependentUpon>
+    <Compile Include="Administration\Users\EditUser.aspx.cs">
+      <DependentUpon>EditUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\Users\EditUser.aspx.designer.cs">
+      <DependentUpon>EditUser.aspx</DependentUpon>
     </Compile>
     <Compile Include="Administration\Users\UserControls\DeleteUser.ascx.cs">
       <DependentUpon>DeleteUser.ascx</DependentUpon>
@@ -564,6 +567,7 @@
     </Compile>
     <Compile Include="Old_App_Code\UIL\GridViewExportUtil.cs" />
     <Compile Include="Old_App_Code\UIL\IEditHostSettingControl.cs" />
+    <Compile Include="Old_App_Code\UIL\IEditUserControl.cs" />
     <Compile Include="Old_App_Code\UIL\IssueListState.cs" />
     <Compile Include="Old_App_Code\UIL\PresentationUtils.cs" />
     <Compile Include="Old_App_Code\UIL\QueryListState.cs" />
@@ -881,6 +885,7 @@
     <Content Include="Administration\Projects\UserControls\ProjectMembers.ascx" />
     <Content Include="Administration\Projects\UserControls\ProjectRoles.ascx" />
     <Content Include="Administration\Projects\UserControls\ProjectMilestones.ascx" />
+    <Content Include="Administration\Users\EditUser.aspx" />
     <Content Include="Administration\Users\UserList.aspx" />
     <Content Include="App_Themes\Default\superfish.css" />
     <Content Include="Default.aspx" />
@@ -959,8 +964,11 @@
     <Content Include="Images\package_go.gif" />
     <Content Include="Images\page_go.gif" />
     <Content Include="Images\page_white_delete.gif" />
+    <Content Include="Images\page_white_error.png" />
+    <Content Include="Images\page_white_gear.png" />
     <Content Include="Images\page_white_go.gif" />
     <Content Include="Images\page_white_put.gif" />
+    <Content Include="Images\page_white_world.png" />
     <Content Include="Images\pencil.gif" />
     <Content Include="Images\pie_chart.png" />
     <Content Include="Images\plugin.gif" />
@@ -975,6 +983,7 @@
     <Content Include="Images\Resolution\page_white_copy.png" />
     <Content Include="Images\Resolution\page_white_delete.png" />
     <Content Include="Images\Resolution\page_white_remove.png" />
+    <Content Include="Images\save.gif" />
     <Content Include="Images\sBg.gif" />
     <Content Include="Images\shadow.png" />
     <Content Include="Images\shield.gif" />
@@ -1029,6 +1038,7 @@
     <Content Include="Providers\DataProviders\SqlDataProvider\0.8.284.0.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\0.8.295.0.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\0.8.300.0.SqlDataProvider.sql" />
+    <Content Include="Providers\DataProviders\SqlDataProvider\0.9.126.0.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\BugNet.Data.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\BugNet.Schema.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\InstallCommon.sql" />
@@ -1352,7 +1362,9 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.sitemap" />
+    <Content Include="Web.sitemap">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Account\Web.config" />
     <Content Include="Administration\Web.config" />
     <None Include="Providers\HtmlEditorProviders\CKEditor\ckeditor.pack" />
@@ -1424,7 +1436,6 @@
     <Content Include="Administration\Projects\UserControls\ProjectNotifications.ascx" />
     <Content Include="Administration\Projects\UserControls\ProjectSubversion.ascx" />
     <Content Include="Administration\Users\AddUser.aspx" />
-    <Content Include="Administration\Users\ManageUser.aspx" />
     <Content Include="Administration\Users\UserControls\DeleteUser.ascx" />
     <Content Include="Administration\Users\UserControls\Membership.ascx" />
     <Content Include="Administration\Users\UserControls\Password.ascx" />
@@ -1458,8 +1469,6 @@
     <Content Include="Images\off.gif" />
     <Content Include="Images\on.gif" />
     <Content Include="Images\page_white_add.gif" />
-    <Content Include="Images\page_white_error.gif" />
-    <Content Include="Images\page_white_gear.gif" />
     <Content Include="Images\page_white_refresh.png" />
     <Content Include="Images\Priority\Blocker.gif" />
     <Content Include="Images\Priority\Critical.gif" />
@@ -1573,6 +1582,8 @@
     <Content Include="UserControls\App_LocalResources\PickImage.ascx.resx" />
     <Content Include="UserControls\App_LocalResources\CategoryTreeView.ascx.resx" />
     <Content Include="Errors\App_LocalResources\AccessDenied.aspx.resx" />
+    <Content Include="Administration\Users\App_LocalResources\EditUser.aspx.resx" />
+    <Content Include="Administration\Users\UserControls\App_LocalResources\DeleteUser.ascx.resx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BugNET.BLL\BugNET.BLL.csproj">

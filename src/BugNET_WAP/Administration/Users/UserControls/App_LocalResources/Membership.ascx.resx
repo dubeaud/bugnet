@@ -159,4 +159,13 @@
   <data name="UserUnAuthorizedMessage" xml:space="preserve">
     <value>The user has been unauthorized successfully.</value>
   </data>
+  <data name="ControlTitle" xml:space="preserve">
+    <value>Manage User Details</value>
+  </data>
+  <data name="ControlDescription" xml:space="preserve">
+    <value>Update the users membership information</value>
+  </data>
+  <data name="BackToUserList" xml:space="preserve">
+    <value>Back to User List</value>
+  </data>
 </root>

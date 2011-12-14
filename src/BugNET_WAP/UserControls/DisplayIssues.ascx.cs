@@ -11,6 +11,7 @@ namespace BugNET.UserControls
     using BugNET.Common;
     using BugNET.Entities;
     using BugNET.UserInterfaceLayer;
+
     /// <summary>
 	///	Display Issues grid
 	/// </summary>
@@ -29,7 +30,10 @@ namespace BugNET.UserControls
         /// </summary>
         private string[] _arrIssueColumns = new string[] { "4", "5", "6", "7", "8", "9", "10","11","12","13","14","15","16","17","18","19","20","21", "22"};
 
-
+         //store amount of fixed search columns due to bad string above
+         public const int FixedColumns = 22;
+         //stores total amount of columns (fixed and custom)
+         private int nrColumns = FixedColumns;
 
         /// <summary>
         /// Handles the Init event of the Page control.
@@ -40,8 +44,21 @@ namespace BugNET.UserControls
         {
             if (Page.User.Identity.IsAuthenticated)
             {
-                if (!string.IsNullOrEmpty(WebProfile.Current.SelectedIssueColumns))
+                string columns = null;
+                int projectId;
+                if (Int32.TryParse(Request.QueryString["pid"], out projectId))
+                {
+                    columns = UserManager.GetSelectedIssueColumnsByUserName(Security.GetUserName(), projectId);
+
+                    if (!string.IsNullOrEmpty(columns))
+                        _arrIssueColumns = columns.Trim().Split();
+                }
+                //if it is myIssues and not a specific project
+                else
+                {
+                    if (!string.IsNullOrEmpty(WebProfile.Current.SelectedIssueColumns))
                     _arrIssueColumns = WebProfile.Current.SelectedIssueColumns.Trim().Split();
+                }
             }
             else
             {
@@ -76,51 +93,73 @@ namespace BugNET.UserControls
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, System.EventArgs e)
         {
-            //need to rebind these on every postback because of dynamic controls
-            int projectId;
-            if (Request.QueryString["pid"] != null)
-            {
-                if (Int32.TryParse(Request.QueryString["pid"], out projectId))
-                {
-                    List<CustomField> customFields = CustomFieldManager.GetByProjectId(projectId);
-
-                    if (customFields.Count > 0)
-                    {
-                        ctlCustomFields.DataSource = customFields;
-                        ctlCustomFields.DataBind();
-                    }
-                }
-            }
+  
         }
 
         /// <summary>
         /// Binds a data source to the invoked server control and all its child controls.
         /// </summary>
-		public override void DataBind() 
+        public override void DataBind() 
 		{
 			if(this.DataSource.Count > 0)
 			{
                 if (!string.IsNullOrEmpty(gvIssues.SortField))
                 {
-                    //_DataSource.Sort(gvIssues.SortField);
-                    _DataSource.Sort(new IssueComparer(SortField, SortAscending));
-                   //_DataSource.Sort(new ObjectComparer<Issue>(gvIssues.SortField, true));
+                   _DataSource.Sort(new ObjectComparer<Issue>(gvIssues.SortField, true));
                 }
 
 				gvIssues.Visible = true;
                 pager.Visible = true;
+                ScrollPanel.Visible = true;
+                
+                int pId = -1;
+                if (Request.QueryString["pid"] != null)
+                    pId = Int32.Parse(Request.QueryString["pid"]);
+
+                //get custom fields for project
+                if (pId != -1)
+                {
+                    List<CustomField> customFields = CustomFieldManager.GetByProjectId(pId);
+
+                    //checks if its initial load to add custom controls and checkboxes
+                    if (gvIssues.Columns.Count <= nrColumns + 1)
+                    {
+                        //if there is custom fields add them
+                        if (customFields.Count > 0)
+                        {
+                            //ctlCustomFields.DataSource = customFields;
+                           // ctlCustomFields.DataBind();
+
+                            foreach (CustomField value in customFields)
+                            {
+                                //increments nr of columns
+                                nrColumns++;
+
+                                //create checkbox item
+                                ListItem lstValue = new ListItem(value.Name, nrColumns.ToString());
+
+                                //find custom controls that has been checked and check them
+                                bool selected = Array.IndexOf(_arrIssueColumns, nrColumns.ToString()) >= 0;
+                                if (selected)
+                                    lstValue.Selected = true;
+
+                                //add item to checkbox list
+                                lstIssueColumns.Items.Add(lstValue);
+
+                                //create column for custom control
+                                TemplateField tf = new TemplateField();
+                                tf.HeaderText = value.Name;
+                                //tf.SortExpression = value.Name;
+                                gvIssues.Columns.Add(tf);
+
+                            }
+                        }
+
+                    }
+                }
+
                 DisplayColumns();
-
-              
-              
-
                 SelectColumnsPanel.Visible = true;
-
-                //Table tb = (Table)gvIssues.Controls[0];
-                //TableRow pagerRow = tb.Rows[tb.Rows.Count - 1]; //last row in the table is for bottom pager
-                //pagerRow.Cells[0].Attributes.Remove("colspan");
-                //pagerRow.Cells[0].Attributes.Add("colspan",_arrIssueColumns.Length.ToString() + 4);
-
 				lblResults.Visible=false;
 
                 if (ShowProjectColumn)
@@ -134,20 +173,6 @@ namespace BugNET.UserControls
                     lstIssueColumns.Items.Remove(lstIssueColumns.Items.FindByValue("4"));
 
                     int projectId = ((Issue)_DataSource[0]).ProjectId;
-
-
-                      //foreach(CustomField cf in CustomField.GetByProjectId(projectId))
-                      //{
-
-                      //    TemplateField ckhColumn = new TemplateField();
-
-                      //    ckhColumn.HeaderTemplate = new GridViewTemplate(DataControlRowType.Header, cf.Name);
-
-                      //    ckhColumn.ItemTemplate = new GridViewTemplate(DataControlRowType.DataRow, cf.Name);
-                      //    ckhColumn.Visible = true;
-                      //    gvIssues.Columns.Add(ckhColumn);
-
-                      //}
 
                     //hide votes column if issue voting is disabled
                     if (!ProjectManager.GetById(projectId).AllowIssueVoting)
@@ -200,6 +225,7 @@ namespace BugNET.UserControls
 			}
             else
             {
+                ScrollPanel.Visible = false;
                 OptionsContainerPanel.Visible = false;
                 lblResults.Visible = true;
                 gvIssues.Visible = false;
@@ -207,6 +233,32 @@ namespace BugNET.UserControls
             }
 			
 		}
+
+
+        /// <summary>
+        /// Retrieves and inserts custom field values
+        /// </summary>
+        public void InsertCustomFieldData()
+        {
+            //if there exist custom fields
+            if (gvIssues.Columns.Count > FixedColumns)
+            {
+                foreach (GridViewRow row in gvIssues.Rows)
+                {
+                    //get issue id from grid
+                    int id = (int)gvIssues.DataKeys[row.RowIndex].Value;
+                    //get custom controls assigned to that issue
+                    List<CustomField> customFieldValues = CustomFieldManager.GetByIssueId(id);
+
+                    //for every custom control add relevant value (make use of const value)
+                    for (int i = FixedColumns + 1; i <= gvIssues.Columns.Count - 1; i++)
+                    {
+                        CustomField value = customFieldValues[i - (FixedColumns + 1)];
+                        row.Cells[i].Text = value.Value;
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Handles the Click event of the ExportExcelButton control.
@@ -228,8 +280,14 @@ namespace BugNET.UserControls
                 gvIssues.Columns[index].Visible = false;
 
             // Display columns based on the _arrIssueColumns array (retrieved from cookie)
+            //foreach (var colIndex in _arrIssueColumns)
+            //    gvIssues.Columns[Int32.Parse(colIndex)].Visible = true;
             foreach (var colIndex in _arrIssueColumns)
-                gvIssues.Columns[Int32.Parse(colIndex)].Visible = true;
+            {
+                //ensure custom field exist for this project
+                if (Int32.Parse(colIndex) < gvIssues.Columns.Count)
+                    gvIssues.Columns[Int32.Parse(colIndex)].Visible = true;
+            }
         }
 
         /// <summary>
@@ -347,8 +405,16 @@ namespace BugNET.UserControls
 
             if (Page.User.Identity.IsAuthenticated)
             {
-                WebProfile.Current.SelectedIssueColumns = strIssueColumns.Trim();
-                WebProfile.Current.Save();
+                int projectId;
+                if (Int32.TryParse(Request.QueryString["pid"], out projectId))
+                {
+                    UserManager.SetSelectedIssueColumnsByUserName(Security.GetUserName(), projectId, strIssueColumns.Trim());
+                }
+                else //if it is MyIssue and not a specific project
+                {
+                    WebProfile.Current.SelectedIssueColumns = strIssueColumns.Trim();
+                    WebProfile.Current.Save();
+                }
             }
             else
             {
@@ -451,7 +517,6 @@ namespace BugNET.UserControls
 			}
 		}
 
-
         /// <summary>
         /// Gets or sets the size of the page.
         /// </summary>
@@ -464,7 +529,6 @@ namespace BugNET.UserControls
                 pager.PageSize = value;
             }      
         }
-
 
         /// <summary>
         /// Handles the PreRender event of the Page control.
@@ -509,10 +573,7 @@ namespace BugNET.UserControls
                 //    e.Row.Attributes.Add("style", "background-color:#ffdddc");
                 //    e.Row.Attributes.Add("onmouseout", "this.style.background='#ffdddc'");
                 //}
-                ((HtmlControl)e.Row.FindControl("ProgressBar")).Attributes.CssStyle.Add("width", b.Progress.ToString() + "%");
-                //CheckBox cb = e.Row.Cells[23].Controls[0] as CheckBox;
-                //string val = CustomField.GetByIssueId(b.Id)[0].Value;
-                //cb.Checked = true;
+                ((HtmlControl)e.Row.FindControl("ProgressBar")).Attributes.CssStyle.Add("width", b.Progress.ToString() + "%"); 
             }
         }
    
@@ -537,101 +598,6 @@ namespace BugNET.UserControls
             gvIssues.PageIndex = e.NewPageIndex;
             OnRebindCommand(EventArgs.Empty);
         }
-	}
-
-    public class GridViewTemplate : System.Web.UI.Page, ITemplate
-    {
-
-        private DataControlRowType templateType;
-
-        string columnName;
-
-        public GridViewTemplate(DataControlRowType type, string colname)
-        {
-
-            templateType = type;
-
-            columnName = colname;
-
-        }
-
-        /// <summary>
-        /// Handles the DataBind event of the tb1 control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void tb1_DataBind(Object sender, EventArgs e)
-        {
-            TextBox hpl = (TextBox)sender;
-            GridViewRow row = (GridViewRow)hpl.NamingContainer;
-            //hpl.NavigateUrl = DataBinder.Eval(row.DataItem, _ColNameURL).ToString();
-            Issue i = row.DataItem as Issue;
-            string value = CustomFieldManager.GetByIssueId(i.Id).Find(cf => cf.Name == columnName).Value;
-            hpl.Text = "<div class=\"Post\"><div class=\"PostTitle\">" + value + "</div></div>";
-        }
-
-        /// <summary>
-        /// When implemented by a class, defines the <see cref="T:System.Web.UI.Control"/> object that child controls and templates belong to. These child controls are in turn defined within an inline template.
-        /// </summary>
-        /// <param name="container">The <see cref="T:System.Web.UI.Control"/> object to contain the instances of controls from the inline template.</param>
-        public void InstantiateIn(System.Web.UI.Control container)
-        {
-
-            Literal lc = new Literal();
-
-            LinkButton lb = new LinkButton();
-            CheckBox ckh = new CheckBox();
-
-            TextBox tb1 = new TextBox();
-
-            switch (templateType)
-            {
-
-                case  DataControlRowType.Header:
-
-                    lc.Text = "<B>" + columnName + "</B>";
-
-                    lb.Text = columnName;
-
-                    lb.CommandName = "EditButton";
-
-                    container.Controls.Add(lb);
-
-                    container.Controls.Add(lc);
-
-                    break;
-
-                case DataControlRowType.DataRow:
-
-
-                    container.Controls.Add(tb1);
-                    container.Controls.Add(ckh);
-                    tb1.DataBinding += new EventHandler(this.tb1_DataBind);
-
-                    break;
-
-                //case ListItemType.EditItem:
-
-                //    TextBox tb = new TextBox();
-
-                //    tb.Text = "";
-
-                //    container.Controls.Add(tb);
-
-                //    break;
-
-                //case ListItemType.Footer:
-
-                //    lc.Text = "<I>" + columnName + "</I>";
-
-                //    container.Controls.Add(lc);
-
-                //    break;
-
-            }
-
-
-
-        }
+   
     }
 }

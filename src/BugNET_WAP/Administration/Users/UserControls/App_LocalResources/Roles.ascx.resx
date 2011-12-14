@@ -126,4 +126,10 @@
   <data name="UserRolesUpdateSuccess" xml:space="preserve">
     <value>The users roles have been updated successfully.</value>
   </data>
+  <data name="ManageRolesDescription" xml:space="preserve">
+    <value>Select the project you wish to modify the users roles for, then select one or more roles for the project.</value>
+  </data>
+  <data name="BackToUserList" xml:space="preserve">
+    <value>Back to User List</value>
+  </data>
 </root>

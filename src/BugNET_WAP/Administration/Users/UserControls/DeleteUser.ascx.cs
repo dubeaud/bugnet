@@ -1,36 +1,35 @@
 ﻿using System;
-using System.Web.Security;
+using System.Web.UI;
 using BugNET.BLL;
+using BugNET.Common;
+using BugNET.UserInterfaceLayer;
+using log4net;
 
 namespace BugNET.Administration.Users.UserControls
 {
-    public partial class DeleteUser : System.Web.UI.UserControl
+    public partial class DeleteUser : BaseUserControlUserAdmin, IEditUserControl
     {
-        protected void Page_Load(object sender, EventArgs e)
-        {
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        public event ActionEventHandler Action;
+
+        void OnAction(ActionEventArgs args)
+        {
+            if (Action != null)
+                Action(this, args);
         }
 
-        /// <summary>
-        /// Gets the user id.
-        /// </summary>
-        /// <value>The user id.</value>
         public Guid UserId
         {
-            get
-            {
-                if (Request.QueryString["user"] != null && Request.QueryString["user"].Length != 0)
-                    try
-                    {
-                        return new Guid(Request.QueryString["user"].ToString());
-                    }
-                    catch
-                    {
-                        throw new Exception(LoggingManager.GetErrorMessageResource("QueryStringError"));
-                    }
-                else
-                    return Guid.Empty;
-            }
+            get { return ViewState.Get("UserId", Guid.Empty); }
+            set { ViewState.Set("UserId", value); }
+        }
+
+        public void Initialize()
+        {
+            GetMembershipData(UserId);
+            cmdDeleteUser.Attributes.Add("onclick", string.Format("return confirm('{0}');", GetLocalResourceObject("ConfirmDeleteUser")));
+            cmdUnauthorizeAccount.Attributes.Add("onclick", string.Format("return confirm('{0}');", GetLocalResourceObject("ConfirmUnauthorizeUser")));
         }
 
         /// <summary>
@@ -38,17 +37,18 @@ namespace BugNET.Administration.Users.UserControls
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
-        protected void cmdUnauthorizeAccount_Click(object sender, EventArgs e)
+        protected void UnauthorizeAccountClick(object sender, EventArgs e)
         {
             try
-            {           
-                MembershipUser objUser = UserManager.GetUser(UserId);
-                objUser.IsApproved = false;
-                UserManager.UpdateUser(objUser);
-            }
-            catch (Exception ex)
             {
-                lblError.Text = ex.Message;
+                GetMembershipData(UserId); 
+                MembershipData.IsApproved = false;
+                UserManager.UpdateUser(MembershipData);
+                Response.Redirect("~/Administration/Users/UserList.aspx");
+            }
+            catch (Exception)
+            {
+                ActionMessage.ShowErrorMessage(LoggingManager.GetErrorMessageResource("UserUnAuthorizedError"));
             }
         }
 
@@ -57,18 +57,23 @@ namespace BugNET.Administration.Users.UserControls
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
-        protected void cmdDeleteUser_Click(object sender, EventArgs e)
+        protected void DeleteUserClick(object sender, EventArgs e)
         {
             try
             {
-                MembershipUser objUser = UserManager.GetUser(UserId);
-                System.Web.Security.Membership.DeleteUser(objUser.UserName);
+                GetMembershipData(UserId);
+                System.Web.Security.Membership.DeleteUser(MembershipData.UserName);
                 Response.Redirect("~/Administration/Users/UserList.aspx");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                lblError.Text = ex.Message;
+                ActionMessage.ShowErrorMessage(LoggingManager.GetErrorMessageResource("DeleteUserError"));
             }
+        }
+
+        protected void CmdCancelClick(object sender, ImageClickEventArgs e)
+        {
+            Response.Redirect("~/Administration/Users/UserList.aspx");
         }
     }
 }

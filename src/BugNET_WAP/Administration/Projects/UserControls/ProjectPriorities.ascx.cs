@@ -175,7 +175,7 @@ namespace BugNET.Administration.Projects.UserControls
 			} 
 			else 
 			{
-                lblError.Text = LoggingManager.GetErrorMessageResource("SavePriorityError");
+                ActionMessage.ShowErrorMessage(LoggingManager.GetErrorMessageResource("SavePriorityError"));
 			}
 		}
 
@@ -187,12 +187,16 @@ namespace BugNET.Administration.Projects.UserControls
         /// <param name="e">The <see cref="System.Web.UI.WebControls.DataGridCommandEventArgs"/> instance containing the event data.</param>
         protected void grdPriorities_Delete(Object s, DataGridCommandEventArgs e) 
 		{
-			var priorityId = (int)grdPriorities.DataKeys[e.Item.ItemIndex];
+            var id = (int)grdPriorities.DataKeys[e.Item.ItemIndex];
+            string cannotDeleteMessage;
 
-			if (!PriorityManager.Delete(priorityId))
-				lblError.Text =  LoggingManager.GetErrorMessageResource("DeletePriorityError");
-			else
-				BindPriorities();
+            if (!PriorityManager.Delete(id, out cannotDeleteMessage))
+            {
+                ActionMessage.ShowErrorMessage(cannotDeleteMessage);
+                return;
+            }
+
+            BindPriorities();
 		}
 
 
@@ -222,7 +226,7 @@ namespace BugNET.Administration.Projects.UserControls
 				}
 
                 var cmdDelete = (ImageButton)e.Item.FindControl("cmdDelete");
-                var message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), currentPriority.Name);
+                var message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), currentPriority.Name.Replace("'", "\\'"));
                 cmdDelete.Attributes.Add("onclick", String.Format("return confirm('{0}');", message));
 			}
 

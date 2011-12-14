@@ -1,5 +1,6 @@
 ﻿using System;
-//using System.Security.Principal;
+using System.Security.Principal;
+using System.Threading;
 using System.Web.Services;
 
 namespace BugNET.Webservices
@@ -15,16 +16,16 @@ namespace BugNET.Webservices
         /// </summary>
         public LogInWebService()
         {
-            //if (User.Identity != null && User.Identity.IsAuthenticated)
-            //{
-            //    //already authenticated through web app.
-            //}
-            //else if (IsAuthenticated)
-            //{
-            //    IIdentity identity = new GenericIdentity(UserName);
-            //    IPrincipal principal = new GenericPrincipal(identity, null);
-            //    Thread.CurrentPrincipal = principal;
-            //}
+            if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                //already authenticated through web app.
+            }
+            else if (IsAuthenticated)
+            {
+                IIdentity identity = new GenericIdentity(UserName);
+                IPrincipal principal = new GenericPrincipal(identity, null);
+                Thread.CurrentPrincipal = principal;
+            }
         }
 
         /// <summary>

@@ -54,7 +54,7 @@ namespace BugNET.Issues
                 }
                 else
                 {
-                    ctlDisplayIssues.PageSize = WebProfile.Current.IssuesPageSize;                     
+                   // ctlDisplayIssues.PageSize = WebProfile.Current.IssuesPageSize;
                 }
 
                 IssueListState state = (IssueListState)Session[ISSUELISTSTATE];
@@ -83,8 +83,7 @@ namespace BugNET.Issues
                     if (Request.QueryString.Count > 1) dropView.SelectedValue = string.Empty;
                 }
            
-                BindIssues();
-                  
+                BindIssues();                  
             }
 	
 		}
@@ -124,6 +123,7 @@ namespace BugNET.Issues
                 return Request.QueryString["c"];
             }
         }
+
         /// <summary>
         /// Returns the keywords from the query string
         /// </summary>
@@ -138,6 +138,7 @@ namespace BugNET.Issues
                 return Request.QueryString["key"].Replace("+", " ");
             }
         }
+
         /// <summary>
         /// Returns the Milestone Id from the query string
         /// </summary>
@@ -153,7 +154,6 @@ namespace BugNET.Issues
             }
         }
 
-       
         /// <summary>
         /// Returns the priority Id from the query string
         /// </summary>
@@ -168,6 +168,7 @@ namespace BugNET.Issues
                 return Request.QueryString["p"].ToString();
             }
         }
+
         /// <summary>
         /// Returns the Type Id from the query string
         /// </summary>
@@ -182,6 +183,7 @@ namespace BugNET.Issues
                 return Request.QueryString["t"].ToString();
             }
         }
+
         /// <summary>
         /// Returns the status Id from the query string
         /// </summary>
@@ -194,10 +196,11 @@ namespace BugNET.Issues
                 }
                 return Request.QueryString["s"].ToString(); }
         }
+
         /// <summary>
         /// Returns the assigned to user Id from the query string
         /// </summary>
-        public string AssignedUserName
+        public string AssignedUserId
         {
             get
             {
@@ -224,6 +227,7 @@ namespace BugNET.Issues
                 return Request.QueryString["ru"].ToString();
             }
         }
+
         /// <summary>
         /// Returns the hardware Id from the query string
         /// </summary>
@@ -261,7 +265,6 @@ namespace BugNET.Issues
             BindIssues();
         }
 
-
         /// <summary>
         /// Issues the rebind.
         /// </summary>
@@ -280,14 +283,6 @@ namespace BugNET.Issues
             bool isError = false;
             List<Issue> colIssues = null;
      
-            //only do this if the user came from the project summary page.
-           //only do this if the user came from the project summary or default page.
-           //if ((Request.UrlReferrer != null) &&
-            //   (Request.UrlReferrer.ToString().Contains("ProjectSummary") || Request.UrlReferrer.ToString().Contains("Default") && Request.QueryString.Count > 1))
-           //if (Request.UrlReferrer != null && Request.UrlReferrer.ToString().Contains("ProjectSummary") && Request.QueryString.Count > 1)
-
-           //if ((Request.UrlReferrer != null) &&
-              //(!Request.UrlReferrer.ToString().Contains("IssueList") && Request.QueryString.Count > 1 && dropView.SelectedIndex == 0))
            if (Request.QueryString.Count > 1 && dropView.SelectedIndex == 0)
            {
                dropView.SelectedIndex = 0;
@@ -295,6 +290,7 @@ namespace BugNET.Issues
                bool isStatus = false;
                string BooleanOperator = "AND";
                List<QueryClause> queryClauses = new List<QueryClause>();
+
                if (!string.IsNullOrEmpty(IssueCategoryId))
                {
                    if (IssueCategoryId == "0")
@@ -307,11 +303,13 @@ namespace BugNET.Issues
                    }             
                    queryClauses.Add(q);
                }
+
                if (!string.IsNullOrEmpty(IssueTypeId))
                {
                    q = new QueryClause(BooleanOperator, "IssueTypeId", "=", IssueTypeId.ToString(), SqlDbType.Int, false);
                    queryClauses.Add(q);
                }
+
                if (!string.IsNullOrEmpty(IssueMilestoneId))
                {
                    //if zero, do a null comparison.
@@ -325,16 +323,19 @@ namespace BugNET.Issues
                    }                  
                    queryClauses.Add(q);
                }
+
                if (!string.IsNullOrEmpty(IssueResolutionId))
                {
                    q = new QueryClause(BooleanOperator, "IssueResolutionId", "=", IssueResolutionId.ToString(), SqlDbType.Int, false);
                    queryClauses.Add(q);
                }
+
                if (!string.IsNullOrEmpty(IssuePriorityId))
                {
                    q = new QueryClause(BooleanOperator, "IssuePriorityId", "=", IssuePriorityId.ToString(), SqlDbType.Int, false);
                    queryClauses.Add(q);
                }
+
                if (!string.IsNullOrEmpty(IssueStatusId))
                {
                    if (IssueStatusId != "-1")
@@ -350,17 +351,15 @@ namespace BugNET.Issues
                        foreach (Status status in closedStatus)                     
                            queryClauses.Add(new QueryClause("AND", "IssueStatusId", "<>", status.Id.ToString(), SqlDbType.Int, false));
                    }
-                 
-                   //q = new QueryClause(BooleanOperator, "IssueStatusId", "=", IssueStatusId.ToString(), SqlDbType.Int, false);
-                   //queryClauses.Add(q);
                }
-               if (!string.IsNullOrEmpty(AssignedUserName))
+
+               if (!string.IsNullOrEmpty(AssignedUserId))
                {
-                   if (AssignedUserName == "0")
-                       q = new QueryClause(BooleanOperator, "IssueAssignedUserId", "IS", null, SqlDbType.NVarChar, false); 
+                   if (AssignedUserId == "0")
+                       q = new QueryClause(BooleanOperator, "IssueAssignedUserId", "IS", null, SqlDbType.NVarChar, false);
                    else
-                       q = new QueryClause(BooleanOperator, "AssignedUsername", "=", AssignedUserName, SqlDbType.NVarChar, false);
-                  
+                       q = new QueryClause(BooleanOperator, "IssueAssignedUserId", "=", AssignedUserId, SqlDbType.NVarChar, false);
+
                    queryClauses.Add(q);
                }
 
@@ -374,9 +373,7 @@ namespace BugNET.Issues
                        queryClauses.Add(q);
                    }
                }
-              
-               //q = new QueryClause(BooleanOperator, "new", "=", "another one", SqlDbType.NVarChar, true);
-               //queryClauses.Add(q);
+
                try
                {
                    colIssues = IssueManager.PerformQuery(queryClauses, ProjectId);
@@ -446,6 +443,9 @@ namespace BugNET.Issues
                    colIssues.Sort(new IssueComparer("LastUpdate", true));
 
                ctlDisplayIssues.DataBind();
+
+               //Add Custom Control data
+               ctlDisplayIssues.InsertCustomFieldData();
            }
         }
 

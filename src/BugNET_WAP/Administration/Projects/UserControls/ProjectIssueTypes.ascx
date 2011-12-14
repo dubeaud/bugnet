@@ -1,17 +1,15 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ProjectIssueTypes.ascx.cs" Inherits="BugNET.Administration.Projects.UserControls.ProjectIssueTypes" %>
 <%@ Register TagPrefix="IT" TagName="PickImage" Src="~/UserControls/PickImage.ascx" %>
 <div>
-    <h2>
-        <asp:Literal ID="IssueTypesTitle" runat="Server" meta:resourcekey="IssueTypesTitle" /></h2>
-    <asp:Label ID="lblError" ForeColor="red" EnableViewState="false" runat="Server" />
-    <asp:CustomValidator Text="You must add at least one issue type" meta:resourcekey="IssueTypeValidator" Display="Dynamic"
-        runat="server" ID="CustomValidator1" OnServerValidate="ValidateIssueType" />
+    <h2><asp:Literal ID="IssueTypesTitle" runat="Server" meta:resourcekey="IssueTypesTitle" /></h2>
+    <asp:CustomValidator Text="You must add at least one issue type" meta:resourcekey="IssueTypeValidator" Display="Dynamic" runat="server" ID="CustomValidator1" OnServerValidate="ValidateIssueType" />
     <p>
         <asp:Label ID="DescriptionLabel" runat="server" meta:resourcekey="DescriptionLabel" />
     </p>
-    <br />
+    <br/>
     <asp:UpdatePanel ID="UpdatePanel2" runat="server">
         <ContentTemplate>
+            <BN:Message ID="ActionMessage" runat="server" Visible="False"  />
             <asp:DataGrid 
                 ID="grdIssueTypes" 
                 SkinID="DataGrid" 

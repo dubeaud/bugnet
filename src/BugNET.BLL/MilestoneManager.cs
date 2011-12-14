@@ -36,12 +36,27 @@ namespace BugNET.BLL
         /// Deletes the Milestone.
         /// </summary>
         /// <param name="id">The id for the item to be deleted.</param>
+        /// <param name="cannotDeleteMessage">If</param>
         /// <returns></returns>
-        public static bool Delete(int id)
+        public static bool Delete(int id, out string cannotDeleteMessage)
         {
             if (id <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("id"));
 
-            return DataProviderManager.Provider.DeleteMilestone(id);
+            var milestone = GetById(id);
+
+            cannotDeleteMessage = string.Empty;
+
+            if (milestone == null) return true;
+
+            var canBeDeleted = DataProviderManager.Provider.CanDeleteMilestone(milestone.Id);
+
+            if (canBeDeleted)
+                return DataProviderManager.Provider.DeleteMilestone(milestone.Id);
+
+            cannotDeleteMessage = ResourceStrings.GetGlobalResource(GlobalResources.Exceptions, "DeleteItemAssignedToIssueError");
+            cannotDeleteMessage = string.Format(cannotDeleteMessage,  milestone.Name, "milestone");
+
+            return false;
         }
 
         /// <summary>

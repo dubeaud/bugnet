@@ -15,7 +15,6 @@ namespace BugNET.BLL
     {
         private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        #region Instance Methods
         /// <summary>
         /// Saves the issue
         /// </summary>
@@ -534,6 +533,16 @@ namespace BugNET.BLL
             return DataProviderManager.Provider.PerformSavedQuery(projectId, queryId);
         }
 
-        #endregion
+        /// <summary>
+        /// Validates the issue by fetching the issue from the database
+        /// </summary>
+        /// <param name="issueId">The issue Id to search for</param>
+        /// <returns></returns>
+        public static bool IsValidId(int issueId)
+        {
+            var issue = GetById(issueId);
+
+            return (issue != null);
+        }
     }
 }

@@ -47,13 +47,28 @@ namespace BugNET.BLL
         /// <summary>
         /// Deletes the priority.
         /// </summary>
-        /// <param name="priorityId">The priority id.</param>
+        /// <param name="id">The id for the item to be deleted.</param>
+        /// <param name="cannotDeleteMessage">If</param>
         /// <returns></returns>
-        public static bool Delete(int priorityId)
+        public static bool Delete(int id, out string cannotDeleteMessage)
         {
-            if (priorityId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("priorityId"));
+            if (id <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("id"));
 
-            return (DataProviderManager.Provider.DeletePriority(priorityId));
+            var entity = GetById(id);
+
+            cannotDeleteMessage = string.Empty;
+
+            if (entity == null) return true;
+
+            var canBeDeleted = DataProviderManager.Provider.CanDeletePriority(entity.Id);
+
+            if (canBeDeleted)
+                return DataProviderManager.Provider.DeletePriority(entity.Id);
+
+            cannotDeleteMessage = ResourceStrings.GetGlobalResource(GlobalResources.Exceptions, "DeleteItemAssignedToIssueError");
+            cannotDeleteMessage = string.Format(cannotDeleteMessage, entity.Name, "priority");
+
+            return false;
         }
 
         /// <summary>
