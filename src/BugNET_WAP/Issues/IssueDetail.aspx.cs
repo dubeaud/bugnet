@@ -459,7 +459,7 @@ namespace BugNET.Issues
                 if (!IssueVoteManager.SaveOrUpdate(vote))
                     Message1.ShowErrorMessage(Resources.Exceptions.SaveIssueVoteError);
 
-                if (chkNotifyOwner.Checked)
+                if (chkNotifyOwner.Checked && !string.IsNullOrEmpty(issue.OwnerUserName))
                 {
                     var oUser = UserManager.GetUser(issue.OwnerUserName);
                     if (oUser != null)
@@ -478,6 +478,8 @@ namespace BugNET.Issues
                         IssueNotificationManager.SaveOrUpdate(notify);
                     }
                 }
+
+                //send issue notifications
                 IssueNotificationManager.SendIssueAddNotifications(IssueId);
             }
 
@@ -616,6 +618,8 @@ namespace BugNET.Issues
                     foreach (var s in status)
                         stat.Items.Remove(stat.Items.FindByValue(s.Id.ToString()));
                 }
+
+                // TODO: Re add this functionality to the application
 
                 //if status is closed, check if user is allowed to reopen issue
                 //if (editBug.StatusId.CompareTo((int)Globals.StatusType.Closed) == 0)

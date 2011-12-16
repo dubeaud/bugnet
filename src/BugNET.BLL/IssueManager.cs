@@ -26,52 +26,51 @@ namespace BugNET.BLL
             if (entity.ProjectId <= Globals.NEW_ID) throw (new ArgumentException("The issue project id is invalid"));
             if (string.IsNullOrEmpty(entity.Title)) throw (new ArgumentException("The issue title cannot be empty or null"));
 
-            if (entity.Id <= Globals.NEW_ID)
+            try
             {
-                var tempId = DataProviderManager.Provider.CreateNewIssue(entity);
-
-                if (tempId > 0)
+                if (entity.Id <= Globals.NEW_ID)
                 {
-                    entity.Id = tempId;
+                    var tempId = DataProviderManager.Provider.CreateNewIssue(entity);
 
-                    //add vote
-                    var vote = new IssueVote { IssueId = entity.Id, VoteUsername = entity.CreatorUserName };
-                    IssueVoteManager.SaveOrUpdate(vote);
+                    if (tempId > 0)
+                    {
+                        entity.Id = tempId;
+                        return true;
+                    }
 
-                    //TOOD: handle adding an attachment for new issue.
-
-                    //send notifications for add issue
-                    IssueNotificationManager.SendIssueAddNotifications(entity.Id);
-
-                    return true;
+                    return false;
                 }
+                else 
+                { 
+                    //existing issue
+                    var issueChanges = GetIssueChanges(GetById(entity.Id), entity);
 
+                    if (issueChanges.Count > 0)
+                    {
+                        DataProviderManager.Provider.UpdateIssue(entity);
+                        
+                        UpdateHistory(issueChanges);
+                        IssueNotificationManager.SendIssueNotifications(entity.Id, issueChanges);
+
+                        if (entity.SendNewAssigneeNotification)
+                        {
+                            //add this user to notifications and send them a notification
+                            var notification = new IssueNotification() { IssueId = entity.Id, NotificationUsername = entity.AssignedUserName };
+
+                            IssueNotificationManager.SaveOrUpdate(notification);
+                            IssueNotificationManager.SendNewAssigneeNotification(notification);
+                        }
+                        return true;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                Log.Error(LoggingManager.GetErrorMessageResource("SaveIssueError"), ex);
                 return false;
             }
 
-            var issueChanges = GetIssueChanges(GetById(entity.Id), entity);
-
-            if (issueChanges.Count > 0)
-            {
-                var result = DataProviderManager.Provider.UpdateIssue(entity);
-                if (result)
-                {
-                    UpdateHistory(issueChanges);
-
-                    IssueNotificationManager.SendIssueNotifications(entity.Id, issueChanges);
-                    if (entity.SendNewAssigneeNotification)
-                    {
-                        //add this user to notifications and send them a notification
-                        var notification = new IssueNotification() { IssueId = entity.Id, NotificationUsername = entity.AssignedUserName };
-
-                        IssueNotificationManager.SaveOrUpdate(notification);
-                        IssueNotificationManager.SendNewAssigneeNotification(notification);
-                    }
-                }
-                return result;
-            }
-
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -320,34 +319,6 @@ namespace BugNET.BLL
 
             return DataProviderManager.Provider.GetIssueCountByProjectAndCategory(projectId, categoryId);
         }
-
-        /// <summary>
-        /// Gets the bugs by criteria.
-        /// </summary>
-        /// <param name="projectId">The project id.</param>
-        /// <param name="componentId">The component id.</param>
-        /// <param name="versionId">The version id.</param>
-        /// <param name="issueTypeId">The type id.</param>
-        /// <param name="priorityId">The priority id.</param>
-        /// <param name="statusId">The status id.</param>
-        /// <param name="assignedToUserName">Name of the assigned to user.</param>
-        /// <param name="resolutionId">The resolution id.</param>
-        /// <param name="keywords">The keywords.</param>
-        /// <param name="excludeClosed">if set to <c>true</c> [exclude closed].</param>
-        /// <param name="reporterUserName">Name of the reporter user.</param>
-        /// <param name="fixedInVersionId">The fixed in version id.</param>
-        /// <returns></returns>
-        public static List<Issue> GetIssuesByCriteria(int projectId, int componentId, int versionId, int issueTypeId,
-                int priorityId, int statusId, string assignedToUserName,
-                int resolutionId, string keywords, bool excludeClosed, string reporterUserName, int fixedInVersionId)
-        {
-
-
-            throw new NotImplementedException();
-            //return DataProviderManager.Provider.GetIssuesByCriteria(projectId, componentId, versionId, IssueTypeId,
-            //    priorityId, statusId, AssignedToUserName, resolutionId, keywords, excludeClosed,reporterUserName,fixedInVersionId);
-        }
-
 
         /// <summary>
         /// Deletes the issue
