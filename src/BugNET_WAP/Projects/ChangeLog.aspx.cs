@@ -253,6 +253,12 @@ namespace BugNET.Projects
             BindChangeLog();
         }
 
+        protected void SortResolutionClick(object sender, EventArgs e)
+        {
+            SortField = "Resolution";
+            BindChangeLog();
+        }
+
         /// <summary>
         /// Sorts the assigned user click.
         /// </summary>
@@ -470,6 +476,10 @@ namespace BugNET.Projects
                                 case "Status":
                                     if (r == 0 && l1.StatusName != null)
                                         r = l1.StatusName.CompareTo(l2.StatusName) * (SortAscending ? -1 : 1);
+                                    break;
+                                case "Resolution":
+                                    if (r == 0 && l1.ResolutionName!= null)
+                                        r = l1.ResolutionName.CompareTo(l2.ResolutionName) * (SortAscending ? -1 : 1);
                                     break;
                                 case "Priority":
                                     if (r == 0 && l1.PriorityName != null)
