@@ -120,7 +120,7 @@ namespace BugNET.Administration.Projects.UserControls
                 {
                     var isFileOk = false;
                     var allowedFileTypes = new string[3] { ".gif", ".png", ".jpg" };
-                    var fileExt = Path.GetExtension(uploadFile.FileName);
+                    var fileExt = Path.GetExtension(uploadFile.FileName).ToLower();
                     var uploadedFileName = Path.GetFileName(uploadFile.FileName);
 
                     foreach (var newfileType in allowedFileTypes.Select(fileType => fileType.Substring(fileType.LastIndexOf("."))).Where(newfileType => newfileType.CompareTo(fileExt) == 0))
