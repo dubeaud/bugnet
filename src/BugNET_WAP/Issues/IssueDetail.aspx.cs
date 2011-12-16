@@ -127,6 +127,9 @@ namespace BugNET.Issues
                 //private issue check
                 Issue issue = IssueManager.GetById(IssueId);
 
+                if (issue.Disabled)
+                    ErrorRedirector.TransferToNotFoundPage(Page);
+
                 if (issue.Visibility == (int)Globals.IssueVisibility.Private && issue.AssignedDisplayName != Security.GetUserName() && issue.CreatorDisplayName != Security.GetUserName() && !UserManager.IsInRole(Globals.SUPER_USER_ROLE) && !UserManager.IsInRole(Globals.ProjectAdminRole))
                     ErrorRedirector.TransferToLoginPage(Page);
 
