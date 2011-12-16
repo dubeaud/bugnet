@@ -67,6 +67,10 @@ GO
 UPDATE BugNet_HostSettings SET SettingValue = '2'  WHERE SettingName = 'SMTPEmailFormat'
 GO
 
+IF NOT EXISTS (SELECT * FROM [dbo].[BugNet_HostSettings] WHERE [SettingName] = 'Pop3Port')
+	INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('Pop3Port', '110')
+GO
+
 COMMIT
 
 SET NOEXEC OFF
