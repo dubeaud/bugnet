@@ -64,6 +64,32 @@ BEGIN
 END
 GO
 
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueHistory_GetIssueHistoryByIssueId]    Script Date: 12/15/2011 22:14:52 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[BugNet_IssueHistory_GetIssueHistoryByIssueId]
+	@IssueId int
+AS
+ SELECT
+	IssueHistoryId,
+	IssueId,
+	U.UserName CreatorUsername,
+	IsNull(DisplayName,'') CreatorDisplayName,
+	FieldChanged,
+	OldValue,
+	NewValue,
+	DateCreated
+FROM 
+	BugNet_IssueHistory
+	INNER JOIN aspnet_Users U ON BugNet_IssueHistory.UserId = U.UserId
+	LEFT OUTER JOIN BugNet_UserProfiles ON U.UserName = BugNet_UserProfiles.UserName
+WHERE 
+	IssueId = @IssueId
+ORDER BY
+	DateCreated DESC
+
 UPDATE BugNet_HostSettings SET SettingValue = '2'  WHERE SettingName = 'SMTPEmailFormat'
 GO
 
