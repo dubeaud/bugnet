@@ -22,8 +22,9 @@
                  if(data.rslt.np != undefined && data.rslt.o != undefined)
                  {
                     var currentNodeId = data.rslt.o.attr('id');
-                    //alert(currentNodeId);
-                    var newParentNodeId = data.rslt.np == -1 ? 0 : data.rslt.np.attr('id');
+                    
+                    var newParentNodeId = data.rslt.np.attr('id') == 'divJsTree' ? 0 : data.rslt.np.attr('id');
+                   
                     BugNET.Webservices.BugNetServices.MoveCategory(currentNodeId,0,newParentNodeId, SucceededCallback, OnError);
                  }
             })
