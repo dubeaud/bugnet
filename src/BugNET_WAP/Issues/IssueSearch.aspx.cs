@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
+using System.Web;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 using BugNET.BLL;
+using BugNET.Common;
 using BugNET.Entities;
 using BugNET.UserInterfaceLayer;
+using System.Data;
+using System.Linq;
 
 namespace BugNET
 {
@@ -61,7 +64,35 @@ namespace BugNET
 
             }
 
+            // The ExpandIssuePaths method is called to handle
+            // the SiteMapResolve event.
+            SiteMap.SiteMapResolve += ExpandIssuePaths;
 
+
+        }
+
+        /// <summary>
+        /// Handles the Unload event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void Page_Unload(object sender, EventArgs e)
+        {
+            //remove the event handler
+            SiteMap.SiteMapResolve -= ExpandIssuePaths;
+        }
+
+        private SiteMapNode ExpandIssuePaths(Object sender, SiteMapResolveEventArgs e)
+        {
+            var currentNode = SiteMap.CurrentNode.Clone(true);
+            var tempNode = currentNode;
+
+            if ((null != (tempNode = tempNode.ParentNode)))
+            {
+                tempNode.Url = string.Empty;
+            }
+
+            return currentNode;
         }
 
         //  private const string ISSUELISTSTATE = "SearchIssueListState";
