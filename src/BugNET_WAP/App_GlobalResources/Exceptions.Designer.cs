@@ -394,7 +394,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Could not save issue.
+        ///   Looks up a localized string similar to There was an error saving the issue..
         /// </summary>
         internal static string SaveIssueError {
             get {

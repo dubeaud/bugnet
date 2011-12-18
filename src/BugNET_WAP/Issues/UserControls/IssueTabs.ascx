@@ -76,7 +76,7 @@
                 <div class="scrollButtons">
                     <a class="right" style=""></a><a class="left" style=""></a>
                 </div>
-                <div style="padding: 2em; border: 1px solid #D5D291; background-color: White; top: -1px; position: relative; display: block; min-height: 150px;">
+                <div style="padding: 2em; border: 1px solid #D5D291; background-color: White; top: -1px; position: relative; display: block;">
                     <IssueTab:Notifications ID="TabNotifications" runat="server" Visible="false" />
                     <IssueTab:History ID="TabHistory" runat="server" Visible="false" />
                     <IssueTab:Attachments ID="TabAttachments" runat="server" Visible="false" />

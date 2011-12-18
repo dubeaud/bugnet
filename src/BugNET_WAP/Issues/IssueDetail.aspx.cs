@@ -15,6 +15,9 @@ namespace BugNET.Issues
     /// </summary>
     public partial class IssueDetail : BasePage
     {
+        Issue CurrentIssue;
+        Project CurrentProject;
+        bool IsClosed = false;
 
         #region Private Events
         /// <summary>
@@ -38,10 +41,25 @@ namespace BugNET.Issues
                     ErrorRedirector.TransferToSomethingMissingPage(Page);
 
                 // Initialize for Adding or Editing
-                if (IssueId == 0)
+                if (IssueId == 0) // new issue
                 {
+                    CurrentProject = ProjectManager.GetById(ProjectId);
+
+                    if (CurrentProject == null)
+                    {
+                        ErrorRedirector.TransferToNotFoundPage(Page);
+                    }
+
+                    ProjectId = CurrentProject.Id;
+
+                    //security check: add issue
+                    if (!UserManager.HasPermission(ProjectId, Globals.Permission.AddIssue.ToString()))
+                    {
+                        ErrorRedirector.TransferToLoginPage(Page);
+                    }
+              
                     BindOptions();
-                    pnlAddAttachment.Visible = true;
+                   
                     TitleTextBox.Visible = true;
                     DescriptionHtmlEditor.Visible = true;
                     Description.Visible = false;
@@ -50,12 +68,78 @@ namespace BugNET.Issues
                     Page.Title = GetLocalResourceObject("PageTitleNewIssue").ToString();
                     lblIssueNumber.Text = GetGlobalResourceObject("SharedResources", "NotAvailableAbbr").ToString();
                     VoteButton.Visible = false;
+
+                    //check users role permission for adding an attachment
+                    if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.AddAttachment.ToString()))
+                    {
+                        pnlAddAttachment.Visible = false;
+                    }
+                    else
+                    {
+                        pnlAddAttachment.Visible = true;
+                    }
+
                 }
-                else
+                else //existing issue
                 {
-                    BindValues();
+                    //set up global properties
+                    CurrentIssue = IssueManager.GetById(IssueId);
+
+                    if (CurrentIssue == null || CurrentIssue.Disabled)
+                    {
+                        ErrorRedirector.TransferToNotFoundPage(Page);
+                    }
+
+                    //private issue check
+                    if (CurrentIssue.Visibility == (int)Globals.IssueVisibility.Private && CurrentIssue.AssignedDisplayName != Security.GetUserName()
+                        && CurrentIssue.CreatorDisplayName != Security.GetUserName()
+                        && !UserManager.IsInRole(Globals.SUPER_USER_ROLE)
+                        && !UserManager.IsInRole(Globals.ProjectAdminRole))
+                    {
+                        ErrorRedirector.TransferToLoginPage(Page);
+                    }
+
+                    CurrentProject = ProjectManager.GetById(CurrentIssue.ProjectId);
+
+                    if (CurrentProject == null)
+                    {
+                        ErrorRedirector.TransferToNotFoundPage(Page);
+                    }
+                    else 
+                    { 
+                        ProjectId = CurrentProject.Id;
+                    }
+
+                    if (CurrentProject.AccessType == Globals.ProjectAccessType.Private && !User.Identity.IsAuthenticated)
+                    {
+                        ErrorRedirector.TransferToLoginPage(Page);
+                    }
+                    else if (User.Identity.IsAuthenticated && CurrentProject.AccessType == Globals.ProjectAccessType.Private 
+                        && !ProjectManager.IsUserProjectMember(User.Identity.Name, ProjectId))
+                    {
+                        ErrorRedirector.TransferToLoginPage(Page);
+                    }
+
+                    IsClosed = CurrentIssue.IsClosed;
+                    BindValues(CurrentIssue);
+
+                    Page.Title = string.Concat(CurrentIssue.FullId, ": ", Server.HtmlDecode(CurrentIssue.Title));
+                    lblIssueNumber.Text = string.Format("{0}-{1}", CurrentProject.Code, IssueId);
+                    ctlIssueTabs.Visible = true;
+                    TimeLogged.Visible = true;
+                    TimeLoggedLabel.Visible = true;
+                    chkNotifyAssignedTo.Visible = false;
+                    chkNotifyOwner.Visible = false;
+
+                    SetFieldSecurity();
                 }
 
+                if (!CurrentProject.AllowIssueVoting)
+                { 
+                    VoteBox.Visible = false;
+                }
+
+              
                 //set the referrer url
                 if (Request.UrlReferrer != null)
                 {
@@ -82,68 +166,6 @@ namespace BugNET.Issues
 
             ctlIssueTabs.IssueId = IssueId;
             ctlIssueTabs.ProjectId = ProjectId;
-        }
-
-        /// <summary>
-        /// Handles the PreRender event of the Page control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void Page_PreRender(object sender, EventArgs e)
-        {
-            Project p = ProjectManager.GetById(ProjectId);
-
-            if (p == null)
-                ErrorRedirector.TransferToNotFoundPage(Page);
-
-            //check if the user can access this project
-            if (p.AccessType == Globals.ProjectAccessType.Private && !User.Identity.IsAuthenticated)
-            {
-                ErrorRedirector.TransferToLoginPage(Page);
-            }
-            else if (User.Identity.IsAuthenticated && p.AccessType == Globals.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(User.Identity.Name, ProjectId))
-            {
-                ErrorRedirector.TransferToLoginPage(Page);
-            }
-            else if (IssueId == 0)
-            {
-                //security check: add issue
-                if (!UserManager.HasPermission(ProjectId, Globals.Permission.AddIssue.ToString()))
-                    ErrorRedirector.TransferToLoginPage(Page);
-
-                //check users role permission for adding an attachment
-                if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.AddAttachment.ToString()))
-                    pnlAddAttachment.Visible = false;
-            }
-            //security check: assign issue
-            if (!UserManager.HasPermission(ProjectId, Globals.Permission.AssignIssue.ToString()))
-                DropAssignedTo.Enabled = false;
-
-            if (!p.AllowIssueVoting)
-                VoteBox.Visible = false;
-
-            if (IssueId != 0)
-            {
-                //private issue check
-                Issue issue = IssueManager.GetById(IssueId);
-
-                if (issue.Disabled)
-                    ErrorRedirector.TransferToNotFoundPage(Page);
-
-                if (issue.Visibility == (int)Globals.IssueVisibility.Private && issue.AssignedDisplayName != Security.GetUserName() && issue.CreatorDisplayName != Security.GetUserName() && !UserManager.IsInRole(Globals.SUPER_USER_ROLE) && !UserManager.IsInRole(Globals.ProjectAdminRole))
-                    ErrorRedirector.TransferToLoginPage(Page);
-
-                Page.Title = string.Concat(issue.FullId, ": ", Server.HtmlDecode(issue.Title));
-                lblIssueNumber.Text = string.Format("{0}-{1}", p.Code, IssueId);
-                ctlIssueTabs.Visible = true;
-                TimeLogged.Visible = true;
-                TimeLoggedLabel.Visible = true;
-                chkNotifyAssignedTo.Visible = false;
-                chkNotifyOwner.Visible = false;
-                SetFieldSecurity();
-            }
-
-            ctlCustomFields.DataBind();
         }
 
         /// <summary>
@@ -191,84 +213,68 @@ namespace BugNET.Issues
         /// <summary>
         /// Binds the values.
         /// </summary>
-        private void BindValues()
+        private void BindValues(Issue currentIssue)
         {
-            var currentIssue = IssueManager.GetById(IssueId);
+            BindOptions();
 
-            if (currentIssue == null)
+            lblIssueNumber.Text = string.Concat(currentIssue.FullId, ":");
+            TitleLabel.Text = Server.HtmlDecode(currentIssue.Title);
+
+            DropIssueType.SelectedValue = currentIssue.IssueTypeId;
+            DropResolution.SelectedValue = currentIssue.ResolutionId;
+            DropStatus.SelectedValue = currentIssue.StatusId;
+            DropPriority.SelectedValue = currentIssue.PriorityId;
+            DropOwned.SelectedValue = currentIssue.OwnerUserName;
+
+            // SMOSS: XSS Bugfix
+            Description.Text = (currentIssue.Description);
+
+            // WARNING: Do Not html decode the text for the editor. 
+            // The editor is expecting HtmlEncoded text as input.
+            DescriptionHtmlEditor.Text = currentIssue.Description;
+            lblLastUpdateUser.Text = currentIssue.LastUpdateDisplayName;
+            lblReporter.Text = currentIssue.CreatorDisplayName;
+
+            // XSS Bugfix
+            // The text box is expecting raw html
+            TitleTextBox.Text = Server.HtmlDecode(currentIssue.Title);
+            DisplayTitleLabel.Text = currentIssue.Title;
+
+            Label5.Text = currentIssue.IssueTypeName;
+            lblDateCreated.Text = currentIssue.DateCreated.ToString("g");
+            lblLastModified.Text = currentIssue.LastUpdate.ToString("g");
+            lblIssueNumber.Text = currentIssue.FullId;
+            DropCategory.SelectedValue = currentIssue.CategoryId;
+            DropMilestone.SelectedValue = currentIssue.MilestoneId;
+            DropAffectedMilestone.SelectedValue = currentIssue.AffectedMilestoneId;
+            DropAssignedTo.SelectedValue = currentIssue.AssignedUserName;
+            lblLoggedTime.Text = currentIssue.TimeLogged.ToString();
+            txtEstimation.Text = currentIssue.Estimation == 0 ? string.Empty : currentIssue.Estimation.ToString();
+            DueDatePicker.SelectedValue = currentIssue.DueDate == DateTime.MinValue ? null : (DateTime?)currentIssue.DueDate;
+            chkPrivate.Checked = currentIssue.Visibility != 0;
+            ProgressSlider.Text = currentIssue.Progress.ToString();
+            IssueVoteCount.Text = currentIssue.Votes.ToString();
+
+            if (currentIssue.Votes > 1)
+                Votes.Text = GetLocalResourceObject("Votes").ToString();
+
+            if (User.Identity.IsAuthenticated && IssueVoteManager.HasUserVoted(currentIssue.Id, Security.GetUserName()))
             {
-                // BGN-1379
-                ErrorRedirector.TransferToNotFoundPage(Page);
+                VoteButton.Visible = false;
+                VotedLabel.Visible = true;
+                VotedLabel.Text = GetLocalResourceObject("Voted").ToString();
             }
             else
             {
-
-                ProjectId = currentIssue.ProjectId;
-
-                BindOptions();
-
-                lblIssueNumber.Text = string.Concat(currentIssue.FullId, ":");
-                TitleLabel.Text = Server.HtmlDecode(currentIssue.Title);
-                //Page.Title = string.Concat(currentIssue.FullId, ": ", currentIssue.Title);
-                DropIssueType.SelectedValue = currentIssue.IssueTypeId;
-                DropResolution.SelectedValue = currentIssue.ResolutionId;
-                DropStatus.SelectedValue = currentIssue.StatusId;
-                DropPriority.SelectedValue = currentIssue.PriorityId;
-                DropOwned.SelectedValue = currentIssue.OwnerUserName;
-
-                // SMOSS: XSS Bugfix
-                Description.Text = (currentIssue.Description);
-
-                // WARNING: Do Not html decode the text for the editor. 
-                // The editor is expecting HtmlEncoded text as input.
-                DescriptionHtmlEditor.Text = currentIssue.Description;
-                lblLastUpdateUser.Text = currentIssue.LastUpdateDisplayName;
-                lblReporter.Text = currentIssue.CreatorDisplayName;
-
-                // XSS Bugfix
-                // The text box is expecting raw html
-                TitleTextBox.Text = Server.HtmlDecode(currentIssue.Title);
-                DisplayTitleLabel.Text = currentIssue.Title;
-
-                Label5.Text = currentIssue.IssueTypeName;
-                lblDateCreated.Text = currentIssue.DateCreated.ToString("g");
-                lblLastModified.Text = currentIssue.LastUpdate.ToString("g");
-                lblIssueNumber.Text = currentIssue.FullId;
-                DropCategory.SelectedValue = currentIssue.CategoryId;
-                DropMilestone.SelectedValue = currentIssue.MilestoneId;
-                DropAffectedMilestone.SelectedValue = currentIssue.AffectedMilestoneId;
-                DropAssignedTo.SelectedValue = currentIssue.AssignedUserName;
-                lblLoggedTime.Text = currentIssue.TimeLogged.ToString();
-                txtEstimation.Text = currentIssue.Estimation == 0 ? string.Empty : currentIssue.Estimation.ToString();
-                DueDatePicker.SelectedValue = currentIssue.DueDate == DateTime.MinValue ? null : (DateTime?)currentIssue.DueDate;
-                chkPrivate.Checked = currentIssue.Visibility != 0;
-                ProgressSlider.Text = currentIssue.Progress.ToString();
-                IssueVoteCount.Text = currentIssue.Votes.ToString();
-
-                if (currentIssue.Votes > 1)
-                    Votes.Text = GetLocalResourceObject("Votes").ToString();
-
-                if (User.Identity.IsAuthenticated && IssueVoteManager.HasUserVoted(currentIssue.Id, Security.GetUserName()))
-                {
-                    VoteButton.Visible = false;
-                    VotedLabel.Visible = true;
-                    VotedLabel.Text = GetLocalResourceObject("Voted").ToString();
-                }
-                else
-                {
-                    VoteButton.Visible = true;
-                    VotedLabel.Visible = false;
-                }
-
-                if (currentIssue.StatusId != 0 && StatusManager.GetById(currentIssue.StatusId).IsClosedState)
-                {
-                    VoteButton.Visible = false;
-                    VotedLabel.Visible = false;
-                }
-
+                VoteButton.Visible = true;
+                VotedLabel.Visible = false;
             }
 
-
+            if (currentIssue.StatusId != 0 && StatusManager.GetById(currentIssue.StatusId).IsClosedState)
+            {
+                VoteButton.Visible = false;
+                VotedLabel.Visible = false;
+            }
         }
 
         /// <summary>
@@ -408,7 +414,6 @@ namespace BugNET.Issues
                 return false;
             }
 
-
             //if new issue check if notify owner and assigned is checked.
             if (isNewIssue)
             {
@@ -453,14 +458,19 @@ namespace BugNET.Issues
 
                 }
                 else
+                {
                     Message1.ShowErrorMessage(inValidReason);
-
+                    return false;
+                }
 
                 //create a vote for the new issue
                 var vote = new IssueVote { IssueId = IssueId, VoteUsername = Security.GetUserName() };
 
                 if (!IssueVoteManager.SaveOrUpdate(vote))
+                { 
                     Message1.ShowErrorMessage(Resources.Exceptions.SaveIssueVoteError);
+                    return false;
+                }
 
                 if (chkNotifyOwner.Checked && !string.IsNullOrEmpty(issue.OwnerUserName))
                 {
@@ -469,7 +479,6 @@ namespace BugNET.Issues
                     {
                         var notify = new IssueNotification { IssueId = IssueId, NotificationUsername = oUser.UserName };
                         IssueNotificationManager.SaveOrUpdate(notify);
-
                     }
                 }
                 if (chkNotifyAssignedTo.Checked && !string.IsNullOrEmpty(issue.AssignedUserName))
@@ -498,8 +507,10 @@ namespace BugNET.Issues
         {
             if (!Page.IsValid) return;
 
-            SaveIssue();
-            Response.Redirect(string.Format("~/Issues/IssueDetail.aspx?id={0}", IssueId));
+            if (SaveIssue())
+            { 
+                Response.Redirect(string.Format("~/Issues/IssueDetail.aspx?id={0}", IssueId));
+            }
         }
 
         /// <summary>
@@ -610,29 +621,23 @@ namespace BugNET.Issues
                 if (UserManager.HasPermission(ProjectId, Globals.Permission.DeleteIssue.ToString()))
                     IssueActionDelete.Visible = true;
 
+                //security check: assign issue
+                if (!UserManager.HasPermission(ProjectId, Globals.Permission.AssignIssue.ToString()))
+                    DropAssignedTo.Enabled = false;
+
                 if (!UserManager.HasPermission(ProjectId, Globals.Permission.ChangeIssueStatus.ToString()))
                     DropStatus.Enabled = false;
 
                 //remove closed status' if user does not have access
                 if (!UserManager.HasPermission(ProjectId, Globals.Permission.CloseIssue.ToString()))
                 {
-                    var status = StatusManager.GetByProjectId(ProjectId).FindAll(st => st.IsClosedState);
                     var stat = (DropDownList)DropStatus.FindControl("dropStatus");
+                    var status = StatusManager.GetByProjectId(ProjectId).FindAll(st => st.IsClosedState);
+
                     foreach (var s in status)
                         stat.Items.Remove(stat.Items.FindByValue(s.Id.ToString()));
                 }
 
-                // TODO: Re add this functionality to the application
-
-                //if status is closed, check if user is allowed to reopen issue
-                //if (editBug.StatusId.CompareTo((int)Globals.StatusType.Closed) == 0)
-                //{
-                //    LockFields();
-                //    pnlClosedMessage.Visible = true;
-
-                //    if (UserIT.HasPermission(ProjectId, Globals.Permissions.REOPEN_ISSUE.ToString()))
-                //        lnkReopen.Visible = true;
-                //}
             }
             else
             {

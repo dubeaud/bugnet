@@ -45,23 +45,21 @@ namespace BugNET.BLL
                     //existing issue
                     var issueChanges = GetIssueChanges(GetById(entity.Id), entity);
 
-                    if (issueChanges.Count > 0)
-                    {
-                        DataProviderManager.Provider.UpdateIssue(entity);
+                    DataProviderManager.Provider.UpdateIssue(entity);
                         
-                        UpdateHistory(issueChanges);
-                        IssueNotificationManager.SendIssueNotifications(entity.Id, issueChanges);
+                    UpdateHistory(issueChanges);
+                    
+                    IssueNotificationManager.SendIssueNotifications(entity.Id, issueChanges);
 
-                        if (entity.SendNewAssigneeNotification)
-                        {
-                            //add this user to notifications and send them a notification
-                            var notification = new IssueNotification() { IssueId = entity.Id, NotificationUsername = entity.AssignedUserName };
+                    if (entity.SendNewAssigneeNotification)
+                    {
+                        //add this user to notifications and send them a notification
+                        var notification = new IssueNotification() { IssueId = entity.Id, NotificationUsername = entity.AssignedUserName };
 
-                            IssueNotificationManager.SaveOrUpdate(notification);
-                            IssueNotificationManager.SendNewAssigneeNotification(notification);
-                        }
-                        return true;
+                        IssueNotificationManager.SaveOrUpdate(notification);
+                        IssueNotificationManager.SendNewAssigneeNotification(notification);
                     }
+                    return true;
                 }
             }
             catch(Exception ex)

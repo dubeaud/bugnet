@@ -230,7 +230,7 @@
     <value>Could not save issue custom fields</value>
   </data>
   <data name="SaveIssueError" xml:space="preserve">
-    <value>Could not save issue</value>
+    <value>There was an error saving the issue.</value>
   </data>
   <data name="SaveIssueTypeError" xml:space="preserve">
     <value>Could not save issue type</value>

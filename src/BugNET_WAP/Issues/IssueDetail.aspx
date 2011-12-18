@@ -14,6 +14,7 @@
     <asp:ValidationSummary ID="ValidationSummary1" DisplayMode="BulletList" HeaderText="<%$ Resources:SharedResources, ValidationSummaryHeaderText %>"
         CssClass="validationSummary" runat="server" />
     <bn:Message ID="Message1" runat="server" Width="100%" Visible="False" />
+
     <asp:Panel ID="pnlBugNavigation" Style="height: 25px;" runat="server">
         <div class="float-right">
             <ul id="horizontal-list">
