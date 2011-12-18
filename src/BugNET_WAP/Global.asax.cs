@@ -3,8 +3,6 @@ using System.Web;
 using BugNET.BLL;
 using log4net;
 
-[assembly: log4net.Config.XmlConfigurator(ConfigFile = "log4net.config", Watch = true)]
-
 namespace BugNET
 {
     /// <summary>
@@ -112,11 +110,12 @@ namespace BugNET
                 if (HttpContext.Current.Request.Url.LocalPath.ToLower().EndsWith("install.aspx"))
                     return;
 
-                //log4net.Util.LogLog.InternalDebugging = true;
                 //load the host settings into the application cache
                 HostSettingManager.GetHostSettings();
+
                 //configure logging
                 LoggingManager.ConfigureLogging();
+
                 Log.Info("Application Start");
 
                 // Perform first-request initialization here ...

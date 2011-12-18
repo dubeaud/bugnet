@@ -19,32 +19,9 @@ namespace BugNET.BLL
         /// </summary>
         public static void ConfigureLogging()
         {
-            ConfigureAdoNetAppender();
-
-            //if email notification of errors are enabled create a smtp logging appender.
+            //if email notification of errors are enabled create a SMTP logging appender.
             if (HostSettingManager.Get(HostSettingNames.EmailErrors, false))
                 ConfigureEmailLoggingAppender();
-        }
-
-        /// <summary>
-        /// Configures the ADO net appender.
-        /// </summary>
-        private static void ConfigureAdoNetAppender()
-        {
-            // Get the Hierarchy object that organizes the loggers
-            var hier =
-              LogManager.GetRepository() as log4net.Repository.Hierarchy.Hierarchy;
-
-            if (hier == null) return;
-
-            //get ADONetAppender
-            var adoAppender =
-                (AdoNetAppender)hier.Root.GetAppender("AdoNetAppender");
-
-            if (adoAppender == null) return;
-
-            adoAppender.ConnectionString = ConfigurationManager.ConnectionStrings["BugNET"].ConnectionString;
-            adoAppender.ActivateOptions(); //refresh settings of appender
         }
 
         /// <summary>
