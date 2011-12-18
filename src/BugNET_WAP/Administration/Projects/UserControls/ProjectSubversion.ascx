@@ -9,9 +9,6 @@
             <li>
                 <asp:Label ID="Label1"  CssClass="col1" AssociatedControlID="svnUrl" runat="server" Text="Subversion Url:" />
                 <asp:TextBox id="svnUrl" Columns="30" runat="Server" />
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" 
-                        ControlToValidate="svnUrl" ErrorMessage="A Subversion URL is required." 
-                        SetFocusOnError="True"></asp:RequiredFieldValidator>
             </li>
        </ol>
     </div>  
