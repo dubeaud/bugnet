@@ -121,46 +121,53 @@ namespace BugNET.Account
             String securityAnswer = SecurityAnswer.Text;
 
             //Set the password
-            bool PasswordChanged = CurrentUser.ChangePassword(currentPassword, newPassword);
-            bool SecurityQuestionChanged = false;
-            if (PasswordChanged == true)
+            try
             {
-                Message2.ShowSuccessMessage(GetLocalResourceObject("PasswordChanged").ToString());
-
-                if (Log.IsInfoEnabled)
+                bool PasswordChanged = CurrentUser.ChangePassword(currentPassword, newPassword);
+                bool SecurityQuestionChanged = false;
+                if (PasswordChanged == true)
                 {
-                    if (HttpContext.Current.User != null && HttpContext.Current.User.Identity.IsAuthenticated)
-                        MDC.Set("user", HttpContext.Current.User.Identity.Name);
-                    Log.Info("Password changed");
+                    Message2.ShowSuccessMessage(GetLocalResourceObject("PasswordChanged").ToString());
+
+                    if (Log.IsInfoEnabled)
+                    {
+                        if (HttpContext.Current.User != null && HttpContext.Current.User.Identity.IsAuthenticated)
+                            MDC.Set("user", HttpContext.Current.User.Identity.Name);
+                        Log.Info("Password changed");
+                    }
+
+                    SecurityQuestionChanged = CurrentUser.ChangePasswordQuestionAndAnswer(newPassword, securityQuestion, securityAnswer);
+
                 }
-
-                SecurityQuestionChanged = CurrentUser.ChangePasswordQuestionAndAnswer(newPassword, securityQuestion, securityAnswer);
-
-            }
-            else
-            {
-                if (Log.IsErrorEnabled)
+                else
                 {
-                    if (HttpContext.Current.User != null && HttpContext.Current.User.Identity.IsAuthenticated)
-                        MDC.Set("user", HttpContext.Current.User.Identity.Name);
-                    Log.Error("Password update failure");
-                }
+                    if (Log.IsErrorEnabled)
+                    {
+                        if (HttpContext.Current.User != null && HttpContext.Current.User.Identity.IsAuthenticated)
+                            MDC.Set("user", HttpContext.Current.User.Identity.Name);
+                        Log.Error("Password update failure");
+                    }
 
-                Message2.ShowErrorMessage(GetLocalResourceObject("PasswordChangeError").ToString());
+                    Message2.ShowErrorMessage(GetLocalResourceObject("PasswordChangeError").ToString());
+                }
+                if (SecurityQuestionChanged == true)
+                {
+                    Message2.ShowSuccessMessage("Security question was changed successfully");
+                }
+                else
+                {
+                    //if (Log.IsErrorEnabled)
+                    //{
+                    //    if (HttpContext.Current.User != null && HttpContext.Current.User.Identity.IsAuthenticated)
+                    //        MDC.Set("user", HttpContext.Current.User.Identity.Name);
+                    //    Log.Error("Password update failure");
+                    //}
+                    //Message2.ShowErrorMessage(GetLocalResourceObject("PasswordChangeError").ToString());
+                }
             }
-            if (SecurityQuestionChanged == true)
+            catch (Exception ex)
             {
-                Message2.ShowSuccessMessage("Security question was changed successfully");
-            }
-            else
-            {
-                //if (Log.IsErrorEnabled)
-                //{
-                //    if (HttpContext.Current.User != null && HttpContext.Current.User.Identity.IsAuthenticated)
-                //        MDC.Set("user", HttpContext.Current.User.Identity.Name);
-                //    Log.Error("Password update failure");
-                //}
-                //Message2.ShowErrorMessage(GetLocalResourceObject("PasswordChangeError").ToString());
+                Message2.ShowSuccessMessage(ex.Message);
             }
             //else { lblCurrentPassword.Visible = true; }
         }

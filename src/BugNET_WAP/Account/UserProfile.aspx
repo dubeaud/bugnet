@@ -244,9 +244,9 @@
 <asp:Content ID="Content2" runat="server" ContentPlaceHolderID="Left">
     <asp:BulletedList ID="BulletedList4" DisplayMode="LinkButton" CssClass="sideMenu"
         runat="server" OnClick="BulletedList4_Click1">
-        <asp:ListItem style="background-image: url('images/user_edit.gif')" meta:resourceKey="UserDetails">User Details</asp:ListItem>
-        <asp:ListItem style="background-image: url('images/key.gif')" meta:resourceKey="Password">Password</asp:ListItem>
-        <asp:ListItem style="background-image: url('images/application_edit.gif')" meta:resourceKey="Preferences">Preferences</asp:ListItem>
-        <asp:ListItem style="background-image: url('images/email_go.gif')" meta:resourceKey="Notifications">Notifications</asp:ListItem>
+        <asp:ListItem style="background-image: url('../images/user_edit.gif')" meta:resourceKey="UserDetails">User Details</asp:ListItem>
+        <asp:ListItem style="background-image: url('../images/key.gif')" meta:resourceKey="Password">Password</asp:ListItem>
+        <asp:ListItem style="background-image: url('../images/application_edit.gif')" meta:resourceKey="Preferences">Preferences</asp:ListItem>
+        <asp:ListItem style="background-image: url('../images/email_go.gif')" meta:resourceKey="Notifications">Notifications</asp:ListItem>
     </asp:BulletedList>
 </asp:Content>
