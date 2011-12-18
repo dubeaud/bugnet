@@ -75,6 +75,11 @@ namespace BugNET
 
             // Attempt to perform first request initialization
             Initialization.Init(context);
+
+            if (Request.Url.AbsoluteUri.ToLower().Contains("bugdetail.aspx"))
+            {
+                Response.Redirect(string.Format("~/Issues/IssueDetail.aspx{0}", Request.Url.Query));
+            }
         }
   
     }
