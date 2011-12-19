@@ -417,50 +417,52 @@ namespace BugNET.Issues
             //if new issue check if notify owner and assigned is checked.
             if (isNewIssue)
             {
+           
                 //add attachment if present.
-                // get the current file
-                var uploadFile = AspUploadFile.PostedFile;
-
-                string inValidReason;
-
-                var validFile = IssueAttachmentManager.IsValidFile(uploadFile.FileName, out inValidReason);
-
-                if (validFile)
+                if (AspUploadFile.HasFile)
                 {
-                    if (uploadFile.ContentLength > 0)
+                    // get the current file
+                    var uploadFile = AspUploadFile.PostedFile;
+                    string inValidReason;
+                    var validFile = IssueAttachmentManager.IsValidFile(uploadFile.FileName, out inValidReason);
+
+                    if (validFile)
                     {
-                        byte[] fileBytes;
-                        using (var input = uploadFile.InputStream)
+                        if (uploadFile.ContentLength > 0)
                         {
-                            fileBytes = new byte[uploadFile.ContentLength];
-                            input.Read(fileBytes, 0, uploadFile.ContentLength);
+                            byte[] fileBytes;
+                            using (var input = uploadFile.InputStream)
+                            {
+                                fileBytes = new byte[uploadFile.ContentLength];
+                                input.Read(fileBytes, 0, uploadFile.ContentLength);
+                            }
+
+                            var issueAttachment = new IssueAttachment
+                            {
+                                Id = Globals.NEW_ID,
+                                Attachment = fileBytes,
+                                Description = AttachmentDescription.Text.Trim(),
+                                DateCreated = DateTime.Now,
+                                ContentType = uploadFile.ContentType,
+                                CreatorDisplayName = string.Empty,
+                                CreatorUserName = Security.GetUserName(),
+                                FileName = uploadFile.FileName,
+                                IssueId = IssueId,
+                                Size = fileBytes.Length
+                            };
+
+                            if (!IssueAttachmentManager.SaveOrUpdate(issueAttachment))
+                            {
+                                Message1.ShowErrorMessage(string.Format(GetGlobalResourceObject("Exceptions", "SaveAttachmentError").ToString(), uploadFile.FileName));
+                            }
                         }
 
-                        var issueAttachment = new IssueAttachment
-                        {
-                            Id = Globals.NEW_ID,
-                            Attachment = fileBytes,
-                            Description = AttachmentDescription.Text.Trim(),
-                            DateCreated = DateTime.Now,
-                            ContentType = uploadFile.ContentType,
-                            CreatorDisplayName = string.Empty,
-                            CreatorUserName = Security.GetUserName(),
-                            FileName = uploadFile.FileName,
-                            IssueId = IssueId,
-                            Size = fileBytes.Length
-                        };
-
-                        if (!IssueAttachmentManager.SaveOrUpdate(issueAttachment))
-                        {
-                            Message1.ShowErrorMessage(string.Format(GetGlobalResourceObject("Exceptions", "SaveAttachmentError").ToString(), uploadFile.FileName));
-                        }
                     }
-
-                }
-                else
-                {
-                    Message1.ShowErrorMessage(inValidReason);
-                    return false;
+                    else
+                    {
+                        Message1.ShowErrorMessage(inValidReason);
+                        return false;
+                    }
                 }
 
                 //create a vote for the new issue
