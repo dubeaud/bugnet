@@ -134,9 +134,11 @@ namespace BugNET.BLL
                     issueChanges.Add(GetNewIssueHistory(history, "Assigned to", originalIssue.AssignedDisplayName, newAssignedDisplayName));
                 }
 
-                if (originalIssue.OwnerUserName != issueToCompare.OwnerUserName)
+                var newOwnerUserName = String.IsNullOrEmpty(issueToCompare.OwnerUserName) ? Globals.UNASSIGNED_DISPLAY_TEXT : issueToCompare.OwnerUserName;
+
+                if (originalIssue.OwnerUserName != newOwnerUserName)
                 {
-                    var newOwnerDisplayName = UserManager.GetUserDisplayName(issueToCompare.OwnerUserName);
+                    var newOwnerDisplayName = (newOwnerUserName == Globals.UNASSIGNED_DISPLAY_TEXT) ? newOwnerUserName : UserManager.GetUserDisplayName(issueToCompare.OwnerUserName);
                     issueChanges.Add(GetNewIssueHistory(history, "Owner", originalIssue.OwnerDisplayName, newOwnerDisplayName));
                 }
 
