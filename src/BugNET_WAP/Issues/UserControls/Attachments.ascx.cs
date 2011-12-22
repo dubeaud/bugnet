@@ -24,8 +24,10 @@ namespace BugNET.Issues.UserControls
             var guidLength = Globals.EMPTY_GUID.Length;
             var guidEnd = fileName.LastIndexOf(".");
             var guidStart = guidEnd - guidLength;
-
-            fileName = string.Concat(fileName.Substring(0, guidStart), fileName.Substring(guidEnd + 1));
+            if (guidStart > -1)
+            {
+                fileName = string.Concat(fileName.Substring(0, guidStart), fileName.Substring(guidEnd + 1));
+            }
             return fileName;
         }
 

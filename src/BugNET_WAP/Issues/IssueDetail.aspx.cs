@@ -224,7 +224,11 @@ namespace BugNET.Issues
             DropResolution.SelectedValue = currentIssue.ResolutionId;
             DropStatus.SelectedValue = currentIssue.StatusId;
             DropPriority.SelectedValue = currentIssue.PriorityId;
-            DropOwned.SelectedValue = currentIssue.OwnerUserName;
+            if (IssueId == 0)
+                DropOwned.SelectedValue = User.Identity.Name;
+            else
+                DropOwned.SelectedValue = currentIssue.OwnerUserName;
+
 
             // SMOSS: XSS Bugfix
             Description.Text = (currentIssue.Description);
@@ -316,7 +320,7 @@ namespace BugNET.Issues
 
             DropOwned.DataSource = users;
             DropOwned.DataBind();
-            DropOwned.SelectedValue = User.Identity.Name;
+          
 
             DropStatus.DataSource = StatusManager.GetByProjectId(ProjectId);
             DropStatus.DataBind();
