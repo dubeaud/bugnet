@@ -293,7 +293,7 @@ namespace BugNET.BLL
             get
             {
                 var context = HttpContext.Current;
-                return context.Server.MapPath("~");
+                return context.Server.MapPath("~").EndsWith("\\") ? context.Server.MapPath("~") : context.Server.MapPath("~") + "\\";
             }
         }
     #endregion
