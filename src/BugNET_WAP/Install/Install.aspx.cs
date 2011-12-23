@@ -48,13 +48,6 @@ namespace BugNET.Install
                 Server.ScriptTimeout = int.MaxValue;
                 try
                 {
-                    // carlowahlstedt's patch
-                    //if (HttpContext.Current.User.Identity.AuthenticationType == "NTLM" || HttpContext.Current.User.Identity.AuthenticationType == "Negotiate")
-                    //{
-                    //    WindowsAuthenticationWarning();
-                    //    return;
-                    //}
-
                     switch (UpgradeManager.GetUpgradeStatus())
                     {
                         case Globals.UpgradeStatus.Install:
@@ -77,19 +70,6 @@ namespace BugNET.Install
                     Server.ScriptTimeout = scriptTimeOut;
                 }
             }
-        }
-
-        /// <summary>
-        /// Warns the user that some kind of windows authentication is turned on.
-        /// </summary>
-        private void WindowsAuthenticationWarning()
-        {
-            string tmpuser = HttpContext.Current.User.Identity.Name;
-            WriteHeader("authentication");
-            WriteMessage(string.Format("<h3>You are logged in as user '{0}' using some kind of windows authentication.</h3>", tmpuser));
-            WriteMessage("<h3>This installer does not support Windows or Active Directory Authentication</h3>");
-            WriteMessage("<h3>You must disable these settings to continue.</h3>");            
-            WriteFooter();
         }
 
         /// <summary>

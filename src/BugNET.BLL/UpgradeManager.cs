@@ -11,6 +11,8 @@ using System.Web.Security;
 using BugNET.Common;
 using BugNET.DAL;
 using log4net;
+using System.Xml;
+using System.Globalization;
 
 namespace BugNET.BLL
 {
@@ -82,7 +84,7 @@ namespace BugNET.BLL
             }
             catch (Exception ex)
             {
-
+               
             }
 
             return false;
@@ -99,40 +101,59 @@ namespace BugNET.BLL
         }
 
         /// <summary>
+        /// Backups the config.
+        /// </summary>
+        public static void BackupConfig()
+        {
+            var context = HttpContext.Current;
+            var backupFolder = Globals.CONFIG_FOLDER + "Backup_" + DateTime.Now.ToString("yyyymmddhhmm") + "\\";
+
+            if (!(Directory.Exists(context.Server.MapPath("~") + backupFolder)))
+            {
+                Directory.CreateDirectory(context.Server.MapPath("~") + backupFolder);
+            }
+
+            if (File.Exists(context.Server.MapPath("~") + "\\web.config"))
+            {
+                File.Copy(context.Server.MapPath("~") + "\\web.config", context.Server.MapPath("~") + backupFolder + "web_old.config", true);
+            }
+        }
+
+        /// <summary>
         /// Updates the machine key.
         /// </summary>
         /// <returns></returns>
         public static string UpdateMachineKey()
         {
-            var context = HttpContext.Current;
-            var backupFolder = Globals.CONFIG_FOLDER + "Backup_" + DateTime.Now.ToString("yyyymmddhhmm") + "\\";
+            XmlElement xmlElement;
+            var config = new XmlDocument();
             var strError = "";
 
             try
             {
-                if (!(Directory.Exists(context.Server.MapPath("~") + backupFolder)))
+                BackupConfig();
+
+                config = LoadConfig();
+
+                XmlNode xmlMachineKey = config.SelectSingleNode("configuration/system.web/machineKey");
+                if(xmlMachineKey != null)
                 {
-                    Directory.CreateDirectory(context.Server.MapPath("~") + backupFolder);
+                
+                    xmlMachineKey.Attributes["validationKey"].Value = GenRandomValues(128);
+                    xmlMachineKey.Attributes["decryptionKey"].Value =  GenRandomValues(64);
                 }
-
-                if (File.Exists(context.Server.MapPath("~") + "\\web.config"))
+  
+                XmlNode AppSettings = config.SelectSingleNode("//appSettings");
+                if(AppSettings != null)
                 {
-                    File.Copy(context.Server.MapPath("~") + "\\web.config", context.Server.MapPath("~") + backupFolder + "web_old.config", true);
+                    //create a new element for installation date parameter
+                    xmlElement = config.CreateElement("add");
+                    xmlElement.SetAttribute("key", "InstallationDate");
+                    xmlElement.SetAttribute("value", DateTime.Today.ToString("d", new CultureInfo("en-US")));
+                    AppSettings.AppendChild(xmlElement);
                 }
-
-                var config = WebConfigurationManager.OpenWebConfiguration("~");
-                var webSection = (SystemWebSectionGroup)config.GetSectionGroup("system.web");
-
-                if (webSection != null)
-                {
-                    webSection.MachineKey.ValidationKey = GenRandomValues(128);
-                    webSection.MachineKey.DecryptionKey = GenRandomValues(64);
-                }
-
-                config.AppSettings.Settings.Add("InstallationDate", DateTime.Today.ToShortDateString());
-
-                //save
-                config.Save(ConfigurationSaveMode.Full);
+                
+                SaveConfig(config);
 
             }
             catch (Exception ex)
@@ -170,15 +191,6 @@ namespace BugNET.BLL
             if (string.IsNullOrEmpty(DataProviderManager.Provider.GetDatabaseVersion()))
                 return Globals.UpgradeStatus.Install;
 
-            // Querying for AD and windows authentication must take precedence over            
-            // upgrading.
-            // We can query the database from now on, because BugNET is installed          
-            //string adStatus = HostSetting.Get("UserAccountSource");
-            //if (adStatus == "WindowsSAM")
-            //    return Globals.UpgradeStatus.WindowsSAM;
-            //if (adStatus == "ActiveDirectory")
-            //    return Globals.UpgradeStatus.ActiveDirectory;
-
             // Now check if the user is authenticated.
             if (HttpContext.Current != null && HttpContext.Current.User != null && HttpContext.Current.User.Identity.IsAuthenticated && (HttpContext.Current.User.Identity.AuthenticationType != "NTLM" || HttpContext.Current.User.Identity.AuthenticationType != "Negotiate"))
                 return Globals.UpgradeStatus.Authenticated;
@@ -214,5 +226,75 @@ namespace BugNET.BLL
         {
             return GetUpgradeStatus() != Globals.UpgradeStatus.Install;
         }
+
+        #region Load & Save Config
+         /// <summary>
+        /// Loads the config.
+        /// </summary>
+        /// <returns></returns>
+        public static XmlDocument LoadConfig()
+        {
+            //open the config file
+            var xmlDoc = new XmlDocument();
+            xmlDoc.Load(ApplicationMapPath + "web.config");
+
+            if (!String.IsNullOrEmpty(xmlDoc.DocumentElement.GetAttribute("xmlns")))
+            {
+                //remove namespace
+                string strDoc = xmlDoc.InnerXml.Replace("xmlns=\"http://schemas.microsoft.com/.NetConfiguration/v2.0\"", "");
+                xmlDoc.LoadXml(strDoc);
+            }
+            return xmlDoc;
+        }
+
+        /// <summary>
+        /// Saves the config.
+        /// </summary>
+        /// <param name="xmlDoc">The XML doc.</param>
+        /// <returns></returns>
+        public static string SaveConfig(XmlDocument xmlDoc)
+        {
+            try
+            {
+                string strFilePath = ApplicationMapPath + "web.config";
+                FileAttributes objFileAttributes = FileAttributes.Normal;
+                if (File.Exists(strFilePath))
+                {
+					//save current file attributes
+                    objFileAttributes = File.GetAttributes(strFilePath);
+                    //change to normal ( in case it is flagged as read-only )
+                    File.SetAttributes(strFilePath, FileAttributes.Normal);
+                }
+                //save the config file
+                var writer = new XmlTextWriter(strFilePath, null) { Formatting = Formatting.Indented };
+                xmlDoc.WriteTo(writer);
+                writer.Flush();
+                writer.Close();
+                //reset file attributes
+                File.SetAttributes(strFilePath, objFileAttributes);
+                return "";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        /// <summary>
+        /// Gets the application map path.
+        /// </summary>
+        /// <value>The application map path.</value>
+        public static string ApplicationMapPath
+        {
+            get
+            {
+                var context = HttpContext.Current;
+                return context.Server.MapPath("~");
+            }
+        }
+    #endregion
+
+       
+
     }
 }
