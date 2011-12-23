@@ -188,8 +188,12 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static Globals.UpgradeStatus GetUpgradeStatus()
         {
-            if (string.IsNullOrEmpty(DataProviderManager.Provider.GetDatabaseVersion()))
+            string version = DataProviderManager.Provider.GetDatabaseVersion();
+
+            if (string.IsNullOrEmpty(version))
                 return Globals.UpgradeStatus.Install;
+            else if(version.StartsWith("ERROR"))
+                return Globals.UpgradeStatus.None;
 
             // Now check if the user is authenticated.
             if (HttpContext.Current != null && HttpContext.Current.User != null && HttpContext.Current.User.Identity.IsAuthenticated && (HttpContext.Current.User.Identity.AuthenticationType != "NTLM" || HttpContext.Current.User.Identity.AuthenticationType != "Negotiate"))

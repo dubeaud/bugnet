@@ -1,6 +1,7 @@
 using System;
 using System.Web;
 using BugNET.BLL;
+using BugNET.Common;
 using log4net;
 
 namespace BugNET
@@ -114,6 +115,21 @@ namespace BugNET
                 //First check if we are upgrading/installing
                 if (HttpContext.Current.Request.Url.LocalPath.ToLower().EndsWith("install.aspx"))
                     return;
+
+                try
+                {
+                    switch (UpgradeManager.GetUpgradeStatus())
+                    {
+                        case Globals.UpgradeStatus.Install:
+                        case Globals.UpgradeStatus.Upgrade:
+                            HttpContext.Current.Response.Redirect("~/Install/Install.aspx");
+                            break;
+                    }
+                }
+                catch
+                {
+                  // could be just an error connecting to the database.
+                }
 
                 //load the host settings into the application cache
                 HostSettingManager.GetHostSettings();
