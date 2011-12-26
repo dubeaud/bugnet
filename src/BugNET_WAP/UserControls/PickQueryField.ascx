@@ -38,6 +38,7 @@
 	<td>
 		<asp:DropDownList id="dropComparisonOperator" Runat="Server">
 			<asp:ListItem Text="EQUALS" Value="=" />
+            <asp:ListItem Text="NOT EQUALS" Value="<>" />
 			<asp:ListItem Text="LIKE" Value="LIKE" />
 			<asp:ListItem Text="GREATER THAN" Value="&gt;" />
 			<asp:ListItem Text="LESS THAN" Value="&lt;" />
