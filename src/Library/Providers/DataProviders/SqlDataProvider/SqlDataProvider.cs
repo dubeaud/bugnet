@@ -2763,6 +2763,10 @@ namespace BugNET.Providers.DataProviders
                         {
                             commandBuilder.AppendFormat(" {0} {1} {2} NULL", qc.BooleanOperator, qc.FieldName, qc.ComparisonOperator);
                         }
+                        else if(qc.DataType == SqlDbType.DateTime)
+                        {
+                            commandBuilder.AppendFormat(" {0} CONVERT(date, {1}) {2} @p{3}", qc.BooleanOperator, qc.FieldName, qc.ComparisonOperator, i);
+                        }
                         else
                         {
                             commandBuilder.AppendFormat(" {0} {1} {2} @p{3}", qc.BooleanOperator, qc.FieldName, qc.ComparisonOperator, i);
