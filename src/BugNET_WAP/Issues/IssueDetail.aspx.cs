@@ -496,6 +496,17 @@ namespace BugNET.Issues
                     }
                 }
 
+                // add all users subscribed at the project level to the issue level
+                IEnumerable<ProjectNotification> subscriptions = ProjectNotificationManager.GetByProjectId(ProjectId);
+                foreach (ProjectNotification sub in subscriptions)
+                {
+                    IssueNotificationManager.SaveOrUpdate(new IssueNotification()
+                    {
+                        IssueId = IssueId,
+                        NotificationUsername = sub.NotificationUsername
+                    });
+                }
+
                 //send issue notifications
                 IssueNotificationManager.SendIssueAddNotifications(IssueId);
             }
