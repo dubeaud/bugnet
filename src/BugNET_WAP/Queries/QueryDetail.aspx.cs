@@ -338,6 +338,9 @@ namespace BugNET.Queries
                     ctlDisplayIssues.DataSource = colIssues;
                     Results.Visible = true;
                     ctlDisplayIssues.DataBind();
+
+                    //Add Custom Control data
+                    ctlDisplayIssues.InsertCustomFieldData();
                 }
                 catch
                 {

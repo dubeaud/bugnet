@@ -177,14 +177,12 @@ namespace BugNET.Queries
 				ctlDisplayIssues.DataSource = colIssues;
 				ctlDisplayIssues.RssUrl = string.Format("~/Rss.aspx?pid={1}&q={0}&channel=13",dropQueries.SelectedValue,ProjectId);
 
-				// Moved by SMOSS
-				// 8-Apr-2010
-				// 
 				// Only bind results if there is no error.                
 				ctlDisplayIssues.DataBind();
-				// The error message has been moved out of the "Results" panel and into the 
-				// content area.
-				// 
+
+                //Add Custom Control data
+                ctlDisplayIssues.InsertCustomFieldData();
+
 				Results.Visible = true;
 			} 
 			catch (Exception ex)
