@@ -99,7 +99,7 @@ namespace BugNET.UserControls
         /// <summary>
         /// Binds a data source to the invoked server control and all its child controls.
         /// </summary>
-        public override void DataBind() 
+        public void DataBind() 
 		{
 			if(this.DataSource.Count > 0)
 			{
@@ -222,6 +222,8 @@ namespace BugNET.UserControls
                 gvIssues.DataSource = this.DataSource;
                 gvIssues.DataBind();
 
+                InsertCustomFieldData();
+
 			}
             else
             {
@@ -238,7 +240,7 @@ namespace BugNET.UserControls
         /// <summary>
         /// Retrieves and inserts custom field values
         /// </summary>
-        public void InsertCustomFieldData()
+        private void InsertCustomFieldData()
         {
             //if there exist custom fields
             if (gvIssues.Columns.Count > FixedColumns)

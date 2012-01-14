@@ -180,9 +180,6 @@ namespace BugNET.Queries
 				// Only bind results if there is no error.                
 				ctlDisplayIssues.DataBind();
 
-                //Add Custom Control data
-                ctlDisplayIssues.InsertCustomFieldData();
-
 				Results.Visible = true;
 			} 
 			catch (Exception ex)

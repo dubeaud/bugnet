@@ -443,9 +443,6 @@ namespace BugNET.Issues
                    colIssues.Sort(new IssueComparer("LastUpdate", true));
 
                ctlDisplayIssues.DataBind();
-
-               //Add Custom Control data
-               ctlDisplayIssues.InsertCustomFieldData();
            }
         }
 
