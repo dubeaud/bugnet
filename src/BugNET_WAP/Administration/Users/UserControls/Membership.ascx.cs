@@ -123,9 +123,20 @@ namespace BugNET.Administration.Users.UserControls
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void UnLockUserClick(object sender, EventArgs e)
         {
+            GetMembershipData(UserId);
+
             if (MembershipData != null)
             {
-                MembershipData.UnlockUser();
+                try
+                {
+                    MembershipData.UnlockUser();
+                    ActionMessage.ShowSuccessMessage(GetLocalResourceObject("UpdateUserMessage").ToString());
+                    BindData();
+                }
+                catch
+                {
+                    ActionMessage.ShowErrorMessage(LoggingManager.GetErrorMessageResource("UpdateUserError"));
+                }
             }
         }
 
