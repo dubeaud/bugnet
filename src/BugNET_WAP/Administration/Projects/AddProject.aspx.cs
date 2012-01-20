@@ -103,7 +103,7 @@ namespace BugNET.Administration.Projects
         private void btnCancel_Click(object sender, EventArgs e)
         {
             //delete any project that has already been created to prevent bad project data.
-            if (ProjectId != -1)
+            if (ProjectId != 0)
             {
                 if (!ProjectManager.Delete(ProjectId))
                     Log.Error("Error Deleting Project");
