@@ -42,6 +42,46 @@ WHERE
 	IssueId = @IssueId
 ORDER BY
 	DisplayName
+GO
+
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectMilestones_CanDeleteMilestone]    Script Date: 02/05/2012 15:45:11 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[BugNet_ProjectMilestones_CanDeleteMilestone]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [dbo].[BugNet_ProjectMilestones_CanDeleteMilestone]
+GO
+
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectMilestones_CanDeleteMilestone]    Script Date: 02/05/2012 15:45:11 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[BugNet_ProjectMilestones_CanDeleteMilestone]
+	@MilestoneId INT
+AS
+
+SET NOCOUNT ON
+
+DECLARE
+	@ProjectId INT,
+	@Count INT
+	
+SET @ProjectId = (SELECT ProjectId FROM BugNet_ProjectMilestones WHERE MilestoneId = @MilestoneId)
+
+SET @Count = 
+(
+	SELECT COUNT(*)
+	FROM BugNet_Issues
+	WHERE ((IssueMilestoneId = @MilestoneId) OR (IssueAffectedMilestoneId = @MilestoneId))
+	AND ProjectId = @ProjectId
+)
+
+IF(@Count = 0)
+	RETURN 1
+ELSE
+	RETURN 0
+
+GO
 
 COMMIT
 
