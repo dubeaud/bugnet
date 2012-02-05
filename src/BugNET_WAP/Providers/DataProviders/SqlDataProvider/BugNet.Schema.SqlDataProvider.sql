@@ -4381,11 +4381,6 @@ CREATE PROCEDURE [dbo].[BugNet_IssueNotification_GetIssueNotificationsByIssueId]
 	@IssueId Int
 AS
 
-/* This will return multiple results if the user is 
-subscribed at the project level and issue level*/
-declare @tmpTable table (IssueNotificationId int, IssueId int,NotificationUserId uniqueidentifier, NotificationUsername nvarchar(50), NotificationDisplayName nvarchar(50), NotificationEmail nvarchar(50))
-INSERT @tmpTable
-
 SELECT 
 	IssueNotificationId,
 	IssueId,
@@ -4402,31 +4397,6 @@ WHERE
 	IssueId = @IssueId
 ORDER BY
 	DisplayName
-
--- get all people on the project who want to be notified
-
-INSERT @tmpTable
-SELECT
-	ProjectNotificationId,
-	IssueId = @IssueId,
-	u.UserId NotificationUserId,
-	u.UserName NotificationUsername,
-	IsNull(DisplayName,'') NotificationDisplayName,
-	m.Email NotificationEmail
-FROM
-	BugNet_ProjectNotifications p,
-	BugNet_Issues i,
-	aspnet_Users u,
-	aspnet_Membership m ,
-	BugNet_UserProfiles up
-WHERE
-	IssueId = @IssueId
-	AND p.ProjectId = i.ProjectId
-	AND u.UserId = p.UserId
-	AND u.UserId = m.UserId
-	AND u.UserName = up.UserName
-
-SELECT DISTINCT IssueId,NotificationUserId, NotificationUsername, NotificationDisplayName, NotificationEmail FROM @tmpTable
 GO
 /****** Object:  StoredProcedure [dbo].[BugNet_IssueNotification_DeleteIssueNotification]    Script Date: 12/17/2011 15:26:21 ******/
 SET ANSI_NULLS ON
