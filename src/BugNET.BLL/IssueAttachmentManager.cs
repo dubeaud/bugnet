@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using BugNET.Common;
 using BugNET.DAL;
@@ -12,9 +16,28 @@ namespace BugNET.BLL
 {
     public static class IssueAttachmentManager
     {
-        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         #region Instance Methods
+
+        /// <summary>
+        /// Strips the unique guid from the file system version of the file
+        /// </summary>
+        /// <param name="fileName">The file name</param>
+        /// <returns></returns>
+        public static string StripGuidFromFileName(string fileName)
+        {
+            var guidLength = Globals.EMPTY_GUID.Length;
+            var guidEnd = fileName.LastIndexOf(".");
+            var guidStart = guidEnd - guidLength;
+            if (guidStart > -1)
+            {
+                fileName = String.Concat(fileName.Substring(0, guidStart), fileName.Substring(guidEnd + 1));
+            }
+
+            return fileName;
+        }
+
         /// <summary>
         /// Saves this instance.
         /// </summary>
@@ -24,9 +47,9 @@ namespace BugNET.BLL
         {
             if (entity == null) throw new ArgumentNullException("entity");
             if (entity.IssueId <= Globals.NEW_ID) throw (new ArgumentException("Cannot save issue attachment, the issue id is invalid"));
-            if (string.IsNullOrEmpty(entity.FileName)) throw (new ArgumentException("The attachment file name cannot be empty or null"));
+            if (String.IsNullOrEmpty(entity.FileName)) throw (new ArgumentException("The attachment file name cannot be empty or null"));
 
-            var invalidReason = string.Empty;
+            var invalidReason = String.Empty;
 
             if (!IsValidFile(entity.FileName, out invalidReason))
             {
@@ -48,8 +71,8 @@ namespace BugNET.BLL
                         using (var ms = new MemoryStream(entity.Attachment, 0, entity.Attachment.Length))
                         {
                             ms.Write(entity.Attachment, 0, entity.Attachment.Length);
-                            System.Drawing.Image img = System.Drawing.Image.FromStream(ms);
-                            img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                            Image img = Image.FromStream(ms);
+                            img.Save(ms, ImageFormat.Png);
                             ms.Seek(0, SeekOrigin.Begin);
                             entity.Attachment = ms.ToArray();
 
@@ -76,7 +99,7 @@ namespace BugNET.BLL
                     try
                     {
                         if (projectPath.Length == 0)
-                            throw new ApplicationException(string.Format(LoggingManager.GetErrorMessageResource("UploadPathNotDefined"), p.Name));
+                            throw new ApplicationException(String.Format(LoggingManager.GetErrorMessageResource("UploadPathNotDefined"), p.Name));
 
                         var attachmentGuid = Guid.NewGuid();
                         var attachmentBytes = entity.Attachment;
@@ -108,7 +131,7 @@ namespace BugNET.BLL
                     catch (DirectoryNotFoundException ex)
                     {
                         if (Log.IsErrorEnabled) 
-                            Log.Error(string.Format(LoggingManager.GetErrorMessageResource("UploadPathNotFound"), projectPath), ex);
+                            Log.Error(String.Format(LoggingManager.GetErrorMessageResource("UploadPathNotFound"), projectPath), ex);
                         throw;
                     }
                     catch (Exception ex)
@@ -194,7 +217,7 @@ namespace BugNET.BLL
                     //delete IssueAttachment from file system.
                     try
                     {
-                        File.Delete(HttpContext.Current.Server.MapPath(string.Format("~{2}{0}\\{1}", p.UploadPath, att.FileName, Globals.UPLOAD_FOLDER)));
+                        File.Delete(HttpContext.Current.Server.MapPath(String.Format("~{2}{0}\\{1}", p.UploadPath, att.FileName, Globals.UPLOAD_FOLDER)));
                     }
                     catch (Exception ex)
                     {
@@ -203,7 +226,7 @@ namespace BugNET.BLL
                             MDC.Set("user", HttpContext.Current.User.Identity.Name);
 
                         if (Log.IsErrorEnabled)
-                            Log.Error(String.Format("Error Deleting IssueAttachment - {0}", string.Format("{0}\\{1}", p.UploadPath, att.FileName)), ex);
+                            Log.Error(String.Format("Error Deleting IssueAttachment - {0}", String.Format("{0}\\{1}", p.UploadPath, att.FileName)), ex);
 
                         throw new ApplicationException(LoggingManager.GetErrorMessageResource("AttachmentDeleteError"), ex);
                     }
@@ -227,7 +250,7 @@ namespace BugNET.BLL
             if (issueId < 0)
                 throw new ArgumentOutOfRangeException("issueId", "must be bigger than 0");
 
-            queryClauses.Add(new QueryClause("AND", "IssueId", "=", issueId.ToString(), System.Data.SqlDbType.Int, false));
+            queryClauses.Add(new QueryClause("AND", "IssueId", "=", issueId.ToString(), SqlDbType.Int, false));
 
             return PerformQuery(queryClauses);
         }
@@ -262,17 +285,17 @@ namespace BugNET.BLL
         /// <returns>True if the file is valid, otherwise false</returns>
         public static bool IsValidFile(string fileName, out string inValidReason)
         {
-            inValidReason = string.Empty;
+            inValidReason = String.Empty;
             fileName = fileName.Trim();
 
             // empty file name
-            if (string.IsNullOrEmpty(fileName))
+            if (String.IsNullOrEmpty(fileName))
             {
                 inValidReason = LoggingManager.GetErrorMessageResource("InvalidFileName");
                 return false;
             }
 
-            var allowedFileTypes = HostSettingManager.Get(HostSettingNames.AllowedFileExtensions, string.Empty).Split(';');
+            var allowedFileTypes = HostSettingManager.Get(HostSettingNames.AllowedFileExtensions, String.Empty).Split(';');
             var fileExt = Path.GetExtension(fileName);
             var fileOk = false;
 
@@ -291,14 +314,14 @@ namespace BugNET.BLL
             // valid file type
             if (!fileOk)
             {
-                inValidReason = string.Format(LoggingManager.GetErrorMessageResource("InvalidFileType"), fileName);
+                inValidReason = String.Format(LoggingManager.GetErrorMessageResource("InvalidFileType"), fileName);
                 return false;
             }
 
             // illegal filename characters
             if (Path.GetInvalidFileNameChars().Any(invalidFileNameChar => fileName.Contains(invalidFileNameChar)))
             {
-                inValidReason = string.Format(LoggingManager.GetErrorMessageResource("InvalidFileName"), fileName);
+                inValidReason = String.Format(LoggingManager.GetErrorMessageResource("InvalidFileName"), fileName);
                 return false;
             }
 
