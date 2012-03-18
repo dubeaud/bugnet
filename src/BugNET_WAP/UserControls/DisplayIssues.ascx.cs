@@ -30,10 +30,10 @@ namespace BugNET.UserControls
         /// </summary>
         private string[] _arrIssueColumns = new string[] { "4", "5", "6", "7", "8", "9", "10","11","12","13","14","15","16","17","18","19","20","21", "22"};
 
-         //store amount of fixed search columns due to bad string above
-         public const int FixedColumns = 22;
-         //stores total amount of columns (fixed and custom)
-         private int nrColumns = FixedColumns;
+        //store amount of fixed search columns due to bad string above
+        public const int FixedColumns = 22;
+        //stores total amount of columns (fixed and custom)
+        //private int nrColumns = FixedColumns;
 
         /// <summary>
         /// Handles the Init event of the Page control.
@@ -121,6 +121,7 @@ namespace BugNET.UserControls
                 {
                     List<CustomField> customFields = CustomFieldManager.GetByProjectId(pId);
 
+                    int nrColumns = FixedColumns;
                     //checks if its initial load to add custom controls and checkboxes
                     if (gvIssues.Columns.Count <= nrColumns + 1)
                     {
