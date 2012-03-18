@@ -182,15 +182,17 @@ namespace BugNET.UserControls
                         lstIssueColumns.Items.Remove(lstIssueColumns.Items.FindByValue("4"));
                     }
 
-                    if ((!Page.User.Identity.IsAuthenticated) || (UserManager.HasPermission(projectId, Globals.Permission.EditIssue.ToString()) == false) ||
-                        (UserManager.IsInRole(projectId, Globals.DefaultRoles[0]) == false))
+
+                    if (Page.User.Identity.IsAuthenticated && UserManager.HasPermission(projectId, Globals.Permission.EditIssue.ToString()))
+                    {
+                        LeftButtonContainerPanel.Visible = true;
+                    }
+                    else
                     {
                         //hide selection column for unauthenticated users 
                         gvIssues.Columns[0].Visible = false;
                         LeftButtonContainerPanel.Visible = false;
                     }
-                    else
-                        LeftButtonContainerPanel.Visible = true;
 
                     CategoryTree categories = new CategoryTree();
                     dropCategory.DataSource = categories.GetCategoryTreeByProjectId(projectId);
