@@ -103,6 +103,9 @@ namespace BugNET
                 case 13:
                     QueryFeed(ref myFeed);
                     break;
+                case 14: //Missing in build 0.9.152
+                    OpenIssueFeed(ref myFeed); //add new method for open issues
+                    break;
             }
 
             // Return the feed's XML content as the response
@@ -542,6 +545,23 @@ namespace BugNET
             feed.Title = TextSyndicationContent.CreatePlaintextContent(string.Format(GetLocalResourceObject("AssigneeTitle").ToString(), p.Name));
             feed.Description = TextSyndicationContent.CreatePlaintextContent(string.Format(GetLocalResourceObject("AssigneeDescription").ToString(), p.Name));
             feed.Items = feedItems;      
+        }
+
+        /// <summary>
+        /// Gets feed for open issues.
+        /// </summary>
+        /// <param name="feed">SyndicationFeed</param>
+        /// <remarks>Missing in build 0.9.152</remarks>
+        private void OpenIssueFeed(ref SyndicationFeed feed)
+        {
+             List<Issue> openissueList = IssueManager.GetOpenIssues(ProjectId);
+             List<SyndicationItem> feedItems = CreateSyndicationItemsFromIssueList(openissueList);
+             Project p = ProjectManager.GetById(ProjectId);
+             feed.Title = TextSyndicationContent.CreatePlaintextContent(string.Format(GetLocalResourceObject("OpenIssuesTitle").ToString(), p.Name));
+              
+            feed.Description = TextSyndicationContent.CreatePlaintextContent(string.Format(GetLocalResourceObject("OpenIssuesDescription").ToString(), p.Name));
+              
+            feed.Items = feedItems;
         }
         #endregion
 
