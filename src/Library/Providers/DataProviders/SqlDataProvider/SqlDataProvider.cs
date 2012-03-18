@@ -2765,7 +2765,7 @@ namespace BugNET.Providers.DataProviders
                         }
                         else if(qc.DataType == SqlDbType.DateTime)
                         {
-                            commandBuilder.AppendFormat(" {0} CONVERT(date, {1}) {2} @p{3}", qc.BooleanOperator, qc.FieldName, qc.ComparisonOperator, i);
+                            commandBuilder.AppendFormat(" {0} datediff(day, {1}, @p{3}) {2} 0", qc.BooleanOperator, qc.FieldName, qc.ComparisonOperator, i);
                         }
                         else
                         {
