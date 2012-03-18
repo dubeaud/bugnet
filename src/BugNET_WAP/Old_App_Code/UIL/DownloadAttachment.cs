@@ -74,6 +74,8 @@ namespace BugNET.UserInterfaceLayer
                 // Get the attachment
                 var attachmentId = context.Request.QueryString.Get("id", Globals.NEW_ID);
                 var attachment = IssueAttachmentManager.GetById(attachmentId);
+                var cleanFileName = IssueAttachmentManager.StripGuidFromFileName(attachment.FileName);
+                var fileName = attachment.FileName;
 
                 if (attachment.Attachment != null)
                 {
@@ -81,15 +83,16 @@ namespace BugNET.UserInterfaceLayer
                     context.Server.ScriptTimeout = 600;
                     context.Response.Buffer = true;
                     context.Response.Clear();
+
                     if (attachment.ContentType.ToLower().StartsWith("image/"))
                     {
                         context.Response.ContentType = attachment.ContentType;
-                        context.Response.AddHeader("Content-Disposition", "inline; filename=\"" + attachment.FileName + "\";");
+                        context.Response.AddHeader("Content-Disposition", string.Format("inline; filename=\"{0}\";", cleanFileName));
                     }
                     else
                     {
                         context.Response.ContentType = "application/octet-stream";
-                        context.Response.AddHeader("Content-Disposition", "attachment; filename=\"" + attachment.FileName + "\";");
+                        context.Response.AddHeader("Content-Disposition", string.Format("attachment; filename=\"{0}\";", cleanFileName));
                     }
                     context.Response.AddHeader("Content-Length", attachment.Attachment.Length.ToString());
                     context.Response.BinaryWrite(attachment.Attachment);
@@ -98,8 +101,6 @@ namespace BugNET.UserInterfaceLayer
                 {
 
                     var p = ProjectManager.GetById(IssueManager.GetById(attachment.IssueId).ProjectId);
-
-                    var fileName = attachment.FileName;
                     var projectPath = p.UploadPath;
 
                     //append a trailing slash if it doesn't exist
@@ -112,8 +113,8 @@ namespace BugNET.UserInterfaceLayer
                     {
                         context.Response.Clear();
                         context.Response.ContentType = attachment.ContentType;
-                        if (attachment.ContentType.ToLower().StartsWith("image/")) context.Response.AddHeader("Content-Disposition", "inline; filename=\"" + attachment.FileName + "\";");
-                        else context.Response.AddHeader("Content-Disposition", "attachment; filename=\"" + attachment.FileName + "\";");
+                        if (attachment.ContentType.ToLower().StartsWith("image/")) context.Response.AddHeader("Content-Disposition", string.Format("inline; filename=\"{0}\";", cleanFileName));
+                        else context.Response.AddHeader("Content-Disposition", string.Format("attachment; filename=\"{0}\";", cleanFileName));
                         context.Response.WriteFile(path);
                     }
                     else

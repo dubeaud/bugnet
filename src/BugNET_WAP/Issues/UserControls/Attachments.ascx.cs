@@ -19,18 +19,6 @@ namespace BugNET.Issues.UserControls
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(Attachments));
 
-        static string CleanFileName(string fileName)
-        {
-            var guidLength = Globals.EMPTY_GUID.Length;
-            var guidEnd = fileName.LastIndexOf(".");
-            var guidStart = guidEnd - guidLength;
-            if (guidStart > -1)
-            {
-                fileName = string.Concat(fileName.Substring(0, guidStart), fileName.Substring(guidEnd + 1));
-            }
-            return fileName;
-        }
-
         /// <summary>
         /// Handles the Load event of the Page control.
         /// </summary>
@@ -199,7 +187,7 @@ namespace BugNET.Issues.UserControls
 
             if (lnkAttachment != null)
             {
-                lnkAttachment.InnerText = CleanFileName(currentAttachment.FileName);
+                lnkAttachment.InnerText = IssueAttachmentManager.StripGuidFromFileName(currentAttachment.FileName);
                 lnkAttachment.HRef = string.Concat("DownloadAttachment.axd?id=", currentAttachment.Id.ToString());
             }
 
@@ -255,6 +243,5 @@ namespace BugNET.Issues.UserControls
             }
             BindAttachments();
         }
-
     }
 }
