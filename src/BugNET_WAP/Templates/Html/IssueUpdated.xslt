@@ -52,7 +52,7 @@
             </a>
         </p>
         <p style="text-align:center;font-size:8pt;padding:5px;">
-            If you no longer wish to receive notifications, please visit <a href="{HostSetting_DefaultUrl}UserProfile.aspx" target="_blank">your profile</a> and change your notifications options.
+            If you no longer wish to receive notifications, please visit <a href="{HostSetting_DefaultUrl}Account/UserProfile.aspx" target="_blank">your profile</a> and change your notifications options.
         </p>
     </xsl:template>
 </xsl:stylesheet>

@@ -28,6 +28,6 @@
       <xsl:value-of select="HostSetting_DefaultUrl" />Issues/IssueDetail.aspx?id=<xsl:value-of select="Issue/Id" />
       <xsl:text>&#10;</xsl:text>
       <xsl:text>&#10;</xsl:text>
-      If you no longer wish to receive notifications, please visit <xsl:value-of select="HostSetting_DefaultUrl" />UserProfile.aspx and change your notifications options.
+      If you no longer wish to receive notifications, please visit <xsl:value-of select="HostSetting_DefaultUrl" />Account/UserProfile.aspx and change your notifications options.
   </xsl:template>
 </xsl:stylesheet>
