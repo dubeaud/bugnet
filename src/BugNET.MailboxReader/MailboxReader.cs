@@ -231,7 +231,7 @@ namespace BugNET.MailboxReader
 
                                 //if delete all messages AND the message was processed delete the message from the server.
                                 if (_DeleteAllMessages && messageWasProcessed)
-                                    mailClient.DeleteEmail(i);
+                                    mailClient.DeleteEmail(messageIds[i]);
                             }
                             else
                             {
