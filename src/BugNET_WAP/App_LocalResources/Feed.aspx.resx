@@ -198,4 +198,10 @@
   <data name="SavedQueryTitle" xml:space="preserve">
     <value>{0} - Issues</value>
   </data>
+  <data name="OpenIssuesTitle" xml:space="preserve">
+    <value>{0} open issues</value>
+  </data>
+  <data name="OpenIssuesDescription" xml:space="preserve">
+    <value>A syndication of open issues for {0}</value>
+  </data>
 </root>
