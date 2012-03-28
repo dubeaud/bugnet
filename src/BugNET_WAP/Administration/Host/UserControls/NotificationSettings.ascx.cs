@@ -48,11 +48,16 @@ namespace BugNET.Administration.Host.UserControls
                 currentCheckBox.Selected = true;
             }
 
-            AdminNotificationUser.DataSource = UserManager.GetAllUsers();
+            var users = UserManager.GetAllUsers();
+
+            AdminNotificationUser.DataSource = users;
             AdminNotificationUser.DataTextField = "DisplayName";
             AdminNotificationUser.DataValueField = "UserName";
             AdminNotificationUser.DataBind();
-            AdminNotificationUser.SelectedValue = HostSettingManager.Get(HostSettingNames.AdminNotificationUsername);
+
+            var adminNotifyUsername = HostSettingManager.Get(HostSettingNames.AdminNotificationUsername);
+            if(users.Where(u=>u.UserName == adminNotifyUsername).SingleOrDefault() != null)
+                AdminNotificationUser.SelectedValue = adminNotifyUsername;
         }
 
         #endregion
