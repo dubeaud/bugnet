@@ -89,10 +89,6 @@
       <Project>{5A0AE67B-1F8C-4A6D-A02B-B57BB219288F}</Project>
       <Name>BugNET.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BugNET.Services\BugNET.Services.csproj">
-      <Project>{171D523B-6F5D-4C45-B415-EC4CC32C4D91}</Project>
-      <Name>BugNET.Services</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

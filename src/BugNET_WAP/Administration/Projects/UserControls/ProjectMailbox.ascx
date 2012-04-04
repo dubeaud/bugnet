@@ -19,12 +19,12 @@
                         <ItemStyle HorizontalAlign="Right" Width="45" Wrap="false" />
                         <ItemTemplate>
                             <asp:ImageButton ID="cmdEdit" ToolTip="<%$ Resources:SharedResources, Edit %>" AlternateText="<%$ Resources:SharedResources, Edit %>"
-                                CssClass="icon" ImageUrl="~/images/pencil.gif" BorderWidth="0px" CommandName="Edit" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
+                                CssClass="icon" ImageUrl="~/images/pencil.gif" BorderWidth="0px" CommandName="Edit" CausesValidation="false" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
                                 runat="server" />
                         </ItemTemplate>
                         <EditItemTemplate>
                             <asp:ImageButton ID="cmdUpdate" ToolTip="<%$ Resources:SharedResources, Update %>" AlternateText="<%$ Resources:SharedResources, Update %>"
-                                CssClass="icon" ImageUrl="~/images/disk.gif" BorderWidth="0px" CommandName="Update" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
+                                CssClass="icon" ImageUrl="~/images/disk.gif" BorderWidth="0px" ValidationGroup="Update" CommandName="Update" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
                                 runat="server" />&nbsp;
                             <asp:ImageButton ID="cmdCancel" ToolTip="<%$ Resources:SharedResources, Cancel %>" AlternateText="<%$ Resources:SharedResources, Cancel %>"
                                 CssClass="icon" ImageUrl="~/images/cancel.gif" BorderWidth="0px" CommandName="Cancel" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
@@ -81,9 +81,9 @@
                     <li>
                         <asp:Label ID="EmailAddressLabel" runat="server" AssociatedControlID="txtMailbox" Text="Email Address:" meta:resourcekey="EmailAddressLabel" />
                         <asp:TextBox ID="txtMailbox" runat="server" EnableViewState="false"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="reqVal" Display="dynamic" ControlToValidate="txtMailBox" Text=" (required)" runat="Server" />
+                        <asp:RequiredFieldValidator ID="reqVal" Display="dynamic" ControlToValidate="txtMailBox" CssClass="req"  Text=" (required)" runat="Server" />
                         <asp:RegularExpressionValidator ID="regexEmailValid" runat="server" ValidationExpression="\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"
-                            ControlToValidate="txtMailbox" ErrorMessage="Invalid Email Format" Text="Invalid Email Format" />
+                            ControlToValidate="txtMailbox" ErrorMessage="Invalid Email Format"  CssClass="req"  Text="Invalid Email Format" />
                     </li>
                     <li>
                         <asp:Label ID="IssueAssignedUserLabel" runat="server" AssociatedControlID="IssueAssignedUser" Text="Assign To:" meta:resourcekey="IssueAssignedUserLabel" />
