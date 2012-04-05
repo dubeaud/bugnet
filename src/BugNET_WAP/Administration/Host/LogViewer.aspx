@@ -104,7 +104,7 @@
     </asp:UpdatePanel>
     <div style="padding:10px 0 10px 0;">
         <asp:imagebutton runat="server" id="save" CssClass="icon" OnClick="cmdClearLog_Click"  ImageUrl="~/Images/page_white_delete.gif" />
-        <asp:LinkButton ID="cmdClearLog" OnClick="cmdClearLog_Click" runat="server" Text="Clear Log" />
+        <asp:LinkButton ID="cmdClearLog" OnClick="cmdClearLog_Click" runat="server" Text="[Clear Log]" meta:resourcekey="cmdClearLog" />
     </div>
 </asp:Content>
 

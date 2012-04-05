@@ -153,4 +153,7 @@
   <data name="Warning" xml:space="preserve">
     <value>Warning</value>
   </data>
+  <data name="cmdClearLog.Text" xml:space="preserve">
+    <value>Clear Log</value>
+  </data>
 </root>

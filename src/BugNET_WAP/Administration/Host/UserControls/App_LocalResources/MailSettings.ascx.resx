@@ -138,6 +138,12 @@
   <data name="HostEmail" xml:space="preserve">
     <value>Host Email</value>
   </data>
+    <data name="lblSMTPDomain.Text" xml:space="preserve">
+    <value>Domain</value>
+  </data>
+      <data name="lblSSL.Text" xml:space="preserve">
+    <value>SSL</value>
+  </data>
   <data name="MailSettings" xml:space="preserve">
     <value>Mail / SMTP</value>
   </data>
@@ -147,10 +153,25 @@
   <data name="Port" xml:space="preserve">
     <value>Port</value>
   </data>
+    <data name="regexEmailValid.ErrorMessage" xml:space="preserve">
+    <value>Invalid Email Format</value>
+  </data>
+      <data name="regexEmailValid.Text" xml:space="preserve">
+    <value>Invalid Email Format</value>
+  </data>
   <data name="SeeErrorLog" xml:space="preserve">
     <value>&lt;br/&gt; {0}.  Please see the error log for more details.</value>
   </data>
   <data name="Server" xml:space="preserve">
     <value>Server</value>
+  </data>
+    <data name="SMTPEmailFormat_HTML.Text" xml:space="preserve">
+    <value>HTML</value>
+  </data>
+      <data name="SMTPEmailFormat_Text.Text" xml:space="preserve">
+   <value>Text</value>
+  </data>
+      <data name="TestEmailSettings.Text" xml:space="preserve">
+    <value>Test</value>
   </data>
 </root>

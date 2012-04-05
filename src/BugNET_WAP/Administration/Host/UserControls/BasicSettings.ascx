@@ -4,7 +4,7 @@
  <div class="fieldgroup noborder">
      <ol>
         <li>
-            <asp:Label ID="label28" runat="server" AssociatedControlID="ApplicationTitle"  Text="<%$ Resources:Title %>" />
+            <asp:Label ID="lblApplicationTitle" runat="server" AssociatedControlID="ApplicationTitle"  Text="<%$ Resources:Title %>" />
             <asp:TextBox ID="ApplicationTitle" runat="Server" MaxLength="500"></asp:TextBox>
         </li>
         <li>
@@ -16,7 +16,7 @@
             <asp:TextBox id="DefaultUrl" Runat="Server" Width="300px" />
         </li>
         <li>
-            <asp:Label ID="label3" runat="server" AssociatedControlID="EnableGravatar"  Text="Enable Gravatar" />
+            <asp:Label ID="lblEnableGravatar" runat="server" AssociatedControlID="EnableGravatar" Text="[Enable Gravatar]" meta:resourcekey="lblEnableGravatar" />
             <asp:CheckBox  id="EnableGravatar"  Runat="Server" />
         </li>
      </ol>

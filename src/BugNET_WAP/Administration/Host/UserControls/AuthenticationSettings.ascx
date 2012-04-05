@@ -10,9 +10,9 @@
                     <div class="labelgroup">
                         <asp:RadioButtonList RepeatDirection="Horizontal"  OnSelectedIndexChanged="UserAccountSource_SelectedIndexChanged"
                             AutoPostBack="true" TextAlign="Left" ID="UserAccountSource" runat="server">
-                            <asp:ListItem id="option3" runat="server" Value="None"  />
-                            <asp:ListItem id="option1" runat="server" Value="WindowsSAM" />
-                            <asp:ListItem id="option2" runat="server" Value="ActiveDirectory" />
+                                <asp:ListItem id="option3" runat="server" Value="None" meta:resourceKey="UserAccountSource_None" />
+                                <asp:ListItem id="option1" runat="server" Value="WindowsSAM" meta:resourceKey="UserAccountSource_WindowsSAM"/>
+                                <asp:ListItem id="option2" runat="server" Value="ActiveDirectory" meta:resourceKey="UserAccountSource_AD"/>
                         </asp:RadioButtonList>
                     </div>
                 </li>

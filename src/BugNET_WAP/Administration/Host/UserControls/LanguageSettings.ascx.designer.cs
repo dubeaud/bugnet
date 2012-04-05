@@ -31,13 +31,13 @@ namespace BugNET.Administration.Host.UserControls {
         protected global::BugNET.UserControls.Message Message1;
         
         /// <summary>
-        /// label1 control.
+        /// lblApplicationDefault control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label label1;
+        protected global::System.Web.UI.WebControls.Label lblApplicationDefault;
         
         /// <summary>
         /// lblDefaultLanguage control.

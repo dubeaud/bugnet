@@ -124,7 +124,7 @@
     <value>Could not add role</value>
   </data>
   <data name="AttachmentDeleteError" xml:space="preserve">
-    <value>An error has occured deleing an IssueAttachment.</value>
+    <value>An error has occured deleting an IssueAttachment</value>
   </data>
   <data name="CloneProjectError" xml:space="preserve">
     <value>Could not clone project</value>

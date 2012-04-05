@@ -441,4 +441,13 @@
   <data name="NotAvailableAbbr" xml:space="preserve">
     <value>N/A</value>
   </data>
+      <data name="GoTo" xml:space="preserve">
+    <value>Go to:</value>
+  </data>
+      <data name="RowXofY" xml:space="preserve">
+    <value>{0} - {1} of {2}</value>
+ </data>
+      <data name="ShowRows" xml:space="preserve">
+    <value>Show rows: </value>
+  </data>
 </root>

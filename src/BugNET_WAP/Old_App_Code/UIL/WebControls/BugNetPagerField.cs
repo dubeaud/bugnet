@@ -18,6 +18,10 @@ namespace BugNET.UserInterfaceLayer.WebControls
         private bool _showNextPage = true;
         private bool _showLastPage = true;
 
+        private string _ShowRows = HttpContext.GetGlobalResourceObject("SharedResources", "ShowRows").ToString();
+        private string _RowXofY = HttpContext.GetGlobalResourceObject("SharedResources", "RowXofY").ToString();
+        private string _GoTo = HttpContext.GetGlobalResourceObject("SharedResources", "GoTo").ToString();
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BugNetPagerField"/> class.
         /// </summary>
@@ -447,6 +451,7 @@ namespace BugNET.UserInterfaceLayer.WebControls
             if (this._showFirstPage)
             {
                 container.Controls.Add(this.CreateControl("First", this.FirstPageText, fieldIndex, this.FirstPageImageUrl, this._showFirstPage));
+
                 this.AddNonBreakingSpace(container);
             }
 
@@ -524,8 +529,7 @@ namespace BugNET.UserInterfaceLayer.WebControls
             if (endRowIndex > this._totalRowCount)
                 endRowIndex = this._totalRowCount;
 
-            container.Controls.Add(new LiteralControl(string.Format("{0} - {1} of {2}", this._startRowIndex + 1, endRowIndex, this._totalRowCount)));
-
+            container.Controls.Add(new LiteralControl(string.Format(_RowXofY, this._startRowIndex + 1, endRowIndex, this._totalRowCount)));
             this.AddNonBreakingSpace(container);
             this.AddNonBreakingSpace(container);
             this.AddNonBreakingSpace(container);
@@ -537,7 +541,7 @@ namespace BugNET.UserInterfaceLayer.WebControls
         /// <param name="container">The container.</param>
         private void CreatePageSizeControl(DataPagerFieldItem container)
         {
-            container.Controls.Add(new LiteralControl("Show rows: "));
+            container.Controls.Add(new LiteralControl(_ShowRows));
 
             ButtonDropDownList pageSizeDropDownList = new ButtonDropDownList();
 
@@ -573,7 +577,7 @@ namespace BugNET.UserInterfaceLayer.WebControls
         private void CreateGoToTexBox(DataPagerFieldItem container)
         {
             Label label = new Label();
-            label.Text = "Go to: ";
+            label.Text = _GoTo;
             container.Controls.Add(label);
 
             ButtonTextBox goToTextBox = new ButtonTextBox();

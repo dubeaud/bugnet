@@ -63,7 +63,6 @@
     <Compile Include="NotificationManagerTests.cs" />
     <Compile Include="ProjectTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceTests.cs" />
     <Compile Include="TestCaseWithLog4NetSupport.cs" />
     <Compile Include="UtilityTests.cs" />
   </ItemGroup>

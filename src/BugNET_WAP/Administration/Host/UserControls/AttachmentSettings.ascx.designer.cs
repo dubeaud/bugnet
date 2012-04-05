@@ -31,13 +31,13 @@ namespace BugNET.Administration.Host.UserControls {
         protected global::BugNET.UserControls.Message Message1;
         
         /// <summary>
-        /// label25 control.
+        /// lblAllowedFileExtentions control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label label25;
+        protected global::System.Web.UI.WebControls.Label lblAllowedFileExtentions;
         
         /// <summary>
         /// AllowedFileExtentions control.
@@ -49,13 +49,22 @@ namespace BugNET.Administration.Host.UserControls {
         protected global::System.Web.UI.WebControls.TextBox AllowedFileExtentions;
         
         /// <summary>
-        /// label1 control.
+        /// lclSeperation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label label1;
+        protected global::System.Web.UI.WebControls.Localize lclSeperation;
+        
+        /// <summary>
+        /// lblFileSizeLimit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFileSizeLimit;
         
         /// <summary>
         /// FileSizeLimit control.
@@ -65,5 +74,14 @@ namespace BugNET.Administration.Host.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox FileSizeLimit;
+        
+        /// <summary>
+        /// lclBytes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Localize lclBytes;
     }
 }

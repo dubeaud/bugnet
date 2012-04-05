@@ -126,4 +126,7 @@
   <data name="LanguageSettings" xml:space="preserve">
     <value>Languages</value>
   </data>
+  <data name="LanguagesGridView_Col_Culture.HeaderText" xml:space="preserve">
+    <value>Culture</value>
+  </data>
 </root>

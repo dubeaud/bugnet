@@ -138,7 +138,16 @@
   <data name="UserAccountSource" xml:space="preserve">
     <value>User Account Source</value>
   </data>
-  <data name="UserRegistration.Text" xml:space="preserve">
+  <data name="UserAccountSource_AD.Text" xml:space="preserve">
+        <value>Active Directory</value>
+  </data>
+  <data name="UserAccountSource_None.Text" xml:space="preserve">
+    <value>None</value>
+  </data>
+      <data name="UserAccountSource_WindowsSAM.Text" xml:space="preserve">
+    <value>Windows SAM</value>
+  </data>
+    <data name="UserRegistration.Text" xml:space="preserve">
     <value>User Registration</value>
   </data>
   <data name="UserRegistration_None.Text" xml:space="preserve">

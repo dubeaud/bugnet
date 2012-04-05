@@ -31,13 +31,13 @@ namespace BugNET.Administration.Host.UserControls {
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
         
         /// <summary>
-        /// label9 control.
+        /// lblSMTPServer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label label9;
+        protected global::System.Web.UI.WebControls.Label lblSMTPServer;
         
         /// <summary>
         /// SMTPServer control.
@@ -67,13 +67,13 @@ namespace BugNET.Administration.Host.UserControls {
         protected global::System.Web.UI.WebControls.Label lblEmail;
         
         /// <summary>
-        /// label26 control.
+        /// lblSMTPPort control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label label26;
+        protected global::System.Web.UI.WebControls.Label lblSMTPPort;
         
         /// <summary>
         /// SMTPPort control.
@@ -85,13 +85,13 @@ namespace BugNET.Administration.Host.UserControls {
         protected global::System.Web.UI.WebControls.TextBox SMTPPort;
         
         /// <summary>
-        /// label22 control.
+        /// lblHostEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label label22;
+        protected global::System.Web.UI.WebControls.Label lblHostEmail;
         
         /// <summary>
         /// HostEmail control.
@@ -121,13 +121,13 @@ namespace BugNET.Administration.Host.UserControls {
         protected global::System.Web.UI.WebControls.RegularExpressionValidator regexEmailValid;
         
         /// <summary>
-        /// label27 control.
+        /// lblSSL control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label label27;
+        protected global::System.Web.UI.WebControls.Label lblSSL;
         
         /// <summary>
         /// SMTPUseSSL control.
@@ -139,13 +139,13 @@ namespace BugNET.Administration.Host.UserControls {
         protected global::System.Web.UI.WebControls.CheckBox SMTPUseSSL;
         
         /// <summary>
-        /// label10 control.
+        /// lblSMTPEnableAuthentication control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label label10;
+        protected global::System.Web.UI.WebControls.Label lblSMTPEnableAuthentication;
         
         /// <summary>
         /// SMTPEnableAuthentication control.
@@ -166,13 +166,13 @@ namespace BugNET.Administration.Host.UserControls {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl trSMTPUsername;
         
         /// <summary>
-        /// label11 control.
+        /// lblSMTPUsername control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label label11;
+        protected global::System.Web.UI.WebControls.Label lblSMTPUsername;
         
         /// <summary>
         /// SMTPUsername control.
@@ -193,13 +193,13 @@ namespace BugNET.Administration.Host.UserControls {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl trSMTPPassword;
         
         /// <summary>
-        /// label12 control.
+        /// lblSMTPPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label label12;
+        protected global::System.Web.UI.WebControls.Label lblSMTPPassword;
         
         /// <summary>
         /// SMTPPassword control.
@@ -220,13 +220,13 @@ namespace BugNET.Administration.Host.UserControls {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl trSMTPDomain;
         
         /// <summary>
-        /// label3 control.
+        /// lblSMTPDomain control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label label3;
+        protected global::System.Web.UI.WebControls.Label lblSMTPDomain;
         
         /// <summary>
         /// SMTPDomain control.
@@ -238,13 +238,13 @@ namespace BugNET.Administration.Host.UserControls {
         protected global::System.Web.UI.WebControls.TextBox SMTPDomain;
         
         /// <summary>
-        /// label1 control.
+        /// lblSMTPEmailFormat control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label label1;
+        protected global::System.Web.UI.WebControls.Label lblSMTPEmailFormat;
         
         /// <summary>
         /// SMTPEmailFormat control.
@@ -256,13 +256,13 @@ namespace BugNET.Administration.Host.UserControls {
         protected global::System.Web.UI.WebControls.RadioButtonList SMTPEmailFormat;
         
         /// <summary>
-        /// label2 control.
+        /// lblSMTPEmailTemplateRoot control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label label2;
+        protected global::System.Web.UI.WebControls.Label lblSMTPEmailTemplateRoot;
         
         /// <summary>
         /// SMTPEmailTemplateRoot control.

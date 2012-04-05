@@ -31,13 +31,13 @@ namespace BugNET.Administration.Host.UserControls {
         protected global::BugNET.UserControls.Message Message1;
         
         /// <summary>
-        /// label28 control.
+        /// lblApplicationTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label label28;
+        protected global::System.Web.UI.WebControls.Label lblApplicationTitle;
         
         /// <summary>
         /// ApplicationTitle control.
@@ -85,13 +85,13 @@ namespace BugNET.Administration.Host.UserControls {
         protected global::System.Web.UI.WebControls.TextBox DefaultUrl;
         
         /// <summary>
-        /// label3 control.
+        /// lblEnableGravatar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label label3;
+        protected global::System.Web.UI.WebControls.Label lblEnableGravatar;
         
         /// <summary>
         /// EnableGravatar control.
