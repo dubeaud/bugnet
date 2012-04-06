@@ -74,9 +74,9 @@ namespace BugNET.Administration.Projects
                 btnBack.Visible = true;
 
             if (StepIndex == (WizardSteps.Count - 1))
-                btnNext.Text = "Finish";
+                btnNext.Text = GetLocalResourceObject("Finish").ToString();
             else
-                btnNext.Text = "Next";
+                btnNext.Text = GetLocalResourceObject("Next").ToString();
         }
 
         /// <summary>

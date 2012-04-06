@@ -80,7 +80,7 @@
         $("#DeleteCategory").click(function () { 
             var node = $("#divJsTree").jstree('get_selected');
            if(node.find("> ul > li").length > 0){
-                return alert('You must delete all child categories of this parent first.');
+                return alert('<asp:Literal runat="server" Text="<%$ Resources:DeleteCategoriesMessage%>" />');
            }
            $find('DeleteCategoryMP').show();
 		   //$("#divJsTree").jstree("remove"); 
@@ -121,11 +121,11 @@
 	 <BN:Message ID="Message1" runat="server" /> 
 	 <br />
 	 <img alt="Add Category" type="image" src="../../images/plugin_add.gif" class="icon" />
-	 <a href="#" id="AddNewCategory">Add Category</a>
+	 <a href="#" id="AddNewCategory"><asp:literal ID="Literal2" runat="Server" meta:resourcekey="AddCategory"  /></a>
 	 &nbsp;
 	 <asp:LinkButton ID="LinkButton1" runat="server" Text="Not Used" style="display:none;" ></asp:LinkButton>
 	 <img alt="Delete Category" type="image" src="../../images/plugin_delete.gif" class="icon" />
-	 <a href="#" id="DeleteCategory" >Delete Category</a>
+	 <a href="#" id="DeleteCategory" ><asp:literal ID="Literal1" runat="Server" meta:resourcekey="DeleteCategory"  /></a>
 	 <br />
 	 <br />
 	<div id="divJsTree"></div>
@@ -142,13 +142,13 @@
             <tr>
                 <td>
                     <asp:RadioButton ID="RadioButton1" GroupName="DeleteCategory" runat="server" Checked="true"
-                        Height="30px" Text="&nbsp;&nbsp;Delete this category and all assigned issues." />
+                        Height="30px" Text="&nbsp;&nbsp;Delete this category and all assigned issues." meta:resourcekey="DeleteCategoryRadioButton" />
                 </td>
             </tr>
             <tr>
                 <td>
                     <asp:RadioButton ID="RadioButton2" GroupName="DeleteCategory" runat="server" Height="30px"
-                        Text="&nbsp;&nbsp;Assign all issues to an existing category." />
+                        Text="&nbsp;&nbsp;Assign all issues to an existing category." meta:resourcekey="DeleteCategoryRadioButton1" />
                     <div style="margin: 0 0 0 35px;">
                         <it:PickCategory ID="DropCategory" DisplayDefault="true" Required="false" runat="Server" />
                     </div>
@@ -157,7 +157,7 @@
             <tr>
                 <td>
                     <asp:RadioButton ID="RadioButton3" GroupName="DeleteCategory" runat="server" Height="30px"
-                        Text="&nbsp;&nbsp;Assign all issues to a new category. " />
+                        Text="&nbsp;&nbsp;Assign all issues to a new category. " meta:resourcekey="DeleteCategoryRadioButton2" />
                     <div style="margin: 0 0 0 35px;">
                         <asp:TextBox ID="NewCategoryTextBox" runat="server" Text=""></asp:TextBox>
                     </div>
@@ -166,8 +166,8 @@
         </table>
         <p style="text-align: center;">
             <asp:Button ID="OkButton" runat="server" OnClick="OkButton_Click" OnClientClick="onOk();"
-                Text="Ok" />
-            <asp:Button ID="CancelButton" runat="server" Text="Cancel" />
+                Text="Ok" meta:resourcekey="OkButton" />
+            <asp:Button ID="CancelButton" runat="server" Text="Cancel" meta:resourcekey="CancelButton" />
         </p>
     </div>
 </asp:Panel>
@@ -178,6 +178,6 @@
 <ajaxToolkit:ConfirmButtonExtender ID="cbe" runat="server" TargetControlID="LinkButton1"
     DisplayModalPopupID="ModalPopupExtender2" />
 <ajaxToolkit:TextBoxWatermarkExtender ID="TBWE2" runat="server" TargetControlID="NewCategoryTextBox"
-    WatermarkText="Enter a new category" WatermarkCssClass="watermarked" />
+    WatermarkText="Enter a new category" meta:resourcekey="NewCategoryWatermark" WatermarkCssClass="watermarked" />
 
 

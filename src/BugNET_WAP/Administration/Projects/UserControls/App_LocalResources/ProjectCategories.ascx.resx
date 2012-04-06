@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddCategory.Text" xml:space="preserve">
+    <value>Add Category</value>
+  </data>
+  <data name="CancelButton.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="CannotDeleteRootCategory" xml:space="preserve">
     <value>You cannot delete the root category</value>
   </data>
@@ -126,14 +132,35 @@
   <data name="CategoryValidator.ErrorMessage" xml:space="preserve">
     <value>You must add at least one category</value>
   </data>
+  <data name="DeleteCategoriesMessage" xml:space="preserve">
+    <value>You must delete all child categories of this parent first.</value>
+  </data>
+  <data name="DeleteCategory.Text" xml:space="preserve">
+    <value>Delete Category</value>
+  </data>
+  <data name="DeleteCategoryRadioButton.Text" xml:space="preserve">
+    <value>&amp;nbsp;&amp;nbsp;Delete this category and all assigned issues.</value>
+  </data>
+  <data name="DeleteCategoryRadioButton1.Text" xml:space="preserve">
+    <value>&amp;nbsp;&amp;nbsp;Assign all issues to an existing category.</value>
+  </data>
+  <data name="DeleteCategoryRadioButton2.Text" xml:space="preserve">
+    <value>&amp;nbsp;&amp;nbsp;Assign all issues to a new category.</value>
+  </data>
   <data name="DescriptionLabel.Text" xml:space="preserve">
     <value>When you create an issue, you assign the issue a category. Add categories by clicking the add category button and entering the name of the category. You can add sub-categories by selecting a parent category from the tree view below then entering the child category in the textbox and clicking the add button. To delete a category select the category then click the delete button.</value>
   </data>
   <data name="NewCategoryNotEntered" xml:space="preserve">
     <value>You must enter a new category to assign the issues to</value>
   </data>
+  <data name="NewCategoryWatermark.WatermarkText" xml:space="preserve">
+    <value>Enter a new category</value>
+  </data>
   <data name="NoCategorySelected" xml:space="preserve">
     <value>You must select a category to reassign the issues to.</value>
+  </data>
+  <data name="OkButton.Text" xml:space="preserve">
+    <value>Ok</value>
   </data>
   <data name="SameCategorySelected" xml:space="preserve">
     <value>You can not reassign the issues to the same category</value>
