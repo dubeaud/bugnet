@@ -21,7 +21,7 @@ namespace BugNET.Webservices
     [ScriptService]
     public class BugNetServices : LogInWebService
     {
-        
+
         /// <summary>
         /// Creates the new issue revision.
         /// </summary>
@@ -42,12 +42,15 @@ namespace BugNET.Webservices
 
             //authentication checks against user access to project
             if (ProjectManager.GetById(projectId).AccessType == Globals.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(UserName, projectId))
-                throw new UnauthorizedAccessException(string.Format(LoggingManager.GetErrorMessageResource("ProjectAccessDenied"), UserName)); 
+                throw new UnauthorizedAccessException(string.Format(LoggingManager.GetErrorMessageResource("ProjectAccessDenied"), UserName));
 
-            var issueRevision = new IssueRevision() 
+            var issueRevision = new IssueRevision()
                                     {
-                                        Revision = revision, IssueId = issueId, 
-                                        Author = revisionAuthor, Message = revisionMessage, Repository = repository, 
+                                        Revision = revision,
+                                        IssueId = issueId,
+                                        Author = revisionAuthor,
+                                        Message = revisionMessage,
+                                        Repository = repository,
                                         RevisionDate = revisionDate
                                     };
             return IssueRevisionManager.SaveOrUpdate(issueRevision);
@@ -134,14 +137,14 @@ namespace BugNET.Webservices
         [PrincipalPermission(SecurityAction.Demand, Authenticated = true)]
         [WebMethod]
         public void MoveCategory(string categoryId, string oldParentId, string newParentId)
-        {          
+        {
             if (string.IsNullOrEmpty(categoryId))
                 throw new ArgumentNullException("categoryId");
             if (string.IsNullOrEmpty(oldParentId))
                 throw new ArgumentNullException("oldParentId");
             if (string.IsNullOrEmpty(newParentId))
                 throw new ArgumentNullException("newParentId");
-         
+
 
             Category c = CategoryManager.GetById(Convert.ToInt32(categoryId));
             if (c != null)
@@ -166,20 +169,57 @@ namespace BugNET.Webservices
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public string GetCategories(string projectId)
         {
-            if (string.IsNullOrEmpty(projectId))
-                throw new ArgumentNullException("projectId");
+            if (string.IsNullOrEmpty(projectId)) throw new ArgumentNullException("projectId");
 
-            int ProjectId = int.Parse(projectId);
-            List<Category> categories = CategoryManager.GetRootCategoriesByProjectId(ProjectId);
+            int pid;
 
-            //if (context.User.Identity == null || !context.User.Identity.IsAuthenticated || (!ITUser.HasPermission(context.User.Identity.Name, ProjectId, Globals.Permission.ADMIN_EDIT_PROJECT.ToString()) && !ITUser.IsInRole(context.User.Identity.Name, 0, Globals.SuperUserRole)))
-            //    throw new System.Security.SecurityException("Access Denied");
+            if (int.TryParse(projectId, out pid))
+            {
+                var allCategories = CategoryManager.GetByProjectId(pid);
 
+                var parentCategories = allCategories.FindAll(p => p.ParentCategoryId == 0);
 
-            List<JsTreeNode> nodes = new List<JsTreeNode>();
-            PopulateNodes(categories, nodes);
-            JavaScriptSerializer js = new JavaScriptSerializer();
-            return js.Serialize(nodes);
+                var tree = new List<JsTreeNode>();
+
+                foreach (var pCat in parentCategories)
+                {
+                    var pNode = new JsTreeNode {attr = new Attributes()};
+                    pNode.attr.id = Convert.ToString(pCat.Id);
+                    pNode.attr.rel = "cat" + Convert.ToString(pCat.Id);
+                    pNode.data = new Data {title = Convert.ToString(pCat.Name), icon = "../../images/plugin.gif"};
+                    tree.Add(pNode);
+
+                    if (pCat.ChildCount > 0)
+                    {
+                        pNode.children = PopulateChildNodes(pCat, allCategories);
+                    }
+                }
+
+                return new JavaScriptSerializer().Serialize(tree);
+            }
+
+            return string.Empty;
+        }
+
+        private static List<JsTreeNode> PopulateChildNodes(Category parent, List<Category> all)
+        {
+            var tree = new List<JsTreeNode>();
+
+            foreach (var pCat in all.FindAll(p => p.ParentCategoryId == parent.Id))
+            {
+                var pNode = new JsTreeNode { attr = new Attributes() };
+                pNode.attr.id = Convert.ToString(pCat.Id);
+                pNode.attr.rel = "cat" + Convert.ToString(pCat.Id);
+                pNode.data = new Data { title = Convert.ToString(pCat.Name), icon = "../../images/plugin.gif" };
+                tree.Add(pNode);
+
+                if (pCat.ChildCount > 0)
+                {
+                    pNode.children = PopulateChildNodes(pCat, all);
+                }
+            }
+
+            return tree;
         }
 
         /// <summary>
@@ -187,40 +227,40 @@ namespace BugNET.Webservices
         /// </summary>
         /// <param name="list">The list.</param>
         /// <param name="nodes">The nodes.</param>
-        private void PopulateNodes(List<Category> list, List<JsTreeNode> nodes)
-        {
+        //private void PopulateNodes(List<Category> list, List<JsTreeNode> nodes)
+        //{
 
-            foreach (Category c in list)
-            {                
-                JsTreeNode cnode = new JsTreeNode();
-                cnode.attr = new Attributes();
-                cnode.attr.id = Convert.ToString(c.Id);
-                cnode.attr.rel = "cat" + Convert.ToString(c.Id);
-                cnode.data = new Data();
-                cnode.data.title = Convert.ToString(c.Name);
-                cnode.data.icon = "../../images/plugin.gif";
-                //cnode.attributes.mdata = "{ draggable : true, max_children : 100, max_depth : 100 }";
+        //    foreach (Category c in list)
+        //    {
+        //        JsTreeNode cnode = new JsTreeNode();
+        //        cnode.attr = new Attributes();
+        //        cnode.attr.id = Convert.ToString(c.Id);
+        //        cnode.attr.rel = "cat" + Convert.ToString(c.Id);
+        //        cnode.data = new Data();
+        //        cnode.data.title = Convert.ToString(c.Name);
+        //        cnode.data.icon = "../../images/plugin.gif";
+        //        //cnode.attributes.mdata = "{ draggable : true, max_children : 100, max_depth : 100 }";
 
-                nodes.Add(cnode);
+        //        nodes.Add(cnode);
 
-                if (c.ChildCount > 0)
-                {
+        //        if (c.ChildCount > 0)
+        //        {
 
-                    PopulateSubLevel(c.Id, cnode);
-                }
-            }
-        }
+        //            PopulateSubLevel(c.Id, cnode);
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Populates the sub level.
         /// </summary>
         /// <param name="parentid">The parentid.</param>
         /// <param name="parentNode">The parent node.</param>
-        private void PopulateSubLevel(int parentid, JsTreeNode parentNode)
-        {
-            PopulateNodes(CategoryManager.GetChildCategoriesByCategoryId(parentid), parentNode.children);
-        }
-      
+        //private void PopulateSubLevel(int parentid, JsTreeNode parentNode)
+        //{
+        //    PopulateNodes(CategoryManager.GetChildCategoriesByCategoryId(parentid), parentNode.children);
+        //}
+
         /// <summary>
         /// Adds the Category.
         /// </summary>
@@ -231,7 +271,7 @@ namespace BugNET.Webservices
         [PrincipalPermission(SecurityAction.Demand, Authenticated = true)]
         [WebMethod(EnableSession = true)]
         public int AddCategory(string projectId, string name, string parentCategoryId)
-        {  
+        {
             if (string.IsNullOrEmpty(projectId)) throw new ArgumentNullException("projectId");
             if (string.IsNullOrEmpty(name)) throw new ArgumentNullException("name");
             if (string.IsNullOrEmpty(parentCategoryId)) throw new ArgumentNullException("parentCategoryId");
@@ -239,10 +279,10 @@ namespace BugNET.Webservices
             var validParojectId = 0;
             var validParentCategoryId = 0;
 
-            if(projectId.Is<int>()) validParojectId = int.Parse(projectId);
-            if(parentCategoryId.Is<int>()) validParentCategoryId = int.Parse(parentCategoryId);
+            if (projectId.Is<int>()) validParojectId = int.Parse(projectId);
+            if (parentCategoryId.Is<int>()) validParentCategoryId = int.Parse(parentCategoryId);
 
-            var userName = Thread.CurrentPrincipal.Identity.Name; 
+            var userName = Thread.CurrentPrincipal.Identity.Name;
 
             if (!UserManager.IsInRole(userName, Convert.ToInt32(projectId), Globals.ProjectAdminRole) && !UserManager.IsInRole(userName, 0, Globals.SUPER_USER_ROLE))
                 throw new UnauthorizedAccessException(LoggingManager.GetErrorMessageResource("AccessDenied"));
@@ -289,12 +329,12 @@ namespace BugNET.Webservices
 
             Category c = CategoryManager.GetById(categoryId);
 
-            foreach(Category childCategory in CategoryManager.GetChildCategoriesByCategoryId(c.Id))
+            foreach (Category childCategory in CategoryManager.GetChildCategoriesByCategoryId(c.Id))
                 CategoryManager.Delete(childCategory.Id);
-            
+
             if (c.ChildCount > 0)
                 DeleteChildCategoriesByCategoryId(c.Id);
-                  
+
         }
 
 
@@ -310,7 +350,7 @@ namespace BugNET.Webservices
         public String[] GetResolutions(int ProjectId)
         {
             if (ProjectManager.GetById(ProjectId).AccessType == Globals.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(UserName, ProjectId))
-                throw new UnauthorizedAccessException(string.Format(LoggingManager.GetErrorMessageResource("ProjectAccessDenied"), UserName)); 
+                throw new UnauthorizedAccessException(string.Format(LoggingManager.GetErrorMessageResource("ProjectAccessDenied"), UserName));
 
             List<Resolution> resolutions = ResolutionManager.GetByProjectId(ProjectId);
             List<String> returnval = new List<String>();
@@ -331,7 +371,7 @@ namespace BugNET.Webservices
         public String[] GetMilestones(int ProjectId)
         {
             if (ProjectManager.GetById(ProjectId).AccessType == Globals.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(UserName, ProjectId))
-                throw new UnauthorizedAccessException(string.Format(LoggingManager.GetErrorMessageResource("ProjectAccessDenied"), UserName)); 
+                throw new UnauthorizedAccessException(string.Format(LoggingManager.GetErrorMessageResource("ProjectAccessDenied"), UserName));
 
             List<Milestone> milestones = MilestoneManager.GetByProjectId(ProjectId);
             List<String> returnval = new List<String>();
@@ -374,7 +414,7 @@ namespace BugNET.Webservices
         public String[] GetPriorities(int ProjectId)
         {
             if (ProjectManager.GetById(ProjectId).AccessType == Globals.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(UserName, ProjectId))
-                throw new UnauthorizedAccessException(string.Format(LoggingManager.GetErrorMessageResource("ProjectAccessDenied"), UserName)); 
+                throw new UnauthorizedAccessException(string.Format(LoggingManager.GetErrorMessageResource("ProjectAccessDenied"), UserName));
 
             List<Priority> priorites = PriorityManager.GetByProjectId(ProjectId);
             List<String> returnval = new List<String>();
@@ -417,7 +457,7 @@ namespace BugNET.Webservices
         public String[] GetStatus(int ProjectId)
         {
             if (ProjectManager.GetById(ProjectId).AccessType == Globals.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(UserName, ProjectId))
-                throw new UnauthorizedAccessException(string.Format(LoggingManager.GetErrorMessageResource("ProjectAccessDenied"), UserName)); 
+                throw new UnauthorizedAccessException(string.Format(LoggingManager.GetErrorMessageResource("ProjectAccessDenied"), UserName));
 
             List<Status> statuslist = StatusManager.GetByProjectId(ProjectId);
             List<String> returnval = new List<String>();
@@ -440,7 +480,7 @@ namespace BugNET.Webservices
         {
             Project project = ProjectManager.GetByCode(ProjectCode);
             if (project.AccessType == Globals.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(UserName, project.Id))
-                throw new UnauthorizedAccessException(string.Format(LoggingManager.GetErrorMessageResource("ProjectAccessDenied"), UserName)); 
+                throw new UnauthorizedAccessException(string.Format(LoggingManager.GetErrorMessageResource("ProjectAccessDenied"), UserName));
 
             return project.Id;
         }
@@ -456,7 +496,7 @@ namespace BugNET.Webservices
         public object[] GetProjectIssues(int ProjectId, string Filter)
         {
             if (ProjectManager.GetById(ProjectId).AccessType == Globals.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(UserName, ProjectId))
-                throw new UnauthorizedAccessException(string.Format(LoggingManager.GetErrorMessageResource("ProjectAccessDenied"), UserName)); 
+                throw new UnauthorizedAccessException(string.Format(LoggingManager.GetErrorMessageResource("ProjectAccessDenied"), UserName));
 
             List<Issue> issues;
             QueryClause q;
@@ -540,7 +580,7 @@ namespace BugNET.Webservices
 
         #endregion
 
-       
+
 
     }
 }

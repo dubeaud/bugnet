@@ -1048,27 +1048,28 @@ div.welcomemessage ul
 /* Summary Page Styles */
 table.summary
 {
-	border-collapse: separate;
+	border-collapse: collapse;
 	border-spacing: 3px;
 	width: 100%;
 	margin-bottom: 10px;
 }
+
 td.count-column
 {
 	width: 15px;
 	text-align: right;
-	padding-right: 5px;
+	padding: 3px;
 	white-space: nowrap;
 }
 td.item-column
 {
-	padding-left: 5px;
+	padding: 3px;
 	text-align: left;
 	width: 90%;
 }
 td.image-column
 {
-	padding-left: 5px;
+	padding: 3px;
 	width: 15px;
 }
 

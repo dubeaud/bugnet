@@ -52,6 +52,18 @@ namespace BugNET.Entities
         /// <value>The parent Category id.</value>
         public int ParentCategoryId { get; set; }
 
+        /// <summary>
+        /// Gets the issue count for the category
+        /// </summary>
+        /// <value>The parent Category id.</value>
+        public int IssueCount { get; set; }
+
+        /// <summary>
+        /// Gets the disabled status for the category
+        /// </summary>
+        /// <value>The disabled status.</value>
+        public bool Disabled { get; set; }
+
         #endregion
     }
 }

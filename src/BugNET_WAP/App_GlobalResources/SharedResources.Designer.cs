@@ -970,6 +970,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unassigned.
+        /// </summary>
+        internal static string Unassigned {
+            get {
+                return ResourceManager.GetString("Unassigned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update.
         /// </summary>
         internal static string Update {

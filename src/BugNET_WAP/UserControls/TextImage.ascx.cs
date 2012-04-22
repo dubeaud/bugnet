@@ -1,3 +1,5 @@
+using BugNET.Common;
+
 namespace BugNET.UserControls
 {
 	using System;
@@ -10,46 +12,21 @@ namespace BugNET.UserControls
 	/// </summary>
 	public partial class TextImage : System.Web.UI.UserControl
 	{
-
-
-		#region Web Form Designer generated code
-		override protected void OnInit(EventArgs e)
-		{
-			//
-			// CODEGEN: This call is required by the ASP.NET Web Form Designer.
-			//
-			InitializeComponent();
-			base.OnInit(e);
-		}
-		
-		/// <summary>
-		///		Required method for Designer support - do not modify
-		///		the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
-
-		}
-		#endregion
-
-		public string ImageDirectory = String.Empty;
-
         /// <summary>
         /// Gets or sets the text.
         /// </summary>
         /// <value>The text.</value>
 		public string Text 
 		{
-			get 
-			{
-				if (ViewState["Text"] == null)
-					return String.Empty;
-				else
-					return (string)ViewState["Text"];
-			}
-			set {ViewState["Text"] = value; }
+			get { return ViewState.Get("Text", string.Empty); }
+            set { ViewState.Set("Text", value); }
 		}
 
+        public string ImageDirectory
+        {
+            get { return ViewState.Get("ImageDirectory", string.Empty); }
+            set { ViewState.Set("ImageDirectory", value); }
+        }
 
         /// <summary>
         /// Gets or sets the image URL.
@@ -57,27 +34,20 @@ namespace BugNET.UserControls
         /// <value>The image URL.</value>
 		public string ImageUrl 
 		{
-			get 
-			{
-				if (ViewState["ImageUrl"] == null)
-					return String.Empty;
-				else
-					return (string)ViewState["ImageUrl"];
-			}
-			set {ViewState["ImageUrl"] = value; }
+			get { return ViewState.Get("ImageUrl", string.Empty); }
+            set { ViewState.Set("ImageUrl", value); }
 		}
-
 
         /// <summary>
         /// Handles the PreRender event of the Page control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		protected void Page_PreRender(object sender, System.EventArgs e) 
+		protected void Page_PreRender(object sender, EventArgs e) 
 		{
 			if (ImageUrl != String.Empty) 
 			{
-				ctlImage.ImageUrl = "~/Images" + ImageDirectory + "/" + ImageUrl;
+				ctlImage.ImageUrl = string.Format("~/Images{0}/{1}", ImageDirectory, ImageUrl);
 				ctlImage.ToolTip = Text;
                 ctlImage.AlternateText = Text;
 			} 

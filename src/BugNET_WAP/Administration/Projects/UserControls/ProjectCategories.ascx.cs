@@ -155,7 +155,6 @@ namespace BugNET.Administration.Projects.UserControls
             else
             {
                 Message1.ShowErrorMessage(GetLocalResourceObject("CannotDeleteRootCategory").ToString());
-                return;
             }
         }
 

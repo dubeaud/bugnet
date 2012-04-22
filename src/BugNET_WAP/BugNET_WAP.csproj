@@ -960,6 +960,7 @@
     <Content Include="Images\lock_open.gif" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\magnifier.gif" />
+    <Content Include="Images\Milestone\package.gif" />
     <Content Include="Images\minus.gif" />
     <Content Include="Images\noprofile.png" />
     <Content Include="Images\package.gif" />

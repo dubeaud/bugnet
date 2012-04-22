@@ -2747,8 +2747,8 @@ namespace BugNET.Providers.DataProviders
                 var commandBuilder = new StringBuilder();
                 //'DSS customfields in the same query   
                 commandBuilder.Append(projectId != 0
-                                          ? "SELECT DISTINCT * FROM BugNet_GetIssuesByProjectIdAndCustomFieldView WHERE ProjectId=@ProjectId AND (Disabled = 0 AND ProjectDisabled = 0) AND IssueId IN (SELECT IssueId FROM BugNet_Issues WHERE 1=1 "
-                                          : "SELECT DISTINCT * FROM BugNet_GetIssuesByProjectIdAndCustomFieldView WHERE (Disabled = 0 AND ProjectDisabled = 0) AND IssueId IN (SELECT IssueId FROM BugNet_Issues WHERE 1=1 ");
+                                          ? "SELECT DISTINCT * FROM BugNet_GetIssuesByProjectIdAndCustomFieldView WHERE ProjectId = @ProjectId AND IssueId IN (SELECT IssueId FROM BugNet_IssuesView WHERE 1 = 1 "
+                                          : "SELECT DISTINCT * FROM BugNet_GetIssuesByProjectIdAndCustomFieldView WHERE IssueId IN (SELECT IssueId FROM BugNet_IssuesView WHERE 1 = 1 ");
 
                 var i = 0;
 
@@ -5079,7 +5079,12 @@ namespace BugNET.Providers.DataProviders
         {
             while (returnData.Read())
             {
-                var issueCount = new IssueCount(returnData.GetValue(2), (string)returnData.GetValue(0), (int)returnData.GetValue(1), (string)returnData.GetValue(3));
+                var issueCount = new IssueCount(
+                    returnData.GetValue(2), 
+                    (string)returnData.GetValue(0), 
+                    (int)returnData.GetValue(1), 
+                    (string)returnData.GetValue(3)
+                );
                 issueCountList.Add(issueCount);
             }
         }
@@ -5324,7 +5329,7 @@ namespace BugNET.Providers.DataProviders
                                                     NotificationEmail = returnData.GetString(returnData.GetOrdinal("NotificationEmail")),
                                                     NotificationUsername = returnData.GetString(returnData.GetOrdinal("NotificationUsername")),
                                                     ProjectId = returnData.GetInt32(returnData.GetOrdinal("ProjectId")),
-                                                    ProjectName = returnData.GetString(returnData.GetOrdinal("ProjectName")),
+                                                    ProjectName = returnData.GetString(returnData.GetOrdinal("ProjectName"))
                                                 });
             }
         }
@@ -5345,6 +5350,8 @@ namespace BugNET.Providers.DataProviders
                             Name = returnData.GetString(returnData.GetOrdinal("CategoryName")),
                             ChildCount = returnData.GetInt32(returnData.GetOrdinal("ChildCount")),
                             ParentCategoryId = returnData.GetInt32(returnData.GetOrdinal("ParentCategoryId")),
+                            IssueCount = returnData.GetInt32(returnData.GetOrdinal("IssueCount")),
+                            Disabled = returnData.GetBoolean(returnData.GetOrdinal("Disabled"))
                         });
             }
         }

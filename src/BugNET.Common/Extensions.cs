@@ -172,7 +172,7 @@ namespace BugNET.Common
             if (string.IsNullOrEmpty(input)) return false;
             var conv = TypeDescriptor.GetConverter(typeof(T));
 
-            if (conv != null && conv.CanConvertFrom(typeof(string)))
+            if (conv.CanConvertFrom(typeof(string)))
             {
                 try
                 {

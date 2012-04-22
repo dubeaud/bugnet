@@ -195,7 +195,13 @@ namespace BugNET.BLL
             // update each issue percentage
             foreach (var issueCount in issueCountList)
             {
-                issueCount.Percentage = issueSum != 0 ? Math.Round((decimal)((issueCount.Count * 100) / issueSum)) : 0;
+                var count = (decimal)issueCount.Count;
+
+                var value = (count / issueSum) * 100;
+
+                value = Math.Round(value, MidpointRounding.ToEven); // might help make the percentages closer to 100% on UI
+
+                issueCount.Percentage = issueSum != 0 ? value : 0;
             }
 
             return issueCountList;

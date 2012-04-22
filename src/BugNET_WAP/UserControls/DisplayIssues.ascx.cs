@@ -28,7 +28,7 @@ namespace BugNET.UserControls
         /// <summary>
         /// Array of issue columns
         /// </summary>
-        private string[] _arrIssueColumns = new string[] { "4", "5", "6", "7", "8", "9", "10","11","12","13","14","15","16","17","18","19","20","21", "22"};
+        private string[] _arrIssueColumns = new[] { "4", "5", "6", "7", "8", "9", "10","11","12","13","14","15","16","17","18","19","20","21", "22"};
 
         //store amount of fixed search columns due to bad string above
         public const int FixedColumns = 22;
@@ -99,9 +99,9 @@ namespace BugNET.UserControls
         /// <summary>
         /// Binds a data source to the invoked server control and all its child controls.
         /// </summary>
-        public void DataBind() 
+        public new void DataBind() 
 		{
-			if(this.DataSource.Count > 0)
+			if(DataSource.Count > 0)
 			{
                 if (!string.IsNullOrEmpty(gvIssues.SortField))
                 {
@@ -173,7 +173,7 @@ namespace BugNET.UserControls
                     gvIssues.Columns[4].Visible = false;
                     lstIssueColumns.Items.Remove(lstIssueColumns.Items.FindByValue("4"));
 
-                    int projectId = ((Issue)_DataSource[0]).ProjectId;
+                    var projectId = _DataSource[0].ProjectId;
 
                     //hide votes column if issue voting is disabled
                     if (!ProjectManager.GetById(projectId).AllowIssueVoting)
@@ -182,10 +182,32 @@ namespace BugNET.UserControls
                         lstIssueColumns.Items.Remove(lstIssueColumns.Items.FindByValue("4"));
                     }
 
-
                     if (Page.User.Identity.IsAuthenticated && UserManager.HasPermission(projectId, Globals.Permission.EditIssue.ToString()))
                     {
                         LeftButtonContainerPanel.Visible = true;
+
+                        // performance enhancement
+                        // WRH 2012-04-06
+                        // only load these if the user has permission to do so
+                        var categories = new CategoryTree();
+                        dropCategory.DataSource = categories.GetCategoryTreeByProjectId(projectId);
+                        dropCategory.DataBind();
+                        dropMilestone.DataSource = MilestoneManager.GetByProjectId(projectId);
+                        dropMilestone.DataBind();
+                        dropAffectedMilestone.DataSource = dropMilestone.DataSource;
+                        dropAffectedMilestone.DataBind();
+                        dropOwner.DataSource = UserManager.GetUsersByProjectId(projectId);
+                        dropOwner.DataBind();
+                        dropPriority.DataSource = PriorityManager.GetByProjectId(projectId);
+                        dropPriority.DataBind();
+                        dropStatus.DataSource = StatusManager.GetByProjectId(projectId);
+                        dropStatus.DataBind();
+                        dropType.DataSource = IssueTypeManager.GetByProjectId(projectId);
+                        dropType.DataBind();
+                        dropAssigned.DataSource = UserManager.GetUsersByProjectId(projectId);
+                        dropAssigned.DataBind();
+                        dropResolution.DataSource = ResolutionManager.GetByProjectId(projectId);
+                        dropResolution.DataBind();
                     }
                     else
                     {
@@ -193,36 +215,16 @@ namespace BugNET.UserControls
                         gvIssues.Columns[0].Visible = false;
                         LeftButtonContainerPanel.Visible = false;
                     }
-
-                    CategoryTree categories = new CategoryTree();
-                    dropCategory.DataSource = categories.GetCategoryTreeByProjectId(projectId);
-                    dropCategory.DataBind();
-                    dropMilestone.DataSource = MilestoneManager.GetByProjectId(projectId);
-                    dropMilestone.DataBind();
-                    dropAffectedMilestone.DataSource = MilestoneManager.GetByProjectId(projectId);
-                    dropAffectedMilestone.DataBind();
-                    dropOwner.DataSource = UserManager.GetUsersByProjectId(projectId);
-                    dropOwner.DataBind();
-                    dropPriority.DataSource = PriorityManager.GetByProjectId(projectId);
-                    dropPriority.DataBind();
-                    dropStatus.DataSource = StatusManager.GetByProjectId(projectId);
-                    dropStatus.DataBind();
-                    dropType.DataSource = IssueTypeManager.GetByProjectId(projectId);
-                    dropType.DataBind();
-                    dropAssigned.DataSource = UserManager.GetUsersByProjectId(projectId);
-                    dropAssigned.DataBind();
-                    dropResolution.DataSource = ResolutionManager.GetByProjectId(projectId);
-                    dropResolution.DataBind();
                 }
 
                 foreach (string colIndex in _arrIssueColumns)
                 {
-                    ListItem item = lstIssueColumns.Items.FindByValue(colIndex);
+                    var item = lstIssueColumns.Items.FindByValue(colIndex);
                     if (item != null)
                         item.Selected = true;
                 }
 
-                gvIssues.DataSource = this.DataSource;
+                gvIssues.DataSource = DataSource;
                 gvIssues.DataBind();
 
                 InsertCustomFieldData();
@@ -553,33 +555,32 @@ namespace BugNET.UserControls
         /// <param name="e">The <see cref="T:System.Web.UI.WebControls.GridViewRowEventArgs"/> instance containing the event data.</param>
         protected void gvIssues_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.DataRow)
-            {
-                e.Row.Attributes.Add("onmouseover", "this.style.background='#F7F7EC'");
+            if (e.Row.RowType != DataControlRowType.DataRow) return;
 
-                if (e.Row.RowState == DataControlRowState.Normal)
-                    e.Row.Attributes.Add("onmouseout", "this.style.background=''");
-                else if (e.Row.RowState == DataControlRowState.Alternate)
-                    e.Row.Attributes.Add("onmouseout", "this.style.background='#fafafa'");
+            e.Row.Attributes.Add("onmouseover", "this.style.background='#F7F7EC'");
+
+            if (e.Row.RowState == DataControlRowState.Normal)
+                e.Row.Attributes.Add("onmouseout", "this.style.background=''");
+            else if (e.Row.RowState == DataControlRowState.Alternate)
+                e.Row.Attributes.Add("onmouseout", "this.style.background='#fafafa'");
  
-                Issue b = ((Issue)e.Row.DataItem);
+            var b = ((Issue)e.Row.DataItem);
 
-                //Private issue check
-                if (b.Visibility == (int)Globals.IssueVisibility.Private && b.AssignedDisplayName != Security.GetUserName() && b.CreatorDisplayName != Security.GetUserName() && (!UserManager.IsInRole(Globals.SUPER_USER_ROLE) || !UserManager.IsInRole(Globals.ProjectAdminRole)))
-                    e.Row.Visible = false;
+            //Private issue check
+            if (b.Visibility == (int)Globals.IssueVisibility.Private && b.AssignedDisplayName != Security.GetUserName() && b.CreatorDisplayName != Security.GetUserName() && (!UserManager.IsInRole(Globals.SUPER_USER_ROLE) || !UserManager.IsInRole(Globals.ProjectAdminRole)))
+                e.Row.Visible = false;
 
-                e.Row.FindControl("imgPrivate").Visible = b.Visibility == 0 ? false : true;
+            e.Row.FindControl("imgPrivate").Visible = b.Visibility != 0;
 
-                double warnPeriod = 7; //TODO: Add this to be configurable in the users profile
-                bool isDue = b.DueDate <= DateTime.Now.AddDays(warnPeriod) && b.DueDate > DateTime.MinValue;
-                bool noOwner = b.AssignedUserId == Guid.Empty;
-                //if (noOwner || isDue)
-                //{
-                //    e.Row.Attributes.Add("style", "background-color:#ffdddc");
-                //    e.Row.Attributes.Add("onmouseout", "this.style.background='#ffdddc'");
-                //}
-                ((HtmlControl)e.Row.FindControl("ProgressBar")).Attributes.CssStyle.Add("width", b.Progress.ToString() + "%"); 
-            }
+            double warnPeriod = 7; //TODO: Add this to be configurable in the users profile
+            bool isDue = b.DueDate <= DateTime.Now.AddDays(warnPeriod) && b.DueDate > DateTime.MinValue;
+            bool noOwner = b.AssignedUserId == Guid.Empty;
+            //if (noOwner || isDue)
+            //{
+            //    e.Row.Attributes.Add("style", "background-color:#ffdddc");
+            //    e.Row.Attributes.Add("onmouseout", "this.style.background='#ffdddc'");
+            //}
+            ((HtmlControl)e.Row.FindControl("ProgressBar")).Attributes.CssStyle.Add("width", b.Progress.ToString() + "%");
         }
    
         /// <summary>

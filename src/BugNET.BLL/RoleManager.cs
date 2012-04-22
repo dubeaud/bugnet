@@ -144,7 +144,15 @@ namespace BugNET.BLL
         {
             if (String.IsNullOrEmpty(userName)) throw new ArgumentOutOfRangeException("userName");
 
-            return DataProviderManager.Provider.GetRolesByUserName(userName, projectId);
+            if (!HttpContext.Current.User.Identity.IsAuthenticated)
+                return DataProviderManager.Provider.GetRolesByUserName(userName, projectId);
+
+            // performance enhancement
+            // WRH 2012-04-06
+            // use the current loaded user roles if we are looking at the same user
+            return userName.ToLower().Equals(HttpContext.Current.User.Identity.Name.ToLower()) ?
+                CurrentUserRoles.FindAll(p => p.ProjectId == projectId) :
+                DataProviderManager.Provider.GetRolesByUserName(userName, projectId);
         }
 
         /// <summary>
@@ -156,9 +164,16 @@ namespace BugNET.BLL
         {
             if (String.IsNullOrEmpty(userName)) throw new ArgumentOutOfRangeException("userName");
 
-            return DataProviderManager.Provider.GetRolesByUserName(userName);
-        }
+            if (!HttpContext.Current.User.Identity.IsAuthenticated)
+                return DataProviderManager.Provider.GetRolesByUserName(userName);
 
+            // performance enhancement
+            // WRH 2012-04-06
+            // use the current loaded user roles if we are looking at the same user
+            return userName.ToLower().Equals(HttpContext.Current.User.Identity.Name.ToLower()) ? 
+                CurrentUserRoles : 
+                DataProviderManager.Provider.GetRolesByUserName(userName);
+        }
 
         /// <summary>
         /// Gets all roles.
@@ -298,6 +313,41 @@ namespace BugNET.BLL
             }
 
             return false;
+        }
+
+        private const string CURRENT_USER_ROLES = "CURRENT_USER_ROLES";
+
+        /// <summary>
+        /// performance enhancement
+        /// WRH 2012-04-06
+        /// Singleton pattern for the current users roles
+        /// We load them the first time and keep them around for the lenght of the request
+        /// </summary>
+        private static List<Role> CurrentUserRoles
+        {
+            get 
+            { 
+                var ctx = HttpContext.Current;
+                if (ctx == null) return null;
+
+                var items = ctx.Items[CURRENT_USER_ROLES] as List<Role>;
+
+                if(items == null)
+                {
+                    var roles = DataProviderManager.Provider.GetRolesByUserName(ctx.User.Identity.Name);
+                    CurrentUserRoles = roles;
+                    return roles;
+                }
+
+                return items;
+            }
+            set
+            {
+                var ctx = HttpContext.Current;
+                if (ctx == null) return;
+
+                ctx.Items[CURRENT_USER_ROLES] = value;
+            }
         }
     }
 }

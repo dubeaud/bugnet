@@ -511,6 +511,7 @@ namespace BugNET.BLL
 
             DataProviderManager.Provider.SetSelectedIssueColumnsByUserName(userName, projectId, columns);
         }
+
         #endregion
     }
 }

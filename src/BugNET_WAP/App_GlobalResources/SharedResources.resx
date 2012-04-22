@@ -450,4 +450,7 @@
       <data name="ShowRows" xml:space="preserve">
     <value>Show rows: </value>
   </data>
+  <data name="Unassigned">
+    <value xml:space="preserve">Unassigned</value>
+  </data>
 </root>

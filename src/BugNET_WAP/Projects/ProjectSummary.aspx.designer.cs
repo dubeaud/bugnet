@@ -130,13 +130,13 @@ namespace BugNET.Projects {
         protected global::System.Web.UI.WebControls.Literal litProjectCode;
         
         /// <summary>
-        /// rptVersions control.
+        /// rptMilestonesOpenIssues control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptVersions;
+        protected global::System.Web.UI.WebControls.Repeater rptMilestonesOpenIssues;
         
         /// <summary>
         /// Literal3 control.
@@ -166,39 +166,39 @@ namespace BugNET.Projects {
         protected global::BugNET.UserControls.CategoryTreeView CategoryTreeView1;
         
         /// <summary>
-        /// rptAssignee control.
+        /// rptAssigneeOpenIssues control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptAssignee;
+        protected global::System.Web.UI.WebControls.Repeater rptAssigneeOpenIssues;
         
         /// <summary>
-        /// rptSummary control.
+        /// rptIssueStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptSummary;
+        protected global::System.Web.UI.WebControls.Repeater rptIssueStatus;
         
         /// <summary>
-        /// rptOpenIssues control.
+        /// rptPriorityOpenIssues control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptOpenIssues;
+        protected global::System.Web.UI.WebControls.Repeater rptPriorityOpenIssues;
         
         /// <summary>
-        /// rptType control.
+        /// rptTypeOpenIssues control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptType;
+        protected global::System.Web.UI.WebControls.Repeater rptTypeOpenIssues;
     }
 }

@@ -67,17 +67,17 @@ namespace BugNET.Administration.Users.UserControls
                 RoleList.Items.Clear();
                 var projectId = dropProjects.SelectedValue;
                 var roles = RoleManager.GetByProjectId(projectId);
+                var userRoles = RoleManager.GetForUser(MembershipData.UserName, projectId);
 
                 foreach (var r in roles)
                 {
                     if (r.ProjectId == 0) continue;
-
                     var roleListItem = new ListItem
-                                           {
-                                               Text = r.Name,
-                                               Value = r.Id.ToString(),
-                                               Selected = UserManager.IsInRole(MembershipData.UserName, projectId, r.Name)
-                                           };
+                        {
+                            Text = r.Name,
+                            Value = r.Id.ToString(),
+                            Selected = (userRoles.FindAll(p => p.ProjectId == projectId && p.Id == r.Id).Count > 0)
+                        };
                     RoleList.Items.Add(roleListItem);
                 }
             }
