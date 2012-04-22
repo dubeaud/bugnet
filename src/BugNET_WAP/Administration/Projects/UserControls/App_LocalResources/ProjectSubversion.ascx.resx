@@ -147,4 +147,13 @@
   <data name="SVNInfoLabel.Text" xml:space="preserve">
     <value>Create a tag of the trunk. This assumes that the root contains both a trunk and a tags directory. Your username and password are used for the single command only and never stored.</value>
   </data>
+  <data name="CreateATagTitle.Text" xml:space="preserve">
+    <value>Create a Tag</value>
+  </data>
+  <data name="NameLabel.Text" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="TagNameLabel.Text" xml:space="preserve">
+    <value>Tag Name:</value>
+  </data>
 </root>

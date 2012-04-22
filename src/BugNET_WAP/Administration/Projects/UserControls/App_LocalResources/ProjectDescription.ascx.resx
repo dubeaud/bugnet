@@ -162,4 +162,22 @@
   <data name="AllowIssueVotingLabel.Text" xml:space="preserve">
     <value>Allow Issue Voting:</value>
   </data>
+  <data name="DetailsTitle.Text" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="IssueAttachmentsTitle.Text" xml:space="preserve">
+    <value>Issue Attachments</value>
+  </data>
+  <data name="PrivateListItem.Text" xml:space="preserve">
+    <value>Private</value>
+  </data>
+  <data name="ProjectImageLabel.Text" xml:space="preserve">
+    <value>Project Image:</value>
+  </data>
+  <data name="PublicListItem.Text" xml:space="preserve">
+    <value>Public</value>
+  </data>
+  <data name="SecurityTitle.Text" xml:space="preserve">
+    <value>Security</value>
+  </data>
 </root>

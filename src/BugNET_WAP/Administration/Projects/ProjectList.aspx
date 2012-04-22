@@ -4,7 +4,7 @@
     <div style="padding:0px 0 10px 0;">
         <span style="padding-right:5px;border-right:1px dotted #ccc" id="NewProject" runat="server">
             <a  href='<%= ResolveUrl("~/Administration/Projects/AddProject.aspx") %>'><img style="border:none;" src='<%= ResolveUrl("~/Images/application_add.gif") %>' class="icon" /></a>
-            <asp:HyperLink ID="lnkNewProject" runat="server"  NavigateUrl="~/Administration/Projects/AddProject.aspx" Text="Create New Project"/>
+            <asp:HyperLink ID="lnkNewProject" runat="server"  NavigateUrl="~/Administration/Projects/AddProject.aspx" meta:resourcekey="CreateNewProject" Text="[Create New Project]"/>
         </span>
         &nbsp;
         <span id="CloneProject" runat="server">

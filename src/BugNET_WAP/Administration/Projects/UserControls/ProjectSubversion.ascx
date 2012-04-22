@@ -13,13 +13,13 @@
        </ol>
     </div>  
    <div class="fieldgroup">  
-	    <h3>Create a Tag</h3>
+	    <h3><asp:literal ID="Literal3" runat="Server" meta:resourcekey="CreateATagTitle" /></h3>
         <asp:Label id="createTagErrorLabel" ForeColor="red" EnableViewState="false" runat="Server" />
         <p class="desc" ><asp:Label ID="Label3" runat="server" meta:resourcekey="SVNInfoLabel" Text="Create a tag of the trunk. This assumes that the root contains both a trunk and a tags directory. Your username and password are used for the single command only and never stored."></asp:Label></p>
         <br />
 	    <ol>
             <li>
-                <asp:Label ID="Label4" CssClass="col1" AssociatedControlID="tagName" runat="server" Text="Tag Name:" />
+                <asp:Label ID="Label4" CssClass="col1" AssociatedControlID="tagName" runat="server"  meta:resourcekey="TagNameLabel"  Text="Tag Name:" />
                 <asp:TextBox id="tagName" Columns="30" runat="Server" />
             </li>
             <li>
@@ -47,7 +47,7 @@
         <br />
         <ol>
             <li>
-                <asp:Label ID="Label8" CssClass="col1" AssociatedControlID="repoName" runat="server" Text="Name:" />
+                <asp:Label ID="Label8" CssClass="col1" AssociatedControlID="repoName" runat="server"  meta:resourcekey="NameLabel" Text="Name:" />
                 <asp:TextBox id="repoName" Columns="30" runat="Server" />
             </li>
         </ol> 

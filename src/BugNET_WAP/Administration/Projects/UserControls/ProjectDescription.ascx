@@ -2,7 +2,7 @@
 <%@ Register TagPrefix="it" TagName="PickSingleUser" Src="~/UserControls/PickSingleUser.ascx" %>
 <div>
     <asp:ValidationSummary ID="ValidationSummary1" runat="server"  DisplayMode="BulletList"  HeaderText="<%$ Resources:SharedResources, ValidationSummaryHeaderText %>" CssClass="validationSummary" />
-	<h2>Details</h2>
+	<h2><asp:literal ID="DetailsTitle" runat="Server" meta:resourcekey="DetailsTitle"  /></h2>
 	<asp:Label id="lblError" ForeColor="red" EnableViewState="false" runat="Server" />
 	<p class="desc"><asp:Label ID="Label9" runat="server" meta:resourcekey="ProjectDescription" Text="Enter the details for the project."/></p>
 	 <div class="fieldgroup" style="border:none">  
@@ -40,7 +40,7 @@
                 <asp:checkbox cssclass="inputCheckBox" Checked="true"  id="chkAllowIssueVoting"  runat="server"/>
             </li>
              <li>
-                <asp:Label ID="Label11" AssociatedControlID="ProjectImageUploadFile" runat="server"  Text="Project Image:"></asp:Label>
+                <asp:Label ID="Label11" AssociatedControlID="ProjectImageUploadFile" runat="server" meta:resourcekey="ProjectImageLabel"  Text="Project Image:"></asp:Label>
                 <asp:FileUpload ID="ProjectImageUploadFile"  runat="server"  />
                 <div style="margin:1em 0 0 14em;width:100px;text-align:center;">
                     <asp:Image runat="server" ID="ProjectImage" Height="62" Width="62"  />
@@ -51,21 +51,21 @@
         </ol>
     </div>
     <div class="fieldgroup">  
-        <h3>Security</h3>
+        <h3><asp:literal ID="Literal1" runat="Server" meta:resourcekey="SecurityTitle"  /></h3>
         <ol>
             <li>
                 <asp:Label ID="Label8" AssociatedControlID="rblAccessType"  meta:resourcekey="AccessTypeLabel" runat="server" Text="Access Type:"></asp:Label>
                 <div class="labelgroup">
                     <asp:radiobuttonlist cssclass="checkboxlist" id="rblAccessType" RepeatDirection="Horizontal" runat="server">
-	                    <asp:listitem value="Public" />
-	                    <asp:listitem value="Private" Selected="True" />
+	                    <asp:listitem value="Public" meta:resourcekey="PublicListItem" />
+	                    <asp:listitem value="Private" Selected="True" meta:resourcekey="PrivateListItem"/>
                     </asp:radiobuttonlist>
                 </div>
             </li>
         </ol>
     </div>
     <div class="fieldgroup">  
-        <h3>Issue Attachments</h3>
+        <h3><asp:literal ID="Literal2" runat="Server" meta:resourcekey="IssueAttachmentsTitle"  /></h3>
         <asp:UpdatePanel ID="UpdatePanel1" runat="server" ChildrenAsTriggers="true">
             <ContentTemplate>
                 <ol>

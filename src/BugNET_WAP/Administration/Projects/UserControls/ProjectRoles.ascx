@@ -63,7 +63,7 @@
         <asp:Label ID="Label3" meta:resourcekey="PermissionsTitle" runat="server" /></h5>
     <div>
         <fieldset>
-            <legend>Issue Tracking</legend>
+            <legend><asp:Literal ID="Literal2" runat="Server" Text="Issue Tracking" meta:resourcekey="IssueTracking"></asp:Literal></legend>
             <ul class="permissions">
                 <li>
                     <asp:CheckBox ID="chkAddIssue" Text="Add issues" meta:resourcekey="AddIssues" runat="server"></asp:CheckBox></li>

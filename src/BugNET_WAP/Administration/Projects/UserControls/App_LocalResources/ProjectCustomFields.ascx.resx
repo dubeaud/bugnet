@@ -127,13 +127,19 @@
     <value>Are you sure you want to delete the \"{0}\" field?</value>
   </data>
   <data name="CustomFieldsTitle.Text" xml:space="preserve">
-    <value>Custom Fields</value>
+    <value>Custom Fields (optional)</value>
   </data>
   <data name="DataType" xml:space="preserve">
     <value>Data Type</value>
   </data>
+  <data name="DateType.Text" xml:space="preserve">
+    <value>Date</value>
+  </data>
   <data name="DescriptionLabel.Text" xml:space="preserve">
     <value>You can add one or more custom fields to a project. You can assign a data type to each custom field. In addtion, each custom field can be marked as either required or optional.</value>
+  </data>
+  <data name="DropDownListType.Text" xml:space="preserve">
+    <value>Drop Down List</value>
   </data>
   <data name="Field" xml:space="preserve">
     <value>Field</value>
@@ -144,13 +150,28 @@
   <data name="FieldType" xml:space="preserve">
     <value>Field Type</value>
   </data>
+  <data name="NewCustomFieldTitle.Text" xml:space="preserve">
+    <value>New Custom Field</value>
+  </data>
   <data name="Required" xml:space="preserve">
     <value>Required</value>
+  </data>
+  <data name="RichTextType.Text" xml:space="preserve">
+    <value>Rich Text</value>
   </data>
   <data name="SelectionValuesLabel.Text" xml:space="preserve">
     <value>Selection Values</value>
   </data>
+  <data name="TextType.Text" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="UserList.Type" xml:space="preserve">
+    <value>User List</value>
+  </data>
   <data name="Value" xml:space="preserve">
     <value>Value</value>
+  </data>
+  <data name="YesNoType.Text" xml:space="preserve">
+    <value>Yes / No</value>
   </data>
 </root>

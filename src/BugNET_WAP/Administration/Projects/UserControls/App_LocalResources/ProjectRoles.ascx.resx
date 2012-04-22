@@ -312,4 +312,7 @@
   <data name="ViewCalendar.Text" xml:space="preserve">
     <value>View calendar</value>
   </data>
+  <data name="IssueTracking.Text" xml:space="preserve">
+    <value>Issue Tracking</value>
+  </data>
 </root>

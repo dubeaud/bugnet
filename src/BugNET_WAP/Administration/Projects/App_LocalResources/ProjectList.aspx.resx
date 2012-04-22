@@ -120,6 +120,9 @@
   <data name="CreatedBy" xml:space="preserve">
     <value>Created By</value>
   </data>
+  <data name="CreateNewProject.Text" xml:space="preserve">
+    <value>Create New Project</value>
+  </data>
   <data name="Disabled" xml:space="preserve">
     <value>Disabled</value>
   </data>

@@ -191,7 +191,7 @@
     </asp:DataGrid>		                           
 
     <div class="fieldgroup">  
-	    <h3>New Custom Field</h3>
+	    <h3><asp:literal ID="DetailsTitle" runat="Server" meta:resourcekey="NewCustomFieldTitle"  /></h3>
         <ol>
             <li>
                 <asp:Label ID="label1" runat="server" AssociatedControlID="txtName" Text="<%$ Resources:FieldName %>" />
@@ -202,12 +202,12 @@
                 <asp:RadioButtonList AutoPostBack="True"
                 OnSelectedIndexChanged="rblCustomFieldType_SelectedIndexChanged"
                 ID="rblCustomFieldType" runat="server">
-                <asp:ListItem Text="Text" Selected="True" Value="1" />
-                <asp:ListItem Text="Drop Down List" Value="2" />
-                <asp:ListItem Text="Date" Value="3" />
-                <asp:ListItem Text="Rich Text" Value="4" />
-                <asp:ListItem Text="Yes / No" Value="5" />
-                <asp:ListItem Text="User List" Value="6" />
+                <asp:ListItem Text="Text" Selected="True" Value="1" meta:resourcekey="TextType" />
+                <asp:ListItem Text="Drop Down List" Value="2" meta:resourcekey="DropDownListType"  />
+                <asp:ListItem Text="Date" Value="3"  meta:resourcekey="DateType" />
+                <asp:ListItem Text="Rich Text" Value="4"  meta:resourcekey="RichTextType" />
+                <asp:ListItem Text="Yes / No" Value="5"  meta:resourcekey="YesNoType" />
+                <asp:ListItem Text="User List" Value="6"  meta:resourcekey="UserListType" />
                 </asp:RadioButtonList>
             </li>
             <li>
