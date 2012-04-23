@@ -552,3 +552,108 @@ WHERE LoweredUserName = LOWER(@UserName)
 GO
 
 
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[BugNet_IssueAttachment_ValidateDownload]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [BugNet_IssueAttachment_ValidateDownload]
+GO
+
+CREATE PROCEDURE [BugNet_IssueAttachment_ValidateDownload]
+	@IssueAttachmentId INT,
+	@RequestingUserId UNIQUEIDENTIFIER = NULL
+AS
+
+SET NOCOUNT ON
+
+DECLARE
+	@HasPermission BIT,
+	@HasProjectAccess BIT,
+	@ProjectAdminId INT,
+	@ProjectId INT,
+	@IssueId INT,
+	@IssueVisibility INT,
+	@ProjectAdminString VARCHAR(25),
+	@ProjectAccessType INT,
+	@ReturnValue INT,
+	@AnonymousAccess BIT
+
+SET @ProjectAdminString = 'project administrators'
+
+/* get the anon setting for the site */
+SET @AnonymousAccess = 
+(
+	SELECT 
+		CASE LOWER(SUBSTRING(SettingValue, 1, 1))
+			WHEN '1' THEN 1
+			WHEN 't' THEN 1
+			ELSE 0
+		END
+	FROM BugNet_HostSettings
+	WHERE LOWER(SettingName) = 'anonymousaccess'
+)
+
+/* if the requesting user is anon and anon access is disabled exit */
+IF (@RequestingUserId IS NULL AND @AnonymousAccess = 0)
+	RETURN -1;
+	
+SELECT 
+	@ProjectId = i.ProjectId,
+	@IssueId = i.IssueId,
+	@IssueVisibility = i.IssueVisibility,
+	@ProjectAccessType = p.ProjectAccessType
+FROM BugNet_IssuesView i
+INNER JOIN BugNet_IssueAttachments ia ON i.IssueId = ia.IssueId
+INNER JOIN BugNet_Projects p ON i.ProjectId = p.ProjectId
+WHERE ia.IssueAttachmentId = @IssueAttachmentId
+AND (i.[Disabled] = 0 AND p.ProjectDisabled = 0)
+
+/* if the issue or project is disabled then exit */
+IF (@IssueId IS NULL OR @ProjectId IS NULL)
+	RETURN -1;
+
+/* does the requesting user have elevated permissions? */
+SET @HasPermission = 
+(
+	SELECT COUNT(*)
+	FROM BugNet_UserRoles ur
+	INNER JOIN BugNet_Roles r ON ur.RoleId = r.RoleId
+	WHERE r.ProjectId = @ProjectId
+	AND (LOWER(r.RoleName) = @ProjectAdminString OR r.RoleId = 1)
+	AND ur.UserId = @RequestingUserId
+)
+
+/* does the requesting user have access to the project? */
+SET @HasProjectAccess =
+(
+	SELECT COUNT(*)
+	FROM BugNet_UserProjects
+	WHERE UserId = @RequestingUserId
+	AND ProjectId = @ProjectId
+)
+
+/* if the project is private and the requesting user does not have project access exit or elevated permissions */
+IF (@ProjectAccessType = 2 AND (@HasProjectAccess = 0 AND @HasPermission = 0))
+	RETURN -1;
+
+/* try and get the attachment id */
+SELECT @ReturnValue = ia.IssueAttachmentId
+FROM BugNet_IssuesView i
+INNER JOIN BugNet_IssueAttachments ia ON i.IssueId = ia.IssueId
+INNER JOIN BugNet_Projects p ON i.ProjectId = p.ProjectId
+WHERE ia.IssueAttachmentId = @IssueAttachmentId
+AND (
+		(@IssueVisibility = 0 AND @AnonymousAccess = 1) OR -- issue is visible and anon access is on
+		(
+			(@IssueVisibility = 1) AND -- issue is private
+			(
+				(UPPER(i.IssueCreatorUserId) = UPPER(@RequestingUserId)) OR -- requesting user is issue creator
+				(UPPER(i.IssueAssignedUserId) = UPPER(@RequestingUserId) AND @AnonymousAccess = 0) OR -- requesting user is assigned to issue and anon access is off 
+				(@HasPermission = 1) -- requesting user has elevated permissions
+			)
+		)
+	)
+AND (i.[Disabled] = 0 AND p.ProjectDisabled = 0)
+
+IF (@ReturnValue IS NULL)
+	RETURN -1;
+	
+RETURN @ReturnValue;
+GO

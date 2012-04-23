@@ -154,6 +154,7 @@ namespace BugNET.Providers.DataProviders
         private const string SP_ISSUEATTACHMENT_GETATTACHMENTBYID = "BugNet_IssueAttachment_GetIssueAttachmentById";
         private const string SP_ISSUEATTACHMENT_GETATTACHMENTSBYISSUEID = "BugNet_IssueAttachment_GetIssueAttachmentsByIssueId";
         private const string SP_ISSUEATTACHMENT_DELETEATTACHMENT = "BugNet_IssueAttachment_DeleteIssueAttachment";
+        private const string SP_ISSUEATTACHMENT_VALIDATEDOWNLOAD = "BugNet_IssueAttachment_ValidateDownload";
 
         //Comment Stored Procs
         private const string SP_ISSUECOMMENT_CREATE = "BugNet_IssueComment_CreateNewIssueComment";
@@ -2412,6 +2413,48 @@ namespace BugNET.Providers.DataProviders
         #endregion
 
         #region Issue attachment methods
+
+        /// <summary>
+        /// Validates if the requesting user can download the attachment
+        /// </summary>
+        /// <param name="attachmentId">The attachment id to fetch</param>
+        /// <param name="requestingUserId">The requesting user is</param>
+        /// <returns>An attachment if the security checks pass</returns>
+        /// <remarks>
+        /// The following defines the logic for a attachment id NOT to be returned
+        /// <list type="number">
+        /// <item><description>When the requestor is anon and anon access is disabled</description></item>
+        /// <item><description>When the project or the issue is deleted / disabled</description></item>
+        /// <item><description>When the project is private and (the requestor does not have project access or elevated permissions)</description></item>
+        /// <item><description>When the issue is private and (the requestor is neither the creator of the issue or (assigned to the issue when anon access is off)) or (the requestor does not have elevated permissions)</description></item>
+        /// </list>
+        /// </remarks>
+        public override IssueAttachment GetAttachmentForDownload(int attachmentId, Guid? requestingUserId)
+        {
+            if (attachmentId <= 0) throw (new ArgumentOutOfRangeException("attachmentId"));
+
+            try
+            {
+                using (var sqlCmd = new SqlCommand())
+                {
+                    AddParamToSqlCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
+                    AddParamToSqlCmd(sqlCmd, "@IssueAttachmentId", SqlDbType.Int, 0, ParameterDirection.Input, attachmentId);
+                    AddParamToSqlCmd(sqlCmd, "@RequestingUserId", SqlDbType.UniqueIdentifier, 0, ParameterDirection.Input, requestingUserId);
+
+                    SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUEATTACHMENT_VALIDATEDOWNLOAD);
+
+                    attachmentId = ((int)sqlCmd.Parameters["@ReturnValue"].Value);
+
+                    return GetIssueAttachmentById(attachmentId);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ProcessException(ex);
+            }
+        }
+
         /// <summary>
         /// Creates the new issue attachment.
         /// </summary>
@@ -2557,6 +2600,7 @@ namespace BugNET.Providers.DataProviders
                 throw ProcessException(ex);
             }
         }
+
         #endregion
 
         #region Query methods

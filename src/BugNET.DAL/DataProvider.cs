@@ -90,6 +90,7 @@ namespace BugNET.DAL
         public abstract List<IssueAttachment> GetIssueAttachmentsByIssueId(int issueId);
         public abstract IssueAttachment GetIssueAttachmentById(int attachmentId);
         public abstract bool DeleteIssueAttachment(int attachmentId);
+        public abstract IssueAttachment GetAttachmentForDownload(int attachmentId, Guid? requestingUserId);
 
         // IssueHistory
         public abstract List<IssueHistory> GetIssueHistoryByIssueId(int issueId);
@@ -241,6 +242,5 @@ namespace BugNET.DAL
 
         //String Resources
         public abstract List<string> GetInstalledLanguageResources();
-
     }
 }

@@ -559,10 +559,15 @@ namespace BugNET.UserControls
 
             e.Row.Attributes.Add("onmouseover", "this.style.background='#F7F7EC'");
 
-            if (e.Row.RowState == DataControlRowState.Normal)
-                e.Row.Attributes.Add("onmouseout", "this.style.background=''");
-            else if (e.Row.RowState == DataControlRowState.Alternate)
-                e.Row.Attributes.Add("onmouseout", "this.style.background='#fafafa'");
+            switch (e.Row.RowState)
+            {
+                case DataControlRowState.Normal:
+                    e.Row.Attributes.Add("onmouseout", "this.style.background=''");
+                    break;
+                case DataControlRowState.Alternate:
+                    e.Row.Attributes.Add("onmouseout", "this.style.background='#fafafa'");
+                    break;
+            }
  
             var b = ((Issue)e.Row.DataItem);
 

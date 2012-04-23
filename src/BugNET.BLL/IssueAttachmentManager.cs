@@ -18,7 +18,37 @@ namespace BugNET.BLL
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        #region Instance Methods
+        // BGN-2090
+        /// <summary>
+        /// Validates if the requesting user can download the attachment
+        /// </summary>
+        /// <param name="attachmentId">The attachment id to fetch</param>
+        ///<returns>An attachment if the security checks pass</returns>
+        /// <remarks>
+        /// The following defines the logic for a attachment NOT to be returned
+        /// <list type="number">
+        /// <item><description>When the requestor is anon and anon access is disabled</description></item>
+        /// <item><description>When the project or the issue is deleted / disabled</description></item>
+        /// <item><description>When the project is private and (the requestor does not have project access or elevated permissions)</description></item>
+        /// <item><description>When the issue is private and (the requestor is neither the creator of the issue or assigned to the issue) or (the requestor does not have elevated permissions)</description></item>
+        /// </list>
+        /// </remarks>
+        public static IssueAttachment GetAttachmentForDownload(int attachmentId)
+        {
+            // validate input
+            if (attachmentId <= Globals.NEW_ID)
+                throw (new ArgumentOutOfRangeException("attachmentId"));
+
+            Guid? requestingUserId = null;
+
+            if (HttpContext.Current.User != null)
+            {
+                if (HttpContext.Current.User.Identity.IsAuthenticated)
+                    requestingUserId = Guid.Parse(HttpContext.Current.User.Identity.Name);
+            }
+
+            return DataProviderManager.Provider.GetAttachmentForDownload(attachmentId, requestingUserId);
+        }
 
         /// <summary>
         /// Strips the unique guid from the file system version of the file
@@ -145,9 +175,7 @@ namespace BugNET.BLL
 
             return false;
         }
-        #endregion
 
-        #region Static Methods
         /// <summary>
         /// Gets all IssueAttachments for an issue
         /// </summary>
@@ -299,7 +327,7 @@ namespace BugNET.BLL
             var fileExt = Path.GetExtension(fileName);
             var fileOk = false;
 
-            if (allowedFileTypes.Length > 0 && allowedFileTypes[0].CompareTo("*.*") == 0)
+            if (allowedFileTypes.Length > 0 && String.CompareOrdinal(allowedFileTypes[0], "*.*") == 0)
             {
                 fileOk = true;
             }
@@ -471,8 +499,5 @@ namespace BugNET.BLL
         //        }
         //    }
         //}
-
-
-        #endregion
     }
 }
