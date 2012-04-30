@@ -17,5 +17,3 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompany("http://www.bugnetproject.com")]
 [assembly: AssemblyCopyright("Copyright © 2008-2011 BugNET Project")]
 [assembly: AssemblyConfiguration("net-4.0.win32")]
-
-

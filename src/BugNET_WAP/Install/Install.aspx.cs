@@ -9,14 +9,15 @@ using System.Web.Configuration;
 using System.Web.Security;
 using BugNET.BLL;
 using BugNET.Common;
-//using BugNET.DataAccessLayer;
-using BugNET.Entities;
+using log4net;
 
 namespace BugNET.Install
 {
     public partial class Install : System.Web.UI.Page
     {
-        private DateTime StartTime;
+        private DateTime _startTime;
+
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
         /// Handles the Load event of the Page control.
@@ -26,9 +27,10 @@ namespace BugNET.Install
         protected void Page_Load(object sender, EventArgs e)
         {
             //Get current Script time-out
-            int scriptTimeOut = Server.ScriptTimeout;
+            var scriptTimeOut = Server.ScriptTimeout;
 
-            string mode = string.Empty;
+            var mode = string.Empty;
+
             if (Request.QueryString["mode"] != null)
             {
                 mode = Request.QueryString["mode"].ToLower();
@@ -48,7 +50,9 @@ namespace BugNET.Install
                 Server.ScriptTimeout = int.MaxValue;
                 try
                 {
-                    switch (UpgradeManager.GetUpgradeStatus())
+                    var status = UpgradeManager.GetUpgradeStatus();
+
+                    switch (status)
                     {
                         case Globals.UpgradeStatus.Install:
                             InstallApplication();
@@ -61,6 +65,9 @@ namespace BugNET.Install
                             break;
                         case Globals.UpgradeStatus.Authenticated:
                             InstallerLogout();
+                            break;
+                        default:
+                            Log.Info(string.Format("The current status [{0}] was not handled during the install process.", status));
                             break;
                     }
                 }
@@ -77,7 +84,8 @@ namespace BugNET.Install
         /// </summary>
         private void InstallerLogout()
         {
-            string tmpuser = HttpContext.Current.User.Identity.Name;
+            var tmpuser = HttpContext.Current.User.Identity.Name;
+
             // Sign out before writing the headers!
             FormsAuthentication.SignOut();
 
@@ -110,13 +118,13 @@ namespace BugNET.Install
         /// <returns></returns>
         private void InstallApplication()
         {
-            string installationDate = WebConfigurationManager.AppSettings["InstallationDate"];
+            var installationDate = WebConfigurationManager.AppSettings["InstallationDate"];
 
-            if (installationDate == null || installationDate == "")
+            if (string.IsNullOrEmpty(installationDate))
             {
 
                 //update machine key.
-                string error = UpgradeManager.UpdateMachineKey();
+                var error = UpgradeManager.UpdateMachineKey();
 
                 if (error == "")
                 {
@@ -124,17 +132,17 @@ namespace BugNET.Install
                 }
                 else
                 {
-                    StreamReader oStreamReader = new StreamReader(HttpContext.Current.Server.MapPath("~/Install/403-3.htm"));
-                    string strHTML = oStreamReader.ReadToEnd();
+                    var oStreamReader = new StreamReader(HttpContext.Current.Server.MapPath("~/Install/403-3.htm"));
+                    var strHtml = oStreamReader.ReadToEnd();
                     oStreamReader.Close();
-                    strHTML = strHTML.Replace("[MESSAGE]", error);
-                    HttpContext.Current.Response.Write(strHTML);
+                    strHtml = strHtml.Replace("[MESSAGE]", error);
+                    HttpContext.Current.Response.Write(strHtml);
                     HttpContext.Current.Response.End();
                 }
             }
             else 
             {              
-                StartTime = DateTime.Now;
+                _startTime = DateTime.Now;
                 WriteHeader("install");
               
 
@@ -159,14 +167,14 @@ namespace BugNET.Install
         }
 
         /// <summary>
-        /// Installs the bug NET.
+        /// Installs the BugNET.
         /// </summary>
         /// <returns></returns>
         private bool InstallBugNET()
         {
             try
             {
-                string providerPath = UpgradeManager.GetProviderPath();           
+                var providerPath = UpgradeManager.GetProviderPath();           
 
                 if (!providerPath.StartsWith("ERROR"))
                 {
@@ -182,18 +190,18 @@ namespace BugNET.Install
                     ExecuteSqlInFile(string.Format("{0}BugNET.Data.SqlDataProvider.sql",providerPath));
                     WriteMessage("Creating Administrator Account", 0, true);
                     //create admin user
-                    MembershipCreateStatus status = MembershipCreateStatus.Success;
-                    MembershipUser NewUser = Membership.CreateUser("Admin", "password", "admin@yourdomain.com", "no question", "no answer", true, out status);
-                    if (NewUser != null)
+                    MembershipCreateStatus status;
+                    var newUser = Membership.CreateUser("Admin", "password", "admin@yourdomain.com", "no question", "no answer", true, out status);
+                    if (newUser != null)
                     {
                         //add the admin user to the Super Users role.
                         RoleManager.AddUser("Admin", 1);
                         //add user profile information
-                        WebProfile Profile = new WebProfile().GetProfile("Admin");
-                        Profile.FirstName = "Admin";
-                        Profile.LastName = "Admin";
-                        Profile.DisplayName = "Administrator";
-                        Profile.Save();
+                        var profile = new WebProfile().GetProfile("Admin");
+                        profile.FirstName = "Admin";
+                        profile.LastName = "Admin";
+                        profile.DisplayName = "Administrator";
+                        profile.Save();
                     }
                     WriteScriptSuccessError(true);
                     UpgradeManager.UpdateDatabaseVersion(UpgradeManager.GetCurrentVersion());
@@ -223,7 +231,7 @@ namespace BugNET.Install
         {
             string installationDate = WebConfigurationManager.AppSettings["InstallationDate"];
 
-            if (installationDate == null || installationDate == string.Empty)
+            if (string.IsNullOrEmpty(installationDate))
             {
                 WriteMessage("<h2>Performing security updates...</h2>");
                 try
@@ -238,7 +246,7 @@ namespace BugNET.Install
             }
             else
             {
-                StartTime = DateTime.Now;
+                _startTime = DateTime.Now;
                 WriteHeader("upgrade");
                 WriteMessage("<h2>Upgrade Status Report</h2>");
                 WriteMessage(string.Format("<h2>Current Assembly Version: {0}</h2>", UpgradeManager.GetCurrentVersion()));
@@ -265,20 +273,20 @@ namespace BugNET.Install
         {
             try
             {
-                  string providerPath = UpgradeManager.GetProviderPath();
+                  var providerPath = UpgradeManager.GetProviderPath();
 
                   if (!providerPath.StartsWith("ERROR"))
                   {
                       //get current App version
-                      int AssemblyVersion = Convert.ToInt32(UpgradeManager.GetCurrentVersion().Replace(".", ""));
-                      int DatabaseVersion = Convert.ToInt32(UpgradeManager.GetInstalledVersion().Replace(".", ""));
+                      var assemblyVersion = Convert.ToInt32(UpgradeManager.GetCurrentVersion().Replace(".", ""));
+                      var databaseVersion = Convert.ToInt32(UpgradeManager.GetInstalledVersion().Replace(".", ""));
+
                       //get list of script files
-                      string strScriptVersion;
-                      ArrayList arrScriptFiles = new ArrayList();
+                      var arrScriptFiles = new ArrayList();
 
                       //install the membership provider and migrate the users if the 
                       //installed version is less than 0.7
-                      if (DatabaseVersion < 70)
+                      if (databaseVersion < 70)
                       {
                           WriteMessage("Installing Membership Provider:<br/>", 0, true);
                           ExecuteSqlInFile(string.Format("{0}InstallCommon.sql",providerPath));
@@ -289,45 +297,45 @@ namespace BugNET.Install
                           UpgradeManager.MigrateUsers();
                       }
 
-                      string[] arrFiles = Directory.GetFiles(providerPath, "*.sql");
-                      foreach (string File in arrFiles)
+                      var arrFiles = Directory.GetFiles(providerPath, "*.sql");
+
+                      foreach (var file in arrFiles)
                       {
-                          //ignore default scripts
-                          if (Path.GetFileNameWithoutExtension(File).StartsWith("Install") || Path.GetFileNameWithoutExtension(File).StartsWith("BugNet")
-                              || Path.GetFileNameWithoutExtension(File).StartsWith("Latest"))
-                          { }
-                          else
+                          var fileName = Path.GetFileNameWithoutExtension(file);
+
+                          if (string.IsNullOrEmpty(fileName)) continue;
+
+                          fileName = fileName.ToLower().Trim();
+                          if (fileName.Length.Equals(0)) continue;
+                          if (fileName.StartsWith("install")) continue;
+                          if (fileName.StartsWith("bugnet")) continue;
+                          if (fileName.StartsWith("latest")) continue;
+
+                          var strScriptVersion = fileName.Substring(0, fileName.LastIndexOf("."));
+                          var scriptVersion = Convert.ToInt32(strScriptVersion.Replace(".", ""));
+
+                          //check if script file is relevant for upgrade
+                          if (scriptVersion > databaseVersion && scriptVersion <= assemblyVersion)
                           {
-                              strScriptVersion = Path.GetFileNameWithoutExtension(File).Substring(0, Path.GetFileNameWithoutExtension(File).LastIndexOf("."));
-                              int ScriptVersion = Convert.ToInt32(strScriptVersion.Replace(".", ""));
-                              //check if script file is relevant for upgrade
-                              if (ScriptVersion > DatabaseVersion && ScriptVersion <= AssemblyVersion)
-                              {
-                                  arrScriptFiles.Add(File);
-                              }
+                              arrScriptFiles.Add(file);
                           }
                       }
+
                       arrScriptFiles.Sort();
 
-                      foreach (string strScriptFile in arrScriptFiles)
+                      foreach (var scriptFile in arrScriptFiles.Cast<string>().Where(strScriptFile => databaseVersion != assemblyVersion))
                       {
-                          strScriptVersion = Path.GetFileNameWithoutExtension(strScriptFile);
-                          //verify script has not already been run
-                          if (DatabaseVersion != AssemblyVersion)
-                          {
-                              //execute script file (and version upgrades) for version
-                              ExecuteSqlInFile(strScriptFile);
-                          }
+                          //execute script file (and version upgrades) for version
+                          ExecuteSqlInFile(scriptFile);
                       }
 
                       //check if the admin user is in the super users role.
-                      bool found = false;
-                      List<Role> roles = RoleManager.GetForUser("Admin");
+                      var found = false;
+                      var roles = RoleManager.GetForUser("Admin");
                       if (roles.Count > 0)
                       {
-                          Role role = roles.SingleOrDefault(r => r.Name == Globals.SUPER_USER_ROLE);
-                          if (role != null)
-                              found = true;
+                          var role = roles.SingleOrDefault(r => r.Name == Globals.SUPER_USER_ROLE);
+                          if (role != null) found = true;
                       }
                       if (!found)
                           RoleManager.AddUser("Admin", 1);
@@ -335,12 +343,10 @@ namespace BugNET.Install
                       UpgradeManager.UpdateDatabaseVersion(UpgradeManager.GetCurrentVersion());
                       return true;
                   }
-                  else
-                  {
-                      //upgrade error
-                      Response.Write("<h2>Upgrade Error: " + providerPath + "</h2>");
-                      return false;
-                  }
+
+                //upgrade error
+                Response.Write("<h2>Upgrade Error: " + providerPath + "</h2>");
+                return false;
             }
             catch (Exception e)
             {
@@ -351,48 +357,46 @@ namespace BugNET.Install
         #endregion
 
         #region Script Functions
+
         /// <summary>
         /// Executes the SQL in file.
         /// </summary>
         /// <param name="pathToScriptFile">The path to script file.</param>
         /// <returns></returns>
-        private bool ExecuteSqlInFile(string pathToScriptFile)
+        private void ExecuteSqlInFile(string pathToScriptFile)
         {
             WriteMessage(string.Format("Executing Script: {0}", pathToScriptFile.Substring(pathToScriptFile.LastIndexOf("\\") + 1)), 2, true);
          
             try
             {
-                StreamReader _reader = null;
-                string sql = string.Empty;
-                List<string> statements = new List<string>();
+                var statements = new List<string>();
 
-                if (false == System.IO.File.Exists(pathToScriptFile))
+                if (false == File.Exists(pathToScriptFile))
                 {
                     throw new Exception(string.Format("File {0} does not exist!", pathToScriptFile));
                 }
-                using (Stream stream = System.IO.File.OpenRead(pathToScriptFile))
+
+                using (Stream stream = File.OpenRead(pathToScriptFile))
                 {
-                    _reader = new StreamReader(stream);
-                    string statement = string.Empty;
-                    while ((statement = ReadNextStatementFromStream(_reader)) != null)
+                    using(var reader = new StreamReader(stream))
                     {
-                        statements.Add(statement);
+                        string statement;
+                        while ((statement = ReadNextStatementFromStream(reader)) != null)
+                        {
+                            statements.Add(statement);
+                        }                        
                     }
-                    _reader.Close();
                 }
 
                 UpgradeManager.ExecuteStatements(statements);
 
                 WriteScriptSuccessError(true);
-                return true;
             }
             catch (Exception ex)
             {
                 WriteScriptSuccessError(false);
                 WriteScriptErrorMessage(pathToScriptFile.Substring(pathToScriptFile.LastIndexOf("\\") + 1), ex.Message);
-                return false;
-            }
-                
+            }  
         }
 
         /// <summary>
@@ -402,18 +406,14 @@ namespace BugNET.Install
         /// <returns></returns>
         private static string ReadNextStatementFromStream(StreamReader reader)
         {         
-            StringBuilder sb = new StringBuilder();
-            string lineOfText;
+            var sb = new StringBuilder();
 
             while (true)
             {
-                lineOfText = reader.ReadLine();
+                var lineOfText = reader.ReadLine();
                 if (lineOfText == null)
                 {
-                    if (sb.Length > 0)
-                        return sb.ToString();
-                    else
-                        return null;
+                    return sb.Length > 0 ? sb.ToString() : null;
                 }
                 if (lineOfText.TrimEnd().ToUpper() == "GO")
                     break;
@@ -443,11 +443,10 @@ namespace BugNET.Install
         private void WriteHeader(string mode)
         {
             //read install page and insert into response stream
-            if (File.Exists(System.Web.HttpContext.Current.Server.MapPath("~/Install/Install.htm")))
+            if (File.Exists(HttpContext.Current.Server.MapPath("~/Install/Install.htm")))
             {
-                StreamReader oStreamReader;
-                oStreamReader = File.OpenText(System.Web.HttpContext.Current.Server.MapPath("~/Install/Install.htm"));
-                string sHtml = oStreamReader.ReadToEnd();
+                var oStreamReader = File.OpenText(HttpContext.Current.Server.MapPath("~/Install/Install.htm"));
+                var sHtml = oStreamReader.ReadToEnd();
                 oStreamReader.Close();
                 Response.Write(sHtml);
             }
@@ -486,24 +485,16 @@ namespace BugNET.Install
         /// Writes the message.
         /// </summary>
         /// <param name="message">The message.</param>
-        private void WriteMessage(string message)
-        {
-            WriteMessage(message, 0, false);
-        }
-
-        /// <summary>
-        /// Writes the message.
-        /// </summary>
-        /// <param name="message">The message.</param>
+        /// <param name="indent">How many spaces to indent the text by</param>
         /// <param name="showTime">if set to <c>true</c> [show time].</param>
-        private void WriteMessage(string message, int indent, bool showTime)
+        private void WriteMessage(string message, int indent = 0, bool showTime = false)
         {
-            string spacer = string.Empty;
-            for (int i = 0; i < indent; i++)
+            var spacer = string.Empty;
+            for (var i = 0; i < indent; i++)
                 spacer += "&nbsp;";
 
             if (showTime)
-                message = string.Format("{1} - {2} {0} ", message, DateTime.Now.Subtract(StartTime), spacer);
+                message = string.Format("{1} - {2} {0} ", message, DateTime.Now.Subtract(_startTime), spacer);
 
             HttpContext.Current.Response.Write(message);
             HttpContext.Current.Response.Flush();
@@ -512,18 +503,10 @@ namespace BugNET.Install
         /// <summary>
         /// Writes the success error message.
         /// </summary>
-        /// <param name="message">The message.</param>
         /// <param name="success">if set to <c>true</c> [success].</param>
         private void WriteScriptSuccessError(bool success)
         {
-            if (success)
-            {
-                WriteMessage("<font color='green'>Success</font><br/>");
-            }
-            else
-            {
-                WriteMessage("<font color='red'>Error!</font><br/>");
-            }
+            WriteMessage(success ? "<font color='green'>Success</font><br/>" : "<font color='red'>Error!</font><br/>");
         }
 
 
@@ -537,7 +520,7 @@ namespace BugNET.Install
             HttpContext.Current.Response.Write("<h2>Error Details</h2>");
             HttpContext.Current.Response.Write("<table style='color:red;font-size:11px' cellspacing='0' cellpadding='0' border='0'>");
             HttpContext.Current.Response.Write("<tr><td>File</td><td>" + file + "</td></tr>");
-            HttpContext.Current.Response.Write("<tr><td>Error&nbsp;&nbsp;</td><td>" + message + "</td></tr>");
+            HttpContext.Current.Response.Write(string.Format("<tr><td>Error&nbsp;&nbsp;</td><td>{0}</td></tr>", message));
             HttpContext.Current.Response.Write("</table>");
             HttpContext.Current.Response.Write("<br><br>");
             HttpContext.Current.Response.Flush();

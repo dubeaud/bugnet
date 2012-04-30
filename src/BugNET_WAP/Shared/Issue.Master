@@ -25,10 +25,10 @@
         <form id="form1" enctype="multipart/form-data" method="post" runat="server">
             <ajaxToolkit:ToolkitScriptManager ID="ScriptManager1" runat="server">
                     <Scripts>
-                        <asp:ScriptReference Path="~/js/jquery-1.5.2.min.js" />
-                        <asp:ScriptReference Path="~/js/jquery.blockUI.js"  />
-                        <asp:ScriptReference Path="~/js/superfish.js" />
-                        <asp:ScriptReference Path="~/js/supersubs.js" />
+                        <asp:ScriptReference Path="~/Scripts/jquery-1.7.2.min.js" />
+                        <asp:ScriptReference Path="~/Scripts/jquery.blockUI.js"  />
+                        <asp:ScriptReference Path="~/Scripts/superfish.js" />
+                        <asp:ScriptReference Path="~/Scripts/supersubs.js" />
                     </Scripts>
                 </ajaxToolkit:ToolkitScriptManager>
 

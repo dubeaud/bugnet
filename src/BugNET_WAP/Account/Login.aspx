@@ -1,6 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Shared/SingleColumn.master"
     Title="Login" CodeBehind="Login.aspx.cs" Inherits="BugNET.Account.Login" %>
-<%@ Register Assembly="DotNetOpenAuth" Namespace="DotNetOpenAuth.OpenId.RelyingParty" TagPrefix="rp" %>
 <%@ Register Src="~/UserControls/LoginControl.ascx" TagName="LoginControl" TagPrefix="uc1" %>
 
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="Content">
@@ -21,7 +20,7 @@
             </p>
             <p>
                 <strong><asp:Localize runat="server" ID="Localize1" Text="You can login using your OpenID" meta:resourcekey="LoginOpenIDAccount" /></strong></p>
-            <rp:OpenIdLogin ID="OpenIdLogin1" runat="server" EnableRequestProfile="true" RequestNickname="Require"
+            <openAuth:OpenIdLogin ID="OpenIdLogin1" runat="server" EnableRequestProfile="true" RequestNickname="Require"
                 OnLoggedIn="OpenIdLogin1_LoggedIn" RequestEmail="Require" 
                 RequestFullName="Require" onloggingin="OpenIdLogin1_LoggingIn" />
         </asp:Panel>

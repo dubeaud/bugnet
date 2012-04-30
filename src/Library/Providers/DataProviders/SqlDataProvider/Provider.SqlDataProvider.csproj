@@ -12,6 +12,8 @@
     <AssemblyName>BugNET.Providers.SqlDataProvider</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,7 +34,8 @@
     <DocumentationFile>..\..\..\..\build\output\BugNET.Providers.SqlDataProvider.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net">
+    <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\lib\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -77,4 +80,5 @@
   <PropertyGroup>
     <PostBuildEvent Condition="'$(Configuration)' == 'Debug'">copy "$(ProjectDir)bin\$(ConfigurationName)\*.*" "$(SolutionDir)BugNET_WAP\bin\"</PostBuildEvent>
   </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
 </Project>

@@ -1,66 +1,67 @@
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Web.UI.WebControls;
+using BugNET.BLL;
+using BugNET.Entities;
+using BugNET.UserInterfaceLayer;
+
 namespace BugNET.Administration.Projects.UserControls
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Web.UI.WebControls;
-    using BugNET.BLL;
-    using BugNET.Entities;
-    using BugNET.UserInterfaceLayer;
-
 	/// <summary>
 	///		Summary description for ProjectComponents.
 	/// </summary>
 	public partial class ProjectCategories : System.Web.UI.UserControl, IEditProjectControl
 	{
-        /// <summary>
-        /// Handles the Load event of the Page control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		protected void Page_Load(object sender, System.EventArgs e)
-		{
-			// Put user code to initialize the page here
-            OkButton.OnClientClick = String.Format("onOk('{0}','{1}')", OkButton.UniqueID, "");
-		}
 
-
-
-		#region IEditProjectControl Members
+        #region IEditProjectControl Members
 
         /// <summary>
         /// Gets or sets the project id.
         /// </summary>
         /// <value>The project id.</value>
-		public int ProjectId
-		{
-            get{return ((BasePage)Page).ProjectId;}
+        public int ProjectId
+        {
+            get { return ((BasePage)Page).ProjectId; }
             set { ((BasePage)Page).ProjectId = value; }
-		}
+        }
 
         /// <summary>
         /// Inits this instance.
         /// </summary>
-		public void Initialize()
-		{
-            CategoryTree categories = new CategoryTree();
+        public void Initialize()
+        {
+            var categories = new CategoryTree();
             DropCategory.DataSource = categories.GetCategoryTreeByProjectId(ProjectId);
             DropCategory.DataBind();
-		}
+        }
 
         /// <summary>
         /// Updates this instance.
         /// </summary>
         /// <returns></returns>
-		public bool Update()
-		{
-			if (Page.IsValid)
-				return true;
-			else
-				return false;
-		}
+        public bool Update()
+        {
+            return Page.IsValid;
+        }
 
-		#endregion
+        public bool ShowSaveButton
+        {
+            get { return false; }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+		protected void Page_Load(object sender, EventArgs e)
+		{
+			// Put user code to initialize the page here
+            OkButton.OnClientClick = String.Format("onOk('{0}','{1}')", OkButton.UniqueID, "");
+		}
 
         /// <summary>
         /// Handles the Validate event of the ComponentValidation control.
@@ -70,41 +71,35 @@ namespace BugNET.Administration.Projects.UserControls
         protected void CategoryValidation_Validate(object sender, ServerValidateEventArgs e)
         {
             //validate that at least one version exists.
-            if (CategoryManager.GetByProjectId(ProjectId).Count > 0)
-            {
-                e.IsValid = true;
-            }
-            else
-            {
-                e.IsValid = false;
-            }
+            e.IsValid = CategoryManager.GetByProjectId(ProjectId).Count > 0;
         }
 
-        /// <summary>
+	    /// <summary>
         /// Handles the Click event of the OkButton control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void OkButton_Click(object sender, EventArgs e)
         {
-            int OldCategoryId = 0;
-            if(!string.IsNullOrEmpty(HiddenField1.Value))
-                OldCategoryId = Convert.ToInt32(HiddenField1.Value);
+            var oldCategoryId = 0;
 
-            if (OldCategoryId != 0)
+            if(!string.IsNullOrEmpty(HiddenField1.Value))
+                oldCategoryId = Convert.ToInt32(HiddenField1.Value);
+
+            if (oldCategoryId != 0)
             {
-                List<QueryClause> queryClauses = new List<QueryClause>();
-                QueryClause q = new QueryClause("AND", "IssueCategoryId", "=", HiddenField1.Value, SqlDbType.Int, false);
+                var queryClauses = new List<QueryClause>();
+                var q = new QueryClause("AND", "IssueCategoryId", "=", HiddenField1.Value, SqlDbType.Int, false);
                 queryClauses.Add(q);
 
-                List<Issue> issues = IssueManager.PerformQuery(queryClauses, ProjectId);
+                var issues = IssueManager.PerformQuery(queryClauses, ProjectId);
 
                 if (RadioButton1.Checked) //delete category 
                 {
                     //if (RecursiveDelete.Checked == true)
                     //Category.DeleteChildCategoriesByCategoryId(OldCategoryId);
                     //delete the category.
-                    CategoryManager.Delete(OldCategoryId);
+                    CategoryManager.Delete(oldCategoryId);
                 }
 
                 if (RadioButton2.Checked) //reassign issues to existing category.
@@ -114,13 +109,13 @@ namespace BugNET.Administration.Projects.UserControls
                         Message1.ShowErrorMessage(GetLocalResourceObject("NoCategorySelected").ToString());
                         return;
                     }
-                    if (OldCategoryId == DropCategory.SelectedValue)
+                    if (oldCategoryId == DropCategory.SelectedValue)
                     {
                         Message1.ShowErrorMessage(GetLocalResourceObject("SameCategorySelected").ToString());
                         return;
                     }
 
-                    foreach (Issue issue in issues)
+                    foreach (var issue in issues)
                     {
                         issue.CategoryName = DropCategory.SelectedText;
                         issue.CategoryId = DropCategory.SelectedValue;
@@ -128,7 +123,7 @@ namespace BugNET.Administration.Projects.UserControls
                     }
 
                     //delete the category.
-                    CategoryManager.Delete(OldCategoryId);
+                    CategoryManager.Delete(oldCategoryId);
                 }
 
                 //assign new category 
@@ -148,7 +143,7 @@ namespace BugNET.Administration.Projects.UserControls
                         IssueManager.SaveOrUpdate(issue);
                     }
                     //delete the category.
-                    CategoryManager.Delete(OldCategoryId);
+                    CategoryManager.Delete(oldCategoryId);
 
                 }
             }
@@ -157,15 +152,5 @@ namespace BugNET.Administration.Projects.UserControls
                 Message1.ShowErrorMessage(GetLocalResourceObject("CannotDeleteRootCategory").ToString());
             }
         }
-
-        #region IEditProjectControl Members
-
-
-        public bool ShowSaveButton
-        {
-            get { return false; }
-        }
-
-        #endregion
     }
 }

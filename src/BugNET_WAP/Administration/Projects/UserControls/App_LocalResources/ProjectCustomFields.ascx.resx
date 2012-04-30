@@ -174,4 +174,7 @@
   <data name="YesNoType.Text" xml:space="preserve">
     <value>Yes / No</value>
   </data>
+  <data name="UserListType.Text" xml:space="preserve">
+    <value>User List</value>
+  </data>
 </root>

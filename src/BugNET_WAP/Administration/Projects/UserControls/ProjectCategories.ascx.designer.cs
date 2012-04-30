@@ -67,6 +67,15 @@ namespace BugNET.Administration.Projects.UserControls {
         protected global::BugNET.UserControls.Message Message1;
         
         /// <summary>
+        /// imgAddCategory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlImage imgAddCategory;
+        
+        /// <summary>
         /// Literal2 control.
         /// </summary>
         /// <remarks>
@@ -76,13 +85,13 @@ namespace BugNET.Administration.Projects.UserControls {
         protected global::System.Web.UI.WebControls.Literal Literal2;
         
         /// <summary>
-        /// LinkButton1 control.
+        /// imgDeleteCategory control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
+        protected global::System.Web.UI.HtmlControls.HtmlImage imgDeleteCategory;
         
         /// <summary>
         /// Literal1 control.
@@ -101,6 +110,15 @@ namespace BugNET.Administration.Projects.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField HiddenField1;
+        
+        /// <summary>
+        /// lbDeleteCategory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lbDeleteCategory;
         
         /// <summary>
         /// pnlDeleteCategory control.
@@ -184,13 +202,13 @@ namespace BugNET.Administration.Projects.UserControls {
         protected global::System.Web.UI.WebControls.Button CancelButton;
         
         /// <summary>
-        /// ModalPopupExtender2 control.
+        /// mpeDeleteCategory control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.ModalPopupExtender ModalPopupExtender2;
+        protected global::AjaxControlToolkit.ModalPopupExtender mpeDeleteCategory;
         
         /// <summary>
         /// cbe control.

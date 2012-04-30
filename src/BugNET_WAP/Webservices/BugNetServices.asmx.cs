@@ -106,12 +106,10 @@ namespace BugNET.Webservices
         [WebMethod]
         public void RenameCategory(string categoryId, string name)
         {
-            if (string.IsNullOrEmpty(categoryId) || Convert.ToInt32(categoryId) == 0)
-                return;
-            if (string.IsNullOrEmpty(categoryId))
-                throw new ArgumentNullException("categoryId");
-            if (string.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+            if (string.IsNullOrEmpty(categoryId) || Convert.ToInt32(categoryId) == 0) return;
+            if (string.IsNullOrEmpty(categoryId)) throw new ArgumentNullException("categoryId");
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException("name");
+
             //if (string.IsNullOrEmpty(oldText))
             //    throw new ArgumentNullException("oldText");
 
@@ -138,13 +136,9 @@ namespace BugNET.Webservices
         [WebMethod]
         public void MoveCategory(string categoryId, string oldParentId, string newParentId)
         {
-            if (string.IsNullOrEmpty(categoryId))
-                throw new ArgumentNullException("categoryId");
-            if (string.IsNullOrEmpty(oldParentId))
-                throw new ArgumentNullException("oldParentId");
-            if (string.IsNullOrEmpty(newParentId))
-                throw new ArgumentNullException("newParentId");
-
+            if (string.IsNullOrEmpty(categoryId)) throw new ArgumentNullException("categoryId");
+            if (string.IsNullOrEmpty(oldParentId)) throw new ArgumentNullException("oldParentId");
+            if (string.IsNullOrEmpty(newParentId)) throw new ArgumentNullException("newParentId");
 
             Category c = CategoryManager.GetById(Convert.ToInt32(categoryId));
             if (c != null)
@@ -289,6 +283,7 @@ namespace BugNET.Webservices
 
             var entity = new Category { ProjectId = validParojectId, ParentCategoryId = validParentCategoryId, Name = name, ChildCount = 0 };
             CategoryManager.SaveOrUpdate(entity);
+
             return entity.Id;
         }
 

@@ -1418,6 +1418,9 @@ ul.permissions li
 	background-color: #efefef;
 	border: 5px solid #999;
 	padding: 20px;
+    filter: alpha(opacity=80);
+    opacity: 0.8;
+    z-index:999;
     clear:both;
 }
 .ModalHeader

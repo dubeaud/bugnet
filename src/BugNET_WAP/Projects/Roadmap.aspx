@@ -4,7 +4,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="Content" Runat="Server">
  <asp:ScriptManagerProxy ID="ScriptManagerProxy1" runat="server">
         <Scripts>
-            <asp:ScriptReference Path="~/js/jquery.cookie.js" />
+            <asp:ScriptReference Path="~/Scripts/jquery.cookie.js" />
         </Scripts>
     </asp:ScriptManagerProxy>
     <script type="text/javascript">
