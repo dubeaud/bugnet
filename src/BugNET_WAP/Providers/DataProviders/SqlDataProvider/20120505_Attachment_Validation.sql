@@ -115,6 +115,7 @@ BEGIN
 	RETURN 0;
 END
 
+/*
 SELECT 
 	@HasPermission AS '@HasPermission',
 	@HasProjectAccess AS '@HasProjectAccess',
@@ -127,6 +128,7 @@ SELECT
 	@AnonymousAccess AS '@AnonymousAccess',
 	@AttachmentExists AS '@AttachmentExists' ,
 	@RequestingUserID AS '@RequestingUserID'
+*/
 	
 /* try and get the attachment id */
 SELECT @ReturnValue = ia.IssueAttachmentId
