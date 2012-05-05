@@ -72,54 +72,109 @@ namespace BugNET.UserInterfaceLayer
             else
             {
                 // Get the attachment
-                var attachmentId = context.Request.QueryString.Get("id", Globals.NEW_ID);
-                var attachment = IssueAttachmentManager.GetById(attachmentId);
-                var cleanFileName = IssueAttachmentManager.StripGuidFromFileName(attachment.FileName);
-                var fileName = attachment.FileName;
+                var attachmentId = context.Request.Get("id", Globals.NEW_ID);
 
-                if (attachment.Attachment != null)
+                // cannot parse the attachment from the querystring bail without trying
+                if (attachmentId.Equals(Globals.NEW_ID))
                 {
-                    // Write out the attachment
-                    context.Server.ScriptTimeout = 600;
-                    context.Response.Buffer = true;
-                    context.Response.Clear();
-
-                    if (attachment.ContentType.ToLower().StartsWith("image/"))
-                    {
-                        context.Response.ContentType = attachment.ContentType;
-                        context.Response.AddHeader("Content-Disposition", string.Format("inline; filename=\"{0}\";", cleanFileName));
-                    }
-                    else
-                    {
-                        context.Response.ContentType = "application/octet-stream";
-                        context.Response.AddHeader("Content-Disposition", string.Format("attachment; filename=\"{0}\";", cleanFileName));
-                    }
-                    context.Response.AddHeader("Content-Length", attachment.Attachment.Length.ToString());
-                    context.Response.BinaryWrite(attachment.Attachment);
+                    context.Response.Write("<h1>Attachment Not Found.</h1>  It may have been deleted from the server.");
+                    context.Response.End();
+                    return;
                 }
-                else
+
+                try
                 {
+                    var attachment = IssueAttachmentManager.GetAttachmentForDownload(attachmentId);
 
-                    var p = ProjectManager.GetById(IssueManager.GetById(attachment.IssueId).ProjectId);
-                    var projectPath = p.UploadPath;
-
-                    //append a trailing slash if it doesn't exist
-                    if (!projectPath.EndsWith("\\"))
-                        projectPath = String.Concat(projectPath, "\\");
-
-                    var path = String.Concat("~", Globals.UPLOAD_FOLDER, projectPath, fileName);
-
-                    if (System.IO.File.Exists(context.Server.MapPath(path)))
-                    {
-                        context.Response.Clear();
-                        context.Response.ContentType = attachment.ContentType;
-                        if (attachment.ContentType.ToLower().StartsWith("image/")) context.Response.AddHeader("Content-Disposition", string.Format("inline; filename=\"{0}\";", cleanFileName));
-                        else context.Response.AddHeader("Content-Disposition", string.Format("attachment; filename=\"{0}\";", cleanFileName));
-                        context.Response.WriteFile(path);
-                    }
-                    else
+                    if(attachment == null)
                     {
                         context.Response.Write("<h1>Attachment Not Found.</h1>  It may have been deleted from the server.");
+                        context.Response.End();
+                        return;
+                    }
+
+                    var cleanFileName = IssueAttachmentManager.StripGuidFromFileName(attachment.FileName);
+                    var fileName = attachment.FileName;
+
+                    if (attachment.Attachment != null)
+                    {
+                        // Write out the attachment
+                        context.Server.ScriptTimeout = 600;
+                        context.Response.Buffer = true;
+                        context.Response.Clear();
+
+                        if (attachment.ContentType.ToLower().StartsWith("image/"))
+                        {
+                            context.Response.ContentType = attachment.ContentType;
+                            context.Response.AddHeader("Content-Disposition", string.Format("inline; filename=\"{0}\";", cleanFileName));
+                        }
+                        else
+                        {
+                            context.Response.ContentType = "application/octet-stream";
+                            context.Response.AddHeader("Content-Disposition", string.Format("attachment; filename=\"{0}\";", cleanFileName));
+                        }
+                        context.Response.AddHeader("Content-Length", attachment.Attachment.Length.ToString());
+                        context.Response.BinaryWrite(attachment.Attachment);
+                    }
+                    else
+                    {
+
+                        var p = ProjectManager.GetById(IssueManager.GetById(attachment.IssueId).ProjectId);
+                        var projectPath = p.UploadPath;
+
+                        //append a trailing slash if it doesn't exist
+                        if (!projectPath.EndsWith("\\"))
+                            projectPath = String.Concat(projectPath, "\\");
+
+                        var path = String.Concat("~", Globals.UPLOAD_FOLDER, projectPath, fileName);
+
+                        if (System.IO.File.Exists(context.Server.MapPath(path)))
+                        {
+                            context.Response.Clear();
+                            context.Response.ContentType = attachment.ContentType;
+                            context.Response.AddHeader("Content-Disposition",
+                                                       attachment.ContentType.ToLower().StartsWith("image/")
+                                                           ? string.Format("inline; filename=\"{0}\";", cleanFileName)
+                                                           : string.Format("attachment; filename=\"{0}\";",
+                                                                           cleanFileName));
+                            context.Response.WriteFile(path);
+                        }
+                        else
+                        {
+                            context.Response.Write("<h1>Attachment Not Found.</h1>  It may have been deleted from the server.");
+                        }
+                    }
+                }
+                catch(DataAccessException dx)
+                {
+                    if(dx.StatusCode > 0)
+                    {
+                        var statusCode = dx.StatusCode.ToEnum(Globals.DownloadAttachmentStatusCodes.NoAccess);
+
+                        var url = context.Request.Url.PathAndQuery.Trim().ToLower();
+                        var fullPath = context.Request.Url.ToString().ToLower();
+                        var authority = fullPath.Replace(url, "");
+
+                        var redirectUrl =
+                            string.Format("~/Account/Login.aspx?ReturnUrl={0}{1}", authority, context.Server.UrlEncode(url));
+
+                        switch(statusCode)
+                        {
+                            case Globals.DownloadAttachmentStatusCodes.InvalidAttachmentId:
+                                context.Response.Write("<h1>Attachment Not Found.</h1>  It may have been deleted from the server.");
+                                break;
+                            case Globals.DownloadAttachmentStatusCodes.AuthenticationRequired:
+                                context.Response.Redirect(redirectUrl);
+                                break;
+                            case Globals.DownloadAttachmentStatusCodes.ProjectOrIssueDisabled:
+                                context.Response.Write("<h1>Attachment Not Found.</h1>  It may have been deleted from the server.");
+                                break;
+                            case Globals.DownloadAttachmentStatusCodes.NoAccess:
+                                context.Response.Write("<h1>Access Denied.</h1>  You do not have proper permissions to access this Attachment.");
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
                     }
                 }
             }

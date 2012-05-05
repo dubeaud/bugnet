@@ -403,7 +403,7 @@ namespace BugNET.Administration.Projects.UserControls
 
             var permissions = RoleManager.GetPermissionsById(RoleId);
 
-            foreach (var permission in permissions.Select(p => p.Key.ToEnum<Globals.Permission>()))
+            foreach (var permission in permissions.Select(p => p.Key.ToEnum(true, Globals.Permission.None)))
             {
                 switch (permission)
                 {

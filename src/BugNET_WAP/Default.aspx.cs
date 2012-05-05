@@ -13,7 +13,7 @@ namespace BugNET
 	/// <summary>
 	/// Summary description for _Default.
 	/// </summary>
-	public partial class _Default : System.Web.UI.Page
+	public partial class _Default : Page
 	{
 
         /// <summary>
@@ -24,6 +24,7 @@ namespace BugNET
 		protected void Page_Load(object sender, System.EventArgs e)
 		{
             Page.Title = string.Format("{0} - {1}", "Home", HostSettingManager.Get(HostSettingNames.ApplicationTitle));
+
             if (!Page.IsPostBack)
             {
                 lblApplicationTitle.Text = HostSettingManager.Get(HostSettingNames.ApplicationTitle);
@@ -119,7 +120,7 @@ namespace BugNET
                 if (!Context.User.Identity.IsAuthenticated || !UserManager.HasPermission(p.Id, Globals.Permission.ViewProjectCalendar.ToString()))
                     e.Item.FindControl("ProjectCalendar").Visible = false;
 
-                System.Web.UI.WebControls.Image ProjectImage = (System.Web.UI.WebControls.Image)e.Item.FindControl("ProjectImage");                 
+                Image ProjectImage = (Image)e.Item.FindControl("ProjectImage");                 
                 ProjectImage.ImageUrl = string.Format("~/DownloadAttachment.axd?id={0}&mode=project",p.Id);
                 
                 Label OpenIssuesLink = (Label)e.Item.FindControl("OpenIssues");

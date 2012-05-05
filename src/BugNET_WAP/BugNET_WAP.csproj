@@ -1047,6 +1047,8 @@
     <Content Include="Providers\DataProviders\SqlDataProvider\0.9.126.0.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\0.9.142.0.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\0.9.152.0.SqlDataProvider.sql" />
+    <Content Include="Providers\DataProviders\SqlDataProvider\20120505_Attachment_Validation.sql" />
+    <Content Include="Providers\DataProviders\SqlDataProvider\20120505_Missing_FKs.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\BugNet.Data.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\BugNet.Schema.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\InstallCommon.sql" />

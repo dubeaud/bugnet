@@ -152,6 +152,18 @@ namespace BugNET.Common
 
         #region Public Enumerations
 
+        /// <summary>
+        /// Status codes from the database when validating an attachment
+        /// </summary>
+        /// <remarks>When using a valid attacment id would be returned from the database so this emun would not mat properly</remarks>
+        public enum DownloadAttachmentStatusCodes
+        {
+            InvalidAttachmentId = 100,
+            AuthenticationRequired = 200,
+            ProjectOrIssueDisabled = 300,
+            NoAccess = 400
+        }
+
         public enum ActionTriggers
         {
             None = 0,
@@ -180,7 +192,6 @@ namespace BugNET.Common
             Public = 0,
             Private = 1
         }
-
 
         /// <summary>
         /// Permissions Enumeration
@@ -221,6 +232,7 @@ namespace BugNET.Common
             ChangeIssueStatus = 31,
             EditQuery = 32
         }
+
         #endregion
     }
 }

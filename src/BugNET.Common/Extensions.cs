@@ -103,10 +103,19 @@ namespace BugNET.Common
         /// </summary>
         /// <typeparam name="T">The type of the Enum</typeparam>
         /// <param name="value">String value to parse</param>
+        /// <param name="defaultValue">The default value if the int cannot be cast to the typeparam</param>
         /// <returns>The Enum corresponding to the stringExtensions</returns>
-        public static T ToEnum<T>(this string value)
+        public static T ToEnum<T>(this int value, T defaultValue)
         {
-            return ToEnum<T>(value, false);
+            int num;
+
+            if (int.TryParse(value.ToString(), out num))
+            {
+                if (Enum.IsDefined(typeof(T), num))
+                    return (T)Enum.ToObject(typeof(T), num);
+            }
+
+            return defaultValue; 
         }
 
         /// <summary>
@@ -115,20 +124,16 @@ namespace BugNET.Common
         /// <typeparam name="T">The type of the Enum</typeparam>
         /// <param name="value">String value to parse</param>
         /// <param name="ignorecase">Ignore the case of the string being parsed</param>
+        /// <param name="defaultValue"> </param>
         /// <returns>The Enum corresponding to the stringExtensions</returns>
-        public static T ToEnum<T>(this string value, bool ignorecase)
+        public static T ToEnum<T>(this string value, bool ignorecase, T defaultValue)
         {
             if (value == null) throw new ArgumentNullException("value");
 
-            value = value.Trim();
+            if (Enum.IsDefined(typeof(T), value))
+                return (T)Enum.Parse(typeof(T), value, ignorecase);
 
-            if (value.Length == 0) throw new ArgumentNullException("value", "Must specify valid information for parsing in the string.");
-
-            var t = typeof(T);
-
-            if (!t.IsEnum) throw new ArgumentException("Type provided must be an Enum.", "value");
-
-            return (T)Enum.Parse(t, value, ignorecase);
+            return defaultValue;
         }
         #endregion
 

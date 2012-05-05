@@ -53,6 +53,7 @@
     </Compile>
     <Compile Include="ActionEventArgs.cs" />
     <Compile Include="AdminMenuItem.cs" />
+    <Compile Include="DataAccessException.cs" />
     <Compile Include="NotificationTypes.cs" />
     <Compile Include="CustomFieldTypes.cs" />
     <Compile Include="Extensions.cs" />

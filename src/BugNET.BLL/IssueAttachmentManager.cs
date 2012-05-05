@@ -23,7 +23,7 @@ namespace BugNET.BLL
         /// Validates if the requesting user can download the attachment
         /// </summary>
         /// <param name="attachmentId">The attachment id to fetch</param>
-        ///<returns>An attachment if the security checks pass</returns>
+        /// <returns>An attachment if the security checks pass</returns>
         /// <remarks>
         /// The following defines the logic for a attachment NOT to be returned
         /// <list type="number">
@@ -36,18 +36,17 @@ namespace BugNET.BLL
         public static IssueAttachment GetAttachmentForDownload(int attachmentId)
         {
             // validate input
-            if (attachmentId <= Globals.NEW_ID)
-                throw (new ArgumentOutOfRangeException("attachmentId"));
+            if (attachmentId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("attachmentId"));
 
-            Guid? requestingUserId = null;
+            var requestingUser = string.Empty;
 
             if (HttpContext.Current.User != null)
             {
                 if (HttpContext.Current.User.Identity.IsAuthenticated)
-                    requestingUserId = Guid.Parse(HttpContext.Current.User.Identity.Name);
+                    requestingUser = Security.GetUserName();
             }
 
-            return DataProviderManager.Provider.GetAttachmentForDownload(attachmentId, requestingUserId);
+            return DataProviderManager.Provider.GetAttachmentForDownload(attachmentId, requestingUser);
         }
 
         /// <summary>

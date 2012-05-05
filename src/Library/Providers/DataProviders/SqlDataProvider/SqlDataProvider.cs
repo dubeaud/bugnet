@@ -2418,7 +2418,7 @@ namespace BugNET.Providers.DataProviders
         /// Validates if the requesting user can download the attachment
         /// </summary>
         /// <param name="attachmentId">The attachment id to fetch</param>
-        /// <param name="requestingUserId">The requesting user is</param>
+        /// <param name="requestingUser">The requesting user name</param>
         /// <returns>An attachment if the security checks pass</returns>
         /// <remarks>
         /// The following defines the logic for a attachment id NOT to be returned
@@ -2429,7 +2429,7 @@ namespace BugNET.Providers.DataProviders
         /// <item><description>When the issue is private and (the requestor is neither the creator of the issue or (assigned to the issue when anon access is off)) or (the requestor does not have elevated permissions)</description></item>
         /// </list>
         /// </remarks>
-        public override IssueAttachment GetAttachmentForDownload(int attachmentId, Guid? requestingUserId)
+        public override IssueAttachment GetAttachmentForDownload(int attachmentId, string requestingUser = "")
         {
             if (attachmentId <= 0) throw (new ArgumentOutOfRangeException("attachmentId"));
 
@@ -2439,19 +2439,24 @@ namespace BugNET.Providers.DataProviders
                 {
                     AddParamToSqlCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
                     AddParamToSqlCmd(sqlCmd, "@IssueAttachmentId", SqlDbType.Int, 0, ParameterDirection.Input, attachmentId);
-                    AddParamToSqlCmd(sqlCmd, "@RequestingUserId", SqlDbType.UniqueIdentifier, 0, ParameterDirection.Input, requestingUserId);
+                    AddParamToSqlCmd(sqlCmd, "@RequestingUser", SqlDbType.VarChar, 0, ParameterDirection.Input, requestingUser);
 
                     SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUEATTACHMENT_VALIDATEDOWNLOAD);
+                    ExecuteNonQuery(sqlCmd);
 
                     attachmentId = ((int)sqlCmd.Parameters["@ReturnValue"].Value);
 
                     return GetIssueAttachmentById(attachmentId);
-
                 }
             }
             catch (Exception ex)
             {
-                throw ProcessException(ex);
+                var message = ex.Message.Trim();
+
+                if (!message.StartsWith("BNCode")) throw ProcessException(ex);
+
+                var statusCode = Utilities.ParseDatabaseStatusCode(ex.Message);
+                throw new DataAccessException(ex.Message, statusCode);
             }
         }
 
@@ -5035,6 +5040,24 @@ namespace BugNET.Providers.DataProviders
             return result;
         }
 
+        /// <summary>
+        /// Executes the SqlCommand via non-query.
+        /// </summary>
+        /// <param name="sqlCmd">The SqlCommand.</param>
+        /// <returns></returns>
+        private void ExecuteNonQuery(SqlCommand sqlCmd)
+        {
+            // Validate Command Properties
+            if (string.IsNullOrEmpty(_connectionString)) throw new Exception("The connection string cannot be empty, please check the web.config for the proper settings");
+            if (sqlCmd == null) throw (new ArgumentNullException("sqlCmd"));
+
+            using (var cn = new SqlConnection(_connectionString))
+            {
+                sqlCmd.Connection = cn;
+                cn.Open();
+                sqlCmd.ExecuteNonQuery();
+            }
+        }
 
         /// <summary>
         /// Ts the execute reader CMD.

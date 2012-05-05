@@ -9,6 +9,35 @@ namespace BugNET.Common
     public static class Utilities
     {
         /// <summary>
+        /// Parses a BugNet status code from a database raiserror exception
+        /// </summary>
+        /// <param name="errorMessage">The error message from the database</param>
+        /// <returns></returns>
+        public static int ParseDatabaseStatusCode(string errorMessage)
+        {
+            if (!errorMessage.StartsWith("BNCode")) return 0;
+
+            // at this point we have a code so we have to parse it out
+            var parts = errorMessage.Split(' ');
+
+            if (parts.Length > 0)
+            {
+                var statusCodeParts = parts[0].Split(':');
+
+                if (statusCodeParts.Length.Equals(2))
+                {
+                    var statusCode = statusCodeParts[1];
+
+                    // if we cannot convert the code to a proper status code then do the safe thing and not allow access
+                    return statusCode.ToOrDefault(Globals.DownloadAttachmentStatusCodes.NoAccess.To<int>());
+                }
+            }
+
+            // if we cannot parse the code out then do the safe thing and not allow access
+            return Globals.DownloadAttachmentStatusCodes.NoAccess.To<int>();
+        }
+
+        /// <summary>
         /// Parses the full issue id.
         /// </summary>
         /// <param name="fullId">The full id.</param>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration.Provider;
+using BugNET.Common;
 using BugNET.Entities;
 
 namespace BugNET.DAL
@@ -90,7 +91,7 @@ namespace BugNET.DAL
         public abstract List<IssueAttachment> GetIssueAttachmentsByIssueId(int issueId);
         public abstract IssueAttachment GetIssueAttachmentById(int attachmentId);
         public abstract bool DeleteIssueAttachment(int attachmentId);
-        public abstract IssueAttachment GetAttachmentForDownload(int attachmentId, Guid? requestingUserId);
+        public abstract IssueAttachment GetAttachmentForDownload(int attachmentId, string requestingUser = "");
 
         // IssueHistory
         public abstract List<IssueHistory> GetIssueHistoryByIssueId(int issueId);
