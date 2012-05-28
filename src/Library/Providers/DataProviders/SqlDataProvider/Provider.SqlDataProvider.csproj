@@ -54,6 +54,10 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlDataProvider.cs" />
+    <Compile Include="SqlDataProviderConstants.cs" />
+    <Compile Include="SqlDataProviderHelpers.cs" />
+    <Compile Include="SqlDataProviderIssues.cs" />
+    <Compile Include="SqlDataProviderListHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\BugNET.Common\BugNET.Common.csproj">

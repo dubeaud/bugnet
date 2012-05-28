@@ -47,10 +47,10 @@ namespace BugNET.UserInterfaceLayer.WebControls
 
             Items.Add(new SuckerMenuItem("~/Issues/MyIssues.aspx", Resources.SharedResources.MyIssues, this));
 
-            if (projectId > Globals.NEW_ID && UserManager.IsInRole(Globals.ProjectAdminRole))
+            if (projectId > Globals.NEW_ID && (UserManager.IsInRole(projectId, Globals.ProjectAdminRole) || UserManager.IsSuperUser()))
                 Items.Add(new SuckerMenuItem(string.Format("~/Administration/Projects/EditProject.aspx?pid={0}", projectId), Resources.SharedResources.EditProject, this,"admin"));
 
-            if (!UserManager.IsInRole(Globals.SUPER_USER_ROLE)) return;
+            if (!UserManager.IsSuperUser()) return;
 
             var oItemAdmin = new SuckerMenuItem("~/Administration/Admin.aspx", string.Concat(Resources.SharedResources.Admin, " »"), this, "admin");
             Items.Add(oItemAdmin);

@@ -32,6 +32,8 @@ namespace BugNET.Common
         public static readonly string[] DefaultRoles = { "Project Administrators", "Read Only", "Reporter", "Developer", "Quality Assurance" };
         public static readonly string ProjectAdminRole = DefaultRoles[0];
 
+        public const string PROJECT_CUSTOM_FIELDS_VIEW_NAME = "BugNet_P{0}_CFV";
+
         /// <summary>
         /// The default length of short comments (if not specified).
         /// </summary>

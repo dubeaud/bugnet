@@ -21,14 +21,40 @@ namespace BugNET.BLL
         private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
+        /// Creates the custom field views for issue
+        /// </summary>
+        /// <returns></returns>
+        public static bool CreateCustomFieldViews()
+        {
+            try
+            {
+                var projects = DataProviderManager.Provider.GetAllProjects();
+
+                foreach (var project in projects)
+                {
+                    CustomFieldManager.UpdateCustomFieldView(project.Id);
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Executes the statements.
         /// </summary>
         /// <param name="statements">The statements.</param>
-        public static void ExecuteStatements(List<string> statements)
+        public static void ExecuteStatements(IEnumerable<string> statements)
         {
             DataProviderManager.Provider.ExecuteScript(statements);
 
         }
+
         /// <summary>
         /// Gets the provider path.
         /// </summary>
@@ -37,6 +63,7 @@ namespace BugNET.BLL
         {
             return DataProviderManager.Provider.GetProviderPath();
         }
+
         /// <summary>
         /// Migrates the users to the .NET 2.0 membership provider.
         /// </summary>   
@@ -45,13 +72,13 @@ namespace BugNET.BLL
         {
             try
             {
-                using(var conn = new SqlConnection(WebConfigurationManager.ConnectionStrings[0].ConnectionString))
+                using (var conn = new SqlConnection(WebConfigurationManager.ConnectionStrings[0].ConnectionString))
                 {
-                    using(var command = new SqlCommand("SELECT * FROM Users", conn))
+                    using (var command = new SqlCommand("SELECT * FROM Users", conn))
                     {
                         conn.Open();
 
-                        using(var dr = command.ExecuteReader())
+                        using (var dr = command.ExecuteReader())
                         {
                             while (dr.Read())
                             {
@@ -84,7 +111,7 @@ namespace BugNET.BLL
             }
             catch (Exception ex)
             {
-               
+                Log.Error(ex);
             }
 
             return false;
@@ -136,15 +163,15 @@ namespace BugNET.BLL
                 config = LoadConfig();
 
                 XmlNode xmlMachineKey = config.SelectSingleNode("configuration/system.web/machineKey");
-                if(xmlMachineKey != null)
+                if (xmlMachineKey != null)
                 {
-                
+
                     xmlMachineKey.Attributes["validationKey"].Value = GenRandomValues(128);
-                    xmlMachineKey.Attributes["decryptionKey"].Value =  GenRandomValues(64);
+                    xmlMachineKey.Attributes["decryptionKey"].Value = GenRandomValues(64);
                 }
-  
+
                 XmlNode AppSettings = config.SelectSingleNode("//appSettings");
-                if(AppSettings != null)
+                if (AppSettings != null)
                 {
                     //create a new element for installation date parameter
                     xmlElement = config.CreateElement("add");
@@ -152,7 +179,7 @@ namespace BugNET.BLL
                     xmlElement.SetAttribute("value", DateTime.Today.ToString("d", new CultureInfo("en-US")));
                     AppSettings.AppendChild(xmlElement);
                 }
-                
+
                 SaveConfig(config);
 
             }
@@ -192,7 +219,7 @@ namespace BugNET.BLL
 
             if (string.IsNullOrEmpty(version))
                 return Globals.UpgradeStatus.Install;
-            else if(version.StartsWith("ERROR"))
+            else if (version.StartsWith("ERROR"))
                 return Globals.UpgradeStatus.None;
 
             // Now check if the user is authenticated.
@@ -231,8 +258,22 @@ namespace BugNET.BLL
             return GetUpgradeStatus() != Globals.UpgradeStatus.Install;
         }
 
+        /// <summary>
+        /// Gets the application map path.
+        /// </summary>
+        /// <value>The application map path.</value>
+        public static string ApplicationMapPath
+        {
+            get
+            {
+                var context = HttpContext.Current;
+                return context.Server.MapPath("~").EndsWith("\\") ? context.Server.MapPath("~") : context.Server.MapPath("~") + "\\";
+            }
+        }
+
         #region Load & Save Config
-         /// <summary>
+
+        /// <summary>
         /// Loads the config.
         /// </summary>
         /// <returns></returns>
@@ -264,7 +305,7 @@ namespace BugNET.BLL
                 FileAttributes objFileAttributes = FileAttributes.Normal;
                 if (File.Exists(strFilePath))
                 {
-					//save current file attributes
+                    //save current file attributes
                     objFileAttributes = File.GetAttributes(strFilePath);
                     //change to normal ( in case it is flagged as read-only )
                     File.SetAttributes(strFilePath, FileAttributes.Normal);
@@ -284,21 +325,7 @@ namespace BugNET.BLL
             }
         }
 
-        /// <summary>
-        /// Gets the application map path.
-        /// </summary>
-        /// <value>The application map path.</value>
-        public static string ApplicationMapPath
-        {
-            get
-            {
-                var context = HttpContext.Current;
-                return context.Server.MapPath("~").EndsWith("\\") ? context.Server.MapPath("~") : context.Server.MapPath("~") + "\\";
-            }
-        }
-    #endregion
-
-       
+        #endregion
 
     }
 }

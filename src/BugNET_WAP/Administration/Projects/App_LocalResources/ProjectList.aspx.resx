@@ -138,4 +138,10 @@
   <data name="ProjectManager" xml:space="preserve">
     <value>Project Manager</value>
   </data>
+  <data name="GenerateCustomFieldViews" xml:space="preserve">
+    <value>Generate Custom Field Views</value>
+  </data>
+  <data name="ConfirmCustomFieldViewCreation" xml:space="preserve">
+    <value>This will re-generate all custom field views for all projects, are you sure you wish to do this?</value>
+  </data>
 </root>

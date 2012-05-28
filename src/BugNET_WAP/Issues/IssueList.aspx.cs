@@ -31,7 +31,7 @@ namespace BugNET.Issues
             ProjectId = Request.Get("pid", -1);
 
             // BGN-1379
-            if (ProjectId .Equals(-1))
+            if (ProjectId.Equals(-1))
                 ErrorRedirector.TransferToNotFoundPage(Page);
 
             if (!User.Identity.IsAuthenticated)
@@ -55,7 +55,9 @@ namespace BugNET.Issues
                 }
                 else
                 {
-                    if (Request.QueryString.Count > 1) state.ViewIssues = string.Empty;
+                    if (Request.QueryString.Count > 1)
+                        state.ViewIssues = string.Empty;
+
                     dropView.SelectedValue = state.ViewIssues;
                     ProjectId = state.ProjectId;
                     ctlDisplayIssues.CurrentPageIndex = state.IssueListPageIndex;
@@ -77,7 +79,7 @@ namespace BugNET.Issues
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void Page_PreRender(object sender, System.EventArgs e)
+        private void Page_PreRender(object sender, EventArgs e)
         {
             // Intention is to restore IssueList page state when if it is redirected back to.
             // Put all necessary data in IssueListState object and save it in the session.
@@ -93,6 +95,7 @@ namespace BugNET.Issues
         }
 
         #region Querystring Properties
+
         /// <summary>
         /// Returns the component Id from the query string
         /// </summary>
@@ -204,6 +207,7 @@ namespace BugNET.Issues
                 return Request.Get("bid", -1);
             }
         }
+
         #endregion
 
         /// <summary>
@@ -215,7 +219,7 @@ namespace BugNET.Issues
         {
             ctlDisplayIssues.CurrentPageIndex = 0;
 
-            BindIssues();
+            BindIssues(dropView.SelectedValue);
         }
 
         /// <summary>
@@ -231,30 +235,26 @@ namespace BugNET.Issues
         /// <summary>
         /// Binds the issues.
         /// </summary>
-        protected void BindIssues()
+        private void BindIssues(string issueViewSelectedValue = "")
         {
             var isError = false;
-            List<Issue> colIssues = null;
 
-            if (Request.QueryString.Count > 1 && dropView.SelectedIndex == 0)
+            var queryClauses = new List<QueryClause>();
+
+            // add the disabled field as the first order of business
+            var q = new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int, false);
+            queryClauses.Add(q);
+
+            if (Request.QueryString.Count > 1 && issueViewSelectedValue.Equals(""))
             {
                 dropView.SelectedIndex = 0;
-                QueryClause q;
                 var isStatus = false;
-                const string booleanOperator = "AND";
-
-                var queryClauses = new List<QueryClause>();
-
-                // add the disabled field
-                q = new QueryClause(booleanOperator, "[Disabled]", "=", "0", SqlDbType.Int, false);
-
-                queryClauses.Add(q);
 
                 if (!string.IsNullOrEmpty(IssueCategoryId))
                 {
-                    q = IssueCategoryId == "0" ? 
-                        new QueryClause(booleanOperator, "IssueCategoryId", "IS", null, SqlDbType.Int, false) : 
-                        new QueryClause(booleanOperator, "IssueCategoryId", "=", IssueCategoryId, SqlDbType.Int, false);
+                    q = IssueCategoryId == "0" ?
+                        new QueryClause("AND", "iv.[IssueCategoryId]", "IS", null, SqlDbType.Int, false) :
+                        new QueryClause("AND", "iv.[IssueCategoryId]", "=", IssueCategoryId, SqlDbType.Int, false);
 
                     queryClauses.Add(q);
                 }
@@ -262,8 +262,8 @@ namespace BugNET.Issues
                 if (!string.IsNullOrEmpty(IssueTypeId))
                 {
                     q = IssueTypeId == "0" ?
-                        new QueryClause(booleanOperator, "IssueTypeId", "IS", null, SqlDbType.Int, false) :
-                        new QueryClause(booleanOperator, "IssueTypeId", "=", IssueTypeId, SqlDbType.Int, false);
+                        new QueryClause("AND", "iv.[IssueTypeId]", "IS", null, SqlDbType.Int, false) :
+                        new QueryClause("AND", "iv.[IssueTypeId]", "=", IssueTypeId, SqlDbType.Int, false);
 
                     queryClauses.Add(q);
                 }
@@ -271,8 +271,8 @@ namespace BugNET.Issues
                 if (!string.IsNullOrEmpty(IssuePriorityId))
                 {
                     q = IssuePriorityId == "0" ?
-                        new QueryClause(booleanOperator, "IssuePriorityId", "IS", null, SqlDbType.Int, false) :
-                        new QueryClause(booleanOperator, "IssuePriorityId", "=", IssuePriorityId, SqlDbType.Int, false);
+                        new QueryClause("AND", "iv.[IssuePriorityId]", "IS", null, SqlDbType.Int, false) :
+                        new QueryClause("AND", "iv.[IssuePriorityId]", "=", IssuePriorityId, SqlDbType.Int, false);
 
                     queryClauses.Add(q);
                 }
@@ -280,8 +280,8 @@ namespace BugNET.Issues
                 if (!string.IsNullOrEmpty(IssueMilestoneId))
                 {
                     q = IssueMilestoneId == "0" ?
-                        new QueryClause(booleanOperator, "IssueMilestoneId", "IS", null, SqlDbType.Int, false) :
-                        new QueryClause(booleanOperator, "IssueMilestoneId", "=", IssueMilestoneId, SqlDbType.Int, false);
+                        new QueryClause("AND", "iv.[IssueMilestoneId]", "IS", null, SqlDbType.Int, false) :
+                        new QueryClause("AND", "iv.[IssueMilestoneId]", "=", IssueMilestoneId, SqlDbType.Int, false);
 
                     queryClauses.Add(q);
                 }
@@ -289,8 +289,8 @@ namespace BugNET.Issues
                 if (!string.IsNullOrEmpty(IssueResolutionId))
                 {
                     q = IssueResolutionId == "0" ?
-                        new QueryClause(booleanOperator, "IssueResolutionId", "IS", null, SqlDbType.Int, false) :
-                        new QueryClause(booleanOperator, "IssueResolutionId", "=", IssueResolutionId, SqlDbType.Int, false);
+                        new QueryClause("AND", "iv.[IssueResolutionId]", "IS", null, SqlDbType.Int, false) :
+                        new QueryClause("AND", "iv.[IssueResolutionId]", "=", IssueResolutionId, SqlDbType.Int, false);
 
                     queryClauses.Add(q);
                 }
@@ -298,13 +298,13 @@ namespace BugNET.Issues
                 if (!string.IsNullOrEmpty(AssignedUserId))
                 {
                     Guid userId;
-                    q = new QueryClause(booleanOperator, "IssueAssignedUserId", "IS", null, SqlDbType.NVarChar, false);
+                    q = new QueryClause("AND", "iv.[IssueAssignedUserId]", "IS", null, SqlDbType.NVarChar, false);
 
                     if (Guid.TryParse(AssignedUserId, out userId))
                     {
                         q = AssignedUserId == Globals.EMPTY_GUID ?
-                            new QueryClause(booleanOperator, "IssueAssignedUserId", "IS", null, SqlDbType.Int, false) :
-                            new QueryClause(booleanOperator, "IssueAssignedUserId", "=", AssignedUserId, SqlDbType.NVarChar, false);
+                            new QueryClause("AND", "iv.[IssueAssignedUserId]", "IS", null, SqlDbType.Int, false) :
+                            new QueryClause("AND", "iv.[IssueAssignedUserId]", "=", AssignedUserId, SqlDbType.NVarChar, false);
                     }
 
                     queryClauses.Add(q);
@@ -317,27 +317,27 @@ namespace BugNET.Issues
                         isStatus = true;
 
                         q = IssueStatusId == "0" ?
-                            new QueryClause(booleanOperator, "IssueStatusId", "IS", null, SqlDbType.Int, false) :
-                            new QueryClause(booleanOperator, "IssueStatusId", "=", IssueStatusId, SqlDbType.Int, false);
+                            new QueryClause("AND", "iv.[IssueStatusId]", "IS", null, SqlDbType.Int, false) :
+                            new QueryClause("AND", "iv.[IssueStatusId]", "=", IssueStatusId, SqlDbType.Int, false);
 
                         queryClauses.Add(q);
                     }
                     else
                     {
                         isStatus = true;
-                        queryClauses.Add(new QueryClause("AND", "IsClosed", "=", "0", SqlDbType.Int, false));
+                        queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false));
                     }
                 }
 
                 // exclude all closed status's
                 if (!isStatus)
                 {
-                    queryClauses.Add(new QueryClause("AND", "IsClosed", "=", "0", SqlDbType.Int, false));
+                    queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false));
                 }
 
                 try
                 {
-                    colIssues = IssueManager.PerformQuery(queryClauses, ProjectId);
+                    //colIssues = IssueManager.PerformQuery(queryClauses, ProjectId);
 
                     // TODO: WARNING Potential Cross Site Scripting attack
                     // also this code only runs if the previous code does not freak out
@@ -359,49 +359,74 @@ namespace BugNET.Issues
             }
             else
             {
+                var userName = Security.GetUserName();
 
                 switch (dropView.SelectedValue)
                 {
                     case "Relevant":
-                        colIssues = IssueManager.GetByRelevancy(ProjectId, User.Identity.Name);
+                        queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false));
+
+                        queryClauses.Add(new QueryClause("AND (", "", "", "", SqlDbType.NVarChar, false));
+                        queryClauses.Add(new QueryClause("", "iv.[AssignedUsername]", "=", userName, SqlDbType.NVarChar, false));
+                        queryClauses.Add(new QueryClause("OR", "iv.[CreatorUsername]", "=", userName, SqlDbType.NVarChar, false));
+                        queryClauses.Add(new QueryClause("OR", "iv.[OwnerUsername]", "=", userName, SqlDbType.NVarChar, false));
+                        queryClauses.Add(new QueryClause(")", "", "", "", SqlDbType.NVarChar, false));
+
                         ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?pid={0}&channel=8", ProjectId);
                         break;
                     case "Assigned":
-                        colIssues = IssueManager.GetByAssignedUserName(ProjectId, User.Identity.Name);
+                        queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false));
+                        queryClauses.Add(new QueryClause("AND", "iv.[AssignedUsername]", "=", userName, SqlDbType.NVarChar, false));
+
                         ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?pid={0}&channel=9", ProjectId);
                         break;
                     case "Owned":
-                        colIssues = IssueManager.GetByOwnerUserName(ProjectId, User.Identity.Name);
+                        queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false));
+                        queryClauses.Add(new QueryClause("AND", "iv.[OwnerUsername]", "=", userName, SqlDbType.NVarChar, false));
+
                         ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?pid={0}&channel=10", ProjectId);
                         break;
                     case "Created":
-                        colIssues = IssueManager.GetByCreatorUserName(ProjectId, User.Identity.Name);
+                        queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false));
+                        queryClauses.Add(new QueryClause("AND", "iv.[CreatorUsername]", "=", userName, SqlDbType.NVarChar, false));
+
                         ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?pid={0}&channel=11", ProjectId);
                         break;
                     case "All":
-                        colIssues = IssueManager.GetByProjectId(ProjectId);
+
                         ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?pid={0}&channel=12", ProjectId);
                         break;
                     case "Open":
-                        colIssues = IssueManager.GetOpenIssues(ProjectId);
+                        queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false));
+
                         ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?pid={0}&channel=14", ProjectId);
-                        break;
-                    default:
-                        colIssues = new List<Issue>();
                         break;
                 }
             }
 
             if (isError) return;
 
-            ctlDisplayIssues.DataSource = colIssues;
+            var sortColumns = new List<KeyValuePair<string, string>>();
 
             if (Request.QueryString["cr"] != null)
-                colIssues.Sort(new IssueComparer("Created", true));
+                sortColumns.Add(new KeyValuePair<string, string>("iv.[DateCreated]", "asc"));
 
             if (Request.QueryString["ur"] != null)
-                colIssues.Sort(new IssueComparer("LastUpdate", true));
+                sortColumns.Add(new KeyValuePair<string, string>("iv.[LastUpdate]", "asc"));
 
+            var sorter = ctlDisplayIssues.SortString;
+
+            foreach (var sort in sorter.Split(','))
+            {
+                var args = sort.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                if (args.Length.Equals(2))
+                    sortColumns.Add(new KeyValuePair<string, string>(args[0], args[1]));
+
+            }
+
+            var colIssues = IssueManager.PerformQuery(ProjectId, queryClauses, sortColumns);
+
+            ctlDisplayIssues.DataSource = colIssues;
             ctlDisplayIssues.DataBind();
         }
 

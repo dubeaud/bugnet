@@ -222,7 +222,7 @@ namespace BugNET.Issues.UserControls
             cmdDelete.Visible = false;
 
             // Check if it is the original user, the project admin or a super user trying to delete the comment.
-            if (currentAttachment.CreatorUserName.ToLower() == Context.User.Identity.Name.ToLower() || UserManager.IsInRole(Globals.SUPER_USER_ROLE) || UserManager.IsInRole(ProjectId, Globals.ProjectAdminRole))
+            if (currentAttachment.CreatorUserName.ToLower() == Context.User.Identity.Name.ToLower() || UserManager.IsSuperUser() || UserManager.IsInRole(ProjectId, Globals.ProjectAdminRole))
             {
                 cmdDelete.Visible = true;
             }

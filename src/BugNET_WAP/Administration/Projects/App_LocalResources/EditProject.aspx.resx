@@ -177,4 +177,10 @@
   <data name="Subversion" xml:space="preserve">
     <value>Subversion</value>
   </data>
+  <data name="NewProjectNameLabel.Text">
+    <value xml:space="preserve">New Project Name</value>
+  </data>
+  <data name="ExistingProjectNameLabel.Text">
+    <value xml:space="preserve">Project To Clone</value>
+  </data>
 </root>

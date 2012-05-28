@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Xml.Serialization;
 using BugNET.Common;
 
@@ -18,11 +19,17 @@ namespace BugNET.Entities
             LastUpdateUserName = string.Empty;
             Title = string.Empty;
             Description = string.Empty;
+            CustomFieldValues = new List<KeyValuePair<string, string>>();
         }
 
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Gets or sets the custom field values for the issue
+        /// </summary>
+        public List<KeyValuePair<string, string>> CustomFieldValues { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is closed.
@@ -341,6 +348,7 @@ namespace BugNET.Entities
         public string Description { get; set; }
 
         #endregion
+
 
         /// <summary>
         /// Estimations to string.

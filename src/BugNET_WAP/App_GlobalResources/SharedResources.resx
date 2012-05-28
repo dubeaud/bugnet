@@ -441,16 +441,22 @@
   <data name="NotAvailableAbbr" xml:space="preserve">
     <value>N/A</value>
   </data>
-      <data name="GoTo" xml:space="preserve">
+  <data name="GoTo" xml:space="preserve">
     <value>Go to:</value>
   </data>
-      <data name="RowXofY" xml:space="preserve">
+  <data name="RowXofY" xml:space="preserve">
     <value>{0} - {1} of {2}</value>
- </data>
-      <data name="ShowRows" xml:space="preserve">
+  </data>
+  <data name="ShowRows" xml:space="preserve">
     <value>Show rows: </value>
   </data>
-  <data name="Unassigned">
-    <value xml:space="preserve">Unassigned</value>
+  <data name="Unassigned" xml:space="preserve">
+    <value>Unassigned</value>
+  </data>
+  <data name="CloneProjectInstructions" xml:space="preserve">
+    <value>When you clone a project, you make a copy of the project. For example, you make a copy of all of the project's categories, milestones, and custom fields. However, when you clone a project, issues are not copied to the new project.</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
   </data>
 </root>

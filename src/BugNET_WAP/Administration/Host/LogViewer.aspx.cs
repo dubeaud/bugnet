@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Web.UI.WebControls;
 using BugNET.BLL;
-using BugNET.Common;
 using BugNET.Entities;
 using BugNET.UserInterfaceLayer;
 using log4net;
@@ -20,14 +19,13 @@ namespace BugNET.Administration.Host
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!UserManager.IsInRole(Globals.SUPER_USER_ROLE))
+            if (!UserManager.IsSuperUser())
                 ErrorRedirector.TransferToLoginPage(this);
 
-            if (!Page.IsPostBack)
-            {
-                SortField = "Date";
-                BindData(FilterDropDown.SelectedValue);
-            }
+            if (Page.IsPostBack) return;
+
+            SortField = "Date";
+            BindData(FilterDropDown.SelectedValue);
         }
 
        

@@ -143,7 +143,7 @@ namespace BugNET
                         if (progressValues[0] != 0 || progressValues[1] != 0)
                         {
                             double percent = progressValues[0] * 100 / progressValues[1];
-                            MilestoneComplete.Text = string.Format("{0}%", percent.ToString());
+                            MilestoneComplete.Text = string.Format("{0}%", percent);
                         }
                         else
                         {
@@ -160,30 +160,27 @@ namespace BugNET
                     NextMilestoneDue.Text = string.Format(GetLocalResourceObject("NextMilestoneDue").ToString(),GetLocalResourceObject("NoDueDatesSet").ToString());
                 }
 
-                //get total open issues
-                List<QueryClause> queryClauses = new List<QueryClause>();
-                List<Status> status = StatusManager.GetByProjectId(p.Id);
+                var status = StatusManager.GetByProjectId(p.Id);
 
                 if (status.Count > 0)
                 {
-                    List<Status> closedStatus = status.FindAll(s => s.IsClosedState);                  
-                    foreach (Status st in closedStatus)
+                    //get total open issues
+                    var queryClauses = new List<QueryClause>
                     {
-                        queryClauses.Add(new QueryClause("AND", "IssueStatusId", "<>", st.Id.ToString(), SqlDbType.Int, false));
-                    }
-                    if (queryClauses.Count > 0)
-                    {
-                        List<Issue> issueList = IssueManager.PerformQuery(queryClauses, p.Id);
-                        OpenIssuesLink.Text = string.Format(GetLocalResourceObject("OpenIssuesCount").ToString(), issueList.Count);
-                    }
-                    else
-                    {
-                        // OpenIssuesLink.Text = string.Format(GetLocalResourceObject("OpenIssuesCount").ToString(), 0);
+                        new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false),
+                        new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int, false)
+                    };
 
+                    var issueList = IssueManager.PerformQuery(p.Id, queryClauses, null);
+
+                    OpenIssuesLink.Text = string.Format(GetLocalResourceObject("OpenIssuesCount").ToString(), issueList.Count);
+
+                    var closedStatus = status.FindAll(s => s.IsClosedState);
+
+                    if (closedStatus.Count.Equals(0))
+                    {
                         // No open issue statuses means there is a problem with the setup of the system.
                         OpenIssuesLink.Text = GetLocalResourceObject("NoClosedStatus").ToString();
-                            
-                        
                     }
                 }
                 else

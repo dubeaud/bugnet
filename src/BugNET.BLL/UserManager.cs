@@ -208,19 +208,33 @@ namespace BugNET.BLL
         }
 
         /// <summary>
+        /// Determines if the user is in the superuser role
+        /// </summary>
+        /// <returns>
+        /// <c>true</c> if is in role otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsSuperUser()
+        {
+            var roles = RoleManager.GetForUser(HttpContext.Current.User.Identity.Name);
+            return roles.Exists(r => r.Name == Globals.SUPER_USER_ROLE);
+        }
+
+        /// <summary>
         /// Determines whether [is in role] [the specified role name].
         /// </summary>
         /// <param name="roleName">Name of the role.</param>
         /// <returns>
         /// 	<c>true</c> if [is in role] [the specified role name]; otherwise, <c>false</c>.
         /// </returns>
+        [Obsolete("When testing for super user use IsSuperUser() method, otherwise use IsInRole() with project id overload")]
         public static bool IsInRole(string roleName)
         {
-            if (String.IsNullOrEmpty(roleName)) throw new ArgumentNullException("roleName");
-            if (HttpContext.Current.User.Identity.Name.Length == 0) return false;
+            throw new NotImplementedException();
+            //if (String.IsNullOrEmpty(roleName)) throw new ArgumentNullException("roleName");
+            //if (HttpContext.Current.User.Identity.Name.Length == 0) return false;
 
-            var roles = RoleManager.GetForUser(HttpContext.Current.User.Identity.Name);
-            return roles.Exists(r => r.Name == roleName);
+            //var roles = RoleManager.GetForUser(HttpContext.Current.User.Identity.Name);
+            //return roles.Exists(r => r.Name == roleName);
         }
 
         /// <summary>
@@ -275,7 +289,7 @@ namespace BugNET.BLL
             //if (projectId <= Globals.NEW_ID) throw new ArgumentNullException("projectId");
 
             //return true for all permission checks if the user is in the super users role.
-            if (IsInRole(Globals.SUPER_USER_ROLE)) return true;
+            if (IsSuperUser()) return true;
 
             var roles = RoleManager.GetForUser(userName, projectId);
 

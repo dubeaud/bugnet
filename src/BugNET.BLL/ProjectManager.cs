@@ -13,8 +13,6 @@ namespace BugNET.BLL
     {
         private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        #region Public Methods
-
         /// <summary>
         /// Saves this instance.
         /// </summary>
@@ -32,6 +30,8 @@ namespace BugNET.BLL
                 return false;
 
             entity.Id = tempId;
+
+            CustomFieldManager.UpdateCustomFieldView(entity.Id);
 
             try
             {
@@ -58,7 +58,7 @@ namespace BugNET.BLL
                 {
                     // BGN-1909
                     // Better santization of Upload Paths
-                    if (!Utilities.CheckUploadPath(uploadPath)) 
+                    if (!Utilities.CheckUploadPath(uploadPath))
                         throw new InvalidDataException(LoggingManager.GetErrorMessageResource("UploadPathInvalid"));
 
                     Directory.CreateDirectory(fullUploadPath);
@@ -75,69 +75,6 @@ namespace BugNET.BLL
 
             return true;
         }
-
-        #endregion
-
-        #region Private Methods
-
-
-        /// <summary>
-        /// Updates the project.
-        /// </summary>
-        /// <returns></returns>
-        private static bool Update(Project entity)
-        {
-            var p = GetById(entity.Id);
-
-            if (entity.AttachmentStorageType == IssueAttachmentStorageTypes.FileSystem && p.UploadPath != entity.UploadPath)
-            {
-                // BGN-1909
-                // Better santization of Upload Paths
-                var currentPath = string.Concat("~", Globals.UPLOAD_FOLDER, p.UploadPath.Trim());
-                var currentFullPath = HttpContext.Current.Server.MapPath(currentPath);
-
-                var newPath = string.Concat("~", Globals.UPLOAD_FOLDER, entity.UploadPath.Trim());
-                var newFullPath = HttpContext.Current.Server.MapPath(newPath);
-
-                // WARNING: When editing an invalid path, and trying to make it valid, 
-                // you will still get an error. This is because the Directory.Move() call 
-                // can traverse directories! Maybe we should allow the database to change, 
-                // but not change the file system?
-                var isPathNorty = !Utilities.CheckUploadPath(currentPath);
-
-                if (!Utilities.CheckUploadPath(newPath))
-                    isPathNorty = true;
-
-                if (isPathNorty)
-                {
-                    // something bad is going on. DONT even File.Exist()!!
-                    if (Log.IsErrorEnabled) 
-                        Log.Error(string.Format(LoggingManager.GetErrorMessageResource("CouldNotCreateUploadDirectory"), newFullPath));
-
-                    return false;
-                }
-
-                try
-                {
-                    // BGN-1878 Upload path not recreated when user fiddles with a project setting
-                    if (File.Exists(currentFullPath))
-                        Directory.Move(currentFullPath, newFullPath);
-                    else
-                        Directory.CreateDirectory(newFullPath);
-                }
-                catch (Exception ex)
-                {
-                    if (Log.IsErrorEnabled) 
-                        Log.Error(string.Format(LoggingManager.GetErrorMessageResource("CouldNotCreateUploadDirectory"), newFullPath), ex);
-                    return false;
-                }
-            }
-            return DataProviderManager.Provider.UpdateProject(entity);
-
-        }
-        #endregion
-
-        #region Static Methods
 
         /// <summary>
         /// Gets the project by id.
@@ -206,7 +143,6 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<Project> GetPublicProjects()
         {
-
             return DataProviderManager.Provider.GetPublicProjects();
         }
 
@@ -305,12 +241,16 @@ namespace BugNET.BLL
 
             if (DataProviderManager.Provider.DeleteProject(projectId))
             {
+                DeleteProjectCustomView(projectId);
+
                 try
                 {
+
                     uploadpath = string.Concat("~", Globals.UPLOAD_FOLDER, uploadpath);
                     Directory.Delete(HttpContext.Current.Server.MapPath(uploadpath), true);
                 }
-                catch (Exception ex) {
+                catch (Exception ex)
+                {
                     Log.Error(string.Format(LoggingManager.GetErrorMessageResource("DeleteProjectUploadFolderError"), uploadpath, projectId), ex);
                 }
 
@@ -319,7 +259,26 @@ namespace BugNET.BLL
             return false;
         }
 
+        /// <summary>
+        /// Delete the project specific custom view
+        /// </summary>
+        /// <param name="projectId">The project id for the custom fields for the project</param>
+        public static bool DeleteProjectCustomView(int projectId)
+        {
+            try
+            {
+                var viewName = string.Format(Globals.PROJECT_CUSTOM_FIELDS_VIEW_NAME, projectId);
+                var sql = string.Concat("IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'", viewName, "') AND OBJECTPROPERTY(id, N'IsView') = 1) DROP VIEW ", viewName);
+                DataProviderManager.Provider.ExecuteScript(new[] { sql });
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
 
+            return false;
+        }
 
         /// <summary>
         /// Clones the project.
@@ -327,22 +286,26 @@ namespace BugNET.BLL
         /// <param name="projectId">The project id.</param>
         /// <param name="projectName">Name of the project.</param>
         /// <returns></returns>
-        public static bool CloneProject(int projectId, string projectName)
+        public static int CloneProject(int projectId, string projectName)
         {
             if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
             if (string.IsNullOrEmpty(projectName)) throw new ArgumentNullException("projectName");
 
-            var newProjectId = DataProviderManager.Provider.CloneProject(projectId, projectName);
+            var newProjectId = DataProviderManager.Provider.CloneProject(projectId, projectName, Security.GetUserName());
 
             if (newProjectId != 0)
             {
                 var newProject = GetById(newProjectId);
+
+                CustomFieldManager.UpdateCustomFieldView(newProjectId);
+
                 try
                 {
                     if (newProject.AllowAttachments && newProject.AttachmentStorageType == IssueAttachmentStorageTypes.FileSystem)
                     {
                         // Old bugfix which wasn't carried forward.
                         newProject.UploadPath = Guid.NewGuid().ToString();
+
                         DataProviderManager.Provider.UpdateProject(newProject);
 
                         var fullPath = HttpContext.Current.Server.MapPath(string.Concat("~", Globals.UPLOAD_FOLDER, newProject.UploadPath));
@@ -355,10 +318,10 @@ namespace BugNET.BLL
                         Log.Error(string.Format(LoggingManager.GetErrorMessageResource("CreateProjectUploadFolderError"), newProject.UploadPath, projectId), ex);
                 }
                 HttpContext.Current.Cache.Remove("RolePermission");
-                return true;
+                return newProjectId;
             }
 
-            return false;
+            return 0;
         }
 
         /// <summary>
@@ -410,6 +373,62 @@ namespace BugNET.BLL
             return DataProviderManager.Provider.GetProjectMembersRoles(projectId);
         }
 
+        #region Private Methods
+
+        /// <summary>
+        /// Updates the project.
+        /// </summary>
+        /// <returns></returns>
+        private static bool Update(Project entity)
+        {
+            var p = GetById(entity.Id);
+
+            if (entity.AttachmentStorageType == IssueAttachmentStorageTypes.FileSystem && p.UploadPath != entity.UploadPath)
+            {
+                // BGN-1909
+                // Better santization of Upload Paths
+                var currentPath = string.Concat("~", Globals.UPLOAD_FOLDER, p.UploadPath.Trim());
+                var currentFullPath = HttpContext.Current.Server.MapPath(currentPath);
+
+                var newPath = string.Concat("~", Globals.UPLOAD_FOLDER, entity.UploadPath.Trim());
+                var newFullPath = HttpContext.Current.Server.MapPath(newPath);
+
+                // WARNING: When editing an invalid path, and trying to make it valid, 
+                // you will still get an error. This is because the Directory.Move() call 
+                // can traverse directories! Maybe we should allow the database to change, 
+                // but not change the file system?
+                var isPathNorty = !Utilities.CheckUploadPath(currentPath);
+
+                if (!Utilities.CheckUploadPath(newPath))
+                    isPathNorty = true;
+
+                if (isPathNorty)
+                {
+                    // something bad is going on. DONT even File.Exist()!!
+                    if (Log.IsErrorEnabled)
+                        Log.Error(string.Format(LoggingManager.GetErrorMessageResource("CouldNotCreateUploadDirectory"), newFullPath));
+
+                    return false;
+                }
+
+                try
+                {
+                    // BGN-1878 Upload path not recreated when user fiddles with a project setting
+                    if (File.Exists(currentFullPath))
+                        Directory.Move(currentFullPath, newFullPath);
+                    else
+                        Directory.CreateDirectory(newFullPath);
+                }
+                catch (Exception ex)
+                {
+                    if (Log.IsErrorEnabled)
+                        Log.Error(string.Format(LoggingManager.GetErrorMessageResource("CouldNotCreateUploadDirectory"), newFullPath), ex);
+                    return false;
+                }
+            }
+            return DataProviderManager.Provider.UpdateProject(entity);
+
+        }
         #endregion
     }
 }

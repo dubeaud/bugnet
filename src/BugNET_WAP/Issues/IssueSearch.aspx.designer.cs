@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BugNET {
+namespace BugNET.Issues {
     
     
     public partial class SearchResults {
@@ -139,13 +139,22 @@ namespace BugNET {
         protected global::System.Web.UI.WebControls.CheckBox chkHistory;
         
         /// <summary>
-        /// ctlBugs control.
+        /// pnlResultsMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::BugNET.UserControls.DisplayIssues ctlBugs;
+        protected global::System.Web.UI.WebControls.Panel pnlResultsMessage;
+        
+        /// <summary>
+        /// litResultsMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litResultsMessage;
         
         /// <summary>
         /// pnlSearchResults control.

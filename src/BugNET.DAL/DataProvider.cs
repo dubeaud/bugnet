@@ -20,7 +20,7 @@ namespace BugNET.DAL
         // Installation Helper Methods
         public abstract string GetProviderPath();
         public abstract string GetDatabaseVersion();
-        public abstract void ExecuteScript(List<string> sql);
+        public abstract void ExecuteScript(IEnumerable<string> sql);
 
         // Category
         public abstract int CreateNewCategory(Category newCategory);
@@ -74,7 +74,10 @@ namespace BugNET.DAL
         public abstract bool DeleteQuery(int queryId);
         public abstract List<RequiredField> GetRequiredFieldsForIssues();
         public abstract void PerformGenericQuery<T>(ref List<T> list, List<QueryClause> queryClauses, string sql, string orderBy);
+
         public abstract List<Issue> PerformQuery(int projectId, List<QueryClause> queryClauses);
+        public abstract List<Issue> PerformQuery(int projectId, List<QueryClause> queryClauses, IEnumerable<KeyValuePair<string, string>> sortFields);
+
         public abstract List<Issue> PerformSavedQuery(int projectId, int queryId);
         public abstract List<QueryClause> GetQueryClausesByQueryId(int queryId);
         public abstract Query GetQueryById(int queryId);
@@ -121,7 +124,7 @@ namespace BugNET.DAL
         public abstract bool UpdateProject(Project projectToUpdate);
         public abstract bool AddUserToProject(string userName, int projectId);
         public abstract bool RemoveUserFromProject(string userName, int projectId);
-        public abstract int CloneProject(int projectId, string projectName);
+        public abstract int CloneProject(int projectId, string projectName, string creatorUserName = "");
         public abstract Project GetProjectByCode(string projectCode);
         public abstract List<Project> GetPublicProjects();
         public abstract bool IsUserProjectMember(string userName, int projectId);

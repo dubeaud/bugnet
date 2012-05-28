@@ -3,13 +3,11 @@
 
 <%@ Register TagPrefix="it" TagName="DisplayIssues" Src="~/UserControls/DisplayIssues.ascx" %>
 <asp:Content ID="Content3" runat="server" ContentPlaceHolderID="PageTitle">
-    <div class="centered-content">
-        <h1 class="page-title">
-            <asp:Label ID="lblProjectName" runat="Server" /></h1>
+    <div class="align-center">
+        <h1 class="page-title"><asp:Label ID="lblProjectName" runat="Server" /></h1>
         <h1 class="page-title">
             <asp:Literal ID="ltProject" runat="server" Visible="false"></asp:Literal>
-            <span>
-                <asp:Literal ID="litProjectCode" Visible="False" runat="Server"></asp:Literal></span>
+            <span><asp:Literal ID="litProjectCode" Visible="False" runat="Server"></asp:Literal></span>
         </h1>
     </div>
 </asp:Content>
@@ -30,7 +28,7 @@
             </td>
         </tr>
         <tr>
-            <td valign="top">
+            <td class="align-vtop">
                 <it:DisplayIssues ID="ctlDisplayIssues" runat="server" ShowProjectColumn="False" OnRebindCommand="IssuesRebind"></it:DisplayIssues>
             </td>
         </tr>

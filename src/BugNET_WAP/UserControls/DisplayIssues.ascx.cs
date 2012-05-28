@@ -1,37 +1,37 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using BugNET.BLL;
+using BugNET.Common;
+using BugNET.Entities;
+using BugNET.UserInterfaceLayer;
 
 namespace BugNET.UserControls
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Web.UI;
-    using System.Web.UI.HtmlControls;
-    using System.Web.UI.WebControls;
-    using BugNET.BLL;
-    using BugNET.Common;
-    using BugNET.Entities;
-    using BugNET.UserInterfaceLayer;
-
     /// <summary>
-	///	Display Issues grid
-	/// </summary>
-	public partial class DisplayIssues : UserControl
-	{
+    ///	Display Issues grid
+    /// </summary>
+    public partial class DisplayIssues : UserControl
+    {
         /// <summary>
         /// Datasource 
         /// </summary>
-		private List<Issue> _DataSource;
+        private List<Issue> _dataSource;
         /// <summary>
         /// Event that fires on a databind
         /// </summary>
-		public event EventHandler RebindCommand;
+        public event EventHandler RebindCommand;
         /// <summary>
         /// Array of issue columns
         /// </summary>
-        private string[] _arrIssueColumns = new[] { "4", "5", "6", "7", "8", "9", "10","11","12","13","14","15","16","17","18","19","20","21", "22"};
+        private string[] _arrIssueColumns = new[] { "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22" };
 
         //store amount of fixed search columns due to bad string above
-        public const int FixedColumns = 22;
+        private const int FIXED_COLUMNS = 22;
         //stores total amount of columns (fixed and custom)
         //private int nrColumns = FixedColumns;
 
@@ -40,31 +40,35 @@ namespace BugNET.UserControls
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void Page_Init(object sender, System.EventArgs e)
+        protected void Page_Init(object sender, EventArgs e)
         {
             if (Page.User.Identity.IsAuthenticated)
             {
-                string columns = null;
-                int projectId;
-                if (Int32.TryParse(Request.QueryString["pid"], out projectId))
+                var projectId = Request.QueryString.Get("pid", 0);
+
+                if (projectId > 0)
                 {
-                    columns = UserManager.GetSelectedIssueColumnsByUserName(Security.GetUserName(), projectId);
+                    string columns = UserManager.GetSelectedIssueColumnsByUserName(Security.GetUserName(), projectId);
 
                     if (!string.IsNullOrEmpty(columns))
                         _arrIssueColumns = columns.Trim().Split();
                 }
-                //if it is myIssues and not a specific project
-                else
+                else //if it is myIssues and not a specific project
                 {
                     if (!string.IsNullOrEmpty(WebProfile.Current.SelectedIssueColumns))
-                    _arrIssueColumns = WebProfile.Current.SelectedIssueColumns.Trim().Split();
+                        _arrIssueColumns = WebProfile.Current.SelectedIssueColumns.Trim().Split();
                 }
             }
             else
             {
-                if ((Request.Cookies[Globals.ISSUE_COLUMNS] != null) && (Request.Cookies[Globals.ISSUE_COLUMNS].Value != String.Empty))
-                    _arrIssueColumns = Request.Cookies[Globals.ISSUE_COLUMNS].Value.Split();
-            }  
+                var httpCookie = Request.Cookies[Globals.ISSUE_COLUMNS];
+
+                if (httpCookie != null)
+                {
+                    if (httpCookie.Value != String.Empty)
+                        _arrIssueColumns = httpCookie.Value.Split();
+                }
+            }
         }
 
         /// <summary>
@@ -75,53 +79,54 @@ namespace BugNET.UserControls
         {
             set { lnkRSS.NavigateUrl = value; }
         }
-   
+
         /// <summary>
         /// Gets or sets the data source.
         /// </summary>
         /// <value>The data source.</value>
-		public List<Issue> DataSource 
-		{
-			get { return _DataSource; }
-			set { _DataSource = value; }
-		}
+        public List<Issue> DataSource
+        {
+            get { return _dataSource; }
+            set { _dataSource = value; }
+        }
 
         /// <summary>
         /// Handles the Load event of the Page control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void Page_Load(object sender, System.EventArgs e)
+        protected void Page_Load(object sender, EventArgs e)
         {
-  
+
         }
 
         /// <summary>
         /// Binds a data source to the invoked server control and all its child controls.
         /// </summary>
-        public new void DataBind() 
-		{
-			if(DataSource.Count > 0)
-			{
-                if (!string.IsNullOrEmpty(gvIssues.SortField))
-                {
-                   _DataSource.Sort(new ObjectComparer<Issue>(gvIssues.SortField, true));
-                }
+        public new void DataBind()
+        {
+            if (DataSource.Count > 0)
+            {
+                // not needed server side sorting
+                //if (!string.IsNullOrEmpty(gvIssues.SortField))
+                //{
+                //   _DataSource.Sort(new ObjectComparer<Issue>(gvIssues.SortField, true));
+                //}
 
-				gvIssues.Visible = true;
+                gvIssues.Visible = true;
                 pager.Visible = true;
                 ScrollPanel.Visible = true;
-                
-                int pId = -1;
+
+                var pId = -1;
                 if (Request.QueryString["pid"] != null)
                     pId = Int32.Parse(Request.QueryString["pid"]);
 
                 //get custom fields for project
                 if (pId != -1)
                 {
-                    List<CustomField> customFields = CustomFieldManager.GetByProjectId(pId);
+                    var customFields = CustomFieldManager.GetByProjectId(pId);
 
-                    int nrColumns = FixedColumns;
+                    var nrColumns = FIXED_COLUMNS;
                     //checks if its initial load to add custom controls and checkboxes
                     if (gvIssues.Columns.Count <= nrColumns + 1)
                     {
@@ -129,18 +134,18 @@ namespace BugNET.UserControls
                         if (customFields.Count > 0)
                         {
                             //ctlCustomFields.DataSource = customFields;
-                           // ctlCustomFields.DataBind();
+                            // ctlCustomFields.DataBind();
 
-                            foreach (CustomField value in customFields)
+                            foreach (var value in customFields)
                             {
                                 //increments nr of columns
                                 nrColumns++;
 
                                 //create checkbox item
-                                ListItem lstValue = new ListItem(value.Name, nrColumns.ToString());
+                                var lstValue = new ListItem(value.Name, nrColumns.ToString());
 
                                 //find custom controls that has been checked and check them
-                                bool selected = Array.IndexOf(_arrIssueColumns, nrColumns.ToString()) >= 0;
+                                var selected = Array.IndexOf(_arrIssueColumns, nrColumns.ToString()) >= 0;
                                 if (selected)
                                     lstValue.Selected = true;
 
@@ -148,20 +153,18 @@ namespace BugNET.UserControls
                                 lstIssueColumns.Items.Add(lstValue);
 
                                 //create column for custom control
-                                TemplateField tf = new TemplateField();
-                                tf.HeaderText = value.Name;
-                                //tf.SortExpression = value.Name;
+                                var tf = new TemplateField { HeaderText = value.Name, SortExpression = value.Name };
+
                                 gvIssues.Columns.Add(tf);
 
                             }
                         }
-
                     }
                 }
 
                 DisplayColumns();
                 SelectColumnsPanel.Visible = true;
-				lblResults.Visible=false;
+                lblResults.Visible = false;
 
                 if (ShowProjectColumn)
                 {
@@ -173,7 +176,7 @@ namespace BugNET.UserControls
                     gvIssues.Columns[4].Visible = false;
                     lstIssueColumns.Items.Remove(lstIssueColumns.Items.FindByValue("4"));
 
-                    var projectId = _DataSource[0].ProjectId;
+                    var projectId = _dataSource[0].ProjectId;
 
                     //hide votes column if issue voting is disabled
                     if (!ProjectManager.GetById(projectId).AllowIssueVoting)
@@ -217,19 +220,14 @@ namespace BugNET.UserControls
                     }
                 }
 
-                foreach (string colIndex in _arrIssueColumns)
+                foreach (var item in _arrIssueColumns.Select(colIndex => lstIssueColumns.Items.FindByValue(colIndex)).Where(item => item != null))
                 {
-                    var item = lstIssueColumns.Items.FindByValue(colIndex);
-                    if (item != null)
-                        item.Selected = true;
+                    item.Selected = true;
                 }
 
                 gvIssues.DataSource = DataSource;
                 gvIssues.DataBind();
-
-                InsertCustomFieldData();
-
-			}
+            }
             else
             {
                 ScrollPanel.Visible = false;
@@ -238,33 +236,7 @@ namespace BugNET.UserControls
                 gvIssues.Visible = false;
                 pager.Visible = false;
             }
-			
-		}
 
-
-        /// <summary>
-        /// Retrieves and inserts custom field values
-        /// </summary>
-        private void InsertCustomFieldData()
-        {
-            //if there exist custom fields
-            if (gvIssues.Columns.Count > FixedColumns)
-            {
-                foreach (GridViewRow row in gvIssues.Rows)
-                {
-                    //get issue id from grid
-                    int id = (int)gvIssues.DataKeys[row.RowIndex].Value;
-                    //get custom controls assigned to that issue
-                    List<CustomField> customFieldValues = CustomFieldManager.GetByIssueId(id);
-
-                    //for every custom control add relevant value (make use of const value)
-                    for (int i = FixedColumns + 1; i <= gvIssues.Columns.Count - 1; i++)
-                    {
-                        CustomField value = customFieldValues[i - (FixedColumns + 1)];
-                        row.Cells[i].Text = value.Value;
-                    }
-                }
-            }
         }
 
         /// <summary>
@@ -274,7 +246,7 @@ namespace BugNET.UserControls
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void ExportExcelButton_Click(object sender, EventArgs e)
         {
-            GridViewExportUtil.Export("Issues.xls", this.gvIssues);
+            GridViewExportUtil.Export("Issues.xls", gvIssues);
         }
 
         /// <summary>
@@ -309,7 +281,7 @@ namespace BugNET.UserControls
 
             if (ids.Length > 0)
             {
-                 //prune out all values that must not change
+                //prune out all values that must not change
                 var customFieldValues = ctlCustomFields.Values;
 
                 for (var i = customFieldValues.Count - 1; i >= 0; i--)
@@ -325,7 +297,7 @@ namespace BugNET.UserControls
                 {
                     int issueId;
 
-                    if(!int.TryParse(s, out issueId))
+                    if (!int.TryParse(s, out issueId))
                         throw new Exception(string.Format(LoggingManager.GetErrorMessageResource("InvalidIssueId"), s));
 
                     var issue = IssueManager.GetById(issueId);
@@ -334,7 +306,7 @@ namespace BugNET.UserControls
 
                     var dueDate = DateTime.MinValue;
 
-                    if(DueDate.SelectedValue != null)
+                    if (DueDate.SelectedValue != null)
                         dueDate = (DateTime)DueDate.SelectedValue;
 
                     issue.CategoryId = dropCategory.SelectedValue != 0 ? dropCategory.SelectedValue : issue.CategoryId;
@@ -375,7 +347,7 @@ namespace BugNET.UserControls
                 }
             }
 
-            OnRebindCommand(EventArgs.Empty);         
+            OnRebindCommand(EventArgs.Empty);
         }
         /// <summary>
         /// Gets the selected issues.
@@ -384,19 +356,18 @@ namespace BugNET.UserControls
         private string GetSelectedIssueIds()
         {
             var ids = string.Empty;
-             foreach (GridViewRow gvr in gvIssues.Rows)
-             {
-                 if (gvr.RowType != DataControlRowType.DataRow) continue;
 
-                 if (((CheckBox)gvr.Cells[0].Controls[1]).Checked)
-                 {
-                     var dataKey = gvIssues.DataKeys[gvr.RowIndex];
-                     if (dataKey != null) ids += dataKey.Value + ",";
-                 }
-             }
+            foreach (GridViewRow gvr in gvIssues.Rows)
+            {
+                if (gvr.RowType != DataControlRowType.DataRow) continue;
+
+                if (!((CheckBox)gvr.Cells[0].Controls[1]).Checked) continue;
+                var dataKey = gvIssues.DataKeys[gvr.RowIndex];
+                if (dataKey != null) ids += dataKey.Value + ",";
+            }
             return ids.EndsWith(",") ? ids.TrimEnd(new[] { ',' }) : ids;
         }
-       
+
         /// <summary>
         /// Saves the click.
         /// </summary>
@@ -412,8 +383,9 @@ namespace BugNET.UserControls
 
             if (Page.User.Identity.IsAuthenticated)
             {
-                int projectId;
-                if (Int32.TryParse(Request.QueryString["pid"], out projectId))
+                var projectId = Request.Get("pid", 0);
+
+                if (projectId > 0)
                 {
                     UserManager.SetSelectedIssueColumnsByUserName(Security.GetUserName(), projectId, strIssueColumns.Trim());
                 }
@@ -425,33 +397,33 @@ namespace BugNET.UserControls
             }
             else
             {
-                Response.Cookies[Globals.ISSUE_COLUMNS].Value = strIssueColumns;
-                Response.Cookies[Globals.ISSUE_COLUMNS].Path = "/";
-                Response.Cookies[Globals.ISSUE_COLUMNS].Expires = DateTime.MaxValue;
+                var httpCookie = new HttpCookie(Globals.ISSUE_COLUMNS) { Path = "/", Expires = DateTime.MaxValue, Value = strIssueColumns };
+
+                Response.Cookies.Add(httpCookie);
             }
 
             OnRebindCommand(EventArgs.Empty);
         }
-     
+
         /// <summary>
         /// Raises the rebind command event.
         /// </summary>
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
-		void OnRebindCommand(EventArgs e) 
-		{
-			if (RebindCommand != null)
-				RebindCommand(this, e);
-		}
+        void OnRebindCommand(EventArgs e)
+        {
+            if (RebindCommand != null)
+                RebindCommand(this, e);
+        }
 
         /// <summary>
         /// Gets or sets the index of the current page.
         /// </summary>
         /// <value>The index of the current page.</value>
-		public int CurrentPageIndex 
-		{
-			get { return gvIssues.PageIndex; }
-			set { gvIssues.PageIndex = value; }
-		}
+        public int CurrentPageIndex
+        {
+            get { return gvIssues.PageIndex; }
+            set { gvIssues.PageIndex = value; }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether [show project column].
@@ -459,70 +431,43 @@ namespace BugNET.UserControls
         /// <value><c>true</c> if [show project column]; otherwise, <c>false</c>.</value>
         public bool ShowProjectColumn
         {
-            get
-            {
-                object o = ViewState["ShowProjectColumn"];
-                if (o == null)
-                {
-                    return false;
-                }
-                return (bool)o;
-            }
-            set
-            {
-                ViewState["ShowProjectColumn"] = value;
-            }
-
+            get { return ViewState.Get("ShowProjectColumn", false); }
+            set { ViewState.Set("ShowProjectColumn", value); }
         }
 
         /// <summary>
         /// Gets or sets the sort field.
         /// </summary>
         /// <value>The sort field.</value>
-		public string SortField 
-		{
-			get 
-			{
-				object o = ViewState["SortField"];
-				if (o == null) 
-				{
-					return String.Empty;
-				}
-				return (string)o;
-			}
-    
-			set 
-			{
-				if (value == SortField) 
-				{
-					// same as current sort file, toggle sort direction
-					SortAscending = !SortAscending;
-				}
-				ViewState["SortField"] = value;
-			}
-		}
+        public string SortField
+        {
+            get { return ViewState.Get("SortField", String.Empty); }
+            set
+            {
+                if (value == SortField) SortAscending = !SortAscending;
+                ViewState.Set("SortField", value);
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether [sort ascending].
         /// </summary>
         /// <value><c>true</c> if [sort ascending]; otherwise, <c>false</c>.</value>
-		public bool SortAscending 
-		{
-			get 
-			{
-				object o = ViewState["SortAscending"];
-				if (o == null) 
-				{
-					return true;
-				}
-				return (bool)o;
-			}
-    
-			set 
-			{
-				ViewState["SortAscending"] = value;
-			}
-		}
+        public bool SortAscending
+        {
+            get { return ViewState.Get("SortAscending", false); }
+            set { ViewState.Set("SortAscending", value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [sort ascending].
+        /// </summary>
+        /// <value><c>true</c> if [sort ascending]; otherwise, <c>false</c>.</value>
+        public string SortString
+        {
+            get { return ViewState.Get("SortString", string.Empty); }
+            set { ViewState.Set("SortString", value); }
+        }
 
         /// <summary>
         /// Gets or sets the size of the page.
@@ -531,10 +476,7 @@ namespace BugNET.UserControls
         public int PageSize
         {
             get { return pager.PageSize; }
-            set
-            {
-                pager.PageSize = value;
-            }      
+            set { pager.PageSize = value; }
         }
 
         /// <summary>
@@ -544,7 +486,7 @@ namespace BugNET.UserControls
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_PreRender(object sender, EventArgs e)
         {
-            if(gvIssues.HeaderRow !=null)
+            if (gvIssues.HeaderRow != null)
                 gvIssues.HeaderRow.TableSection = TableRowSection.TableHeader;
         }
 
@@ -568,26 +510,42 @@ namespace BugNET.UserControls
                     e.Row.Attributes.Add("onmouseout", "this.style.background='#fafafa'");
                     break;
             }
- 
-            var b = ((Issue)e.Row.DataItem);
+
+            var issue = e.Row.DataItem as Issue;
+
+            if (issue == null) return;
+
+            // set the custom field values
+            var i = FIXED_COLUMNS + 1;
+
+            foreach (var customFieldValue in issue.CustomFieldValues)
+            {
+                e.Row.Cells[i].Text = customFieldValue.Value;
+                i++;
+            }
 
             //Private issue check
-            if (b.Visibility == (int)Globals.IssueVisibility.Private && b.AssignedDisplayName != Security.GetUserName() && b.CreatorDisplayName != Security.GetUserName() && (!UserManager.IsInRole(Globals.SUPER_USER_ROLE) || !UserManager.IsInRole(Globals.ProjectAdminRole)))
-                e.Row.Visible = false;
+            var userName = Security.GetUserName();
+            var rowVisible = true;
 
-            e.Row.FindControl("imgPrivate").Visible = b.Visibility != 0;
+            // if the current user is a super user don't bother checking at all
+            if(!UserManager.IsSuperUser())
+            {
+                // if the issue is private and current user does not have project admin rights
+                if (issue.Visibility == Globals.IssueVisibility.Private.To<int>() && !UserManager.IsInRole(issue.ProjectId, Globals.ProjectAdminRole))
+                {
+                    // if the current user is either the assigned / creator / owner then they can see the private issue
+                    rowVisible = (issue.AssignedUserName == userName || issue.CreatorUserName == userName || issue.OwnerUserName == userName);
+                }   
+            }
 
-            double warnPeriod = 7; //TODO: Add this to be configurable in the users profile
-            bool isDue = b.DueDate <= DateTime.Now.AddDays(warnPeriod) && b.DueDate > DateTime.MinValue;
-            bool noOwner = b.AssignedUserId == Guid.Empty;
-            //if (noOwner || isDue)
-            //{
-            //    e.Row.Attributes.Add("style", "background-color:#ffdddc");
-            //    e.Row.Attributes.Add("onmouseout", "this.style.background='#ffdddc'");
-            //}
-            ((HtmlControl)e.Row.FindControl("ProgressBar")).Attributes.CssStyle.Add("width", b.Progress.ToString() + "%");
+            e.Row.Visible = rowVisible;
+
+            e.Row.FindControl("imgPrivate").Visible = issue.Visibility != 0;
+
+            ((HtmlControl)e.Row.FindControl("ProgressBar")).Attributes.CssStyle.Add("width", issue.Progress + "%");
         }
-   
+
         /// <summary>
         /// Handles the Sorting event of the gvIssues control.
         /// </summary>
@@ -595,6 +553,7 @@ namespace BugNET.UserControls
         /// <param name="e">The <see cref="T:System.Web.UI.WebControls.GridViewSortEventArgs"/> instance containing the event data.</param>
         protected void gvIssues_Sorting(object sender, GridViewSortEventArgs e)
         {
+            SortString = e.SortExpression;
             gvIssues.SortField = e.SortExpression;
             OnRebindCommand(EventArgs.Empty);
         }
@@ -606,9 +565,9 @@ namespace BugNET.UserControls
         /// <param name="e">The <see cref="T:System.Web.UI.WebControls.GridViewPageEventArgs"/> instance containing the event data.</param>
         protected void gvIssues_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            gvIssues.PageIndex = e.NewPageIndex;
+            gvIssues.PageIndex = e.NewPageIndex; // needed for server side paging
             OnRebindCommand(EventArgs.Empty);
         }
-   
+
     }
 }

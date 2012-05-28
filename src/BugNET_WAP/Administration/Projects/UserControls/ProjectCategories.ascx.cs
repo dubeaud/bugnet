@@ -88,11 +88,12 @@ namespace BugNET.Administration.Projects.UserControls
 
             if (oldCategoryId != 0)
             {
-                var queryClauses = new List<QueryClause>();
-                var q = new QueryClause("AND", "IssueCategoryId", "=", HiddenField1.Value, SqlDbType.Int, false);
-                queryClauses.Add(q);
+                var queryClauses = new List<QueryClause>
+                {
+                    new QueryClause("AND", "iv.[IssueCategoryId]", "=", HiddenField1.Value, SqlDbType.Int, false)
+                };
 
-                var issues = IssueManager.PerformQuery(queryClauses, ProjectId);
+                var issues = IssueManager.PerformQuery(ProjectId, queryClauses, null);
 
                 if (RadioButton1.Checked) //delete category 
                 {

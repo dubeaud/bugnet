@@ -3,54 +3,42 @@ using System.Globalization;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using BugNET.Common;
 
 namespace BugNET.UserInterfaceLayer.WebControls
 {
     public class BugNetPagerField : DataPagerField
     {
-        private int _startRowIndex;
+        private readonly string _goTo = HttpContext.GetGlobalResourceObject("SharedResources", "GoTo").ToString();
+        private readonly string _rowXofY = HttpContext.GetGlobalResourceObject("SharedResources", "RowXofY").ToString();
+
+        private readonly string _ShowRows =
+            HttpContext.GetGlobalResourceObject("SharedResources", "ShowRows").ToString();
+
         private int _maximumRows;
-        private int _totalRowCount;
 
         //Next and previous buttons by default are always enabled.
-        private bool _showFirstPage = true;
-        private bool _showPreviousPage = true;
-        private bool _showNextPage = true;
-        private bool _showLastPage = true;
-
-        private string _ShowRows = HttpContext.GetGlobalResourceObject("SharedResources", "ShowRows").ToString();
-        private string _RowXofY = HttpContext.GetGlobalResourceObject("SharedResources", "RowXofY").ToString();
-        private string _GoTo = HttpContext.GetGlobalResourceObject("SharedResources", "GoTo").ToString();
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BugNetPagerField"/> class.
-        /// </summary>
-        public BugNetPagerField()
-        {}
+        private const bool SHOW_FIRST_PAGE = true;
+        private const bool SHOW_LAST_PAGE = true;
+        private const bool SHOW_NEXT_PAGE = true;
+        private const bool SHOW_PREVIOUS_PAGE = true;
+        private int _startRowIndex;
+        private int _totalRowCount;
 
         #region Properties
+
         /// <summary>
         /// Gets or sets the next page text.
         /// </summary>
         /// <value>The next page text.</value>
         public string NextPageText
         {
-            get
-            {
-                object obj2 = base.ViewState["NextPageText"];
-                if (obj2 != null)
-                {
-                    return (string)obj2;
-                }
-                return "Next";
-            }
+            get { return ViewState.Get("NextPageText", "Next"); }
             set
             {
-                if (value != this.NextPageText)
-                {
-                    base.ViewState["NextPageText"] = value;
-                    this.OnFieldChanged();
-                }
+                if (value == NextPageText) return;
+                ViewState.Set("NextPageText", value);
+                OnFieldChanged();
             }
         }
 
@@ -60,22 +48,12 @@ namespace BugNET.UserInterfaceLayer.WebControls
         /// <value>The first page text.</value>
         public string FirstPageText
         {
-            get
-            {
-                object obj2 = base.ViewState["FirstPageText"];
-                if (obj2 != null)
-                {
-                    return (string)obj2;
-                }
-                return "First";
-            }
+            get { return ViewState.Get("FirstPageText", "First"); }
             set
             {
-                if (value != this.FirstPageText)
-                {
-                    base.ViewState["FirstPageText"] = value;
-                    this.OnFieldChanged();
-                }
+                if (value == FirstPageText) return;
+                ViewState.Set("FirstPageText", value);
+                OnFieldChanged();
             }
         }
 
@@ -85,23 +63,12 @@ namespace BugNET.UserInterfaceLayer.WebControls
         /// <value>The previous page text.</value>
         public string PreviousPageText
         {
-            get
-            {
-                object obj2 = base.ViewState["PreviousPageText"];
-                if (obj2 != null)
-                {
-                    return (string)obj2;
-                }
-
-                return "Previous";
-            }
+            get { return ViewState.Get("PreviousPageText", "Previous"); }
             set
             {
-                if (value != this.PreviousPageText)
-                {
-                    base.ViewState["PreviousPageText"] = value;
-                    this.OnFieldChanged();
-                }
+                if (value == PreviousPageText) return;
+                ViewState.Set("PreviousPageText", value);
+                OnFieldChanged();
             }
         }
 
@@ -111,23 +78,12 @@ namespace BugNET.UserInterfaceLayer.WebControls
         /// <value>The last page text.</value>
         public string LastPageText
         {
-            get
-            {
-                object obj2 = base.ViewState["LastPageText"];
-                if (obj2 != null)
-                {
-                    return (string)obj2;
-                }
-
-                return "Last";
-            }
+            get { return ViewState.Get("LastPageText", "Last"); }
             set
             {
-                if (value != this.PreviousPageText)
-                {
-                    base.ViewState["LastPageText"] = value;
-                    this.OnFieldChanged();
-                }
+                if (value == LastPageText) return;
+                ViewState.Set("LastPageText", value);
+                OnFieldChanged();
             }
         }
 
@@ -137,22 +93,12 @@ namespace BugNET.UserInterfaceLayer.WebControls
         /// <value>The next page image URL.</value>
         public string NextPageImageUrl
         {
-            get
-            {
-                object obj2 = base.ViewState["NextPageImageUrl"];
-                if (obj2 != null)
-                {
-                    return (string)obj2;
-                }
-                return string.Empty;
-            }
+            get { return ViewState.Get("NextPageImageUrl", string.Empty); }
             set
             {
-                if (value != this.NextPageImageUrl)
-                {
-                    base.ViewState["NextPageImageUrl"] = value;
-                    this.OnFieldChanged();
-                }
+                if (value == NextPageImageUrl) return;
+                ViewState.Set("NextPageImageUrl", value);
+                OnFieldChanged();
             }
         }
 
@@ -162,22 +108,12 @@ namespace BugNET.UserInterfaceLayer.WebControls
         /// <value>The first page image URL.</value>
         public string FirstPageImageUrl
         {
-            get
-            {
-                object obj2 = base.ViewState["FirstPageImageUrl"];
-                if (obj2 != null)
-                {
-                    return (string)obj2;
-                }
-                return string.Empty;
-            }
+            get { return ViewState.Get("FirstPageImageUrl", string.Empty); }
             set
             {
-                if (value != this.FirstPageImageUrl)
-                {
-                    base.ViewState["FirstPageImageUrl"] = value;
-                    this.OnFieldChanged();
-                }
+                if (value == FirstPageImageUrl) return;
+                ViewState.Set("FirstPageImageUrl", value);
+                OnFieldChanged();
             }
         }
 
@@ -187,22 +123,12 @@ namespace BugNET.UserInterfaceLayer.WebControls
         /// <value>The previous page image URL.</value>
         public string PreviousPageImageUrl
         {
-            get
-            {
-                object obj2 = base.ViewState["PreviousPageImageUrl"];
-                if (obj2 != null)
-                {
-                    return (string)obj2;
-                }
-                return string.Empty;
-            }
+            get { return ViewState.Get("PreviousPageImageUrl", string.Empty); }
             set
             {
-                if (value != this.PreviousPageImageUrl)
-                {
-                    base.ViewState["PreviousPageImageUrl"] = value;
-                    this.OnFieldChanged();
-                }
+                if (value == PreviousPageImageUrl) return;
+                ViewState.Set("PreviousPageImageUrl", value);
+                OnFieldChanged();
             }
         }
 
@@ -212,22 +138,12 @@ namespace BugNET.UserInterfaceLayer.WebControls
         /// <value>The last page image URL.</value>
         public string LastPageImageUrl
         {
-            get
-            {
-                object obj2 = base.ViewState["LastPageImageUrl"];
-                if (obj2 != null)
-                {
-                    return (string)obj2;
-                }
-                return string.Empty;
-            }
+            get { return ViewState.Get("LastPageImageUrl", string.Empty); }
             set
             {
-                if (value != this.LastPageImageUrl)
-                {
-                    base.ViewState["LastPageImageUrl"] = value;
-                    this.OnFieldChanged();
-                }
+                if (value == LastPageImageUrl) return;
+                ViewState.Set("LastPageImageUrl", value);
+                OnFieldChanged();
             }
         }
 
@@ -239,22 +155,12 @@ namespace BugNET.UserInterfaceLayer.WebControls
         /// </value>
         public bool RenderNonBreakingSpacesBetweenControls
         {
-            get
-            {
-                object obj2 = base.ViewState["RenderNonBreakingSpacesBetweenControls"];
-                if (obj2 != null)
-                {
-                    return (bool)obj2;
-                }
-                return true;
-            }
+            get { return ViewState.Get("RenderNonBreakingSpacesBetweenControls", true); }
             set
             {
-                if (value != this.RenderNonBreakingSpacesBetweenControls)
-                {
-                    base.ViewState["RenderNonBreakingSpacesBetweenControls"] = value;
-                    this.OnFieldChanged();
-                }
+                if (value == RenderNonBreakingSpacesBetweenControls) return;
+                ViewState.Set("RenderNonBreakingSpacesBetweenControls", value);
+                OnFieldChanged();
             }
         }
 
@@ -265,22 +171,12 @@ namespace BugNET.UserInterfaceLayer.WebControls
         [CssClassProperty]
         public string ButtonCssClass
         {
-            get
-            {
-                object obj2 = base.ViewState["ButtonCssClass"];
-                if (obj2 != null)
-                {
-                    return (string)obj2;
-                }
-                return string.Empty;
-            }
+            get { return ViewState.Get("ButtonCssClass", string.Empty); }
             set
             {
-                if (value != this.ButtonCssClass)
-                {
-                    base.ViewState["ButtonCssClass"] = value;
-                    this.OnFieldChanged();
-                }
+                if (value == ButtonCssClass) return;
+                ViewState.Set("ButtonCssClass", value);
+                OnFieldChanged();
             }
         }
 
@@ -290,10 +186,7 @@ namespace BugNET.UserInterfaceLayer.WebControls
         /// <value><c>true</c> if [enable previous page]; otherwise, <c>false</c>.</value>
         private bool EnablePreviousPage
         {
-            get
-            {
-                return (this._startRowIndex > 0);
-            }
+            get { return (_startRowIndex > 0); }
         }
 
         /// <summary>
@@ -302,11 +195,9 @@ namespace BugNET.UserInterfaceLayer.WebControls
         /// <value><c>true</c> if [enable next page]; otherwise, <c>false</c>.</value>
         private bool EnableNextPage
         {
-            get
-            {
-                return ((this._startRowIndex + this._maximumRows) < this._totalRowCount);
-            }
+            get { return ((_startRowIndex + _maximumRows) < _totalRowCount); }
         }
+
         #endregion
 
         /// <summary>
@@ -317,19 +208,20 @@ namespace BugNET.UserInterfaceLayer.WebControls
         /// <param name="maximumRows">The maximum number of items on a single page.</param>
         /// <param name="totalRowCount">The total number of items.</param>
         /// <param name="fieldIndex">The index of the data pager field in the <see cref="P:System.Web.UI.WebControls.DataPager.Fields"/> collection.</param>
-        public override void CreateDataPagers(DataPagerFieldItem container, int startRowIndex, int maximumRows, int totalRowCount, int fieldIndex)
+        public override void CreateDataPagers(DataPagerFieldItem container, int startRowIndex, int maximumRows,
+                                              int totalRowCount, int fieldIndex)
         {
-            this._startRowIndex = startRowIndex;
-            this._maximumRows = maximumRows;
-            this._totalRowCount = totalRowCount;
+            _startRowIndex = startRowIndex;
+            _maximumRows = maximumRows;
+            _totalRowCount = totalRowCount;
 
-            if (string.IsNullOrEmpty(base.DataPager.QueryStringField))
+            if (string.IsNullOrEmpty(DataPager.QueryStringField))
             {
-                this.CreateDataPagersForCommand(container, fieldIndex);
+                CreateDataPagersForCommand(container, fieldIndex);
             }
             else
             {
-                this.CreateDataPagersForQueryString(container, fieldIndex);
+                CreateDataPagersForQueryString(container);
             }
         }
 
@@ -352,20 +244,20 @@ namespace BugNET.UserInterfaceLayer.WebControls
         {
             if (string.Equals(e.CommandName, "UpdatePageSize"))
             {
-                base.DataPager.PageSize = Int32.Parse(e.CommandArgument.ToString());
-                base.DataPager.SetPageProperties(this._startRowIndex, base.DataPager.PageSize, true);
+                DataPager.PageSize = Int32.Parse(e.CommandArgument.ToString());
+                DataPager.SetPageProperties(_startRowIndex, DataPager.PageSize, true);
                 return;
             }
 
             //if (string.Equals(e.CommandName, "GoToItem"))
             //{
             //    //int newStartRowIndex = Int32.Parse(e.CommandArgument.ToString()) - 1;
-            //    //base.DataPager.SetPageProperties(newStartRowIndex, base.DataPager.PageSize, true);
+            //    //DataPager.SetPageProperties(newStartRowIndex, DataPager.PageSize, true);
             //    //return;
 
             //    int pageNumber;
             //    int newStartRowIndex;
-            //    if (int.TryParse(e.CommandArgument.ToString(), out pageNumber) && pageNumber > 0 && pageNumber <= (this._totalRowCount / base.DataPager.PageSize) +1)
+            //    if (int.TryParse(e.CommandArgument.ToString(), out pageNumber) && pageNumber > 0 && pageNumber <= (this._totalRowCount / DataPager.PageSize) +1)
             //    {
             //        newStartRowIndex= pageNumber;
             //    }
@@ -374,12 +266,12 @@ namespace BugNET.UserInterfaceLayer.WebControls
             //        newStartRowIndex = 0;
             //    }
 
-            //    base.DataPager.SetPageProperties(newStartRowIndex,base.DataPager.PageSize, true);
+            //    DataPager.SetPageProperties(newStartRowIndex,DataPager.PageSize, true);
             //    return;
             //}
             if (string.Equals(e.CommandName, "GoToItem"))
             {
-                int newStartRowIndex = 0;
+                int newStartRowIndex;
                 try
                 {
                     newStartRowIndex = Int32.Parse(e.CommandArgument.ToString());
@@ -393,40 +285,40 @@ namespace BugNET.UserInterfaceLayer.WebControls
                     newStartRowIndex = 0;
                 }
 
-                base.DataPager.SetPageProperties(newStartRowIndex, base.DataPager.PageSize, true);
+                DataPager.SetPageProperties(newStartRowIndex, DataPager.PageSize, true);
                 return;
             }
-           
-            if (string.IsNullOrEmpty(base.DataPager.QueryStringField))
+
+            if (string.IsNullOrEmpty(DataPager.QueryStringField))
             {
                 if (string.Equals(e.CommandName, "First"))
                 {
-                    base.DataPager.SetPageProperties(0, base.DataPager.PageSize, true);
+                    DataPager.SetPageProperties(0, DataPager.PageSize, true);
                 }
                 else if (string.Equals(e.CommandName, "Last"))
                 {
-                    base.DataPager.SetPageProperties(this._totalRowCount, base.DataPager.PageSize, true);
+                    DataPager.SetPageProperties(_totalRowCount, DataPager.PageSize, true);
                 }
                 else if (string.Equals(e.CommandName, "Prev"))
                 {
-                    int startRowIndex = this._startRowIndex - base.DataPager.PageSize;
+                    int startRowIndex = _startRowIndex - DataPager.PageSize;
                     if (startRowIndex < 0)
                     {
                         startRowIndex = 0;
                     }
-                    base.DataPager.SetPageProperties(startRowIndex, base.DataPager.PageSize, true);
+                    DataPager.SetPageProperties(startRowIndex, DataPager.PageSize, true);
                 }
                 else if (string.Equals(e.CommandName, "Next"))
                 {
-                    int nextStartRowIndex = this._startRowIndex + base.DataPager.PageSize;
+                    int nextStartRowIndex = _startRowIndex + DataPager.PageSize;
 
-                    if (nextStartRowIndex >= this._totalRowCount)  
-                        nextStartRowIndex = this._startRowIndex;   
+                    if (nextStartRowIndex >= _totalRowCount)
+                        nextStartRowIndex = _startRowIndex;
 
                     if (nextStartRowIndex < 0)
                         nextStartRowIndex = 0;
 
-                    base.DataPager.SetPageProperties(nextStartRowIndex, base.DataPager.PageSize, true);
+                    DataPager.SetPageProperties(nextStartRowIndex, DataPager.PageSize, true);
                 }
             }
         }
@@ -440,40 +332,28 @@ namespace BugNET.UserInterfaceLayer.WebControls
         {
             //Goto item texbox
             //this.CreateGoToTexBox(container);
-           
+
             //Control used to set the page size.
-            this.CreatePageSizeControl(container);
+            CreatePageSizeControl(container);
 
             //Set of records - total records
-            this.CreateLabelRecordControl(container);
+            CreateLabelRecordControl(container);
 
             //First button
-            if (this._showFirstPage)
-            {
-                container.Controls.Add(this.CreateControl("First", this.FirstPageText, fieldIndex, this.FirstPageImageUrl, this._showFirstPage));
+            container.Controls.Add(CreateControl("First", FirstPageText, fieldIndex, FirstPageImageUrl, SHOW_FIRST_PAGE));
 
-                this.AddNonBreakingSpace(container);
-            }
+            AddNonBreakingSpace(container);
 
             //Previous button
-            if (this._showPreviousPage)
-            {
-                container.Controls.Add(this.CreateControl("Prev", this.PreviousPageText, fieldIndex, this.PreviousPageImageUrl, this._showPreviousPage));
-                this.AddNonBreakingSpace(container);
-            }
+            container.Controls.Add(CreateControl("Prev", PreviousPageText, fieldIndex, PreviousPageImageUrl, SHOW_PREVIOUS_PAGE));
+            AddNonBreakingSpace(container);
 
             //Next button
-            if (this._showNextPage)
-            {
-                container.Controls.Add(this.CreateControl("Next", this.NextPageText, fieldIndex, this.NextPageImageUrl, this._showNextPage));
-                this.AddNonBreakingSpace(container);
-            }
+            container.Controls.Add(CreateControl("Next", NextPageText, fieldIndex, NextPageImageUrl, SHOW_NEXT_PAGE));
+            AddNonBreakingSpace(container);
 
-            if (this._showLastPage)
-            {
-                container.Controls.Add(this.CreateControl("Last", this.LastPageText, fieldIndex, this.LastPageImageUrl, this._showLastPage));
-                this.AddNonBreakingSpace(container);
-            }
+            container.Controls.Add(CreateControl("Last", LastPageText, fieldIndex, LastPageImageUrl, SHOW_LAST_PAGE));
+            AddNonBreakingSpace(container);
         }
 
         /// <summary>
@@ -485,22 +365,21 @@ namespace BugNET.UserInterfaceLayer.WebControls
         /// <param name="imageUrl">The image URL.</param>
         /// <param name="enabled">if set to <c>true</c> [enabled].</param>
         /// <returns></returns>
-        private Control CreateControl(string commandName, string buttonText, int fieldIndex, string imageUrl, bool enabled)
+        private Control CreateControl(string commandName, string buttonText, int fieldIndex, string imageUrl,
+                                      bool enabled)
         {
-            IButtonControl control;
-
-            control = new ImageButton();
-            ((ImageButton)control).ImageUrl = imageUrl;
-            ((ImageButton)control).Enabled = enabled;
-            ((ImageButton)control).AlternateText = HttpUtility.HtmlDecode(buttonText);
+            IButtonControl control = new ImageButton();
+            ((ImageButton) control).ImageUrl = imageUrl;
+            ((ImageButton) control).Enabled = enabled;
+            ((ImageButton) control).AlternateText = HttpUtility.HtmlDecode(buttonText);
 
             control.Text = buttonText;
             control.CommandName = commandName;
             control.CommandArgument = fieldIndex.ToString(CultureInfo.InvariantCulture);
-            WebControl control2 = control as WebControl;
-            if ((control2 != null) && !string.IsNullOrEmpty(this.ButtonCssClass))
+            var control2 = control as WebControl;
+            if (!string.IsNullOrEmpty(ButtonCssClass))
             {
-                control2.CssClass = this.ButtonCssClass;
+                control2.CssClass = ButtonCssClass;
             }
 
             return (control as Control);
@@ -512,7 +391,7 @@ namespace BugNET.UserInterfaceLayer.WebControls
         /// <param name="container">The container.</param>
         private void AddNonBreakingSpace(DataPagerFieldItem container)
         {
-            if (this.RenderNonBreakingSpacesBetweenControls)
+            if (RenderNonBreakingSpacesBetweenControls)
             {
                 container.Controls.Add(new LiteralControl("&nbsp;"));
             }
@@ -524,15 +403,16 @@ namespace BugNET.UserInterfaceLayer.WebControls
         /// <param name="container">The container.</param>
         private void CreateLabelRecordControl(DataPagerFieldItem container)
         {
-            int endRowIndex = this._startRowIndex + base.DataPager.PageSize;
+            int endRowIndex = _startRowIndex + DataPager.PageSize;
 
-            if (endRowIndex > this._totalRowCount)
-                endRowIndex = this._totalRowCount;
+            if (endRowIndex > _totalRowCount)
+                endRowIndex = _totalRowCount;
 
-            container.Controls.Add(new LiteralControl(string.Format(_RowXofY, this._startRowIndex + 1, endRowIndex, this._totalRowCount)));
-            this.AddNonBreakingSpace(container);
-            this.AddNonBreakingSpace(container);
-            this.AddNonBreakingSpace(container);
+            container.Controls.Add(
+                new LiteralControl(string.Format(_rowXofY, _startRowIndex + 1, endRowIndex, _totalRowCount)));
+            AddNonBreakingSpace(container);
+            AddNonBreakingSpace(container);
+            AddNonBreakingSpace(container);
         }
 
         /// <summary>
@@ -543,9 +423,7 @@ namespace BugNET.UserInterfaceLayer.WebControls
         {
             container.Controls.Add(new LiteralControl(_ShowRows));
 
-            ButtonDropDownList pageSizeDropDownList = new ButtonDropDownList();
-
-            pageSizeDropDownList.CommandName = "UpdatePageSize";
+            var pageSizeDropDownList = new ButtonDropDownList {CommandName = "UpdatePageSize"};
 
             pageSizeDropDownList.Items.Add(new ListItem("5", "5"));
             pageSizeDropDownList.Items.Add(new ListItem("10", "10"));
@@ -555,19 +433,19 @@ namespace BugNET.UserInterfaceLayer.WebControls
             pageSizeDropDownList.Items.Add(new ListItem("75", "75"));
             pageSizeDropDownList.Items.Add(new ListItem("100", "100"));
 
-            ListItem pageSizeItem = pageSizeDropDownList.Items.FindByValue(base.DataPager.PageSize.ToString());
+            var pageSizeItem = pageSizeDropDownList.Items.FindByValue(DataPager.PageSize.ToString());
 
             if (pageSizeItem == null)
             {
-                pageSizeItem = new ListItem(base.DataPager.PageSize.ToString(), base.DataPager.PageSize.ToString());
+                pageSizeItem = new ListItem(DataPager.PageSize.ToString(), DataPager.PageSize.ToString());
                 pageSizeDropDownList.Items.Insert(0, pageSizeItem);
             }
 
             pageSizeItem.Selected = true;
             container.Controls.Add(pageSizeDropDownList);
-            
-            this.AddNonBreakingSpace(container);
-            this.AddNonBreakingSpace(container);
+
+            AddNonBreakingSpace(container);
+            AddNonBreakingSpace(container);
         }
 
         /// <summary>
@@ -576,79 +454,66 @@ namespace BugNET.UserInterfaceLayer.WebControls
         /// <param name="container">The container.</param>
         private void CreateGoToTexBox(DataPagerFieldItem container)
         {
-            Label label = new Label();
-            label.Text = _GoTo;
+            var label = new Label {Text = _goTo};
             container.Controls.Add(label);
 
-            ButtonTextBox goToTextBox = new ButtonTextBox();
-            
-            goToTextBox.CommandName = "GoToItem";
-            goToTextBox.Width = new Unit("20px");
+            var goToTextBox = new ButtonTextBox {CommandName = "GoToItem", Width = new Unit("20px")};
+
             container.Controls.Add(goToTextBox);
 
-            this.AddNonBreakingSpace(container);
-            this.AddNonBreakingSpace(container);
+            AddNonBreakingSpace(container);
+            AddNonBreakingSpace(container);
         }
 
         /// <summary>
         /// Creates the data pagers for query string.
         /// </summary>
         /// <param name="container">The container.</param>
-        /// <param name="fieldIndex">Index of the field.</param>
-        private void CreateDataPagersForQueryString(DataPagerFieldItem container, int fieldIndex)
+        private void CreateDataPagersForQueryString(DataPagerFieldItem container)
         {
-            bool validPageIndex = false;
-            if (!base.QueryStringHandled)
+            var validPageIndex = false;
+            if (!QueryStringHandled)
             {
                 int num;
-                base.QueryStringHandled = true;
-                if (int.TryParse(base.QueryStringValue, out num))
+                QueryStringHandled = true;
+                if (int.TryParse(QueryStringValue, out num))
                 {
                     num--;
-                    int currentPageIndex = this._startRowIndex / this._maximumRows;
-                    int maxPageIndex = (this._totalRowCount - 1) / this._maximumRows;
+                    var maxPageIndex = (_totalRowCount - 1)/_maximumRows;
                     if ((num >= 0) && (num <= maxPageIndex))
                     {
-                        this._startRowIndex = num * this._maximumRows;
+                        _startRowIndex = num*_maximumRows;
                         validPageIndex = true;
                     }
                 }
             }
 
             //Goto item texbox
-            this.CreateGoToTexBox(container);
+            CreateGoToTexBox(container);
 
             //Control used to set the page size.
-            this.CreatePageSizeControl(container);
+            CreatePageSizeControl(container);
 
             //Set of records - total records
-            this.CreateLabelRecordControl(container);
+            CreateLabelRecordControl(container);
 
-            if (this._showPreviousPage)
-            {
-                int pageIndex = (this._startRowIndex / this._maximumRows) - 1;
-                container.Controls.Add(this.CreateLink(this.PreviousPageText, pageIndex, this.PreviousPageImageUrl, this.EnablePreviousPage));
-                this.AddNonBreakingSpace(container);
-            }
-            if (this._showNextPage)
-            {
-                int num4 = (this._startRowIndex + this._maximumRows) / this._maximumRows;
-                container.Controls.Add(this.CreateLink(this.NextPageText, num4, this.NextPageImageUrl, this.EnableNextPage));
-                this.AddNonBreakingSpace(container);
-            }
-            if (this._showFirstPage)
-            {
-                container.Controls.Add(this.CreateLink(this.FirstPageText, 0, this.FirstPageImageUrl, true));
-                this.AddNonBreakingSpace(container);
-            }
-            if (this._showLastPage)
-            {
-                container.Controls.Add(this.CreateLink(this.LastPageText, _totalRowCount, this.LastPageImageUrl, true));
-                this.AddNonBreakingSpace(container);
-            }
+            var pageIndex = (_startRowIndex/_maximumRows) - 1;
+            container.Controls.Add(CreateLink(PreviousPageText, pageIndex, PreviousPageImageUrl, EnablePreviousPage));
+            AddNonBreakingSpace(container);
+
+            var num4 = (_startRowIndex + _maximumRows)/_maximumRows;
+            container.Controls.Add(CreateLink(NextPageText, num4, NextPageImageUrl, EnableNextPage));
+            AddNonBreakingSpace(container);
+
+            container.Controls.Add(CreateLink(FirstPageText, 0, FirstPageImageUrl, true));
+            AddNonBreakingSpace(container);
+
+            container.Controls.Add(CreateLink(LastPageText, _totalRowCount, LastPageImageUrl, true));
+            AddNonBreakingSpace(container);
+
             if (validPageIndex)
             {
-                base.DataPager.SetPageProperties(this._startRowIndex, this._maximumRows, true);
+                DataPager.SetPageProperties(_startRowIndex, _maximumRows, true);
             }
         }
 
@@ -662,15 +527,17 @@ namespace BugNET.UserInterfaceLayer.WebControls
         /// <returns></returns>
         private HyperLink CreateLink(string buttonText, int pageIndex, string imageUrl, bool enabled)
         {
-            int pageNumber = pageIndex + 1;
-            HyperLink link = new HyperLink();
-            link.Text = buttonText;
-            link.NavigateUrl = base.GetQueryStringNavigateUrl(pageNumber);
-            link.ImageUrl = imageUrl;
-            link.Enabled = enabled;
-            if (!string.IsNullOrEmpty(this.ButtonCssClass))
+            var pageNumber = pageIndex;
+            var link = new HyperLink
+                           {
+                               Text = buttonText,
+                               NavigateUrl = GetQueryStringNavigateUrl(pageNumber),
+                               ImageUrl = imageUrl,
+                               Enabled = enabled
+                           };
+            if (!string.IsNullOrEmpty(ButtonCssClass))
             {
-                link.CssClass = this.ButtonCssClass;
+                link.CssClass = ButtonCssClass;
             }
             return link;
         }

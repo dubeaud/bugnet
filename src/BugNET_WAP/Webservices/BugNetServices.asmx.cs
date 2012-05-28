@@ -494,9 +494,7 @@ namespace BugNET.Webservices
                 throw new UnauthorizedAccessException(string.Format(LoggingManager.GetErrorMessageResource("ProjectAccessDenied"), UserName));
 
             List<Issue> issues;
-            QueryClause q;
-            List<QueryClause> queryClauses = new List<QueryClause>();
-            string BooleanOperator = "AND";
+            var queryClauses = new List<QueryClause>();
 
             if (Filter.Trim() == "")
             {
@@ -505,55 +503,43 @@ namespace BugNET.Webservices
             }
             else
             {
-                foreach (string item in Filter.Split('&'))
+                queryClauses.Add(new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int, false));
+
+                foreach (var item in Filter.Split('&'))
                 {
                     if (item.StartsWith("status=", StringComparison.CurrentCultureIgnoreCase))
                     {
                         if (item.EndsWith("=notclosed", StringComparison.CurrentCultureIgnoreCase))
                         {
-                            List<Status> status = StatusManager.GetByProjectId(ProjectId).FindAll(delegate(Status s) { return s.IsClosedState == true; });
-                            foreach (Status st in status)
-                            {
-                                q = new QueryClause(BooleanOperator, "IssueStatusId", "<>", st.Id.ToString(), SqlDbType.Int, false);
-                                queryClauses.Add(q);
-                            }
+                            queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false));
                         }
                         else if (item.EndsWith("=new", StringComparison.CurrentCultureIgnoreCase))
                         {
-                            q = new QueryClause(BooleanOperator, "AssignedUsername", "=", "none", SqlDbType.NVarChar, false);
-                            queryClauses.Add(q);
-                            List<Status> status = StatusManager.GetByProjectId(ProjectId).FindAll(delegate(Status s) { return s.IsClosedState == true; });
-                            foreach (Status st in status)
-                            {
-                                q = new QueryClause(BooleanOperator, "IssueStatusId", "<>", st.Id.ToString(), SqlDbType.Int, false);
-                                queryClauses.Add(q);
-                            }
+                            queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false));
+                            queryClauses.Add(new QueryClause("AND", "iv.[IssueAssignedUserId]", "IS", null, SqlDbType.Int, false));
                         }
                     }
                     else if (item.StartsWith("owner=", StringComparison.CurrentCultureIgnoreCase))
                     {
-                        q = new QueryClause(BooleanOperator, "OwnerUsername", "=", item.Substring(item.IndexOf('=') + 1, item.Length - item.IndexOf('=') - 1).ToString(), SqlDbType.NVarChar, false);
-                        queryClauses.Add(q);
+                        queryClauses.Add(new QueryClause("AND", "iv.[OwnerUsername]", "=", item.Substring(item.IndexOf('=') + 1, item.Length - item.IndexOf('=') - 1), SqlDbType.NVarChar, false));
                     }
                     else if (item.StartsWith("reporter=", StringComparison.CurrentCultureIgnoreCase))
                     {
-                        q = new QueryClause(BooleanOperator, "CreatorUsername", "=", item.Substring(item.IndexOf('=') + 1, item.Length - item.IndexOf('=') - 1).ToString(), SqlDbType.NVarChar, false);
-                        queryClauses.Add(q);
+                        queryClauses.Add(new QueryClause("AND", "iv.[CreatorUsername]", "=", item.Substring(item.IndexOf('=') + 1, item.Length - item.IndexOf('=') - 1), SqlDbType.NVarChar, false));
                     }
                     else if (item.StartsWith("assigned=", StringComparison.CurrentCultureIgnoreCase))
                     {
-                        q = new QueryClause(BooleanOperator, "AssignedUsername", "=", item.Substring(item.IndexOf('=') + 1, item.Length - item.IndexOf('=') - 1).ToString(), SqlDbType.NVarChar, false);
-                        queryClauses.Add(q);
+                        queryClauses.Add(new QueryClause("AND", "iv.[AssignedUsername]", "=", item.Substring(item.IndexOf('=') + 1, item.Length - item.IndexOf('=') - 1), SqlDbType.NVarChar, false));
                     }
                 }
-                issues = IssueManager.PerformQuery(queryClauses, ProjectId);
+
+                issues = IssueManager.PerformQuery(ProjectId, queryClauses, null);
             }
 
-            List<Object> issueList = new List<Object>();
-            Object[] issueitem;
-            foreach (Issue item in issues)
+            var issueList = new List<Object>();
+            foreach (var item in issues)
             {
-                issueitem = new Object[13];
+                var issueitem = new Object[13];
                 issueitem[0] = item.Id;
                 issueitem[1] = item.DateCreated;
                 issueitem[2] = item.LastUpdate;

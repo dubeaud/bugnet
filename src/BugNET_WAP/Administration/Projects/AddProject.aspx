@@ -7,12 +7,14 @@
 		<br/>
 		<br/>
 		<div style="float:left">
-			<asp:Button Text="<%$ Resources:SharedResources, Cancel %>"  CssClass="button" CausesValidation="false" runat="server" id="btnCancel" />
+			<asp:Button Text="<%$ Resources:SharedResources, Cancel %>"  CssClass="button" CausesValidation="false" runat="server" 
+                id="btnCancel" onclick="btnCancel_Click" />
 		</div>
 		<div style="float:right">
-			<asp:Button id="btnBack"  CssClass="button" Text="<%$ Resources:Back %>" CausesValidation="false" runat="Server" />
+			<asp:Button id="btnBack"  CssClass="button" Text="<%$ Resources:Back %>" CausesValidation="false" runat="Server" 
+                onclick="btnBack_Click" />
 			&nbsp;
-			<asp:Button id="btnNext"  CssClass="button" Text="<%$ Resources:Next %>" runat="Server" />
+			<asp:Button id="btnNext"  CssClass="button" Text="<%$ Resources:Next %>" runat="Server" onclick="btnNext_Click" />
 		</div>	
 	</div>	
 </asp:Content>

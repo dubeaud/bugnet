@@ -12,7 +12,8 @@ namespace BugNET.Issues
 {
     public partial class MyIssues : BasePage
     {
-        string BooleanOperator = "AND";
+        private const string BOOLEAN_OPERATOR = "AND";
+
         /// <summary>
         /// Handles the Load event of the Page control.
         /// </summary>
@@ -20,33 +21,29 @@ namespace BugNET.Issues
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (User.Identity == null || !User.Identity.IsAuthenticated)
+            if (!User.Identity.IsAuthenticated)
                 ErrorRedirector.TransferToLoginPage(this);
 
-            if (!Page.IsPostBack)
-            {
-                ctlDisplayIssues.PageSize = WebProfile.Current.IssuesPageSize;
-                ctlDisplayIssues.CurrentPageIndex = 0;
+            if (Page.IsPostBack) return;
 
-                DisplayNameLabel.Text = string.Format(this.GetLocalResourceObject("MyIssuesPage_Title.Text").ToString(), Security.GetDisplayName());
+            ctlDisplayIssues.PageSize = WebProfile.Current.IssuesPageSize;
+            ctlDisplayIssues.CurrentPageIndex = 0;
 
-                ProjectListBoxFilter.DataSource = ProjectManager.GetByMemberUserName(Context.User.Identity.Name);
-                ProjectListBoxFilter.DataTextField = "Name";
-                ProjectListBoxFilter.DataValueField = "Id";
-                ProjectListBoxFilter.DataBind();
-                ProjectListBoxFilter.Items.Insert(0, new ListItem(this.GetLocalResourceObject("ProjectListBoxFilter_SelectAll.Text").ToString()));
-                ProjectListBoxFilter.SelectedIndex = 0;
+            DisplayNameLabel.Text = string.Format(GetLocalResourceObject("MyIssuesPage_Title.Text").ToString(),
+                                                  Security.GetDisplayName());
 
-                if (ViewIssuesDropDownFilter.SelectedValue == "Closed")
-                {
-                    ExcludeClosedIssuesFilter.Enabled = false;
-                }
-                else
-                {
-                    ExcludeClosedIssuesFilter.Enabled = true;
-                }
-                BindIssues();
-            }
+            ProjectListBoxFilter.DataSource = ProjectManager.GetByMemberUserName(Context.User.Identity.Name);
+            ProjectListBoxFilter.DataTextField = "Name";
+            ProjectListBoxFilter.DataValueField = "Id";
+            ProjectListBoxFilter.DataBind();
+            ProjectListBoxFilter.Items.Insert(0,
+                                              new ListItem(
+                                                  GetLocalResourceObject("ProjectListBoxFilter_SelectAll.Text").
+                                                      ToString()));
+            ProjectListBoxFilter.SelectedIndex = 0;
+
+            ExcludeClosedIssuesFilter.Enabled = ViewIssuesDropDownFilter.SelectedValue != "Closed";
+            BindIssues();
         }
 
         /// <summary>
@@ -78,10 +75,7 @@ namespace BugNET.Issues
         {
             ctlDisplayIssues.CurrentPageIndex = 0;
 
-            if (ViewIssuesDropDownFilter.SelectedValue == "Closed")
-                ExcludeClosedIssuesFilter.Enabled = false;
-            else
-                ExcludeClosedIssuesFilter.Enabled = true;
+            ExcludeClosedIssuesFilter.Enabled = ViewIssuesDropDownFilter.SelectedValue != "Closed";
 
             BindIssues();
         }
@@ -90,24 +84,27 @@ namespace BugNET.Issues
         /// Gets the total assigned issue count.
         /// </summary>
         /// <returns></returns>
-        protected string GetTotalAssignedIssueCount()
+        protected static string GetTotalAssignedIssueCount()
         {
-            MembershipUser user = Membership.GetUser();
-            List<QueryClause> queryClauses = new List<QueryClause>();
-            queryClauses.Add(new QueryClause(BooleanOperator, "IssueAssignedUserId", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
+            var user = Membership.GetUser();
+            var queryClauses = new List<QueryClause>
+                {
+                    new QueryClause(BOOLEAN_OPERATOR, "IssueAssignedUserId", "=",
+                                    user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false)
+                };
             return IssueManager.PerformQuery(queryClauses).Count.ToString();
-
         }
 
         /// <summary>
         /// Gets the total created issue count.
         /// </summary>
         /// <returns></returns>
-        protected string GetTotalCreatedIssueCount()
+        protected static string GetTotalCreatedIssueCount()
         {
             MembershipUser user = Membership.GetUser();
-            List<QueryClause> queryClauses = new List<QueryClause>();
-            queryClauses.Add(new QueryClause(BooleanOperator, "IssueCreatorUserId", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
+            var queryClauses = new List<QueryClause>();
+            queryClauses.Add(new QueryClause(BOOLEAN_OPERATOR, "IssueCreatorUserId", "=",
+                                             user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
             return IssueManager.PerformQuery(queryClauses).Count.ToString();
         }
 
@@ -118,16 +115,17 @@ namespace BugNET.Issues
         protected string GetTotalClosedIssueCount()
         {
             MembershipUser user = Membership.GetUser();
-            List<QueryClause> queryClauses = new List<QueryClause>();
-            queryClauses.Add(new QueryClause(BooleanOperator, "IssueAssignedUserId", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
+            var queryClauses = new List<QueryClause>();
+            queryClauses.Add(new QueryClause(BOOLEAN_OPERATOR, "IssueAssignedUserId", "=",
+                                             user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
             foreach (Project p in ProjectManager.GetByMemberUserName(Context.User.Identity.Name))
             {
                 List<Status> status = StatusManager.GetByProjectId(p.Id).FindAll(s => !s.IsClosedState);
                 foreach (Status st in status)
                 {
-                    queryClauses.Add(new QueryClause(BooleanOperator, "IssueStatusId", "<>", st.Id.ToString(), SqlDbType.Int, false));
+                    queryClauses.Add(new QueryClause(BOOLEAN_OPERATOR, "IssueStatusId", "<>", st.Id.ToString(),
+                                                     SqlDbType.Int, false));
                 }
-
             }
             return IssueManager.PerformQuery(queryClauses).Count.ToString();
         }
@@ -136,11 +134,12 @@ namespace BugNET.Issues
         /// Gets the total owned issue count.
         /// </summary>
         /// <returns></returns>
-        protected string GetTotalOwnedIssueCount()
+        protected static string GetTotalOwnedIssueCount()
         {
             MembershipUser user = Membership.GetUser();
-            List<QueryClause> queryClauses = new List<QueryClause>();
-            queryClauses.Add(new QueryClause(BooleanOperator, "IssueOwnerUserId", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
+            var queryClauses = new List<QueryClause>();
+            queryClauses.Add(new QueryClause(BOOLEAN_OPERATOR, "IssueOwnerUserId", "=", user.ProviderUserKey.ToString(),
+                                             SqlDbType.NVarChar, false));
             return IssueManager.PerformQuery(queryClauses).Count.ToString();
         }
 
@@ -148,7 +147,7 @@ namespace BugNET.Issues
         /// Gets the total monitored issues count.
         /// </summary>
         /// <returns></returns>
-        protected string GetTotalMonitoredIssuesCount()
+        protected static string GetTotalMonitoredIssuesCount()
         {
             return IssueManager.GetMonitoredIssuesByUserName(Security.GetUserName(), false).Count.ToString();
         }
@@ -158,12 +157,15 @@ namespace BugNET.Issues
         /// </summary>
         private void BindIssues()
         {
-            List<QueryClause> queryClauses = new List<QueryClause>();
+            var queryClauses = new List<QueryClause>();
             MembershipUser user = Membership.GetUser();
             if (ViewIssuesDropDownFilter.SelectedValue == "Monitored")
             {
-                ctlDisplayIssues.RssUrl = string.Format("~/Rss.aspx?channel=15&ec={0}", ExcludeClosedIssuesFilter.Checked);
-                ctlDisplayIssues.DataSource = IssueManager.GetMonitoredIssuesByUserName(Security.GetUserName(), ExcludeClosedIssuesFilter.Checked);
+                ctlDisplayIssues.RssUrl = string.Format("~/Rss.aspx?channel=15&ec={0}",
+                                                        ExcludeClosedIssuesFilter.Checked);
+                ctlDisplayIssues.DataSource = IssueManager.GetMonitoredIssuesByUserName(Security.GetUserName(),
+                                                                                        ExcludeClosedIssuesFilter.
+                                                                                            Checked);
                 ctlDisplayIssues.DataBind();
             }
             else
@@ -171,28 +173,36 @@ namespace BugNET.Issues
                 switch (ViewIssuesDropDownFilter.SelectedValue)
                 {
                     case "Assigned":
-                        queryClauses.Add(new QueryClause(BooleanOperator, "IssueAssignedUserId", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
-                        ctlDisplayIssues.RssUrl = string.Format("~/Rss.aspx?channel=16&ec={0}", ExcludeClosedIssuesFilter.Checked);
+                        queryClauses.Add(new QueryClause(BOOLEAN_OPERATOR, "IssueAssignedUserId", "=",
+                                                         user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
+                        ctlDisplayIssues.RssUrl = string.Format("~/Rss.aspx?channel=16&ec={0}",
+                                                                ExcludeClosedIssuesFilter.Checked);
                         break;
                     case "Closed":
-                        queryClauses.Add(new QueryClause(BooleanOperator, "IssueAssignedUserId", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
+                        queryClauses.Add(new QueryClause(BOOLEAN_OPERATOR, "IssueAssignedUserId", "=",
+                                                         user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
                         foreach (Project p in ProjectManager.GetByMemberUserName(Context.User.Identity.Name))
                         {
                             List<Status> status = StatusManager.GetByProjectId(p.Id).FindAll(s => !s.IsClosedState);
                             foreach (Status st in status)
                             {
-                                queryClauses.Add(new QueryClause(BooleanOperator, "IssueStatusId", "<>", st.Id.ToString(), SqlDbType.Int, false));
+                                queryClauses.Add(new QueryClause(BOOLEAN_OPERATOR, "IssueStatusId", "<>",
+                                                                 st.Id.ToString(), SqlDbType.Int, false));
                             }
                         }
                         ctlDisplayIssues.RssUrl = string.Format("~/Rss.aspx?channel=17");
                         break;
                     case "Owned":
-                        queryClauses.Add(new QueryClause(BooleanOperator, "IssueOwnerUserId", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
-                        ctlDisplayIssues.RssUrl = string.Format("~/Rss.aspx?channel=18&ec={0}", ExcludeClosedIssuesFilter.Checked);
+                        queryClauses.Add(new QueryClause(BOOLEAN_OPERATOR, "IssueOwnerUserId", "=",
+                                                         user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
+                        ctlDisplayIssues.RssUrl = string.Format("~/Rss.aspx?channel=18&ec={0}",
+                                                                ExcludeClosedIssuesFilter.Checked);
                         break;
                     case "Created":
-                        queryClauses.Add(new QueryClause(BooleanOperator, "IssueCreatorUserId", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
-                        ctlDisplayIssues.RssUrl = string.Format("~/Rss.aspx?channel=19&ec={0}", ExcludeClosedIssuesFilter.Checked);
+                        queryClauses.Add(new QueryClause(BOOLEAN_OPERATOR, "IssueCreatorUserId", "=",
+                                                         user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
+                        ctlDisplayIssues.RssUrl = string.Format("~/Rss.aspx?channel=19&ec={0}",
+                                                                ExcludeClosedIssuesFilter.Checked);
                         break;
                 }
 
@@ -200,20 +210,25 @@ namespace BugNET.Issues
                 {
                     foreach (Project p in ProjectManager.GetByMemberUserName(Context.User.Identity.Name))
                     {
-                        var status = StatusManager.GetByProjectId(p.Id).FindAll(s => s.IsClosedState);
-                        queryClauses.AddRange(status.Select(st => new QueryClause(BooleanOperator, "IssueStatusId", "<>", st.Id.ToString(), SqlDbType.Int, false)));
+                        List<Status> status = StatusManager.GetByProjectId(p.Id).FindAll(s => s.IsClosedState);
+                        queryClauses.AddRange(
+                            status.Select(
+                                st =>
+                                new QueryClause(BOOLEAN_OPERATOR, "IssueStatusId", "<>", st.Id.ToString(), SqlDbType.Int,
+                                                false)));
                     }
                 }
 
                 //List<Issue> issues = Issue.PerformQuery(0, queryClauses);
                 if (ProjectListBoxFilter.SelectedIndex != 0)
-                    ctlDisplayIssues.DataSource = IssueManager.PerformQuery(queryClauses).FindAll(i => PresentationUtils.GetSelectedItemsIntegerList(ProjectListBoxFilter).Contains(i.ProjectId));
+                    ctlDisplayIssues.DataSource =
+                        IssueManager.PerformQuery(queryClauses).FindAll(
+                            i =>
+                            PresentationUtils.GetSelectedItemsIntegerList(ProjectListBoxFilter).Contains(i.ProjectId));
                 else
                     ctlDisplayIssues.DataSource = IssueManager.PerformQuery(queryClauses);
                 ctlDisplayIssues.DataBind();
-
             }
-
         }
     }
 }

@@ -14,30 +14,30 @@ namespace BugNET.Administration.Host
 	/// </summary>
 	public partial class Settings : BasePage
 	{
-        Control ctlHostSettings;
-        Dictionary<string, string> _MenuItems = new Dictionary<string, string>();
+        Control _ctlHostSettings;
+	    readonly Dictionary<string, string> _menuItems = new Dictionary<string, string>();
 
         /// <summary>
         /// Handles the Load event of the Page control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
-		protected void Page_Load(object sender, System.EventArgs e)
+		protected void Page_Load(object sender, EventArgs e)
 		{
-            if (!UserManager.IsInRole(Globals.SUPER_USER_ROLE))
+            if (!UserManager.IsSuperUser())
                 Response.Redirect("~/Errors/AccessDenied.aspx");
 
-            _MenuItems.Add(GetLocalResourceObject("Basic").ToString(), "page_white_gear.png");
-            _MenuItems.Add(GetLocalResourceObject("Authentication").ToString(), "lock.gif");
-            _MenuItems.Add(GetLocalResourceObject("Mail").ToString(), "email.gif");
-            _MenuItems.Add(GetLocalResourceObject("Logging").ToString(), "page_white_error.png");
-            _MenuItems.Add(GetLocalResourceObject("Subversion").ToString(), "svnLogo_sm.jpg");
-            _MenuItems.Add(GetLocalResourceObject("Notifications").ToString(), "email_go.gif");
-            _MenuItems.Add(GetLocalResourceObject("Attachments").ToString(), "attach.gif");
-            _MenuItems.Add(GetLocalResourceObject("POP3Mailbox").ToString(), "mailbox.png");
-            _MenuItems.Add(GetLocalResourceObject("Languages").ToString(), "page_white_world.png");
+            _menuItems.Add(GetLocalResourceObject("Basic").ToString(), "page_white_gear.png");
+            _menuItems.Add(GetLocalResourceObject("Authentication").ToString(), "lock.gif");
+            _menuItems.Add(GetLocalResourceObject("Mail").ToString(), "email.gif");
+            _menuItems.Add(GetLocalResourceObject("Logging").ToString(), "page_white_error.png");
+            _menuItems.Add(GetLocalResourceObject("Subversion").ToString(), "svnLogo_sm.jpg");
+            _menuItems.Add(GetLocalResourceObject("Notifications").ToString(), "email_go.gif");
+            _menuItems.Add(GetLocalResourceObject("Attachments").ToString(), "attach.gif");
+            _menuItems.Add(GetLocalResourceObject("POP3Mailbox").ToString(), "mailbox.png");
+            _menuItems.Add(GetLocalResourceObject("Languages").ToString(), "page_white_world.png");
 
-            AdminMenu.DataSource = _MenuItems;
+            AdminMenu.DataSource = _menuItems;
             AdminMenu.DataBind();   
  
             if (TabId != -1)
@@ -113,7 +113,7 @@ namespace BugNET.Administration.Host
                     break;
             }
 
-            for (int i = 0; i < _MenuItems.Count; i++)
+            for (int i = 0; i < _menuItems.Count; i++)
             {
                 if (i == TabId)
                    ((HtmlGenericControl)AdminMenu.Items[i].FindControl("ListItem")).Attributes.Add("class", "on");
@@ -122,11 +122,11 @@ namespace BugNET.Administration.Host
             }
          
 
-            ctlHostSettings = Page.LoadControl("~/Administration/Host/UserControls/" + controlName);
-            ctlHostSettings.ID = "ctlHostSetting";
+            _ctlHostSettings = Page.LoadControl("~/Administration/Host/UserControls/" + controlName);
+            _ctlHostSettings.ID = "ctlHostSetting";
             plhSettingsControl.Controls.Clear();
-            plhSettingsControl.Controls.Add(ctlHostSettings);
-            ((IEditHostSettingControl)ctlHostSettings).Initialize();
+            plhSettingsControl.Controls.Add(_ctlHostSettings);
+            ((IEditHostSettingControl)_ctlHostSettings).Initialize();
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace BugNET.Administration.Host
 		{
             if (Page.IsValid)
             { 
-                if (((IEditHostSettingControl)ctlHostSettings).Update())
+                if (((IEditHostSettingControl)_ctlHostSettings).Update())
                     Message1.ShowSuccessMessage(GetLocalResourceObject("SaveMessage").ToString());
             }
 		}

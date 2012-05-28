@@ -31,6 +31,7 @@ namespace BugNET.Administration.Projects
 			if (!Page.IsPostBack)
 			{
 				litProjectName.Text = ProjectManager.GetById(ProjectId).Name;
+			    lblExistingProjectName.Text = litProjectName.Text;
 
                 var message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), litProjectName.Text);
                 Image1.OnClientClick = String.Format("return confirm('{0}');", message);
@@ -42,6 +43,12 @@ namespace BugNET.Administration.Projects
                 {
                     DeleteButton.Visible = false;
                     Image1.Visible = false;
+                }
+
+                if (!UserManager.HasPermission(ProjectId, Globals.Permission.AdminCloneProject.ToString()))
+                {
+                    imgCloneProject.Visible = false;
+                    linkCloneProject.Visible = false;
                 }
 
                 var p = ProjectManager.GetById(ProjectId);
@@ -252,6 +259,18 @@ namespace BugNET.Administration.Projects
 
             if (((IEditProjectControl)c).Update())
                 Message1.ShowInfoMessage(GetLocalResourceObject("ProjectUpdated").ToString());
+        }
+
+        protected void OkButton_Click(object sender, EventArgs e)
+        {
+            if (!IsValid) return;
+
+            var newProjectId = ProjectManager.CloneProject(ProjectId, txtNewProjectName.Text);
+
+            if (newProjectId > 0)
+                Response.Redirect(string.Format("~/Administration/Projects/EditProject.aspx?pid={0}", newProjectId));
+            else
+                lblError.Text = LoggingManager.GetErrorMessageResource("CloneProjectError");
         }
 	}
 }

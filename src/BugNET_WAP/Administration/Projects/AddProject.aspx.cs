@@ -11,72 +11,22 @@ namespace BugNET.Administration.Projects
     /// <summary>
     /// Summary description for AddProject.
     /// </summary>
-	public partial class AddProject :  BasePage
-	{
-        ArrayList WizardSteps = new ArrayList();
-        Control ctlWizardStep;
+    public partial class AddProject : BasePage
+    {
+        readonly ArrayList _wizardSteps = new ArrayList();
+
+        Control _ctlWizardStep;
+
         private static readonly ILog Log = LogManager.GetLogger(typeof(AddProject));
+
         /// <summary>
         /// Gets or sets the index of the step.
         /// </summary>
         /// <value>The index of the step.</value>
         int StepIndex
         {
-            get
-            {
-                if (ViewState["StepIndex"] == null)
-                    return 0;
-                else
-                    return (int)ViewState["StepIndex"];
-            }
-
-            set { ViewState["StepIndex"] = value; }
-        }
-
-        /// <summary>
-        /// Handles the Load event of the Page control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		protected void Page_Load(object sender, System.EventArgs e)
-		{
-            if (!UserManager.HasPermission(Convert.ToInt32(Request.QueryString["id"]), Globals.Permission.AdminCreateProject.ToString()))
-                Response.Redirect("~/Errors/AccessDenied.aspx");
-
-            if (Request.Cookies[Globals.SKIP_PROJECT_INTRO] == null)
-                WizardSteps.Add("UserControls/NewProjectIntro.ascx");        
-
-            WizardSteps.Add("UserControls/ProjectDescription.ascx");
-            WizardSteps.Add("UserControls/ProjectCategories.ascx");
-            WizardSteps.Add("UserControls/ProjectStatus.ascx");
-            WizardSteps.Add("UserControls/ProjectPriorities.ascx");
-            WizardSteps.Add("UserControls/ProjectMilestones.ascx");
-            WizardSteps.Add("UserControls/ProjectIssueTypes.ascx");
-            WizardSteps.Add("UserControls/ProjectResolutions.ascx");
-            WizardSteps.Add("UserControls/ProjectCustomFields.ascx");
-            WizardSteps.Add("UserControls/ProjectRoles.ascx");
-            WizardSteps.Add("UserControls/ProjectMembers.ascx");  
-            WizardSteps.Add("UserControls/NewProjectSummary.ascx");
-
-            LoadWizardStep();
-		}
-
-        /// <summary>
-        /// Handles the PreRender event of the AddProject control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void AddProject_PreRender(object sender, EventArgs e)
-        {
-            if (StepIndex == 0)
-                btnBack.Visible = false;
-            else
-                btnBack.Visible = true;
-
-            if (StepIndex == (WizardSteps.Count - 1))
-                btnNext.Text = GetLocalResourceObject("Finish").ToString();
-            else
-                btnNext.Text = GetLocalResourceObject("Next").ToString();
+            get { return ViewState.Get("StepIndex", 0); }
+            set { ViewState.Set("StepIndex", value); }
         }
 
         /// <summary>
@@ -84,15 +34,50 @@ namespace BugNET.Administration.Projects
         /// </summary>
         private void LoadWizardStep()
         {
-            ctlWizardStep = Page.LoadControl((string)WizardSteps[StepIndex]);
-            ctlWizardStep.ID = "ctlWizardStep";
-            ((IEditProjectControl)ctlWizardStep).ProjectId = ProjectId;
+            _ctlWizardStep = Page.LoadControl((string)_wizardSteps[StepIndex]);
+            _ctlWizardStep.ID = "ctlWizardStep";
+            ((IEditProjectControl)_ctlWizardStep).ProjectId = ProjectId;
             plhWizardStep.Controls.Clear();
-            plhWizardStep.Controls.Add(ctlWizardStep);
-            ((IEditProjectControl)ctlWizardStep).Initialize();
-            lblStepNumber.Text = String.Format("{2} {0} {3} {1}", StepIndex + 1, WizardSteps.Count, GetLocalResourceObject("Step").ToString(), GetLocalResourceObject("Of").ToString());
-        
+            plhWizardStep.Controls.Add(_ctlWizardStep);
+            ((IEditProjectControl)_ctlWizardStep).Initialize();
+            lblStepNumber.Text = String.Format("{2} {0} {3} {1}", StepIndex + 1, _wizardSteps.Count, GetLocalResourceObject("Step"), GetLocalResourceObject("Of"));
+        }
 
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!UserManager.IsSuperUser())
+                Response.Redirect("~/Errors/AccessDenied.aspx");
+
+            if (Request.Cookies[Globals.SKIP_PROJECT_INTRO] == null)
+                _wizardSteps.Add("UserControls/NewProjectIntro.ascx");
+
+            _wizardSteps.Add("UserControls/ProjectDescription.ascx");
+            _wizardSteps.Add("UserControls/ProjectCategories.ascx");
+            _wizardSteps.Add("UserControls/ProjectStatus.ascx");
+            _wizardSteps.Add("UserControls/ProjectPriorities.ascx");
+            _wizardSteps.Add("UserControls/ProjectMilestones.ascx");
+            _wizardSteps.Add("UserControls/ProjectIssueTypes.ascx");
+            _wizardSteps.Add("UserControls/ProjectResolutions.ascx");
+            _wizardSteps.Add("UserControls/ProjectCustomFields.ascx");
+            _wizardSteps.Add("UserControls/ProjectRoles.ascx");
+            _wizardSteps.Add("UserControls/ProjectMembers.ascx");
+            _wizardSteps.Add("UserControls/NewProjectSummary.ascx");
+
+            LoadWizardStep();
+        }
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            base.OnPreRender(e);
+
+            btnNext.Text = StepIndex == (_wizardSteps.Count - 1) ?
+                GetLocalResourceObject("Finish").ToString() :
+                GetLocalResourceObject("Next").ToString();
         }
 
         /// <summary>
@@ -100,7 +85,7 @@ namespace BugNET.Administration.Projects
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void btnCancel_Click(object sender, EventArgs e)
+        protected void btnCancel_Click(object sender, EventArgs e)
         {
             //delete any project that has already been created to prevent bad project data.
             if (ProjectId != 0)
@@ -116,7 +101,7 @@ namespace BugNET.Administration.Projects
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void btnBack_Click(object sender, EventArgs e)
+        protected void btnBack_Click(object sender, EventArgs e)
         {
             StepIndex--;
             LoadWizardStep();
@@ -127,47 +112,17 @@ namespace BugNET.Administration.Projects
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void btnNext_Click(object sender, EventArgs e)
+        protected void btnNext_Click(object sender, EventArgs e)
         {
-            if (((IEditProjectControl)ctlWizardStep).Update())
+            if (((IEditProjectControl)_ctlWizardStep).Update())
             {
-                ProjectId = ((IEditProjectControl)ctlWizardStep).ProjectId;
+                ProjectId = ((IEditProjectControl)_ctlWizardStep).ProjectId;
                 StepIndex++;
-                if (StepIndex == WizardSteps.Count)
+                if (StepIndex == _wizardSteps.Count)
                     Response.Redirect("ProjectList.aspx");
                 else
                     LoadWizardStep();
             }
         }
-
-		#region Web Form Designer generated code
-        /// <summary>
-        /// Overrides the default OnInit to provide a security check for pages
-        /// </summary>
-        /// <param name="e"></param>
-		override protected void OnInit(EventArgs e)
-		{
-			//
-			// CODEGEN: This call is required by the ASP.NET Web Form Designer.
-			//
-			InitializeComponent();
-			base.OnInit(e);
-		}
-		
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{    
-            //this.Load += new System.EventHandler(this.Page_Load);
-            this.PreRender += new EventHandler(AddProject_PreRender);
-            this.btnCancel.Click += new EventHandler(btnCancel_Click);
-            this.btnBack.Click += new EventHandler(btnBack_Click);
-            this.btnNext.Click += new EventHandler(btnNext_Click);
-		}
-
-    
-		#endregion
-}
+    }
 }

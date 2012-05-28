@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using BugNET.BLL;
-using BugNET.Common;
 using BugNET.Entities;
 using BugNET.UserInterfaceLayer;
 using System.Data;
 using System.Linq;
 
-namespace BugNET
+namespace BugNET.Issues
 {
     /// <summary>
     /// 
@@ -26,35 +24,9 @@ namespace BugNET
         {
             if (!Page.IsPostBack)
             {
-                // if (User.Identity.IsAuthenticated)
-                // {
-                //      ctlBugs.PageSize = WebProfile.Current.IssuesPageSize;
-                //  }
-
-                //IssueListState state = (IssueListState)Session[ISSUELISTSTATE];
-
-                //if (state != null)
-                //{
-                //    if (Request.QueryString.Count == 1 && state.ViewIssues == string.Empty) state.ViewIssues = "Open";
-
-                //    //if ((ProjectId > 0) && (ProjectId != state.ProjectId))
-                //    //{
-                //    //    Session.Remove(ISSUELISTSTATE);
-                //    //}
-                //    //else
-                //    //{
-                //    if (Request.QueryString.Count > 1) state.ViewIssues = string.Empty;
-                //    ctlBugs.CurrentPageIndex = state.IssueListPageIndex;
-                //    ctlBugs.SortField = state.SortField;
-                //    ctlBugs.SortAscending = state.SortAscending;
-                //    ctlBugs.PageSize = state.PageSize;
-
-                //    //}
-                //}
-                //else
-                //{
-                //    // if (Request.QueryString.Count > 1) dropView.SelectedValue = string.Empty;
-                //}
+                pnlResultsMessage.Visible = true;
+                pnlSearchResults.Visible = false;
+                litResultsMessage.Text = GetLocalResourceObject("SearchInstructions").ToString();
 
                 if (Request.QueryString["cr"] != null)
                     _mainIssues.Sort(new IssueComparer("Created", true));
@@ -67,8 +39,6 @@ namespace BugNET
             // The ExpandIssuePaths method is called to handle
             // the SiteMapResolve event.
             SiteMap.SiteMapResolve += ExpandIssuePaths;
-
-
         }
 
         /// <summary>
@@ -82,8 +52,10 @@ namespace BugNET
             SiteMap.SiteMapResolve -= ExpandIssuePaths;
         }
 
-        private SiteMapNode ExpandIssuePaths(Object sender, SiteMapResolveEventArgs e)
+        private static SiteMapNode ExpandIssuePaths(Object sender, SiteMapResolveEventArgs e)
         {
+            if (SiteMap.CurrentNode == null) return null;
+
             var currentNode = SiteMap.CurrentNode.Clone(true);
             var tempNode = currentNode;
 
@@ -102,7 +74,7 @@ namespace BugNET
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void Page_PreRender(object sender, System.EventArgs e)
+        private void Page_PreRender(object sender, EventArgs e)
         {
             // Intention is to restore IssueList page state when if it is redirected back to.
             // Put all necessary data in IssueListState object and save it in the session.
@@ -117,8 +89,8 @@ namespace BugNET
             //Session[ISSUELISTSTATE] = state;
         }
 
-        List<Issue> _mainIssues = null;
-        List<IssueComment> _mainComments = null;
+        List<Issue> _mainIssues;
+        List<IssueComment> _mainComments;
 
         /// <summary>
         /// Handles the Click event of the Button1 control.
@@ -161,10 +133,8 @@ namespace BugNET
             //
             // ---------------------------------------------------------------
 
-            var searchProjects = new List<Project>();
-
             // are we logged in ?
-            searchProjects = String.IsNullOrEmpty(Context.User.Identity.Name) ? 
+            var searchProjects = String.IsNullOrEmpty(Context.User.Identity.Name) ? 
                 ProjectManager.GetPublicProjects() : 
                 ProjectManager.GetByMemberUserName(Context.User.Identity.Name);
 
@@ -185,13 +155,24 @@ namespace BugNET
             //
             // ---------------------------------------------------------------
             SearchProjectRepeater.DataSource = searchProjects;
-
             SearchProjectRepeater.DataBind();
+
+            if (_mainIssues.Count.Equals(0))
+            {
+                pnlResultsMessage.Visible = true;
+                pnlSearchResults.Visible = false;
+                litResultsMessage.Text = GetLocalResourceObject("SearchNoResults").ToString();
+            }
+            else
+            {
+                pnlResultsMessage.Visible = false;
+                pnlSearchResults.Visible = true;
+            }
+
 
             lblSearchSummary.Text = _mainComments.Count > 0 ? 
                 string.Format("{0} Issues found.<br />{1} Matching Comment(s) found.", _mainIssues.Count, _mainComments.Count) : 
                 string.Format("{0} Issues found.", _mainIssues.Count);
-
         }
 
         /// <summary>
@@ -203,7 +184,6 @@ namespace BugNET
 
             var foundComments = new List<IssueComment>();
             var issueComments = new List<IssueComment>();
-            var lstMainHistory = new List<IssueHistory>();
 
             // Our search strings on normal and "like" comparators
             // Note: these are deliberately not trimmed!
@@ -218,12 +198,7 @@ namespace BugNET
             // variants later on.
             var srchHtmlcode = strHtmlSearch != strSearch;
 
-
             var srchComments = chkComments.Checked;
-            var srchOpenIssues = chkExcludeClosedIssues.Checked;
-            var srchUserName = false;//= chkUsername.Checked ; // not implemented
-
-            var srchHistory = false; //  chkHistory.Checked;
 
             // Sort the projects using LINQ
             foreach (var p in searchProjects)
@@ -242,75 +217,45 @@ namespace BugNET
 
                 var queryClauses = new List<QueryClause>();
 
-                // NOTE WE ARE OPENING A PARENTHISES using the 
-                // "William Highfield" trick ;)
-                //
-                // SQL Statement constructed by the QueryBuilder will nned to be something like
-                // SELECT something FROM somewhere WHERE 1=1 AND ( IssueDescription LIKE '%test%' OR IssueTitle LIKE '%test%' )
-                // 
-                // The parenthesis ensure this, however you need to close the parenthesis off properly.
+                // filter out disabled issues
+                queryClauses.Add(new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int, false));
 
-                var q = new QueryClause("AND (", "IssueDescription", "LIKE", strLike, SqlDbType.NVarChar, false);
-                queryClauses.Add(q);
-                q = new QueryClause("OR", "IssueTitle", "LIKE", strLike, SqlDbType.NVarChar, false);
-                queryClauses.Add(q);
+                // if the user wants to exclude closed issues then filter the closed flag otherwise don't bother
+                if (chkExcludeClosedIssues.Checked)
+                    queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false));
 
-                if (srchHtmlcode)
+                if(chkSearchTitle.Checked || chkSearchDesc.Checked)
                 {
-                    q = new QueryClause("OR", "IssueDescription", "LIKE", strHtmlLike, SqlDbType.NVarChar, false);
-                    queryClauses.Add(q);
-                    q = new QueryClause("OR", "IssueTitle", "LIKE", strHtmlLike, SqlDbType.NVarChar, false);
-                    queryClauses.Add(q);
+                    queryClauses.Add(new QueryClause("AND (", "", "", "", SqlDbType.NVarChar, false));
+                    queryClauses.Add(new QueryClause("", "1", "=", "2", SqlDbType.NVarChar, false));
+
+                    if(chkSearchTitle.Checked)
+                    {
+                        queryClauses.Add(new QueryClause("OR", "iv.[IssueTitle]", "LIKE", strLike, SqlDbType.NVarChar, false));
+                         if (srchHtmlcode)
+                         {
+                             queryClauses.Add(new QueryClause("OR", "iv.[IssueTitle]", "LIKE", strHtmlLike, SqlDbType.NVarChar, false)); 
+                         }
+                    }
+
+                    if (chkSearchDesc.Checked)
+                    {
+                        queryClauses.Add(new QueryClause("OR", "iv.[IssueDescription]", "LIKE", strLike, SqlDbType.NVarChar, false));
+                        if (srchHtmlcode)
+                        {
+                            queryClauses.Add(new QueryClause("OR", "iv.[IssueDescription]", "LIKE", strHtmlLike, SqlDbType.NVarChar, false));
+                        }
+                    }
+
+                    queryClauses.Add(new QueryClause(")", "", "", "", SqlDbType.NVarChar, false));
                 }
-
-                // USERNAME 
-                if (srchUserName)
-                {
-                    /*
-                     * 
-                    q = new QueryClause("OR", "LastUpdateUsername", "LIKE", strLike, SqlDbType.NVarChar, false);
-                    queryClauses.Add(q);
-
-                    q = new QueryClause("OR", "AssignedUsername", "LIKE", strLike, SqlDbType.NVarChar, false);
-                    queryClauses.Add(q);
-
-                    q = new QueryClause("OR", "CreatorUserName", "LIKE", strLike, SqlDbType.NVarChar, false);
-                    queryClauses.Add(q);
-
-                    q = new QueryClause("OR", "OwnerUserName", "LIKE", strLike, SqlDbType.NVarChar, false);
-                    queryClauses.Add(q);
-                     * 
-                     */
-                }
-
-                // NOW TO CLOSE PARENTHISES
-                //
-                // Using the "William Highfield" trick ;)
-                //
-
-                q = new QueryClause(")", "", "", "", SqlDbType.NVarChar, false);
-                queryClauses.Add(q);
-
 
                 // Use the new Generic way to search with those QueryClauses
-                var issues = IssueManager.PerformQuery(queryClauses, p.Id);
+                var issues = IssueManager.PerformQuery(p.Id, queryClauses, null);
 
-                // Now we can quicjkly filter out open issues
-                if (srchOpenIssues)
-                {
-                    // get list of open issues for the project using LINQ                 
-                    var tmpIssues = from iss in issues
-                                    join st in StatusManager.GetByProjectId(p.Id)
-                                    on iss.StatusId equals st.Id
-                                    where st.IsClosedState == false
-                                    select iss;
+                queryClauses.Clear();
 
-                    _mainIssues.AddRange(tmpIssues);
-                }
-                else
-                {
-                    _mainIssues.AddRange(issues);
-                }
+                _mainIssues.AddRange(issues);
 
                 //if (srchComments /*|| srchHistory*/ )
                 //{
@@ -327,115 +272,101 @@ namespace BugNET
                 //
                 // ---------------------------------------------------------------
                 // List<IssueHistory> lstprjHistory = null;
-                if (srchHistory)
-                {
-                    /*                      
-                    lstprjHistory = new List<IssueHistory>();
-                    queryClauses.Clear();
-                    // bug need highfield method
-                    queryClauses.Add(new QueryClause("AND", "OldValue", "LIKE", strLike , SqlDbType.VarChar, false));
-                    queryClauses.Add(new QueryClause("OR", "NewValue", "LIKE", strLike, SqlDbType.VarChar, false));
-                    queryClauses.Add(new QueryClause("AND", "c.ProjectID", "=", p.Id.ToString(), SqlDbType.Int, false));
-                    lstprjHistory = IssueHistory.PerformQuery(queryClauses);
+                //if (srchHistory)
+                //{
+                //    /*                      
+                //    lstprjHistory = new List<IssueHistory>();
+                //    queryClauses.Clear();
+                //    // bug need highfield method
+                //    queryClauses.Add(new QueryClause("AND", "OldValue", "LIKE", strLike , SqlDbType.VarChar, false));
+                //    queryClauses.Add(new QueryClause("OR", "NewValue", "LIKE", strLike, SqlDbType.VarChar, false));
+                //    queryClauses.Add(new QueryClause("AND", "c.ProjectID", "=", p.Id.ToString(), SqlDbType.Int, false));
+                //    lstprjHistory = IssueHistory.PerformQuery(queryClauses);
 
-                    // Now we can quicjkly filter out open issues
-                    if (srchOpenIssues)
-                    {
+                //    // Now we can quicjkly filter out open issues
+                //    if (srchOpenIssues)
+                //    {
 
-                        // get list of open issues with matching history items for the project using LINQ                 
-                        var tmpIssues = from hist in lstprjHistory
-                                        join iss1 in Issue.GetByProjectId(p.Id)
-                                        on hist.Id equals iss1.Id
-                                        join st in Status.GetByProjectId(p.Id)
-                                        on iss1.StatusId equals st.Id
-                                        where st.IsClosedState = false
-                                        select iss1;
+                //        // get list of open issues with matching history items for the project using LINQ                 
+                //        var tmpIssues = from hist in lstprjHistory
+                //                        join iss1 in Issue.GetByProjectId(p.Id)
+                //                        on hist.Id equals iss1.Id
+                //                        join st in Status.GetByProjectId(p.Id)
+                //                        on iss1.StatusId equals st.Id
+                //                        where st.IsClosedState = false
+                //                        select iss1;
 
-                        mainIssues.AddRange(tmpIssues);
+                //        mainIssues.AddRange(tmpIssues);
 
-                    }
-                    else
-                    {
-                        mainIssues.AddRange(Issues);
-                    }
+                //    }
+                //    else
+                //    {
+                //        mainIssues.AddRange(Issues);
+                //    }
 
-                    throw new NotImplementedException();
-                    */
-                }
+                //    throw new NotImplementedException();
+                //    */
+                //}
 
                 // ---------------------------------------------------------------
                 // Search Comments
                 //
                 // ---------------------------------------------------------------
 
-                if (srchComments)
+                if (!srchComments) continue;
+
+                issues.Clear();
+                issueComments.Clear();
+                foundComments.Clear();
+
+                queryClauses.Add(new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int, false));
+
+                // if the user wants to exclude closed issues then filter the closed flag otherwise don't bother
+                // stuff the citeria into the first spot becuase we have an open nested criteria going on
+                if (chkExcludeClosedIssues.Checked)
+                    queryClauses.Insert(0, new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false));
+
+                // Get ALL issues
+                issues = IssueManager.PerformQuery(p.Id, queryClauses, null);
+
+                foreach (var iss in issues)
                 {
-                    issueComments.Clear();
-                    foundComments.Clear();
+                    // New Way
+                    // Using the Generic Interface
+                    var qryComment = new List<QueryClause>
+                                         {
+                                             new QueryClause("AND (", "Comment", "LIKE", strLike, SqlDbType.VarChar, false)
+                                         };
 
-                    // Get ALL issues
-                    issues = IssueManager.GetByProjectId(p.Id);
+                    // NOTE WE ARE OPENING A PARENTHISES using the 
+                    // "William Highfield" trick ;)
+                    // see earlier in this code
 
-                    // Now filter out the Closed issues if we need to
-                    if (srchOpenIssues)
+                    if (srchHtmlcode)
                     {
-                        // get list of open issues with matching history items for the project using LINQ                 
-                        var tmpIssues = from Iss in issues
-                                        join st in StatusManager.GetByProjectId(p.Id)
-                                        on Iss.StatusId equals st.Id
-                                        where st.IsClosedState = false
-                                        select Iss;
-
-                        List<Issue> tmpIssueList = new List<Issue>();
-                        tmpIssueList.AddRange(tmpIssues);
-
-                        issues.Clear();
-                        issues.AddRange(tmpIssueList);
-                        // Issues now only has open issues
+                        qryComment.Add(new QueryClause("OR", "Comment", "LIKE", strHtmlLike, SqlDbType.VarChar, false));
                     }
 
-                    foreach (Issue iss in issues)
-                    {
-                        // New Way
-                        // Using the Generic Interface
-                        List<QueryClause> qryComment = new List<QueryClause>();
+                    // NOW TO CLOSE PARENTHISES
+                    //
+                    // Using the "William Highfield" trick ;)
+                    //
+                    qryComment.Add(new QueryClause(")", "", "", "", SqlDbType.NVarChar, false));
 
-                        // NOTE WE ARE OPENING A PARENTHISES using the 
-                        // "William Highfield" trick ;)
-                        // see earlier in this code
+                    //if (srchUserName)
+                    //{
+                    //    q = new QueryClause("OR", "CreatorUsername", "LIKE", "%" + strSearch + "%", SqlDbType.VarChar, false);
+                    //    qryComment.Add(q);
+                    //}
 
-                        q = new QueryClause("AND (", "Comment", "LIKE", strLike, SqlDbType.VarChar, false);
-                        qryComment.Add(q);
+                    issueComments = IssueCommentManager.PerformQuery(iss.Id, qryComment);
 
-                        if (srchHtmlcode)
-                        {
-                            q = new QueryClause("OR", "Comment", "LIKE", strHtmlLike, SqlDbType.VarChar, false);
-                            qryComment.Add(q);
-                        }
+                    // Did we find anything?
+                    if (issueComments.Count <= 0) continue;
 
-                        // NOW TO CLOSE PARENTHISES
-                        //
-                        // Using the "William Highfield" trick ;)
-                        //
-                        q = new QueryClause(")", "", "", "", SqlDbType.NVarChar, false);
-                        qryComment.Add(q);
-
-                        //if (srchUserName)
-                        //{
-                        //    q = new QueryClause("OR", "CreatorUsername", "LIKE", "%" + strSearch + "%", SqlDbType.VarChar, false);
-                        //    qryComment.Add(q);
-                        //}
-
-                        issueComments = IssueCommentManager.PerformQuery(iss.Id, qryComment);
-
-                        // Did we find anything?
-                        if (issueComments.Count > 0)
-                        {
-                            _mainComments.AddRange(issueComments);
-                            _mainIssues.Add(iss);
-                            // make sure we record the parent issue of the comment(s)
-                        }
-                    }
+                    _mainComments.AddRange(issueComments);
+                    _mainIssues.Add(iss);
+                    // make sure we record the parent issue of the comment(s)
                 }
 
                 //if (srchHistory && (lstprjHistory != null))
@@ -458,7 +389,7 @@ namespace BugNET
                           select iss1).Distinct(new DistinctIssueComparer());
 
 
-            List<Issue> tmpIssues1 = new List<Issue>();
+            var tmpIssues1 = new List<Issue>();
             tmpIssues1.AddRange(tmpIss);
             _mainIssues.Clear();
             _mainIssues.AddRange(tmpIssues1);
@@ -470,27 +401,12 @@ namespace BugNET
                            select comm)
                            .Distinct();
 
-            List<IssueComment> tmpComm1 = new List<IssueComment>();
+            var tmpComm1 = new List<IssueComment>();
             tmpComm1.AddRange(tmpComm);
             _mainComments.Clear();
             _mainComments.AddRange(tmpComm1);
 
 
-        }
-
-        /// <summary>
-        /// A LINQ helper method that Returns a list of distinct projects from a list of issues.
-        /// </summary>
-        /// <param name="issues">The issues.</param>
-        /// <returns></returns>
-        private List<Project> GetDistinctProjects(IEnumerable<Issue> issues)
-        {
-            var prjs = (from p in issues
-                        join proj in ProjectManager.GetAllProjects()
-                        on p.ProjectId equals proj.Id
-                        select proj).Distinct();
-            var projList = new List<Project>(prjs);
-            return projList;
         }
 
         protected void chkHistory_CheckedChanged(object sender, EventArgs e)
@@ -503,62 +419,40 @@ namespace BugNET
         }
 
         /// <summary>
-        /// Binds the project summary.
-        /// </summary>
-        private void BindSearchProject()
-        {
-
-            /*  List<Milestone> milestones = Milestone.GetByProjectId(ProjectId).Sort<Milestone>("SortOrder" + ascending).ToList();
-              if (ViewMode == 1)
-                  ChangeLogRepeater.DataSource = milestones.Take(5);
-              else
-                  ChangeLogRepeater.DataSource = milestones;
-
-              ChangeLogRepeater.DataBind(); */
-        }
-
-        Project curProj = null;
-
-        /// <summary>
         /// Handles the ItemDataBound event of the SearchProjectRepeater control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Web.UI.WebControls.RepeaterItemEventArgs"/> instance containing the event data.</param>
-        protected void SearchProjectRepeater_ItemDataBound(object sender, System.Web.UI.WebControls.RepeaterItemEventArgs e)
+        protected void SearchProjectRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
+            if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem) return;
+
+            var p = (Project)e.Item.DataItem;
+
+            ((HyperLink)e.Item.FindControl("ProjectLink")).Text = string.Format("{0} ({1})", p.Name, p.Code);
+
+            // Chop description at 50 chars
+            ((Label)e.Item.FindControl("ProjectDescription")).Text = (p.Description.Length > 100 ? p.Description.Substring(0, 100) + "..." : p.Description);
 
 
-            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            // Only get this projects issues using LINQ
+            var FilteredIssues = new List<Issue>(from iss in _mainIssues
+                                                 where p.Id == iss.ProjectId
+                                                 select iss);
+
+            // Are there any results
+            if (FilteredIssues.Count > 0)
             {
 
-                Project p = (Project)e.Item.DataItem;
+                ((HyperLink)e.Item.FindControl("IssuesCount")).Text = string.Format("{0} Issues found.", FilteredIssues.Count);
+                var rptr = ((Repeater)e.Item.FindControl("IssuesList"));
 
-                ((HyperLink)e.Item.FindControl("ProjectLink")).Text = p.Name + " (" + p.Code + ")";
-
-                // Chop description at 50 chars
-                ((Label)e.Item.FindControl("ProjectDescription")).Text = (p.Description.Length > 100 ? p.Description.Substring(0, 100) + "..." : p.Description);
-
-
-                // Only get this projects issues using LINQ
-                List<Issue> FilteredIssues = new List<Issue>(from iss in _mainIssues
-                                                             where p.Id == iss.ProjectId
-                                                             select iss);
-
-                // Are there any results
-                if (FilteredIssues.Count > 0)
-                {
-
-                    ((HyperLink)e.Item.FindControl("IssuesCount")).Text = FilteredIssues.Count.ToString() + (FilteredIssues.Count == 1 ? " Issues found." : " Issues found.");
-                    Repeater rptr = ((Repeater)e.Item.FindControl("IssuesList"));
-
-                    rptr.DataSource = FilteredIssues;
-                    rptr.DataBind();
-                }
-                else
-                {
-                    e.Item.Visible = false;
-                }
-
+                rptr.DataSource = FilteredIssues;
+                rptr.DataBind();
+            }
+            else
+            {
+                e.Item.Visible = false;
             }
         }
 
@@ -567,17 +461,15 @@ namespace BugNET
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Web.UI.WebControls.RepeaterItemEventArgs"/> instance containing the event data.</param>
-        protected void IssuesCommentListRepeater_ItemDataBound(object sender, System.Web.UI.WebControls.RepeaterItemEventArgs e)
+        protected void IssuesCommentListRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
-            {
+            if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem) return;
 
-                Label lblcomm = ((Label)e.Item.FindControl("lblComment"));
-                IssueComment ic = (IssueComment)e.Item.DataItem;
+            var lblcomm = ((Label)e.Item.FindControl("lblComment"));
+            var ic = (IssueComment)e.Item.DataItem;
 
-                // Prevent XSS
-                lblcomm.Text = Server.HtmlEncode(IssueCommentManager.GetShortTextComment(ic.Comment));
-            }
+            // Prevent XSS
+            lblcomm.Text = Server.HtmlEncode(IssueCommentManager.GetShortTextComment(ic.Comment));
         }
 
 
@@ -586,41 +478,37 @@ namespace BugNET
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Web.UI.WebControls.RepeaterItemEventArgs"/> instance containing the event data.</param>
-        protected void IssuesListRepeater_ItemDataBound(object sender, System.Web.UI.WebControls.RepeaterItemEventArgs e)
+        protected void IssuesListRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
+            if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem) return;
+            var i = (Issue)e.Item.DataItem;
+            // Only get this projects issues using LINQ
+            var filteredComm = new List<IssueComment>(from comm in _mainComments
+                                                                     where i.Id == comm.IssueId
+                                                                     select comm);
 
-            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            var pnl1 = (Panel)(e.Item.FindControl("pnlIssueComments"));
+
+            // Are there any results
+            if (filteredComm.Count > 0)
             {
-                Issue i = (Issue)e.Item.DataItem;
-                // Only get this projects issues using LINQ
-                List<IssueComment> FilteredComm = new List<IssueComment>(from comm in _mainComments
-                                                                         where i.Id == comm.IssueId
-                                                                         select comm);
+                //((HyperLink)e.Item.FindControl("IssuesCount")).Text = FilteredIssues.Count.ToString() + (FilteredIssues.Count == 1 ? " Issues found." : " Issues found.");
+                var rptr = ((Repeater)e.Item.FindControl("IssuesCommentList"));
 
-                Panel pnl1 = (Panel)(e.Item.FindControl("pnlIssueComments"));
+                var lbl1 = (Label)pnl1.FindControl("lblCommentCount");
+                lbl1.Text = string.Format("<em>{0} matching comment(s) found for <a href='../Issues/IssueDetail.aspx?id={2}'>{1}</a>.</em>", filteredComm.Count.ToString(), i.FullId, i.Id.ToString());
 
-                // Are there any results
-                if (FilteredComm.Count > 0)
-                {
-                    //((HyperLink)e.Item.FindControl("IssuesCount")).Text = FilteredIssues.Count.ToString() + (FilteredIssues.Count == 1 ? " Issues found." : " Issues found.");
-                    Repeater rptr = ((Repeater)e.Item.FindControl("IssuesCommentList"));
+                rptr.DataSource = filteredComm;
+                rptr.DataBind();
 
-                    Label lbl1 = (Label)pnl1.FindControl("lblCommentCount");
-                    lbl1.Text = string.Format("<em>{0} matching comment(s) found for <a href='../Issues/IssueDetail.aspx?id={2}'>{1}</a>.</em>", FilteredComm.Count.ToString(), i.FullId, i.Id.ToString());
-
-                    rptr.DataSource = FilteredComm;
-                    rptr.DataBind();
-
-                    pnl1.Visible = true;
-                }
-                else
-                {
-                    Repeater rptr = ((Repeater)e.Item.FindControl("IssuesCommentList"));
-                    rptr.Visible = false;
-                    pnl1.Visible = false;
-                }
+                pnl1.Visible = true;
             }
-
+            else
+            {
+                var rptr = ((Repeater)e.Item.FindControl("IssuesCommentList"));
+                rptr.Visible = false;
+                pnl1.Visible = false;
+            }
         }
     }
 }

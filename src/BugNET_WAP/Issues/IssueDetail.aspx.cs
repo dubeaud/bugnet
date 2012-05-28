@@ -15,9 +15,8 @@ namespace BugNET.Issues
     /// </summary>
     public partial class IssueDetail : BasePage
     {
-        Issue CurrentIssue;
-        Project CurrentProject;
-        bool IsClosed = false;
+        Issue _currentIssue;
+        Project _currentProject;
 
         #region Private Events
         /// <summary>
@@ -43,14 +42,14 @@ namespace BugNET.Issues
                 // Initialize for Adding or Editing
                 if (IssueId == 0) // new issue
                 {
-                    CurrentProject = ProjectManager.GetById(ProjectId);
+                    _currentProject = ProjectManager.GetById(ProjectId);
 
-                    if (CurrentProject == null)
+                    if (_currentProject == null)
                     {
                         ErrorRedirector.TransferToNotFoundPage(Page);
                     }
 
-                    ProjectId = CurrentProject.Id;
+                    ProjectId = _currentProject.Id;
 
                     //security check: add issue
                     if (!UserManager.HasPermission(ProjectId, Globals.Permission.AddIssue.ToString()))
@@ -83,48 +82,47 @@ namespace BugNET.Issues
                 else //existing issue
                 {
                     //set up global properties
-                    CurrentIssue = IssueManager.GetById(IssueId);
+                    _currentIssue = IssueManager.GetById(IssueId);
 
-                    if (CurrentIssue == null || CurrentIssue.Disabled)
+                    if (_currentIssue == null || _currentIssue.Disabled)
                     {
                         ErrorRedirector.TransferToNotFoundPage(Page);
                     }
 
                     //private issue check
-                    if (CurrentIssue.Visibility == (int)Globals.IssueVisibility.Private && CurrentIssue.AssignedDisplayName != Security.GetUserName()
-                        && CurrentIssue.CreatorDisplayName != Security.GetUserName()
-                        && !UserManager.IsInRole(Globals.SUPER_USER_ROLE)
-                        && !UserManager.IsInRole(Globals.ProjectAdminRole))
+                    if (_currentIssue.Visibility == (int)Globals.IssueVisibility.Private && _currentIssue.AssignedDisplayName != Security.GetUserName()
+                        && _currentIssue.CreatorDisplayName != Security.GetUserName()
+                        && !UserManager.IsSuperUser()
+                        && !UserManager.IsInRole(_currentIssue.ProjectId, Globals.ProjectAdminRole))
                     {
                         ErrorRedirector.TransferToLoginPage(Page);
                     }
 
-                    CurrentProject = ProjectManager.GetById(CurrentIssue.ProjectId);
+                    _currentProject = ProjectManager.GetById(_currentIssue.ProjectId);
 
-                    if (CurrentProject == null)
+                    if (_currentProject == null)
                     {
                         ErrorRedirector.TransferToNotFoundPage(Page);
                     }
                     else 
                     { 
-                        ProjectId = CurrentProject.Id;
+                        ProjectId = _currentProject.Id;
                     }
 
-                    if (CurrentProject.AccessType == Globals.ProjectAccessType.Private && !User.Identity.IsAuthenticated)
+                    if (_currentProject.AccessType == Globals.ProjectAccessType.Private && !User.Identity.IsAuthenticated)
                     {
                         ErrorRedirector.TransferToLoginPage(Page);
                     }
-                    else if (User.Identity.IsAuthenticated && CurrentProject.AccessType == Globals.ProjectAccessType.Private 
+                    else if (User.Identity.IsAuthenticated && _currentProject.AccessType == Globals.ProjectAccessType.Private 
                         && !ProjectManager.IsUserProjectMember(User.Identity.Name, ProjectId))
                     {
                         ErrorRedirector.TransferToLoginPage(Page);
                     }
 
-                    IsClosed = CurrentIssue.IsClosed;
-                    BindValues(CurrentIssue);
+                    BindValues(_currentIssue);
 
-                    Page.Title = string.Concat(CurrentIssue.FullId, ": ", Server.HtmlDecode(CurrentIssue.Title));
-                    lblIssueNumber.Text = string.Format("{0}-{1}", CurrentProject.Code, IssueId);
+                    Page.Title = string.Concat(_currentIssue.FullId, ": ", Server.HtmlDecode(_currentIssue.Title));
+                    lblIssueNumber.Text = string.Format("{0}-{1}", _currentProject.Code, IssueId);
                     ctlIssueTabs.Visible = true;
                     TimeLogged.Visible = true;
                     TimeLoggedLabel.Visible = true;
@@ -134,7 +132,7 @@ namespace BugNET.Issues
                     SetFieldSecurity();
                 }
 
-                if (!CurrentProject.AllowIssueVoting)
+                if (!_currentProject.AllowIssueVoting)
                 { 
                     VoteBox.Visible = false;
                 }

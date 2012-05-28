@@ -51,7 +51,7 @@ namespace BugNET.Issues.UserControls
             if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.SubscribeIssue.ToString()))
                 pnlNotifications.Visible = false;
 
-            if (UserManager.IsInRole(Globals.SUPER_USER_ROLE) || UserManager.IsInRole(Globals.ProjectAdminRole))
+            if (UserManager.IsSuperUser() || UserManager.IsInRole(ProjectId, Globals.ProjectAdminRole))
             {
                 pnlNotificationAdmin.Visible = true;
             }

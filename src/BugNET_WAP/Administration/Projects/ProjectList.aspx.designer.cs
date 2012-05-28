@@ -58,6 +58,42 @@ namespace BugNET.Administration.Projects {
         protected global::System.Web.UI.WebControls.HyperLink lnkCloneProject;
         
         /// <summary>
+        /// CreateCustomViews control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl CreateCustomViews;
+        
+        /// <summary>
+        /// btnGenerateCustomFieldViews control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton btnGenerateCustomFieldViews;
+        
+        /// <summary>
+        /// lbGenerateCustomFieldViews control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lbGenerateCustomFieldViews;
+        
+        /// <summary>
+        /// PageMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::BugNET.UserControls.Message PageMessage;
+        
+        /// <summary>
         /// dgProjects control.
         /// </summary>
         /// <remarks>

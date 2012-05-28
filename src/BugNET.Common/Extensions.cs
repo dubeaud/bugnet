@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -20,6 +21,22 @@ namespace BugNET.Common
     /// </summary>
     public static class Extensions
     {
+
+        /// <summary>
+        /// Extension method for checking if a DataReader has a specific column in the results
+        /// </summary>
+        /// <param name="dr">The IDataReader interface instance</param>
+        /// <param name="columnName">The column name</param>
+        /// <returns></returns>
+        public static bool HasColumn(this IDataRecord dr, string columnName)
+        {
+            for (var i = 0; i < dr.FieldCount; i++)
+            {
+                if (dr.GetName(i).Equals(columnName, StringComparison.InvariantCultureIgnoreCase))
+                    return true;
+            }
+            return false;
+        }
 
         #region XmlSerialize XmlDeserialize
 

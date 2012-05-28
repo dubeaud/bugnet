@@ -151,4 +151,10 @@
   <data name="SearchHTMLEncoded.Text" xml:space="preserve">
     <value>Search fields with HTML Encoded elements too (BETA)</value>
   </data>
+  <data name="SearchInstructions" xml:space="preserve">
+    <value>Please enter the text you wish to search for and check the search options above to filter for the issues you wish to find.</value>
+  </data>
+  <data name="SearchNoResults" xml:space="preserve">
+    <value>No results were found for the criteria you have supplied, please modify your criteria.</value>
+  </data>
 </root>

@@ -67,8 +67,6 @@ namespace BugNET.BLL
                 Log.Error(LoggingManager.GetErrorMessageResource("SaveIssueError"), ex);
                 return false;
             }
-
-            return false;
         }
 
         /// <summary>
@@ -494,6 +492,20 @@ namespace BugNET.BLL
             if (queryClauses.Count == 0) throw new ArgumentOutOfRangeException("queryClauses");
 
             return DataProviderManager.Provider.PerformQuery(projectId, queryClauses);
+        }
+
+        /// <summary>
+        /// Performs the query.
+        /// </summary>
+        /// <param name="queryClauses">The query clauses.</param>
+        /// <param name="projectId">The project id.</param>
+        /// <param name="sortColumns">key value pair of sort fields and directions</param>
+        /// <returns></returns>
+        public static List<Issue> PerformQuery(int projectId, List<QueryClause> queryClauses, IEnumerable<KeyValuePair<string, string>> sortColumns)
+        {
+            if (projectId == 0) throw new ArgumentOutOfRangeException("projectId");
+
+            return DataProviderManager.Provider.PerformQuery(projectId, queryClauses, sortColumns);
         }
 
         /// <summary>

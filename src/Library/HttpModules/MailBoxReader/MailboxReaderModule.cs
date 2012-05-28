@@ -164,7 +164,7 @@ namespace BugNET.HttpModules
                 // Clear the number of consecutive errors.
                 _readerErrors = 0;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //   Log.Error("Mailbox reader failed", ex); // too many log entries
                 // Increment the number of consecutive errors.

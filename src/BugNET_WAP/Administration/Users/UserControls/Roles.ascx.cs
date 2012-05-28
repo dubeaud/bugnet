@@ -47,7 +47,7 @@ namespace BugNET.Administration.Users.UserControls
                 dropProjects.DataBind();
             }
 
-            if (!UserManager.IsInRole(Globals.SUPER_USER_ROLE)) return;
+            if (!UserManager.IsSuperUser()) return;
 
             chkSuperUsers.Visible = true;
             chkSuperUsers.Checked = UserManager.IsInRole(MembershipData.UserName, 0, Globals.SUPER_USER_ROLE);

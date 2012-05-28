@@ -296,6 +296,24 @@ namespace BugNET.Install
                           WriteMessage("Migrating Users", 0, true);
                           UpgradeManager.MigrateUsers();
                       }
+                      
+                      // todo: need to wire up the custom field creation here based on the version number supported
+                      // from here we need to create the custom field views
+                      // doing this will not hurt the code if the code does n ot support it
+                      if (assemblyVersion <= 9161) 
+                      {
+                          WriteMessage("Creating Custom Field Views<br/>", 0, true);
+                          if(UpgradeManager.CreateCustomFieldViews())
+                          {
+                              WriteMessage("Custom fields created!<br/>", 0, true); 
+                          }
+                          else
+                          {
+                              WriteMessage("There was an issue creating the custom fields views for your project, please view the application log for more details<br/>", 0, true);
+                              //<a href='../Install/Install.aspx'>Click Here to retry the installation.</a>
+                              WriteMessage("You can manually re-generate the custom field views by going to the <a href='../Administration/Projects/ProjectList.aspx'>Project List</a> page and using the generate feature along the top menu<br/>", 0, true);
+                          }
+                      }
 
                       var arrFiles = Directory.GetFiles(providerPath, "*.sql");
 
@@ -354,6 +372,7 @@ namespace BugNET.Install
                 return false;
             }
         }
+
         #endregion
 
         #region Script Functions

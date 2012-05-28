@@ -5,9 +5,6 @@ using System.Configuration;
 using System.Configuration.Provider;
 using System.Data;
 using System.Data.SqlClient;
-using System.Web;
-using System.Web.UI.WebControls;
-using System.IO;
 using System.Linq;
 using System.Text;
 using BugNET.Common;
@@ -23,7 +20,7 @@ namespace BugNET.Providers.DataProviders
     public partial class SqlDataProvider : DataProvider
     {
         /*** DELEGATE ***/
-        private delegate void GenerateListFromReader<T>(SqlDataReader returnData, ref List<T> tempList);
+        private delegate int GenerateListFromReader<T>(SqlDataReader returnData, ref List<T> tempList);
         private static readonly ILog Log = LogManager.GetLogger(typeof(SqlDataProvider));
         private string _connectionString = string.Empty;
         private string _providerPath = string.Empty;
@@ -54,811 +51,6 @@ namespace BugNET.Providers.DataProviders
             if (string.IsNullOrEmpty(_providerPath))
                 throw new ProviderException("providerPath folder value not specified in web.config for SqlDataProvider");
 
-        }
-
-        #region Private Constants
-
-        /// <summary>
-        /// Stored Procedure Constants
-        /// </summary>
-        private const string SP_PROJECT_CREATE = "BugNet_Project_CreateNewProject";
-        private const string SP_PROJECT_DELETE = "BugNet_Project_DeleteProject";
-        private const string SP_PROJECT_GETALLPROJECTS = "BugNet_Project_GetAllProjects";
-        private const string SP_PROJECT_GETPUBLICPROJECTS = "BugNet_Project_GetPublicProjects";
-        private const string SP_PROJECT_GETPROJECTBYID = "BugNet_Project_GetProjectById";
-        private const string SP_PROJECT_UPDATE = "BugNet_Project_UpdateProject";
-        private const string SP_PROJECT_ADDUSERTOPROJECT = "BugNet_Project_AddUserToProject";
-        private const string SP_PROJECT_REMOVEUSERFROMPROJECT = "BugNet_Project_RemoveUserFromProject";
-        private const string SP_PROJECT_GETPROJECTSBYMEMBERUSERNAME = "BugNet_Project_GetProjectsByMemberUserName";
-        private const string SP_PROJECT_GETPROJECTBYCODE = "BugNet_Project_GetProjectByCode";
-        private const string SP_PROJECT_CLONEPROJECT = "BugNet_Project_CloneProject";
-        private const string SP_PROJECT_GETROADMAP = "BugNet_Project_GetRoadMap";
-        private const string SP_PROJECT_GETROADMAPPROGRESS = "BugNet_Project_GetRoadMapProgress";
-        private const string SP_PROJECT_GETCHANGELOG = "BugNet_Project_GetChangeLog";
-
-        private const string SP_PROJECT_ISUSERPROJECTMEMBER = "BugNet_Project_IsUserProjectMember";
-
-        private const string SP_PROJECTMAILBOX_GETPROJECTBYMAILBOX = "BugNet_ProjectMailbox_GetProjectByMailbox";
-        private const string SP_PROJECTMAILBOX_GETMAILBOXBYID = "BugNet_ProjectMailbox_GetMailboxById";
-        private const string SP_PROJECTMAILBOX_GETMAILBYPROJECTID = "BugNet_ProjectMailbox_GetMailboxByProjectId";
-        private const string SP_PROJECTMAILBOX_CREATEPROJECTMAILBOX = "BugNet_ProjectMailbox_CreateProjectMailbox";
-        private const string SP_PROJECTMAILBOX_DELETEPROJECTMAILBOX = "BugNet_ProjectMailbox_DeleteProjectMailbox";
-        private const string SP_PROJECTMAILBOX_UPDATEPROJECTMAILBOX = "BugNet_ProjectMailbox_UpdateProjectMailbox";
-
-        //User - Role Stored Procs
-        private const string SP_USER_GETUSERSBYPROJECTID = "BugNet_User_GetUsersByProjectId";
-        private const string SP_PROJECT_GETMEMBERROLESBYPROJECTID = "BugNET_Project_GetMemberRolesByProjectId";
-
-        private const string SP_PERMISSION_GETALLPERMISSIONS = "BugNet_Permission_GetAllPermissions";
-        private const string SP_PERMISSION_GETROLEPERMISSIONS = "BugNet_Permission_GetRolePermission";
-        private const string SP_PERMISSION_GETPERMISSIONSBYROLE = "BugNet_Permission_GetPermissionsByRole";
-        private const string SP_PERMISSION_DELETEROLEPERMISSION = "BugNet_Permission_DeleteRolePermission";
-        private const string SP_PERMISSION_ADDROLEPERMISSION = "BugNet_Permission_AddRolePermission";
-
-        private const string SP_ROLE_GETPROJECTROLESBYUSER = "BugNet_Role_GetProjectRolesByUser";
-        private const string SP_ROLE_GETROLESBYUSER = "BugNet_Role_GetRolesByUser";
-        private const string SP_ROLE_GETROLEBYID = "BugNet_Role_GetRoleById";
-        private const string SP_ROLE_GETROLESBYPROJECT = "BugNet_Role_GetRolesByProject";
-        private const string SP_ROLE_ROLEEXISTS = "BugNet_Role_RoleExists";
-        private const string SP_ROLE_GETALLROLES = "BugNet_Role_GetAllRoles";
-        private const string SP_ROLE_DELETEROLE = "BugNet_Role_DeleteRole";
-        private const string SP_ROLE_REMOVEUSERFROMROLE = "BugNet_Role_RemoveUserFromRole";
-        private const string SP_ROLE_ADDUSERTOROLE = "BugNet_Role_AddUserToRole";
-        private const string SP_ROLE_UPDATEROLE = "BugNet_Role_UpdateRole";
-        private const string SP_ROLE_CREATE = "BugNet_Role_CreateNewRole";
-
-        //Issue Stored Procs
-        private const string SP_ISSUE_CREATE = "BugNet_Issue_CreateNewIssue";
-        private const string SP_ISSUE_UPDATE = "BugNet_Issue_UpdateIssue";
-        private const string SP_ISSUE_DELETE = "BugNet_Issue_Delete";
-        private const string SP_ISSUE_GETISSUEBYID = "BugNet_Issue_GetIssueById";
-        private const string SP_ISSUE_GETISSUESBYRELEVANCY = "BugNet_Issue_GetIssuesByRelevancy";
-        private const string SP_ISSUE_GETISSUESBYASSIGNEDUSERNAME = "BugNet_Issue_GetIssuesByAssignedUserName";
-        private const string SP_ISSUE_GETISSUESBYCREATORUSERNAME = "BugNet_Issue_GetIssuesByCreatorUserName";
-        private const string SP_ISSUE_GETISSUESBYOWNERUSERNAME = "BugNet_Issue_GetIssuesByOwnerUserName";
-        private const string SP_ISSUE_GETMONITOREDISSUESBYUSERNAME = "BugNet_Issue_GetMonitoredIssuesByUserName";
-        private const string SP_ISSUE_GETISSUESBYPROJECTID = "BugNet_Issue_GetIssuesByProjectId";
-
-        private const string SP_ISSUE_GETISSUEMILESTONECOUNTBYPROJECT = "BugNet_Issue_GetIssueMilestoneCountByProject";
-
-        private const string SP_ISSUE_GETISSUESTATUSCOUNTBYPROJECT = "BugNet_Issue_GetIssueStatusCountByProject";
-        private const string SP_ISSUE_GETISSUEPRIORITYCOUNTBYPROJECT = "BugNet_Issue_GetIssuePriorityCountByProject";
-        private const string SP_ISSUE_GETISSUEUSERCOUNTBYPROJECT = "BugNet_Issue_GetIssueUserCountByProject";
-        private const string SP_ISSUE_GETISSUEUNASSIGNEDCOUNTBYPROJECT = "BugNet_Issue_GetIssueUnassignedCountByProject";
-        private const string SP_ISSUE_GETISSUEUNSCHEDULEDMILESTONECOUNTBYPROJECT = "BugNet_Issue_GetIssueUnscheduledMilestoneCountByProject";
-        private const string SP_ISSUE_GETISSUETYPECOUNTBYPROJECT = "BugNet_Issue_GetIssueTypeCountByProject";
-        private const string SP_ISSUE_GETISSUECATEGORYCOUNTBYPROJECT = "BugNet_Issue_GetIssueCategoryCountByProject";
-        private const string SP_ISSUE_GETOPENISSUES = "BugNet_Issue_GetOpenIssues";
-
-        private const string SP_QUERY_GETQUERIESBYUSERNAME = "BugNet_Query_GetQueriesByUsername";
-        private const string SP_QUERY_SAVEQUERY = "BugNet_Query_SaveQuery";
-        private const string SP_QUERY_UPDATEQUERY = "BugNet_Query_UpdateQuery";
-        private const string SP_QUERY_SAVEQUERYCLAUSE = "BugNet_Query_SaveQueryClause";
-        private const string SP_QUERY_GETSAVEDQUERY = "BugNet_Query_GetSavedQuery";
-        private const string SP_QUERY_DELETEQUERY = "BugNet_Query_DeleteQuery";
-        private const string SP_QUERY_GETQUERYBYID = "BugNet_Query_GetQueryById";
-
-        //Related Issue Stored Procs
-        private const string SP_RELATEDISSUE_GETRELATEDISSUES = "BugNet_RelatedIssue_GetRelatedIssues";
-        private const string SP_RELATEDISSUE_CREATENEWRELATEDISSUE = "BugNet_RelatedIssue_CreateNewRelatedIssue";
-        private const string SP_RELATEDISSUE_DELETERELATEDISSUE = "BugNet_RelatedIssue_DeleteRelatedIssue";
-        private const string SP_RELATEDISSUE_CREATENEWPARENTISSUE = "BugNet_RelatedIssue_CreateNewParentIssue";
-        private const string SP_RELATEDISSUE_CREATENEWCHILDISSUE = "BugNet_RelatedIssue_CreateNewChildIssue";
-        private const string SP_RELATEDISSUE_DELETECHILDISSUE = "BugNet_RelatedIssue_DeleteChildIssue";
-        private const string SP_RELATEDISSUE_DELETEPARENTISSUE = "BugNet_RelatedIssue_DeleteParentIssue";
-        private const string SP_RELATEDISSUE_GETPARENTISSUES = "BugNet_RelatedIssue_GetParentIssues";
-        private const string SP_RELATEDISSUE_GETCHILDISSUES = "BugNet_RelatedIssue_GetChildIssues";
-
-        //Attachment Stored Procs
-        private const string SP_ISSUEATTACHMENT_CREATE = "BugNet_IssueAttachment_CreateNewIssueAttachment";
-        private const string SP_ISSUEATTACHMENT_GETATTACHMENTBYID = "BugNet_IssueAttachment_GetIssueAttachmentById";
-        private const string SP_ISSUEATTACHMENT_GETATTACHMENTSBYISSUEID = "BugNet_IssueAttachment_GetIssueAttachmentsByIssueId";
-        private const string SP_ISSUEATTACHMENT_DELETEATTACHMENT = "BugNet_IssueAttachment_DeleteIssueAttachment";
-        private const string SP_ISSUEATTACHMENT_VALIDATEDOWNLOAD = "BugNet_IssueAttachment_ValidateDownload";
-
-        //Comment Stored Procs
-        private const string SP_ISSUECOMMENT_CREATE = "BugNet_IssueComment_CreateNewIssueComment";
-        private const string SP_ISSUECOMMENT_GETISSUECOMMENTBYID = "BugNet_IssueComment_GetIssueCommentById";
-        private const string SP_ISSUECOMMENT_GETISSUECOMMENTSBYISSUEID = "BugNet_IssueComment_GetIssueCommentsByIssueId";
-        private const string SP_ISSUECOMMENT_DELETE = "BugNet_IssueComment_DeleteIssueComment";
-        private const string SP_ISSUECOMMENT_UPDATE = "BugNet_IssueComment_UpdateIssueComment";
-
-        //Issue Revisions
-        private const string SP_ISSUEREVISION_CREATE = "BugNet_IssueRevision_CreateNewIssueRevision";
-        private const string SP_ISSUEREVISION_GETISSUEREVISIONSBYISSUEID = "BugNet_IssueRevision_GetIssueRevisionsByIssueId";
-        private const string SP_ISSUEREVISION_DELETE = "BugNet_IssueRevision_DeleteIssueRevision";
-
-        //Issue Votes
-        private const string SP_ISSUEVOTE_CREATE = "BugNet_IssueVote_CreateNewIssueVote";
-        private const string SP_ISSUEVOTE_HASUSERVOTED = "BugNet_IssueVote_HasUserVoted";
-
-        //History Stored Procs
-        private const string SP_ISSUEHISTORY_CREATENEWISSUEHISTORY = "BugNet_IssueHistory_CreateNewIssueHistory";
-        private const string SP_ISSUEHISTORY_GETISSUEHISTORYBYISSUEID = "BugNet_IssueHistory_GetIssueHistoryByIssueId";
-
-        //Milestone Stored Procs
-        private const string SP_MILESTONE_CREATE = "BugNet_ProjectMilestones_CreateNewMilestone";
-        private const string SP_MILESTONE_GETMILESTONEBYPROJECTID = "BugNet_ProjectMilestones_GetMilestonesByProjectId";
-        private const string SP_MILESTONE_DELETE = "BugNet_ProjectMilestones_DeleteMilestone";
-        private const string SP_MILESTONE_GETMILESTONEBYID = "BugNet_ProjectMilestones_GetMilestoneById";
-        private const string SP_MILESTONE_UPDATE = "BugNet_ProjectMilestones_UpdateMilestone";
-        private const string SP_MILESTONE_CANDELETE = "BugNet_ProjectMilestones_CanDeleteMilestone";
-        
-        //Category Stored Procs
-        private const string SP_CATEGORY_CREATE = "BugNet_ProjectCategories_CreateNewCategory";
-        private const string SP_CATEGORY_UPDATE = "BugNet_ProjectCategories_UpdateCategory";
-        private const string SP_CATEGORY_DELETE = "BugNet_ProjectCategories_DeleteCategory";
-        private const string SP_CATEGORY_GETCATEGORIESBYPROJECTID = "BugNet_ProjectCategories_GetCategoriesByProjectId";
-        private const string SP_CATEGORY_GETCATEGORYBYID = "BugNet_ProjectCategories_GetCategoryById";
-        private const string SP_CATEGORY_GETROOTCATEGORIESBYPROJECTID = "BugNet_ProjectCategories_GetRootCategoriesByProjectId";
-        private const string SP_CATEGORY_GETCHILDCATEGORIESBYCATEGORYID = "BugNet_ProjectCategories_GetChildCategoriesByCategoryId";
-
-        //Status
-        private const string SP_STATUS_GETSTATUSBYPROJECTID = "BugNet_ProjectStatus_GetStatusByProjectId";
-        private const string SP_STATUS_CREATE = "BugNet_ProjectStatus_CreateNewStatus";
-        private const string SP_STATUS_UPDATE = "BugNet_ProjectStatus_UpdateStatus";
-        private const string SP_STATUS_GETSTATUSBYID = "BugNet_ProjectStatus_GetStatusById";
-        private const string SP_STATUS_DELETE = "BugNet_ProjectStatus_DeleteStatus";
-        private const string SP_STATUS_CANDELETE = "BugNet_ProjectStatus_CanDeleteStatus";
-
-        //Issue Type Stored Procs
-        private const string SP_ISSUETYPE_GETISSUETYPEBYID = "BugNet_ProjectIssueTypes_GetIssueTypeById";
-        private const string SP_ISSUETYPE_GETISSUETYPESBYPROJECTID = "BugNet_ProjectIssueTypes_GetIssueTypesByProjectId";
-        private const string SP_ISSUETYPE_CREATE = "BugNet_ProjectIssueTypes_CreateNewIssueType";
-        private const string SP_ISSUETYPE_DELETE = "BugNet_ProjectIssueTypes_DeleteIssueType";
-        private const string SP_ISSUETYPE_UPDATE = "BugNet_ProjectIssueTypes_UpdateIssueType";
-        private const string SP_ISSUETYPE_CANDELETE = "BugNet_ProjectIssueTypes_CanDeleteIssueType";
-
-        //Resolution Stored Procs
-        private const string SP_RESOLUTION_GETRESOLUTIONBYID = "BugNet_ProjectResolutions_GetResolutionById";
-        private const string SP_RESOLUTION_GETRESOLUTIONSBYPROJECTID = "BugNet_ProjectResolutions_GetResolutionsByProjectId";
-        private const string SP_RESOLUTION_CREATE = "BugNet_ProjectResolutions_CreateNewResolution";
-        private const string SP_RESOLUTION_DELETE = "BugNet_ProjectResolutions_DeleteResolution";
-        private const string SP_RESOLUTION_UPDATE = "BugNet_ProjectResolutions_UpdateResolution";
-        private const string SP_RESOLUTION_CANDELETE = "BugNet_ProjectResolutions_CanDeleteResolution";
-
-        //Priority Stored Procs
-        private const string SP_PRIORITY_GETPRIORITYBYID = "BugNet_ProjectPriorities_GetPriorityById";
-        private const string SP_PRIORITY_GETPRIORITIESBYPROJECTID = "BugNet_ProjectPriorities_GetPrioritiesByProjectId";
-        private const string SP_PRIORITY_CREATE = "BugNet_ProjectPriorities_CreateNewPriority";
-        private const string SP_PRIORITY_DELETE = "BugNet_ProjectPriorities_DeletePriority";
-        private const string SP_PRIORITY_UPDATE = "BugNet_ProjectPriorities_UpdatePriority";
-        private const string SP_PRIORITY_CANDELETE = "BugNet_ProjectPriorities_CanDeletePriority";
-
-        //Notification Stored Procs
-        private const string SP_ISSUENOTIFICATION_CREATE = "BugNet_IssueNotification_CreateNewIssueNotification";
-        private const string SP_ISSUENOTIFICATION_DELETE = "BugNet_IssueNotification_DeleteIssueNotification";
-        private const string SP_ISSUENOTIFICATION_GETISSUENOTIFICATIONSBYISSUEID = "BugNet_IssueNotification_GetIssueNotificationsByIssueId";
-
-        //Project Notification
-        private const string SP_PROJECTNOTIFICATION_CREATE = "BugNet_ProjectNotification_CreateNewProjectNotification";
-        private const string SP_PROJECTNOTIFICATION_DELETE = "BugNet_ProjectNotification_DeleteProjectNotification";
-        private const string SP_PROJECTNOTIFICATION_GETPROJECTNOTIFICATIONSBYPROJECTID = "BugNet_ProjectNotification_GetProjectNotificationsByProjectId";
-        private const string SP_PROJECTNOTIFICATION_GETPROJECTNOTIFICATIONSBYUSERNAME = "BugNet_ProjectNotification_GetProjectNotificationsByUsername";
-
-        private const string SP_HOSTSETTING_GETHOSTSETTINGS = "BugNet_HostSetting_GetHostSettings";
-        private const string SP_HOSTSETTING_UPDATEHOSTSETTING = "BugNet_HostSetting_UpdateHostSetting";
-
-        private const string SP_ISSUEWORKREPORT_CREATE = "BugNet_IssueWorkReport_CreateNewIssueWorkReport";
-        private const string SP_ISSUEWORKREPORT_DELETE = "BugNet_IssueWorkReport_DeleteIssueWorkReport";
-        private const string SP_ISSUEWORKREPORT_GETBYISSUEWORKREPORTSBYISSUEID = "BugNet_IssueWorkReport_GetIssueWorkReportsByIssueId";
-        private const string SP_ISSUEWORKREPORT_GETISSUEWORKREPORTBYPROJECTID = "BugNet_IssueWorkReport_GetIssueWorkReportByProjectId";
-        private const string SP_ISSUEWORKREPORT_GETISSUEWORKREPORTBYPROJECTMEMBER = "BugNet_TimeEntry_GetProjectWorkerWorkReport";
-
-        private const string SP_APPLICATIONLOG_GETLOG = "BugNet_ApplicationLog_GetLog";
-        private const string SP_APPLICATIONLOG_CLEARLOG = "BugNet_ApplicationLog_ClearLog";
-
-        private const string SP_CUSTOMFIELD_GETCUSTOMFIELDBYID = "BugNet_ProjectCustomField_GetCustomFieldById";
-        private const string SP_CUSTOMFIELD_GETCUSTOMFIELDSBYPROJECTID = "BugNet_ProjectCustomField_GetCustomFieldsByProjectId";
-        private const string SP_CUSTOMFIELD_GETCUSTOMFIELDSBYISSUEID = "BugNet_ProjectCustomField_GetCustomFieldsByIssueId";
-        private const string SP_CUSTOMFIELD_CREATE = "BugNet_ProjectCustomField_CreateNewCustomField";
-        private const string SP_CUSTOMFIELD_UPDATE = "BugNet_ProjectCustomField_UpdateCustomField";
-        private const string SP_CUSTOMFIELD_DELETE = "BugNet_ProjectCustomField_DeleteCustomField";
-        private const string SP_CUSTOMFIELD_SAVECUSTOMFIELDVALUE = "BugNet_ProjectCustomField_SaveCustomFieldValue";
-
-        private const string SP_CUSTOMFIELDSELECTION_CREATE = "BugNet_ProjectCustomFieldSelection_CreateNewCustomFieldSelection";
-        private const string SP_CUSTOMFIELDSELECTION_DELETE = "BugNet_ProjectCustomFieldSelection_DeleteCustomFieldSelection";
-        private const string SP_CUSTOMFIELDSELECTION_GETCUSTOMFIELDSELECTIONSBYCUSTOMFIELDID = "BugNet_ProjectCustomFieldSelection_GetCustomFieldSelectionsByCustomFieldId";
-        private const string SP_CUSTOMFIELDSELECTION_GETCUSTOMFIELDSELECTIONBYID = "BugNet_ProjectCustomFieldSelection_GetCustomFieldSelectionById";
-        private const string SP_CUSTOMFIELDSELECTION_UPDATE = "BugNet_ProjectCustomFieldSelection_Update";
-        //private const string SP_CUSTOMFIELDSELECTION_GETCUSTOMFIELDSELECTION = "BugNet_ProjectCustomFieldSelection_GetCustomFieldSelection";
-
-        private const string SP_REQUIREDFIELDS_GETFIELDLIST = "BugNet_RequiredField_GetRequiredFieldListForIssues";
-        private const string SP_ISSUE_BYPROJECTIDANDCUSTOMFIELDVIEW = "BugNet_GetIssuesByProjectIdAndCustomFieldView";
-
-        //String Resources
-        private const string SP_LANGUAGES_GETINSTALLEDLANGUAGES = "BugNet_Languages_GetInstalledLanguages";
-
-        private const string SP_GETSELECTEDISSUECOLUMNS = "BugNet_GetProjectSelectedColumnsWithUserIdAndProjectId";
-        private const string SP_SETSELECTEDISSUECOLUMNS = "BugNet_SetProjectSelectedColumnsWithUserIdAndProjectId";
-        #endregion
-
-        /// <summary>
-        /// Gets a value indicating whether [supports project cloning].
-        /// </summary>
-        /// <value>
-        /// 	<c>true</c> if [supports project cloning]; otherwise, <c>false</c>.
-        /// </value>
-        public override bool SupportsProjectCloning
-        {
-            get { return true; }
-        }
-
-        #region Issue methods
-        /// <summary>
-        /// Deletes the issue.
-        /// </summary>
-        /// <param name="issueId">The issue id.</param>
-        /// <returns></returns>
-        public override bool DeleteIssue(int issueId)
-        {
-            if (issueId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("issueId"));
-
-            try
-            {
-                using(var sqlCmd = new SqlCommand())
-                {
-                    AddParamToSqlCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
-                    AddParamToSqlCmd(sqlCmd, "@IssueId", SqlDbType.Int, 0, ParameterDirection.Input, issueId);
-
-                    SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_DELETE);
-                    ExecuteScalarCmd(sqlCmd);
-                    var returnValue = (int)sqlCmd.Parameters["@ReturnValue"].Value;
-                    return (returnValue == 0);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ProcessException(ex);
-            }
-        }
-
-        /// <summary>
-        /// Gets the issues by project id.
-        /// </summary>
-        /// <param name="projectId">The project id.</param>
-        /// <returns></returns>
-        public override List<Issue> GetIssuesByProjectId(int projectId)
-        {
-            if (projectId <= 0) throw (new ArgumentOutOfRangeException("projectId"));
-
-            using (var sqlCmd = new SqlCommand())
-            {
-                AddParamToSqlCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
-                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETISSUESBYPROJECTID);
-
-                var issueList = new List<Issue>();
-                ExecuteReaderCmd(sqlCmd, GenerateIssueListFromReader, ref issueList);
-
-                return issueList;
-            }
-        }
-
-        /// <summary>
-        /// Gets the issue by id.
-        /// </summary>
-        /// <param name="issueId">The issue id.</param>
-        /// <returns></returns>
-        public override Issue GetIssueById(int issueId)
-        {
-            if (issueId <= 0) throw (new ArgumentOutOfRangeException("issueId"));
-
-            using (var sqlCmd = new SqlCommand())
-            {
-                AddParamToSqlCmd(sqlCmd, "@IssueId", SqlDbType.Int, 0, ParameterDirection.Input, issueId);
-                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETISSUEBYID);
-
-                var issueList = new List<Issue>();
-                ExecuteReaderCmd(sqlCmd, GenerateIssueListFromReader, ref issueList);
-
-                return issueList.Count > 0 ? issueList[0] : null;  
-            }
-        }
-
-        /// <summary>
-        /// Updates the issue.
-        /// </summary>
-        /// <param name="issueToUpdate">The issue to update.</param>
-        /// <returns></returns>
-        public override bool UpdateIssue(Issue issueToUpdate)
-        {
-            if (issueToUpdate == null) throw (new ArgumentNullException("issueToUpdate"));
-
-            using (var sqlCmd = new SqlCommand())
-            {
-                AddParamToSqlCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
-                AddParamToSqlCmd(sqlCmd, "@IssueId", SqlDbType.Int, 0, ParameterDirection.Input, issueToUpdate.Id);
-                AddParamToSqlCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, issueToUpdate.ProjectId);
-                AddParamToSqlCmd(sqlCmd, "@IssueTitle", SqlDbType.NVarChar, 500, ParameterDirection.Input, issueToUpdate.Title);
-                AddParamToSqlCmd(sqlCmd, "@IssueCategoryId", SqlDbType.Int, 0, ParameterDirection.Input, (issueToUpdate.CategoryId == 0) ? DBNull.Value : (object)issueToUpdate.CategoryId);
-                AddParamToSqlCmd(sqlCmd, "@IssueStatusId", SqlDbType.Int, 0, ParameterDirection.Input, (issueToUpdate.StatusId == 0) ? DBNull.Value : (object)issueToUpdate.StatusId);
-                AddParamToSqlCmd(sqlCmd, "@IssuePriorityId", SqlDbType.Int, 0, ParameterDirection.Input, (issueToUpdate.PriorityId == 0) ? DBNull.Value : (object)issueToUpdate.PriorityId);
-                AddParamToSqlCmd(sqlCmd, "@IssueTypeId", SqlDbType.Int, 0, ParameterDirection.Input, issueToUpdate.IssueTypeId == 0 ? DBNull.Value : (object)issueToUpdate.IssueTypeId);
-                AddParamToSqlCmd(sqlCmd, "@IssueResolutionId", SqlDbType.Int, 0, ParameterDirection.Input, (issueToUpdate.ResolutionId == 0) ? DBNull.Value : (object)issueToUpdate.ResolutionId);
-                AddParamToSqlCmd(sqlCmd, "@IssueMilestoneId", SqlDbType.Int, 0, ParameterDirection.Input, (issueToUpdate.MilestoneId == 0) ? DBNull.Value : (object)issueToUpdate.MilestoneId);
-                AddParamToSqlCmd(sqlCmd, "@IssueAffectedMilestoneId", SqlDbType.Int, 0, ParameterDirection.Input, (issueToUpdate.AffectedMilestoneId == 0) ? DBNull.Value : (object)issueToUpdate.AffectedMilestoneId);
-                AddParamToSqlCmd(sqlCmd, "@IssueAssignedUserName", SqlDbType.NText, 255, ParameterDirection.Input, (issueToUpdate.AssignedUserName == string.Empty) ? DBNull.Value : (object)issueToUpdate.AssignedUserName);
-                AddParamToSqlCmd(sqlCmd, "@IssueOwnerUserName", SqlDbType.NText, 255, ParameterDirection.Input, (issueToUpdate.OwnerUserName == string.Empty) ? DBNull.Value : (object)issueToUpdate.OwnerUserName);
-                AddParamToSqlCmd(sqlCmd, "@IssueCreatorUserName", SqlDbType.NText, 255, ParameterDirection.Input, issueToUpdate.CreatorUserName);
-                AddParamToSqlCmd(sqlCmd, "@IssueDueDate", SqlDbType.DateTime, 0, ParameterDirection.Input, (issueToUpdate.DueDate == DateTime.MinValue) ? DBNull.Value : (object)issueToUpdate.DueDate);
-                AddParamToSqlCmd(sqlCmd, "@IssueEstimation", SqlDbType.Decimal, 0, ParameterDirection.Input, issueToUpdate.Estimation);
-                AddParamToSqlCmd(sqlCmd, "@IssueVisibility", SqlDbType.Bit, 0, ParameterDirection.Input, issueToUpdate.Visibility);
-                AddParamToSqlCmd(sqlCmd, "@IssueDescription", SqlDbType.NText, 0, ParameterDirection.Input, issueToUpdate.Description);
-                AddParamToSqlCmd(sqlCmd, "@IssueProgress", SqlDbType.Int, 0, ParameterDirection.Input, issueToUpdate.Progress);
-                AddParamToSqlCmd(sqlCmd, "@LastUpdateUserName", SqlDbType.NText, 255, ParameterDirection.Input, issueToUpdate.LastUpdateUserName);
-
-                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_UPDATE);
-                ExecuteScalarCmd(sqlCmd);
-                var returnValue = (int)sqlCmd.Parameters["@ReturnValue"].Value;
-                return (returnValue == 0);   
-            }
-        }
-
-        /// <summary>
-        /// Creates the new issue.
-        /// </summary>
-        /// <param name="newIssue">The issue to create.</param>
-        /// <returns></returns>
-        public override int CreateNewIssue(Issue newIssue)
-        {
-            // Validate Parameters
-            if (newIssue == null) throw (new ArgumentNullException("newIssue"));
-
-            using (var sqlCmd = new SqlCommand())
-            {
-                AddParamToSqlCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
-                AddParamToSqlCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, newIssue.ProjectId);
-                AddParamToSqlCmd(sqlCmd, "@IssueTitle", SqlDbType.NVarChar, 255, ParameterDirection.Input, newIssue.Title);
-                AddParamToSqlCmd(sqlCmd, "@IssueDescription", SqlDbType.NVarChar, 0, ParameterDirection.Input, newIssue.Description);
-                AddParamToSqlCmd(sqlCmd, "@IssueCategoryId", SqlDbType.Int, 0, ParameterDirection.Input, (newIssue.CategoryId == 0) ? DBNull.Value : (object)newIssue.CategoryId);
-                AddParamToSqlCmd(sqlCmd, "@IssueStatusId", SqlDbType.Int, 0, ParameterDirection.Input, (newIssue.StatusId == 0) ? DBNull.Value : (object)newIssue.StatusId);
-                AddParamToSqlCmd(sqlCmd, "@IssuePriorityId", SqlDbType.Int, 0, ParameterDirection.Input, (newIssue.PriorityId == 0) ? DBNull.Value : (object)newIssue.PriorityId);
-                AddParamToSqlCmd(sqlCmd, "@IssueTypeId", SqlDbType.Int, 0, ParameterDirection.Input, (newIssue.IssueTypeId == 0) ? DBNull.Value : (object)newIssue.IssueTypeId);
-                AddParamToSqlCmd(sqlCmd, "@IssueResolutionId", SqlDbType.Int, 0, ParameterDirection.Input, (newIssue.ResolutionId == 0) ? DBNull.Value : (object)newIssue.ResolutionId);
-                AddParamToSqlCmd(sqlCmd, "@IssueMilestoneId", SqlDbType.Int, 0, ParameterDirection.Input, (newIssue.MilestoneId == 0) ? DBNull.Value : (object)newIssue.MilestoneId);
-                AddParamToSqlCmd(sqlCmd, "@IssueAffectedMilestoneId", SqlDbType.Int, 0, ParameterDirection.Input, (newIssue.AffectedMilestoneId == 0) ? DBNull.Value : (object)newIssue.AffectedMilestoneId);
-                AddParamToSqlCmd(sqlCmd, "@IssueAssignedUserName", SqlDbType.NText, 255, ParameterDirection.Input, (newIssue.AssignedUserName == string.Empty) ? DBNull.Value : (object)newIssue.AssignedUserName);
-                AddParamToSqlCmd(sqlCmd, "@IssueOwnerUserName", SqlDbType.NText, 255, ParameterDirection.Input, (newIssue.OwnerUserName == string.Empty) ? DBNull.Value : (object)newIssue.OwnerUserName);
-                AddParamToSqlCmd(sqlCmd, "@IssueCreatorUserName", SqlDbType.NText, 255, ParameterDirection.Input, newIssue.CreatorUserName);
-                AddParamToSqlCmd(sqlCmd, "@IssueDueDate", SqlDbType.DateTime, 0, ParameterDirection.Input, (newIssue.DueDate == DateTime.MinValue) ? DBNull.Value : (object)newIssue.DueDate);
-                AddParamToSqlCmd(sqlCmd, "@IssueEstimation", SqlDbType.Decimal, 0, ParameterDirection.Input, newIssue.Estimation);
-                AddParamToSqlCmd(sqlCmd, "@IssueVisibility", SqlDbType.Bit, 0, ParameterDirection.Input, newIssue.Visibility);
-                AddParamToSqlCmd(sqlCmd, "@IssueProgress", SqlDbType.Int, 0, ParameterDirection.Input, newIssue.Progress);
-
-                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_CREATE);
-                ExecuteScalarCmd(sqlCmd);
-                return ((int)sqlCmd.Parameters["@ReturnValue"].Value);   
-            }
-        }
-
-        /// <summary>
-        /// Gets the issues by relevancy.
-        /// </summary>
-        /// <param name="projectId">The project id.</param>
-        /// <param name="userName">The userName.</param>
-        /// <returns></returns>
-        public override List<Issue> GetIssuesByRelevancy(int projectId, string userName)
-        {
-            if (userName == null) throw (new ArgumentNullException("userName"));
-            if (projectId <= 0) throw (new ArgumentOutOfRangeException("projectId"));
-
-            using (var sqlCmd = new SqlCommand())
-            {
-                AddParamToSqlCmd(sqlCmd, "@UserName", SqlDbType.NVarChar, 255, ParameterDirection.Input, userName);
-                AddParamToSqlCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
-                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETISSUESBYRELEVANCY);
-
-                var issueList = new List<Issue>();
-                ExecuteReaderCmd(sqlCmd, GenerateIssueListFromReader, ref issueList);
-
-                return issueList;   
-            }
-        }
-
-        /// <summary>
-        /// Gets the name of the issues by assigned user.
-        /// </summary>
-        /// <param name="projectId">The project id.</param>
-        /// <param name="assignedUserName">Name of the assigned user.</param>
-        /// <returns></returns>
-        public override List<Issue> GetIssuesByAssignedUserName(int projectId, string assignedUserName)
-        {
-            if (assignedUserName == null) throw (new ArgumentNullException("assignedUserName"));
-            if (projectId <= 0) throw (new ArgumentOutOfRangeException("projectId"));
-
-            using (var sqlCmd = new SqlCommand())
-            {
-                AddParamToSqlCmd(sqlCmd, "@UserName", SqlDbType.NVarChar, 255, ParameterDirection.Input, assignedUserName);
-                AddParamToSqlCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
-                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETISSUESBYASSIGNEDUSERNAME);
-
-                var issueList = new List<Issue>();
-                ExecuteReaderCmd(sqlCmd, GenerateIssueListFromReader, ref issueList);
-
-                return issueList;   
-            }
-        }
-
-        /// <summary>
-        /// Gets the open issues.
-        /// </summary>
-        /// <param name="projectId">The project id.</param>
-        /// <returns></returns>
-        public override List<Issue> GetOpenIssues(int projectId)
-        {
-            if (projectId <= 0) throw (new ArgumentOutOfRangeException("projectId"));
-
-            using (var sqlCmd = new SqlCommand())
-            {
-                AddParamToSqlCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
-                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETOPENISSUES);
-
-                var issueList = new List<Issue>();
-                ExecuteReaderCmd(sqlCmd, GenerateIssueListFromReader, ref issueList);
-
-                return issueList;   
-            }
-        }
-
-        /// <summary>
-        /// Gets the name of the issues by creator user.
-        /// </summary>
-        /// <param name="projectId">The project id.</param>
-        /// <param name="userName">Name of the user.</param>
-        /// <returns></returns>
-        public override List<Issue> GetIssuesByCreatorUserName(int projectId, string userName)
-        {
-            if (userName == null) throw (new ArgumentNullException("userName"));
-            if (projectId <= 0) throw (new ArgumentOutOfRangeException("projectId"));
-
-            using (var sqlCmd = new SqlCommand())
-            {
-                AddParamToSqlCmd(sqlCmd, "@UserName", SqlDbType.NVarChar, 255, ParameterDirection.Input, userName);
-                AddParamToSqlCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
-                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETISSUESBYCREATORUSERNAME);
-
-                var issueList = new List<Issue>();
-                ExecuteReaderCmd(sqlCmd, GenerateIssueListFromReader, ref issueList);
-
-                return issueList;   
-            }
-        }
-
-        /// <summary>
-        /// Gets the name of the issues by owner user.
-        /// </summary>
-        /// <param name="projectId">The project id.</param>
-        /// <param name="userName">Name of the user.</param>
-        /// <returns></returns>
-        public override List<Issue> GetIssuesByOwnerUserName(int projectId, string userName)
-        {
-            if (userName == null) throw (new ArgumentNullException("userName"));
-            if (projectId <= 0) throw (new ArgumentOutOfRangeException("projectId"));
-
-            using (var sqlCmd = new SqlCommand())
-            {
-                AddParamToSqlCmd(sqlCmd, "@UserName", SqlDbType.NVarChar, 255, ParameterDirection.Input, userName);
-                AddParamToSqlCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
-                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETISSUESBYOWNERUSERNAME);
-
-                var issueList = new List<Issue>();
-                ExecuteReaderCmd(sqlCmd, GenerateIssueListFromReader, ref issueList);
-
-                return issueList;   
-            }
-        }
-
-        /// <summary>
-        /// Gets the name of the monitored issues by user.
-        /// </summary>
-        /// <param name="userName">Name of the user.</param>
-        /// <param name="excludeClosedStatus">if set to <c>true</c> [exclude closed status].</param>
-        /// <returns></returns>
-        public override List<Issue> GetMonitoredIssuesByUserName(string userName, bool excludeClosedStatus)
-        {
-            if (userName == null) throw (new ArgumentNullException("userName"));
-
-            using (var sqlCmd = new SqlCommand())
-            {
-                AddParamToSqlCmd(sqlCmd, "@UserName", SqlDbType.NVarChar, 255, ParameterDirection.Input, userName);
-                AddParamToSqlCmd(sqlCmd, "@ExcludeClosedStatus", SqlDbType.Bit, 0, ParameterDirection.Input, excludeClosedStatus);
-                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETMONITOREDISSUESBYUSERNAME);
-
-                var issueList = new List<Issue>();
-                ExecuteReaderCmd(sqlCmd, GenerateIssueListFromReader, ref issueList);
-
-                return issueList;   
-            }
-        }
-
-        /// <summary>
-        /// Gets the issue status count by project.
-        /// </summary>
-        /// <param name="projectId">The project id.</param>
-        /// <returns></returns>
-        public override List<IssueCount> GetIssueStatusCountByProject(int projectId)
-        {
-            if (projectId <= 0) throw (new ArgumentOutOfRangeException("projectId"));
-
-            try
-            {
-                using (var sqlCmd = new SqlCommand())
-                {
-                    AddParamToSqlCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
-                    AddParamToSqlCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
-
-                    SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETISSUESTATUSCOUNTBYPROJECT);
-                    var issueCountList = new List<IssueCount>();
-                    ExecuteReaderCmd(sqlCmd, GenerateIssueCountListFromReader, ref issueCountList);
-                    return issueCountList;   
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ProcessException(ex);
-            }
-        }
-
-        /// <summary>
-        /// Gets the issue milestone count by project.
-        /// </summary>
-        /// <param name="projectId">The project id.</param>
-        /// <returns></returns>
-        public override List<IssueCount> GetIssueMilestoneCountByProject(int projectId)
-        {
-            if (projectId <= 0) throw (new ArgumentOutOfRangeException("projectId"));
-
-            try
-            {
-                using (var sqlCmd = new SqlCommand())
-                {
-                    AddParamToSqlCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
-                    AddParamToSqlCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
-
-                    SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETISSUEMILESTONECOUNTBYPROJECT);
-                    var issueCountList = new List<IssueCount>();
-                    ExecuteReaderCmd(sqlCmd, GenerateIssueCountListFromReader, ref issueCountList);
-                    return issueCountList;   
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ProcessException(ex);
-            }
-        }
-
-        /// <summary>
-        /// Gets the issue user count by project.
-        /// </summary>
-        /// <param name="projectId">The project id.</param>
-        /// <returns></returns>
-        public override List<IssueCount> GetIssueUserCountByProject(int projectId)
-        {
-            if (projectId <= 0) throw (new ArgumentOutOfRangeException("projectId"));
-
-            try
-            {
-                using (var sqlCmd = new SqlCommand())
-                {
-                    AddParamToSqlCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
-                    AddParamToSqlCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
-
-                    SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETISSUEUSERCOUNTBYPROJECT);
-                    var issueCountList = new List<IssueCount>();
-                    ExecuteReaderCmd(sqlCmd, GenerateIssueCountListFromReader, ref issueCountList);
-                    return issueCountList;   
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ProcessException(ex);
-            }
-        }
-
-        /// <summary>
-        /// Gets the issue unassigned count by project.
-        /// </summary>
-        /// <param name="projectId">The project id.</param>
-        /// <returns></returns>
-        public override int GetIssueUnassignedCountByProject(int projectId)
-        {
-            if (projectId <= 0) throw (new ArgumentOutOfRangeException("projectId"));
-
-            try
-            {
-                using (var sqlCmd = new SqlCommand())
-                {
-                    AddParamToSqlCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
-                    AddParamToSqlCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
-
-                    SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETISSUEUNASSIGNEDCOUNTBYPROJECT);
-                    return (int)ExecuteScalarCmd(sqlCmd);   
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ProcessException(ex);
-            }
-
-        }
-
-        /// <summary>
-        /// Gets the issue unscheduled milestone count by project.
-        /// </summary>
-        /// <param name="projectId">The project id.</param>
-        /// <returns></returns>
-        public override int GetIssueUnscheduledMilestoneCountByProject(int projectId)
-        {
-            if (projectId <= 0) throw (new ArgumentOutOfRangeException("projectId"));
-
-            try
-            {
-                using (var sqlCmd = new SqlCommand())
-                {
-                    AddParamToSqlCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
-                    AddParamToSqlCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
-
-                    SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETISSUEUNSCHEDULEDMILESTONECOUNTBYPROJECT);
-                    return (int)ExecuteScalarCmd(sqlCmd);   
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ProcessException(ex);
-            }
-        }
-
-        /// <summary>
-        /// Gets the issue count by project and category.
-        /// </summary>
-        /// <param name="projectId">The project id.</param>
-        /// <param name="categoryId">The category id.</param>
-        /// <returns></returns>
-        public override int GetIssueCountByProjectAndCategory(int projectId, int categoryId)
-        {
-            if (projectId <= 0) throw (new ArgumentOutOfRangeException("projectId"));
-
-            try
-            {
-                using (var sqlCmd = new SqlCommand())
-                {
-                    AddParamToSqlCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
-                    if (categoryId == 0)
-                        AddParamToSqlCmd(sqlCmd, "@CategoryId", SqlDbType.Int, 0, ParameterDirection.Input, DBNull.Value);
-                    else
-                        AddParamToSqlCmd(sqlCmd, "@CategoryId", SqlDbType.Int, 0, ParameterDirection.Input, categoryId);
-
-                    SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETISSUECATEGORYCOUNTBYPROJECT);
-                    return (int)ExecuteScalarCmd(sqlCmd);   
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ProcessException(ex);
-            }
-        }
-
-        /// <summary>
-        /// Gets the issue type count by project.
-        /// </summary>
-        /// <param name="projectId">The project id.</param>
-        /// <returns></returns>
-        public override List<IssueCount> GetIssueTypeCountByProject(int projectId)
-        {
-            if (projectId <= 0) throw (new ArgumentOutOfRangeException("projectId"));
-
-            try
-            {
-                using (var sqlCmd = new SqlCommand())
-                {
-                    AddParamToSqlCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
-                    AddParamToSqlCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
-
-                    SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETISSUETYPECOUNTBYPROJECT);
-                    var issueCountList = new List<IssueCount>();
-                    ExecuteReaderCmd(sqlCmd, GenerateIssueCountListFromReader, ref issueCountList);
-                    return issueCountList;   
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ProcessException(ex);
-            }
-        }
-
-        /// <summary>
-        /// Gets the issue priority count by project.
-        /// </summary>
-        /// <param name="projectId">The project id.</param>
-        /// <returns></returns>
-        public override List<IssueCount> GetIssuePriorityCountByProject(int projectId)
-        {
-            if (projectId <= 0) throw (new ArgumentOutOfRangeException("projectId"));
-
-            try
-            {
-                using (var sqlCmd = new SqlCommand())
-                {
-                    AddParamToSqlCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
-                    AddParamToSqlCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
-
-                    SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_GETISSUEPRIORITYCOUNTBYPROJECT);
-                    var issueCountList = new List<IssueCount>();
-                    ExecuteReaderCmd(sqlCmd, GenerateIssueCountListFromReader, ref issueCountList);
-                    return issueCountList;   
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ProcessException(ex);
-            }
-        }
-
-        #endregion
-
-        /// <summary>
-        /// Gets the issue columns for a user for a specific project
-        /// </summary>
-        /// <param name="userName">Name of the user.</param>
-        /// <param name="projectId">The project id.</param>
-        /// <returns></returns>
-        public override string GetSelectedIssueColumnsByUserName(string userName, int projectId)
-        {
-            if (projectId <= Globals.NEW_ID)
-                throw (new ArgumentNullException("projectId"));
-            if (string.IsNullOrEmpty(userName))
-                throw (new ArgumentNullException("userName"));
-            try
-            {
-                // Execute SQL Command
-                SqlCommand sqlCmd = new SqlCommand();
-                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_GETSELECTEDISSUECOLUMNS);
-
-                AddParamToSqlCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
-                AddParamToSqlCmd(sqlCmd, "@UserName", SqlDbType.NVarChar, 255, ParameterDirection.Input, userName);
-                AddParamToSqlCmd(sqlCmd, "@ReturnValue", SqlDbType.NVarChar, 255, ParameterDirection.Output, null);
-
-                ExecuteScalarCmd(sqlCmd);
-                return ((string)sqlCmd.Parameters["@ReturnValue"].Value.ToString());
-            }
-            catch (Exception ex)
-            {
-                throw ProcessException(ex);
-            }
-        }
-
-
-        /// <summary>
-        /// Sets the issue columns for a user for a specific project
-        /// </summary>
-        /// <param name="userName">Name of the user.</param>
-        /// <param name="projectId">The project id.</param>
-        /// <param name="columns">The columns selected to be displayed for specific project.</param>
-        /// <returns></returns>
-        public override void SetSelectedIssueColumnsByUserName(string userName, int projectId, string columns)
-        {
-            if (projectId <= Globals.NEW_ID)
-                throw (new ArgumentNullException("projectId"));
-            if (string.IsNullOrEmpty(userName))
-                throw (new ArgumentNullException("userName"));
-            if (string.IsNullOrEmpty(columns))
-                columns = "";
-            try
-            {
-                // Execute SQL Command
-                SqlCommand sqlCmd = new SqlCommand();
-                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_SETSELECTEDISSUECOLUMNS);
-
-                AddParamToSqlCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
-                AddParamToSqlCmd(sqlCmd, "@UserName", SqlDbType.NVarChar, 255, ParameterDirection.Input, userName);
-                AddParamToSqlCmd(sqlCmd, "@Columns", SqlDbType.NVarChar, 255, ParameterDirection.Input, columns);
-
-                ExecuteScalarCmd(sqlCmd);
-            }
-            catch (Exception ex)
-            {
-                throw ProcessException(ex);
-            }
         }
 
         #region Issue history methods
@@ -1655,7 +847,7 @@ namespace BugNET.Providers.DataProviders
         /// <returns></returns>
         public override bool DeleteProject(int projectId)
         {
-            if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectID"));
+            if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
             using (var sqlCmd = new SqlCommand())
             {
@@ -1847,8 +1039,9 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="projectId">The project id.</param>
         /// <param name="projectName">Name of the project.</param>
+        /// <param name="creatorUserName">The user who cloned the project</param>
         /// <returns></returns>
-        public override int CloneProject(int projectId, string projectName)
+        public override int CloneProject(int projectId, string projectName, string creatorUserName = "")
         {
             if (string.IsNullOrEmpty(projectName)) throw new ArgumentNullException("projectName");
             if (projectId <= 0) throw (new ArgumentOutOfRangeException("projectId"));
@@ -1860,6 +1053,7 @@ namespace BugNET.Providers.DataProviders
                     AddParamToSqlCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
                     AddParamToSqlCmd(sqlCmd, "@ProjectName", SqlDbType.NText, 256, ParameterDirection.Input, projectName);
                     AddParamToSqlCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
+                    AddParamToSqlCmd(sqlCmd, "@CloningUsername", SqlDbType.VarChar, 0, ParameterDirection.Input, creatorUserName);
                     SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_PROJECT_CLONEPROJECT);
                     ExecuteScalarCmd(sqlCmd);
                     return (int)sqlCmd.Parameters["@ReturnValue"].Value;   
@@ -2777,11 +1971,181 @@ namespace BugNET.Providers.DataProviders
         }
 
         /// <summary>
+        /// Perform a query agains the issues stored
+        /// </summary>
+        /// <param name="projectId">The project id</param>
+        /// <param name="queryClauses">Criteria for the query</param>
+        /// <param name="sortFields">The name / sort direction of the sort fields</param>
+        /// <returns></returns>
+        /// <remarks>This mehtod does not filter the issues by any criteria, that means disabled and closed issues will be returned by default.
+        /// It is up to the client caller to define the filters before hand.  For filtering closed and disabled issues use iv.[IsClosed] = 0 and 
+        /// iv.[Disabled] = 0
+        /// </remarks>
+        public override List<Issue> PerformQuery(int projectId, List<QueryClause> queryClauses, IEnumerable<KeyValuePair<string, string>> sortFields)
+        {
+            // build the custom field view name
+            var customFieldViewName = string.Format(Globals.PROJECT_CUSTOM_FIELDS_VIEW_NAME, projectId);
+
+            // start out with some default values
+            var customFieldsJoin = string.Empty;
+            var startWhere = "WHERE 1=1";
+
+            // store the sql we will be building
+            var commandBuilder = new StringBuilder();
+
+            // this is our default select statement, the placeholders will be swapped out as we go
+            commandBuilder.Append("SELECT * FROM BugNet_IssuesView iv @PROJECT_CF_JOIN@ @START_WHERE@ @CRITERIA@ @SORT_FIELDS@");
+
+            // if we have a project id then we can take advantage of the custom field view to help with performance
+            if (projectId > 0)
+            {
+                customFieldsJoin = string.Format("INNER JOIN {0} cf ON cf.IssueId = iv.IssueId AND cf.ProjectId = iv.ProjectId", customFieldViewName);
+                startWhere = string.Format("WHERE iv.[ProjectId] = {0}", projectId);
+            }
+
+            // swap out the placeholders for the custom field view join logic and the were criteria
+            commandBuilder = commandBuilder.Replace("@PROJECT_CF_JOIN@", customFieldsJoin);
+            commandBuilder = commandBuilder.Replace("@START_WHERE@", startWhere);
+
+            //var sql = string.Format("SELECT * FROM BugNet_IssuesView iv INNER JOIN {0} cf ON cf.IssueId = iv.IssueId AND cf.ProjectId = iv.ProjectId WHERE iv.ProjectId = {1} @CRITERIA@ @SORT_FIELDS@", customFieldViewName, projectId);
+            var sortSql = "ORDER BY ";
+            var issueList = new List<Issue>();
+
+            try
+            {
+                // build the sort string (if any)
+                if (sortFields != null)
+                {
+                    foreach (var keyValuePair in sortFields)
+                    {
+                        var field = keyValuePair.Key.Trim();
+
+                        // no field then no sort option
+                        if (field.Length.Equals(0)) continue;
+
+                        // lower the direction
+                        var direction = keyValuePair.Value.Trim().ToLowerInvariant();
+
+                        // check if the direction is valid
+                        if (!direction.Equals("asc") || !direction.Equals("desc"))
+                            direction = "asc";
+
+                        // if the field contains a period then they might be passing in and alias so dont try and clean up
+                        if (!field.Contains("."))
+                        {
+                            if (!field.EndsWith("]"))
+                                field = string.Concat(field, "]");
+
+                            if (!field.EndsWith("["))
+                                field = string.Concat("[", field);
+                        }
+
+                        // build proper sort string
+                        sortSql = string.Concat(sortSql, " ", field, " ", direction, ",");
+                    }
+                }
+
+                // set a default sort
+                sortSql = string.Concat(sortSql, " iv.[IssueId] desc");
+
+                // do we have query clauses if so then process them
+                if (queryClauses != null)
+                {
+                    var i = 0;
+                    var criteriaBuilder = new StringBuilder();
+
+                    foreach (var qc in queryClauses)
+                    {
+                        var fieldName = qc.FieldName.Trim();
+                        var fieldValue = qc.FieldValue;
+                        var boolOper = qc.BooleanOperator.ToLower().Trim();
+                        var compareOper = qc.ComparisonOperator.Trim();
+
+                        // if the field contains a period then they might be passing in and alias so dont try and clean up
+                        // this puts properness in the hands of the UI making the call
+                        if (!fieldName.Contains(".") && !fieldName.Equals("1"))
+                        {
+                            fieldName = fieldName.Replace("[", "").Replace("]", "");
+
+                            if (!fieldName.StartsWith("["))
+                                fieldName = string.Concat("[", fieldName);
+
+                            if (!fieldName.EndsWith("]"))
+                                fieldName = string.Concat(fieldName, "]");
+                        }
+
+                        // handle when we want to create nested boolean logic in the query clauses
+                        // this of course means the order of the query clauses must be correct
+                        if (boolOper.EndsWith(")") || boolOper.EndsWith("("))
+                        {
+                            criteriaBuilder.AppendFormat(" {0}", boolOper);
+                            continue;
+                        }
+
+                        // if the custom field value is null empty then setup for a null value
+                        if (string.IsNullOrEmpty(fieldValue))
+                        {
+                            criteriaBuilder.AppendFormat(" {0} {1} {2} NULL", boolOper, fieldName, compareOper);
+                        }
+                        else if (qc.DataType == SqlDbType.DateTime)
+                        {
+                            criteriaBuilder.AppendFormat(" {0} datediff(day, {1}, @p{3}) {2} 0", boolOper, fieldName, compareOper, i);
+                        }
+                        else
+                        {
+                            criteriaBuilder.AppendFormat(" {0} {1} {2} @p{3}", boolOper, fieldName, compareOper, i);
+                        }
+
+                        i++;
+                    }
+
+                    // swap out the placeholders for the critiera and the sort fields
+                    commandBuilder = commandBuilder.Replace("@CRITERIA@", criteriaBuilder.ToString());
+                    commandBuilder = commandBuilder.Replace("@SORT_FIELDS@", sortSql);
+
+                    using (var sqlCmd = new SqlCommand())
+                    {
+                        sqlCmd.CommandText = commandBuilder.ToString();
+
+#if (DEBUG)
+                        System.Diagnostics.Debug.WriteLine(sqlCmd.CommandText);
+#endif
+                        commandBuilder.Clear();
+
+                        i = 0;
+
+                        //RW loop thru and add non custom field queries parameters.
+                        foreach (var qc in queryClauses)
+                        {
+                            //skip if value null
+                            if (string.IsNullOrEmpty(qc.FieldValue)) continue;
+                            var par = new SqlParameter("@p" + i, qc.DataType) {Value = qc.FieldValue};
+                            sqlCmd.Parameters.Add(par);
+                            commandBuilder.AppendFormat("{0} = {1} | ", par, par.Value);
+                            i++;
+                        }
+#if (DEBUG)
+                        System.Diagnostics.Debug.WriteLine(commandBuilder);
+#endif
+                        ExecuteReaderCmd(sqlCmd, GenerateIssueListFromReader, ref issueList);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ProcessException(ex);
+            }
+
+            return issueList;
+        }
+
+        /// <summary>
         /// Combined Perform Custom Query Method
         /// </summary>
         /// <param name="projectId">The project id.</param>
         /// <param name="queryClauses">The query clauses.</param>
         /// <returns></returns>
+        [Obsolete("Please use the PerformQuery, you may have to update how the query clauses get built first")]
         public override List<Issue> PerformQuery(int projectId, List<QueryClause> queryClauses)
         {
             // Validate Parameters
@@ -4868,981 +4232,6 @@ namespace BugNET.Providers.DataProviders
                 throw ProcessException(ex);
             }
         }
-        #endregion
-
-        /// <summary>
-        /// Gets the installed language resources.
-        /// </summary>
-        /// <returns></returns>
-        public override List<string> GetInstalledLanguageResources()
-        {
-            try
-            {
-                using (var sqlCmd = new SqlCommand())
-                {
-                    SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_LANGUAGES_GETINSTALLEDLANGUAGES);
-                    var cultureCodes = new List<string>();
-                    ExecuteReaderCmd(sqlCmd, GenerateInstalledResourcesListFromReader, ref cultureCodes);
-                    return cultureCodes;   
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ProcessException(ex);
-            }
-        }
-
-        /// <summary>
-        /// Gets the provider path.
-        /// </summary>
-        /// <returns></returns>
-        public override string GetProviderPath()
-        {
-            var context = HttpContext.Current;
-
-            if (_providerPath != string.Empty)
-            {
-                if (_mappedProviderPath == string.Empty)
-                {
-                    _mappedProviderPath = context.Server.MapPath(_providerPath);
-                    if (!Directory.Exists(_mappedProviderPath))
-                        return string.Format("ERROR: providerPath folder {0} specified for SqlDataProvider does not exist on web server", _mappedProviderPath);
-                }
-            }
-            else
-            {
-                return "ERROR: providerPath folder value not specified in web.config for SqlDataProvider";
-            }
-            return _mappedProviderPath;
-        }
-
-        /// <summary>
-        /// Gets the database version.
-        /// </summary>
-        /// <returns></returns>
-        public override string GetDatabaseVersion()
-        {
-            string currentVersion;
-
-            using (var sqlCmd = new SqlCommand())
-            {
-                //Check For 0.7 Version
-                try
-                {
-                    SetCommandType(sqlCmd, CommandType.Text, "SELECT SettingValue FROM HostSettings WHERE SettingName='Version'");
-                    currentVersion = (string)ExecuteScalarCmd(sqlCmd);
-                }
-                catch (SqlException)
-                {
-                    currentVersion = "ERROR";
-                }
-
-                //check for version 0.8 if 0.7 has not already been found or threw an exception
-                if (currentVersion == string.Empty || currentVersion == "ERROR")
-                {
-                    try
-                    {
-                        SetCommandType(sqlCmd, CommandType.Text, "SELECT SettingValue FROM BugNet_HostSettings WHERE SettingName='Version'");
-                        currentVersion = (string)ExecuteScalarCmd(sqlCmd);
-                    }
-                    catch (SqlException e)
-                    {
-                        switch (e.Number)
-                        {
-                            case 4060:
-                                return "ERROR " + e.Message;
-                        }
-
-                        currentVersion = string.Empty;
-                    }
-
-                }   
-            }
-
-            return currentVersion;
-        }
-
-        /// <summary>
-        /// Processes the exception.
-        /// </summary>
-        /// <param name="ex">The ex.</param>
-        /// <returns></returns>
-        public override DataAccessException ProcessException(Exception ex)
-        {
-            if (HttpContext.Current.User != null && HttpContext.Current.User.Identity.IsAuthenticated)
-                MDC.Set("user", HttpContext.Current.User.Identity.Name);
-
-            if (Log.IsErrorEnabled)
-                Log.Error(ex.Message, ex);
-
-            return new DataAccessException("Database Error", ex);
-        }
-
-        #region SQL Helper Methods
-
-        //*********************************************************************
-        //
-        // SQL Helper Methods
-        //
-        // The following utility methods are used to interact with SQL Server.
-        //
-        //*********************************************************************
-
-        /// <summary>
-        /// Adds the param to SQL CMD.
-        /// </summary>
-        /// <param name="sqlCmd">The SQL CMD.</param>
-        /// <param name="paramId">The param id.</param>
-        /// <param name="sqlType">Type of the SQL.</param>
-        /// <param name="paramSize">Size of the param.</param>
-        /// <param name="paramDirection">The param direction.</param>
-        /// <param name="paramvalue">The paramvalue.</param>
-        private static void AddParamToSqlCmd(SqlCommand sqlCmd, string paramId, SqlDbType sqlType, int paramSize, ParameterDirection paramDirection, object paramvalue)
-        {
-            // Validate Parameter Properties
-            if (sqlCmd == null) throw (new ArgumentNullException("sqlCmd"));
-            if (paramId == string.Empty) throw (new ArgumentOutOfRangeException("paramId"));
-
-            // Add Parameter
-            var newSqlParam = new SqlParameter
-                                  {ParameterName = paramId, SqlDbType = sqlType, Direction = paramDirection};
-
-            if (paramSize > 0)
-                newSqlParam.Size = paramSize;
-
-            if (paramvalue != null)
-                newSqlParam.Value = paramvalue;
-
-            sqlCmd.Parameters.Add(newSqlParam);
-        }
-
-
-        /// <summary>
-        /// Executes the scalar CMD.
-        /// </summary>
-        /// <param name="sqlCmd">The SQL CMD.</param>
-        /// <returns></returns>
-        private Object ExecuteScalarCmd(SqlCommand sqlCmd)
-        {
-            // Validate Command Properties
-            if (string.IsNullOrEmpty(_connectionString)) throw new Exception("The connection string cannot be empty, please check the web.config for the proper settings");
-            if (sqlCmd == null) throw (new ArgumentNullException("sqlCmd"));
-
-            Object result;
-
-            using (var cn = new SqlConnection(_connectionString))
-            {
-                sqlCmd.Connection = cn;
-                cn.Open();
-                result = sqlCmd.ExecuteScalar();
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Executes the SqlCommand via non-query.
-        /// </summary>
-        /// <param name="sqlCmd">The SqlCommand.</param>
-        /// <returns></returns>
-        private void ExecuteNonQuery(SqlCommand sqlCmd)
-        {
-            // Validate Command Properties
-            if (string.IsNullOrEmpty(_connectionString)) throw new Exception("The connection string cannot be empty, please check the web.config for the proper settings");
-            if (sqlCmd == null) throw (new ArgumentNullException("sqlCmd"));
-
-            using (var cn = new SqlConnection(_connectionString))
-            {
-                sqlCmd.Connection = cn;
-                cn.Open();
-                sqlCmd.ExecuteNonQuery();
-            }
-        }
-
-        /// <summary>
-        /// Ts the execute reader CMD.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="sqlCmd">The SQL CMD.</param>
-        /// <param name="gcfr">The GCFR.</param>
-        /// <param name="list">The list.</param>
-        private void ExecuteReaderCmd<T>(SqlCommand sqlCmd, GenerateListFromReader<T> gcfr, ref List<T> list)
-        {
-            if (string.IsNullOrEmpty(_connectionString)) throw new Exception("The connection string cannot be empty, please check the web.config for the proper settings");
-            if (sqlCmd == null) throw (new ArgumentNullException("sqlCmd"));
-
-            using (var cn = new SqlConnection(_connectionString))
-            {
-                sqlCmd.Connection = cn;
-                cn.Open();
-                gcfr(sqlCmd.ExecuteReader(), ref list);
-            }
-        }
-
-        /// <summary>
-        /// Sets the type of the command.
-        /// </summary>
-        /// <param name="sqlCmd">The SQL CMD.</param>
-        /// <param name="cmdType">Type of the CMD.</param>
-        /// <param name="cmdText">The CMD text.</param>
-        private static void SetCommandType(IDbCommand sqlCmd, CommandType cmdType, string cmdText)
-        {
-            sqlCmd.CommandType = cmdType;
-            sqlCmd.CommandText = cmdText;
-        }
-
-        /// <summary>
-        /// Executes the script.
-        /// </summary>
-        /// <param name="sql">The SQL.</param>
-        public override void ExecuteScript(List<string> sql)
-        {
-            if (sql == null)
-                throw new ArgumentNullException("sql");
-
-            using (var conn = new SqlConnection(_connectionString))
-            {
-                conn.Open();
-                foreach (var command in sql.Select(stmt => new SqlCommand(stmt, conn)))
-                {
-                    command.ExecuteNonQuery();
-                }
-                conn.Close();
-            }
-        }
-
-        #endregion
-
-        #region GENARATE LIST HELPER METHODS
-
-        /// <summary>
-        /// Ts the generate issue comment list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="issueCommentList">The issue comment list.</param>
-        private static void GenerateIssueCommentListFromReader(IDataReader returnData, ref List<IssueComment> issueCommentList)
-        {
-            while (returnData.Read())
-            {
-                issueCommentList.Add(new IssueComment
-                                         {
-                                            Id = returnData.GetInt32(returnData.GetOrdinal("IssueCommentId")),
-                                            Comment = returnData.GetString(returnData.GetOrdinal("Comment")),
-                                            DateCreated = returnData.GetDateTime(returnData.GetOrdinal("DateCreated")),
-                                            CreatorDisplayName = returnData.GetString(returnData.GetOrdinal("CreatorDisplayName")),
-                                            CreatorUserName = returnData.GetString(returnData.GetOrdinal("CreatorUsername")),
-                                            IssueId = returnData.GetInt32(returnData.GetOrdinal("IssueId")),
-                                            CreatorUserId = returnData.GetGuid(returnData.GetOrdinal("CreatorUserId"))
-                                         });
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate issue count list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="issueCountList">The issue count list.</param>
-        private static void GenerateIssueCountListFromReader(IDataReader returnData, ref List<IssueCount> issueCountList)
-        {
-            while (returnData.Read())
-            {
-                var issueCount = new IssueCount(
-                    returnData.GetValue(2), 
-                    (string)returnData.GetValue(0), 
-                    (int)returnData.GetValue(1), 
-                    (string)returnData.GetValue(3)
-                );
-                issueCountList.Add(issueCount);
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate issue list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="issueList">The issue list.</param>
-        private static void GenerateIssueListFromReader(IDataReader returnData, ref List<Issue> issueList)
-        {
-            while (returnData.Read())
-            {
-                issueList.Add(MapIssue(returnData));
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate installed resources list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="cultureCodes">The culture codes.</param>
-        private static void GenerateInstalledResourcesListFromReader(IDataReader returnData, ref List<string> cultureCodes)
-        {
-            while (returnData.Read())
-            {
-                cultureCodes.Add((string)returnData["cultureCode"]);
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate issue history list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="issueHistoryList">The issue history list.</param>
-        private static void GenerateIssueHistoryListFromReader(IDataReader returnData, ref List<IssueHistory> issueHistoryList)
-        {
-            while (returnData.Read())
-            {
-                issueHistoryList.Add(new IssueHistory
-                {
-                    Id = returnData.GetInt32(returnData.GetOrdinal("IssueHistoryId")),
-                    IssueId = returnData.GetInt32(returnData.GetOrdinal("IssueId")),
-                    CreatedUserName = returnData.GetString(returnData.GetOrdinal("CreatorUsername")),
-                    CreatorDisplayName = returnData.GetString(returnData.GetOrdinal("CreatorDisplayName")),
-                    FieldChanged = returnData.GetString(returnData.GetOrdinal("FieldChanged")),
-                    NewValue = returnData.GetString(returnData.GetOrdinal("NewValue")),
-                    OldValue = returnData.GetString(returnData.GetOrdinal("OldValue")),
-                    DateChanged = returnData.GetDateTime(returnData.GetOrdinal("DateCreated"))
-                });
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate issue notification list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="issueNotificationList">The issue notification list.</param>
-        private static void GenerateIssueNotificationListFromReader(IDataReader returnData, ref List<IssueNotification> issueNotificationList)
-        {
-            while (returnData.Read())
-            {
-                issueNotificationList.Add(new IssueNotification
-                {
-                    Id = 1,
-                    IssueId = returnData.GetInt32(returnData.GetOrdinal("IssueId")),
-                    NotificationUsername = returnData.GetString(returnData.GetOrdinal("NotificationUsername")),
-                    NotificationEmail = returnData.GetString(returnData.GetOrdinal("NotificationEmail")),
-                    NotificationDisplayName = returnData.GetString(returnData.GetOrdinal("NotificationDisplayName"))
-                });
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate host setting list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="hostsettingList">The hostsetting list.</param>
-        private static void GenerateHostSettingListFromReader(IDataReader returnData, ref List<HostSetting> hostsettingList)
-        {
-            while (returnData.Read())
-            {
-                hostsettingList.Add(new HostSetting
-                                        {
-                                            SettingName = returnData.GetString(returnData.GetOrdinal("SettingName")),
-                                            SettingValue = returnData.GetString(returnData.GetOrdinal("SettingValue"))
-                                        });
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate role list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="roleList">The role list.</param>
-        private static void GenerateRoleListFromReader(IDataReader returnData, ref List<Role> roleList)
-        {
-            while (returnData.Read())
-            {
-                roleList.Add(new Role
-                {
-                    Id = returnData.GetInt32(returnData.GetOrdinal("RoleId")),
-                    ProjectId = (returnData["ProjectId"] != DBNull.Value) ? returnData.GetInt32(returnData.GetOrdinal("ProjectId")) : 0,
-                    Name = returnData.GetString(returnData.GetOrdinal("RoleName")),
-                    AutoAssign = returnData.GetBoolean(returnData.GetOrdinal("AutoAssign")),
-                    Description = returnData.GetString(returnData.GetOrdinal("RoleDescription")),
-                });
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate role permission list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="rolePermissionList">The role permission list.</param>
-        private static void GenerateRolePermissionListFromReader(SqlDataReader returnData, ref List<RolePermission> rolePermissionList)
-        {
-            while (returnData.Read())
-            {
-                var permission = new RolePermission((int)returnData["PermissionId"], (int)returnData["ProjectId"], returnData["RoleName"].ToString(),
-                    returnData["PermissionName"].ToString(), returnData["PermissionKey"].ToString());
-                rolePermissionList.Add(permission);
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate permission list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="permissionList">The permission list.</param>
-        private static void GeneratePermissionListFromReader(SqlDataReader returnData, ref List<Permission> permissionList)
-        {
-            while (returnData.Read())
-            {
-                var permission = new Permission((int)returnData["PermissionId"], returnData["PermissionName"].ToString(), returnData["PermissionKey"].ToString());
-                permissionList.Add(permission);
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate user list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="userList">The user list.</param>
-        private static void GenerateUserListFromReader(SqlDataReader returnData, ref List<ITUser> userList)
-        {
-            while (returnData.Read())
-            {
-                var user = new ITUser((Guid)returnData["UserId"], (string)returnData["UserName"], (string)returnData["DisplayName"]);
-                userList.Add(user);
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate project list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="projectList">The project list.</param>
-        private static void GenerateProjectListFromReader(IDataReader returnData, ref List<Project> projectList)
-        {
-            while (returnData.Read())
-            {
-                projectList.Add(new Project
-                {
-                    Id = returnData.GetInt32(returnData.GetOrdinal("ProjectId")),
-                    Name = returnData.GetString(returnData.GetOrdinal("ProjectName")),
-                    Description = returnData.GetString(returnData.GetOrdinal("ProjectDescription")),
-                    CreatorUserName = returnData.GetString(returnData.GetOrdinal("CreatorUserName")),
-                    CreatorDisplayName = returnData.GetString(returnData.GetOrdinal("CreatorDisplayName")),
-                    AllowAttachments = returnData.GetBoolean(returnData.GetOrdinal("AllowAttachments")),
-                    AccessType = (Globals.ProjectAccessType)returnData["ProjectAccessType"],
-                    AllowIssueVoting = returnData.GetBoolean(returnData.GetOrdinal("AllowIssueVoting")),
-                    AttachmentStorageType = (IssueAttachmentStorageTypes)returnData["AttachmentStorageType"], 
-                    Code = returnData.GetString(returnData.GetOrdinal("ProjectCode")),
-                    Disabled = returnData.GetBoolean(returnData.GetOrdinal("ProjectDisabled")), 
-                    ManagerDisplayName = returnData.GetString(returnData.GetOrdinal("ManagerDisplayName")),
-                    ManagerId = returnData.GetGuid(returnData.GetOrdinal("ProjectManagerUserId")),
-                    ManagerUserName = returnData.GetString(returnData.GetOrdinal("ManagerUserName")),
-                    SvnRepositoryUrl = returnData.GetString(returnData.GetOrdinal("SvnRepositoryUrl")),
-                    UploadPath = returnData.GetString(returnData.GetOrdinal("AttachmentUploadPath")),
-                    DateCreated = returnData.GetDateTime(returnData.GetOrdinal("DateCreated"))
-                });
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate member roles list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="memberRoleList">The member roles list.</param>
-        private static void GenerateProjectMemberRoleListFromReader(SqlDataReader returnData, ref List<MemberRoles> memberRoleList)
-        {
-            while (returnData.Read())
-            {
-                int i;
-                var found = false;
-                for (i = 0; i < memberRoleList.Count; i++)
-                {
-                    if (!memberRoleList[i].Username.Equals((string) returnData.GetValue(0))) continue;
-                    memberRoleList[i].AddRole((string)returnData.GetValue(1));
-                    found = true;
-                }
-
-                if (found) continue;
-
-                var memberRoles = new MemberRoles((string)returnData.GetValue(0), (string)returnData.GetValue(1));
-                memberRoleList.Add(memberRoles);
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate roadmap issue list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="issueList">The issue list.</param>
-        private static void GenerateRoadmapIssueListFromReader(IDataReader returnData, ref List<RoadMapIssue> issueList)
-        {
-            while (returnData.Read())
-            {
-                var issue = MapIssue(returnData);
-
-                if(issue == null) continue;
-
-                var rmIssue = new RoadMapIssue(issue, returnData.GetInt32(returnData.GetOrdinal("MilestoneSortOrder")));
-                issueList.Add(rmIssue);
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate project notification list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="projectNotificationList">The project notification list.</param>
-        private static void GenerateProjectNotificationListFromReader(IDataReader returnData, ref List<ProjectNotification> projectNotificationList)
-        {
-            while (returnData.Read())
-            {
-                projectNotificationList.Add(new ProjectNotification
-                                                {
-                                                    Id = returnData.GetInt32(returnData.GetOrdinal("ProjectNotificationId")),
-                                                    NotificationDisplayName = returnData.GetString(returnData.GetOrdinal("NotificationDisplayName")),
-                                                    NotificationEmail = returnData.GetString(returnData.GetOrdinal("NotificationEmail")),
-                                                    NotificationUsername = returnData.GetString(returnData.GetOrdinal("NotificationUsername")),
-                                                    ProjectId = returnData.GetInt32(returnData.GetOrdinal("ProjectId")),
-                                                    ProjectName = returnData.GetString(returnData.GetOrdinal("ProjectName"))
-                                                });
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate category list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="categoryList">The category list.</param>
-        private static void GenerateCategoryListFromReader(IDataReader returnData, ref List<Category> categoryList)
-        {
-            while (returnData.Read())
-            {
-                categoryList.Add(new Category
-                        {
-                            Id = returnData.GetInt32(returnData.GetOrdinal("CategoryId")),
-                            ProjectId = returnData.GetInt32(returnData.GetOrdinal("ProjectId")),
-                            Name = returnData.GetString(returnData.GetOrdinal("CategoryName")),
-                            ChildCount = returnData.GetInt32(returnData.GetOrdinal("ChildCount")),
-                            ParentCategoryId = returnData.GetInt32(returnData.GetOrdinal("ParentCategoryId")),
-                            IssueCount = returnData.GetInt32(returnData.GetOrdinal("IssueCount")),
-                            Disabled = returnData.GetBoolean(returnData.GetOrdinal("Disabled"))
-                        });
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate issue attachment list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="issueAttachmentList">The issue attachment list.</param>
-        private static void GenerateIssueAttachmentListFromReader(IDataReader returnData, ref List<IssueAttachment> issueAttachmentList)
-        {
-            while (returnData.Read())
-            {
-                var attachment = new IssueAttachment
-                                     {
-                                         Id = returnData.GetInt32(returnData.GetOrdinal("IssueAttachmentId")),
-                                         Attachment = null,
-                                         Description = returnData.GetString(returnData.GetOrdinal("Description")),
-                                         DateCreated = returnData.GetDateTime(returnData.GetOrdinal("DateCreated")),
-                                         ContentType = returnData.GetString(returnData.GetOrdinal("ContentType")),
-                                         CreatorDisplayName = returnData.GetString(returnData.GetOrdinal("CreatorDisplayName")),
-                                         CreatorUserName = returnData.GetString(returnData.GetOrdinal("CreatorUsername")),
-                                         FileName = returnData.GetString(returnData.GetOrdinal("FileName")),
-                                         IssueId = returnData.GetInt32(returnData.GetOrdinal("IssueId")),
-                                         Size = returnData.GetInt32(returnData.GetOrdinal("FileSize"))
-                                     };
-
-                issueAttachmentList.Add(attachment);
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate query clause list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="queryClauseList">The query clause list.</param>
-        private static void GenerateQueryClauseListFromReader(IDataReader returnData, ref List<QueryClause> queryClauseList)
-        {
-            while (returnData.Read())
-            {
-                var queryClause = new QueryClause((string)returnData["BooleanOperator"], (string)returnData["FieldName"], (string)returnData["ComparisonOperator"], (string)returnData["FieldValue"], (SqlDbType)returnData["DataType"], (bool)returnData["IsCustomField"]);
-                queryClauseList.Add(queryClause);
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate query list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="queryList">The query list.</param>
-        private static void GenerateQueryListFromReader(IDataReader returnData, ref List<Query> queryList)
-        {
-            while (returnData.Read())
-            {
-                queryList.Add(new Query
-                                  {
-                                      Id = returnData.GetInt32(returnData.GetOrdinal("QueryId")),
-                                      Name = returnData.GetString(returnData.GetOrdinal("QueryName")),
-                                      IsPublic = returnData.GetBoolean(returnData.GetOrdinal("IsPublic"))
-                                  });
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate required field list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="requiredFieldList">The required field list.</param>
-        private static void GenerateRequiredFieldListFromReader(SqlDataReader returnData, ref List<RequiredField> requiredFieldList)
-        {
-            while (returnData.Read())
-            {
-                var newRequiredField = new RequiredField(returnData["FieldName"].ToString(), returnData["FieldValue"].ToString());
-                requiredFieldList.Add(newRequiredField);
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate related issue list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="relatedIssueList">The related issue list.</param>
-        private static void GenerateRelatedIssueListFromReader(IDataReader returnData, ref List<RelatedIssue> relatedIssueList)
-        {
-            while (returnData.Read())
-            {
-                var relatedIssue = new RelatedIssue
-                                       {
-                                           DateCreated = returnData.GetDateTime(returnData.GetOrdinal("DateCreated")),
-                                           IssueId = returnData.GetInt32(returnData.GetOrdinal("IssueId")),
-                                           Resolution = DefaultIfNull(returnData["IssueResolution"], string.Empty),
-                                           Status = DefaultIfNull(returnData["IssueStatus"], string.Empty), 
-                                           Title = returnData.GetString(returnData.GetOrdinal("IssueTitle"))
-                                       };
-
-                relatedIssueList.Add(relatedIssue);
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate issue revision list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="revisionList">The revision list.</param>
-        private static void GenerateIssueRevisionListFromReader(IDataReader returnData, ref List<IssueRevision> revisionList)
-        {
-            while (returnData.Read())
-            {
-                revisionList.Add(new IssueRevision
-                                    {
-                                        Id = returnData.GetInt32(returnData.GetOrdinal("IssueRevisionId")),
-                                        Author = returnData.GetString(returnData.GetOrdinal("RevisionAuthor")),
-                                        DateCreated = returnData.GetDateTime(returnData.GetOrdinal("DateCreated")),
-                                        IssueId = returnData.GetInt32(returnData.GetOrdinal("IssueId")),
-                                        Message = returnData.GetString(returnData.GetOrdinal("RevisionMessage")),
-                                        Repository = returnData.GetString(returnData.GetOrdinal("Repository")),
-                                        RevisionDate = returnData.GetString(returnData.GetOrdinal("RevisionDate")),
-                                        Revision = returnData.GetInt32(returnData.GetOrdinal("Revision"))
-                                    });
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate milestone list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="milestoneList">The milestone list.</param>
-        private static void GenerateMilestoneListFromReader(IDataReader returnData, ref List<Milestone> milestoneList)
-        {
-            while (returnData.Read())
-            {
-                var milestone = new Milestone
-                                    {
-                                        Id = returnData.GetInt32(returnData.GetOrdinal("MilestoneId")),
-                                        ProjectId = returnData.GetInt32(returnData.GetOrdinal("ProjectId")),
-                                        Name = returnData.GetString(returnData.GetOrdinal("MilestoneName")),
-                                        DueDate = returnData[returnData.GetOrdinal("MilestoneDueDate")] as DateTime?,
-                                        ImageUrl = returnData.GetString(returnData.GetOrdinal("MilestoneImageUrl")),
-                                        ReleaseDate = returnData[returnData.GetOrdinal("MilestoneReleaseDate")] as DateTime?,
-                                        IsCompleted = returnData.GetBoolean(returnData.GetOrdinal("MilestoneCompleted")),
-                                        Notes = returnData[returnData.GetOrdinal("MilestoneNotes")] as string ?? string.Empty,
-                                        SortOrder = returnData.GetInt32(returnData.GetOrdinal("SortOrder"))
-                                    };
-
-                milestoneList.Add(milestone);
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate priority list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="priorityList">The priority list.</param>
-        private static void GeneratePriorityListFromReader(IDataReader returnData, ref List<Priority> priorityList)
-        {
-            while (returnData.Read())
-            {
-                priorityList.Add(new Priority
-                                     {
-                                         Id = returnData.GetInt32(returnData.GetOrdinal("PriorityId")),
-                                         ProjectId = returnData.GetInt32(returnData.GetOrdinal("ProjectId")),
-                                         Name = returnData.GetString(returnData.GetOrdinal("PriorityName")),
-                                         ImageUrl = returnData.GetString(returnData.GetOrdinal("PriorityImageUrl")),
-                                         SortOrder = returnData.GetInt32(returnData.GetOrdinal("SortOrder")),
-                                     });
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate project mailbox list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="projectMailboxList">The project mailbox list.</param>
-        private static void GenerateProjectMailboxListFromReader(IDataReader returnData, ref List<ProjectMailbox> projectMailboxList)
-        {
-            while (returnData.Read())
-            {
-                var mailbox = new ProjectMailbox
-                                  {
-                                      AssignToDisplayName = returnData.GetString(returnData.GetOrdinal("AssignToDisplayName")),
-                                      AssignToId = returnData["AssignToUserId"] as Guid? ?? Guid.Empty,
-                                      AssignToUserName = DefaultIfNull(returnData["AssignToUserName"], string.Empty),
-                                      Id = returnData.GetInt32(returnData.GetOrdinal("ProjectMailboxId")),
-                                      IssueTypeId = returnData.GetInt32(returnData.GetOrdinal("IssueTypeId")),
-                                      IssueTypeName = returnData.GetString(returnData.GetOrdinal("IssueTypeName")),
-                                      Mailbox = returnData.GetString(returnData.GetOrdinal("Mailbox")),
-                                      ProjectId = returnData.GetInt32(returnData.GetOrdinal("ProjectId"))
-                                  };
-                projectMailboxList.Add(mailbox);
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate status list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="statusList">The status list.</param>
-        private static void GenerateStatusListFromReader(IDataReader returnData, ref List<Status> statusList)
-        {
-            while (returnData.Read())
-            {
-                statusList.Add(new Status
-                                   {
-                                       Id = returnData.GetInt32(returnData.GetOrdinal("StatusId")),
-                                       ProjectId = returnData.GetInt32(returnData.GetOrdinal("ProjectId")),
-                                       Name = returnData.GetString(returnData.GetOrdinal("StatusName")),
-                                       SortOrder = returnData.GetInt32(returnData.GetOrdinal("SortOrder")),
-                                       ImageUrl = returnData.GetString(returnData.GetOrdinal("StatusImageUrl")),
-                                       IsClosedState = returnData.GetBoolean(returnData.GetOrdinal("IsClosedState"))
-                                   });
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate custom field list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="customFieldList">The custom field list.</param>
-        private static void GenerateCustomFieldListFromReader(IDataReader returnData, ref List<CustomField> customFieldList)
-        {
-            while (returnData.Read())
-            {
-                customFieldList.Add(new CustomField
-                                        {
-                                            Id = returnData.GetInt32(returnData.GetOrdinal("CustomFieldId")),
-                                            ProjectId = returnData.GetInt32(returnData.GetOrdinal("ProjectId")),
-                                            Name = returnData.GetString(returnData.GetOrdinal("CustomFieldName")),
-                                            DataType = (ValidationDataType)returnData["CustomFieldDataType"],
-                                            FieldType = (CustomFieldType)returnData["CustomFieldTypeId"],
-                                            Required = returnData.GetBoolean(returnData.GetOrdinal("CustomFieldRequired")),
-                                            Value = returnData.GetString(returnData.GetOrdinal("CustomFieldValue")),
-                                        });
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate custom field selection list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="customFieldSelectionList">The custom field list.</param>
-        private static void GenerateCustomFieldSelectionListFromReader(IDataReader returnData, ref List<CustomFieldSelection> customFieldSelectionList)
-        {
-            while (returnData.Read())
-            {
-                customFieldSelectionList.Add(new CustomFieldSelection
-                                                 {
-                                                     Id = returnData.GetInt32(returnData.GetOrdinal("CustomFieldSelectionId")),
-                                                     CustomFieldId = returnData.GetInt32(returnData.GetOrdinal("CustomFieldId")),
-                                                     Value = returnData.GetString(returnData.GetOrdinal("CustomFieldSelectionValue")),
-                                                     Name = returnData.GetString(returnData.GetOrdinal("CustomFieldSelectionName")),
-                                                     SortOrder = returnData.GetInt32(returnData.GetOrdinal("CustomFieldSelectionSortOrder")),
-                                                 });
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate issue type list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="issueTypeList">The issue type list.</param>
-        private static void GenerateIssueTypeListFromReader(IDataReader returnData, ref List<IssueType> issueTypeList)
-        {
-            while (returnData.Read())
-            {
-                issueTypeList.Add(new IssueType
-                                      {
-                                          Id = returnData.GetInt32(returnData.GetOrdinal("IssueTypeId")),
-                                          ProjectId = returnData.GetInt32(returnData.GetOrdinal("ProjectId")),
-                                          Name = returnData.GetString(returnData.GetOrdinal("IssueTypeName")),
-                                          SortOrder = returnData.GetInt32(returnData.GetOrdinal("SortOrder")),
-                                          ImageUrl = returnData.GetString(returnData.GetOrdinal("IssueTypeImageUrl")),
-                                      });
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate issue time entry list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="issueWorkReportList">The issue time entry list.</param>
-        private static void GenerateIssueTimeEntryListFromReader(IDataReader returnData, ref List<IssueWorkReport> issueWorkReportList)
-        {
-            while (returnData.Read())
-            {
-                issueWorkReportList.Add(new IssueWorkReport
-                {
-                    Id = returnData.GetInt32(returnData.GetOrdinal("IssueWorkReportId")),
-                    CommentId = returnData.GetInt32(returnData.GetOrdinal("IssueCommentId")),
-                    CommentText = returnData.GetString(returnData.GetOrdinal("Comment")),
-                    CreatorDisplayName = returnData.GetString(returnData.GetOrdinal("CreatorDisplayName")),
-                    CreatorUserId = returnData.GetGuid(returnData.GetOrdinal("CreatorUserId")),
-                    CreatorUserName = returnData.GetString(returnData.GetOrdinal("CreatorUserName")),
-                    Duration = returnData.GetDecimal(returnData.GetOrdinal("Duration")),
-                    IssueId = returnData.GetInt32(returnData.GetOrdinal("IssueId")),
-                    WorkDate = returnData.GetDateTime(returnData.GetOrdinal("WorkDate"))
-                });
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate resolution list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="resolutionList">The resolution list.</param>
-        private static void GenerateResolutionListFromReader(SqlDataReader returnData, ref List<Resolution> resolutionList)
-        {
-            while (returnData.Read())
-            {
-                resolutionList.Add(new Resolution
-                                       {
-                                           Id = returnData.GetInt32(returnData.GetOrdinal("ResolutionId")),
-                                           ProjectId = returnData.GetInt32(returnData.GetOrdinal("ProjectId")),
-                                           Name = returnData.GetString(returnData.GetOrdinal("ResolutionName")),
-                                           SortOrder = returnData.GetInt32(returnData.GetOrdinal("SortOrder")),
-                                           ImageUrl = returnData.GetString(returnData.GetOrdinal("ResolutionImageUrl")),
-                                       });
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate application log list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="applicationLogList">The application log list.</param>
-        private static void GenerateApplicationLogListFromReader(IDataReader returnData, ref List<ApplicationLog> applicationLogList)
-        {
-            while (returnData.Read())
-            {
-                var newAppLog = new ApplicationLog
-                    {
-                        Id = (int)returnData["Id"],
-                        Date = (DateTime)returnData["Date"],
-                        Thread = (string)returnData["Thread"],
-                        Level = (string)returnData["Level"],
-                        User = (string)returnData["User"],
-                        Logger = (string)returnData["Logger"],
-                        Message = (string)returnData["Message"],
-                        Exception = (string)returnData["Exception"]
-                    };
-
-                applicationLogList.Add(newAppLog);
-            }
-        }
-
-        private static Issue MapIssue(IDataRecord returnData)
-        {
-            var time = returnData["TimeLogged"].ToString();
-            double timeLogged;
-            double.TryParse(time, out timeLogged);
-
-            return new Issue
-            {
-                AffectedMilestoneId = DefaultIfNull(returnData["IssueAffectedMilestoneId"], 0),
-                AffectedMilestoneImageUrl = returnData.GetString(returnData.GetOrdinal("AffectedMilestoneImageUrl")),
-                AffectedMilestoneName = returnData.GetString(returnData.GetOrdinal("AffectedMilestoneName")),
-
-                AssignedDisplayName = returnData.GetString(returnData.GetOrdinal("AssignedDisplayName")),
-                AssignedUserId = DefaultIfNull(returnData["IssueAssignedUserId"], Guid.Empty),
-                AssignedUserName = returnData.GetString(returnData.GetOrdinal("AssignedUserName")),
-
-                CategoryId = DefaultIfNull(returnData["IssueCategoryId"], 0),
-                CategoryName = returnData.GetString(returnData.GetOrdinal("CategoryName")),
-
-                CreatorDisplayName = returnData.GetString(returnData.GetOrdinal("CreatorDisplayName")),
-                CreatorUserId = DefaultIfNull(returnData["IssueCreatorUserId"], Guid.Empty),
-                CreatorUserName = returnData.GetString(returnData.GetOrdinal("CreatorUserName")),
-
-                DateCreated = returnData.GetDateTime(returnData.GetOrdinal("DateCreated")),
-                Description = returnData.GetString(returnData.GetOrdinal("IssueDescription")),
-                Disabled = returnData.GetBoolean(returnData.GetOrdinal("Disabled")),
-                DueDate = DefaultIfNull(returnData["IssueDueDate"], DateTime.MinValue),
-                Estimation = returnData.GetDecimal(returnData.GetOrdinal("IssueEstimation")),
-                Id = returnData.GetInt32(returnData.GetOrdinal("IssueId")),
-                IsClosed = returnData.GetBoolean(returnData.GetOrdinal("IsClosed")),
-
-                IssueTypeId = DefaultIfNull(returnData["IssueTypeId"], 0),
-                IssueTypeName = returnData.GetString(returnData.GetOrdinal("IssueTypeName")),
-                IssueTypeImageUrl = returnData.GetString(returnData.GetOrdinal("IssueTypeImageUrl")),
-
-                LastUpdate = returnData.GetDateTime(returnData.GetOrdinal("LastUpdate")),
-                LastUpdateDisplayName = returnData.GetString(returnData.GetOrdinal("LastUpdateDisplayName")),
-                LastUpdateUserName = returnData.GetString(returnData.GetOrdinal("LastUpdateUserName")),
-
-                MilestoneDueDate = DefaultIfNull(returnData["MilestoneDueDate"], DateTime.MinValue),
-                MilestoneId = DefaultIfNull(returnData["IssueMilestoneId"], 0),
-                MilestoneImageUrl = returnData.GetString(returnData.GetOrdinal("MilestoneImageUrl")),
-                MilestoneName = returnData.GetString(returnData.GetOrdinal("MilestoneName")),
-
-                OwnerDisplayName = returnData.GetString(returnData.GetOrdinal("OwnerDisplayName")),
-                OwnerUserId = DefaultIfNull(returnData["IssueOwnerUserId"], Guid.Empty),
-                OwnerUserName = returnData.GetString(returnData.GetOrdinal("OwnerUserName")),
-
-                PriorityId = DefaultIfNull(returnData["IssuePriorityId"], 0),
-                PriorityImageUrl = returnData.GetString(returnData.GetOrdinal("PriorityImageUrl")),
-                PriorityName = returnData.GetString(returnData.GetOrdinal("PriorityName")),
-
-                Progress = returnData.GetInt32(returnData.GetOrdinal("IssueProgress")),
-
-                ProjectId = returnData.GetInt32(returnData.GetOrdinal("ProjectId")),
-                ProjectCode = returnData.GetString(returnData.GetOrdinal("ProjectCode")),
-                ProjectName = returnData.GetString(returnData.GetOrdinal("ProjectName")),
-
-                ResolutionId = DefaultIfNull(returnData["IssueResolutionId"], 0),
-                ResolutionImageUrl = returnData.GetString(returnData.GetOrdinal("ResolutionImageUrl")),
-                ResolutionName = returnData.GetString(returnData.GetOrdinal("ResolutionName")),
-
-                StatusId = DefaultIfNull(returnData["IssueStatusId"], 0),
-                StatusImageUrl = returnData.GetString(returnData.GetOrdinal("StatusImageUrl")),
-                StatusName = returnData.GetString(returnData.GetOrdinal("StatusName")),
-
-                Title = returnData.GetString(returnData.GetOrdinal("IssueTitle")),
-                TimeLogged = timeLogged,
-                Visibility = returnData.GetInt32(returnData.GetOrdinal("IssueVisibility")),
-                Votes = returnData.GetInt32(returnData.GetOrdinal("IssueVotes"))
-            };
-        }
-
-        private static T DefaultIfNull<T>(object value, T defaultValue)
-        {
-            if (value == DBNull.Value) return defaultValue;
-
-            return (T)value;
-        }
-
         #endregion
 
     }

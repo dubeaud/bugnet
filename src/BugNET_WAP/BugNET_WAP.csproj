@@ -949,6 +949,7 @@
     <Content Include="Images\error.gif" />
     <Content Include="Images\excel.gif" />
     <Content Include="Images\exclamation.gif" />
+    <Content Include="Images\execute_sql.png" />
     <Content Include="Images\fade.png" />
     <Content Include="Images\feed.gif" />
     <Content Include="Images\help.gif" />
@@ -1049,6 +1050,7 @@
     <Content Include="Providers\DataProviders\SqlDataProvider\0.9.152.0.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\20120505_Attachment_Validation.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\20120505_Missing_FKs.sql" />
+    <Content Include="Providers\DataProviders\SqlDataProvider\20120527-BugNet_Project_CloneProject.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\BugNet.Data.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\BugNet.Schema.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\InstallCommon.sql" />
@@ -1414,9 +1416,15 @@
     <Content Include="Administration\Host\UserControls\App_LocalResources\POP3Settings.ascx.resx" />
     <Content Include="Administration\Host\UserControls\App_LocalResources\SubversionSettings.ascx.resx" />
     <Content Include="Administration\Projects\App_LocalResources\AddProject.aspx.resx" />
-    <Content Include="Administration\Projects\App_LocalResources\CloneProject.aspx.resx" />
-    <Content Include="Administration\Projects\App_LocalResources\EditProject.aspx.resx" />
-    <Content Include="Administration\Projects\App_LocalResources\ProjectList.aspx.resx" />
+    <Content Include="Administration\Projects\App_LocalResources\CloneProject.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Administration\Projects\App_LocalResources\EditProject.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Administration\Projects\App_LocalResources\ProjectList.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Administration\Projects\UserControls\App_LocalResources\NewProjectIntro.ascx.resx" />
     <Content Include="Administration\Projects\UserControls\App_LocalResources\NewProjectSummary.ascx.resx" />
     <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectCategories.ascx.resx" />

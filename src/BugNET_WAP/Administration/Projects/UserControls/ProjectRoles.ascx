@@ -7,6 +7,11 @@
     <p class="desc">
         <asp:Label ID="DescriptionLabel" runat="server" meta:resourcekey="DescriptionLabel" />
     </p>
+    <div style="margin-top: 1em">
+        <asp:ImageButton runat="server" OnClick="AddRole_Click" ImageUrl="~/Images/shield_add.gif" CssClass="icon" meta:resourcekey="AddNewRole"
+            AlternateText="Add Role" ID="add" />
+        <asp:LinkButton ID="cmdAddRole" OnClick="AddRole_Click" runat="server" meta:resourcekey="AddNewRole" Text="Add New Role" />
+    </div>
     <br />
     <asp:GridView HorizontalAlign="Left" OnRowCommand="gvRoles_RowCommand" SkinID="GridView" ID="gvRoles" runat="server" AutoGenerateColumns="False"
         DataSourceID="SecurityRoles">
@@ -23,11 +28,6 @@
             <asp:CheckBoxField HeaderStyle-HorizontalAlign="Left" DataField="AutoAssign" HeaderText="Auto Assignment" meta:resourcekey="AutoAssignmentColumnHeader" />
         </Columns>
     </asp:GridView>
-    <div style="margin-top: 1em">
-        <asp:ImageButton runat="server" OnClick="AddRole_Click" ImageUrl="~/Images/shield_add.gif" CssClass="icon" meta:resourcekey="AddNewRole"
-            AlternateText="Add Role" ID="add" />
-        <asp:LinkButton ID="cmdAddRole" OnClick="AddRole_Click" runat="server" meta:resourcekey="AddNewRole" Text="Add New Role" />
-    </div>
     <asp:ObjectDataSource ID="SecurityRoles" runat="server" SelectMethod="GetByProjectId" TypeName="BugNET.BLL.RoleManager">
         <SelectParameters>
             <asp:ControlParameter ControlID="txtProjectID" Name="projectId" PropertyName="Value" Type="Int32" />
