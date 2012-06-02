@@ -215,6 +215,11 @@ namespace BugNET.BLL
         /// </returns>
         public static bool IsSuperUser()
         {
+            if (string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+            {
+                return false;
+            }
+
             var roles = RoleManager.GetForUser(HttpContext.Current.User.Identity.Name);
             return roles.Exists(r => r.Name == Globals.SUPER_USER_ROLE);
         }
@@ -230,11 +235,6 @@ namespace BugNET.BLL
         public static bool IsInRole(string roleName)
         {
             throw new NotImplementedException();
-            //if (String.IsNullOrEmpty(roleName)) throw new ArgumentNullException("roleName");
-            //if (HttpContext.Current.User.Identity.Name.Length == 0) return false;
-
-            //var roles = RoleManager.GetForUser(HttpContext.Current.User.Identity.Name);
-            //return roles.Exists(r => r.Name == roleName);
         }
 
         /// <summary>
