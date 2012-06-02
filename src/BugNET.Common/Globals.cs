@@ -234,7 +234,6 @@ namespace BugNET.Common
             ChangeIssueStatus = 31,
             EditQuery = 32
         }
-
         #endregion
     }
 }

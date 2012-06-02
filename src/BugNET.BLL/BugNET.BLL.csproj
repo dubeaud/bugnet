@@ -74,11 +74,12 @@
     <Compile Include="IssueWorkReportManager.cs" />
     <Compile Include="LoggingManager.cs" />
     <Compile Include="MilestoneManager.cs" />
-    <Compile Include="Notifications\EmailNotificationType.cs" />
-    <Compile Include="Notifications\INotificationContext.cs" />
-    <Compile Include="Notifications\INotificationType.cs" />
-    <Compile Include="Notifications\NotificationContext.cs" />
-    <Compile Include="Notifications\NotificationManager.cs" />
+    <Compile Include="Notifications\IMailDeliveryService.cs" />
+    <Compile Include="Notifications\MailDeliveryResult.cs" />
+    <Compile Include="Notifications\NotificationManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Notifications\SmtpMailDeliveryService.cs" />
     <Compile Include="PermissionManager.cs" />
     <Compile Include="PriorityManager.cs" />
     <Compile Include="ProjectMailboxManager.cs" />

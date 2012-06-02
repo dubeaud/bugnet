@@ -11,6 +11,7 @@ using BugNET.DAL;
 using BugNET.Entities;
 using BugNET.Providers.MembershipProviders;
 using log4net;
+using System.Net.Mail;
 
 namespace BugNET.BLL
 {
@@ -329,22 +330,24 @@ namespace BugNET.BLL
         {
             if (user == null) throw new ArgumentNullException("user");
 
+            // TODO - create this via dependency injection at some point.
+            IMailDeliveryService MailService = new SmtpMailDeliveryService();
+
             //TODO: Move this to xslt notification
             //load template and replace the tokens
-            var template = NotificationManager.Instance.LoadNotificationTemplate("PasswordReminder");
-            var subject = NotificationManager.Instance.LoadNotificationTemplate("PasswordReminderSubject");
+            var template = NotificationManager.LoadNotificationTemplate("PasswordReminder");
+            var subject = NotificationManager.LoadNotificationTemplate("PasswordReminderSubject");
             var displayname = GetUserDisplayName(user.UserName);
+            string Body = String.Format(template, HostSettingManager.Get(HostSettingNames.ApplicationTitle), user.GetPassword());
 
-            var context = new NotificationContext
-                              {
-                                  BodyText = String.Format(template, HostSettingManager.Get(HostSettingNames.ApplicationTitle),user.GetPassword()),
-                                  EmailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text), 
-                                  Subject = subject, 
-                                  UserDisplayName = displayname, 
-                                  Username = user.UserName
-                              };
+            MailMessage message = new MailMessage()
+            {
+                Subject = subject,
+                Body = Body,
+                IsBodyHtml = true
+            };
 
-            NotificationManager.Instance.SendNotification(context);
+            MailService.Send(user.Email, message);
         }
 
         /// <summary>
@@ -355,11 +358,14 @@ namespace BugNET.BLL
         {
             if (user == null) throw new ArgumentNullException("user");
 
+            // TODO - create this via dependency injection at some point.
+            IMailDeliveryService MailService = new SmtpMailDeliveryService();
+
             var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
 
             //load template and replace the tokens
-            var template = NotificationManager.Instance.LoadEmailNotificationTemplate("UserVerification", emailFormatType);
-            var subject = NotificationManager.Instance.LoadNotificationTemplate("UserVerification");
+            var template = NotificationManager.LoadEmailNotificationTemplate("UserVerification", emailFormatType);
+            var subject = NotificationManager.LoadNotificationTemplate("UserVerification");
 
             var data = new Dictionary<string, object>();
 
@@ -379,16 +385,14 @@ namespace BugNET.BLL
             }
             template = NotificationManager.GenerateNotificationContent(template, data);
 
-            var context = new NotificationContext
+            MailMessage message = new MailMessage()
             {
-                BodyText = template,
-                EmailFormatType = emailFormatType,
                 Subject = subject,
-                UserDisplayName = GetUserDisplayName(user.UserName),
-                Username = user.UserName
+                Body = template,
+                IsBodyHtml = true
             };
 
-            NotificationManager.Instance.SendNotification(context);
+            MailService.Send(user.Email, message);
         }
 
         /// <summary>
@@ -401,11 +405,14 @@ namespace BugNET.BLL
             if (user == null) throw new ArgumentNullException("user");
             if (string.IsNullOrEmpty(newPassword)) throw new ArgumentNullException("newPassword");
 
+            // TODO - create this via dependency injection at some point.
+            IMailDeliveryService MailService = new SmtpMailDeliveryService();
+
             var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
 
             //load template and replace the tokens
-            var template = NotificationManager.Instance.LoadEmailNotificationTemplate("PasswordReset", emailFormatType);
-            var subject = NotificationManager.Instance.LoadNotificationTemplate("PasswordResetSubject");
+            var template = NotificationManager.LoadEmailNotificationTemplate("PasswordReset", emailFormatType);
+            var subject = NotificationManager.LoadNotificationTemplate("PasswordResetSubject");
             var data = new Dictionary<string, object>();
 
             var u = new ITUser
@@ -421,16 +428,14 @@ namespace BugNET.BLL
             data.Add("RawXml_Password", string.Format("<Password>{0}</Password>", newPassword));
             template = NotificationManager.GenerateNotificationContent(template, data);
 
-            var context = new NotificationContext
+            MailMessage message = new MailMessage()
             {
-                BodyText = template,
-                EmailFormatType = emailFormatType,
                 Subject = subject,
-                UserDisplayName = UserManager.GetUserDisplayName(user.UserName),
-                Username = user.UserName
+                Body = template,
+                IsBodyHtml = true
             };
 
-            NotificationManager.Instance.SendNotification(context);
+            MailService.Send(user.Email, message);
         }
 
         /// <summary>
@@ -441,12 +446,15 @@ namespace BugNET.BLL
         {
             if (userName == "") throw new ArgumentNullException("userName");
 
+            // TODO - create this via dependency injection at some point.
+            IMailDeliveryService MailService = new SmtpMailDeliveryService();
+
             var user = GetUser(userName);
             var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
 
             //load template and replace the tokens
-            var template = NotificationManager.Instance.LoadEmailNotificationTemplate("UserRegistered", emailFormatType);
-            var subject = NotificationManager.Instance.LoadNotificationTemplate("UserRegisteredSubject");
+            var template = NotificationManager.LoadEmailNotificationTemplate("UserRegistered", emailFormatType);
+            var subject = NotificationManager.LoadNotificationTemplate("UserRegisteredSubject");
             var data = new Dictionary<string, object>();
 
             var u = new ITUser
@@ -464,16 +472,14 @@ namespace BugNET.BLL
             //all admin notifications sent to admin user defined in host settings, 
             var adminNotificationUsername = HostSettingManager.Get(HostSettingNames.AdminNotificationUsername);
 
-            var context = new NotificationContext
+            MailMessage message = new MailMessage()
             {
-                BodyText = template,
-                EmailFormatType = emailFormatType,
                 Subject = subject,
-                UserDisplayName = GetUserDisplayName(adminNotificationUsername),
-                Username = adminNotificationUsername
+                Body = template,
+                IsBodyHtml = true
             };
 
-            NotificationManager.Instance.SendNotification(context);
+            MailService.Send(user.Email, message);
         }
 
         /// <summary>

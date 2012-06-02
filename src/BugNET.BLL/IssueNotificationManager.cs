@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Mail;
 using System.Web;
+using System.Web.Security;
 using BugNET.BLL.Notifications;
 using BugNET.Common;
 using BugNET.DAL;
@@ -61,17 +63,22 @@ namespace BugNET.BLL
         {
             if (issueId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("issueId"));
 
+            // TODO - create this via dependency injection at some point.
+            IMailDeliveryService MailService = new SmtpMailDeliveryService();
+
             var issue = DataProviderManager.Provider.GetIssueById(issueId);
             var issNotifications = DataProviderManager.Provider.GetIssueNotificationsByIssueId(issueId);
             var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
 
             //load template 
-            var template = NotificationManager.Instance.LoadEmailNotificationTemplate("IssueUpdated", emailFormatType);
+            var template = NotificationManager.LoadEmailNotificationTemplate("IssueUpdated", emailFormatType);
             var data = new Dictionary<string, object> {{"Issue", issue}};
             template = NotificationManager.GenerateNotificationContent(template, data);
 
-            var subject = NotificationManager.Instance.LoadNotificationTemplate("IssueUpdatedSubject");
+            var subject = NotificationManager.LoadNotificationTemplate("IssueUpdatedSubject");
             var displayname = UserManager.GetUserDisplayName(Security.GetUserName());
+
+            MembershipUser user;
 
             foreach (var notify in issNotifications)
             {
@@ -80,16 +87,19 @@ namespace BugNET.BLL
                     //send notifications to everyone except who changed it.
                     if (notify.NotificationUsername != Security.GetUserName())
                     {
-                        var context = new NotificationContext
+                        user = UserManager.GetUser(notify.NotificationUsername);
+                        string Subject = String.Format(subject, issue.FullId, displayname);
+                        string Body = template;
+
+
+                        MailMessage message = new MailMessage()
                         {
-                            BodyText = template,
-                            EmailFormatType = emailFormatType,
-                            Subject = String.Format(subject, issue.FullId, displayname),
-                            UserDisplayName = UserManager.GetUserDisplayName(notify.NotificationUsername),
-                            Username = notify.NotificationUsername
+                            Subject = Subject,
+                            Body = Body,
+                            IsBodyHtml = true
                         };
 
-                        NotificationManager.Instance.SendNotification(context);
+                        MailService.Send(user.Email, message);
                     }
                         
                 }
@@ -109,32 +119,39 @@ namespace BugNET.BLL
             // validate input
             if (issueId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("issueId"));
 
+            // TODO - create this via dependency injection at some point.
+            IMailDeliveryService MailService = new SmtpMailDeliveryService();
+            MembershipUser user;
+
             var issue = DataProviderManager.Provider.GetIssueById(issueId);
             var issNotifications = DataProviderManager.Provider.GetIssueNotificationsByIssueId(issueId);
             var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
 
             //load template
-            var template = NotificationManager.Instance.LoadEmailNotificationTemplate("IssueAdded", emailFormatType);
+            var template = NotificationManager.LoadEmailNotificationTemplate("IssueAdded", emailFormatType);
             var data = new Dictionary<string, object> {{"Issue", issue}};
 
             template = NotificationManager.GenerateNotificationContent(template, data);
 
-            var subject = NotificationManager.Instance.LoadNotificationTemplate("IssueAddedSubject");
+            var subject = NotificationManager.LoadNotificationTemplate("IssueAddedSubject");
 
             foreach (var notify in issNotifications)
             {
                 try
                 {
-                    var context = new NotificationContext
+                    user = UserManager.GetUser(notify.NotificationUsername);
+                    string Subject = String.Format(subject, issue.FullId, issue.ProjectName);
+                    string Body = template;
+
+
+                    MailMessage message = new MailMessage()
                     {
-                        BodyText = template,
-                        EmailFormatType = emailFormatType,
-                        Subject = String.Format(subject, issue.FullId, issue.ProjectName),
-                        UserDisplayName = UserManager.GetUserDisplayName(notify.NotificationUsername),
-                        Username = notify.NotificationUsername
+                        Subject = Subject,
+                        Body = Body,
+                        IsBodyHtml = true
                     };
 
-                    NotificationManager.Instance.SendNotification(context);
+                    MailService.Send(user.Email, message);
                 }
                 catch (Exception ex)
                 {
@@ -153,14 +170,20 @@ namespace BugNET.BLL
         {
             // validate input
             if (issueId <= Globals.NEW_ID)
+            { 
                 throw (new ArgumentOutOfRangeException("issueId"));
+            }
+
+            // TODO - create this via dependency injection at some point.
+            IMailDeliveryService MailService = new SmtpMailDeliveryService();
+            MembershipUser user;
 
             var issue = DataProviderManager.Provider.GetIssueById(issueId);
             var issNotifications = DataProviderManager.Provider.GetIssueNotificationsByIssueId(issueId);
             var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
 
             //load template 
-            var template = NotificationManager.Instance.LoadEmailNotificationTemplate("IssueUpdatedWithChanges", emailFormatType);
+            var template = NotificationManager.LoadEmailNotificationTemplate("IssueUpdatedWithChanges", emailFormatType);
             var data = new Dictionary<string, object> {{"Issue", issue}};
 
             var writer = new System.IO.StringWriter();
@@ -181,23 +204,25 @@ namespace BugNET.BLL
 
             template = NotificationManager.GenerateNotificationContent(template, data);
 
-            var subject = NotificationManager.Instance.LoadNotificationTemplate("IssueUpdatedSubject");
+            var subject = NotificationManager.LoadNotificationTemplate("IssueUpdatedSubject");
             var displayname = UserManager.GetUserDisplayName(Security.GetUserName());
 
             foreach (var notify in issNotifications)
             {
                 try
                 {
-                    var context = new NotificationContext
+                    user = UserManager.GetUser(notify.NotificationUsername);
+                    string Subject = String.Format(subject, issue.FullId, displayname);
+                    string Body = template;
+
+                    MailMessage message = new MailMessage()
                     {
-                        BodyText = template,
-                        EmailFormatType = emailFormatType,
-                        Subject = String.Format(subject, issue.FullId, displayname),
-                        UserDisplayName = UserManager.GetUserDisplayName(notify.NotificationUsername),
-                        Username = notify.NotificationUsername
+                        Subject = Subject,
+                        Body = Body,
+                        IsBodyHtml = true
                     };
 
-                    NotificationManager.Instance.SendNotification(context);
+                    MailService.Send(user.Email, message);
                 }
                 catch (Exception ex)
                 {
@@ -215,29 +240,34 @@ namespace BugNET.BLL
             if (notification == null) throw (new ArgumentNullException("notification"));
             if (notification.IssueId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("notification", "The issue id is not valid for this notification"));
 
+            // TODO - create this via dependency injection at some point.
+            IMailDeliveryService MailService = new SmtpMailDeliveryService();
+            MembershipUser user;
+
             var issue = DataProviderManager.Provider.GetIssueById(notification.IssueId);
             var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
 
             //load template
-            var template = NotificationManager.Instance.LoadEmailNotificationTemplate("NewAssignee", emailFormatType);
+            var template = NotificationManager.LoadEmailNotificationTemplate("NewAssignee", emailFormatType);
             var data = new Dictionary<string, object> {{"Issue", issue}};
-
             template = NotificationManager.GenerateNotificationContent(template, data);
-
-            var subject = NotificationManager.Instance.LoadNotificationTemplate("NewAssigneeSubject");
+            var subject = NotificationManager.LoadNotificationTemplate("NewAssigneeSubject");
 
             try
             {
-                var context = new NotificationContext
+
+                user = UserManager.GetUser(notification.NotificationUsername);
+                string Subject = String.Format(subject, issue.FullId);
+                string Body = template;
+
+                MailMessage message = new MailMessage()
                 {
-                    BodyText = template,
-                    EmailFormatType = emailFormatType,
-                    Subject = String.Format(subject, issue.FullId),
-                    UserDisplayName = UserManager.GetUserDisplayName(notification.NotificationUsername),
-                    Username = notification.NotificationUsername
+                    Subject = Subject,
+                    Body = Body,
+                    IsBodyHtml = true
                 };
 
-                NotificationManager.Instance.SendNotification(context);
+                MailService.Send(user.Email, message);
             }
             catch (Exception ex)
             {
@@ -255,34 +285,40 @@ namespace BugNET.BLL
             if (issueId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("issueId"));
             if (newComment == null) throw new ArgumentNullException("newComment");
 
+            // TODO - create this via dependency injection at some point.
+            IMailDeliveryService MailService = new SmtpMailDeliveryService();
+            MembershipUser user;
+
             var issue = DataProviderManager.Provider.GetIssueById(issueId);
             var issNotifications = DataProviderManager.Provider.GetIssueNotificationsByIssueId(issueId);
             var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
 
             //load template 
-            var template = NotificationManager.Instance.LoadEmailNotificationTemplate("NewIssueComment", emailFormatType);
+            var template = NotificationManager.LoadEmailNotificationTemplate("NewIssueComment", emailFormatType);
             var data = new Dictionary<string, object> {{"Issue", issue}, {"Comment", newComment}};
 
             template = NotificationManager.GenerateNotificationContent(template, data);
 
-            var subject = NotificationManager.Instance.LoadNotificationTemplate("NewIssueCommentSubject");
+            var subject = NotificationManager.LoadNotificationTemplate("NewIssueCommentSubject");
             var displayname = UserManager.GetUserDisplayName(Security.GetUserName());
-
 
             foreach (var notify in issNotifications)
             {
                 try
                 {
-                    var context = new NotificationContext
+                    user = UserManager.GetUser(notify.NotificationUsername);
+                    string Subject = String.Format(subject, issue.FullId, displayname);
+                    string Body = template;
+
+
+                    MailMessage message = new MailMessage()
                     {
-                        BodyText = template,
-                        EmailFormatType = emailFormatType,
-                        Subject = String.Format(subject, issue.FullId, displayname),
-                        UserDisplayName = UserManager.GetUserDisplayName(notify.NotificationUsername),
-                        Username = notify.NotificationUsername
+                        Subject = Subject,
+                        Body = Body,
+                        IsBodyHtml = true
                     };
 
-                    NotificationManager.Instance.SendNotification(context);
+                    MailService.Send(user.Email, message);
                 }
                 catch (Exception ex)
                 {
@@ -298,7 +334,6 @@ namespace BugNET.BLL
         /// <returns>New exception to wrap the thrown one.</returns>
         private static void ProcessException(Exception ex)
         {
-            
             //set user to log4net context, so we can use %X{user} in the appenders
             if (HttpContext.Current != null && HttpContext.Current.User != null && HttpContext.Current.User.Identity.IsAuthenticated)
                 MDC.Set("user", HttpContext.Current.User.Identity.Name);

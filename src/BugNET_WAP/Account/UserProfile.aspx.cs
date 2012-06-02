@@ -204,58 +204,9 @@ namespace BugNET.Account
                             lstAllProjects.Items.Remove(matchItem);
                         }
                     }
-
-                    CheckBoxList1.DataSource = NotificationManager.Instance.GetNotificationTypes().FindAll(delegate(INotificationType t) { return t.Enabled == true; });
-                    CheckBoxList1.DataTextField = "Name";
-                    CheckBoxList1.DataValueField = "Name";
-                    CheckBoxList1.DataBind();
-                    string[] notificationTypes = WebProfile.Current.NotificationTypes.Split(';');
-                    foreach (string s in notificationTypes)
-                    {
-                        ListItem currentCheckBox = CheckBoxList1.Items.FindByText(s);
-                        if (currentCheckBox != null)
-                            currentCheckBox.Selected = true;
-
-                    }
                     break;
             }
 
-        }
-
-
-        /// <summary>
-        /// Handles the Click event of the SaveNotificationsButton control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void SaveNotificationsButton_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                string notificationTypes = string.Empty;
-
-                foreach (ListItem li in CheckBoxList1.Items)
-                {
-                    if (li.Selected)
-                        notificationTypes += li.Value + ";";
-                        
-                }
-                notificationTypes = notificationTypes.TrimEnd(';');
-                WebProfile.Current.NotificationTypes = notificationTypes;
-                WebProfile.Current.Save();
-                Message4.ShowSuccessMessage(GetLocalResourceObject("ProfileSaved").ToString());
-            }
-            catch (Exception ex)
-            {
-                if (Log.IsErrorEnabled)
-                {
-                    if (HttpContext.Current.User != null && HttpContext.Current.User.Identity.IsAuthenticated)
-                        MDC.Set("user", HttpContext.Current.User.Identity.Name);
-                    Log.Error("Profile update error", ex);
-                }
-
-                Message4.ShowErrorMessage(GetLocalResourceObject("ProfileUpdateError").ToString());
-            }
         }
 
         /// <summary>

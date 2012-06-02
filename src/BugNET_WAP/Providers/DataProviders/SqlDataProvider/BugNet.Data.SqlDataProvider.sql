@@ -48,7 +48,6 @@ INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'AnonymousAccess', N'False')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'UserRegistration', N'0')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'EmailErrors', N'False')
-INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'EnabledNotificationTypes', N'Email;MSN')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'EnableRepositoryCreation', N'True')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'ErrorLoggingEmailAddress', N'myemail@mysmtpserver.com')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'FileSizeLimit', N'2024')

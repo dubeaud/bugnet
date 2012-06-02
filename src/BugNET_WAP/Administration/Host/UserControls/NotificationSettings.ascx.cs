@@ -22,12 +22,6 @@ namespace BugNET.Administration.Host.UserControls
         /// </summary>
         public bool Update()
         {
-          
-            var notificationTypes = cblNotificationTypes.Items.Cast<ListItem>().Where(li => li.Selected).Aggregate(string.Empty, (current, li) => current + (li.Value + ";"));
-
-            notificationTypes = notificationTypes.TrimEnd(';');
-                
-            HostSettingManager.UpdateHostSetting(HostSettingNames.EnabledNotificationTypes,notificationTypes);
             HostSettingManager.UpdateHostSetting(HostSettingNames.AdminNotificationUsername, AdminNotificationUser.SelectedValue);
             return true;
         }
@@ -37,27 +31,17 @@ namespace BugNET.Administration.Host.UserControls
         /// </summary>
         public void Initialize()
         {
-            cblNotificationTypes.DataSource = NotificationManager.Instance.GetNotificationTypes();
-            cblNotificationTypes.DataTextField = "Name";
-            cblNotificationTypes.DataValueField = "Name";
-            cblNotificationTypes.DataBind();
-
-            var notificationTypes = HostSettingManager.Get(HostSettingNames.EnabledNotificationTypes).Split(';');
-            foreach (var currentCheckBox in notificationTypes.Select(s => cblNotificationTypes.Items.FindByText(s)).Where(currentCheckBox => currentCheckBox != null))
-            {
-                currentCheckBox.Selected = true;
-            }
-
             var users = UserManager.GetAllUsers();
-
             AdminNotificationUser.DataSource = users;
             AdminNotificationUser.DataTextField = "DisplayName";
             AdminNotificationUser.DataValueField = "UserName";
             AdminNotificationUser.DataBind();
 
             var adminNotifyUsername = HostSettingManager.Get(HostSettingNames.AdminNotificationUsername);
-            if(users.Where(u=>u.UserName == adminNotifyUsername).SingleOrDefault() != null)
+            if (users.Where(u => u.UserName == adminNotifyUsername).SingleOrDefault() != null)
+            { 
                 AdminNotificationUser.SelectedValue = adminNotifyUsername;
+            }
         }
 
         #endregion
