@@ -212,10 +212,6 @@
                     <tr>
                         <td colspan="3" class="input-group">
                             <div style="margin: 2em 0 0 0; border-top: 1px solid #ddd; padding-top: 5px;">
-                               <%-- <asp:ImageButton runat="server" ID="ImageButton3" OnClick="SaveNotificationsButton_Click"
-                                    CssClass="icon" ImageUrl="~/Images/disk.gif" />
-                                <asp:LinkButton ID="Linkbutton2" runat="server" CssClass="button" OnClick="SaveNotificationsButton_Click"
-                                    Text="<%$ Resources:SharedResources, Save %>" />--%>
                                 <asp:ImageButton runat="server" ID="ImageButton4" OnClick="BackButton_Click" CssClass="icon"
                                     ImageUrl="~/Images/lt.gif" />
                                 <asp:LinkButton ID="Linkbutton3" runat="server" CssClass="button" OnClick="BackButton_Click"
