@@ -250,8 +250,7 @@ namespace BugNET.BLL
         public static bool IsInRole(string userName, int projectId, string roleName)
         {
             if (String.IsNullOrEmpty(roleName)) throw new ArgumentNullException("roleName");
-            if (String.IsNullOrEmpty(userName)) throw new ArgumentNullException("userName");
-            //if (projectId <= Globals.NEW_ID) throw new ArgumentNullException("projectId");
+            if (String.IsNullOrEmpty(userName)) return false;
 
             var roles = RoleManager.GetForUser(userName, projectId);
 

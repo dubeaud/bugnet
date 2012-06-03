@@ -2027,7 +2027,7 @@ namespace BugNET.Providers.DataProviders
                         var direction = keyValuePair.Value.Trim().ToLowerInvariant();
 
                         // check if the direction is valid
-                        if (!direction.Equals("asc") || !direction.Equals("desc"))
+                        if (!direction.Equals("asc") && !direction.Equals("desc"))
                             direction = "asc";
 
                         // if the field contains a period then they might be passing in and alias so dont try and clean up
