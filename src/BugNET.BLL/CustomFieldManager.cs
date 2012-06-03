@@ -40,7 +40,6 @@ namespace BugNET.BLL
             return true;
         }
 
-
         /// <summary>
         /// Deletes the custom field.
         /// </summary>
@@ -117,21 +116,23 @@ namespace BugNET.BLL
         /// this will only work with SQL 2005 and higher
         /// </summary>
         /// <param name="projectId">THe project id for the custom fields</param>
-        public static void UpdateCustomFieldView(int projectId)
+        public static bool UpdateCustomFieldView(int projectId)
         {
             var customFields = GetByProjectId(projectId);
             var sb = new StringBuilder();
             var viewName = string.Format(Globals.PROJECT_CUSTOM_FIELDS_VIEW_NAME, projectId);
 
-            if (!ProjectManager.DeleteProjectCustomView(projectId)) return;
+            sb.AppendFormat("SET ANSI_NULLS ON {0}SET XACT_ABORT ON {0}SET QUOTED_IDENTIFIER ON {0}", Environment.NewLine);
+            sb.AppendFormat("IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[{0}]') AND OBJECTPROPERTY(id, N'IsView') = 1) {1}", viewName, Environment.NewLine);
+            sb.AppendFormat("DROP VIEW [{0}] {1}", viewName, Environment.NewLine);
 
-            sb.AppendFormat("CREATE VIEW [dbo].[{0}]{1} ", viewName, Environment.NewLine);
+            sb.AppendFormat("EXEC dbo.sp_executesql @statement = N'CREATE VIEW [dbo].[{0}]{1} ", viewName, Environment.NewLine);
             sb.AppendFormat("AS {0} ", Environment.NewLine);
             sb.AppendFormat("SELECT i.ProjectId, i.IssueId, i.[IsClosed], i.[Disabled]{0}", Environment.NewLine);
 
             foreach (var customField in customFields)
             {
-                sb.AppendFormat(",ISNULL(p.[{0}], '') AS [bgn_cf_{0}]{1} ", customField.Name, Environment.NewLine);
+                sb.AppendFormat(",ISNULL(p.[{0}], '''') AS [bgn_cf_{0}]{1} ", customField.Name.Replace("'", "''"), Environment.NewLine);
             }
 
             sb.AppendFormat("FROM{0} ", Environment.NewLine);
@@ -153,7 +154,7 @@ namespace BugNET.BLL
 
                 foreach (var customField in customFields)
                 {
-                    sb.AppendFormat("[{0}],", customField.Name);
+                    sb.AppendFormat("[{0}],", customField.Name.Replace("'", "''"));
                 }
 
                 sb.Remove(sb.Length - 1, 1);
@@ -162,7 +163,7 @@ namespace BugNET.BLL
                 sb.AppendFormat(") AS p ON i.IssueId = p.IssueId AND i.ProjectId = p.ProjectId{0} ", Environment.NewLine);
             }
 
-            sb.AppendFormat("WHERE i.ProjectId = {0}{1} ", projectId, Environment.NewLine);
+            sb.AppendFormat("WHERE i.ProjectId = {0}{1}'", projectId, Environment.NewLine);
 
             try
             {
@@ -170,12 +171,14 @@ namespace BugNET.BLL
                 System.Diagnostics.Debug.WriteLine(sb.ToString());
 #endif
                 DataProviderManager.Provider.ExecuteScript(new[] { sb.ToString() });
+                return true;
             }
             catch (Exception ex)
             {
                 Log.Error(ex);
             }
 
+            return false;
             // sample of the SQL we would need to create
             //CREATE VIEW dbo.BugNet_P96_CFV
             //AS
