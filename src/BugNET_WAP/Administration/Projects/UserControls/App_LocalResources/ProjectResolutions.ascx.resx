@@ -124,7 +124,7 @@
     <value>Add Resolution</value>
   </data>
   <data name="ConfirmDelete" xml:space="preserve">
-    <value>Are you sure you want to delete the \"{0}\" Resolution?</value>
+    <value>Are you sure you want to delete the "{0}" Resolution?</value>
   </data>
   <data name="DescriptionLabel.Text" xml:space="preserve">
     <value>When you complete an issue or task you can set how the issue was resolved such as fixed, duplicate or not valid.</value>

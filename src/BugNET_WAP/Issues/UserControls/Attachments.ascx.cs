@@ -218,7 +218,7 @@ namespace BugNET.Issues.UserControls
 
             if (cmdDelete == null) return;
 
-            cmdDelete.Attributes.Add("onclick", string.Format("return confirm('{0}');", GetLocalResourceObject("DeleteAttachment")));
+            cmdDelete.Attributes.Add("onclick", string.Format("return confirm('{0}');", GetLocalResourceObject("DeleteAttachment").ToString().Trim().JsEncode()));
             cmdDelete.Visible = false;
 
             // Check if it is the original user, the project admin or a super user trying to delete the comment.

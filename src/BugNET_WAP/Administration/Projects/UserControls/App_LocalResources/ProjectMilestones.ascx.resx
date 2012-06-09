@@ -124,7 +124,7 @@
     <value>Add New Milestone</value>
   </data>
   <data name="ConfirmDelete" xml:space="preserve">
-    <value>Are you sure you want to delete the \"{0}\" Milestone?</value>
+    <value>Are you sure you want to delete the "{0}" Milestone?</value>
   </data>
   <data name="DescriptionLabel.Text" xml:space="preserve">
     <value>When creating an issue, you assign the issue a version or milestone such as First, Second, or Third. Enter the list of Milestones below.</value>

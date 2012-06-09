@@ -124,7 +124,7 @@
     <value>Add Status</value>
   </data>
   <data name="ConfirmDelete" xml:space="preserve">
-    <value>Are you sure you want to delete the \"{0}\" status?</value>
+    <value>Are you sure you want to delete the "{0}" status?</value>
   </data>
   <data name="DescriptionLabel.Text" xml:space="preserve">
     <value>When you create an issue, you assign the issue a status such as In Progress or Completed. Enter the list of status values below. Each status can be associated with an image.</value>

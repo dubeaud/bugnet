@@ -223,8 +223,8 @@ namespace BugNET.Administration.Projects.UserControls
                 }
 
                 var cmdDelete = (ImageButton)e.Item.FindControl("cmdDelete");
-                var message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), currentIssueType.Name.Replace("'", "\\'"));
-                cmdDelete.Attributes.Add("onclick", String.Format("return confirm('{0}');", message));
+                var message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), currentIssueType.Name.Trim());
+                cmdDelete.Attributes.Add("onclick", String.Format("return confirm('{0}');", message.JsEncode()));
             }
 
             if (e.Item.ItemType == ListItemType.EditItem)

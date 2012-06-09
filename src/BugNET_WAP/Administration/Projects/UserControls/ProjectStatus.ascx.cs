@@ -233,8 +233,8 @@ namespace BugNET.Administration.Projects.UserControls
                 closedState.Checked = currentStatus.IsClosedState;
 
                 var cmdDelete = (ImageButton)e.Item.FindControl("cmdDelete");
-                var message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), currentStatus.Name.Replace("'", "\\'"));
-                cmdDelete.Attributes.Add("onclick", String.Format("return confirm('{0}');", message));
+                var message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), currentStatus.Name.Trim());
+                cmdDelete.Attributes.Add("onclick", String.Format("return confirm('{0}');", message.JsEncode()));
             }
 
             if (e.Item.ItemType == ListItemType.EditItem)

@@ -29,8 +29,8 @@ namespace BugNET.Issues
 
             if (!Page.IsPostBack)
             {
-                lnkDelete.Attributes.Add("onclick", string.Format("return confirm('{0}');", GetLocalResourceObject("DeleteIssue")));
-                imgDelete.Attributes.Add("onclick", string.Format("return confirm('{0}');", GetLocalResourceObject("DeleteIssue")));
+                lnkDelete.Attributes.Add("onclick", string.Format("return confirm('{0}');", GetLocalResourceObject("DeleteIssue").ToString().Trim().JsEncode()));
+                imgDelete.Attributes.Add("onclick", string.Format("return confirm('{0}');", GetLocalResourceObject("DeleteIssue").ToString().Trim().JsEncode()));
 
                 IssueId = Request.QueryString.Get("id", 0);
                 ProjectId = Request.QueryString.Get("pid", 0);

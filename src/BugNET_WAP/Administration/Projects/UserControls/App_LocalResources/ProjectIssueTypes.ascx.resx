@@ -124,7 +124,7 @@
     <value>Add New Issue Type</value>
   </data>
   <data name="ConfirmDelete" xml:space="preserve">
-    <value>Are you sure you want to delete the \"{0}\" issue type?</value>
+    <value>Are you sure you want to delete the "{0}" issue type?</value>
   </data>
   <data name="DescriptionLabel.Text" xml:space="preserve">
     <value>When you create an issue, you assign the issue a type such as Bug or Task. Enter the list of status values below. Each type can be associated with an image.</value>

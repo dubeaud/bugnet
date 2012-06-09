@@ -179,8 +179,6 @@ namespace BugNET.BLL
                        };
         }
 
-
-
         /// <summary>
         /// Calculate issue's percentage of issue list.
         /// </summary>
@@ -479,7 +477,6 @@ namespace BugNET.BLL
 
             return (DataProviderManager.Provider.GetOpenIssues(projectId));
         }
-
 
         /// <summary>
         /// Performs the query.

@@ -124,7 +124,7 @@
     <value>Add Priority</value>
   </data>
   <data name="ConfirmDelete" xml:space="preserve">
-    <value>Are you sure you want to delete the \"{0}\" priority?</value>
+    <value>Are you sure you want to delete the "{0}" priority?</value>
   </data>
   <data name="DescriptionLabel.Text" xml:space="preserve">
     <value>When you create an issue, you assign the issue a priority such as High, Normal, or Low. Enter the list of priorities below. Each priority can be associated with an image.</value>

@@ -121,10 +121,10 @@
     <value>Add New Custom Field</value>
   </data>
   <data name="ConfirmCustomFieldSelectionDelete" xml:space="preserve">
-    <value>Are you sure you want to delete the \'{0}\" selection?</value>
+    <value>Are you sure you want to delete the "{0}" selection?  This action will remove this value from any issues that have this value assigned to it.</value>
   </data>
   <data name="ConfirmDelete" xml:space="preserve">
-    <value>Are you sure you want to delete the \"{0}\" field?</value>
+    <value>Are you sure you want to delete the "{0}" field?  This delete cannot be undone. </value>
   </data>
   <data name="CustomFieldsTitle.Text" xml:space="preserve">
     <value>Custom Fields (optional)</value>
@@ -176,5 +176,8 @@
   </data>
   <data name="UserListType.Text" xml:space="preserve">
     <value>User List</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
   </data>
 </root>

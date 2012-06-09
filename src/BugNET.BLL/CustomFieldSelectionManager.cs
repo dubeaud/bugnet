@@ -30,8 +30,6 @@ namespace BugNET.BLL
             return true;
         }
 
-        #region Static Methods
-
         /// <summary>
         /// Deletes the custom field selection.
         /// </summary>
@@ -66,6 +64,5 @@ namespace BugNET.BLL
         {
             return (DataProviderManager.Provider.GetCustomFieldSelectionById(id));
         }
-        #endregion
     }
 }

@@ -28,8 +28,8 @@ namespace BugNET.Administration.Users.UserControls
         public void Initialize()
         {
             GetMembershipData(UserId);
-            cmdDeleteUser.Attributes.Add("onclick", string.Format("return confirm('{0}');", GetLocalResourceObject("ConfirmDeleteUser")));
-            cmdUnauthorizeAccount.Attributes.Add("onclick", string.Format("return confirm('{0}');", GetLocalResourceObject("ConfirmUnauthorizeUser")));
+            cmdDeleteUser.Attributes.Add("onclick", string.Format("return confirm('{0}');", GetLocalResourceObject("ConfirmDeleteUser").ToString().Trim().JsEncode()));
+            cmdUnauthorizeAccount.Attributes.Add("onclick", string.Format("return confirm('{0}');", GetLocalResourceObject("ConfirmUnauthorizeUser").ToString().Trim().JsEncode()));
         }
 
         /// <summary>

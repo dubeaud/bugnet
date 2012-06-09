@@ -145,8 +145,8 @@ namespace BugNET.Administration.Projects.UserControls
                 issueTypeName.Text = currentMailbox.IssueTypeName;
 
                 var cmdDelete = (ImageButton)e.Item.FindControl("cmdDelete");
-                var message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), currentMailbox.Mailbox);
-                cmdDelete.Attributes.Add("onclick", String.Format("return confirm('{0}');", message));
+                var message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), currentMailbox.Mailbox.Trim());
+                cmdDelete.Attributes.Add("onclick", String.Format("return confirm('{0}');", message.JsEncode()));
             }
 
             if (e.Item.ItemType != ListItemType.EditItem) return;
