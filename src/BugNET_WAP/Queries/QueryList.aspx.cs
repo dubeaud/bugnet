@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
 using BugNET.BLL;
 using BugNET.Common;
-using BugNET.Entities;
-using BugNET.UserControls;
 using BugNET.UserInterfaceLayer;
 using log4net;
 
@@ -12,15 +9,13 @@ namespace BugNET.Queries
 	/// <summary>
 	/// This page displays a list of existing queries
 	/// </summary>
-	public partial class QueryList : BugNET.UserInterfaceLayer.BasePage 
+	public partial class QueryList : BasePage 
 	{
 
 		private static readonly ILog Log = LogManager.GetLogger(typeof(QueryList));
         private const string QUERY_LIST_STATE = "QueryListState";
-		protected DisplayIssues ctlDisplayIssues;
-		protected PickQuery dropQueries;
 
-		#region Web Form Designer generated code
+	    #region Web Form Designer generated code
 		override protected void OnInit(EventArgs e)
 		{
 			//
@@ -45,46 +40,46 @@ namespace BugNET.Queries
 		/// </summary>
 		/// <param name="sender">The source of the event.</param>
 		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		protected void Page_Load(object sender, System.EventArgs e) 
+		protected void Page_Load(object sender, EventArgs e) 
 		{
-			if (!Page.IsPostBack) 
-			{
-                Results.Visible = false;
+		    if (Page.IsPostBack) return;
 
-				// Set Project ID from Query String
-				if (Request.QueryString["pid"] != null)
-				{
-					try
-					{
-						ProjectId = Int32.Parse(Request.QueryString["pid"]);
-					}
-					catch { }
-				}
+            ctlDisplayIssues.PageSize = WebProfile.Current.IssuesPageSize;
+            ctlDisplayIssues.CurrentPageIndex = 0;
+		    Results.Visible = false;
 
-                QueryListState state = (QueryListState)Session[QUERY_LIST_STATE];
+		    // Set Project ID from Query String
+		    if (Request.QueryString["pid"] != null)
+		    {
+		        try
+		        {
+		            ProjectId = Int32.Parse(Request.QueryString["pid"]);
+		        }
+		        catch { }
+		    }
 
-                BindQueries();
+		    var state = (QueryListState)Session[QUERY_LIST_STATE];
 
-                if (state != null)
-                {
-                    if ((ProjectId > 0) && (ProjectId != state.ProjectId))
-                    {
-                        Session.Remove(QUERY_LIST_STATE);
-                    }
-                    else
-                    {
-                        if (state.QueryId != 0)
-                            dropQueries.SelectedValue = state.QueryId;
-                        ProjectId = state.ProjectId;
-                        ctlDisplayIssues.CurrentPageIndex = state.IssueListPageIndex;
-                        ctlDisplayIssues.SortField = state.SortField;
-                        ctlDisplayIssues.SortAscending = state.SortAscending;
-                        ctlDisplayIssues.PageSize = state.PageSize;
-                    }
+		    BindQueries();
 
-                    ExecuteQuery();
-                }
-			}
+		    if (state == null) return;
+
+		    if ((ProjectId > 0) && (ProjectId != state.ProjectId))
+		    {
+		        Session.Remove(QUERY_LIST_STATE);
+		    }
+		    else
+		    {
+		        if (state.QueryId != 0)
+		            dropQueries.SelectedValue = state.QueryId;
+		        ProjectId = state.ProjectId;
+		        ctlDisplayIssues.CurrentPageIndex = state.IssueListPageIndex;
+		        ctlDisplayIssues.SortField = state.SortField;
+		        ctlDisplayIssues.SortAscending = state.SortAscending;
+		        ctlDisplayIssues.PageSize = state.PageSize;
+		    }
+
+		    ExecuteQuery();
 		}
 
         /// <summary>
@@ -92,12 +87,11 @@ namespace BugNET.Queries
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void Page_PreRender(object sender, System.EventArgs e)
+        private void Page_PreRender(object sender, EventArgs e)
         {
             // Intention is to restore IssueList page state when if it is redirected back to.
             // Put all necessary data in IssueListState object and save it in the session.
-            QueryListState state = (QueryListState)Session[QUERY_LIST_STATE];
-            if (state == null) state = new QueryListState();
+            var state = (QueryListState)Session[QUERY_LIST_STATE] ?? new QueryListState();
             state.QueryId = dropQueries.SelectedValue;
             state.ProjectId = ProjectId;
             state.IssueListPageIndex = ctlDisplayIssues.CurrentPageIndex;
@@ -173,7 +167,7 @@ namespace BugNET.Queries
 
 			try 
 			{
-				List<Issue> colIssues = IssueManager.PerformSavedQuery(ProjectId,dropQueries.SelectedValue);
+				var colIssues = IssueManager.PerformSavedQuery(ProjectId,dropQueries.SelectedValue);
 				ctlDisplayIssues.DataSource = colIssues;
 				ctlDisplayIssues.RssUrl = string.Format("~/Rss.aspx?pid={1}&q={0}&channel=13",dropQueries.SelectedValue,ProjectId);
 

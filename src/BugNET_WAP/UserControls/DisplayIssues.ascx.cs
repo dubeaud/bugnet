@@ -48,7 +48,7 @@ namespace BugNET.UserControls
 
                 if (projectId > 0)
                 {
-                    string columns = UserManager.GetSelectedIssueColumnsByUserName(Security.GetUserName(), projectId);
+                    var columns = UserManager.GetSelectedIssueColumnsByUserName(Security.GetUserName(), projectId);
 
                     if (!string.IsNullOrEmpty(columns))
                         _arrIssueColumns = columns.Trim().Split();

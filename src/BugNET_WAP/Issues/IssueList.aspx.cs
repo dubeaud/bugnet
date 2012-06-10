@@ -28,6 +28,9 @@ namespace BugNET.Issues
         {
             if (Page.IsPostBack) return;
 
+            ctlDisplayIssues.PageSize = WebProfile.Current.IssuesPageSize;
+            ctlDisplayIssues.CurrentPageIndex = 0;
+
             ProjectId = Request.Get("pid", -1);
 
             // BGN-1379

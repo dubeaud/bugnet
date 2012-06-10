@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using BugNET.UserControls;
+
 namespace BugNET.Queries {
     
     
@@ -74,5 +76,9 @@ namespace BugNET.Queries {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal Literal1;
+
+        protected DisplayIssues ctlDisplayIssues;
+
+        protected PickQuery dropQueries;
     }
 }

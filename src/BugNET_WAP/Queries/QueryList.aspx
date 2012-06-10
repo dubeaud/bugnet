@@ -1,5 +1,4 @@
 <%@ Page Language="c#" CodeBehind="QueryList.aspx.cs" AutoEventWireup="True" MasterPageFile="~/Shared/SingleColumn.master" Title="Query List" Inherits="BugNET.Queries.QueryList" %>
-<%@ Register TagPrefix="it" TagName="PickProject" Src="~/UserControls/PickProject.ascx" %>
 <%@ Register TagPrefix="it" TagName="PickQuery" Src="~/UserControls/PickQuery.ascx" %>
 <%@ Register TagPrefix="it" TagName="DisplayIssues" Src="~/UserControls/DisplayIssues.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Content" runat="server">

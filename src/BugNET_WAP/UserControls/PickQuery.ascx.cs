@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Web.UI.WebControls;
+using BugNET.Common;
 using BugNET.Entities;
 
 namespace BugNET.UserControls
@@ -28,7 +29,7 @@ namespace BugNET.UserControls
         /// <value>The selected value.</value>
         public int SelectedValue
         {
-            get { return Int32.Parse(dropQueries.SelectedValue); }
+            get { return dropQueries.SelectedValue.ToOrDefault(0); }
             set { dropQueries.SelectedValue = value.ToString(); }
         }
 
