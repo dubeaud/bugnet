@@ -176,7 +176,6 @@ namespace BugNET.BLL
 
             // TODO - create this via dependency injection at some point.
             IMailDeliveryService MailService = new SmtpMailDeliveryService();
-            MembershipUser user;
 
             var issue = DataProviderManager.Provider.GetIssueById(issueId);
             var issNotifications = DataProviderManager.Provider.GetIssueNotificationsByIssueId(issueId);
@@ -211,11 +210,11 @@ namespace BugNET.BLL
             {
                 try
                 {
-                    user = UserManager.GetUser(notify.NotificationUsername);
+                    var user = UserManager.GetUser(notify.NotificationUsername);
                     string Subject = String.Format(subject, issue.FullId, displayname);
                     string Body = template;
 
-                    MailMessage message = new MailMessage()
+                    var message = new MailMessage()
                     {
                         Subject = Subject,
                         Body = Body,

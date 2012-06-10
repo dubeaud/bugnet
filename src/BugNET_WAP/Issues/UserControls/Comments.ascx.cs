@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
@@ -273,7 +274,25 @@ namespace BugNET.Issues.UserControls
                                   DateCreated = DateTime.Now
                               };
 
-            IssueCommentManager.SaveOrUpdate(comment);
+            var result = IssueCommentManager.SaveOrUpdate(comment);
+
+            if(result)
+            {
+                //add history record
+                var history = new IssueHistory
+                {
+                    IssueId = IssueId,
+                    CreatedUserName = Security.GetUserName(),
+                    DateChanged = DateTime.Now,
+                    FieldChanged = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Comment", "Comment"),
+                    OldValue = string.Empty,
+                    NewValue = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Added", "Added"),
+                    TriggerLastUpdateChange = true
+                };
+
+                IssueHistoryManager.SaveOrUpdate(history);   
+            }
+
             CommentHtmlEditor.Text = String.Empty;
             BindComments();
         }

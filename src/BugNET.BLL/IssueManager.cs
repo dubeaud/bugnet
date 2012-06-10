@@ -73,10 +73,17 @@ namespace BugNET.BLL
         /// Updates the IssueHistory objects in the changes array list
         /// </summary>
         /// <param name="issueChanges">The issue changes.</param>
-        private static void UpdateHistory(IEnumerable<IssueHistory> issueChanges)
+        private static void UpdateHistory(ICollection<IssueHistory> issueChanges)
         {
+            if (issueChanges == null) return;
+
             foreach (var issueHistory in issueChanges)
                 IssueHistoryManager.SaveOrUpdate(issueHistory);
+
+            var historyItem = issueChanges.First(p => p.TriggerLastUpdateChange);
+
+            if(historyItem != null)
+                DataProviderManager.Provider.UpdateIssueLastUpdated(historyItem.IssueId, Security.GetUserName());
         }
 
         /// <summary>

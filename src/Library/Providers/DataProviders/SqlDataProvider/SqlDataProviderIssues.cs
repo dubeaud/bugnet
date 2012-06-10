@@ -9,6 +9,27 @@ namespace BugNET.Providers.DataProviders
 {
     public partial class SqlDataProvider
     {
+        /// <summary>
+        /// Updates the issues last updated fields.
+        /// </summary>
+        /// <param name="issueId">The id of the issue to update</param>
+        /// <param name="lastUpdatedUsername">The username of the indivisual triggering the update</param>
+        /// <returns></returns>
+        public override bool UpdateIssueLastUpdated(int issueId, string lastUpdatedUsername)
+        {
+            if (issueId <= Globals.NEW_ID) throw (new ArgumentNullException("issueId"));
+            if (string.IsNullOrEmpty(lastUpdatedUsername.Trim())) throw (new ArgumentNullException("lastUpdatedUsername"));
+
+            using (var sqlCmd = new SqlCommand())
+            {
+                AddParamToSqlCmd(sqlCmd, "@IssueId", SqlDbType.Int, 0, ParameterDirection.Input, issueId);
+                AddParamToSqlCmd(sqlCmd, "@LastUpdateUserName", SqlDbType.NText, 255, ParameterDirection.Input, lastUpdatedUsername);
+
+                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUE_UPDATELASTUPDATED);
+                ExecuteNonQuery(sqlCmd);
+                return true;
+            }
+        }
 
         /// <summary>
         /// Gets the issue columns for a user for a specific project

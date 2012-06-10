@@ -131,14 +131,15 @@ namespace BugNET.Issues.UserControls
             IssueWorkReportManager.SaveOrUpdate(workReport);
 
             var history = new IssueHistory
-                              {
-                                  IssueId = IssueId,
-                                  CreatedUserName = Security.GetUserName(),
-                                  DateChanged = DateTime.Now,
-                                  FieldChanged = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "TimeLogged", "Time Logged"),
-                                  OldValue = string.Empty,
-                                  NewValue = DurationTextBox.Text.Trim()
-                              };
+            {
+                IssueId = IssueId,
+                CreatedUserName = Security.GetUserName(),
+                DateChanged = DateTime.Now,
+                FieldChanged = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "TimeLogged", "Time Logged"),
+                OldValue = string.Empty,
+                NewValue = DurationTextBox.Text.Trim(),
+                TriggerLastUpdateChange = true
+            };
 
             IssueHistoryManager.SaveOrUpdate(history);
 
@@ -165,14 +166,15 @@ namespace BugNET.Issues.UserControls
             if (!IssueWorkReportManager.Delete(id)) return;
 
             var history = new IssueHistory
-                              {
-                                  IssueId = IssueId,
-                                  CreatedUserName = Security.GetUserName(),
-                                  DateChanged = DateTime.Now,
-                                  FieldChanged = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "TimeLogged", "Time Logged"),
-                                  OldValue = string.Empty,
-                                  NewValue = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Deleted", "Deleted")
-                              };
+            {
+                IssueId = IssueId,
+                CreatedUserName = Security.GetUserName(),
+                DateChanged = DateTime.Now,
+                FieldChanged = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "TimeLogged", "Time Logged"),
+                OldValue = string.Empty,
+                NewValue = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Deleted", "Deleted"),
+                TriggerLastUpdateChange = true
+            };
 
             IssueHistoryManager.SaveOrUpdate(history);
 

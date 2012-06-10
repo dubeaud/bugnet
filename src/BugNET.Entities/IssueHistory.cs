@@ -1,12 +1,9 @@
 ﻿using System;
-using BugNET.Common;
 
 namespace BugNET.Entities
 {
     public class IssueHistory
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="IssueHistory"/> class.
         /// </summary>
@@ -17,11 +14,8 @@ namespace BugNET.Entities
             DateChanged = DateTime.Now;
             NewValue = string.Empty;
             OldValue = string.Empty;
+            TriggerLastUpdateChange = false;
         }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Gets the id.
@@ -71,6 +65,10 @@ namespace BugNET.Entities
         /// <value>The display name of the creator.</value>
         public string CreatorDisplayName { get; set; }
 
-        #endregion
+        /// <summary>
+        /// Gets or sets if the hsitory item will trigger an update to the last updated field
+        /// </summary>
+        /// <remarks>By default this is false, set to true when related entites need to update the last updated field (i.e. A new attachment is added)</remarks>
+        public bool TriggerLastUpdateChange { get; set; }
     }
 }

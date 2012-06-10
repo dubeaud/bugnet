@@ -84,7 +84,8 @@ namespace BugNET.Issues.UserControls
                     DateChanged = DateTime.Now,
                     FieldChanged = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "ParentIssue", "Parent Issue"),
                     OldValue = string.Empty,
-                    NewValue = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Deleted", "Deleted")
+                    NewValue = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Deleted", "Deleted"),
+                    TriggerLastUpdateChange = true
                 };
 
                 IssueHistoryManager.SaveOrUpdate(history);
@@ -112,14 +113,15 @@ namespace BugNET.Issues.UserControls
             RelatedIssueManager.CreateNewParentIssue(IssueId, Int32.Parse(IssueIdTextBox.Text) );
 
             var history = new IssueHistory
-                              {
-                                  IssueId = IssueId,
-                                  CreatedUserName = Security.GetUserName(),
-                                  DateChanged = DateTime.Now,
-                                  FieldChanged = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "ParentIssue", "Parent Issue"),
-                                  OldValue = string.Empty,
-                                  NewValue = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Added", "Added")
-                              };
+            {
+                IssueId = IssueId,
+                CreatedUserName = Security.GetUserName(),
+                DateChanged = DateTime.Now,
+                FieldChanged = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "ParentIssue", "Parent Issue"),
+                OldValue = string.Empty,
+                NewValue = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Added", "Added"),
+                TriggerLastUpdateChange = true
+            };
 
             IssueHistoryManager.SaveOrUpdate(history);
 

@@ -85,7 +85,8 @@ namespace BugNET.Issues.UserControls
                     CreatedUserName = Security.GetUserName(),
                     FieldChanged = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "ChildIssue", "Child Issue"),
                     OldValue = string.Empty,
-                    NewValue = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Deleted", "Deleted")
+                    NewValue = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Deleted", "Deleted"),
+                    TriggerLastUpdateChange = true
                 };
 
                 IssueHistoryManager.SaveOrUpdate(history);
@@ -118,7 +119,8 @@ namespace BugNET.Issues.UserControls
                 CreatedUserName = Security.GetUserName(),
                 FieldChanged = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "ChildIssue", "Child Issue"),
                 OldValue = string.Empty,
-                NewValue = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Added", "Added")
+                NewValue = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Added", "Added"),
+                TriggerLastUpdateChange = true
             };
 
             IssueHistoryManager.SaveOrUpdate(history);

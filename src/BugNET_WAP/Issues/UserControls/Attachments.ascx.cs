@@ -150,14 +150,15 @@ namespace BugNET.Issues.UserControls
 
                     //add history record and send notifications
                     var history = new IssueHistory
-                                      {
-                                          IssueId = IssueId,
-                                          CreatedUserName = Security.GetUserName(),
-                                          DateChanged = DateTime.Now,
-                                          FieldChanged = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Attachment", "Attachment"),
-                                          OldValue = fileName,
-                                          NewValue = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Added", "Added")
-                                      };
+                    {
+                        IssueId = IssueId,
+                        CreatedUserName = Security.GetUserName(),
+                        DateChanged = DateTime.Now,
+                        FieldChanged = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Attachment", "Attachment"),
+                        OldValue = fileName,
+                        NewValue = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Added", "Added"),
+                        TriggerLastUpdateChange = true
+                    };
 
                     if(IssueHistoryManager.SaveOrUpdate(history))
                     {

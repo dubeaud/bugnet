@@ -62,6 +62,7 @@
         private const string SP_ISSUE_GETISSUESBYOWNERUSERNAME = "BugNet_Issue_GetIssuesByOwnerUserName";
         private const string SP_ISSUE_GETMONITOREDISSUESBYUSERNAME = "BugNet_Issue_GetMonitoredIssuesByUserName";
         private const string SP_ISSUE_GETISSUESBYPROJECTID = "BugNet_Issue_GetIssuesByProjectId";
+        private const string SP_ISSUE_UPDATELASTUPDATED = "BugNet_Issue_UpdateLastUpdated";
 
         private const string SP_ISSUE_GETISSUEMILESTONECOUNTBYPROJECT = "BugNet_Issue_GetIssueMilestoneCountByProject";
 

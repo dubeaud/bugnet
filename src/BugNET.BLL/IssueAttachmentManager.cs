@@ -90,9 +90,9 @@ namespace BugNET.BLL
             {
                 // save the file to the upload directory
                 var projectId = IssueManager.GetById(entity.IssueId).ProjectId;
-                var p = ProjectManager.GetById(projectId);
+                var project = ProjectManager.GetById(projectId);
 
-                if (p.AllowAttachments)
+                if (project.AllowAttachments)
                 {
                     entity.ContentType = entity.ContentType.Replace("/x-png", "/png");
                     if (entity.ContentType == "image/bmp")
@@ -111,7 +111,7 @@ namespace BugNET.BLL
                     }
                     entity.Size = entity.Attachment.Length;
 
-                    if (p.AttachmentStorageType == IssueAttachmentStorageTypes.Database)
+                    if (project.AttachmentStorageType == IssueAttachmentStorageTypes.Database)
                     {
                         //save the attachment record to the database.
                         var tempId = DataProviderManager.Provider.CreateNewIssueAttachment(entity);
@@ -123,18 +123,18 @@ namespace BugNET.BLL
                         return false;
                     }
 
-                    var projectPath = p.UploadPath;
+                    var projectPath = project.UploadPath;
 
                     try
                     {
                         if (projectPath.Length == 0)
-                            throw new ApplicationException(String.Format(LoggingManager.GetErrorMessageResource("UploadPathNotDefined"), p.Name));
+                            throw new ApplicationException(String.Format(LoggingManager.GetErrorMessageResource("UploadPathNotDefined"), project.Name));
 
                         var attachmentGuid = Guid.NewGuid();
                         var attachmentBytes = entity.Attachment;
                         entity.Attachment = null;    //set attachment to null    
                         entity.FileName = String.Format("{0}.{1}{2}", Path.GetFileNameWithoutExtension(entity.FileName), attachmentGuid, Path.GetExtension(entity.FileName));
-                        var uploadedFilePath = HttpContext.Current.Server.MapPath("~" + Globals.UPLOAD_FOLDER + projectPath) + "\\" + entity.FileName;
+                        var uploadedFilePath = string.Format("{0}\\{1}", HttpContext.Current.Server.MapPath(string.Format("~{0}{1}", Globals.UPLOAD_FOLDER, projectPath)), entity.FileName);
 
 
                         //save the attachment record to the database.
@@ -143,6 +143,7 @@ namespace BugNET.BLL
                         if (tempId > 0)
                         {
                             entity.Id = tempId;
+
                             //save file to file system
                             var fi = new FileInfo(uploadedFilePath);
 
@@ -211,8 +212,8 @@ namespace BugNET.BLL
         public static bool Delete(int issueAttachmentId)
         {
             var att = GetById(issueAttachmentId);
-            var b = IssueManager.GetById(att.IssueId);
-            var p = ProjectManager.GetById(b.ProjectId);
+            var issue = IssueManager.GetById(att.IssueId);
+            var project = ProjectManager.GetById(issue.ProjectId);
 
             if (DataProviderManager.Provider.DeleteIssueAttachment(issueAttachmentId))
             {
@@ -225,7 +226,8 @@ namespace BugNET.BLL
                         DateChanged = DateTime.Now,
                         FieldChanged = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Attachment", "Attachment"),
                         OldValue = att.FileName,
-                        NewValue = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Deleted", "Deleted")
+                        NewValue = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Deleted", "Deleted"),
+                        TriggerLastUpdateChange = true
                     };
 
                     IssueHistoryManager.SaveOrUpdate(history);
@@ -239,12 +241,12 @@ namespace BugNET.BLL
                     if (Log.IsErrorEnabled) Log.Error(ex);
                 }
 
-                if (p.AttachmentStorageType == IssueAttachmentStorageTypes.FileSystem)
+                if (project.AttachmentStorageType == IssueAttachmentStorageTypes.FileSystem)
                 {
                     //delete IssueAttachment from file system.
                     try
                     {
-                        File.Delete(HttpContext.Current.Server.MapPath(String.Format("~{2}{0}\\{1}", p.UploadPath, att.FileName, Globals.UPLOAD_FOLDER)));
+                        File.Delete(HttpContext.Current.Server.MapPath(String.Format("~{2}{0}\\{1}", project.UploadPath, att.FileName, Globals.UPLOAD_FOLDER)));
                     }
                     catch (Exception ex)
                     {
@@ -253,7 +255,7 @@ namespace BugNET.BLL
                             MDC.Set("user", HttpContext.Current.User.Identity.Name);
 
                         if (Log.IsErrorEnabled)
-                            Log.Error(String.Format("Error Deleting IssueAttachment - {0}", String.Format("{0}\\{1}", p.UploadPath, att.FileName)), ex);
+                            Log.Error(String.Format("Error Deleting IssueAttachment - {0}", String.Format("{0}\\{1}", project.UploadPath, att.FileName)), ex);
 
                         throw new ApplicationException(LoggingManager.GetErrorMessageResource("AttachmentDeleteError"), ex);
                     }

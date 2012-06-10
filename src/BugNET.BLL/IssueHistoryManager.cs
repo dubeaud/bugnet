@@ -28,8 +28,6 @@ namespace BugNET.BLL
             return true;
         }
 
-        #region Static Methods
-
         /// <summary>
         /// Gets the BugHistory by issue id.
         /// </summary>
@@ -79,6 +77,5 @@ namespace BugNET.BLL
 
             return lst;
         }
-        #endregion
     }
 }
