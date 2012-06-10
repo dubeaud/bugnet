@@ -1048,6 +1048,7 @@
     <Content Include="Providers\DataProviders\SqlDataProvider\0.9.126.0.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\0.9.142.0.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\0.9.152.0.SqlDataProvider.sql" />
+    <Content Include="Providers\DataProviders\SqlDataProvider\20120421_Performance_Enhancements.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\20120505_Attachment_Validation.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\20120505_Missing_FKs.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\20120527-BugNet_Project_CloneProject.sql" />
@@ -1060,8 +1061,8 @@
     <Content Include="Providers\DataProviders\SqlDataProvider\InstallPersonalization.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\InstallProfile.SQL" />
     <Content Include="Providers\DataProviders\SqlDataProvider\InstallRoles.sql" />
-    <Content Include="Providers\DataProviders\SqlDataProvider\Latest.SqlDataProvider.sql" />
     <Content Include="App_Themes\Default\Forms.css" />
+    <Content Include="Providers\DataProviders\SqlDataProvider\Latest.SqlDataProvider.sql" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\CHANGES.html" />
     <Content Include="Scripts\ckeditor\ckeditor.js" />
