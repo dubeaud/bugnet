@@ -52,8 +52,20 @@ namespace BugNET.Issues.UserControls
             if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem) return;
 
             var cmdDelete = e.Item.FindControl("cmdDelete") as ImageButton;
-            if (cmdDelete != null)
-                cmdDelete.OnClientClick = string.Format("return confirm('{0}');", GetLocalResourceObject("RemoveParentIssue"));
+
+            if (cmdDelete == null) return;
+            cmdDelete.Visible = false;
+
+            var entity = e.Item.DataItem as RelatedIssue;
+
+            if (entity == null) return;
+
+            // allow delete if user had the permission, the project admin or a super user trying to delete the comment.
+            if (!UserManager.IsInRole(ProjectId, Globals.Permission.DeleteParentIssue.ToString()) &&
+                !UserManager.IsSuperUser() && !UserManager.IsInRole(ProjectId, Globals.ProjectAdminRole)) return;
+
+            cmdDelete.Visible = true;
+            cmdDelete.OnClientClick = string.Format("return confirm('{0}');", GetLocalResourceObject("RemoveParentIssue"));
 		}
 
         /// <summary>
@@ -110,7 +122,13 @@ namespace BugNET.Issues.UserControls
 
             if (!Page.IsValid) return;
 
-            RelatedIssueManager.CreateNewParentIssue(IssueId, Int32.Parse(IssueIdTextBox.Text) );
+            ParentIssuesMessage.Visible = false;
+
+            var issueId = Utilities.ParseFullIssueId(IssueIdTextBox.Text.Trim());
+
+            if (issueId <= Globals.NEW_ID) return;
+
+            RelatedIssueManager.CreateNewParentIssue(IssueId, issueId);
 
             var history = new IssueHistory
             {
@@ -125,7 +143,7 @@ namespace BugNET.Issues.UserControls
 
             IssueHistoryManager.SaveOrUpdate(history);
 
-            var changes = new List<IssueHistory> {history};
+            var changes = new List<IssueHistory> { history };
 
             IssueNotificationManager.SendIssueNotifications(IssueId, changes);
 

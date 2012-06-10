@@ -191,7 +191,7 @@
                                 </asp:Image>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:BoundField DataField="FullId" HeaderText="<%$ Resources:SharedResources, Id %>" ItemStyle-Wrap="false" SortExpression="IssueId">
+                        <asp:BoundField DataField="FullId" HeaderText="<%$ Resources:SharedResources, Id %>" ItemStyle-Wrap="false" SortExpression="iv.[IssueId]">
                             <ItemStyle Wrap="False"></ItemStyle>
                         </asp:BoundField>
                         <asp:HyperLinkField HeaderStyle-HorizontalAlign="Left" HeaderText="<%$ Resources:SharedResources, Title %>" SortExpression="IssueTitle"

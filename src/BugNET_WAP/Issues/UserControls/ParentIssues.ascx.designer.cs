@@ -22,6 +22,15 @@ namespace BugNET.Issues.UserControls {
         protected global::System.Web.UI.WebControls.Label lblDescription;
         
         /// <summary>
+        /// ParentIssuesMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::BugNET.UserControls.Message ParentIssuesMessage;
+        
+        /// <summary>
         /// NoIssuesLabel control.
         /// </summary>
         /// <remarks>
@@ -67,13 +76,13 @@ namespace BugNET.Issues.UserControls {
         protected global::System.Web.UI.WebControls.TextBox IssueIdTextBox;
         
         /// <summary>
-        /// CompareValidator1 control.
+        /// RequiredFieldValidator3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CompareValidator CompareValidator1;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator3;
         
         /// <summary>
         /// btnAdd control.

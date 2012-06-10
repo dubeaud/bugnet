@@ -2,6 +2,7 @@
 <p style="margin-bottom:1em">
 	<asp:label ID="lblDescription" meta:resourcekey="lblDescription"  runat="server" />
 </p>
+<BN:Message ID="ParentIssuesMessage" runat="server" />
 <asp:Label ID="NoIssuesLabel"  Font-Italic="true" runat="server" />
 <asp:DataGrid id="IssuesDataGrid" AutoGenerateColumns="false" Width="100%" SkinID="DataGrid" OnItemDataBound="GrdIssueItemDataBound" OnItemCommand="GrdBugsItemCommand" Runat="Server">
 	<Columns>
@@ -26,8 +27,7 @@
         <li>
             <asp:label ID="IssueIdLabel" runat="server" AssociatedControlID="IssueIdTextBox" Text="<%$ Resources:SharedResources, IssueId %>"/>
             <asp:TextBox id="IssueIdTextBox" Width="100" CssClass="standardText" Runat="Server" />
-            <asp:CompareValidator ControlToValidate="IssueIdTextBox" meta:resourcekey="CompareValidator1" ValidationGroup="AddRelatedIssue"  Operator="DataTypeCheck" Type="Integer" Text="(integer)"
-	            Runat="server" id="CompareValidator1" />
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator3" ControlToValidate="IssueIdTextBox" SetFocusOnError="True" ValidationGroup="AddParentIssue"  runat="server" ErrorMessage=" *"/>
         </li>
     </ol>
     <div class="submit">

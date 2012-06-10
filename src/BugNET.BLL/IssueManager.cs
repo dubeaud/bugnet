@@ -505,7 +505,7 @@ namespace BugNET.BLL
         /// <param name="projectId">The project id.</param>
         /// <param name="sortColumns">key value pair of sort fields and directions</param>
         /// <returns></returns>
-        public static List<Issue> PerformQuery(int projectId, List<QueryClause> queryClauses, IEnumerable<KeyValuePair<string, string>> sortColumns)
+        public static List<Issue> PerformQuery(int projectId, List<QueryClause> queryClauses, ICollection<KeyValuePair<string, string>> sortColumns)
         {
             if (projectId == 0) throw new ArgumentOutOfRangeException("projectId");
 

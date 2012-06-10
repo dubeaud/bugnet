@@ -77,7 +77,7 @@ namespace BugNET.DAL
         public abstract void PerformGenericQuery<T>(ref List<T> list, List<QueryClause> queryClauses, string sql, string orderBy);
 
         public abstract List<Issue> PerformQuery(int projectId, List<QueryClause> queryClauses);
-        public abstract List<Issue> PerformQuery(int projectId, List<QueryClause> queryClauses, IEnumerable<KeyValuePair<string, string>> sortFields);
+        public abstract List<Issue> PerformQuery(int projectId, List<QueryClause> queryClauses, ICollection<KeyValuePair<string, string>> sortFields);
 
         public abstract List<Issue> PerformSavedQuery(int projectId, int queryId);
         public abstract List<QueryClause> GetQueryClausesByQueryId(int queryId);

@@ -28,9 +28,7 @@
         <li>
             <asp:Label ID="IssueIdLabel" AssociatedControlID="IssueIdTextBox" runat="server"  Text="<%$ Resources:SharedResources, IssueId %>" />
             <asp:textbox id="IssueIdTextBox" Width="100" runat="server" />
-              <asp:RequiredFieldValidator ID="RequiredFieldValidator3" ControlToValidate="IssueIdTextBox" SetFocusOnError="True" ValidationGroup="AddRelatedIssue"  runat="server" ErrorMessage=" *"></asp:RequiredFieldValidator>
-            <asp:CompareValidator ControlToValidate="IssueIdTextBox" Operator="DataTypeCheck" Type="Integer" Text="(integer)"
-		        Runat="server" id="CompareValidator1" />
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator3" ControlToValidate="IssueIdTextBox" SetFocusOnError="True" ValidationGroup="AddRelatedIssue"  runat="server" ErrorMessage=" *"/>
         </li>
     </ol>    
     <div class="submit">

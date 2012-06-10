@@ -1981,7 +1981,7 @@ namespace BugNET.Providers.DataProviders
         /// It is up to the client caller to define the filters before hand.  For filtering closed and disabled issues use iv.[IsClosed] = 0 and 
         /// iv.[Disabled] = 0
         /// </remarks>
-        public override List<Issue> PerformQuery(int projectId, List<QueryClause> queryClauses, IEnumerable<KeyValuePair<string, string>> sortFields)
+        public override List<Issue> PerformQuery(int projectId, List<QueryClause> queryClauses, ICollection<KeyValuePair<string, string>> sortFields)
         {
             // build the custom field view name
             var customFieldViewName = string.Format(Globals.PROJECT_CUSTOM_FIELDS_VIEW_NAME, projectId);
@@ -2008,7 +2008,7 @@ namespace BugNET.Providers.DataProviders
             commandBuilder = commandBuilder.Replace("@START_WHERE@", startWhere);
 
             //var sql = string.Format("SELECT * FROM BugNet_IssuesView iv INNER JOIN {0} cf ON cf.IssueId = iv.IssueId AND cf.ProjectId = iv.ProjectId WHERE iv.ProjectId = {1} @CRITERIA@ @SORT_FIELDS@", customFieldViewName, projectId);
-            var sortSql = "ORDER BY ";
+            var sortSql = string.Empty;
             var issueList = new List<Issue>();
 
             try
@@ -2041,12 +2041,19 @@ namespace BugNET.Providers.DataProviders
                         }
 
                         // build proper sort string
-                        sortSql = string.Concat(sortSql, " ", field, " ", direction, ",");
+                        sortSql = string.Concat(sortSql, " ", field, " ", direction, ",").Trim();
                     }
                 }
 
-                // set a default sort
-                sortSql = string.Concat(sortSql, " iv.[IssueId] desc");
+                // set a default sort if no sort fields
+                if (sortFields == null || sortFields.Count.Equals(0))
+                {
+                    sortSql = "iv.[IssueId] desc";
+                }
+
+                sortSql = sortSql.TrimEnd(',');
+
+                sortSql = sortSql.Insert(0, "ORDER BY ");
 
                 // do we have query clauses if so then process them
                 if (queryClauses != null)
