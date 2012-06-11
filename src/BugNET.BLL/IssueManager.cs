@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using BugNET.Common;
 using BugNET.DAL;
@@ -80,9 +81,11 @@ namespace BugNET.BLL
             foreach (var issueHistory in issueChanges)
                 IssueHistoryManager.SaveOrUpdate(issueHistory);
 
-            var historyItem = issueChanges.First(p => p.TriggerLastUpdateChange);
+            if (issueChanges.Count <= 0) return;
 
-            if(historyItem != null)
+            var historyItem = issueChanges.FirstOrDefault(p => p.TriggerLastUpdateChange);
+
+            if (historyItem != null)
                 DataProviderManager.Provider.UpdateIssueLastUpdated(historyItem.IssueId, Security.GetUserName());
         }
 
@@ -162,7 +165,14 @@ namespace BugNET.BLL
                 }
                     
                 if (originalIssue.Progress != issueToCompare.Progress)
-                    issueChanges.Add(GetNewIssueHistory(history, "Progress", originalIssue.Progress.ToString("p"), issueToCompare.Progress.ToString("p")));
+                {
+                    var nfi = new NumberFormatInfo {PercentDecimalDigits = 0};
+
+                    var oldProgress = originalIssue.Progress.Equals(0) ? 0 : (originalIssue.Progress.To<double>() / 100);
+                    var newProgress = issueToCompare.Progress.Equals(0) ? 0 : (issueToCompare.Progress.To<double>() / 100);
+
+                    issueChanges.Add(GetNewIssueHistory(history, "Progress", oldProgress.ToString("P", nfi), newProgress.ToString("P", nfi)));   
+                }
             }
             else
             {
