@@ -41,27 +41,28 @@ namespace BugNET.BLL
 
                     return false;
                 }
-                else 
-                { 
-                    //existing issue
-                    var issueChanges = GetIssueChanges(GetById(entity.Id), entity);
 
-                    DataProviderManager.Provider.UpdateIssue(entity);
+                //existing issue
+                entity.LastUpdate = DateTime.Now;
+                entity.LastUpdateUserName = Security.GetUserName();
+
+                var issueChanges = GetIssueChanges(GetById(entity.Id), entity);
+
+                DataProviderManager.Provider.UpdateIssue(entity);
                         
-                    UpdateHistory(issueChanges);
+                UpdateHistory(issueChanges);
                     
-                    IssueNotificationManager.SendIssueNotifications(entity.Id, issueChanges);
+                IssueNotificationManager.SendIssueNotifications(entity.Id, issueChanges);
 
-                    if (entity.SendNewAssigneeNotification)
-                    {
-                        //add this user to notifications and send them a notification
-                        var notification = new IssueNotification() { IssueId = entity.Id, NotificationUsername = entity.AssignedUserName };
+                if (entity.SendNewAssigneeNotification)
+                {
+                    //add this user to notifications and send them a notification
+                    var notification = new IssueNotification() { IssueId = entity.Id, NotificationUsername = entity.AssignedUserName };
 
-                        IssueNotificationManager.SaveOrUpdate(notification);
-                        IssueNotificationManager.SendNewAssigneeNotification(notification);
-                    }
-                    return true;
+                    IssueNotificationManager.SaveOrUpdate(notification);
+                    IssueNotificationManager.SendNewAssigneeNotification(notification);
                 }
+                return true;
             }
             catch(Exception ex)
             {
@@ -74,19 +75,15 @@ namespace BugNET.BLL
         /// Updates the IssueHistory objects in the changes array list
         /// </summary>
         /// <param name="issueChanges">The issue changes.</param>
-        private static void UpdateHistory(ICollection<IssueHistory> issueChanges)
+        private static void UpdateHistory(IEnumerable<IssueHistory> issueChanges)
         {
             if (issueChanges == null) return;
 
             foreach (var issueHistory in issueChanges)
+            {
+                issueHistory.TriggerLastUpdateChange = false; // set this to false since we don't trigger it from here
                 IssueHistoryManager.SaveOrUpdate(issueHistory);
-
-            if (issueChanges.Count <= 0) return;
-
-            var historyItem = issueChanges.FirstOrDefault(p => p.TriggerLastUpdateChange);
-
-            if (historyItem != null)
-                DataProviderManager.Provider.UpdateIssueLastUpdated(historyItem.IssueId, Security.GetUserName());
+            }
         }
 
         /// <summary>

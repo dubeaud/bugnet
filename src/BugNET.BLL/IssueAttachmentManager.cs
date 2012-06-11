@@ -246,7 +246,16 @@ namespace BugNET.BLL
                     //delete IssueAttachment from file system.
                     try
                     {
-                        File.Delete(HttpContext.Current.Server.MapPath(String.Format("~{2}{0}\\{1}", project.UploadPath, att.FileName, Globals.UPLOAD_FOLDER)));
+                        var filePath = HttpContext.Current.Server.MapPath(String.Format("~{2}{0}\\{1}", project.UploadPath, att.FileName, Globals.UPLOAD_FOLDER));
+
+                        if (File.Exists(filePath))
+                        {
+                            File.Delete(filePath);
+                        }
+                        else
+                        {
+                            Log.Info(String.Format("Failed to locate file {0} to delete, it may have been moved or manually deleted", filePath));
+                        }
                     }
                     catch (Exception ex)
                     {

@@ -160,12 +160,11 @@ namespace BugNET.Issues.UserControls
                         TriggerLastUpdateChange = true
                     };
 
-                    if(IssueHistoryManager.SaveOrUpdate(history))
-                    {
-                        var changes = new List<IssueHistory> { history };
+                    IssueHistoryManager.SaveOrUpdate(history);
 
-                        IssueNotificationManager.SendIssueNotifications(IssueId, changes);
-                    }
+                    var changes = new List<IssueHistory> { history };
+
+                    IssueNotificationManager.SendIssueNotifications(IssueId, changes);
 
                     BindAttachments();
                 }
