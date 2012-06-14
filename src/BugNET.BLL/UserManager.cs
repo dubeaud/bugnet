@@ -330,23 +330,23 @@ namespace BugNET.BLL
             if (user == null) throw new ArgumentNullException("user");
 
             // TODO - create this via dependency injection at some point.
-            IMailDeliveryService MailService = new SmtpMailDeliveryService();
+            IMailDeliveryService mailService = new SmtpMailDeliveryService();
 
             //TODO: Move this to xslt notification
             //load template and replace the tokens
             var template = NotificationManager.LoadNotificationTemplate("PasswordReminder");
             var subject = NotificationManager.LoadNotificationTemplate("PasswordReminderSubject");
             var displayname = GetUserDisplayName(user.UserName);
-            string Body = String.Format(template, HostSettingManager.Get(HostSettingNames.ApplicationTitle), user.GetPassword());
+            string Body = String.Format(template, HostSettingManager.Get(HostSettingNames.ApplicationTitle), user.GetPassword(passwordAnswer));
 
-            MailMessage message = new MailMessage()
+            var message = new MailMessage()
             {
                 Subject = subject,
                 Body = Body,
                 IsBodyHtml = true
             };
 
-            MailService.Send(user.Email, message);
+            mailService.Send(user.Email, message);
         }
 
         /// <summary>
