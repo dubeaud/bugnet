@@ -525,7 +525,7 @@ namespace BugNET
                 queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false));
             }
 
-            var issueList = IssueManager.PerformQuery(_projectId, queryClauses, null);
+            var issueList = IssueManager.PerformQuery(queryClauses, null, _projectId);
 
 
             var feedItems = CreateSyndicationItemsFromIssueList(issueList);

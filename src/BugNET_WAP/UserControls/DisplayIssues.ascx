@@ -171,7 +171,7 @@
                     BorderStyle="Solid" GridLines="None" DataKeyNames="Id" UseAccessibleHeader="true" EnableMultiColumnSorting="True" ShowSortSequence="True"
                     PagerStyle-HorizontalAlign="right" SortAscImageUrl="~/images/bullet_arrow_up.png" SortDescImageUrl="~/images/bullet_arrow_down.png"
                     OnRowDataBound="gvIssues_RowDataBound" OnSorting="gvIssues_Sorting" Width="100%" OnPageIndexChanging="gvIssues_PageIndexChanging"
-                    runat="server">
+                    runat="server" ondatabinding="gvIssues_DataBinding">
                     <Columns>
                         <asp:TemplateField>
                             <ItemStyle HorizontalAlign="center" />

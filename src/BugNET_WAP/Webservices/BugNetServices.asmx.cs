@@ -533,7 +533,7 @@ namespace BugNET.Webservices
                     }
                 }
 
-                issues = IssueManager.PerformQuery(ProjectId, queryClauses, null);
+                issues = IssueManager.PerformQuery(queryClauses, null, ProjectId);
             }
 
             var issueList = new List<Object>();

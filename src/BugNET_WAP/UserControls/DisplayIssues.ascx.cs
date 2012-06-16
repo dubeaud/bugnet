@@ -105,24 +105,40 @@ namespace BugNET.UserControls
         /// </summary>
         public new void DataBind()
         {
+            //Private issue check
+            var userName = Security.GetUserName();
+            var visibleIssues = new List<Issue>();
+
+            // if the current user is a super user don't bother checking at all
+            if (!UserManager.IsSuperUser())
+            {
+                foreach (var issue in DataSource)
+                {
+                    var issueVisible = IssueManager.CanViewIssue(issue, userName);
+
+                    if (issueVisible)
+                    {
+                        visibleIssues.Add(issue);
+                    }
+                }
+            }
+            else
+            {
+                visibleIssues = DataSource;
+            }
+
+            DataSource = visibleIssues;
+
             if (DataSource.Count > 0)
             {
-                // not needed server side sorting
-                //if (!string.IsNullOrEmpty(gvIssues.SortField))
-                //{
-                //   _DataSource.Sort(new ObjectComparer<Issue>(gvIssues.SortField, true));
-                //}
-
                 gvIssues.Visible = true;
                 pager.Visible = true;
                 ScrollPanel.Visible = true;
 
-                var pId = -1;
-                if (Request.QueryString["pid"] != null)
-                    pId = Int32.Parse(Request.QueryString["pid"]);
+                var pId = Request.QueryString.Get("pid", -1);
 
                 //get custom fields for project
-                if (pId != -1)
+                if (pId > Globals.NEW_ID)
                 {
                     var customFields = CustomFieldManager.GetByProjectId(pId);
 
@@ -133,9 +149,6 @@ namespace BugNET.UserControls
                         //if there is custom fields add them
                         if (customFields.Count > 0)
                         {
-                            //ctlCustomFields.DataSource = customFields;
-                            // ctlCustomFields.DataBind();
-
                             foreach (var value in customFields)
                             {
                                 //increments nr of columns
@@ -524,23 +537,6 @@ namespace BugNET.UserControls
                 i++;
             }
 
-            //Private issue check
-            var userName = Security.GetUserName();
-            var rowVisible = true;
-
-            // if the current user is a super user don't bother checking at all
-            if(!UserManager.IsSuperUser())
-            {
-                // if the issue is private and current user does not have project admin rights
-                if (issue.Visibility == Globals.IssueVisibility.Private.To<int>() && !UserManager.IsInRole(issue.ProjectId, Globals.ProjectAdminRole))
-                {
-                    // if the current user is either the assigned / creator / owner then they can see the private issue
-                    rowVisible = (issue.AssignedUserName == userName || issue.CreatorUserName == userName || issue.OwnerUserName == userName);
-                }   
-            }
-
-            e.Row.Visible = rowVisible;
-
             e.Row.FindControl("imgPrivate").Visible = issue.Visibility != 0;
 
             ((HtmlControl)e.Row.FindControl("ProgressBar")).Attributes.CssStyle.Add("width", issue.Progress + "%");
@@ -567,6 +563,11 @@ namespace BugNET.UserControls
         {
             gvIssues.PageIndex = e.NewPageIndex; // needed for server side paging
             OnRebindCommand(EventArgs.Empty);
+        }
+
+        protected void gvIssues_DataBinding(object sender, EventArgs e)
+        {
+            var grid = sender as GridView;
         }
 
     }

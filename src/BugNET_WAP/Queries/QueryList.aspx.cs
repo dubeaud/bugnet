@@ -44,7 +44,7 @@ namespace BugNET.Queries
 		{
 		    if (Page.IsPostBack) return;
 
-            ctlDisplayIssues.PageSize = WebProfile.Current.IssuesPageSize;
+            ctlDisplayIssues.PageSize = UserManager.GetProfilePageSize();
             ctlDisplayIssues.CurrentPageIndex = 0;
 		    Results.Visible = false;
 

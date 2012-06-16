@@ -309,6 +309,13 @@ namespace BugNET.BLL
             return !string.IsNullOrEmpty(displayName) ? displayName : userName;
         }
 
+        public static int GetProfilePageSize()
+        {
+            return HttpContext.Current.User.Identity.IsAuthenticated ? 
+                WebProfile.Current.IssuesPageSize : 
+                10;
+        }
+
         /// <summary>
         /// Gets the users by project id.
         /// </summary>

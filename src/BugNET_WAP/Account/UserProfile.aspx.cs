@@ -47,7 +47,7 @@ namespace BugNET.Account
                 LastName.Text = WebProfile.Current.LastName;
                 FullName.Text = WebProfile.Current.DisplayName;              
                 ddlPreferredLocale.SelectedValue = WebProfile.Current.PreferredLocale;
-                IssueListItems.SelectedValue = WebProfile.Current.IssuesPageSize.ToString();
+                IssueListItems.SelectedValue = UserManager.GetProfilePageSize().ToString();
                 if(objUser !=null)
                 {
                     UserName.Text =objUser.UserName;

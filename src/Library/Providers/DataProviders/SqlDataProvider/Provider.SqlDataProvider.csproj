@@ -56,6 +56,7 @@
     <Compile Include="SqlDataProvider.cs" />
     <Compile Include="SqlDataProviderConstants.cs" />
     <Compile Include="SqlDataProviderHelpers.cs" />
+    <Compile Include="SqlDataProviderIssueQuery.cs" />
     <Compile Include="SqlDataProviderIssues.cs" />
     <Compile Include="SqlDataProviderListHelpers.cs" />
   </ItemGroup>

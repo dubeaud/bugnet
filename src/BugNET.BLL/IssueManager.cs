@@ -509,14 +509,12 @@ namespace BugNET.BLL
         /// Performs the query.
         /// </summary>
         /// <param name="queryClauses">The query clauses.</param>
-        /// <param name="projectId">The project id.</param>
         /// <param name="sortColumns">key value pair of sort fields and directions</param>
+        /// <param name="projectId">The project id.</param>
         /// <returns></returns>
-        public static List<Issue> PerformQuery(int projectId, List<QueryClause> queryClauses, ICollection<KeyValuePair<string, string>> sortColumns)
+        public static List<Issue> PerformQuery(List<QueryClause> queryClauses, ICollection<KeyValuePair<string, string>> sortColumns, int projectId = 0)
         {
-            if (projectId == 0) throw new ArgumentOutOfRangeException("projectId");
-
-            return DataProviderManager.Provider.PerformQuery(projectId, queryClauses, sortColumns);
+            return DataProviderManager.Provider.PerformQuery(queryClauses, sortColumns, projectId);
         }
 
         /// <summary>
@@ -543,6 +541,33 @@ namespace BugNET.BLL
             var issue = GetById(issueId);
 
             return (issue != null);
+        }
+
+        /// <summary>
+        /// Returns true or false if the requesting user can view the issue or not
+        /// </summary>
+        /// <param name="issue">The issue to be viewed</param>
+        /// <param name="requestingUserName">The requesting user name (Use Security.GetUserName()) for this</param>
+        /// <returns></returns>
+        public static bool CanViewIssue(Issue issue, string requestingUserName)
+        {
+            // if the current user is a super user don't bother checking at all
+            if (UserManager.IsSuperUser()) return true;
+
+            var project = ProjectManager.GetById(issue.ProjectId);
+
+            // if the issue is private and current user does not have project admin rights
+            if (issue.Visibility == Globals.IssueVisibility.Private.To<int>() && !UserManager.IsInRole(issue.ProjectId, Globals.ProjectAdminRole))
+            {
+                // if the current user is either the assigned / creator / owner then they can see the private issue
+                return (
+                    issue.AssignedUserName.Trim().Equals(requestingUserName.Trim()) ||
+                    issue.CreatorUserName.Trim().Equals(requestingUserName.Trim()) ||
+                    issue.OwnerUserName.Trim().Equals(requestingUserName.Trim())
+                );
+            }
+
+            return true;
         }
     }
 }

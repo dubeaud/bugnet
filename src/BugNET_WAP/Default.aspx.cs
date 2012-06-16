@@ -171,7 +171,7 @@ namespace BugNET
                         new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int, false)
                     };
 
-                    var issueList = IssueManager.PerformQuery(p.Id, queryClauses, null);
+                    var issueList = IssueManager.PerformQuery(queryClauses, null, p.Id);
 
                     OpenIssuesLink.Text = string.Format(GetLocalResourceObject("OpenIssuesCount").ToString(), issueList.Count);
 

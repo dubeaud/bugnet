@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using BugNET.Common;
 
 namespace BugNET.UserInterfaceLayer
 {
-    public class PresentationUtils
+    public static class PresentationUtils
     {
         /// <summary>
         /// Sets the pager button states.
@@ -51,56 +52,56 @@ namespace BugNET.UserInterfaceLayer
         /// </summary>
         /// <param name="gridView">The grid view.</param>
         /// <param name="row">The row.</param>
+        /// <param name="columnStartIndex"> </param>
         /// <param name="sortField">The sort field.</param>
         /// <param name="sortAscending">if set to <c>true</c> [sort ascending].</param>
         public static void SetSortImageStates(GridView gridView, GridViewRow row,int columnStartIndex, string sortField, bool sortAscending)
         {
-            for (int i = columnStartIndex; i < row.Cells.Count; i++)
+            for (var i = columnStartIndex; i < row.Cells.Count; i++)
             {
-                TableCell tc = row.Cells[i];
-                if (tc.HasControls())
+                var tc = row.Cells[i];
+                if (!tc.HasControls()) continue;
+
+                // search for the header link  
+                var lnk = tc.Controls[0] as LinkButton;
+                if (lnk == null) continue;
+
+                // initialize a new image
+                var img = new Image
                 {
-                    // search for the header link  
-                    LinkButton lnk = (LinkButton)tc.Controls[0];
-                    if (lnk != null)
-                    {
-                        // initialize a new image
-                        System.Web.UI.WebControls.Image img = new System.Web.UI.WebControls.Image();
-                        // setting the dynamically URL of the image
-                        img.ImageUrl = "~/images/" + (sortAscending ? "bullet_arrow_up" : "bullet_arrow_down") + ".png";
-                        img.CssClass = "icon";
-                        // checking if the header link is the user's choice
-                        if (sortField == lnk.CommandArgument)
-                        {
-                            // adding a space and the image to the header link
-                            //tc.Controls.Add(new LiteralControl(" "));
-                            tc.Controls.Add(img);
-                        }
+                    ImageUrl = string.Format("~/images/{0}.png", (sortAscending ? "bullet_arrow_up" : "bullet_arrow_down")),
+                    CssClass = "icon"
+                };
 
-
-                    }
+                // setting the dynamically URL of the image
+                // checking if the header link is the user's choice
+                if (sortField == lnk.CommandArgument)
+                {
+                    // adding a space and the image to the header link
+                    //tc.Controls.Add(new LiteralControl(" "));
+                    tc.Controls.Add(img);
                 }
             }
-            
         }
 
         /// <summary>
         /// Gets the selected items integer list.
         /// </summary>
         /// <param name="listBox">The list box.</param>
+        /// <param name="returnAll">Returns all the items regardless if selected or not</param>
         /// <returns></returns>
-        public static List<int> GetSelectedItemsIntegerList(System.Web.UI.WebControls.ListControl listBox)
+        public static List<int> GetSelectedItemsIntegerList(ListControl listBox, bool returnAll = false)
         {
-            List<int> items = new List<int>();
+            var items = new List<int>();
 
             foreach (ListItem item in listBox.Items)
             {
-                if (item.Selected)
+                if (!item.Value.Is<int>()) continue;
+
+                if (returnAll || item.Selected)
                     items.Add(int.Parse(item.Value));
             }
             return items;
         }
-
-       
     }
 }

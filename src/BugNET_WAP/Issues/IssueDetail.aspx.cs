@@ -87,13 +87,14 @@ namespace BugNET.Issues
                     if (_currentIssue == null || _currentIssue.Disabled)
                     {
                         ErrorRedirector.TransferToNotFoundPage(Page);
+                        return;
                     }
 
                     //private issue check
-                    if (_currentIssue.Visibility == (int)Globals.IssueVisibility.Private && _currentIssue.AssignedDisplayName != Security.GetUserName()
-                        && _currentIssue.CreatorDisplayName != Security.GetUserName()
-                        && !UserManager.IsSuperUser()
-                        && !UserManager.IsInRole(_currentIssue.ProjectId, Globals.ProjectAdminRole))
+                    var issueVisible = IssueManager.CanViewIssue(_currentIssue, Security.GetUserName());
+
+                    //private issue check
+                    if (!issueVisible)
                     {
                         ErrorRedirector.TransferToLoginPage(Page);
                     }

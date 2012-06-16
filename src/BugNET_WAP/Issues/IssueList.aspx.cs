@@ -28,7 +28,7 @@ namespace BugNET.Issues
         {
             if (Page.IsPostBack) return;
 
-            ctlDisplayIssues.PageSize = WebProfile.Current.IssuesPageSize;
+            ctlDisplayIssues.PageSize = UserManager.GetProfilePageSize();
             ctlDisplayIssues.CurrentPageIndex = 0;
 
             ProjectId = Request.Get("pid", -1);
@@ -427,7 +427,7 @@ namespace BugNET.Issues
 
             }
 
-            var colIssues = IssueManager.PerformQuery(ProjectId, queryClauses, sortColumns);
+            var colIssues = IssueManager.PerformQuery(queryClauses, sortColumns, ProjectId);
 
             ctlDisplayIssues.DataSource = colIssues;
             ctlDisplayIssues.DataBind();

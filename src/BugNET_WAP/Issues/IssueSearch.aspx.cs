@@ -251,7 +251,7 @@ namespace BugNET.Issues
                 }
 
                 // Use the new Generic way to search with those QueryClauses
-                var issues = IssueManager.PerformQuery(p.Id, queryClauses, null);
+                var issues = IssueManager.PerformQuery(queryClauses, null, p.Id);
 
                 queryClauses.Clear();
 
@@ -327,7 +327,7 @@ namespace BugNET.Issues
                     queryClauses.Insert(0, new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false));
 
                 // Get ALL issues
-                issues = IssueManager.PerformQuery(p.Id, queryClauses, null);
+                issues = IssueManager.PerformQuery(queryClauses, null, p.Id);
 
                 foreach (var iss in issues)
                 {
