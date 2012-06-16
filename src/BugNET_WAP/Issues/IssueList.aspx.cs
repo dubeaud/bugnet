@@ -27,10 +27,7 @@ namespace BugNET.Issues
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Page.IsPostBack) return;
-
-            ctlDisplayIssues.PageSize = WebProfile.Current.IssuesPageSize;
-            ctlDisplayIssues.CurrentPageIndex = 0;
-
+           
             ProjectId = Request.Get("pid", -1);
 
             // BGN-1379
@@ -45,6 +42,12 @@ namespace BugNET.Issues
                 dropView.Items.Remove(dropView.Items.FindByValue("Created"));
                 dropView.SelectedIndex = 1;
             }
+            else
+            {
+                ctlDisplayIssues.PageSize = WebProfile.Current.IssuesPageSize;
+            }
+
+            ctlDisplayIssues.CurrentPageIndex = 0;
 
             var state = (IssueListState)Session[ISSUELISTSTATE];
 
