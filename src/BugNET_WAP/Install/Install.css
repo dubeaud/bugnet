@@ -100,3 +100,17 @@ HR {
     height:1pt;
     text-align:left
 }
+
+#upgrade-notes {
+    margin: 5px 0 0 20px;
+    padding: 10px;
+    background-color: #D2F3B7;
+}
+
+#upgrade-notes h3  {
+    display: inline;
+}
+
+#upgrade-notes div#upgrade-notes-content  {
+    padding: 10px 0 0 0;
+}

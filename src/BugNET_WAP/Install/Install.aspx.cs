@@ -89,7 +89,7 @@ namespace BugNET.Install
             // Sign out before writing the headers!
             FormsAuthentication.SignOut();
 
-            WriteHeader("logout");            
+            WriteHeader("logout");
             WriteMessage(string.Format("<h3>You were logged in as user '{0}'</h3>", tmpuser));
             WriteMessage("<h3>You have been logged out of the system automatically.</h3>");
             WriteMessage("<br/><h2><a href='../Install/Install.aspx'>Click Here to retry the installation.</a></h2>");
@@ -111,7 +111,7 @@ namespace BugNET.Install
         }
 
         #region Install
-        
+
         /// <summary>
         /// Installs the application.
         /// </summary>
@@ -140,11 +140,11 @@ namespace BugNET.Install
                     HttpContext.Current.Response.End();
                 }
             }
-            else 
-            {              
+            else
+            {
                 _startTime = DateTime.Now;
                 WriteHeader("install");
-              
+
 
                 WriteMessage(string.Format("<h2>Version: {0}</h2>", UpgradeManager.GetCurrentVersion()));
                 WriteMessage(string.Empty);
@@ -158,9 +158,9 @@ namespace BugNET.Install
                     WriteMessage("<h2>Installation Complete</h2>");
                     WriteMessage("<br/><br/><h2><a href='../Default.aspx'>Click Here To Access Your BugNET Installation</a></h2><br/><br/>");
                 }
-               
+
                 Response.Flush();
-               
+
             }
             WriteFooter();
 
@@ -174,20 +174,20 @@ namespace BugNET.Install
         {
             try
             {
-                var providerPath = UpgradeManager.GetProviderPath();           
+                var providerPath = UpgradeManager.GetProviderPath();
 
                 if (!providerPath.StartsWith("ERROR"))
                 {
                     WriteMessage(string.Format("Installing Version: {0}<br/>", UpgradeManager.GetCurrentVersion()), 0, true);
                     WriteMessage("Installing Membership Provider:<br/>", 0, true);
-                    ExecuteSqlInFile(string.Format("{0}InstallCommon.sql",providerPath));
-                    ExecuteSqlInFile(string.Format("{0}InstallMembership.sql",providerPath));
-                    ExecuteSqlInFile(string.Format("{0}InstallProfile.sql",providerPath));
-                    ExecuteSqlInFile(string.Format("{0}InstallRoles.sql",providerPath));
+                    ExecuteSqlInFile(string.Format("{0}InstallCommon.sql", providerPath));
+                    ExecuteSqlInFile(string.Format("{0}InstallMembership.sql", providerPath));
+                    ExecuteSqlInFile(string.Format("{0}InstallProfile.sql", providerPath));
+                    ExecuteSqlInFile(string.Format("{0}InstallRoles.sql", providerPath));
                     WriteMessage("Installing BugNET Database:<br/>", 0, true);
-                    ExecuteSqlInFile(string.Format("{0}BugNET.Schema.SqlDataProvider.sql",providerPath));
+                    ExecuteSqlInFile(string.Format("{0}BugNET.Schema.SqlDataProvider.sql", providerPath));
                     WriteMessage("Installing BugNET Default Data:<br/>", 0, true);
-                    ExecuteSqlInFile(string.Format("{0}BugNET.Data.SqlDataProvider.sql",providerPath));
+                    ExecuteSqlInFile(string.Format("{0}BugNET.Data.SqlDataProvider.sql", providerPath));
                     WriteMessage("Creating Administrator Account", 0, true);
                     //create admin user
                     MembershipCreateStatus status;
@@ -255,13 +255,27 @@ namespace BugNET.Install
                 if (UpgradeBugNET())
                 {
                     WriteMessage("<h2>Upgrade Complete</h2>");
-                    WriteMessage("<br><br><h2><a href='../Default.aspx'>Click Here To Access Your BugNET Installation</a></h2><br><br>");
+                    WriteMessage("<h2><a href='../Default.aspx'>Click Here To Access Your BugNET Installation</a></h2>");
+
+                    var currentVersion = UpgradeManager.GetCurrentVersion();
+                    UpgradeManager.UpdateDatabaseVersion(currentVersion);
+
+                    // support for a version file to be loaded to display things like breaking changes or other info 
+                    // about the upgrade that was done.
+                    var installPath = Server.MapPath("~/Install");
+
+                    var versionFile = Path.Combine(installPath, string.Format("{0}.htm", currentVersion));
+
+                    if (File.Exists(versionFile))
+                    {
+                        WriteMessage(File.ReadAllText(versionFile));
+                    }
                 }
                 else
                 {
                     WriteMessage("<h2>Upgrade Failed!</h2>");
                 }
-                
+
                 WriteFooter();
             }
         }
@@ -273,94 +287,101 @@ namespace BugNET.Install
         {
             try
             {
-                  var providerPath = UpgradeManager.GetProviderPath();
+                var providerPath = UpgradeManager.GetProviderPath();
 
-                  if (!providerPath.StartsWith("ERROR"))
-                  {
-                      //get current App version
-                      var assemblyVersion = Convert.ToInt32(UpgradeManager.GetCurrentVersion().Replace(".", ""));
-                      var databaseVersion = Convert.ToInt32(UpgradeManager.GetInstalledVersion().Replace(".", ""));
+                if (!providerPath.StartsWith("ERROR"))
+                {
+                    //get current App version
+                    var assemblyVersion = Convert.ToInt32(UpgradeManager.GetCurrentVersion().Replace(".", ""));
+                    var databaseVersion = Convert.ToInt32(UpgradeManager.GetInstalledVersion().Replace(".", ""));
 
-                      //get list of script files
-                      var arrScriptFiles = new ArrayList();
+                    //get list of script files
+                    var arrScriptFiles = new ArrayList();
 
-                      //install the membership provider and migrate the users if the 
-                      //installed version is less than 0.7
-                      if (databaseVersion < 70)
-                      {
-                          WriteMessage("Installing Membership Provider:<br/>", 0, true);
-                          ExecuteSqlInFile(string.Format("{0}InstallCommon.sql",providerPath));
-                          ExecuteSqlInFile(string.Format("{0}InstallMembership.sql",providerPath));
-                          ExecuteSqlInFile(string.Format("{0}InstallProfile.sql",providerPath));
-                          ExecuteSqlInFile(string.Format("{0}InstallRoles.sql",providerPath));
-                          WriteMessage("Migrating Users", 0, true);
-                          UpgradeManager.MigrateUsers();
-                      }
-                      
-                      // todo: need to wire up the custom field creation here based on the version number supported
-                      // from here we need to create the custom field views
-                      // doing this will not hurt the code if the code does not support it
-                      if (assemblyVersion <= 91610) 
-                      {
-                          WriteMessage("Creating Custom Field Views<br/>", 0, true);
-                          if(UpgradeManager.CreateCustomFieldViews())
-                          {
-                              WriteMessage("Custom fields created!<br/>", 0, true); 
-                          }
-                          else
-                          {
-                              WriteMessage("There was an issue creating the custom fields views for your project, please view the application log for more details<br/>", 0, true);
-                              //<a href='../Install/Install.aspx'>Click Here to retry the installation.</a>
-                              WriteMessage("You can manually re-generate the custom field views by going to the <a href='../Administration/Projects/ProjectList.aspx'>Project List</a> page and using the generate feature along the top menu<br/>", 0, true);
-                          }
-                      }
+                    //install the membership provider and migrate the users if the 
+                    //installed version is less than 0.7
+                    if (databaseVersion < 70)
+                    {
+                        WriteMessage("Installing Membership Provider:<br/>", 0, true);
+                        ExecuteSqlInFile(string.Format("{0}InstallCommon.sql", providerPath));
+                        ExecuteSqlInFile(string.Format("{0}InstallMembership.sql", providerPath));
+                        ExecuteSqlInFile(string.Format("{0}InstallProfile.sql", providerPath));
+                        ExecuteSqlInFile(string.Format("{0}InstallRoles.sql", providerPath));
+                        WriteMessage("Migrating Users", 0, true);
+                        UpgradeManager.MigrateUsers();
+                    }
 
-                      var arrFiles = Directory.GetFiles(providerPath, "*.sql");
+                    // todo: need to wire up the custom field creation here based on the version number supported
+                    // from here we need to create the custom field views
+                    // doing this will not hurt the code if the code does not support it
+                    if (assemblyVersion <= 91610)
+                    {
+                        WriteMessage("Creating Custom Field Views<br/>", 0, true);
+                        if (UpgradeManager.CreateCustomFieldViews())
+                        {
+                            WriteMessage("Custom fields created!<br/>", 0, true);
+                        }
+                        else
+                        {
+                            WriteMessage("There was an issue creating the custom fields views for your project, please view the application log for more details<br/>", 0, true);
+                            //<a href='../Install/Install.aspx'>Click Here to retry the installation.</a>
+                            WriteMessage("You can manually re-generate the custom field views by going to the <a href='../Administration/Projects/ProjectList.aspx'>Project List</a> page and using the generate feature along the top menu<br/>", 0, true);
+                        }
+                    }
 
-                      foreach (var file in arrFiles)
-                      {
-                          var fileName = Path.GetFileNameWithoutExtension(file);
+                    var arrFiles = Directory.GetFiles(providerPath, "*.sql");
 
-                          if (string.IsNullOrEmpty(fileName)) continue;
+                    foreach (var file in arrFiles)
+                    {
+                        var fileName = Path.GetFileNameWithoutExtension(file);
 
-                          fileName = fileName.ToLower().Trim();
-                          if (fileName.Length.Equals(0)) continue;
-                          if (fileName.StartsWith("install")) continue;
-                          if (fileName.StartsWith("bugnet")) continue;
-                          if (fileName.StartsWith("latest")) continue;
+                        if (string.IsNullOrEmpty(fileName)) continue;
 
-                          var strScriptVersion = fileName.Substring(0, fileName.LastIndexOf("."));
-                          var scriptVersion = Convert.ToInt32(strScriptVersion.Replace(".", ""));
+                        fileName = fileName.ToLower().Trim();
+                        if (fileName.Length.Equals(0)) continue;
+                        if (fileName.StartsWith("install")) continue;
+                        if (fileName.StartsWith("bugnet")) continue;
+                        if (fileName.StartsWith("latest")) continue;
 
-                          //check if script file is relevant for upgrade
-                          if (scriptVersion > databaseVersion && scriptVersion <= assemblyVersion)
-                          {
-                              arrScriptFiles.Add(file);
-                          }
-                      }
+                        // not a version script
+                        if (fileName.LastIndexOf(".").Equals(-1)) continue;
 
-                      arrScriptFiles.Sort();
+                        var strScriptVersion = fileName.Substring(0, fileName.LastIndexOf("."));
+                        var scriptVersion = Convert.ToInt32(strScriptVersion.Replace(".", ""));
 
-                      foreach (var scriptFile in arrScriptFiles.Cast<string>().Where(strScriptFile => databaseVersion != assemblyVersion))
-                      {
-                          //execute script file (and version upgrades) for version
-                          ExecuteSqlInFile(scriptFile);
-                      }
+                        //check if script file is relevant for upgrade
+                        if (scriptVersion > databaseVersion && scriptVersion <= assemblyVersion)
+                        {
+                            arrScriptFiles.Add(file);
+                        }
+                    }
 
-                      //check if the admin user is in the super users role.
-                      var found = false;
-                      var roles = RoleManager.GetForUser("Admin");
-                      if (roles.Count > 0)
-                      {
-                          var role = roles.SingleOrDefault(r => r.Name == Globals.SUPER_USER_ROLE);
-                          if (role != null) found = true;
-                      }
-                      if (!found)
-                          RoleManager.AddUser("Admin", 1);
+                    arrScriptFiles.Sort();
 
-                      UpgradeManager.UpdateDatabaseVersion(UpgradeManager.GetCurrentVersion());
-                      return true;
-                  }
+                    foreach (var scriptFile in arrScriptFiles.Cast<string>().Where(strScriptFile => databaseVersion != assemblyVersion))
+                    {
+                        //execute script file (and version upgrades) for version
+                        ExecuteSqlInFile(scriptFile);
+                    }
+
+                    //check if the admin user is in the super users role.
+                    var found = false;
+                    var roles = RoleManager.GetForUser("Admin");
+                    if (roles.Count > 0)
+                    {
+                        var role = roles.SingleOrDefault(r => r.Name == Globals.SUPER_USER_ROLE);
+                        if (role != null) found = true;
+                    }
+
+                    if (!found)
+                    {
+                        RoleManager.AddUser("Admin", 1);
+                    }
+
+                    UpgradeManager.UpdateDatabaseVersion(UpgradeManager.GetCurrentVersion());
+
+                    return true;
+                }
 
                 //upgrade error
                 Response.Write("<h2>Upgrade Error: " + providerPath + "</h2>");
@@ -385,7 +406,7 @@ namespace BugNET.Install
         private void ExecuteSqlInFile(string pathToScriptFile)
         {
             WriteMessage(string.Format("Executing Script: {0}", pathToScriptFile.Substring(pathToScriptFile.LastIndexOf("\\") + 1)), 2, true);
-         
+
             try
             {
                 var statements = new List<string>();
@@ -397,13 +418,13 @@ namespace BugNET.Install
 
                 using (Stream stream = File.OpenRead(pathToScriptFile))
                 {
-                    using(var reader = new StreamReader(stream))
+                    using (var reader = new StreamReader(stream))
                     {
                         string statement;
                         while ((statement = ReadNextStatementFromStream(reader)) != null)
                         {
                             statements.Add(statement);
-                        }                        
+                        }
                     }
                 }
 
@@ -415,7 +436,7 @@ namespace BugNET.Install
             {
                 WriteScriptSuccessError(false);
                 WriteScriptErrorMessage(pathToScriptFile.Substring(pathToScriptFile.LastIndexOf("\\") + 1), ex.Message);
-            }  
+            }
         }
 
         /// <summary>
@@ -424,7 +445,7 @@ namespace BugNET.Install
         /// <param name="reader">The reader.</param>
         /// <returns></returns>
         private static string ReadNextStatementFromStream(StreamReader reader)
-        {         
+        {
             var sb = new StringBuilder();
 
             while (true)
@@ -439,7 +460,7 @@ namespace BugNET.Install
 
                 sb.Append(lineOfText + Environment.NewLine);
             }
-            return sb.ToString();           
+            return sb.ToString();
         }
         #endregion
 
@@ -545,6 +566,6 @@ namespace BugNET.Install
             HttpContext.Current.Response.Flush();
 
         }
-        #endregion 
+        #endregion
     }
 }
