@@ -10,16 +10,21 @@ namespace BugNET.BLL.Notifications
     using System.Net.Mail;
     using System.Net;
     using BugNET.Common;
+    using System.Threading;
+    using System.ComponentModel;
+    using log4net;
 
     public class SmtpMailDeliveryService : IMailDeliveryService
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(SmtpMailDeliveryService));
+
         /// <summary>
         /// Sends the specified recipient email.
         /// </summary>
         /// <param name="recipientEmail">The recipient email.</param>
         /// <param name="message">The message.</param>
         /// <returns></returns>
-        public MailDeliveryResult Send(string recipientEmail, MailMessage message)
+        public void Send(string recipientEmail, MailMessage message)
         {
             message.To.Clear();
             message.To.Add(recipientEmail);
@@ -42,36 +47,38 @@ namespace BugNET.BLL.Notifications
                 smtpDomain = HostSettingManager.Get(HostSettingNames.SMTPDomain, string.Empty);
             }
 
-            using (var client = new SmtpClient())
+            var client = new SmtpClient();               
+            client.Host = smtpServer;
+            client.Port = smtpPort;
+            client.EnableSsl = smtpUseSSL;
+
+            if (smtpAuthentictation)
             {
-                client.Host = smtpServer;
-                client.Port = smtpPort;
-                client.EnableSsl = smtpUseSSL;
-
-                if (smtpAuthentictation)
-                {
-                    client.Credentials = new NetworkCredential(smtpUsername, smtpPassword, smtpDomain);
-                }
-
-                try
-                {
-                    client.Send(message);
-                    return new MailDeliveryResult()
-                    {
-                        Success = true
-                    };
-                }
-                catch (Exception ex)
-                {
-                    return new MailDeliveryResult()
-                    {
-                        Success = false,
-                        Exception = ex
-                    };
-                }
+                client.Credentials = new NetworkCredential(smtpUsername, smtpPassword, smtpDomain);
             }
 
+            // Set the method that is called back when the send operation ends.
+            client.SendCompleted += new SendCompletedEventHandler(SendCompletedCallback);
+            client.SendAsync(message, null);
+        }
 
+        /// <summary>
+        /// Sends the completed callback.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.ComponentModel.AsyncCompletedEventArgs"/> instance containing the event data.</param>
+        private static void SendCompletedCallback(object sender, AsyncCompletedEventArgs e)
+        {
+            if (e.Cancelled)
+            {
+                return;
+            }
+
+            if (e.Error != null)
+            {
+                // log the error message
+                Log.Error(e.Error);
+            }
         }
     }
 }

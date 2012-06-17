@@ -10,6 +10,6 @@ namespace BugNET.BLL.Notifications
 
     public interface IMailDeliveryService
     {
-        MailDeliveryResult Send(string recipientEmail, MailMessage message);
+        void Send(string recipientEmail, MailMessage message);
     }
 }

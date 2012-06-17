@@ -75,7 +75,6 @@
     <Compile Include="LoggingManager.cs" />
     <Compile Include="MilestoneManager.cs" />
     <Compile Include="Notifications\IMailDeliveryService.cs" />
-    <Compile Include="Notifications\MailDeliveryResult.cs" />
     <Compile Include="Notifications\NotificationManager.cs">
       <SubType>Code</SubType>
     </Compile>
