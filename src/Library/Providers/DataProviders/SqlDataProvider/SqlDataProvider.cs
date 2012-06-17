@@ -1991,7 +1991,7 @@ namespace BugNET.Providers.DataProviders
                 var queryClauses = new List<QueryClause>();
                 ExecuteReaderCmd(sqlCmd, GenerateQueryClauseListFromReader, ref queryClauses);
 
-                return PerformQuery(projectId, queryClauses);   
+                return PerformQuery(queryClauses, null, projectId);   
             }
         }
 

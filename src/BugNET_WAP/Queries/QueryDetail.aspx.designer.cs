@@ -49,13 +49,40 @@ namespace BugNET.Queries {
         protected global::System.Web.UI.WebControls.PlaceHolder plhClauses;
         
         /// <summary>
+        /// pnlDeleteQuery control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlDeleteQuery;
+        
+        /// <summary>
         /// btnAddClause control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddClause;
+        protected global::System.Web.UI.WebControls.ImageButton btnAddClause;
+        
+        /// <summary>
+        /// lbAddClause control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lbAddClause;
+        
+        /// <summary>
+        /// pnlRemoveClause control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlRemoveClause;
         
         /// <summary>
         /// btnRemoveClause control.
@@ -64,16 +91,25 @@ namespace BugNET.Queries {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRemoveClause;
+        protected global::System.Web.UI.WebControls.ImageButton btnRemoveClause;
         
         /// <summary>
-        /// SaveQuery control.
+        /// lbRemoveClause control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel SaveQuery;
+        protected global::System.Web.UI.WebControls.LinkButton lbRemoveClause;
+        
+        /// <summary>
+        /// SaveQueryForm control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel SaveQueryForm;
         
         /// <summary>
         /// Label1 control.
@@ -112,13 +148,40 @@ namespace BugNET.Queries {
         protected global::System.Web.UI.WebControls.CheckBox chkGlobalQuery;
         
         /// <summary>
+        /// pnlPerformQuery control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlPerformQuery;
+        
+        /// <summary>
         /// btnPerformQuery control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPerformQuery;
+        protected global::System.Web.UI.WebControls.ImageButton btnPerformQuery;
+        
+        /// <summary>
+        /// lbPerformQuery control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lbPerformQuery;
+        
+        /// <summary>
+        /// pnlSaveQuery control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlSaveQuery;
         
         /// <summary>
         /// btnSaveQuery control.
@@ -127,7 +190,43 @@ namespace BugNET.Queries {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSaveQuery;
+        protected global::System.Web.UI.WebControls.ImageButton btnSaveQuery;
+        
+        /// <summary>
+        /// lbSaveQuery control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lbSaveQuery;
+        
+        /// <summary>
+        /// pnlCancel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlCancel;
+        
+        /// <summary>
+        /// btnCancel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton btnCancel;
+        
+        /// <summary>
+        /// lbCancel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lbCancel;
         
         /// <summary>
         /// Results control.

@@ -1006,6 +1006,9 @@
     <Content Include="Images\shield.gif" />
     <Content Include="Images\shield_add.gif" />
     <Content Include="Images\shield_delete.gif" />
+    <Content Include="Images\sql_delete_query.png" />
+    <Content Include="Images\sql_edit_query.png" />
+    <Content Include="Images\sql_new_query.png" />
     <Content Include="Images\tableftB.gif" />
     <Content Include="Images\tabrightB.gif" />
     <Content Include="Images\textfield.gif" />
@@ -1572,8 +1575,12 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="UserControls\App_LocalResources\DisplayIssues.ascx.resx" />
-    <Content Include="Queries\App_LocalResources\QueryList.aspx.resx" />
-    <Content Include="Queries\App_LocalResources\QueryDetail.aspx.resx" />
+    <Content Include="Queries\App_LocalResources\QueryList.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Queries\App_LocalResources\QueryDetail.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="UserControls\App_LocalResources\PickQuery.ascx.resx">
       <SubType>Designer</SubType>
     </Content>

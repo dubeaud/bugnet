@@ -147,4 +147,7 @@
   <data name="SelectOneQueryClause" xml:space="preserve">
     <value>Please select at least one clause for your query</value>
   </data>
+  <data name="btnCancelQuery.Text">
+    <value xml:space="preserve">Back to Query List</value>
+  </data>
 </root>

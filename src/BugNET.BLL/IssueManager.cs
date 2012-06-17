@@ -502,7 +502,7 @@ namespace BugNET.BLL
         {
             if (queryClauses.Count == 0) throw new ArgumentOutOfRangeException("queryClauses");
 
-            return DataProviderManager.Provider.PerformQuery(projectId, queryClauses);
+            return DataProviderManager.Provider.PerformQuery(queryClauses, null, projectId);
         }
 
         /// <summary>

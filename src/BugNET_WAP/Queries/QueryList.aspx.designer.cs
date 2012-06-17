@@ -7,21 +7,46 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using BugNET.UserControls;
-
 namespace BugNET.Queries {
     
     
     public partial class QueryList {
         
         /// <summary>
-        /// btnPerformQuery control.
+        /// ConfirmDeleteText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPerformQuery;
+        protected global::System.Web.UI.WebControls.HiddenField ConfirmDeleteText;
+        
+        /// <summary>
+        /// dropQueries control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::BugNET.UserControls.PickQuery dropQueries;
+        
+        /// <summary>
+        /// imgPerformQuery control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton imgPerformQuery;
+        
+        /// <summary>
+        /// pnlAddQuery control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlAddQuery;
         
         /// <summary>
         /// btnAddQuery control.
@@ -30,7 +55,25 @@ namespace BugNET.Queries {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddQuery;
+        protected global::System.Web.UI.WebControls.ImageButton btnAddQuery;
+        
+        /// <summary>
+        /// lbAddQuery control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lbAddQuery;
+        
+        /// <summary>
+        /// pnlDeleteQuery control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlDeleteQuery;
         
         /// <summary>
         /// btnDeleteQuery control.
@@ -39,16 +82,43 @@ namespace BugNET.Queries {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDeleteQuery;
+        protected global::System.Web.UI.WebControls.ImageButton btnDeleteQuery;
         
         /// <summary>
-        /// EditQueryButton control.
+        /// lbDeleteQuery control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button EditQueryButton;
+        protected global::System.Web.UI.WebControls.LinkButton lbDeleteQuery;
+        
+        /// <summary>
+        /// pnlEditQuery control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlEditQuery;
+        
+        /// <summary>
+        /// btnEditQuery control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton btnEditQuery;
+        
+        /// <summary>
+        /// lbEditQuery control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lbEditQuery;
         
         /// <summary>
         /// lblError control.
@@ -76,9 +146,14 @@ namespace BugNET.Queries {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal Literal1;
-
-        protected DisplayIssues ctlDisplayIssues;
-
-        protected PickQuery dropQueries;
+        
+        /// <summary>
+        /// ctlDisplayIssues control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::BugNET.UserControls.DisplayIssues ctlDisplayIssues;
     }
 }

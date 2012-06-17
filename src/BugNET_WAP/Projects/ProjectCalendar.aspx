@@ -1,17 +1,8 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Shared/SingleColumn.master" AutoEventWireup="true" Title="Project Calendar" meta:resourcekey="Page" CodeBehind="ProjectCalendar.aspx.cs" Inherits="BugNET.Projects.ProjectCalendar"  %>
-<%@ Register TagPrefix="it" TagName="PickProject" Src="~/UserControls/PickProject.ascx" %>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="Content" runat="server">
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('.dateField').datepick({ showOn: 'button',
-                buttonImageOnly: true, buttonImage: '<%=ResolveUrl("~/Images/calendar.gif")%>'
-            });
-        });
-	
-    </script>
     <div style="margin: 0 auto;width:850px;">
-        <div class="centered-content">
+        <div>
             <h1><asp:Label id="lblProjectName" Runat="Server" /></h1>
         </div>
         <table style="width:850px;border:0;border-collapse:collapse;">
@@ -40,10 +31,10 @@
                 </td>
             </tr>
             <tr>
-                <td align="left" style="height:25px;padding-left:5px;">
+                <td class="align-left" style="height:25px;padding-left:5px;">
                     <asp:LinkButton ID="btnPrevious" runat="server" OnClick="btnPrevious_Click" meta:resourcekey="btnPrevious" Text="&lt; Previous" ToolTip="Previous" />
                 </td>
-                <td align="right" style="height:25px;padding-left:5px;">      
+                <td class="align-right" style="height:25px;padding-left:5px;">      
                     <asp:LinkButton ID="btnNext" runat="server" OnClick="btnNext_Click" Text="Next &gt;" meta:resourcekey="btnNext"  ToolTip="Next" />
                 </td>
             </tr>

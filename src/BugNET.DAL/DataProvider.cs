@@ -76,7 +76,9 @@ namespace BugNET.DAL
         public abstract List<RequiredField> GetRequiredFieldsForIssues();
         public abstract void PerformGenericQuery<T>(ref List<T> list, List<QueryClause> queryClauses, string sql, string orderBy);
 
+        [Obsolete("Please use the new overloaded PerformQuery method")]
         public abstract List<Issue> PerformQuery(int projectId, List<QueryClause> queryClauses);
+
         public abstract List<Issue> PerformQuery(List<QueryClause> queryClauses, ICollection<KeyValuePair<string, string>> sortFields, int projectId = 0);
 
         public abstract List<Issue> PerformSavedQuery(int projectId, int queryId);

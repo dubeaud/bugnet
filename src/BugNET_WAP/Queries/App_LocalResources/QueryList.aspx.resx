@@ -138,4 +138,10 @@
   <data name="Results.Text" xml:space="preserve">
     <value>Results:</value>
   </data>
+  <data name="btnEditQuery.Text">
+    <value xml:space="preserve">Edit Query</value>
+  </data>
+  <data name="ConfirmDelete">
+    <value xml:space="preserve">Are you sure you wish to delete this query?  This action cannot be undone.</value>
+  </data>
 </root>
