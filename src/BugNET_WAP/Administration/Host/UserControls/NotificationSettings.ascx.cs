@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Linq;
-using System.Web.UI.WebControls;
 using BugNET.BLL;
-using BugNET.BLL.Notifications;
 using BugNET.Common;
 using BugNET.UserInterfaceLayer;
 
@@ -38,7 +36,8 @@ namespace BugNET.Administration.Host.UserControls
             AdminNotificationUser.DataBind();
 
             var adminNotifyUsername = HostSettingManager.Get(HostSettingNames.AdminNotificationUsername);
-            if (users.Where(u => u.UserName == adminNotifyUsername).SingleOrDefault() != null)
+
+            if (users.SingleOrDefault(u => u.UserName == adminNotifyUsername) != null)
             { 
                 AdminNotificationUser.SelectedValue = adminNotifyUsername;
             }

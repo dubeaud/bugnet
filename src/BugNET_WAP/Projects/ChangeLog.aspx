@@ -79,30 +79,28 @@
                             <table class="grid">
                                 <tr>
                                     <td runat="server" id="tdId" class="gridHeader">
-                                        <asp:LinkButton ID="LinkButton2" runat="server" OnClick="SortIssueIdClick" Text="<%$ Resources:SharedResources, Id %>" />
+                                        <asp:LinkButton ID="LinkButton2" runat="server" Text="<%$ Resources:SharedResources, Id %>" CommandArgument="iv.[IssueId]" OnClick="SortIssueClick" />
                                     </td>
                                     <td runat="server" id="tdCategory" class="gridHeader">
-                                        <asp:LinkButton ID="lnkCategory" runat="server" Text="<%$ Resources:SharedResources, Category %>"
-                                            OnClick="SortCategoryClick" />
+                                        <asp:LinkButton ID="lnkCategory" runat="server" Text="<%$ Resources:SharedResources, Category %>" CommandArgument="iv.[CategoryName]" OnClick="SortIssueClick" />
                                     </td>
                                     <td runat="server" id="tdIssueType" class="gridHeader" style="text-align: center;">
-                                        <asp:LinkButton ID="LinkButton1" runat="server" OnClick="SortIssueTypeClick" Text="<%$ Resources:SharedResources, Type %>" />
+                                        <asp:LinkButton ID="LinkButton1" runat="server"  Text="<%$ Resources:SharedResources, Type %>" CommandArgument="iv.[IssueTypeName]" OnClick="SortIssueClick"/>
                                     </td>
                                     <td runat="server" id="tdPriority" class="gridHeader" style="text-align: center;">
-                                        <asp:LinkButton ID="LinkButton8" runat="server" Text="<%$ Resources:SharedResources, Priority %>"
-                                            OnClick="SortPriorityClick" />
+                                        <asp:LinkButton ID="LinkButton8" runat="server" Text="<%$ Resources:SharedResources, Priority %>" CommandArgument="iv.[PriorityName]" OnClick="SortIssueClick" />
                                     </td>
                                     <td runat="server" id="tdTitle" class="gridHeader">
-                                        <asp:LinkButton ID="LinkButton3" runat="server" OnClick="SortTitleClick" Text="<%$ Resources:SharedResources, Title %>" />
+                                        <asp:LinkButton ID="LinkButton3" runat="server" Text="<%$ Resources:SharedResources, Title %>" CommandArgument="iv.[IssueTitle]" OnClick="SortIssueClick" />
                                     </td>
                                     <td runat="server" id="tdAssigned" class="gridHeader">
-                                        <asp:LinkButton ID="LinkButton4" runat="server" OnClick="SortAssignedUserClick" Text="<%$ Resources:SharedResources, AssignedTo %>" />
+                                        <asp:LinkButton ID="LinkButton4" runat="server" Text="<%$ Resources:SharedResources, AssignedTo %>" CommandArgument="iv.[AssignedDisplayName]" OnClick="SortIssueClick" />
                                     </td>
                                     <td runat="server" id="tdStatus" class="gridHeader" style="text-align: center;">
-                                        <asp:LinkButton ID="LinkButton6" runat="server" OnClick="SortStatusClick" Text="<%$ Resources:SharedResources, Status %>" />
+                                        <asp:LinkButton ID="LinkButton6" runat="server" Text="<%$ Resources:SharedResources, Status %>" CommandArgument="iv.[StatusName]" OnClick="SortIssueClick" />
                                     </td>
                                     <td runat="server" id="tdResolution" class="gridHeader" style="text-align: center;">
-                                        <asp:LinkButton ID="LinkButton10" runat="server" OnClick="SortResolutionClick" Text="<%$ Resources:SharedResources, Resolution %>" />
+                                        <asp:LinkButton ID="LinkButton10" runat="server" Text="<%$ Resources:SharedResources, Resolution %>" CommandArgument="iv.[ResolutionName]" OnClick="SortIssueClick" />
                                     </td>
                                 </tr>
                         </HeaderTemplate>
