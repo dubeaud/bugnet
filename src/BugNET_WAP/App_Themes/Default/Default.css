@@ -928,21 +928,6 @@ div.welcomemessage ul
     font-size: 0.8em;
 }
 
-.sortascheaderstyle
-{
-	background-image: url(img/sort_asc.gif);
-	background-color: #8dbdd8;
-	background-repeat: no-repeat;
-	background-position: center left;
-}
-.sortdescheaderstyle
-{
-	background-image: url(img/sort_desc.gif);
-	background-color: #8dbdd8;
-	background-repeat: no-repeat;
-	background-position: center left;
-}
-
 /* Roadmap */
 .roadMapGroupHeader td
 {
@@ -1676,4 +1661,5 @@ ul.permissions li
 .text-color-black{color:#000;} 
 .text-color-grey{color:grey;} 
 .text-color-lightgrey{color:lightgray;} 
-.word-wrap{word-wrap:break-word;} 
+.word-wrap{word-wrap:break-word;}
+.wide-textarea { width: 100% !Important; }

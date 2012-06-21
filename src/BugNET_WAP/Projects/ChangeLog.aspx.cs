@@ -40,11 +40,11 @@ namespace BugNET.Projects
 
                 var p = ProjectManager.GetById(ProjectId);
 
-				if(p == null)
-				{
-					ErrorRedirector.TransferToSomethingMissingPage(Page);
-					return;
-				}
+                if (p == null || p.Disabled)
+                {
+                    ErrorRedirector.TransferToSomethingMissingPage(Page);
+                    return;
+                }
 
                 ltProject.Text = p.Name;
                 litProjectCode.Text = p.Code;
@@ -61,7 +61,9 @@ namespace BugNET.Projects
 
 				ViewMode = 1;
                 SortMilestonesAscending = false;
-				SortField = "iv.[IssueId]";
+                SortHeader = "Id";
+                SortAscending = false;
+                SortField = "iv.[IssueId]";
 
                 BindChangeLog();
 			}
@@ -175,6 +177,25 @@ namespace BugNET.Projects
             set { ViewState.Set("ViewMode", value); }
         }
 
+        string SortHeader
+        {
+            get { return ViewState.Get("SortHeader", string.Empty); }
+            set { ViewState.Set("SortHeader", value); }
+        }
+
+        protected void SortIssueClick(object sender, EventArgs e)
+        {
+            var button = sender as LinkButton;
+
+            if (button != null)
+            {
+                SortField = button.CommandArgument;
+                SortHeader = button.CommandName;
+            }
+
+            BindChangeLog();
+        }
+
         /// <summary>
         /// Gets or sets a value indicating whether [sort milestones ascending].
         /// </summary>
@@ -214,7 +235,7 @@ namespace BugNET.Projects
         		case ListItemType.Header:
         			foreach (Control c in e.Item.Controls)
         			{
-        				if (c.GetType() != typeof (HtmlTableCell) || c.ID != "td" + SortField) continue;
+        				if (c.GetType() != typeof (HtmlTableCell) || c.ID != string.Format("td{0}", SortHeader)) continue;
 
         				var img = new System.Web.UI.WebControls.Image
         				{
@@ -298,11 +319,14 @@ namespace BugNET.Projects
         		((Label)e.Item.FindControl("lblReleaseDate")).Text = GetLocalResourceObject("NoReleaseDate").ToString(); 
         	}
 
-        	var list = (Repeater)e.Item.FindControl("IssuesList");
+        	var list = e.Item.FindControl("IssuesList") as Repeater;
+
+            if(list == null) return;
+
         	var queryClauses = new List<QueryClause>
         	{
         	    new QueryClause("AND", "iv.[IssueMilestoneId]", "=", m.Id.ToString(), SqlDbType.Int, false),
-				new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false)
+				new QueryClause("AND", "iv.[IsClosed]", "=", "1", SqlDbType.Int, false)
         	};
 
         	var sortString = (SortAscending) ? "ASC" : "DESC";
@@ -327,17 +351,5 @@ namespace BugNET.Projects
         	((HyperLink)e.Item.FindControl("MilestoneLink")).NavigateUrl = string.Format(Page.ResolveUrl("~/Issues/IssueList.aspx") + "?pid={0}&m={1}&s=-1", ProjectId, m.Id);
         	((HyperLink)e.Item.FindControl("MilestoneLink")).Text = m.Name;
         }
-
-    	protected void SortIssueClick(object sender, EventArgs e)
-    	{
-			var button = sender as LinkButton;
-
-    		if (button != null)
-    		{
-    			SortField = button.CommandArgument;
-    		}
-
-    		BindChangeLog();
-    	}
 	}
 }

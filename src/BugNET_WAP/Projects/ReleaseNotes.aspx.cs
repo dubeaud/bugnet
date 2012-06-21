@@ -6,6 +6,7 @@ using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using BugNET.BLL;
+using BugNET.Common;
 using BugNET.Entities;
 using BugNET.UserInterfaceLayer;
 
@@ -13,19 +14,44 @@ namespace BugNET.Projects
 {
     public partial class ReleaseNotes : BasePage
     {
-        private int MilestoneId = 0;
+        int MilestoneId
+        {
+            get { return ViewState.Get("MilestoneId", 0); }
+            set { ViewState.Set("MilestoneId", value); }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             Literal1.Text = GetLocalResourceObject("Page.Title").ToString();
-            ProjectId = Convert.ToInt32(Request.QueryString["pid"]);
-            MilestoneId = Convert.ToInt32(Request.QueryString["m"]);
-            litMilestone.Text = MilestoneManager.GetById(MilestoneId).Name;
-            litProject.Text = ProjectManager.GetById(ProjectId).Name;
+
+            if (!IsPostBack)
+            {
+                ProjectId = Request.Get("pid", Globals.NEW_ID);
+                MilestoneId = Request.Get("m", Globals.NEW_ID);
+
+                // If don't know project or issue then redirect to something missing page
+                if (ProjectId == 0 || MilestoneId == 0)
+                {
+                    ErrorRedirector.TransferToSomethingMissingPage(Page);
+                    return;
+                }
+
+                var p = ProjectManager.GetById(ProjectId);
+
+                if (p == null || p.Disabled)
+                {
+                    ErrorRedirector.TransferToSomethingMissingPage(Page);
+                    return;
+                }
+
+                litMilestone.Text = MilestoneManager.GetById(MilestoneId).Name;
+                litProject.Text = ProjectManager.GetById(ProjectId).Name;
+            }
 
             rptReleaseNotes.DataSource = IssueTypeManager.GetByProjectId(ProjectId);
             rptReleaseNotes.DataBind();
 
-            Output.Text = string.Format("<h1>{2} - {0} - {1}</h1>", litProject.Text, litMilestone.Text, GetLocalResourceObject("Page.Title").ToString());
+            Output.Text = string.Format("<h1>{2} - {0} - {1}</h1>", litProject.Text, litMilestone.Text, GetLocalResourceObject("Page.Title"));
             Output.Text += RenderControl(rptReleaseNotes);
         }
 
@@ -36,35 +62,35 @@ namespace BugNET.Projects
         /// <param name="e">The <see cref="System.Web.UI.WebControls.RepeaterItemEventArgs"/> instance containing the event data.</param>
         protected void rptReleaseNotes_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem) return;
+
+            var it = (Literal)e.Item.FindControl("IssueType");
+            var issuesList = (Repeater)e.Item.FindControl("IssuesList");
+            var issueType = (IssueType)e.Item.DataItem;
+            it.Text = issueType.Name;
+
+            var queryClauses = new List<QueryClause>
+        	{
+        	    new QueryClause("AND", "iv.[IssueTypeId]", "=", issueType.Id.ToString(), SqlDbType.Int, false),
+                new QueryClause("AND", "iv.[IssueMilestoneId]", "=", MilestoneId.ToString(), SqlDbType.Int, false),
+				new QueryClause("AND", "iv.[IsClosed]", "=", "1", SqlDbType.Int, false)
+        	};
+
+            var sortList = new List<KeyValuePair<string, string>>
+        	{
+				new KeyValuePair<string, string>("iv.[IssueId]", "DESC")
+        	};
+
+            var issueList = IssueManager.PerformQuery(queryClauses, sortList, ProjectId);
+
+            if (issueList.Count > 0)
             {
-                Literal it = (Literal)e.Item.FindControl("IssueType");
-                IssueType issueType = (IssueType)e.Item.DataItem;
-                it.Text = issueType.Name;
-
-                List<QueryClause> queryClauses = new List<QueryClause>();
-                int MilestoneId = Convert.ToInt32(Request.QueryString["m"]);
-
-                Repeater list = (Repeater)e.Item.FindControl("IssuesList");
-                queryClauses.Add( new QueryClause("AND", "IssueTypeId", "=", issueType.Id.ToString(), SqlDbType.Int, false));
-                queryClauses.Add(new QueryClause("AND", "IssueMilestoneId", "=", MilestoneId.ToString(), SqlDbType.Int, false));
-
-                List<Status> openStatus = StatusManager.GetByProjectId(ProjectId).FindAll(s => !s.IsClosedState);
-                foreach (Status st in openStatus)
-                {
-                    queryClauses.Add(new QueryClause("AND", "IssueStatusId", "<>", st.Id.ToString(), SqlDbType.Int, false));
-                }
-
-                List<Issue> issueList = IssueManager.PerformQuery(queryClauses, ProjectId);
-                if (issueList.Count > 0)
-                {
-                    list.DataSource = issueList;
-                    list.DataBind();
-                }
-                else
-                {
-                    e.Item.Visible = false;
-                }
+                issuesList.DataSource = issueList;
+                issuesList.DataBind();
+            }
+            else
+            {
+                e.Item.Visible = false;
             }
         }
 
@@ -73,11 +99,11 @@ namespace BugNET.Projects
         /// </summary>
         /// <param name="ctrl">The CTRL.</param>
         /// <returns></returns>
-        public string RenderControl(Control ctrl)
+        private static string RenderControl(Control ctrl)
         {
-            StringBuilder sb = new StringBuilder();
-            StringWriter tw = new StringWriter(sb);
-            HtmlTextWriter hw = new HtmlTextWriter(tw);
+            var sb = new StringBuilder();
+            var tw = new StringWriter(sb);
+            var hw = new HtmlTextWriter(tw);
 
             ctrl.RenderControl(hw);
             return sb.ToString();
@@ -90,13 +116,12 @@ namespace BugNET.Projects
         /// <param name="e">The <see cref="System.Web.UI.WebControls.RepeaterItemEventArgs"/> instance containing the event data.</param>
         protected void IssueList_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
-            {
-                Literal it = (Literal)e.Item.FindControl("Issue");
-                Issue issue = (Issue)e.Item.DataItem;
-                it.Text = string.Format("<a href=\"{3}Issues/IssueDetail.aspx?id={2}\">{0}</a> - {1}", issue.FullId, issue.Title,issue.Id,HostSettingManager.DefaultUrl);
+            if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem) return;
 
-            }
+            var it = (Literal)e.Item.FindControl("Issue");
+            var issue = (Issue)e.Item.DataItem;
+
+            it.Text = string.Format("<a href=\"{3}Issues/IssueDetail.aspx?id={2}\">{0}</a> - {1}", issue.FullId, issue.Title, issue.Id, HostSettingManager.DefaultUrl);
         }
     }
 }

@@ -902,6 +902,11 @@
     <Content Include="Administration\Projects\UserControls\ProjectMilestones.ascx" />
     <Content Include="Administration\Users\EditUser.aspx" />
     <Content Include="Administration\Users\UserList.aspx" />
+    <Content Include="App_Themes\Default\Images\bg_head.gif" />
+    <Content Include="App_Themes\Default\Images\logo.png" />
+    <Content Include="App_Themes\Default\Images\tableftB.gif" />
+    <Content Include="App_Themes\Default\Images\tabrightB.gif" />
+    <Content Include="App_Themes\Default\Images\title-top-fade.gif" />
     <Content Include="App_Themes\Default\superfish.css" />
     <Content Include="Default.aspx" />
     <Content Include="Errors\AccessDenied.aspx" />
@@ -927,6 +932,8 @@
     <Content Include="Images\bullet_go.gif" />
     <Content Include="Images\bullet_green.gif" />
     <Content Include="Images\button_background.png" />
+    <Content Include="Images\button_background_admin.png" />
+    <Content Include="Images\button_background_admin1.png" />
     <Content Include="Images\calendar.gif" />
     <Content Include="Images\cancel.gif" />
     <Content Include="Images\Clock.gif" />

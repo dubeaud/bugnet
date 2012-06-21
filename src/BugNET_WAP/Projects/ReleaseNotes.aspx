@@ -22,5 +22,5 @@
 <br />
 <h2><asp:literal id="Literal2" runat="server" meta:resourcekey="EditCopyNotes"   /></h2>
 <p><asp:literal id="Literal3" runat="server" meta:resourcekey="EditCopyNotesDesc"   /></p>
-<asp:TextBox ID="Output" runat="server" width="600px" Height="450px" TextMode="MultiLine"></asp:TextBox>
+<asp:TextBox ID="Output" runat="server" style="height: 450px; width: 80%!Important" TextMode="MultiLine"></asp:TextBox>
 </asp:Content>
