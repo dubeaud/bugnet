@@ -240,10 +240,9 @@ namespace BugNET.BLL
             if (notification.IssueId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("notification", "The issue id is not valid for this notification"));
 
             // TODO - create this via dependency injection at some point.
-            IMailDeliveryService MailService = new SmtpMailDeliveryService();
-            MembershipUser user;
+            IMailDeliveryService mailService = new SmtpMailDeliveryService();
 
-            var issue = DataProviderManager.Provider.GetIssueById(notification.IssueId);
+        	var issue = DataProviderManager.Provider.GetIssueById(notification.IssueId);
             var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
 
             //load template
@@ -255,18 +254,18 @@ namespace BugNET.BLL
             try
             {
 
-                user = UserManager.GetUser(notification.NotificationUsername);
-                string Subject = String.Format(subject, issue.FullId);
-                string Body = template;
+                var user = UserManager.GetUser(notification.NotificationUsername);
+                var Subject = String.Format(subject, issue.FullId);
+                var Body = template;
 
-                MailMessage message = new MailMessage()
-                {
+                var message = new MailMessage
+                              	{
                     Subject = Subject,
                     Body = Body,
                     IsBodyHtml = true
                 };
 
-                MailService.Send(user.Email, message);
+                mailService.Send(user.Email, message);
             }
             catch (Exception ex)
             {

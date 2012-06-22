@@ -144,6 +144,9 @@
   <data name="NewAssignee" xml:space="preserve">
     <value>Text\NewAssignee.xslt</value>
   </data>
+  <data name="NewAssigneeHTML" xml:space="preserve">
+    <value>HTML\NewAssignee.xslt</value>
+  </data>
   <data name="NewAssigneeSubject" xml:space="preserve">
     <value>Issue {0} has been assigned to you</value>
   </data>

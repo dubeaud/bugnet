@@ -132,8 +132,8 @@ namespace BugNET.BLL
                 if ((originalIssue.AssignedUserName != newAssignedUserName))
                 {
                     // if the new assigned user is the unassigned user then don't trigger the new assignee notification
-                    originalIssue.SendNewAssigneeNotification = (newAssignedUserName != Globals.UNASSIGNED_DISPLAY_TEXT);
-                    originalIssue.NewAssignee = true;
+					issueToCompare.SendNewAssigneeNotification = (newAssignedUserName != Globals.UNASSIGNED_DISPLAY_TEXT);
+					issueToCompare.NewAssignee = true;
 
                     var newAssignedDisplayName = (newAssignedUserName == Globals.UNASSIGNED_DISPLAY_TEXT) ? newAssignedUserName : UserManager.GetUserDisplayName(newAssignedUserName);
                     issueChanges.Add(GetNewIssueHistory(history, "Assigned to", originalIssue.AssignedDisplayName, newAssignedDisplayName));
