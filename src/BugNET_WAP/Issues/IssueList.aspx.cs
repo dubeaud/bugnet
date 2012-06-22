@@ -369,8 +369,7 @@ namespace BugNET.Issues
                     case "Relevant":
                         queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false));
 
-                        queryClauses.Add(new QueryClause("AND (", "", "", "", SqlDbType.NVarChar, false));
-                        queryClauses.Add(new QueryClause("", "iv.[AssignedUsername]", "=", userName, SqlDbType.NVarChar, false));
+                        queryClauses.Add(new QueryClause("AND (", "iv.[AssignedUsername]", "=", userName, SqlDbType.NVarChar, false));
                         queryClauses.Add(new QueryClause("OR", "iv.[CreatorUsername]", "=", userName, SqlDbType.NVarChar, false));
                         queryClauses.Add(new QueryClause("OR", "iv.[OwnerUsername]", "=", userName, SqlDbType.NVarChar, false));
                         queryClauses.Add(new QueryClause(")", "", "", "", SqlDbType.NVarChar, false));

@@ -121,22 +121,27 @@ namespace BugNET.Providers.DataProviders
                         // this puts properness in the hands of the UI making the call
                         if (!fieldName.Contains(".") && !fieldName.Equals("1"))
                         {
-                            fieldName = fieldName.Replace("[", "").Replace("]", "");
+                            fieldName = fieldName.Replace("[", "").Replace("]", "").Trim();
 
-                            if (!fieldName.StartsWith("["))
-                                fieldName = string.Concat("[", fieldName);
+                            if (fieldName.Length > 0)
+                            {
+                                if (!fieldName.StartsWith("["))
+                                    fieldName = string.Concat("[", fieldName);
 
-                            if (!fieldName.EndsWith("]"))
-                                fieldName = string.Concat(fieldName, "]");
+                                if (!fieldName.EndsWith("]"))
+                                    fieldName = string.Concat(fieldName, "]");   
+                            }
                         }
 
                         // handle when we want to create nested boolean logic in the query clauses
                         // this of course means the order of the query clauses must be correct
-                        if (boolOper.EndsWith(")") || boolOper.EndsWith("("))
+                        if (boolOper.EndsWith(")"))
                         {
                             criteriaBuilder.AppendFormat(" {0}", boolOper);
-                            continue;
                         }
+
+                        // if the field name is empty they we must be closing a nested criteria
+                        if (fieldName.Length.Equals(0)) continue;
 
                         // if the custom field value is null empty then setup for a null value
                         if (string.IsNullOrEmpty(fieldValue))

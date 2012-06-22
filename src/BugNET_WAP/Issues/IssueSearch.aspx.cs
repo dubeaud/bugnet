@@ -226,8 +226,7 @@ namespace BugNET.Issues
 
                 if(chkSearchTitle.Checked || chkSearchDesc.Checked)
                 {
-                    queryClauses.Add(new QueryClause("AND (", "", "", "", SqlDbType.NVarChar, false));
-                    queryClauses.Add(new QueryClause("", "1", "=", "2", SqlDbType.NVarChar, false));
+                    queryClauses.Add(new QueryClause("AND (", "1", "=", "2", SqlDbType.NVarChar, false));
 
                     if(chkSearchTitle.Checked)
                     {

@@ -52,12 +52,12 @@ namespace BugNET.Issues
             {
                 var first = true;
 
-                queryClauses.Add(new QueryClause("AND (", "", "", "", SqlDbType.NVarChar, false));
                 foreach (var project in projects)
                 {
-                    queryClauses.Add(new QueryClause((first) ? "" : "OR", "iv.[ProjectId]", "=", project.ToString(), SqlDbType.NVarChar, false));
+                    queryClauses.Add(new QueryClause((first) ? "AND (" : "OR", "iv.[ProjectId]", "=", project.ToString(), SqlDbType.NVarChar, false));
                     first = false;
                 }
+
                 queryClauses.Add(new QueryClause(")", "", "", "", SqlDbType.NVarChar, false));
             }
 
