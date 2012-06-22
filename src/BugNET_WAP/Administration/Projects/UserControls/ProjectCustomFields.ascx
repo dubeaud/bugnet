@@ -171,12 +171,12 @@
                                                                     <asp:Label ID="lblSelectionName" runat="server" Text='<%# Server.HtmlEncode(DataBinder.Eval(Container.DataItem, "Name").ToString()) %>' />
                                                                 </ItemTemplate>
                                                                 <EditItemTemplate>
-                                                                    <asp:TextBox ID="txtEditSelectionName" MaxLength="50" Text='<%# DataBinder.Eval(Container.DataItem, "Name") %>' runat="server" />
+                                                                    <asp:TextBox ID="txtEditSelectionName" MaxLength="255" Text='<%# DataBinder.Eval(Container.DataItem, "Name") %>' runat="server" />
                                                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" Text="<%$ Resources:SharedResources, Required %>"
                                                                         ControlToValidate="txtEditSelectionName" ValidationGroup="UpdateSelection"></asp:RequiredFieldValidator>
                                                                 </EditItemTemplate>
                                                                 <FooterTemplate>
-                                                                    <asp:TextBox ID="txtAddSelectionName" MaxLength="50" runat="server" />
+                                                                    <asp:TextBox ID="txtAddSelectionName" MaxLength="255" runat="server" />
                                                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" Text="<%$ Resources:SharedResources, Required %>"
                                                                         ControlToValidate="txtAddSelectionName" ValidationGroup="AddSelection"></asp:RequiredFieldValidator>
                                                                 </FooterTemplate>
@@ -189,12 +189,12 @@
                                                                     <asp:Label ID="lblSelectionValue" runat="server" Text='<%# Server.HtmlEncode(DataBinder.Eval(Container.DataItem, "Value").ToString()) %>' />
                                                                 </ItemTemplate>
                                                                 <EditItemTemplate>
-                                                                    <asp:TextBox ID="txtEditSelectionValue" Text='<%# DataBinder.Eval(Container.DataItem, "Value") %>' runat="server" MaxLength="50" />
+                                                                    <asp:TextBox ID="txtEditSelectionValue" Text='<%# DataBinder.Eval(Container.DataItem, "Value") %>' runat="server" MaxLength="255" />
                                                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" Text="<%$ Resources:SharedResources, Required %>"
                                                                         ControlToValidate="txtEditSelectionValue" ValidationGroup="UpdateSelection"></asp:RequiredFieldValidator>
                                                                 </EditItemTemplate>
                                                                 <FooterTemplate>
-                                                                    <asp:TextBox ID="txtAddSelectionValue" MaxLength="50" runat="server" />
+                                                                    <asp:TextBox ID="txtAddSelectionValue" MaxLength="255" runat="server" />
                                                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" Text="<%$ Resources:SharedResources, Required %>"
                                                                         ControlToValidate="txtAddSelectionValue" ValidationGroup="AddSelection"></asp:RequiredFieldValidator>
                                                                 </FooterTemplate>
@@ -242,7 +242,7 @@
                 <ol>
                     <li>
                         <asp:Label ID="label1" runat="server" AssociatedControlID="txtName" Text="<%$ Resources:FieldName %>" />
-                        <asp:TextBox ID="txtName" MaxLength="50" runat="Server" />
+                        <asp:TextBox ID="txtName" MaxLength="255" runat="Server" />
                     </li>
                     <li>
                         <asp:Label ID="label2" runat="server" AssociatedControlID="rblCustomFieldType" Text="<%$ Resources:FieldType %>" />

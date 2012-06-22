@@ -1066,6 +1066,7 @@
     <Content Include="Providers\DataProviders\SqlDataProvider\20120609-CustomField-sproc-tweeks.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\20120610-IssueLastUpdated-sproc.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\20120616-wrhighfield-updated.sql" />
+    <Content Include="Providers\DataProviders\SqlDataProvider\20120621-wrhighfield-custom_field_selection_length.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\BugNet.Data.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\BugNet.Schema.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\InstallCommon.sql" />

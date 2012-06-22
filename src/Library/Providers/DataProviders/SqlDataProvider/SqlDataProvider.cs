@@ -3264,7 +3264,7 @@ namespace BugNET.Providers.DataProviders
                 sqlCmd.Parameters.Add("@ReturnValue", SqlDbType.Int, 0).Direction = ParameterDirection.ReturnValue;
                 sqlCmd.Parameters.Add("@IssueId", SqlDbType.Int, 0).Direction = ParameterDirection.Input;
                 sqlCmd.Parameters.Add("@CustomFieldId", SqlDbType.Int, 0).Direction = ParameterDirection.Input;
-                sqlCmd.Parameters.Add("@CustomFieldValue", SqlDbType.NVarChar, 255).Direction = ParameterDirection.Input;
+                sqlCmd.Parameters.Add("@CustomFieldValue", SqlDbType.NVarChar).Direction = ParameterDirection.Input;
 
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_CUSTOMFIELD_SAVECUSTOMFIELDVALUE);
 
@@ -3280,28 +3280,6 @@ namespace BugNET.Providers.DataProviders
                         errors = true;
                 }
                 return !errors;   
-            }
-        }
-
-        /// <summary>
-        /// Creates the new custom field selection.
-        /// </summary>
-        /// <param name="newCustomFieldSelection">The new custom field selection.</param>
-        /// <returns></returns>
-        public override int CreateNewCustomFieldSelection(CustomFieldSelection newCustomFieldSelection)
-        {
-            if (newCustomFieldSelection == null) throw new ArgumentNullException("newCustomFieldSelection");
-
-            using (var sqlCmd = new SqlCommand())
-            {
-                AddParamToSqlCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
-                AddParamToSqlCmd(sqlCmd, "@CustomFieldId", SqlDbType.Int, 0, ParameterDirection.Input, newCustomFieldSelection.CustomFieldId);
-                AddParamToSqlCmd(sqlCmd, "@CustomFieldSelectionName", SqlDbType.NVarChar, 255, ParameterDirection.Input, newCustomFieldSelection.Name);
-                AddParamToSqlCmd(sqlCmd, "@CUstomFieldSelectionValue", SqlDbType.NVarChar, 255, ParameterDirection.Input, newCustomFieldSelection.Value);
-
-                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_CUSTOMFIELDSELECTION_CREATE);
-                ExecuteScalarCmd(sqlCmd);
-                return ((int)sqlCmd.Parameters["@ReturnValue"].Value);   
             }
         }
 
@@ -3369,6 +3347,28 @@ namespace BugNET.Providers.DataProviders
         }
 
         /// <summary>
+        /// Creates the new custom field selection.
+        /// </summary>
+        /// <param name="newCustomFieldSelection">The new custom field selection.</param>
+        /// <returns></returns>
+        public override int CreateNewCustomFieldSelection(CustomFieldSelection newCustomFieldSelection)
+        {
+            if (newCustomFieldSelection == null) throw new ArgumentNullException("newCustomFieldSelection");
+
+            using (var sqlCmd = new SqlCommand())
+            {
+                AddParamToSqlCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
+                AddParamToSqlCmd(sqlCmd, "@CustomFieldId", SqlDbType.Int, 0, ParameterDirection.Input, newCustomFieldSelection.CustomFieldId);
+                AddParamToSqlCmd(sqlCmd, "@CustomFieldSelectionName", SqlDbType.NVarChar, 255, ParameterDirection.Input, newCustomFieldSelection.Name);
+                AddParamToSqlCmd(sqlCmd, "@CUstomFieldSelectionValue", SqlDbType.NVarChar, 255, ParameterDirection.Input, newCustomFieldSelection.Value);
+
+                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_CUSTOMFIELDSELECTION_CREATE);
+                ExecuteScalarCmd(sqlCmd);
+                return ((int)sqlCmd.Parameters["@ReturnValue"].Value);
+            }
+        }
+
+        /// <summary>
         /// Updates the custom field selection.
         /// </summary>
         /// <param name="customFieldSelectionToUpdate">The custom field selection to update.</param>
@@ -3382,8 +3382,8 @@ namespace BugNET.Providers.DataProviders
                 AddParamToSqlCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
                 AddParamToSqlCmd(sqlCmd, "@CustomFieldId", SqlDbType.Int, 0, ParameterDirection.Input, customFieldSelectionToUpdate.CustomFieldId);
                 AddParamToSqlCmd(sqlCmd, "@CustomFieldSelectionId", SqlDbType.Int, 0, ParameterDirection.Input, customFieldSelectionToUpdate.Id);
-                AddParamToSqlCmd(sqlCmd, "@CustomFieldSelectionName", SqlDbType.NText, 50, ParameterDirection.Input, customFieldSelectionToUpdate.Name);
-                AddParamToSqlCmd(sqlCmd, "@CustomFieldSelectionValue", SqlDbType.NText, 50, ParameterDirection.Input, customFieldSelectionToUpdate.Value);
+                AddParamToSqlCmd(sqlCmd, "@CustomFieldSelectionName", SqlDbType.NVarChar, 255, ParameterDirection.Input, customFieldSelectionToUpdate.Name);
+                AddParamToSqlCmd(sqlCmd, "@CustomFieldSelectionValue", SqlDbType.NVarChar, 255, ParameterDirection.Input, customFieldSelectionToUpdate.Value);
                 AddParamToSqlCmd(sqlCmd, "@CustomFieldSelectionSortOrder", SqlDbType.Int, 0, ParameterDirection.Input, customFieldSelectionToUpdate.SortOrder);
 
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_CUSTOMFIELDSELECTION_UPDATE);
