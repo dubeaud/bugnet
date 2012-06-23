@@ -47,6 +47,7 @@ namespace BugNET.Issues
                     if (_currentProject == null)
                     {
                         ErrorRedirector.TransferToNotFoundPage(Page);
+                        return;
                     }
 
                     ProjectId = _currentProject.Id;
@@ -186,6 +187,8 @@ namespace BugNET.Issues
         /// <returns></returns>
         private SiteMapNode ExpandIssuePaths(Object sender, SiteMapResolveEventArgs e)
         {
+            if (SiteMap.CurrentNode == null) return null;
+
             var currentNode = SiteMap.CurrentNode.Clone(true);
             var tempNode = currentNode;
 

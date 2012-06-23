@@ -1,5 +1,5 @@
 <%@ Page Language="c#" ValidateRequest="false" Inherits="BugNET.Issues.IssueDetail" MasterPageFile="~/Shared/IssueDetail.master"
-    Title=" " CodeBehind="IssueDetail.aspx.cs" AutoEventWireup="True" %>
+    Title=" " CodeBehind="IssueDetail.aspx.cs" AutoEventWireup="True" Async="true" %>
 
 <%@ Register TagPrefix="it" TagName="DisplayCustomFields" Src="~/UserControls/DisplayCustomFields.ascx" %>
 <%@ Register TagPrefix="it" TagName="PickCategory" Src="~/UserControls/PickCategory.ascx" %>

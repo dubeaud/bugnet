@@ -32,6 +32,9 @@ namespace BugNET.Queries
             {
                 pnlEditQuery.Visible = false;
             }
+
+		    pnlDeleteQuery.Visible = (dropQueries.DataSource.Count > 0);
+            pnlEditQuery.Visible = pnlDeleteQuery.Visible;
 		}
 
 		/// <summary>

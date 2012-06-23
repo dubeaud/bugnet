@@ -1,5 +1,5 @@
 <%@ Page Language="c#" Inherits="BugNET.Issues.IssueList" MasterPageFile="~/Shared/SingleColumn.master" Title="Issue List"
-    CodeBehind="IssueList.aspx.cs" AutoEventWireup="True"  meta:resourcekey="Page" %>
+    CodeBehind="IssueList.aspx.cs" AutoEventWireup="True"  meta:resourcekey="Page" Async="true" %>
 
 <%@ Register TagPrefix="it" TagName="DisplayIssues" Src="~/UserControls/DisplayIssues.ascx" %>
 <asp:Content ID="Content3" runat="server" ContentPlaceHolderID="PageTitle">

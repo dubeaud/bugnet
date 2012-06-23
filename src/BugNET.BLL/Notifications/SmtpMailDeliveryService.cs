@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System.Threading.Tasks;
+
 namespace BugNET.BLL.Notifications
 {
     using System;
@@ -47,19 +49,28 @@ namespace BugNET.BLL.Notifications
                 smtpDomain = HostSettingManager.Get(HostSettingNames.SMTPDomain, string.Empty);
             }
 
-            var client = new SmtpClient();               
-            client.Host = smtpServer;
-            client.Port = smtpPort;
-            client.EnableSsl = smtpUseSSL;
+            var client = new SmtpClient {Host = smtpServer, Port = smtpPort, EnableSsl = smtpUseSSL};
 
             if (smtpAuthentictation)
             {
                 client.Credentials = new NetworkCredential(smtpUsername, smtpPassword, smtpDomain);
             }
 
-            // Set the method that is called back when the send operation ends.
-            client.SendCompleted += new SendCompletedEventHandler(SendCompletedCallback);
-            client.SendAsync(message, null);
+
+            //Set the method that is called back when the send operation ends.
+            client.SendCompleted += SendCompletedCallback;
+
+            try
+            {
+                client.SendAsync(message, null);
+            }
+            catch (Exception)
+            {
+                client.SendAsyncCancel();
+                client.SendCompleted -= SendCompletedCallback;
+                client.Dispose();
+                throw;
+            }
         }
 
         /// <summary>
@@ -69,6 +80,8 @@ namespace BugNET.BLL.Notifications
         /// <param name="e">The <see cref="System.ComponentModel.AsyncCompletedEventArgs"/> instance containing the event data.</param>
         private static void SendCompletedCallback(object sender, AsyncCompletedEventArgs e)
         {
+            var smtpClient = sender as SmtpClient;
+
             if (e.Cancelled)
             {
                 return;
@@ -79,6 +92,11 @@ namespace BugNET.BLL.Notifications
                 // log the error message
                 Log.Error(e.Error);
             }
+
+            if (smtpClient == null) return;
+
+            smtpClient.SendCompleted -= SendCompletedCallback;
+            smtpClient.Dispose();
         }
     }
 }

@@ -1,8 +1,7 @@
 ﻿<%@ Page Language="c#" Inherits="BugNET.Issues.SearchResults" MasterPageFile="~/Shared/SingleColumn.master" Title="<%$ Resources:SharedResources, Search %>"
-    CodeBehind="IssueSearch.aspx.cs" %>
-
-<%@ Register Src="~/UserControls/DisplayIssues.ascx" TagName="DisplayIssues" TagPrefix="uc1" %>
+    CodeBehind="IssueSearch.aspx.cs" Async="true" %>
 <%@ Register TagPrefix="it" TagName="TextImage" Src="~/UserControls/TextImage.ascx" %>
+
 <asp:Content runat="server" ID="Content1" ContentPlaceHolderID="Content">
 
     <script type="text/javascript">
