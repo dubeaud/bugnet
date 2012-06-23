@@ -274,45 +274,45 @@ namespace BugNET.BLL
 
         }
 
-        /// <summary>
-        /// Stewart Moss
-        /// Apr 14 2010 
-        /// 
-        /// Performs a query containing any number of query clauses on a certain IssueID
-        /// </summary>
-        /// <param name="issueId"></param>
-        /// <param name="queryClauses"></param>
-        /// <returns></returns>
-        public static List<IssueAttachment> PerformQuery(int issueId, List<QueryClause> queryClauses)
-        {
-            if (issueId < 0)
-                throw new ArgumentOutOfRangeException("issueId", "must be bigger than 0");
+        ///// <summary>
+        ///// Stewart Moss
+        ///// Apr 14 2010 
+        ///// 
+        ///// Performs a query containing any number of query clauses on a certain IssueID
+        ///// </summary>
+        ///// <param name="issueId"></param>
+        ///// <param name="queryClauses"></param>
+        ///// <returns></returns>
+        //public static List<IssueAttachment> PerformQuery(int issueId, List<QueryClause> queryClauses)
+        //{
+        //    if (issueId < 0)
+        //        throw new ArgumentOutOfRangeException("issueId", "must be bigger than 0");
 
-            queryClauses.Add(new QueryClause("AND", "IssueId", "=", issueId.ToString(), SqlDbType.Int, false));
+        //    queryClauses.Add(new QueryClause("AND", "IssueId", "=", issueId.ToString(), SqlDbType.Int, false));
 
-            return PerformQuery(queryClauses);
-        }
+        //    return PerformQuery(queryClauses);
+        //}
 
-        /// <summary>
-        /// Stewart Moss
-        /// Apr 14 2010 8:30 pm
-        /// 
-        /// Performs any query containing any number of query clauses
-        /// WARNING! Will expose the entire IssueAttachment table, regardless of 
-        /// project level privileges. (that's why its private for now)
-        /// </summary>        
-        /// <param name="queryClauses"></param>
-        /// <returns></returns>
-        private static List<IssueAttachment> PerformQuery(List<QueryClause> queryClauses)
-        {
-            if (queryClauses == null)
-                throw new ArgumentNullException("queryClauses");
+        ///// <summary>
+        ///// Stewart Moss
+        ///// Apr 14 2010 8:30 pm
+        ///// 
+        ///// Performs any query containing any number of query clauses
+        ///// WARNING! Will expose the entire IssueAttachment table, regardless of 
+        ///// project level privileges. (that's why its private for now)
+        ///// </summary>        
+        ///// <param name="queryClauses"></param>
+        ///// <returns></returns>
+        //private static List<IssueAttachment> PerformQuery(List<QueryClause> queryClauses)
+        //{
+        //    if (queryClauses == null)
+        //        throw new ArgumentNullException("queryClauses");
 
-            var lst = new List<IssueAttachment>();
-            DataProviderManager.Provider.PerformGenericQuery(ref lst, queryClauses, @"SELECT a.*, b.UserName as CreatorUserName, a.Userid as CreatorUserID, b.Username as CreatorDisplayName from BugNet_IssueAttachment as a, aspnet_Users as b  WHERE a.UserId=b.UserID ", @" ORDER BY IssueAttachmentId DESC");
+        //    var lst = new List<IssueAttachment>();
+        //    DataProviderManager.Provider.PerformGenericQuery(ref lst, queryClauses, @"SELECT a.*, b.UserName as CreatorUserName, a.Userid as CreatorUserID, b.Username as CreatorDisplayName from BugNet_IssueAttachment as a, aspnet_Users as b  WHERE a.UserId=b.UserID ", @" ORDER BY IssueAttachmentId DESC");
 
-            return lst;
-        }
+        //    return lst;
+        //}
 
 
         /// <summary>

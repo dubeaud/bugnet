@@ -74,7 +74,7 @@ namespace BugNET.DAL
         public abstract bool UpdateQuery(int queryId, string username, int projectId, string queryName, bool isPublic, List<QueryClause> queryClauses);
         public abstract bool DeleteQuery(int queryId);
         public abstract List<RequiredField> GetRequiredFieldsForIssues();
-        public abstract void PerformGenericQuery<T>(ref List<T> list, List<QueryClause> queryClauses, string sql, string orderBy);
+        public abstract void PerformIssueCommentSearchQuery(ref List<IssueComment> list, List<QueryClause> queryClauses);
 
         [Obsolete("Please use the new overloaded PerformQuery method")]
         public abstract List<Issue> PerformQuery(int projectId, List<QueryClause> queryClauses);

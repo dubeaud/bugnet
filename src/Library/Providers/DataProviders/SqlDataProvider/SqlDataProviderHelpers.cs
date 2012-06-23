@@ -216,21 +216,17 @@ namespace BugNET.Providers.DataProviders
         /// <param name="sqlCmd">The SQL CMD.</param>
         /// <param name="gcfr">The GCFR.</param>
         /// <param name="list">The list.</param>
-        private int ExecuteReaderCmd<T>(SqlCommand sqlCmd, GenerateListFromReader<T> gcfr, ref List<T> list)
+        private void ExecuteReaderCmd<T>(SqlCommand sqlCmd, GenerateListFromReader<T> gcfr, ref List<T> list)
         {
             if (string.IsNullOrEmpty(_connectionString)) throw new Exception("The connection string cannot be empty, please check the web.config for the proper settings");
             if (sqlCmd == null) throw (new ArgumentNullException("sqlCmd"));
-
-            var totalRows = 0;
 
             using (var cn = new SqlConnection(_connectionString))
             {
                 sqlCmd.Connection = cn;
                 cn.Open();
-                totalRows = gcfr(sqlCmd.ExecuteReader(), ref list);
+                gcfr(sqlCmd.ExecuteReader(), ref list);
             }
-
-            return totalRows;
         }
 
         /// <summary>

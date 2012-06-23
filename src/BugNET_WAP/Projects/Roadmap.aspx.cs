@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
@@ -296,6 +297,9 @@ namespace BugNET.Projects
         	};
 
             var issueList = IssueManager.PerformQuery(queryClauses, sortList, ProjectId);
+
+            // private issue check
+            issueList = IssueManager.StripPrivateIssuesForRequestor(issueList, Security.GetUserName()).ToList();
 
             if (issueList.Count > 0)
             {

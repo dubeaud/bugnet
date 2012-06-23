@@ -321,90 +321,17 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="list"></param>
         /// <param name="queryClauses">The query clauses.</param>
-        /// <param name="sql"></param>
-        /// <param name="orderBy"></param>
         /// <returns></returns>
-        public override void PerformGenericQuery<T>(ref List<T> list, List<QueryClause> queryClauses, string sql, string orderBy)
+        public override void PerformIssueCommentSearchQuery(ref List<IssueComment> list, List<QueryClause> queryClauses)
         {
-            SqlDataProvider.GenerateListFromReader<T> gcfr = null;
-
-            // ---------------------------------------------------------------
-            //
-            // The following Regular Expression yields the lines out of this provider file.
-            // 
-            // TGenerate\w*FromReader\<T\>\(SqlDataReader returnData, ref List\<\w*\> *\w* *\w*\) *
-            //            
-            //TGenerateIssueCountListFromReader<T>(SqlDataReader returnData, ref List<IssueCount> issueCountList)
-            //TGenerateProjectMemberRoleListFromReader<T>(SqlDataReader returnData, ref List<MemberRoles> memberRoleList)
-            //TGenerateRolePermissionListFromReader<T>(SqlDataReader returnData, ref List<RolePermission> rolePermissionList)
-            //TGeneratePermissionListFromReader<T>(SqlDataReader returnData, ref List<Permission> permissionList)
-            //GenerateIssueRevisionListFromReader<T>(SqlDataReader returnData, ref List<IssueRevision> revisionList)
-            //TGenerateRequiredFieldListFromReader<T>(SqlDataReader returnData, ref List<RequiredField> requiredFieldList)
-            //GenerateCategoryListFromReader<T>(SqlDataReader returnData, ref List<Category> categoryList)
-            //GenerateHostSettingListFromReader<T>(SqlDataReader returnData, ref List<HostSetting> hostsettingList)
-            //TGenerateProjectListFromReader<T>(SqlDataReader returnData, ref List<Project> projectList)
-            //TGenerateApplicationLogListFromReader<T>(SqlDataReader returnData, ref List<ApplicationLog> applicationLogList)
-            //GenerateIssueNotificationListFromReader<T>(SqlDataReader returnData, ref List<IssueNotification> issueNotificationList)
-            //TGenerateProjectNotificationListFromReader<T>(SqlDataReader returnData, ref List<ProjectNotification> projectNotificationList)
-            //GenerateRelatedIssueListFromReader<T>(SqlDataReader returnData, ref List<RelatedIssue> relatedIssueList)
-            //TGenerateUserListFromReader<T>(SqlDataReader returnData, ref List<ITUser> userList)
-            //TGenerateStatusListFromReader<T>(SqlDataReader returnData, ref List<Status> statusList)
-            //GenerateMilestoneListFromReader<T>(SqlDataReader returnData, ref List<Milestone> milestoneList)
-            //TGeneratePriorityListFromReader<T>(SqlDataReader returnData, ref List<Priority> priorityList)            
-            //TGenerateQueryClauseListFromReader<T>(SqlDataReader returnData, ref List<QueryClause> queryClauseList)
-            //TGenerateIssueTimeEntryListFromReader<T>(SqlDataReader returnData, ref List<IssueWorkReport> issueWorkReportList)
-            //TGenerateResolutionListFromReader<T>(SqlDataReader returnData, ref List<Resolution> resolutionList)
-            //GenerateRoleListFromReader<T>(SqlDataReader returnData, ref List<Role> roleList)
-            //TGenerateCustomFieldListFromReader<T>(SqlDataReader returnData, ref List<CustomField> customFieldList)
-            //TGenerateCustomFieldSelectionListFromReader<T>(SqlDataReader returnData, ref List<CustomFieldSelection> customFieldSelectionList)
-            //GenerateQueryListFromReader<T>(SqlDataReader returnData, ref List<Query> queryList)
-            //TGenerateRoadmapIssueListFromReader<T>(SqlDataReader returnData, ref List<RoadMapIssue> issueList)
-            //
-            // ---------------------------------------------------------------
-            var theType = typeof(T);
-
-            // Wont work in a switch statement due to Type
-
-            //if (theType == typeof(ProjectMailbox))
-            //{
-            //    System.Reflection.MethodInfo mi = this.GetType().GetMethod("GenerateProjectMailboxListFromReader").MakeGenericMethod(new Type[] { typeof(ProjectMailbox) });
-            //    gcfr = (TGenerateListFromReader<T>)Delegate.CreateDelegate(typeof(TGenerateListFromReader<ProjectMailbox>), this, mi);
-            //}
-
-            if (theType == typeof(IssueHistory))
-            {
-                var mi = GetType().GetMethod("GenerateIssueHistoryListFromReader").MakeGenericMethod(new[] { typeof(IssueHistory) });
-                gcfr = (SqlDataProvider.GenerateListFromReader<T>)Delegate.CreateDelegate(typeof(SqlDataProvider.GenerateListFromReader<IssueHistory>), this, mi);
-            }
-
-            //TGenerateIssueTypeListFromReader<T>(SqlDataReader returnData, ref List<IssueType> issueTypeList)
-            if (theType == typeof(IssueHistory))
-            {
-                var mi = GetType().GetMethod("GenerateIssueHistoryListFromReader").MakeGenericMethod(new[] { typeof(IssueHistory) });
-                gcfr = (SqlDataProvider.GenerateListFromReader<T>)Delegate.CreateDelegate(typeof(SqlDataProvider.GenerateListFromReader<IssueHistory>), this, mi);
-            }
-
-            if (theType == typeof(IssueAttachment))
-            {
-                var mi = GetType().GetMethod("GenerateIssueAttachmentListFromReader").MakeGenericMethod(new[] { typeof(IssueAttachment) });
-                gcfr = (SqlDataProvider.GenerateListFromReader<T>)Delegate.CreateDelegate(typeof(SqlDataProvider.GenerateListFromReader<IssueAttachment>), this, mi);
-            }
-
-            if (theType == typeof(Issue))
-            {
-                var mi = GetType().GetMethod("TGenerateIssueListFromReader").MakeGenericMethod(new[] { typeof(Issue) });
-                gcfr = (SqlDataProvider.GenerateListFromReader<T>)Delegate.CreateDelegate(typeof(SqlDataProvider.GenerateListFromReader<Issue>), this, mi);
-            }
-
-            if (theType == typeof(IssueComment))
-            {
-                var mi = GetType().GetMethod("GenerateIssueCommentListFromReader").MakeGenericMethod(new[] { typeof(IssueComment) });
-                gcfr = (SqlDataProvider.GenerateListFromReader<T>)Delegate.CreateDelegate(typeof(SqlDataProvider.GenerateListFromReader<IssueComment>), this, mi);
-            }
 
             //assign the queryClauses Count to our variable and then check the result.
             if ((queryClauses.Count) == 0)
                 throw (new ArgumentOutOfRangeException("queryClauses", 0, "queryClauses == 0"));
+
+            //BugNet_IssueCommentsView
+            const string sql = @"SELECT * FROM BugNet_IssueCommentsView WHERE 1=1 ";
+            const string orderBy = @" ORDER BY IssueCommentId DESC";
 
             // Build Command Text
             var commandBuilder = new StringBuilder();
@@ -454,15 +381,8 @@ namespace BugNET.Providers.DataProviders
                     i++;
                 }
 
-                if (gcfr != null)
-                {
-                    ExecuteReaderCmd(sqlCmd, gcfr, ref list);
-                    //note we are passing this methods objects by reference because we want
-                    //the collection to be added to. If we don't pass by reference, we lose the collection
-                    //when the method returns.
-                }
+                ExecuteReaderCmd(sqlCmd, GenerateIssueCommentListFromReader, ref list);
             }
         } //end PerformGenericQuery
-
     }
 }

@@ -151,7 +151,7 @@ namespace BugNET.BLL
                 throw new ArgumentNullException("queryClauses");
 
             var lst = new List<IssueComment>();
-            DataProviderManager.Provider.PerformGenericQuery(ref lst, queryClauses, @"SELECT a.*, b.UserName as CreatorUserName, a.Userid as CreatorUserID, b.Username as CreatorDisplayName from BugNet_IssueComments as a, aspnet_Users as b  WHERE a.UserId=b.UserID ", @" ORDER BY IssueCommentId DESC");
+            DataProviderManager.Provider.PerformIssueCommentSearchQuery(ref lst, queryClauses);
 
             return lst;
         }

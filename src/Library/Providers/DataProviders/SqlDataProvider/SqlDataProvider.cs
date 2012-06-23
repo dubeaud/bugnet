@@ -20,7 +20,7 @@ namespace BugNET.Providers.DataProviders
     public partial class SqlDataProvider : DataProvider
     {
         /*** DELEGATE ***/
-        private delegate int GenerateListFromReader<T>(SqlDataReader returnData, ref List<T> tempList);
+        private delegate void GenerateListFromReader<T>(SqlDataReader returnData, ref List<T> tempList);
         private static readonly ILog Log = LogManager.GetLogger(typeof(SqlDataProvider));
         private string _connectionString = string.Empty;
         private string _providerPath = string.Empty;

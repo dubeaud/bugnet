@@ -85,42 +85,42 @@ namespace BugNET.BLL
             return DataProviderManager.Provider.GetIssueTypesByProjectId(projectId);
         }
 
-        /// <summary>
-        /// Stewart Moss
-        /// Apr 14 2010 
-        /// 
-        /// Performs a query containing any number of query clauses on a certain projectID
-        /// </summary>
-        /// <param name="projectId"></param>
-        /// <param name="queryClauses"></param>
-        /// <returns></returns>
-        public static List<IssueType> PerformQuery(int projectId, List<QueryClause> queryClauses)
-        {
-            if (projectId < 0) throw new ArgumentOutOfRangeException("projectId", "projectI d must be bigger than 0");
+        ///// <summary>
+        ///// Stewart Moss
+        ///// Apr 14 2010 
+        ///// 
+        ///// Performs a query containing any number of query clauses on a certain projectID
+        ///// </summary>
+        ///// <param name="projectId"></param>
+        ///// <param name="queryClauses"></param>
+        ///// <returns></returns>
+        //public static List<IssueType> PerformQuery(int projectId, List<QueryClause> queryClauses)
+        //{
+        //    if (projectId < 0) throw new ArgumentOutOfRangeException("projectId", "projectI d must be bigger than 0");
 
-            queryClauses.Add(new QueryClause("AND", "ProjectID", "=", projectId.ToString(), System.Data.SqlDbType.Int, false));
+        //    queryClauses.Add(new QueryClause("AND", "ProjectID", "=", projectId.ToString(), System.Data.SqlDbType.Int, false));
 
-            return PerformQuery(queryClauses);
-        }
+        //    return PerformQuery(queryClauses);
+        //}
 
-        /// <summary>
-        /// Stewart Moss
-        /// Apr 14 2010 8:30 pm
-        /// 
-        /// Performs any query containing any number of query clauses
-        /// WARNING! Will expose the entire IssueType table, regardless of 
-        /// project level privledges. (thats why its private for now)
-        /// </summary>        
-        /// <param name="queryClauses"></param>
-        /// <returns></returns>
-        private static List<IssueType> PerformQuery(List<QueryClause> queryClauses)
-        {
-            if (queryClauses == null) throw new ArgumentNullException("queryClauses");
+        ///// <summary>
+        ///// Stewart Moss
+        ///// Apr 14 2010 8:30 pm
+        ///// 
+        ///// Performs any query containing any number of query clauses
+        ///// WARNING! Will expose the entire IssueType table, regardless of 
+        ///// project level privledges. (thats why its private for now)
+        ///// </summary>        
+        ///// <param name="queryClauses"></param>
+        ///// <returns></returns>
+        //private static List<IssueType> PerformQuery(List<QueryClause> queryClauses)
+        //{
+        //    if (queryClauses == null) throw new ArgumentNullException("queryClauses");
 
-            var lst = new List<IssueType>();
-            DataProviderManager.Provider.PerformGenericQuery(ref lst, queryClauses, @"SELECT a.*, b.ProjectName as ProjectName from BugNet_ProjectIssueTypes as a, BugNet_Projects as b  WHERE a.ProjectID=b.ProjectID ", @" ORDER BY a.ProjectID, a.IssueTypeID ASC");
+        //    var lst = new List<IssueType>();
+        //    DataProviderManager.Provider.PerformGenericQuery(ref lst, queryClauses, @"SELECT a.*, b.ProjectName as ProjectName from BugNet_ProjectIssueTypes as a, BugNet_Projects as b  WHERE a.ProjectID=b.ProjectID ", @" ORDER BY a.ProjectID, a.IssueTypeID ASC");
 
-            return lst;
-        }
+        //    return lst;
+        //}
     }
 }

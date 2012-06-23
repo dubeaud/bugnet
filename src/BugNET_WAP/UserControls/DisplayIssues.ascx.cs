@@ -106,28 +106,7 @@ namespace BugNET.UserControls
         public new void DataBind()
         {
             //Private issue check
-            var userName = Security.GetUserName();
-            var visibleIssues = new List<Issue>();
-
-            // if the current user is a super user don't bother checking at all
-            if (!UserManager.IsSuperUser())
-            {
-                foreach (var issue in DataSource)
-                {
-                    var issueVisible = IssueManager.CanViewIssue(issue, userName);
-
-                    if (issueVisible)
-                    {
-                        visibleIssues.Add(issue);
-                    }
-                }
-            }
-            else
-            {
-                visibleIssues = DataSource;
-            }
-
-            DataSource = visibleIssues;
+            DataSource = IssueManager.StripPrivateIssuesForRequestor(DataSource, Security.GetUserName()).ToList();
 
             if (DataSource.Count > 0)
             {

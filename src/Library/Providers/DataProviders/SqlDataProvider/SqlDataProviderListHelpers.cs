@@ -17,10 +17,8 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="issueCommentList">The issue comment list.</param>
-        private static int GenerateIssueCommentListFromReader(IDataReader returnData, ref List<IssueComment> issueCommentList)
+        public static void GenerateIssueCommentListFromReader(IDataReader returnData, ref List<IssueComment> issueCommentList)
         {
-            var totalRowCount = 0;
-
             while (returnData.Read())
             {
                 issueCommentList.Add(new IssueComment
@@ -33,11 +31,7 @@ namespace BugNET.Providers.DataProviders
                     IssueId = returnData.GetInt32(returnData.GetOrdinal("IssueId")),
                     CreatorUserId = returnData.GetGuid(returnData.GetOrdinal("CreatorUserId"))
                 });
-
-                totalRowCount++;
             }
-
-            return totalRowCount;
         }
 
         /// <summary>
@@ -45,9 +39,9 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="issueCountList">The issue count list.</param>
-        private static int GenerateIssueCountListFromReader(IDataReader returnData, ref List<IssueCount> issueCountList)
+        private static void GenerateIssueCountListFromReader(IDataReader returnData, ref List<IssueCount> issueCountList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
@@ -58,10 +52,10 @@ namespace BugNET.Providers.DataProviders
                     (string)returnData.GetValue(3)
                 );
                 issueCountList.Add(issueCount);
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -69,21 +63,12 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="issueList">The issue list.</param>
-        private static int GenerateIssueListFromReader(IDataReader returnData, ref List<Issue> issueList)
+        private static void GenerateIssueListFromReader(IDataReader returnData, ref List<Issue> issueList)
         {
-            var totalRowCount = 0;
-            var hasRowCountColumn = returnData.HasColumn(TOTAL_ROW_COUNT_FIELD_NAME);
-            var populated = false;
-
             while (returnData.Read())
             {
-                if (!populated && hasRowCountColumn) totalRowCount = returnData.GetInt32(returnData.GetOrdinal(TOTAL_ROW_COUNT_FIELD_NAME));
-
-                populated = true;
                 issueList.Add(MapIssue(returnData));
             }
-
-            return totalRowCount;
         }
 
         /// <summary>
@@ -91,17 +76,17 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="cultureCodes">The culture codes.</param>
-        private static int GenerateInstalledResourcesListFromReader(IDataReader returnData, ref List<string> cultureCodes)
+        private static void GenerateInstalledResourcesListFromReader(IDataReader returnData, ref List<string> cultureCodes)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
                 cultureCodes.Add((string)returnData["cultureCode"]);
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -109,9 +94,9 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="issueHistoryList">The issue history list.</param>
-        private static int GenerateIssueHistoryListFromReader(IDataReader returnData, ref List<IssueHistory> issueHistoryList)
+        private static void GenerateIssueHistoryListFromReader(IDataReader returnData, ref List<IssueHistory> issueHistoryList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
@@ -126,10 +111,10 @@ namespace BugNET.Providers.DataProviders
                     OldValue = returnData.GetString(returnData.GetOrdinal("OldValue")),
                     DateChanged = returnData.GetDateTime(returnData.GetOrdinal("DateCreated"))
                 });
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -137,9 +122,9 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="issueNotificationList">The issue notification list.</param>
-        private static int GenerateIssueNotificationListFromReader(IDataReader returnData, ref List<IssueNotification> issueNotificationList)
+        private static void GenerateIssueNotificationListFromReader(IDataReader returnData, ref List<IssueNotification> issueNotificationList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
@@ -151,10 +136,10 @@ namespace BugNET.Providers.DataProviders
                     NotificationEmail = returnData.GetString(returnData.GetOrdinal("NotificationEmail")),
                     NotificationDisplayName = returnData.GetString(returnData.GetOrdinal("NotificationDisplayName"))
                 });
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -162,9 +147,9 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="hostsettingList">The hostsetting list.</param>
-        private static int GenerateHostSettingListFromReader(IDataReader returnData, ref List<HostSetting> hostsettingList)
+        private static void GenerateHostSettingListFromReader(IDataReader returnData, ref List<HostSetting> hostsettingList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
@@ -173,10 +158,10 @@ namespace BugNET.Providers.DataProviders
                     SettingName = returnData.GetString(returnData.GetOrdinal("SettingName")),
                     SettingValue = returnData.GetString(returnData.GetOrdinal("SettingValue"))
                 });
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -184,9 +169,9 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="roleList">The role list.</param>
-        private static int GenerateRoleListFromReader(IDataReader returnData, ref List<Role> roleList)
+        private static void GenerateRoleListFromReader(IDataReader returnData, ref List<Role> roleList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
@@ -198,10 +183,10 @@ namespace BugNET.Providers.DataProviders
                     AutoAssign = returnData.GetBoolean(returnData.GetOrdinal("AutoAssign")),
                     Description = returnData.GetString(returnData.GetOrdinal("RoleDescription")),
                 });
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -209,19 +194,19 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="rolePermissionList">The role permission list.</param>
-        private static int GenerateRolePermissionListFromReader(SqlDataReader returnData, ref List<RolePermission> rolePermissionList)
+        private static void GenerateRolePermissionListFromReader(SqlDataReader returnData, ref List<RolePermission> rolePermissionList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
                 var permission = new RolePermission((int)returnData["PermissionId"], (int)returnData["ProjectId"], returnData["RoleName"].ToString(),
                     returnData["PermissionName"].ToString(), returnData["PermissionKey"].ToString());
                 rolePermissionList.Add(permission);
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -229,18 +214,18 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="permissionList">The permission list.</param>
-        private static int GeneratePermissionListFromReader(SqlDataReader returnData, ref List<Permission> permissionList)
+        private static void GeneratePermissionListFromReader(SqlDataReader returnData, ref List<Permission> permissionList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
                 var permission = new Permission((int)returnData["PermissionId"], returnData["PermissionName"].ToString(), returnData["PermissionKey"].ToString());
                 permissionList.Add(permission);
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -248,18 +233,18 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="userList">The user list.</param>
-        private static int GenerateUserListFromReader(SqlDataReader returnData, ref List<ITUser> userList)
+        private static void GenerateUserListFromReader(SqlDataReader returnData, ref List<ITUser> userList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
                 var user = new ITUser((Guid)returnData["UserId"], (string)returnData["UserName"], (string)returnData["DisplayName"]);
                 userList.Add(user);
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -267,9 +252,9 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="projectList">The project list.</param>
-        private static int GenerateProjectListFromReader(IDataReader returnData, ref List<Project> projectList)
+        private static void GenerateProjectListFromReader(IDataReader returnData, ref List<Project> projectList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
@@ -293,10 +278,10 @@ namespace BugNET.Providers.DataProviders
                     UploadPath = returnData.GetString(returnData.GetOrdinal("AttachmentUploadPath")),
                     DateCreated = returnData.GetDateTime(returnData.GetOrdinal("DateCreated"))
                 });
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -304,9 +289,9 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="memberRoleList">The member roles list.</param>
-        private static int GenerateProjectMemberRoleListFromReader(SqlDataReader returnData, ref List<MemberRoles> memberRoleList)
+        private static void GenerateProjectMemberRoleListFromReader(SqlDataReader returnData, ref List<MemberRoles> memberRoleList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
@@ -323,10 +308,10 @@ namespace BugNET.Providers.DataProviders
 
                 var memberRoles = new MemberRoles((string)returnData.GetValue(0), (string)returnData.GetValue(1));
                 memberRoleList.Add(memberRoles);
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -334,9 +319,9 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="issueList">The issue list.</param>
-        private static int GenerateRoadmapIssueListFromReader(IDataReader returnData, ref List<RoadMapIssue> issueList)
+        private static void GenerateRoadmapIssueListFromReader(IDataReader returnData, ref List<RoadMapIssue> issueList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
@@ -346,10 +331,10 @@ namespace BugNET.Providers.DataProviders
 
                 var rmIssue = new RoadMapIssue(issue, returnData.GetInt32(returnData.GetOrdinal("MilestoneSortOrder")));
                 issueList.Add(rmIssue);
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -357,9 +342,9 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="projectNotificationList">The project notification list.</param>
-        private static int GenerateProjectNotificationListFromReader(IDataReader returnData, ref List<ProjectNotification> projectNotificationList)
+        private static void GenerateProjectNotificationListFromReader(IDataReader returnData, ref List<ProjectNotification> projectNotificationList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
@@ -372,10 +357,10 @@ namespace BugNET.Providers.DataProviders
                     ProjectId = returnData.GetInt32(returnData.GetOrdinal("ProjectId")),
                     ProjectName = returnData.GetString(returnData.GetOrdinal("ProjectName"))
                 });
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -383,9 +368,9 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="categoryList">The category list.</param>
-        private static int GenerateCategoryListFromReader(IDataReader returnData, ref List<Category> categoryList)
+        private static void GenerateCategoryListFromReader(IDataReader returnData, ref List<Category> categoryList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
@@ -399,10 +384,10 @@ namespace BugNET.Providers.DataProviders
                     IssueCount = returnData.GetInt32(returnData.GetOrdinal("IssueCount")),
                     Disabled = returnData.GetBoolean(returnData.GetOrdinal("Disabled"))
                 });
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -410,9 +395,9 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="issueAttachmentList">The issue attachment list.</param>
-        private static int GenerateIssueAttachmentListFromReader(IDataReader returnData, ref List<IssueAttachment> issueAttachmentList)
+        private static void GenerateIssueAttachmentListFromReader(IDataReader returnData, ref List<IssueAttachment> issueAttachmentList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
@@ -431,10 +416,10 @@ namespace BugNET.Providers.DataProviders
                 };
 
                 issueAttachmentList.Add(attachment);
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -442,18 +427,18 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="queryClauseList">The query clause list.</param>
-        private static int GenerateQueryClauseListFromReader(IDataReader returnData, ref List<QueryClause> queryClauseList)
+        private static void GenerateQueryClauseListFromReader(IDataReader returnData, ref List<QueryClause> queryClauseList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
                 var queryClause = new QueryClause((string)returnData["BooleanOperator"], (string)returnData["FieldName"], (string)returnData["ComparisonOperator"], (string)returnData["FieldValue"], (SqlDbType)returnData["DataType"], (bool)returnData["IsCustomField"]);
                 queryClauseList.Add(queryClause);
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -461,9 +446,9 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="queryList">The query list.</param>
-        private static int GenerateQueryListFromReader(IDataReader returnData, ref List<Query> queryList)
+        private static void GenerateQueryListFromReader(IDataReader returnData, ref List<Query> queryList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
@@ -473,10 +458,10 @@ namespace BugNET.Providers.DataProviders
                     Name = returnData.GetString(returnData.GetOrdinal("QueryName")),
                     IsPublic = returnData.GetBoolean(returnData.GetOrdinal("IsPublic"))
                 });
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -484,18 +469,18 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="requiredFieldList">The required field list.</param>
-        private static int GenerateRequiredFieldListFromReader(SqlDataReader returnData, ref List<RequiredField> requiredFieldList)
+        private static void GenerateRequiredFieldListFromReader(SqlDataReader returnData, ref List<RequiredField> requiredFieldList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
                 var newRequiredField = new RequiredField(returnData["FieldName"].ToString(), returnData["FieldValue"].ToString());
                 requiredFieldList.Add(newRequiredField);
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -503,9 +488,9 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="relatedIssueList">The related issue list.</param>
-        private static int GenerateRelatedIssueListFromReader(IDataReader returnData, ref List<RelatedIssue> relatedIssueList)
+        private static void GenerateRelatedIssueListFromReader(IDataReader returnData, ref List<RelatedIssue> relatedIssueList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
@@ -519,10 +504,10 @@ namespace BugNET.Providers.DataProviders
                 };
 
                 relatedIssueList.Add(relatedIssue);
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -530,9 +515,9 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="revisionList">The revision list.</param>
-        private static int GenerateIssueRevisionListFromReader(IDataReader returnData, ref List<IssueRevision> revisionList)
+        private static void GenerateIssueRevisionListFromReader(IDataReader returnData, ref List<IssueRevision> revisionList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
@@ -547,10 +532,10 @@ namespace BugNET.Providers.DataProviders
                     RevisionDate = returnData.GetString(returnData.GetOrdinal("RevisionDate")),
                     Revision = returnData.GetInt32(returnData.GetOrdinal("Revision"))
                 });
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -558,9 +543,9 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="milestoneList">The milestone list.</param>
-        private static int GenerateMilestoneListFromReader(IDataReader returnData, ref List<Milestone> milestoneList)
+        private static void GenerateMilestoneListFromReader(IDataReader returnData, ref List<Milestone> milestoneList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
@@ -578,10 +563,10 @@ namespace BugNET.Providers.DataProviders
                 };
 
                 milestoneList.Add(milestone);
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -589,9 +574,9 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="priorityList">The priority list.</param>
-        private static int GeneratePriorityListFromReader(IDataReader returnData, ref List<Priority> priorityList)
+        private static void GeneratePriorityListFromReader(IDataReader returnData, ref List<Priority> priorityList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
@@ -603,10 +588,10 @@ namespace BugNET.Providers.DataProviders
                     ImageUrl = returnData.GetString(returnData.GetOrdinal("PriorityImageUrl")),
                     SortOrder = returnData.GetInt32(returnData.GetOrdinal("SortOrder")),
                 });
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -614,9 +599,9 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="projectMailboxList">The project mailbox list.</param>
-        private static int GenerateProjectMailboxListFromReader(IDataReader returnData, ref List<ProjectMailbox> projectMailboxList)
+        private static void GenerateProjectMailboxListFromReader(IDataReader returnData, ref List<ProjectMailbox> projectMailboxList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
@@ -632,10 +617,10 @@ namespace BugNET.Providers.DataProviders
                     ProjectId = returnData.GetInt32(returnData.GetOrdinal("ProjectId"))
                 };
                 projectMailboxList.Add(mailbox);
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -643,9 +628,9 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="statusList">The status list.</param>
-        private static int GenerateStatusListFromReader(IDataReader returnData, ref List<Status> statusList)
+        private static void GenerateStatusListFromReader(IDataReader returnData, ref List<Status> statusList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
@@ -658,10 +643,10 @@ namespace BugNET.Providers.DataProviders
                     ImageUrl = returnData.GetString(returnData.GetOrdinal("StatusImageUrl")),
                     IsClosedState = returnData.GetBoolean(returnData.GetOrdinal("IsClosedState"))
                 });
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -669,9 +654,9 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="customFieldList">The custom field list.</param>
-        private static int GenerateCustomFieldListFromReader(IDataReader returnData, ref List<CustomField> customFieldList)
+        private static void GenerateCustomFieldListFromReader(IDataReader returnData, ref List<CustomField> customFieldList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
@@ -685,10 +670,10 @@ namespace BugNET.Providers.DataProviders
                     Required = returnData.GetBoolean(returnData.GetOrdinal("CustomFieldRequired")),
                     Value = returnData.GetString(returnData.GetOrdinal("CustomFieldValue")),
                 });
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -696,9 +681,9 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="customFieldSelectionList">The custom field list.</param>
-        private static int GenerateCustomFieldSelectionListFromReader(IDataReader returnData, ref List<CustomFieldSelection> customFieldSelectionList)
+        private static void GenerateCustomFieldSelectionListFromReader(IDataReader returnData, ref List<CustomFieldSelection> customFieldSelectionList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
@@ -710,10 +695,10 @@ namespace BugNET.Providers.DataProviders
                     Name = returnData.GetString(returnData.GetOrdinal("CustomFieldSelectionName")),
                     SortOrder = returnData.GetInt32(returnData.GetOrdinal("CustomFieldSelectionSortOrder")),
                 });
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -721,9 +706,9 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="issueTypeList">The issue type list.</param>
-        private static int GenerateIssueTypeListFromReader(IDataReader returnData, ref List<IssueType> issueTypeList)
+        private static void GenerateIssueTypeListFromReader(IDataReader returnData, ref List<IssueType> issueTypeList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
@@ -735,10 +720,10 @@ namespace BugNET.Providers.DataProviders
                     SortOrder = returnData.GetInt32(returnData.GetOrdinal("SortOrder")),
                     ImageUrl = returnData.GetString(returnData.GetOrdinal("IssueTypeImageUrl")),
                 });
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -746,9 +731,9 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="issueWorkReportList">The issue time entry list.</param>
-        private static int GenerateIssueTimeEntryListFromReader(IDataReader returnData, ref List<IssueWorkReport> issueWorkReportList)
+        private static void GenerateIssueTimeEntryListFromReader(IDataReader returnData, ref List<IssueWorkReport> issueWorkReportList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
@@ -764,10 +749,10 @@ namespace BugNET.Providers.DataProviders
                     IssueId = returnData.GetInt32(returnData.GetOrdinal("IssueId")),
                     WorkDate = returnData.GetDateTime(returnData.GetOrdinal("WorkDate"))
                 });
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -775,9 +760,9 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="resolutionList">The resolution list.</param>
-        private static int GenerateResolutionListFromReader(SqlDataReader returnData, ref List<Resolution> resolutionList)
+        private static void GenerateResolutionListFromReader(SqlDataReader returnData, ref List<Resolution> resolutionList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
@@ -789,10 +774,10 @@ namespace BugNET.Providers.DataProviders
                     SortOrder = returnData.GetInt32(returnData.GetOrdinal("SortOrder")),
                     ImageUrl = returnData.GetString(returnData.GetOrdinal("ResolutionImageUrl")),
                 });
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         /// <summary>
@@ -800,9 +785,9 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         /// <param name="returnData">The return data.</param>
         /// <param name="applicationLogList">The application log list.</param>
-        private static int GenerateApplicationLogListFromReader(IDataReader returnData, ref List<ApplicationLog> applicationLogList)
+        private static void GenerateApplicationLogListFromReader(IDataReader returnData, ref List<ApplicationLog> applicationLogList)
         {
-            var totalRowCount = 0;
+            
 
             while (returnData.Read())
             {
@@ -819,10 +804,10 @@ namespace BugNET.Providers.DataProviders
                 };
 
                 applicationLogList.Add(newAppLog);
-                totalRowCount++;
+                
             }
 
-            return totalRowCount;
+            
         }
 
         private static Issue MapIssue(IDataRecord returnData)

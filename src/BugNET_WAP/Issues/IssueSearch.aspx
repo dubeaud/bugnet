@@ -88,23 +88,23 @@
                                         <td runat="server" id="tdId" class="gridHeader">
                                             <asp:LinkButton ID="LinkButton2" runat="server" Text="<%$ Resources:SharedResources, Id %>" />
                                         </td>
-                                        <td runat="server" id="tdCategory" class="gridHeader">
-                                            <asp:LinkButton ID="lnkCategory" runat="server" Text="<%$ Resources:SharedResources, Category %>" />
-                                        </td>
-                                        <td runat="server" id="tdIssueType" class="gridHeader" style="text-align: center;">
-                                            <asp:LinkButton ID="LinkButton1" runat="server" Text="<%$ Resources:SharedResources, Type %>" />
-                                        </td>
-                                        <td runat="server" id="tdPriority" class="gridHeader" style="text-align: center;">
-                                            <asp:LinkButton ID="LinkButton8" runat="server" Text="<%$ Resources:SharedResources, Priority %>" />
-                                        </td>
                                         <td runat="server" id="tdTitle" class="gridHeader">
                                             <asp:LinkButton ID="LinkButton3" runat="server" Text="<%$ Resources:SharedResources, Title %>" />
+                                        </td>
+                                        <td runat="server" id="tdCategory" class="gridHeader">
+                                            <asp:LinkButton ID="lnkCategory" runat="server" Text="<%$ Resources:SharedResources, Category %>" />
                                         </td>
                                         <td runat="server" id="tdAssigned" class="gridHeader">
                                             <asp:LinkButton ID="LinkButton4" runat="server" Text="<%$ Resources:SharedResources, AssignedTo %>" />
                                         </td>
-                                        <td runat="server" id="tdStatus" class="gridHeader" style="text-align: center;">
+                                        <td runat="server" id="tdIssueType" class="gridHeader align-center">
+                                            <asp:LinkButton ID="LinkButton1" runat="server" Text="<%$ Resources:SharedResources, Type %>" />
+                                        </td>
+                                        <td runat="server" id="tdStatus" class="gridHeader align-center">
                                             <asp:LinkButton ID="LinkButton6" runat="server" Text="<%$ Resources:SharedResources, Status %>" />
+                                        </td>
+                                        <td runat="server" id="tdPriority" class="gridHeader align-center">
+                                            <asp:LinkButton ID="LinkButton8" runat="server" Text="<%$ Resources:SharedResources, Priority %>" />
                                         </td>
                                     </tr>
                             </HeaderTemplate>
@@ -115,27 +115,27 @@
                                             <%#DataBinder.Eval(Container.DataItem, "FullId") %></a>
                                     </td>
                                     <td>
-                                        <asp:Label ID="lblComponent" Text='<%# DataBinder.Eval(Container.DataItem, "CategoryName" )%>' runat="Server"></asp:Label>
-                                    </td>
-                                    <td style="text-align: center;">
-                                        <it:TextImage ID="ctlType" ImageDirectory="/IssueType" Text='<%# DataBinder.Eval(Container.DataItem, "IssueTypeName" )%>'
-                                            ImageUrl='<%# DataBinder.Eval(Container.DataItem, "IssueTypeImageUrl" )%>' runat="server" />
-                                    </td>
-                                    <td style="text-align: center;">
-                                        <it:TextImage ID="ctlPriority" ImageDirectory="/Priority" Text='<%# DataBinder.Eval(Container.DataItem, "PriorityName" )%>'
-                                            ImageUrl='<%# DataBinder.Eval(Container.DataItem, "PriorityImageUrl" )%>' runat="server" />
-                                    </td>
-                                    <td>
                                         <a href='../Issues/IssueDetail.aspx?id=<%#DataBinder.Eval(Container.DataItem, "Id") %>'>
                                             <asp:Label ID="lblSummary" Text='<%# Server.HtmlEncode(DataBinder.Eval(Container.DataItem, "Title" ).ToString())%>' runat="Server"></asp:Label>
                                         </a>
                                     </td>
                                     <td>
+                                        <asp:Label ID="lblComponent" Text='<%# DataBinder.Eval(Container.DataItem, "CategoryName" )%>' runat="Server"></asp:Label>
+                                    </td>
+                                    <td>
                                         <asp:Label ID="lblAssignedTo" Text='<%# DataBinder.Eval(Container.DataItem, "AssignedDisplayName" )%>' runat="Server"></asp:Label>
                                     </td>
-                                    <td style="text-align: center;">
+                                    <td class="align-center">
+                                        <it:TextImage ID="ctlType" ImageDirectory="/IssueType" Text='<%# DataBinder.Eval(Container.DataItem, "IssueTypeName" )%>'
+                                            ImageUrl='<%# DataBinder.Eval(Container.DataItem, "IssueTypeImageUrl" )%>' runat="server" />
+                                    </td>
+                                    <td class="align-center">
                                         <it:TextImage ID="ctlStatus" ImageDirectory="/Status" Text='<%# DataBinder.Eval(Container.DataItem, "StatusName" )%>' ImageUrl='<%# DataBinder.Eval(Container.DataItem, "StatusImageUrl" )%>'
                                             runat="server" />
+                                    </td>
+                                    <td class="align-center">
+                                        <it:TextImage ID="ctlPriority" ImageDirectory="/Priority" Text='<%# DataBinder.Eval(Container.DataItem, "PriorityName" )%>'
+                                            ImageUrl='<%# DataBinder.Eval(Container.DataItem, "PriorityImageUrl" )%>' runat="server" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -152,26 +152,26 @@
                                                 <HeaderTemplate>
                                                     <table id="tabIssueComments" class="subgrid">
                                                         <tr>
-                                                            <td runat="server" id="tdCreator" class="subgridHeader" width="100px">
+                                                            <td runat="server" id="tdCreator" class="subgridHeader align-left" width="250px">
                                                                 <asp:LinkButton ID="lnkCreator" runat="server" Text="<%$ Resources:SharedResources, Creator %>" />
                                                             </td>
-                                                            <td runat="server" id="tdDateCreate" class="subgridHeader" style="text-align: center;" width="100px">
-                                                                <asp:LinkButton ID="lnkDateCreate" runat="server" Text="Date" />
+                                                            <td runat="server" id="tdDateCreate" class="subgridHeader align-left" width="150px">
+                                                                <asp:LinkButton ID="lnkDateCreate" runat="server" Text="<%$ Resources:SharedResources, Date %>" />
                                                             </td>
-                                                            <td runat="server" id="tdComment" class="subgridHeader" style="text-align: center;" width="500px">
-                                                                <asp:LinkButton ID="lnkComment" runat="server" Text="Comment" />
+                                                            <td runat="server" id="tdComment" class="subgridHeader align-left">
+                                                                <asp:LinkButton ID="lnkComment" runat="server" Text="<%$ Resources:SharedResources, Comment %>" />
                                                             </td>
                                                         </tr>
                                                 </HeaderTemplate>
                                                 <ItemTemplate>
                                                     <tr>
-                                                        <td>
+                                                        <td class="align-left" width="250px">
                                                             <asp:Label ID="lblCreator" Text='<%# DataBinder.Eval(Container.DataItem, "CreatorDisplayName" )%>' runat="Server"></asp:Label>
                                                         </td>
-                                                        <td>
+                                                        <td class="align-left" width="150px">
                                                             <asp:Label ID="lblDateCreated" Text='<%# DataBinder.Eval(Container.DataItem, "DateCreated" )%>' runat="Server"></asp:Label>
                                                         </td>
-                                                        <td style="text-align: left;">
+                                                        <td class="align-left">
                                                             <asp:Label ID="lblComment" Text='' runat="Server"></asp:Label>
                                                         </td>
                                                     </tr>

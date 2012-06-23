@@ -275,6 +275,7 @@ namespace BugNET.BLL
 
             return DataProviderManager.Provider.GetIssuePriorityCountByProject(projectId);
         }
+
         /// <summary>
         /// Gets the issue user count by project.
         /// </summary>
@@ -544,6 +545,20 @@ namespace BugNET.BLL
         }
 
         /// <summary>
+        /// Removes private issues from the list when the requesting user does not have the permission to view it
+        /// </summary>
+        /// <param name="issues">The list of issues to validate</param>
+        /// <param name="requestingUserName">The requesting user</param>
+        /// <returns></returns>
+        public static IEnumerable<Issue> StripPrivateIssuesForRequestor(IEnumerable<Issue> issues, string requestingUserName)
+        {
+            // if the current user is a super user don't bother checking at all
+            if (UserManager.IsSuperUser()) return issues;
+
+            return issues.Where(issue => CanViewIssue(issue, requestingUserName)).ToList();
+        }
+
+        /// <summary>
         /// Returns true or false if the requesting user can view the issue or not
         /// </summary>
         /// <param name="issue">The issue to be viewed</param>
@@ -553,8 +568,6 @@ namespace BugNET.BLL
         {
             // if the current user is a super user don't bother checking at all
             if (UserManager.IsSuperUser()) return true;
-
-            var project = ProjectManager.GetById(issue.ProjectId);
 
             // if the issue is private and current user does not have project admin rights
             if (issue.Visibility == Globals.IssueVisibility.Private.To<int>() && !UserManager.IsInRole(issue.ProjectId, Globals.ProjectAdminRole))

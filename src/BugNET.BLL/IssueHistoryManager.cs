@@ -44,42 +44,42 @@ namespace BugNET.BLL
             return DataProviderManager.Provider.GetIssueHistoryByIssueId(issueId);
         }
 
-        /// <summary>
-        /// Stewart Moss
-        /// Apr 14 2010 
-        /// 
-        /// Performs a query containing any number of query clauses on a certain projectID
-        /// </summary>
-        /// <param name="issueId"></param>
-        /// <param name="queryClauses"></param>
-        /// <returns></returns>
-        public static List<IssueHistory> PerformQuery(int issueId, List<QueryClause> queryClauses)
-        {
-            if (issueId < 0) throw new ArgumentOutOfRangeException("issueId", "Issue id must be bigger than 0");
+        ///// <summary>
+        ///// Stewart Moss
+        ///// Apr 14 2010 
+        ///// 
+        ///// Performs a query containing any number of query clauses on a certain projectID
+        ///// </summary>
+        ///// <param name="issueId"></param>
+        ///// <param name="queryClauses"></param>
+        ///// <returns></returns>
+        //public static List<IssueHistory> PerformQuery(int issueId, List<QueryClause> queryClauses)
+        //{
+        //    if (issueId < 0) throw new ArgumentOutOfRangeException("issueId", "Issue id must be bigger than 0");
 
-            queryClauses.Add(new QueryClause("AND", "IssueID", "=", issueId.ToString(), System.Data.SqlDbType.Int, false));
+        //    queryClauses.Add(new QueryClause("AND", "IssueID", "=", issueId.ToString(), System.Data.SqlDbType.Int, false));
 
-            return PerformQuery(queryClauses);
-        }
+        //    return PerformQuery(queryClauses);
+        //}
 
-        /// <summary>
-        /// Stewart Moss
-        /// Apr 14 2010 8:30 pm
-        /// 
-        /// Performs any query containing any number of query clauses
-        /// WARNING! Will expose the entire IssueHistory table, regardless of 
-        /// project level privledges. 
-        /// </summary>        
-        /// <param name="queryClauses"></param>
-        /// <returns></returns>
-        public static List<IssueHistory> PerformQuery(List<QueryClause> queryClauses)
-        {
-            if (queryClauses == null) throw new ArgumentNullException("queryClauses");
+        ///// <summary>
+        ///// Stewart Moss
+        ///// Apr 14 2010 8:30 pm
+        ///// 
+        ///// Performs any query containing any number of query clauses
+        ///// WARNING! Will expose the entire IssueHistory table, regardless of 
+        ///// project level privledges. 
+        ///// </summary>        
+        ///// <param name="queryClauses"></param>
+        ///// <returns></returns>
+        //public static List<IssueHistory> PerformQuery(List<QueryClause> queryClauses)
+        //{
+        //    if (queryClauses == null) throw new ArgumentNullException("queryClauses");
 
-            var lst = new List<IssueHistory>();
-            DataProviderManager.Provider.PerformGenericQuery(ref lst, queryClauses, @"SELECT DISTINCT a.*, c.ProjectID as ProjectID, b.UserName as CreatorUserName, b.UserName as CreatorDisplayName from BugNet_IssueHistory as a, aspnet_Users as b, BugNet_Issues as d, BugNet_Projects as c  WHERE c.ProjectId=d.ProjectId AND d.IssueID=a.IssueID AND a.UserId=b.UserID AND ( 1=1 ", @" ) ORDER BY IssueHistoryId DESC");
+        //    var lst = new List<IssueHistory>();
+        //    DataProviderManager.Provider.PerformGenericQuery(ref lst, queryClauses, @"SELECT DISTINCT a.*, c.ProjectID as ProjectID, b.UserName as CreatorUserName, b.UserName as CreatorDisplayName from BugNet_IssueHistory as a, aspnet_Users as b, BugNet_Issues as d, BugNet_Projects as c  WHERE c.ProjectId=d.ProjectId AND d.IssueID=a.IssueID AND a.UserId=b.UserID AND ( 1=1 ", @" ) ORDER BY IssueHistoryId DESC");
 
-            return lst;
-        }
+        //    return lst;
+        //}
     }
 }

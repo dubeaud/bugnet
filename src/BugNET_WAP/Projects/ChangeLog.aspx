@@ -81,23 +81,23 @@
                                     <td runat="server" id="tdId" class="gridHeader">
                                         <asp:LinkButton ID="LinkButton2" runat="server" Text="<%$ Resources:SharedResources, Id %>" CommandName="Id" CommandArgument="iv.[IssueId]" OnClick="SortIssueClick" />
                                     </td>
-                                    <td runat="server" id="tdCategory" class="gridHeader">
-                                        <asp:LinkButton ID="lnkCategory" runat="server" Text="<%$ Resources:SharedResources, Category %>" CommandName="Category" CommandArgument="iv.[CategoryName]" OnClick="SortIssueClick" />
-                                    </td>
-                                    <td runat="server" id="tdIssueType" class="gridHeader" style="text-align: center;">
-                                        <asp:LinkButton ID="LinkButton1" runat="server"  Text="<%$ Resources:SharedResources, Type %>" CommandName="IssueType" CommandArgument="iv.[IssueTypeName]" OnClick="SortIssueClick"/>
-                                    </td>
-                                    <td runat="server" id="tdPriority" class="gridHeader" style="text-align: center;">
-                                        <asp:LinkButton ID="LinkButton8" runat="server" Text="<%$ Resources:SharedResources, Priority %>" CommandName="Priority" CommandArgument="iv.[PriorityName]" OnClick="SortIssueClick" />
-                                    </td>
                                     <td runat="server" id="tdTitle" class="gridHeader">
                                         <asp:LinkButton ID="LinkButton3" runat="server" Text="<%$ Resources:SharedResources, Title %>" CommandName="Title" CommandArgument="iv.[IssueTitle]" OnClick="SortIssueClick" />
+                                    </td>
+                                    <td runat="server" id="tdCategory" class="gridHeader">
+                                        <asp:LinkButton ID="lnkCategory" runat="server" Text="<%$ Resources:SharedResources, Category %>" CommandName="Category" CommandArgument="iv.[CategoryName]" OnClick="SortIssueClick" />
                                     </td>
                                     <td runat="server" id="tdAssigned" class="gridHeader">
                                         <asp:LinkButton ID="LinkButton4" runat="server" Text="<%$ Resources:SharedResources, AssignedTo %>" CommandName="Assigned" CommandArgument="iv.[AssignedDisplayName]" OnClick="SortIssueClick" />
                                     </td>
+                                    <td runat="server" id="tdIssueType" class="gridHeader" style="text-align: center;">
+                                        <asp:LinkButton ID="LinkButton1" runat="server"  Text="<%$ Resources:SharedResources, Type %>" CommandName="IssueType" CommandArgument="iv.[IssueTypeName]" OnClick="SortIssueClick"/>
+                                    </td>
                                     <td runat="server" id="tdStatus" class="gridHeader" style="text-align: center;">
                                         <asp:LinkButton ID="LinkButton6" runat="server" Text="<%$ Resources:SharedResources, Status %>" CommandName="Status" CommandArgument="iv.[StatusName]" OnClick="SortIssueClick" />
+                                    </td>
+                                    <td runat="server" id="tdPriority" class="gridHeader" style="text-align: center;">
+                                        <asp:LinkButton ID="LinkButton8" runat="server" Text="<%$ Resources:SharedResources, Priority %>" CommandName="Priority" CommandArgument="iv.[PriorityName]" OnClick="SortIssueClick" />
                                     </td>
                                     <td runat="server" id="tdResolution" class="gridHeader" style="text-align: center;">
                                         <asp:LinkButton ID="LinkButton10" runat="server" Text="<%$ Resources:SharedResources, Resolution %>" CommandName="Resolution" CommandArgument="iv.[ResolutionName]" OnClick="SortIssueClick" />
@@ -111,7 +111,16 @@
                                         <%#DataBinder.Eval(Container.DataItem, "FullId") %></a>
                                 </td>
                                 <td>
+                                    <a href='../Issues/IssueDetail.aspx?id=<%#DataBinder.Eval(Container.DataItem, "Id") %>'>
+                                        <asp:Label ID="lblSummary" Text='<%# DataBinder.Eval(Container.DataItem, "Title" )%>'
+                                            runat="Server"></asp:Label></a>
+                                </td>
+                                <td>
                                     <asp:Label ID="lblComponent" Text='<%# DataBinder.Eval(Container.DataItem, "CategoryName" )%>'
+                                        runat="Server"></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblAssignedTo" Text='<%# DataBinder.Eval(Container.DataItem, "AssignedDisplayName" )%>'
                                         runat="Server"></asp:Label>
                                 </td>
                                 <td style="text-align: center;">
@@ -119,21 +128,12 @@
                                         ImageUrl='<%# DataBinder.Eval(Container.DataItem, "IssueTypeImageUrl" )%>' runat="server" />
                                 </td>
                                 <td style="text-align: center;">
-                                    <it:TextImage ID="ctlPriority" ImageDirectory="/Priority" Text='<%# DataBinder.Eval(Container.DataItem, "PriorityName" )%>'
-                                        ImageUrl='<%# DataBinder.Eval(Container.DataItem, "PriorityImageUrl" )%>' runat="server" />
-                                </td>
-                                <td>
-                                    <a href='../Issues/IssueDetail.aspx?id=<%#DataBinder.Eval(Container.DataItem, "Id") %>'>
-                                        <asp:Label ID="lblSummary" Text='<%# DataBinder.Eval(Container.DataItem, "Title" )%>'
-                                            runat="Server"></asp:Label></a>
-                                </td>
-                                <td>
-                                    <asp:Label ID="lblAssignedTo" Text='<%# DataBinder.Eval(Container.DataItem, "AssignedDisplayName" )%>'
-                                        runat="Server"></asp:Label>
-                                </td>
-                                <td style="text-align: center;">
                                     <it:TextImage ID="ctlStatus" ImageDirectory="/Status" Text='<%# DataBinder.Eval(Container.DataItem, "StatusName" )%>'
                                         ImageUrl='<%# DataBinder.Eval(Container.DataItem, "StatusImageUrl" )%>' runat="server" />
+                                </td>
+                                <td style="text-align: center;">
+                                    <it:TextImage ID="ctlPriority" ImageDirectory="/Priority" Text='<%# DataBinder.Eval(Container.DataItem, "PriorityName" )%>'
+                                        ImageUrl='<%# DataBinder.Eval(Container.DataItem, "PriorityImageUrl" )%>' runat="server" />
                                 </td>
                                  <td style="text-align: center;">
                                     <it:TextImage ID="ctlResolution" ImageDirectory="/Resolution" Text='<%# DataBinder.Eval(Container.DataItem, "ResolutionName" )%>'
@@ -148,7 +148,16 @@
                                         <%#DataBinder.Eval(Container.DataItem, "FullId") %></a>
                                 </td>
                                 <td>
+                                    <a href='../Issues/IssueDetail.aspx?id=<%#DataBinder.Eval(Container.DataItem, "Id") %>'>
+                                        <asp:Label ID="lblSummary" Text='<%# DataBinder.Eval(Container.DataItem, "Title" )%>'
+                                            runat="Server"></asp:Label></a>
+                                </td>
+                                <td>
                                     <asp:Label ID="lblComponent" Text='<%# DataBinder.Eval(Container.DataItem, "CategoryName" )%>'
+                                        runat="Server"></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblAssignedTo" Text='<%# DataBinder.Eval(Container.DataItem, "AssignedDisplayName" )%>'
                                         runat="Server"></asp:Label>
                                 </td>
                                 <td style="text-align: center;">
@@ -156,21 +165,12 @@
                                         ImageUrl='<%# DataBinder.Eval(Container.DataItem, "IssueTypeImageUrl" )%>' runat="server" />
                                 </td>
                                 <td style="text-align: center;">
-                                    <it:TextImage ID="ctlPriority" ImageDirectory="/Priority" Text='<%# DataBinder.Eval(Container.DataItem, "PriorityName" )%>'
-                                        ImageUrl='<%# DataBinder.Eval(Container.DataItem, "PriorityImageUrl" )%>' runat="server" />
-                                </td>
-                                <td>
-                                    <a href='../Issues/IssueDetail.aspx?id=<%#DataBinder.Eval(Container.DataItem, "Id") %>'>
-                                        <asp:Label ID="lblSummary" Text='<%# DataBinder.Eval(Container.DataItem, "Title" )%>'
-                                            runat="Server"></asp:Label></a>
-                                </td>
-                                <td>
-                                    <asp:Label ID="lblAssignedTo" Text='<%# DataBinder.Eval(Container.DataItem, "AssignedDisplayName" )%>'
-                                        runat="Server"></asp:Label>
-                                </td>
-                                <td style="text-align: center;">
                                     <it:TextImage ID="ctlStatus" ImageDirectory="/Status" Text='<%# DataBinder.Eval(Container.DataItem, "StatusName" )%>'
                                         ImageUrl='<%# DataBinder.Eval(Container.DataItem, "StatusImageUrl" )%>' runat="server" />
+                                </td>
+                                <td style="text-align: center;">
+                                    <it:TextImage ID="ctlPriority" ImageDirectory="/Priority" Text='<%# DataBinder.Eval(Container.DataItem, "PriorityName" )%>'
+                                        ImageUrl='<%# DataBinder.Eval(Container.DataItem, "PriorityImageUrl" )%>' runat="server" />
                                 </td>
                                  <td style="text-align: center;">
                                     <it:TextImage ID="ctlResolution" ImageDirectory="/Resolution" Text='<%# DataBinder.Eval(Container.DataItem, "ResolutionName" )%>'

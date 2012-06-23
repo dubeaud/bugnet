@@ -328,6 +328,9 @@ namespace BugNET.Issues
                 // Get ALL issues
                 issues = IssueManager.PerformQuery(queryClauses, null, p.Id);
 
+                // to the private check on all issues
+                issues = IssueManager.StripPrivateIssuesForRequestor(issues, Security.GetUserName()).ToList();
+
                 foreach (var iss in issues)
                 {
                     // New Way
@@ -393,8 +396,10 @@ namespace BugNET.Issues
             _mainIssues.Clear();
             _mainIssues.AddRange(tmpIssues1);
 
-            // mainIssues list should be pure now
+            // to the private check on all issues
+            _mainIssues = IssueManager.StripPrivateIssuesForRequestor(_mainIssues, Security.GetUserName()).ToList();
 
+            // mainIssues list should be pure now
             var tmpComm = (from comm in _mainComments
                            orderby comm.IssueId, comm.Id
                            select comm)
@@ -404,8 +409,6 @@ namespace BugNET.Issues
             tmpComm1.AddRange(tmpComm);
             _mainComments.Clear();
             _mainComments.AddRange(tmpComm1);
-
-
         }
 
         protected void chkHistory_CheckedChanged(object sender, EventArgs e)
@@ -427,6 +430,13 @@ namespace BugNET.Issues
             if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem) return;
 
             var p = (Project)e.Item.DataItem;
+            var rptr = e.Item.FindControl("IssuesList") as Repeater;
+
+            if (rptr == null)
+            {
+                e.Item.Visible = false;
+                return;
+            }
 
             ((HyperLink)e.Item.FindControl("ProjectLink")).Text = string.Format("{0} ({1})", p.Name, p.Code);
 
@@ -435,18 +445,16 @@ namespace BugNET.Issues
 
 
             // Only get this projects issues using LINQ
-            var FilteredIssues = new List<Issue>(from iss in _mainIssues
+            var filteredIssues = new List<Issue>(from iss in _mainIssues
                                                  where p.Id == iss.ProjectId
                                                  select iss);
 
             // Are there any results
-            if (FilteredIssues.Count > 0)
+            if (filteredIssues.Count > 0)
             {
+                ((HyperLink)e.Item.FindControl("IssuesCount")).Text = string.Format("{0} Issues found.", filteredIssues.Count);
 
-                ((HyperLink)e.Item.FindControl("IssuesCount")).Text = string.Format("{0} Issues found.", FilteredIssues.Count);
-                var rptr = ((Repeater)e.Item.FindControl("IssuesList"));
-
-                rptr.DataSource = FilteredIssues;
+                rptr.DataSource = filteredIssues;
                 rptr.DataBind();
             }
             else
