@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<configuration>
+    <connectionStrings>
+        <add name="TableAuthDB" providerName="System.Data.SqlClient" connectionString="Data Source=.\SQLExpress;Integrated Security=True;User Instance=True;AttachDBFilename=|DataDirectory|TableAuthDB.mdf"/>
+    </connectionStrings>
+    <system.web>
+        <membership defaultProvider="TableMembershipProvider">
+            <providers>
+                <add name="TableMembershipProvider" type="Altairis.Web.Security.TableMembershipProvider, Altairis.Web.Security" connectionStringName="TableAuthDB" />
+            </providers>
+        </membership>
+        <roleManager enabled="true" defaultProvider="TableRoleProvider">
+            <providers>
+                <add name="TableRoleProvider" type="Altairis.Web.Security.TableRoleProvider, Altairis.Web.Security" connectionStringName="TableAuthDB"/>
+            </providers>
+        </roleManager>
+    </system.web>
+</configuration>

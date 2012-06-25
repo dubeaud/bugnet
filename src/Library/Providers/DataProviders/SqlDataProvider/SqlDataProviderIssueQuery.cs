@@ -147,6 +147,7 @@ namespace BugNET.Providers.DataProviders
                         if (string.IsNullOrEmpty(fieldValue))
                         {
                             criteriaBuilder.AppendFormat(" {0} {1} {2} NULL", boolOper, fieldName, compareOper);
+							continue;
                         }
                         else if (qc.DataType == SqlDbType.DateTime)
                         {
