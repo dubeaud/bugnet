@@ -22,15 +22,6 @@ namespace BugNET.Account {
         protected global::System.Web.UI.WebControls.Localize Localize5;
         
         /// <summary>
-        /// ValidationSummary1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary1;
-        
-        /// <summary>
         /// LoginPanel control.
         /// </summary>
         /// <remarks>
@@ -58,58 +49,49 @@ namespace BugNET.Account {
         protected global::System.Web.UI.WebControls.Label loginCanceledLabel;
         
         /// <summary>
-        /// pnlOpenIDLogin control.
+        /// lblLoggedIn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlOpenIDLogin;
+        protected global::System.Web.UI.WebControls.Label lblLoggedIn;
         
         /// <summary>
-        /// ShowNormal control.
+        /// ValidationSummary1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton ShowNormal;
+        protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary1;
         
         /// <summary>
-        /// Localize1 control.
+        /// LoginTabsMenu control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Localize Localize1;
+        protected global::System.Web.UI.WebControls.Menu LoginTabsMenu;
         
         /// <summary>
-        /// OpenIdLogin1 control.
+        /// MultiView1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DotNetOpenAuth.OpenId.RelyingParty.OpenIdLogin OpenIdLogin1;
+        protected global::System.Web.UI.WebControls.MultiView MultiView1;
         
         /// <summary>
-        /// pnlNormalLogin control.
+        /// tab1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlNormalLogin;
-        
-        /// <summary>
-        /// btnShowOpenID control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnShowOpenID;
+        protected global::System.Web.UI.WebControls.View tab1;
         
         /// <summary>
         /// Localize2 control.
@@ -130,48 +112,30 @@ namespace BugNET.Account {
         protected global::BugNET.UserControls.LoginControl LoginControl1;
         
         /// <summary>
-        /// RegisterPanel control.
+        /// tab2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel RegisterPanel;
+        protected global::System.Web.UI.WebControls.View tab2;
         
         /// <summary>
-        /// Localize4 control.
+        /// Localize1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Localize Localize4;
+        protected global::System.Web.UI.WebControls.Localize Localize1;
         
         /// <summary>
-        /// Localize3 control.
+        /// OpenIdLogin1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Localize Localize3;
-        
-        /// <summary>
-        /// CreateUserLink control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink CreateUserLink;
-        
-        /// <summary>
-        /// lblLoggedIn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblLoggedIn;
+        protected global::DotNetOpenAuth.OpenId.RelyingParty.OpenIdLogin OpenIdLogin1;
     }
 }

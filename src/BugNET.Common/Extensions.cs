@@ -394,7 +394,7 @@ namespace BugNET.Common
                         }
                     }
                     else if (typeof(T).IsGenericType &&
-                             typeof(T).GetGenericTypeDefinition().Equals(typeof(Nullable<>)))
+                             typeof(T).GetGenericTypeDefinition() == typeof(Nullable<>))
                     {
                         var nc = new NullableConverter(typeof(T));
                         var underlyingType = nc.UnderlyingType;

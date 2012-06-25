@@ -165,4 +165,13 @@
   <data name="Label111.Text" xml:space="preserve">
     <value>Enter your new password:</value>
   </data>
+  <data name="CustomSettingsSaved" xml:space="preserve">
+    <value>Your custom settings have been updated successfully.</value>
+  </data>
+  <data name="CustomSettingsUpdateError" xml:space="preserve">
+    <value>Your custom settings could not be updated.</value>
+  </data>
+  <data name="UpdateProfileForOpenId">
+    <value xml:space="preserve">Please take the time to validate your profile, inorder to receive notifications you will need a valid email address.</value>
+  </data>
 </root>

@@ -9,6 +9,18 @@ namespace BugNET.Common
     public static class Utilities
     {
         /// <summary>
+        /// Validates an string for a valid email
+        /// </summary>
+        /// <param name="email">The string to validate</param>
+        /// <returns></returns>
+        public static bool IsValidEmail(string email)
+        {
+            var validator = new IsEMail();
+            return validator.IsEmailValid(email);
+
+        }
+
+        /// <summary>
         /// Parses a BugNet status code from a database raiserror exception
         /// </summary>
         /// <param name="errorMessage">The error message from the database</param>

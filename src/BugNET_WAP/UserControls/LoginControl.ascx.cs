@@ -2,6 +2,8 @@
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using BugNET.BLL;
+using BugNET.Common;
 using log4net;
 
 namespace BugNET.UserControls
@@ -9,7 +11,7 @@ namespace BugNET.UserControls
     /// <summary>
     /// 
     /// </summary>
-    public partial class LoginControl : System.Web.UI.UserControl
+    public partial class LoginControl : UserControl
     {
          private static readonly ILog Log = LogManager.GetLogger(typeof(Global));
 
@@ -50,6 +52,14 @@ namespace BugNET.UserControls
             // BGN-1356
             subLoginControl.Focus();
 
+            //hide the registration link if we have disabled registration
+            if (HostSettingManager.Get(HostSettingNames.UserRegistration, 0) == (int)Globals.UserRegistration.None)
+            {
+                var registerPanel = subLoginControl.FindControl("RegisterPanel") as Panel;
+
+                if(registerPanel != null)
+                    registerPanel.Visible = false;
+            }
          }
 
         /// <summary>

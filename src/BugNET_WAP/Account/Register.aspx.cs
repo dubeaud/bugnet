@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Web.Security;
+using System.Linq;
 using System.Web.UI.WebControls;
 using BugNET.BLL;
 using BugNET.Common;
-using BugNET.Entities;
 using Clearscreen.SharpHIP;
 
 namespace BugNET.Account
@@ -20,20 +18,21 @@ namespace BugNET.Account
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void Page_Load(object sender, System.EventArgs e)
+        protected void Page_Load(object sender, EventArgs e)
         {
             Page.Title = string.Format("{0} - {1}", GetLocalResourceObject("Page.Title"), HostSettingManager.Get(HostSettingNames.ApplicationTitle));
 
-            #region Security Check
             //redirect to access denied if user registration disabled
-            if (Convert.ToInt32(HostSettingManager.Get(HostSettingNames.UserRegistration)) == (int)Globals.UserRegistration.None)
-                Response.Redirect("~/AccessDenied.aspx", true);
-            else if (Convert.ToInt32(HostSettingManager.Get(HostSettingNames.UserRegistration)) == (int)Globals.UserRegistration.Verified)
+            switch (Convert.ToInt32(HostSettingManager.Get(HostSettingNames.UserRegistration)))
             {
-                CreateUserWizard1.DisableCreatedUser = true;
-                CreateUserWizard1.CompleteStep.ContentTemplateContainer.FindControl("VerificationPanel").Visible = true;
+                case (int)Globals.UserRegistration.None:
+                    Response.Redirect("~/AccessDenied.aspx", true);
+                    break;
+                case (int)Globals.UserRegistration.Verified:
+                    CreateUserWizard1.DisableCreatedUser = true;
+                    CreateUserWizard1.CompleteStep.ContentTemplateContainer.FindControl("VerificationPanel").Visible = true;
+                    break;
             }
-            #endregion
 
             // if you are logged in, you cant register
             if (Context.Request.IsAuthenticated)
@@ -49,11 +48,10 @@ namespace BugNET.Account
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void CreatingUser(object sender, LoginCancelEventArgs e)
         {
-            HIPControl captcha = (HIPControl)CreateUserWizardStep0.ContentTemplateContainer.FindControl("CapchaTest");
+            var captcha = (HIPControl)CreateUserWizardStep0.ContentTemplateContainer.FindControl("CapchaTest");
 
             if (!captcha.IsValid || !Page.IsValid)
             {
-
                 e.Cancel = true;
             }
         }
@@ -66,41 +64,37 @@ namespace BugNET.Account
         protected void CreateUserWizard1_CreatedUser(object sender, EventArgs e)
         {
 
-            string userName = CreateUserWizard1.UserName;
+            var userName = CreateUserWizard1.UserName;
 
-            MembershipUser user = UserManager.GetUser(userName);
+            var user = UserManager.GetUser(userName);
 
-            if (user != null)
+            if (user == null) return;
+
+            var firstName = (TextBox)CreateUserWizardStep0.ContentTemplateContainer.FindControl("FirstName");
+            var lastName = (TextBox)CreateUserWizardStep0.ContentTemplateContainer.FindControl("LastName");
+            var fullName = (TextBox)CreateUserWizardStep0.ContentTemplateContainer.FindControl("FullName");
+
+            var profile = new WebProfile().GetProfile(user.UserName);
+
+            profile.FirstName = firstName.Text;
+            profile.LastName = lastName.Text;
+            profile.DisplayName = fullName.Text;
+            profile.Save();
+
+            //auto assign user to roles
+            var roles = RoleManager.GetAll();
+            foreach (var r in roles.Where(r => r.AutoAssign))
             {
-                TextBox FirstName = (TextBox)CreateUserWizardStep0.ContentTemplateContainer.FindControl("FirstName");
-                TextBox LastName = (TextBox)CreateUserWizardStep0.ContentTemplateContainer.FindControl("LastName");
-                TextBox FullName = (TextBox)CreateUserWizardStep0.ContentTemplateContainer.FindControl("FullName");
-
-                WebProfile Profile = new WebProfile().GetProfile(user.UserName);
-
-                Profile.FirstName = FirstName.Text;
-                Profile.LastName = LastName.Text;
-                Profile.DisplayName = FullName.Text;
-                Profile.Save();
-
-                //auto assign user to roles
-                List<Role> roles = RoleManager.GetAll();
-                foreach (Role r in roles)
-                {
-                    if (r.AutoAssign)
-                        RoleManager.AddUser(user.UserName, r.Id);
-                }
-
-                if (Convert.ToBoolean(HostSettingManager.Get(HostSettingNames.UserRegistration,(int)Globals.UserRegistration.Verified)))
-                {
-                    UserManager.SendUserVerificationNotification(user);
-                }
-
-                //send notification this user was created
-                UserManager.SendUserRegisteredNotification(user.UserName);
+                RoleManager.AddUser(user.UserName, r.Id);
             }
+
+            if (Convert.ToBoolean(HostSettingManager.Get(HostSettingNames.UserRegistration, (int)Globals.UserRegistration.Verified)))
+            {
+                UserManager.SendUserVerificationNotification(user);
+            }
+
+            //send notification this user was created
+            UserManager.SendUserRegisteredNotification(user.UserName);
         }
-
-
     }
 }

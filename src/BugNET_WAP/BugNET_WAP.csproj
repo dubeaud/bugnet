@@ -1574,7 +1574,9 @@
     <Content Include="App_LocalResources\Default.aspx.resx">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="UserControls\App_LocalResources\LoginControl.ascx.resx" />
+    <Content Include="UserControls\App_LocalResources\LoginControl.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Projects\App_LocalResources\ProjectSummary.aspx.resx" />
     <Content Include="Projects\App_LocalResources\ReleaseNotes.aspx.resx" />
     <Content Include="Issues\App_LocalResources\MyIssues.aspx.resx" />

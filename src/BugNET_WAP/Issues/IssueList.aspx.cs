@@ -411,10 +411,10 @@ namespace BugNET.Issues
             var sortColumns = new List<KeyValuePair<string, string>>();
 
             if (Request.QueryString["cr"] != null)
-                sortColumns.Add(new KeyValuePair<string, string>("iv.[DateCreated]", "asc"));
+                sortColumns.Add(new KeyValuePair<string, string>("iv.[DateCreated]", "desc"));
 
             if (Request.QueryString["ur"] != null)
-                sortColumns.Add(new KeyValuePair<string, string>("iv.[LastUpdate]", "asc"));
+                sortColumns.Add(new KeyValuePair<string, string>("iv.[LastUpdate]", "desc"));
 
             var sorter = ctlDisplayIssues.SortString;
 
@@ -439,7 +439,7 @@ namespace BugNET.Issues
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void AddIssue(Object s, EventArgs e)
         {
-            Response.Redirect("~/Issues/IssueDetail.aspx?pid=" + ProjectId);
+            Response.Redirect(string.Format("~/Issues/IssueDetail.aspx?pid={0}", ProjectId));
         }
 
     }

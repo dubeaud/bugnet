@@ -1,13 +1,16 @@
 using System;
-using System.Collections.Generic;
 using System.Web.UI.WebControls;
 using BugNET.BLL;
+using BugNET.Common;
 using BugNET.Entities;
 using BugNET.UserInterfaceLayer;
 using log4net;
 
 namespace BugNET.Administration.Host
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class LogViewer : BasePage
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(LogViewer));
@@ -25,10 +28,8 @@ namespace BugNET.Administration.Host
             if (Page.IsPostBack) return;
 
             SortField = "Date";
-            BindData(FilterDropDown.SelectedValue);
+            BindData();
         }
-
-       
 
         /// <summary>
         /// Gets or sets the sort field.
@@ -36,16 +37,7 @@ namespace BugNET.Administration.Host
         /// <value>The sort field.</value>
         string SortField
         {
-            get
-            {
-                object o = ViewState["SortField"];
-                if (o == null)
-                {
-                    return String.Empty;
-                }
-                return (string)o;
-            }
-
+            get { return ViewState.Get("SortField", string.Empty); }
             set
             {
                 if (value == SortField)
@@ -53,7 +45,7 @@ namespace BugNET.Administration.Host
                     // same as current sort file, toggle sort direction
                     SortAscending = !SortAscending;
                 }
-                ViewState["SortField"] = value;
+                ViewState.Set("SortField", value);
             }
         }
 
@@ -63,20 +55,8 @@ namespace BugNET.Administration.Host
         /// <value><c>true</c> if [sort ascending]; otherwise, <c>false</c>.</value>
         bool SortAscending
         {
-            get
-            {
-                object o = ViewState["SortAscending"];
-                if (o == null)
-                {
-                    return true;
-                }
-                return (bool)o;
-            }
-
-            set
-            {
-                ViewState["SortAscending"] = value;
-            }
+            get { return ViewState.Get("SortAscending", true); }
+            set { ViewState.Set("SortAscending", value); }
         }
 
         /// <summary>
@@ -87,7 +67,7 @@ namespace BugNET.Administration.Host
         protected void gvLog_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvLog.PageIndex = e.NewPageIndex;
-            BindData(FilterDropDown.SelectedValue);
+            BindData();
         }
 
         /// <summary>
@@ -98,16 +78,15 @@ namespace BugNET.Administration.Host
         protected void gvLog_Sorting(object sender, GridViewSortEventArgs e)
         {
             SortField = e.SortExpression;
-            BindData(FilterDropDown.SelectedValue);
+            BindData();
         }
 
         /// <summary>
         /// Binds the data.
         /// </summary>
-        protected void BindData(string filterType)
+        private void BindData()
         {
-            List<ApplicationLog> list = new List<ApplicationLog>();
-            list = ApplicationLogManager.GetLog(FilterDropDown.SelectedValue);
+            var list = ApplicationLogManager.GetLog(FilterDropDown.SelectedValue);
             list.Sort(new ApplicationLogComparer(SortField, SortAscending));
             gvLog.DataSource = list;
             gvLog.DataBind();
@@ -115,7 +94,7 @@ namespace BugNET.Administration.Host
 
         protected void FilterDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            BindData(FilterDropDown.SelectedValue);
+            BindData();
         }
 
         /// <summary>
@@ -125,36 +104,24 @@ namespace BugNET.Administration.Host
         /// <param name="e">The <see cref="T:System.Web.UI.WebControls.GridViewRowEventArgs"/> instance containing the event data.</param>
         protected void gvLog_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.Pager)
-            {
-                //e.Row.Cells.AddAt(0, new TableCell());
-                //e.Row.Cells[0].Text = "Total Issues: " + _DataSource.Count;
-                //e.Row.Cells[0].ColumnSpan = 3;
-                //e.Row.Cells[0].Font.Bold = true;
-                //e.Row.Cells[0].HorizontalAlign = HorizontalAlign.Left;
-                //e.Row.Cells[1].ColumnSpan -= 3;  
-                //PresentationUtils.SetPagerButtonStates(gvLog, e.Row, this.Page);
+            if (e.Row.RowType != DataControlRowType.DataRow) return;
 
-            }
-            if (e.Row.RowType == DataControlRowType.DataRow)
-            {
-                ApplicationLog logItem = (ApplicationLog)e.Row.DataItem;
-               
-                System.Web.UI.WebControls.Image img = (System.Web.UI.WebControls.Image)e.Row.FindControl("imgLevel");
-                img.ImageUrl = GetLogImageUrl(logItem.Level);
-                img.AlternateText = logItem.Level;
-                Label LevelLabel = (Label)e.Row.FindControl("LevelLabel");
-                LevelLabel.Text = logItem.Level;
-                Label MessageLabel = (Label)e.Row.FindControl("MessageLabel");
-                MessageLabel.Text = Server.HtmlEncode((logItem.Message.Length >= 100) ? logItem.Message.Substring(0, 100) + "..." : logItem.Message);
-                Label ExceptionLabel = (Label)e.Row.FindControl("ExceptionLabel");
-                ExceptionLabel.Text = Server.HtmlEncode(logItem.Exception);
-                Label LoggerLabel = (Label)e.Row.FindControl("LoggerLabel");
-                LoggerLabel.Text = logItem.Logger;
+            var logItem = (ApplicationLog)e.Row.DataItem;
 
-                e.Row.Attributes.Add("onclick",string.Format("ExpandDetails('Exception_{0}')",logItem.Id));
-                e.Row.Attributes.Add("style","cursor:pointer");
-            }
+            var img = (Image)e.Row.FindControl("imgLevel");
+            img.ImageUrl = GetLogImageUrl(logItem.Level);
+            img.AlternateText = logItem.Level;
+            var LevelLabel = (Label)e.Row.FindControl("LevelLabel");
+            LevelLabel.Text = logItem.Level;
+            var messageLabel = (Label)e.Row.FindControl("MessageLabel");
+            messageLabel.Text = Server.HtmlEncode((logItem.Message.Length >= 100) ? logItem.Message.Substring(0, 100) + "..." : logItem.Message);
+            var exceptionLabel = (Label)e.Row.FindControl("ExceptionLabel");
+            exceptionLabel.Text = Server.HtmlEncode(logItem.Exception);
+            var LoggerLabel = (Label)e.Row.FindControl("LoggerLabel");
+            LoggerLabel.Text = logItem.Logger;
+
+            e.Row.Attributes.Add("onclick", string.Format("ExpandDetails('Exception_{0}')", logItem.Id));
+            e.Row.Attributes.Add("style", "cursor:pointer");
         }
 
         /// <summary>
@@ -162,7 +129,7 @@ namespace BugNET.Administration.Host
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns></returns>
-        private string GetLogImageUrl(string type)
+        private static string GetLogImageUrl(string type)
         {
             switch (type)
             {
@@ -188,26 +155,12 @@ namespace BugNET.Administration.Host
         protected void cmdClearLog_Click(object sender, EventArgs e)
         {
             ApplicationLogManager.ClearLog();
+
             if (System.Web.HttpContext.Current.User != null && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                 MDC.Set("user", System.Web.HttpContext.Current.User.Identity.Name);
 
             Log.Info("The error log was cleared.");
-            BindData(FilterDropDown.SelectedValue);
-        }
-
-        /// <summary>
-        /// Handles the SelectedIndexChanged event of the ddlPages control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void ddlPages_SelectedIndexChanged(Object sender, EventArgs e)
-        {
-            GridViewRow gvrPager = gvLog.BottomPagerRow;
-            if (gvrPager == null)
-                return;
-            DropDownList ddlPages = (DropDownList)gvrPager.Cells[0].FindControl("ddlPages");
-            gvLog.PageIndex = ddlPages.SelectedIndex;
-            BindData(FilterDropDown.SelectedValue);
+            BindData();
         }
     }
 

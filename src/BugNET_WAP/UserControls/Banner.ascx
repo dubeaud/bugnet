@@ -64,6 +64,6 @@
         <asp:ListItem Text="BugNET" Value="BugNET"></asp:ListItem>
     </asp:DropDownList>
 </asp:Panel>
-<div class="breadcrumb">
-    <asp:SiteMapPath ID="SiteMapPath1" PathSeparator=" > " runat="server" />
+<div id="BreadCrumb" class="breadcrumb" runat="server" clientmode="Static">
+    <asp:SiteMapPath ID="SiteMapPath1" PathSeparator=" > " runat="server" SkipLinkText=""/>
 </div>

@@ -1631,6 +1631,22 @@ ul.permissions li
     line-height:18px;
 }
 
+#login-widget {
+    margin: auto;
+    padding-top: 25px;
+}
+        
+#login-widget-content {
+    width: 500px;
+    margin: auto;
+}
+        
+.login-tab {
+    border:solid 1px #D5D291;
+    padding: 25px 10px 25px 10px;
+    text-align: left;
+}
+        
 /* single styles */
 .align-left{text-align:left;} 
 .align-right{text-align:right;} 

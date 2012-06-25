@@ -4,6 +4,9 @@ using System.Web.Security;
 
 namespace BugNET.Account
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class Verify : System.Web.UI.Page
     {
         /// <summary>

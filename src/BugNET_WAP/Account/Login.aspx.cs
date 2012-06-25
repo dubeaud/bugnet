@@ -1,12 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using System.Web.Security;
+using System.Web.UI.WebControls;
 using BugNET.BLL;
 using BugNET.Common;
-using BugNET.Entities;
+using DotNetOpenAuth.Messaging;
+using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
 using DotNetOpenAuth.OpenId.Extensions.SimpleRegistration;
 using DotNetOpenAuth.OpenId.RelyingParty;
+using log4net;
 
 namespace BugNET.Account
 {
@@ -16,7 +19,13 @@ namespace BugNET.Account
     public partial class Login : System.Web.UI.Page
     {
 
-        private bool _isOpenIdEnabled;
+        private static readonly ILog Log = LogManager.GetLogger(typeof(Login));
+
+        private bool IsOpenIdEnabled
+        {
+            get { return ViewState.Get("IsOpenIdEnabled", false); }
+            set { ViewState.Set("IsOpenIdEnabled", value); }
+        }
 
         /// <summary>
         /// Handles the Load event of the Page control.
@@ -25,15 +34,16 @@ namespace BugNET.Account
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            Page.Title = string.Format("{0} - {1}", GetLocalResourceObject("Page.Title"), HostSettingManager.Get(HostSettingNames.ApplicationTitle));
+            if (IsPostBack) return;
 
-            //hide the registration link if we have disabled registration
-            if (HostSettingManager.Get<int>(HostSettingNames.UserRegistration, 0) == (int)Globals.UserRegistration.None)
-                RegisterPanel.Visible = false;
+            Page.Title = string.Format("{0} - {1}", GetLocalResourceObject("Page.Title"), HostSettingManager.Get(HostSettingNames.ApplicationTitle));
 
             // check if OpenID is enabled
             // BGN-1356
-            _isOpenIdEnabled = HostSettingManager.Get(HostSettingNames.OpenIdAuthentication, false);
+            IsOpenIdEnabled = HostSettingManager.Get(HostSettingNames.OpenIdAuthentication, false);
+
+            // if open id is not enabled no reason to show login options
+            LoginTabsMenu.Visible = IsOpenIdEnabled;
 
             if (HttpContext.Current.User.Identity.IsAuthenticated)
             {
@@ -41,16 +51,14 @@ namespace BugNET.Account
             }
             else
             {
-                btnShowOpenID.Visible = _isOpenIdEnabled;
                 if (Session["isDoingOpenIDLogin"] != null)
+                {
                     if (Session["isDoingOpenIDLogin"].ToString() == "true")
                     {
-                        // Call the logic as if we clicked on the OpenID button
-                        btnShowOpenID_Click(sender, new EventArgs());
+                        LoginTabsMenu_Click(LoginTabsMenu, new MenuEventArgs(new MenuItem { Value = "1" }));
                     }
-
+                }
             }
-
         }
 
         protected void OpenIdLogin1_LoggingIn(object sender, OpenIdEventArgs e)
@@ -59,7 +67,6 @@ namespace BugNET.Account
             // Allow us to "remember" that we are preforming an OpenID login
             Session["isDoingOpenIDLogin"] = "true";
         }
-
 
         /// <summary>
         /// Handles the LoggedIn event of the OpenIdLogin1 control.
@@ -85,6 +92,8 @@ namespace BugNET.Account
 
                 if (e.Response != null)
                 {
+                    var isNewUser = false;
+
                     switch (e.Response.Status)
                     {
                         case AuthenticationStatus.Authenticated:
@@ -96,18 +105,29 @@ namespace BugNET.Account
                             // May 31 2010
 
                             // WARNING: There is no logging in this method!
-                            string email = string.Empty;
-                            string alias = string.Empty;
-                            string fullname = string.Empty;
+                            var email = string.Empty;
+                            var alias = string.Empty;
+                            var fullname = string.Empty;
+                            var firstName = string.Empty;
+                            var lastName = string.Empty;
 
-                            ClaimsResponse fetch = e.Response.GetExtension(typeof(ClaimsResponse)) as ClaimsResponse;
-                            if (fetch != null)
+                            var claim = e.Response.GetExtension<ClaimsResponse>();
+                            var fetch = e.Response.GetExtension<FetchResponse>();
+
+                            if (claim != null)
                             {
-                                alias = fetch.Nickname;    // set size limits
-                                email = fetch.Email;       // no validation of email
-                                fullname = fetch.FullName; // set size limits
+                                alias = claim.Nickname;
+                                email = claim.Email;
+                                fullname = claim.FullName;
                             }
-
+                            else if (fetch != null)
+                            {
+                                alias = fetch.GetAttributeValue(WellKnownAttributes.Name.Alias);
+                                email = fetch.GetAttributeValue(WellKnownAttributes.Contact.Email);
+                                fullname = fetch.GetAttributeValue(WellKnownAttributes.Name.FullName);
+                                firstName = fetch.GetAttributeValue(WellKnownAttributes.Name.First);
+                                lastName = fetch.GetAttributeValue(WellKnownAttributes.Name.Last);
+                            }
 
                             if (string.IsNullOrEmpty(alias))
                                 alias = e.Response.ClaimedIdentifier;
@@ -119,18 +139,25 @@ namespace BugNET.Account
                             if (string.IsNullOrEmpty(fullname))
                                 fullname = e.Response.ClaimedIdentifier;
 
-                            //Now see if the user already exists, if not create them
-                            MembershipUser TestUser = Membership.GetUser(e.Response.ClaimedIdentifier);
+                            if (string.IsNullOrEmpty(firstName))
+                                firstName = string.Empty;
 
-                            if (TestUser != null)
+                            if (string.IsNullOrEmpty(lastName))
+                                lastName = string.Empty;
+
+                            //Now see if the user already exists, if not create them
+                            var membershipUser = Membership.GetUser(e.Response.ClaimedIdentifier);
+
+                            if (membershipUser != null)
                             {
                                 // BGN-1867
                                 // Banned users are not allowed to login via OpenID
                                 // See if this user is allowed on the system. Also dont allow users 
                                 // who are still logged in to try and login.
-                                if ((!TestUser.IsApproved) || (TestUser.IsLockedOut) || (TestUser.IsOnline))
+                                if ((!membershipUser.IsApproved) || (membershipUser.IsLockedOut) ||
+                                    (membershipUser.IsOnline))
                                 {
-                                    loginFailedLabel.Text += " " + GetLocalResourceObject("NotAuthorized.Text").ToString();
+                                    loginFailedLabel.Text += string.Format(" {0}", GetLocalResourceObject("NotAuthorized.Text"));
                                     loginFailedLabel.Visible = true;
                                     e.Cancel = true;
                                     break;
@@ -140,7 +167,8 @@ namespace BugNET.Account
                             {
 
                                 // Part of BGN-1860
-                                if (Convert.ToInt32(HostSettingManager.Get(HostSettingNames.UserRegistration)) == (int)Globals.UserRegistration.None)
+                                if (Convert.ToInt32(HostSettingManager.Get(HostSettingNames.UserRegistration)) ==
+                                    (int)Globals.UserRegistration.None)
                                 {
                                     loginFailedLabel.Text += GetLocalResourceObject("RegistrationDisabled").ToString();
                                     loginFailedLabel.Visible = true;
@@ -150,33 +178,56 @@ namespace BugNET.Account
 
                                 MembershipCreateStatus membershipCreateStatus;
 
-                                MembershipUser user = Membership.CreateUser(e.Response.ClaimedIdentifier, Membership.GeneratePassword(7, 2), email, GetLocalResourceObject("OpenIDPasswordQuestion").ToString(), Membership.GeneratePassword(12, 4), true, out membershipCreateStatus);
+                                var user = Membership.CreateUser(e.Response.ClaimedIdentifier,
+                                                                 Membership.GeneratePassword(7, 2), 
+                                                                 email,
+                                                                 GetLocalResourceObject("OpenIDPasswordQuestion").ToString(),
+                                                                 Membership.GeneratePassword(12, 4),
+                                                                 true,
+                                                                 out membershipCreateStatus);
 
                                 if (membershipCreateStatus != MembershipCreateStatus.Success)
                                 {
-                                    loginFailedLabel.Text += GetLocalResourceObject("CreateAccountFailed").ToString() + membershipCreateStatus.ToString();
+                                    loginFailedLabel.Text += GetLocalResourceObject("CreateAccountFailed") +
+                                                             membershipCreateStatus.ToString();
                                     loginFailedLabel.Visible = true;
                                     e.Cancel = true;
-                                    break;// unsecure break should be a return
+                                    break; // unsecure break should be a return
                                 }
 
                                 //save profile info
-                                WebProfile Profile = new WebProfile().GetProfile(user.UserName);
-                                Profile.DisplayName = fullname;
-                                Profile.Save();
-                                user.Comment = alias;
-                                Membership.UpdateUser(user);
-
-                                //auto assign user to roles
-                                List<Role> roles = RoleManager.GetAll();
-                                foreach (Role r in roles)
+                                if (user != null)
                                 {
-                                    if (r.AutoAssign)
-                                        RoleManager.AddUser(user.UserName, r.Id);
-                                }
+                                    var profile = new WebProfile().GetProfile(user.UserName);
 
-                                //send notification this user was created
-                                UserManager.SendUserRegisteredNotification(user.UserName);
+                                    profile.DisplayName = fullname;
+                                    profile.FirstName = firstName;
+                                    profile.LastName = lastName;
+
+                                    profile.Save();
+
+                                    user.Comment = alias;
+                                    Membership.UpdateUser(user);
+
+                                    //auto assign user to roles
+                                    var roles = RoleManager.GetAll();
+                                    foreach (var r in roles.Where(r => r.AutoAssign))
+                                    {
+                                        RoleManager.AddUser(user.UserName, r.Id);
+                                    }
+
+                                    if (Utilities.IsValidEmail(user.Email))
+                                    {
+                                        //send notification this user was created
+                                        UserManager.SendUserRegisteredNotification(user.UserName);
+                                    }
+
+                                    isNewUser = true;
+                                }
+                                else
+                                {
+                                    Log.Info("Failed to return user from CreateUser");
+                                }
                             }
 
                             // NB NB Only do the redirect when e.Cancel != true
@@ -185,8 +236,16 @@ namespace BugNET.Account
                             if (e.Cancel == false)
                             {
                                 // Use FormsAuthentication to tell ASP.NET that the user is now logged in,  
-                                // with the OpenID Claimed Identifier as their username. 
-                                FormsAuthentication.RedirectFromLoginPage(e.Response.ClaimedIdentifier, false);
+                                // with the OpenID Claimed Identifier as their username.
+                                if(isNewUser)
+                                {
+                                    FormsAuthentication.SetAuthCookie(e.Response.ClaimedIdentifier, false);
+                                    Response.Redirect("~/Account/UserProfile.aspx?oid=1", true);
+                                }
+                                else
+                                {
+                                    FormsAuthentication.RedirectFromLoginPage(e.Response.ClaimedIdentifier, false);  
+                                }
                             }
                             break;
 
@@ -210,7 +269,7 @@ namespace BugNET.Account
                 }
                 else
                 {
-                    // response is null
+                    Log.Info("OpenId returned a null respose");
                 }
 
             }
@@ -225,43 +284,27 @@ namespace BugNET.Account
             }
         }
 
-        /// <summary>
-        /// Handles the Click event of the btnShowOpenID control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void btnShowOpenID_Click(object sender, EventArgs e)
+        protected void LoginTabsMenu_Click(object sender, MenuEventArgs e)
         {
-            // May 30 2010
-            // Added by smoss for security. 
-            // User shouldnt be able to use this method
-            // if OpenID is off or they are logged in.
-            if ((!_isOpenIdEnabled) || (HttpContext.Current.User.Identity.IsAuthenticated))
+            ValidationSummary1.Visible = false;
+
+            switch (e.Item.Value)
             {
-                pnlOpenIDLogin.Visible = false;
-                pnlNormalLogin.Visible = true;
-                Session["isDoingOpenIDLogin"] = "";
-                throw new UnauthorizedAccessException();
+                case "0":
+                    ValidationSummary1.Visible = true;
+                    MultiView1.SetActiveView(tab1);
+                    Session["isDoingOpenIDLogin"] = "";
+                    break;
+                case "1":
+                    if ((!IsOpenIdEnabled) || (HttpContext.Current.User.Identity.IsAuthenticated))
+                    {
+                        Session["isDoingOpenIDLogin"] = "";
+                        throw new UnauthorizedAccessException();
+                    }
+                    Session["isDoingOpenIDLogin"] = "true";
+                    MultiView1.SetActiveView(tab2);
+                    break;
             }
-
-            pnlOpenIDLogin.Visible = true;
-            pnlNormalLogin.Visible = false;
-            Session["isDoingOpenIDLogin"] = "true";
         }
-
-        /// <summary>
-        /// Handles the Click event of the btnShowNormal control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void btnShowNormal_Click(object sender, EventArgs e)
-        {
-            pnlOpenIDLogin.Visible = false;
-            pnlNormalLogin.Visible = true;
-            Session["isDoingOpenIDLogin"] = "";
-        }
-
-
-
     }
 }

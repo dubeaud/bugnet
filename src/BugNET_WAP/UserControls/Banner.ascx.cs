@@ -1,12 +1,12 @@
+using System;
+using System.Web;
+using System.Web.UI.WebControls;
+using BugNET.BLL;
+using BugNET.Common;
+using BugNET.UserInterfaceLayer.WebControls;
+
 namespace BugNET.UserControls
 {
-    using System;
-    using System.Web;
-    using System.Web.UI.WebControls;
-    using BugNET.BLL;
-    using BugNET.Common;
-    using BugNET.UserInterfaceLayer.WebControls;
-
     public partial class Banner : System.Web.UI.UserControl
     {
 
@@ -39,7 +39,6 @@ namespace BugNET.UserControls
             if (!Page.User.Identity.IsAuthenticated && !Boolean.Parse(HostSettingManager.Get(HostSettingNames.AnonymousAccess)))
                 Panel1.Visible = false;
 
-
             AppTitle.Text = HostSettingManager.Get(HostSettingNames.ApplicationTitle);
             ddlProject.DataTextField = "Name";
             ddlProject.DataValueField = "Id";
@@ -62,21 +61,18 @@ namespace BugNET.UserControls
                 {
                     pnlHeaderNav.Visible = false;
                 }
-                   
-                if (Request.QueryString["pid"] != null)
-                {
-                    try
-                    {
-                        ddlProject.SelectedValue = Request.QueryString["pid"].ToString();
-                    }
-                    catch { }
-                }
+
+                var projectId = Request.Get("pid", "0");
+                    
+                var item = ddlProject.Items.FindByValue(projectId);
+
+                if (item != null)
+                    ddlProject.SelectedValue = item.Value;
 
                 BindMenuOptions();
 
-              
             }
-            this.LoginView1.DataBind();
+            LoginView1.DataBind();
         }
 
         /// <summary>
@@ -84,7 +80,7 @@ namespace BugNET.UserControls
         /// </summary>
         private void BindMenuOptions()
         {
-            SuckerFishMenuHelper oHelper = new SuckerFishMenuHelper(ProjectId);
+            var oHelper = new SuckerFishMenuHelper(ProjectId);
             litSucker.Text = oHelper.GetHtml();
         }
 

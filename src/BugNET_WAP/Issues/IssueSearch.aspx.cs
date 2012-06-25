@@ -27,13 +27,6 @@ namespace BugNET.Issues
                 pnlResultsMessage.Visible = true;
                 pnlSearchResults.Visible = false;
                 litResultsMessage.Text = GetLocalResourceObject("SearchInstructions").ToString();
-
-                if (Request.QueryString["cr"] != null)
-                    _mainIssues.Sort(new IssueComparer("Created", true));
-
-                if (Request.QueryString["ur"] != null)
-                    _mainIssues.Sort(new IssueComparer("LastUpdate", true));
-
             }
 
             // The ExpandIssuePaths method is called to handle

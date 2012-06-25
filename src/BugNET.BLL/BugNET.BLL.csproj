@@ -57,7 +57,6 @@
     <Compile Include="ApplicationLogManager.cs" />
     <Compile Include="CategoryManager.cs" />
     <Compile Include="CategoryTree.cs" />
-    <Compile Include="Comparers\IssueComparer.cs" />
     <Compile Include="Comparers\ObjectComparer.cs" />
     <Compile Include="Comparers\ProjectComparer.cs" />
     <Compile Include="CustomFieldManager.cs" />

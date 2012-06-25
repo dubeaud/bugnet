@@ -138,4 +138,10 @@
   <data name="UserNameRequired.ToolTip" xml:space="preserve">
     <value>Username is required.</value>
   </data>
+  <data name="NoAccount.Text" xml:space="preserve">
+    <value>If you don&amp;#39;t have an account yet you can</value>
+  </data>
+  <data name="CreateUserLink.Text" xml:space="preserve">
+    <value>click here to get one</value>
+  </data>
 </root>

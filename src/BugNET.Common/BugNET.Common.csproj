@@ -55,6 +55,7 @@
     <Compile Include="AdminMenuItem.cs" />
     <Compile Include="DataAccessException.cs" />
     <Compile Include="EmailFormatType.cs" />
+    <Compile Include="IsEmail.cs" />
     <Compile Include="NotificationTypes.cs" />
     <Compile Include="CustomFieldTypes.cs" />
     <Compile Include="Extensions.cs" />
