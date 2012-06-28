@@ -15,7 +15,7 @@ namespace BugNET.Tests
         private int IssueId;
         private int CategoryId;
         private int IssueTypeId;
-
+         
         /// <summary>
         /// Inits this instance.
         /// </summary>
