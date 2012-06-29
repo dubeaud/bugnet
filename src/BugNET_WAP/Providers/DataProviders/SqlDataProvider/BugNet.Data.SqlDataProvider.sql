@@ -114,6 +114,8 @@ INSERT [BugNet_RequiredFieldList] ([RequiredFieldId], [FieldName], [FieldValue])
 INSERT [BugNet_RequiredFieldList] ([RequiredFieldId], [FieldName], [FieldValue]) VALUES (18, N'Custom Fields', N'CustomFieldName')
 
 INSERT INTO [dbo].[BugNet_Languages] ([CultureCode], [CultureName], [FallbackCulture]) VALUES('en-US', 'English (United States)', 'en')
+INSERT INTO [dbo].[BugNet_Languages] ([CultureCode], [CultureName], [FallbackCulture]) VALUES('es-ES', 'Spanish', 'es')
+
 
 -- Roles and Permissions 
 PRINT 'Add Default Roles & Permissions'

@@ -429,15 +429,30 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Exceptions.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\Exceptions.es-ES.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Exceptions.es-ES.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\Notifications.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Notifications.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\Notifications.es-ES.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Notifications.es-ES.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\SharedResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SharedResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\SharedResources.es-ES.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SharedResources.es-ES.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\Web.sitemap.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -1479,6 +1494,18 @@
     <Content Include="Account\App_LocalResources\Verify.aspx.resx">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Administration\App_LocalResources\Admin.aspx.es-ES.resx" />
+    <Content Include="Administration\Projects\App_LocalResources\AddProject.aspx.es-ES.resx" />
+    <Content Include="Administration\Projects\App_LocalResources\CloneProject.aspx.es-ES.resx" />
+    <Content Include="Administration\Projects\App_LocalResources\EditProject.aspx.es-ES.resx" />
+    <Content Include="Administration\Projects\App_LocalResources\ProjectList.aspx.es-ES.resx" />
+    <Content Include="Administration\Host\App_LocalResources\LogViewer.aspx.es-ES.resx" />
+    <Content Include="Administration\Host\App_LocalResources\Settings.aspx.es-ES.resx" />
+    <Content Include="Account\App_LocalResources\ForgotPassword.aspx.es-ES.resx" />
+    <Content Include="Account\App_LocalResources\Login.aspx.es-ES.resx" />
+    <Content Include="Account\App_LocalResources\Register.aspx.es-ES.resx" />
+    <Content Include="Account\App_LocalResources\UserProfile.aspx.es-ES.resx" />
+    <Content Include="Account\App_LocalResources\Verify.aspx.es-ES.resx" />
     <EmbeddedResource Include="Administration\Projects\UserControls\ProjectPriorities.ascx.resx">
       <DependentUpon>ProjectPriorities.ascx.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -1658,6 +1685,60 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="UserControls\App_LocalResources\Footer.ascx.resx" />
+    <Content Include="App_GlobalResources\Exceptions.es-ES.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Exceptions.es-ES.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Notifications.es-ES.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Notifications.es-ES.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\SharedResources.es-ES.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SharedResources.es-ES.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_LocalResources\Default.aspx.es-ES.resx" />
+    <Content Include="App_LocalResources\Feed.aspx.es-ES.resx" />
+    <Content Include="Errors\App_LocalResources\AccessDenied.aspx.es-ES.resx" />
+    <Content Include="Errors\App_LocalResources\Error.aspx.es-ES.resx" />
+    <Content Include="Errors\App_LocalResources\NotFound.aspx.es-ES.resx" />
+    <Content Include="Errors\App_LocalResources\SessionExpired.aspx.es-ES.resx" />
+    <Content Include="Errors\App_LocalResources\SomethingMissing.es-ES.resx" />
+    <Content Include="Issues\App_LocalResources\IssueDetail.aspx.es-ES.resx" />
+    <Content Include="Issues\App_LocalResources\IssueList.aspx.es-ES.resx" />
+    <Content Include="Issues\App_LocalResources\IssueSearch.aspx.es-ES.resx" />
+    <Content Include="Issues\App_LocalResources\MyIssues.aspx.es-ES.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\Attachments.ascx.es-ES.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\Comments.ascx.es-ES.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\History.ascx.es-ES.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\IssueTabs.ascx.es-ES.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\Notifications.es-ES.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\ParentIssues.ascx.es-ES.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\RelatedIssues.ascx.es-ES.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\Revisions.ascx.es-ES.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\SubIssues.ascx.es-ES.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\TimeTracking.ascx.es-ES.resx" />
+    <Content Include="Projects\App_LocalResources\ChangeLog.aspx.es-ES.resx" />
+    <Content Include="Projects\App_LocalResources\ProjectCalendar.aspx.es-ES.resx" />
+    <Content Include="Projects\App_LocalResources\ProjectSummary.aspx.es-ES.resx" />
+    <Content Include="Projects\App_LocalResources\ReleaseNotes.aspx.es-ES.resx" />
+    <Content Include="Projects\App_LocalResources\Roadmap.aspx.es-ES.resx" />
+    <Content Include="Queries\App_LocalResources\QueryDetail.aspx.es-ES.resx" />
+    <Content Include="Queries\App_LocalResources\QueryList.aspx.es-ES.resx" />
+    <Content Include="UserControls\App_LocalResources\Banner.ascx.es-ES.resx" />
+    <Content Include="UserControls\App_LocalResources\CategoryTreeView.ascx.es-ES.resx" />
+    <Content Include="UserControls\App_LocalResources\DisplayIssues.ascx.es-ES.resx" />
+    <Content Include="UserControls\App_LocalResources\LoginControl.ascx.es-ES.resx" />
+    <Content Include="UserControls\App_LocalResources\PickCategory.ascx.es-ES.resx" />
+    <Content Include="UserControls\App_LocalResources\PickImage.ascx.es-ES.resx" />
+    <Content Include="UserControls\App_LocalResources\PickMilestone.ascx.es-ES.resx" />
+    <Content Include="UserControls\App_LocalResources\PickPriority.ascx.es-ES.resx" />
+    <Content Include="UserControls\App_LocalResources\PickProject.ascx.es-ES.resx" />
+    <Content Include="UserControls\App_LocalResources\PickQuery.ascx.es-ES.resx" />
+    <Content Include="UserControls\App_LocalResources\PickResolution.ascx.es-ES.resx" />
+    <Content Include="UserControls\App_LocalResources\PickSingleUser.ascx.es-ES.resx" />
+    <Content Include="UserControls\App_LocalResources\PickStatus.ascx.es-ES.resx" />
+    <Content Include="UserControls\App_LocalResources\PickType.ascx.es-ES.resx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BugNET.BLL\BugNET.BLL.csproj">

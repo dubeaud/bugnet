@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute name="name" use="required" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="assembly">
+						<xsd:complexType>
+							<xsd:attribute name="alias" type="xsd:string" />
+							<xsd:attribute name="name" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="AccessDenied" xml:space="preserve">
+		<value>Acceso denegado</value>
+	</data>
+	<data name="AddRoleError" xml:space="preserve">
+		<value>No se pudo añadir el rol</value>
+	</data>
+	<data name="AttachmentDeleteError" xml:space="preserve">
+		<value>Se ha producido un error al borrar un adjunto.</value>
+	</data>
+	<data name="CloneProjectError" xml:space="preserve">
+		<value>No se ha podido duplicar un proyecto</value>
+	</data>
+	<data name="CreateProjectUploadFolderError" xml:space="preserve">
+		<value>No se ha podido crear la carpeta "{0}" para el proyecto {1}</value>
+	</data>
+	<data name="DatabaseError" xml:space="preserve">
+		<value>Se ha producido un error de acceso a la base de datos</value>
+	</data>
+	<data name="DeleteCustomFieldError" xml:space="preserve">
+		<value>No se ha podido borrar un campo personalizado</value>
+	</data>
+	<data name="DeleteIssueTypeError" xml:space="preserve">
+		<value>No se ha podido borrar un tipo de caso</value>
+	</data>
+	<data name="DeleteItemAssignedToIssueError" xml:space="preserve">
+		<value>'{0}' no se puede borrar porque está assignado a uno o más casos. Tiene que reasignar los casos a un {1} diferente antes de poder borrarlo.</value>
+	</data>
+	<data name="DeleteMailboxError" xml:space="preserve">
+		<value>No se ha podido borrar el buzón</value>
+	</data>
+	<data name="DeleteMilestoneError" xml:space="preserve">
+		<value>No se ha podido borrar el hito</value>
+	</data>
+	<data name="DeletePriorityError" xml:space="preserve">
+		<value>No se ha podido borrar la prioridad</value>
+	</data>
+	<data name="DeleteProjectUploadFolderError" xml:space="preserve">
+		<value>No se ha podido borrar la carpeta "{0}" del proyecto {1}</value>
+	</data>
+	<data name="DeleteResolutionError" xml:space="preserve">
+		<value>No se ha podido borrar la resolución</value>
+	</data>
+	<data name="DeleteRoleError" xml:space="preserve">
+		<value>No se ha podido borrar el rol</value>
+	</data>
+	<data name="DeleteStatusError" xml:space="preserve">
+		<value>No se ha podido borrar el estado</value>
+	</data>
+	<data name="DeleteUserError" xml:space="preserve">
+		<value>Se ha producido un error al borrar el usuario.</value>
+	</data>
+	<data name="InvalidFileName" xml:space="preserve">
+		<value>El nombre del archivo que ha seleccionado es incorrecto.</value>
+	</data>
+	<data name="InvalidFileType" xml:space="preserve">
+		<value>{0} no es un tipo de archivo permitido.</value>
+	</data>
+	<data name="InvalidIssueId" xml:space="preserve">
+		<value>El id del caso proporcionado [{0}] no es válido.</value>
+	</data>
+	<data name="InvalidProjectId" xml:space="preserve">
+		<value>El id del proyecto proporcionado  [{0}] no es válido.</value>
+	</data>
+	<data name="InvalidQuickSearchText" xml:space="preserve">
+		<value>El id de caso o de BugNET no es válido.</value>
+	</data>
+	<data name="InvalidRepositoryName" xml:space="preserve">
+		<value>El nombre del repositorio no está correctamente formateado. Solo se pueden incluir carácteres alfanuméricos, \"-\" y \"_\".</value>
+	</data>
+	<data name="InvalidRepositoryTagName" xml:space="preserve">
+		<value>El nombre del Tag no está correctamente formateado. Solo se pueden incluir carácteres alfanuméricos, \"-\" y \"_\".</value>
+	</data>
+	<data name="MailboxReaderError" xml:space="preserve">
+		<value>Se ha producido un error al procesar el buzón.</value>
+	</data>
+	<data name="MissingQuickSearchText" xml:space="preserve">
+		<value>El valor de búsqueda no puede ser vacío, introduzca el id del caso.</value>
+	</data>
+	<data name="PasswordChangeError" xml:space="preserve">
+		<value>La contraseña no se ha podido cambiar. Verifique que la contraseña cumple los requisitos del sitio.</value>
+	</data>
+	<data name="PasswordResetError" xml:space="preserve">
+		<value>Error al reiniciar la contraseña</value>
+	</data>
+	<data name="ProfileUpdateError" xml:space="preserve">
+		<value>Se ha producido un error al actualizar el perfil</value>
+	</data>
+	<data name="ProjectAccessDenied" xml:space="preserve">
+		<value>El usuario {0} no tiene permisos para este proyecto.</value>
+	</data>
+	<data name="ProjectNotFoundError" xml:space="preserve">
+		<value>No se ha encontrado ningún proyecto con el id [{0}].</value>
+	</data>
+	<data name="QueryStringError" xml:space="preserve">
+		<value>El parámetro de url no está correctamente formado.</value>
+	</data>
+	<data name="RepositoryCommentRequired" xml:space="preserve">
+		<value>Para crear un Tag es obligatorio un comentario</value>
+	</data>
+	<data name="RepositoryProjectSaveError" xml:space="preserve">
+		<value>No se ha podido guardar el proyecto, verifique que los datos son correctos.</value>
+	</data>
+	<data name="SaveAttachmentError" xml:space="preserve">
+		<value>Se ha producido un error al guardar el adjunto {0}.</value>
+	</data>
+	<data name="SaveCustomFieldError" xml:space="preserve">
+		<value>No se ha podido guardar el campo personalizado.</value>
+	</data>
+	<data name="SaveCustomFieldValuesError" xml:space="preserve">
+		<value>No se pueden guardar los campos personalizados del caso.</value>
+	</data>
+	<data name="SaveIssueError" xml:space="preserve">
+		<value>Se ha producido un error al guardar el caso.</value>
+	</data>
+	<data name="SaveIssueTypeError" xml:space="preserve">
+		<value>No se ha podido guardar el tipo de caso</value>
+	</data>
+	<data name="SaveIssueVoteError" xml:space="preserve">
+		<value>No se ha podido la votación del caso</value>
+	</data>
+	<data name="SaveMilestoneError" xml:space="preserve">
+		<value>No se ha podido el hito</value>
+	</data>
+	<data name="SavePriorityError" xml:space="preserve">
+		<value>No se ha podido la prioridad</value>
+	</data>
+	<data name="SaveProjectError" xml:space="preserve">
+		<value>No se ha podido guardar el proyecto, verifique que el nombre del proyecto y el código son únicos.</value>
+	</data>
+	<data name="SaveResolutionError" xml:space="preserve">
+		<value>No se ha podido guardar la resolución.</value>
+	</data>
+	<data name="SaveStatusError" xml:space="preserve">
+		<value>No se ha podido el estado.</value>
+	</data>
+	<data name="UpdateUserError" xml:space="preserve">
+		<value>Se ha producido un error al guardar el usuario.</value>
+	</data>
+	<data name="UploadPathInvalid" xml:space="preserve">
+		<value>La carpeta de adjuntos no es válida.</value>
+	</data>
+	<data name="UploadPathNotDefined" xml:space="preserve">
+		<value>La carpeta de adjuntos no se ha definido para el proyecto {0}.</value>
+	</data>
+	<data name="UploadPathNotFound" xml:space="preserve">
+		<value>La carpeta de adjuntos {0} no se encuentra. Verifique con el administrador que la carpeta existe en el servidor web.</value>
+	</data>
+	<data name="UserAuthorizedError" xml:space="preserve">
+		<value>Se ha producido un error al autorizar el usuario.</value>
+	</data>
+	<data name="UserUnAuthorizedError" xml:space="preserve">
+		<value>Se ha producido un error al desautorizar el usuario.</value>
+	</data>
+</root>
