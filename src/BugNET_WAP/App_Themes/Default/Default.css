@@ -623,12 +623,6 @@ legend
 }
 
 /* Home Page Styles */
-.projectImageGroup
-{
-	float: left;
-	margin-left: 0px;
-	margin-right: 10px;
-}
 .project
 {
 	position: relative;
@@ -638,6 +632,14 @@ legend
 	color: #666;
 	border-bottom: 1px solid #efefef;
 }
+                                
+.projectImageGroup
+{
+    float: left;
+	margin-left: 0px;
+	margin-right: 10px;
+}
+
 .projectDetails h1
 {
 	line-height: 25px;
@@ -645,11 +647,30 @@ legend
 	padding: 0;
 	word-wrap: break-word;
 }
+
 .projectDetails
 {
 	display: block;
 	margin-left: 80px;
 }
+                
+.projectImage
+{
+	max-width: 62px;
+	max-height: 62px;
+	padding: 2px;
+}
+
+.projectDesc
+{
+
+}
+
+.projectDesc ul, ol
+{
+    margin-left: 20px;
+}
+                
 .project h1 a
 {
 	font-size: 100%;
@@ -657,16 +678,19 @@ legend
 	color: #666;
 	margin: 0;
 }
+
 .project h1 a span
 {
 	font-weight: normal;
 }
+
 .project div.quickLinks
 {
 	margin-top: 3px;
 	text-align: left;
 	height: 20px;
 }
+
 a.quickLink
 {
 	/* background: #efefef; 	border-bottom: 1px solid #ddd; 	border-bottom-left-radius: 3px 3px; 	border-bottom-right-radius: 3px 3px; 	border-right: 1px solid #ddd; 	border-top-left-radius: 3px 3px; 	border-top-right-radius: 3px 3px; 	color: #666; 	text-decoration: none; 	font-family: Helvetica, Arial, San-Serif; 	font-weight: bold; 	margin: 0px 2px; 	padding: 2px 8px;*/ /*background: url('../../images/page_white_link.png') no-repeat 0px 3px;     	padding-top:2px; 	display:block; 	*/
@@ -683,9 +707,7 @@ a.quickLink:hover
 {
 	/*background: #ddd; 	border-bottom: 1px solid #ccc; 	border-bottom-left-radius: 3px 3px; 	border-bottom-right-radius: 3px 3px; 	border-right: 1px solid #ccc; 	border-top-left-radius: 3px 3px; 	border-top-right-radius: 3px 3px; 	color: #666; 	font-family: Helvetica, Arial, San-Serif; 	font-weight: bold; 	margin: 0px 2px; 	padding: 2px 8px;*/
 }
-.projectDesc
-{
-}
+
 .actions
 {
 	margin-top: 10px;
@@ -718,12 +740,7 @@ a.quickLink:hover
 	background: url('../../images/progressbar.png') no-repeat 0px 0px;
 	padding-left: 20px;
 }
-.projectImage
-{
-	max-width: 62px;
-	max-height: 62px;
-	padding: 2px;
-}
+
 .thumb
 {
 	border: 1px solid #efefef;
@@ -1568,7 +1585,12 @@ ul.permissions li
 	padding: 5px;
 }
 
-#MainMenu a.popout { background-image:url("../../Images/bullet_arrow_down.png");background-repeat:no-repeat;background-position:55px center;padding-right:25px; }
+#MainMenu a.popout {
+     background-image: url("../../Images/bullet_arrow_down.png");
+     background-repeat: no-repeat;
+     background-position: 55px center;
+     padding-right: 25px;
+}
 
 /* Watermarks*/
 .issueTitle

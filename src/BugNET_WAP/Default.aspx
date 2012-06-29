@@ -5,13 +5,11 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="Content" runat="server">
     <asp:Repeater ID="rptProject" runat="Server">
         <ItemTemplate>
-            <ajaxToolkit:HoverMenuExtender ID="hme2" runat="Server" TargetControlID="FiltersLink"
-                PopupControlID="PopupMenu" PopupPosition="Bottom" OffsetX="0" OffsetY="5" PopDelay="100" />
+            <ajaxToolkit:HoverMenuExtender ID="hme2" runat="Server" TargetControlID="FiltersLink" PopupControlID="PopupMenu" PopupPosition="Bottom" OffsetX="0" OffsetY="5" PopDelay="100" />
             <div class="project">
                 <div class="projectImageGroup">
                     <a href="Projects/ProjectSummary.aspx?pid=<%# ((Project)Container.DataItem).Id %>">
-                        <asp:Image CssClass="projectImage thumb" BorderWidth="1px" runat="server" Height="62"
-                            Width="62" AlternateText="Project Image" ID="ProjectImage" /></a>
+                        <asp:Image CssClass="projectImage thumb" BorderWidth="1px" runat="server" Height="62" Width="62" AlternateText="Project Image" ID="ProjectImage" /></a>
                 </div>
                 <div class="projectDetails">
                     <h1>
@@ -28,8 +26,7 @@
                                 ID="Image90" />
                         </a>
                     </asp:Panel>
-                    <p class="projectDesc">
-                        <%#Server.HtmlDecode(((Project)Container.DataItem).Description)%></p>
+                    <div class="projectDesc"><%#Server.HtmlDecode(((Project)Container.DataItem).Description)%></div>
                     <asp:Panel CssClass="popupMenu" ID="PopupMenu" Style="width: 320px" runat="server">
                         <div style="float: left">
                             <span class="popupTitle"> <asp:Localize runat="server" ID="Localize2" Text="Quick Links" meta:resourcekey="QuickLinks" /></span>
