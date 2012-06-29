@@ -9,7 +9,7 @@ namespace BugNET.UserInterfaceLayer
     /// <summary>
     /// Exports a gridview to excel
     /// </summary>
-    public class GridViewExportUtil
+    public static class GridViewExportUtil
     {
         /// <summary>
         /// 
@@ -19,38 +19,36 @@ namespace BugNET.UserInterfaceLayer
         public static void Export(string fileName, GridView gv)
         {
             HttpContext.Current.Response.Clear();
-            HttpContext.Current.Response.AddHeader(
-                "content-disposition", string.Format("attachment; filename={0}", fileName));
+            HttpContext.Current.Response.AddHeader("content-disposition", string.Format("attachment; filename={0}", fileName));
             HttpContext.Current.Response.ContentType = "application/ms-excel";
 
-            using (StringWriter sw = new StringWriter())
+            using (var sw = new StringWriter())
             {
-                using (HtmlTextWriter htw = new HtmlTextWriter(sw))
+                using (var htw = new HtmlTextWriter(sw))
                 {
                     //  Create a table to contain the grid
-                    Table table = new Table();
+                    var table = new Table {GridLines = gv.GridLines};
 
                     //  include the gridline settings
-                    table.GridLines = gv.GridLines;
 
                     //  add the header row to the table
                     if (gv.HeaderRow != null)
                     {
-                        GridViewExportUtil.PrepareControlForExport(gv.HeaderRow);
+                        PrepareControlForExport(gv.HeaderRow);
                         table.Rows.Add(gv.HeaderRow);
                     }
 
                     //  add each of the data rows to the table
                     foreach (GridViewRow row in gv.Rows)
                     {
-                        GridViewExportUtil.PrepareControlForExport(row);
+                        PrepareControlForExport(row);
                         table.Rows.Add(row);
                     }
 
                     //  add the footer row to the table
                     if (gv.FooterRow != null)
                     {
-                        GridViewExportUtil.PrepareControlForExport(gv.FooterRow);
+                        PrepareControlForExport(gv.FooterRow);
                         table.Rows.Add(gv.FooterRow);
                     }
 
@@ -70,9 +68,10 @@ namespace BugNET.UserInterfaceLayer
         /// <param name="control"></param>
         private static void PrepareControlForExport(Control control)
         {
-            for (int i = 0; i < control.Controls.Count; i++)
+            for (var i = 0; i < control.Controls.Count; i++)
             {
-                Control current = control.Controls[i];
+                var current = control.Controls[i];
+
                 if (current is LinkButton)
                 {
                     control.Controls.Remove(current);
@@ -106,7 +105,7 @@ namespace BugNET.UserInterfaceLayer
 
                 if (current.HasControls())
                 {
-                    GridViewExportUtil.PrepareControlForExport(current);
+                    PrepareControlForExport(current);
                 }
             }
         }

@@ -167,159 +167,195 @@
                 </asp:Panel>
             </asp:Panel>
             <asp:Panel ID="ScrollPanel" runat="server" ScrollBars="Horizontal" Width="100%">
-                <BNWC:GridView ID="gvIssues" ClientIDMode="Predictable" SkinID="GridView" AllowPaging="True" AllowSorting="True" BorderWidth="1px"
-                    BorderStyle="Solid" GridLines="None" DataKeyNames="Id" UseAccessibleHeader="true" EnableMultiColumnSorting="True" ShowSortSequence="True"
-                    PagerStyle-HorizontalAlign="right" SortAscImageUrl="~/images/bullet_arrow_up.png" SortDescImageUrl="~/images/bullet_arrow_down.png"
-                    OnRowDataBound="gvIssues_RowDataBound" OnSorting="gvIssues_Sorting" Width="100%" OnPageIndexChanging="gvIssues_PageIndexChanging"
-                    runat="server" ondatabinding="gvIssues_DataBinding">
+                <BNWC:GridView 
+                    ID="gvIssues" 
+                    ClientIDMode="Predictable" 
+                    SkinID="GridView" 
+                    AllowPaging="True" 
+                    AllowSorting="True"
+                    BorderWidth="1px"
+                    BorderStyle="Solid" 
+                    GridLines="None" 
+                    DataKeyNames="Id" 
+                    UseAccessibleHeader="true" 
+                    EnableMultiColumnSorting="True" 
+                    ShowSortSequence="True"
+                    PagerStyle-HorizontalAlign="right" 
+                    SortAscImageUrl="~/images/bullet_arrow_up.png" 
+                    SortDescImageUrl="~/images/bullet_arrow_down.png"
+                    OnRowDataBound="gvIssues_RowDataBound" 
+                    OnSorting="gvIssues_Sorting"
+                    Width="100%" 
+                    OnPageIndexChanging="gvIssues_PageIndexChanging"
+                    runat="server" 
+                    ondatabinding="gvIssues_DataBinding">
                     <Columns>
                         <asp:TemplateField>
-                            <ItemStyle HorizontalAlign="center" />
-                            <HeaderStyle HorizontalAlign="center" />
                             <HeaderTemplate>
                                 <asp:Image ID="CheckAllImage" ImageUrl="~/Images/tick.gif" onclick="checkAll();" runat="server" />
                             </HeaderTemplate>
                             <ItemTemplate>
                                 <asp:CheckBox ID="cbSelectAll" runat="server" />
                             </ItemTemplate>
+                            <ItemStyle HorizontalAlign="center" Width="20" />
+                            <HeaderStyle HorizontalAlign="center" Width="20" />
                         </asp:TemplateField>
                         <asp:TemplateField>
-                            <ItemStyle HorizontalAlign="center" />
-                            <HeaderStyle HorizontalAlign="center" />
                             <ItemTemplate>
                                 <asp:Image runat="server" ID="imgPrivate" meta:resourcekey="imgPrivate" AlternateText="Private" ImageUrl="~/images/lock.gif">
                                 </asp:Image>
                             </ItemTemplate>
+                            <ItemStyle HorizontalAlign="center" Width="20" />
+                            <HeaderStyle HorizontalAlign="center" Width="20" />
                         </asp:TemplateField>
                         <asp:BoundField DataField="FullId" HeaderText="<%$ Resources:SharedResources, Id %>" ItemStyle-Wrap="false" SortExpression="iv.[IssueId]">
-                            <ItemStyle Wrap="False"></ItemStyle>
+                            <ItemStyle HorizontalAlign="center" />
+                            <HeaderStyle HorizontalAlign="center" />
                         </asp:BoundField>
                         <asp:HyperLinkField HeaderStyle-HorizontalAlign="Left" HeaderText="<%$ Resources:SharedResources, Title %>" SortExpression="IssueTitle"
                             DataNavigateUrlFormatString="~/Issues/IssueDetail.aspx?id={0}" DataNavigateUrlFields="Id" DataTextField="Title">
                             <ControlStyle Width="250" />
+                            <HeaderStyle HorizontalAlign="Left" />
+                            <ItemStyle HorizontalAlign="Left" />
                         </asp:HyperLinkField>
-                        <asp:BoundField DataField="ProjectName" HeaderText="<%$ Resources:SharedResources, Project %>" SortExpression="ProjectName"
-                            ItemStyle-Wrap="false" Visible="false">
-                            <ItemStyle Wrap="False"></ItemStyle>
+                        <asp:BoundField DataField="ProjectName" HeaderText="<%$ Resources:SharedResources, Project %>" Visible="false" SortExpression="ProjectName">
+                            <HeaderStyle HorizontalAlign="Left" />
+                            <ItemStyle HorizontalAlign="Left" Wrap="False" />
                         </asp:BoundField>
                         <asp:TemplateField HeaderText="<%$ Resources:SharedResources, Votes %>" Visible="false" SortExpression="IssueVotes">
                             <ItemTemplate>
                                 <%# DataBinder.Eval(Container.DataItem, "Votes")%>
                             </ItemTemplate>
+                            <HeaderStyle HorizontalAlign="Center" />
                             <ItemStyle HorizontalAlign="Center" />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="<%$ Resources:SharedResources, Category %>" Visible="false" SortExpression="CategoryName">
-                            <ItemStyle HorizontalAlign="Left"></ItemStyle>
                             <ItemTemplate>
                                 <%# DataBinder.Eval(Container.DataItem, "CategoryName")%>
                             </ItemTemplate>
+                            <HeaderStyle HorizontalAlign="Left" />
+                            <ItemStyle HorizontalAlign="Left" />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="<%$ Resources:SharedResources, Creator %>" Visible="false" SortExpression="CreatorDisplayName">
-                            <ItemStyle HorizontalAlign="Left"></ItemStyle>
                             <ItemTemplate>
                                 <%# DataBinder.Eval(Container.DataItem, "CreatorDisplayName")%>
                             </ItemTemplate>
+                            <HeaderStyle HorizontalAlign="Left" />
+                            <ItemStyle HorizontalAlign="Left" />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="<%$ Resources:SharedResources, Owner %>" Visible="false" SortExpression="OwnerDisplayName">
-                            <ItemStyle HorizontalAlign="Left"></ItemStyle>
                             <ItemTemplate>
                                 <%# DataBinder.Eval(Container.DataItem, "OwnerDisplayName")%>
                             </ItemTemplate>
+                            <HeaderStyle HorizontalAlign="Left" />
+                            <ItemStyle HorizontalAlign="Left" />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="<%$ Resources:SharedResources, Assigned %>" Visible="false" SortExpression="AssignedDisplayName">
-                            <ItemStyle HorizontalAlign="Left"></ItemStyle>
                             <ItemTemplate>
                                 <%# DataBinder.Eval(Container.DataItem, "AssignedDisplayName" )%>
                             </ItemTemplate>
+                            <HeaderStyle HorizontalAlign="Left" />
+                            <ItemStyle HorizontalAlign="Left" />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="<%$ Resources:SharedResources, Type %>" Visible="false" SortExpression="IssueTypeName">
-                            <ItemStyle HorizontalAlign="center" />
-                            <HeaderStyle HorizontalAlign="center" />
                             <ItemTemplate>
                                 <it:TextImage ID="ctlType" ImageDirectory="/IssueType" Text='<%# DataBinder.Eval(Container.DataItem, "IssueTypeName" )%>'
                                     ImageUrl='<%# DataBinder.Eval(Container.DataItem, "IssueTypeImageUrl" )%>' runat="server" />
                             </ItemTemplate>
+                            <HeaderStyle HorizontalAlign="center" />
+                            <ItemStyle HorizontalAlign="center" />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="<%$ Resources:SharedResources, Milestone %>" Visible="false" SortExpression="MilestoneName">
-                            <ItemStyle HorizontalAlign="center" />
-                            <HeaderStyle HorizontalAlign="center" />
                             <ItemTemplate>
                                 <it:TextImage ID="ctlMilestone" ImageDirectory="/Milestone" Text='<%# DataBinder.Eval(Container.DataItem, "MilestoneName" )%>'
                                     ImageUrl='<%# DataBinder.Eval(Container.DataItem, "MilestoneImageUrl" )%>' runat="server" />
                             </ItemTemplate>
+                            <HeaderStyle HorizontalAlign="center" />
+                            <ItemStyle HorizontalAlign="center" />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="<%$ Resources:SharedResources, AffectedMilestone %>" Visible="false" SortExpression="AffectedMilestoneName">
-                            <ItemStyle HorizontalAlign="center" />
-                            <HeaderStyle HorizontalAlign="center" />
                             <ItemTemplate>
                                 <it:TextImage ID="ctlAffectedMilestone" ImageDirectory="/Milestone" Text='<%# DataBinder.Eval(Container.DataItem, "AffectedMilestoneName" )%>'
                                     ImageUrl='<%# DataBinder.Eval(Container.DataItem, "AffectedMilestoneImageUrl" )%>' runat="server" />
                             </ItemTemplate>
+                            <HeaderStyle HorizontalAlign="center" />
+                            <ItemStyle HorizontalAlign="center" />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="<%$ Resources:SharedResources, Status %>" Visible="false" SortExpression="StatusName">
-                            <ItemStyle HorizontalAlign="center" />
-                            <HeaderStyle HorizontalAlign="center" />
                             <ItemTemplate>
                                 <it:TextImage ID="ctlStatus" ImageDirectory="/Status" Text='<%# DataBinder.Eval(Container.DataItem, "StatusName" )%>' ImageUrl='<%# DataBinder.Eval(Container.DataItem, "StatusImageUrl" )%>'
                                     runat="server" />
                             </ItemTemplate>
+                            <HeaderStyle HorizontalAlign="center" />
+                            <ItemStyle HorizontalAlign="center" />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="<%$ Resources:SharedResources, Priority %>" Visible="false" SortExpression="PriorityName">
-                            <ItemStyle HorizontalAlign="center" />
-                            <HeaderStyle HorizontalAlign="center" />
                             <ItemTemplate>
                                 <it:TextImage ID="ctlPriority" ImageDirectory="/Priority" Text='<%# DataBinder.Eval(Container.DataItem, "PriorityName" )%>'
                                     ImageUrl='<%# DataBinder.Eval(Container.DataItem, "PriorityImageUrl" )%>' runat="server" />
                             </ItemTemplate>
+                            <HeaderStyle HorizontalAlign="center" />
+                            <ItemStyle HorizontalAlign="center" />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="<%$ Resources:SharedResources, Resolution %>" Visible="false" SortExpression="ResolutionName">
-                            <ItemStyle HorizontalAlign="center" />
-                            <HeaderStyle HorizontalAlign="center" />
                             <ItemTemplate>
                                 <it:TextImage ID="ctlResolution" ImageDirectory="/Resolution" Text='<%# DataBinder.Eval(Container.DataItem, "ResolutionName" )%>'
                                     ImageUrl='<%# DataBinder.Eval(Container.DataItem, "ResolutionImageUrl" )%>' runat="server" />
                             </ItemTemplate>
+                            <HeaderStyle HorizontalAlign="center" />
+                            <ItemStyle HorizontalAlign="center" />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="<%$ Resources:SharedResources, DueDate%>" Visible="false" SortExpression="IssueDueDate">
                             <ItemTemplate>
                                 <%#(DateTime)Eval("DueDate") == DateTime.MinValue ? "none" : Eval("DueDate", "{0:d}") %>
                             </ItemTemplate>
+                            <HeaderStyle HorizontalAlign="center" />
+                            <ItemStyle HorizontalAlign="center" />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="<%$ Resources:SharedResources, EstimationHours %>" Visible="false" SortExpression="IssueEstimation">
                             <ItemTemplate>
                                 <%# DataBinder.Eval(Container.DataItem, "Estimation")%>
                             </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField HeaderText="<%$ Resources:SharedResources, Progress %>" Visible="false" SortExpression="IssueProgress">
                             <ItemStyle HorizontalAlign="center" />
                             <HeaderStyle HorizontalAlign="center" />
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="<%$ Resources:SharedResources, Progress %>" Visible="false" SortExpression="IssueProgress">
                             <ItemTemplate>
                                 <div id="Progress" runat="server" style="vertical-align: top; font-size: 8px; border: 1px solid #ccc; width: 100px; height: 7px;
                                     margin: 5px; text-align: center;">
-                                    <div id="ProgressBar" runat='server' style="text-align: left; background-color: #C4EFA1; height: 7px;">
-                                        &nbsp;</div>
+                                    <div id="ProgressBar" runat='server' style="text-align: left; background-color: #C4EFA1; height: 7px;">&nbsp;</div>
                                 </div>
                             </ItemTemplate>
+                            <HeaderStyle HorizontalAlign="center" />
+                            <ItemStyle HorizontalAlign="center" />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="<%$ Resources:SharedResources, TimeLoggedHours %>" Visible="false" SortExpression="TimeLogged">
                             <ItemTemplate>
                                 <%# DataBinder.Eval(Container.DataItem, "TimeLogged")%>
                             </ItemTemplate>
+                            <HeaderStyle HorizontalAlign="center" />
+                            <ItemStyle HorizontalAlign="center" />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="<%$ Resources:SharedResources, Created %>" SortExpression="DateCreated">
                             <ItemTemplate>
                                 <%# DataBinder.Eval(Container.DataItem, "DateCreated", "{0:d}")%>
                             </ItemTemplate>
+                            <HeaderStyle HorizontalAlign="center" />
+                            <ItemStyle HorizontalAlign="center" />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="<%$ Resources:SharedResources, LastUpdate %>" SortExpression="LastUpdate">
                             <ItemTemplate>
                                 <%# DataBinder.Eval(Container.DataItem, "LastUpdate", "{0:d}")%>
                             </ItemTemplate>
+                            <HeaderStyle HorizontalAlign="center" />
+                            <ItemStyle HorizontalAlign="center" />
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="<%$ Resources:SharedResources, LastUpdateUser %>" SortExpression="LastUpdateDisplayName">
                             <ItemTemplate>
                                 <%# DataBinder.Eval(Container.DataItem, "LastUpdateDisplayName")%>
                             </ItemTemplate>
+                            <HeaderStyle HorizontalAlign="Left" />
+                            <ItemStyle HorizontalAlign="Left" />
                         </asp:TemplateField>
                     </Columns>
                 </BNWC:GridView>

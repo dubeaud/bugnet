@@ -19,6 +19,7 @@
                 <asp:ServiceReference Path="~/Webservices/BugNetServices.asmx" />
             </Services>
             <Scripts>
+                <asp:ScriptReference Path="~/Scripts/json2.min.js" />
                 <asp:ScriptReference Path="~/Scripts/jquery-1.7.2.min.js" />
                 <asp:ScriptReference Path="~/Scripts/jquery.blockUI.js"  />
                 <asp:ScriptReference Path="~/Scripts/superfish.js" />

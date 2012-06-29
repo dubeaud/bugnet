@@ -821,6 +821,7 @@ div.welcomemessage ul
 {
 	padding: 4px;
 	display: table-cell;
+	vertical-align: top
 }
 .grid tr
 {
@@ -835,7 +836,8 @@ div.welcomemessage ul
 }
 .gridHeader th
 {
-	padding: 0 8px 0 8px;
+	padding: 4px;
+    vertical-align: text-bottom;
 	white-space: nowrap;
 }
 .gridHeader a

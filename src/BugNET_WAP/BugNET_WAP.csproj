@@ -1304,6 +1304,7 @@
     <Content Include="Scripts\jquery.blockUI.js" />
     <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\jquery.jstree.js" />
+    <Content Include="Scripts\json2.min.js" />
     <Content Include="Scripts\superfish.js" />
     <Content Include="Scripts\supersubs.js" />
     <Content Include="Scripts\themes\default\d.gif" />

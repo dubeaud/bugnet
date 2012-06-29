@@ -32,8 +32,6 @@ namespace BugNET.UserControls
 
         //store amount of fixed search columns due to bad string above
         private const int FIXED_COLUMNS = 22;
-        //stores total amount of columns (fixed and custom)
-        //private int nrColumns = FixedColumns;
 
         /// <summary>
         /// Handles the Init event of the Page control.
@@ -238,7 +236,16 @@ namespace BugNET.UserControls
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void ExportExcelButton_Click(object sender, EventArgs e)
         {
+            var currentPage = CurrentPageIndex;
+            var currentPageSize = PageSize;
+
+            pager.PageSize = 10000000;
+            gvIssues.PageIndex = 1;
+
             GridViewExportUtil.Export("Issues.xls", gvIssues);
+
+            CurrentPageIndex = currentPage;
+            pager.PageSize = currentPageSize;
         }
 
         /// <summary>
