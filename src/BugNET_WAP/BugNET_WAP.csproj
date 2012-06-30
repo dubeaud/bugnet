@@ -429,30 +429,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Exceptions.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\Exceptions.es-ES.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Exceptions.es-ES.resx</DependentUpon>
-    </Compile>
     <Compile Include="App_GlobalResources\Notifications.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Notifications.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\Notifications.es-ES.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Notifications.es-ES.resx</DependentUpon>
-    </Compile>
     <Compile Include="App_GlobalResources\SharedResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SharedResources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\SharedResources.es-ES.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SharedResources.es-ES.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\Web.sitemap.Designer.cs">
       <AutoGen>True</AutoGen>
