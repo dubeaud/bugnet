@@ -27,7 +27,7 @@
         </ol>
     </div>
     <div style="margin:2em 0 0 0; border-top:1px solid #ddd; padding-top:5px; clear:both;">
-        <asp:ImageButton runat="server" id="ImageButton1" OnClick="cmdResetPassword_Click" CssClass="icon" ImageUrl="~/Images/key_go.gif" />
+        <asp:ImageButton runat="server" id="ImageButton1" OnClick="CmdChangePasswordClick" CssClass="icon" ImageUrl="~/Images/key_go.gif" />
         <asp:LinkButton ID="cmdChangePassword"  OnClick="CmdChangePasswordClick" runat="server" Text="<%$ Resources:ChangePassword %>"></asp:LinkButton>
     </div>
 </asp:Panel>
