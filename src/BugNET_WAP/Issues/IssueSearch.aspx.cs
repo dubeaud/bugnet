@@ -249,57 +249,6 @@ namespace BugNET.Issues
 
                 _mainIssues.AddRange(issues);
 
-                //if (srchComments /*|| srchHistory*/ )
-                //{
-                //    // Get the Issues by Project now so 
-                //    // we dont have repeated fetches if the user
-                //    // selects multiple options.
-
-                //    // we need to search the projects again becuase bc only contains our search results
-                //    Issues = Issue.GetByProjectId(p.Id);
-                //}
-
-                // ---------------------------------------------------------------
-                // Search History
-                //
-                // ---------------------------------------------------------------
-                // List<IssueHistory> lstprjHistory = null;
-                //if (srchHistory)
-                //{
-                //    /*                      
-                //    lstprjHistory = new List<IssueHistory>();
-                //    queryClauses.Clear();
-                //    // bug need highfield method
-                //    queryClauses.Add(new QueryClause("AND", "OldValue", "LIKE", strLike , SqlDbType.VarChar, false));
-                //    queryClauses.Add(new QueryClause("OR", "NewValue", "LIKE", strLike, SqlDbType.VarChar, false));
-                //    queryClauses.Add(new QueryClause("AND", "c.ProjectID", "=", p.Id.ToString(), SqlDbType.Int, false));
-                //    lstprjHistory = IssueHistory.PerformQuery(queryClauses);
-
-                //    // Now we can quicjkly filter out open issues
-                //    if (srchOpenIssues)
-                //    {
-
-                //        // get list of open issues with matching history items for the project using LINQ                 
-                //        var tmpIssues = from hist in lstprjHistory
-                //                        join iss1 in Issue.GetByProjectId(p.Id)
-                //                        on hist.Id equals iss1.Id
-                //                        join st in Status.GetByProjectId(p.Id)
-                //                        on iss1.StatusId equals st.Id
-                //                        where st.IsClosedState = false
-                //                        select iss1;
-
-                //        mainIssues.AddRange(tmpIssues);
-
-                //    }
-                //    else
-                //    {
-                //        mainIssues.AddRange(Issues);
-                //    }
-
-                //    throw new NotImplementedException();
-                //    */
-                //}
-
                 // ---------------------------------------------------------------
                 // Search Comments
                 //
