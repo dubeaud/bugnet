@@ -63,8 +63,6 @@ namespace BugNET.Administration.Projects
             _wizardSteps.Add("UserControls/ProjectMilestones.ascx");
             _wizardSteps.Add("UserControls/ProjectIssueTypes.ascx");
             _wizardSteps.Add("UserControls/ProjectResolutions.ascx");
-            _wizardSteps.Add("UserControls/ProjectCustomFields.ascx");
-            _wizardSteps.Add("UserControls/ProjectRoles.ascx");
             _wizardSteps.Add("UserControls/ProjectMembers.ascx");
             _wizardSteps.Add("UserControls/NewProjectSummary.ascx");
 
