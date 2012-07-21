@@ -395,7 +395,7 @@ SELECT
 	CategoryName,
 	ParentCategoryId,
 	(SELECT COUNT(*) FROM BugNet_ProjectCategories WHERE ParentCategoryId = c.CategoryId) ChildCount,
-	(SELECT COUNT(*) FROM BugNet_IssuesView where IssueCategoryId = c.CategoryId AND c.ProjectId = 96 AND [Disabled] = 0 AND IsClosed = 0) AS IssueCount,
+	(SELECT COUNT(*) FROM BugNet_IssuesView where IssueCategoryId = c.CategoryId AND c.ProjectId = @ProjectId AND [Disabled] = 0 AND IsClosed = 0) AS IssueCount,
 	[Disabled]
 FROM BugNet_ProjectCategories c
 WHERE ProjectId = @ProjectId 
@@ -426,7 +426,7 @@ SELECT
 	CategoryName,
 	ParentCategoryId,
 	(SELECT COUNT(*) FROM BugNet_ProjectCategories WHERE ParentCategoryId = c.CategoryId) ChildCount,
-	(SELECT COUNT(*) FROM BugNet_IssuesView where IssueCategoryId = c.CategoryId AND c.ProjectId = 96 AND [Disabled] = 0 AND IsClosed = 0) AS IssueCount,
+	(SELECT COUNT(*) FROM BugNet_IssuesView where IssueCategoryId = c.CategoryId AND c.ProjectId = @ProjectId AND [Disabled] = 0 AND IsClosed = 0) AS IssueCount,
 	[Disabled]
 FROM BugNet_ProjectCategories c
 WHERE ProjectId = @ProjectId 
@@ -456,7 +456,7 @@ SELECT
 	CategoryName,
 	ParentCategoryId,
 	(SELECT COUNT(*) FROM BugNet_ProjectCategories WHERE ParentCategoryId = c.CategoryId) ChildCount,
-	(SELECT COUNT(*) FROM BugNet_IssuesView where IssueCategoryId = c.CategoryId AND c.ProjectId = 96 AND [Disabled] = 0 AND IsClosed = 0) AS IssueCount,
+	(SELECT COUNT(*) FROM BugNet_IssuesView where IssueCategoryId = c.CategoryId AND [Disabled] = 0 AND IsClosed = 0) AS IssueCount,
 	[Disabled]
 FROM BugNet_ProjectCategories c
 WHERE c.ParentCategoryId = @CategoryId 
@@ -520,7 +520,7 @@ SELECT
 	CategoryName,
 	ParentCategoryId,
 	(SELECT COUNT(*) FROM BugNet_ProjectCategories WHERE ParentCategoryId = c.CategoryId) ChildCount,
-	(SELECT COUNT(*) FROM BugNet_IssuesView where IssueCategoryId = c.CategoryId AND c.ProjectId = 96 AND [Disabled] = 0 AND IsClosed = 0) AS IssueCount,
+	(SELECT COUNT(*) FROM BugNet_IssuesView where IssueCategoryId = c.CategoryId AND [Disabled] = 0 AND IsClosed = 0) AS IssueCount,
 	[Disabled]
 FROM BugNet_ProjectCategories c
 WHERE CategoryId = @CategoryId
