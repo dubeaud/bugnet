@@ -1,5 +1,3 @@
- BEGIN TRAN
- GO
 
  -- 20120421_Performance_Enhancements.sql
  IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[BugNet_IssueMilestoneCountView]'))
@@ -1685,6 +1683,3 @@ FROM         dbo.BugNet_IssuesView INNER JOIN
 					  dbo.BugNet_UserView ON dbo.BugNet_IssueComments.UserId = dbo.BugNet_UserView.UserId
 
 GO
-
-
-COMMIT
