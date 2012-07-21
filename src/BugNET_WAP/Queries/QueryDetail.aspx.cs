@@ -138,25 +138,28 @@ namespace BugNET.Queries
         /// <returns></returns>
         private SiteMapNode ExpandIssuePaths(Object sender, SiteMapResolveEventArgs e)
         {
-            var currentNode = SiteMap.CurrentNode.Clone(true);
-            var tempNode = currentNode;
-
-            // The current node, and its parents, can be modified to include
-            // dynamic query string information relevant to the currently
-            // executing request.
-            if (ProjectId != 0)
+            if (SiteMap.CurrentNode != null)
             {
-                tempNode.Url = tempNode.Url + "?id=" + ProjectId.ToString();
+                var currentNode = SiteMap.CurrentNode.Clone(true);
+                var tempNode = currentNode;
+
+                // The current node, and its parents, can be modified to include
+                // dynamic query string information relevant to the currently
+                // executing request.
+                if (ProjectId != 0)
+                {
+                    tempNode.Url = string.Format("{0}?id={1}", tempNode.Url, ProjectId);
+                }
+
+                if ((null != (tempNode = tempNode.ParentNode)))
+                {
+                    tempNode.Url = string.Format("~/Queries/QueryList.aspx?pid={0}", ProjectId);
+                }
+
+                return currentNode;
             }
 
-
-            if ((null != (tempNode = tempNode.ParentNode)))
-            {
-                tempNode.Url = string.Format("~/Queries/QueryList.aspx?pid={0}", ProjectId);
-            }
-
-            return currentNode;
-
+            return null;
         }
 
         /// <summary>
@@ -281,9 +284,9 @@ namespace BugNET.Queries
         /// </summary>
         void ExecuteQuery()
         {
-            var colQueryClauses = BuildQuery();
+            var queryClauses = BuildQuery();
 
-            if (colQueryClauses.Count > 0)
+            if (queryClauses.Count > 0)
             {
                 try
                 {
@@ -304,7 +307,7 @@ namespace BugNET.Queries
 
                     }
 
-                    var colIssues = IssueManager.PerformQuery(colQueryClauses, sortColumns, ProjectId);
+                    var colIssues = IssueManager.PerformQuery(queryClauses, sortColumns, ProjectId);
                     ctlDisplayIssues.DataSource = colIssues;
                     Results.Visible = true;
                     ctlDisplayIssues.DataBind();
@@ -327,7 +330,17 @@ namespace BugNET.Queries
         /// <returns></returns>
         List<QueryClause> BuildQuery()
         {
-            return plhClauses.Controls.Cast<PickQueryField>().Select(ctlPickQuery => ctlPickQuery.QueryClause).Where(objQueryClause => objQueryClause != null).ToList();
+            var colQueryClauses = new List<QueryClause>();
+
+            foreach (PickQueryField ctlPickQuery in plhClauses.Controls)
+            {
+                var objQueryClause = ctlPickQuery.QueryClause;
+
+                if (objQueryClause != null)
+                    colQueryClauses.Add(objQueryClause);
+            }
+
+            return colQueryClauses;
         }
 
         void CancelQuery()

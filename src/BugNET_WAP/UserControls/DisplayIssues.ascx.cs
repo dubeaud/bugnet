@@ -123,16 +123,18 @@ namespace BugNET.UserControls
                     //checks if its initial load to add custom controls and checkboxes
                     if (gvIssues.Columns.Count <= nrColumns + 1)
                     {
+                        var firstIssue = DataSource[0];
+
                         //if there is custom fields add them
-                        if (customFields.Count > 0)
+                        if (firstIssue.IssueCustomFields.Count > 0)
                         {
-                            foreach (var value in customFields)
+                            foreach (var value in firstIssue.IssueCustomFields)
                             {
                                 //increments nr of columns
                                 nrColumns++;
 
                                 //create checkbox item
-                                var lstValue = new ListItem(value.Name, nrColumns.ToString());
+                                var lstValue = new ListItem(value.FieldName, nrColumns.ToString());
 
                                 //find custom controls that has been checked and check them
                                 var selected = Array.IndexOf(_arrIssueColumns, nrColumns.ToString()) >= 0;
@@ -143,7 +145,7 @@ namespace BugNET.UserControls
                                 lstIssueColumns.Items.Add(lstValue);
 
                                 //create column for custom control
-                                var tf = new TemplateField { HeaderText = value.Name, SortExpression = value.Name };
+                                var tf = new TemplateField { HeaderText = value.FieldName, SortExpression = value.DatabaseFieldName.Replace(" ", "[]") };
 
                                 gvIssues.Columns.Add(tf);
 
@@ -517,9 +519,9 @@ namespace BugNET.UserControls
             // set the custom field values
             var i = FIXED_COLUMNS + 1;
 
-            foreach (var customFieldValue in issue.CustomFieldValues)
+            foreach (var customFieldValue in issue.IssueCustomFields)
             {
-                e.Row.Cells[i].Text = customFieldValue.Value;
+                e.Row.Cells[i].Text = customFieldValue.FieldValue;
                 i++;
             }
 
