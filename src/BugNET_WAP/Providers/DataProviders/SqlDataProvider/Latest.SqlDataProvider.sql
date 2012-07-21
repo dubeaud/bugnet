@@ -1459,6 +1459,8 @@ BEGIN TRAN
 		LastUpdate = GetDate()
 	WHERE 
 		IssueId = @IssueId
+COMMIT TRAN
+GO
 
 -- 20120616-wrhighfield-updated.sql
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[BugNet_Issue_GetMonitoredIssuesByUserName]') AND type in (N'P', N'PC'))
