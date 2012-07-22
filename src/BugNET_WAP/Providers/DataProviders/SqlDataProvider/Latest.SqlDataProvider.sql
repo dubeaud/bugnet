@@ -1685,3 +1685,7 @@ FROM         dbo.BugNet_IssuesView INNER JOIN
 					  dbo.BugNet_UserView ON dbo.BugNet_IssueComments.UserId = dbo.BugNet_UserView.UserId
 
 GO
+
+INSERT INTO [dbo].[BugNet_Languages] ([CultureCode], [CultureName], [FallbackCulture]) VALUES('es-ES', 'Spanish (Spain)', 'en-US')
+INSERT INTO [dbo].[BugNet_Languages] ([CultureCode], [CultureName], [FallbackCulture]) VALUES('nl-NL', 'Dutch (Netherlands)', 'en-US')
+GO
