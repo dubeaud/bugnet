@@ -1574,6 +1574,7 @@ ul.permissions li
 
 .issueTabs li a
 {
+    cursor: pointer;
 	width: 125px;
 	list-style-type: none;
 	display: inline-block;

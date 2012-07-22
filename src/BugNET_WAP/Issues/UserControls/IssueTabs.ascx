@@ -28,7 +28,7 @@
             content.animate({ left: pos }, 200);
 
         });
-
+        $("ul.issueTabs a").removeAttr('href');
 
     });
 
@@ -48,7 +48,7 @@
         });
     }
     function EndRequestHandler(sender, args) {
-
+        $("ul.issueTabs a").removeAttr('href');
         $('div.issueTabsContainer').unblock();
     }
 </script>
@@ -59,7 +59,7 @@
             <div>
                 <div class="scrollable">
                     <div class="content">
-                        <asp:Menu 
+                        <asp:Menu  
                             ID="IssueTabsMenu" 
                             OnMenuItemClick="IssueTabsMenu_Click" 
                             runat="server" 
