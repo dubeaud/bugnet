@@ -4,7 +4,7 @@
 	<property name="nant.settings.currentframework" value="net-4.0" />
 	<property name="configuration" value="release" />
 	<property name="project.name" value="BugNET" />
-	<property name="project.version" value="0.9" />
+	<property name="project.version" value="1.0" />
 	<property name="publishdirectory" value="C:\Projects\BugNET\publish" />
 	<property name="build.dir" value="C:\Projects\bugnet\src\build" />
 	<property name="outputdirectory" value="C:\Projects\bugnet\src\build\output"/>
@@ -78,7 +78,6 @@
 			<fileset basedir=".\BugNET_WAP">
 				<include name="**\*"/>
 				<exclude name="release.config" />
-				<exclude name="development.config" />
 				<exclude name="**\Latest.SqlDataProvider.sql" />
 				<exclude name="**\obj\**" />
 				<exclude name="**\*.csproj" />
@@ -86,6 +85,10 @@
 				<exclude name="**\*.cs" />
 				<exclude name="**\BugNet.mdf" />
 				<exclude name="**\BugNet_log.ldf" />
+				<exclude name="packages.config" />
+				<exclude name="Web.Debug.config" />
+				<exclude name="Web.Release.config" />
+				<exclude name="Web.Test.config" />
 			</fileset>
 		</copy>	
 		<copy todir="${build.dir}\dist\BugNET\bin">
@@ -148,11 +151,6 @@
 			<zip zipfile="${publishdirectory}\${project.name}-${CCNetLabel}-Install.zip">
 				<fileset basedir="${build.dir}\dist">
 					<include name="**\*" />
-					<exclude name="Latest.SqlDataProvider.sql"/>
-					<exclude name="packages.config" />
-					<exclude name="Web.Debug.config" />
-					<exclude name="Web.Release.config" />
-					<exclude name="Web.Test.config" />
 				</fileset>
 			</zip>
 			
