@@ -149,6 +149,10 @@
 				<fileset basedir="${build.dir}\dist">
 					<include name="**\*" />
 					<exclude name="Latest.SqlDataProvider.sql"/>
+					<exclude name="packages.config" />
+					<exclude name="Web.Debug.config" />
+					<exclude name="Web.Release.config" />
+					<exclude name="Web.Test.config" />
 				</fileset>
 			</zip>
 			
