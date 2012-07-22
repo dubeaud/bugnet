@@ -132,7 +132,7 @@ namespace BugNET.BLL
 
             foreach (var customField in customFields)
             {
-                sb.AppendFormat(",ISNULL(p.[{0}], '''') AS [bgn_cf_{0}]{1} ", customField.Name.Replace("'", "''"), Environment.NewLine);
+                sb.AppendFormat(",ISNULL(p.[{0}], '''') AS [{2}{0}]{1} ", customField.Name.Replace("'", "''"), Environment.NewLine, Globals.PROJECT_CUSTOM_FIELDS_PREFIX);
             }
 
             sb.AppendFormat("FROM{0} ", Environment.NewLine);

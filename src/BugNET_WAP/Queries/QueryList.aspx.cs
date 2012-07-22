@@ -72,7 +72,7 @@ namespace BugNET.Queries
 			{
 				lblError.Text = GetLocalResourceObject("QueryError").ToString();
 				if (Log.IsErrorEnabled)                    
-					Log.Warn(string.Format("Error Running Saved Query. Project Id:{0} Query Id:{1}" , ProjectId.ToString(),dropQueries.SelectedValue.ToString()), ex);
+					Log.Warn(string.Format("Error Running Saved Query. Project Id:{0} Query Id:{1}" , ProjectId,dropQueries.SelectedValue), ex);
 			}
 
 		}

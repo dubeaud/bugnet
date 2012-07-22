@@ -1,4 +1,6 @@
+using System;
 using System.Data;
+using BugNET.Common;
 
 namespace BugNET.Entities
 {
@@ -20,6 +22,20 @@ namespace BugNET.Entities
         /// <value>The name of the field.</value>
         public string FieldName { get; set; }
 
+        /// <summary>
+        /// Gets the database column name of the field.
+        /// </summary>
+        /// <value>The name of the field.</value>
+        public string DatabaseFieldName { 
+            get
+            {
+                if (string.IsNullOrWhiteSpace(FieldName)) return "";
+
+                return CustomFieldQuery ? 
+                    string.Concat(Globals.PROJECT_CUSTOM_FIELDS_PREFIX, FieldName) : 
+                    FieldName;
+            }
+        }
 
         /// <summary>
         /// Gets the comparison operator.
@@ -45,7 +61,6 @@ namespace BugNET.Entities
         /// </summary>
         /// <value><c>true</c> if [custom field query]; otherwise, <c>false</c>.</value>
         public bool CustomFieldQuery { get; set; }
-
 
         /// <summary>
         /// Initializes a new instance of the <see cref="QueryClause"/> class.
