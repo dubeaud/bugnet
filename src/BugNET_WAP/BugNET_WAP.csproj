@@ -84,9 +84,9 @@
     <Reference Include="HtmlSanitizationLibrary">
       <HintPath>..\packages\AjaxControlToolkit.4.1.51116\lib\40\SanitizerProviders\HtmlSanitizationLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\log4net.dll</HintPath>
+      <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="SanitizerProviders">
       <HintPath>..\packages\AjaxControlToolkit.4.1.51116\lib\40\SanitizerProviders\SanitizerProviders.dll</HintPath>
@@ -1390,7 +1390,6 @@
     <Content Include="Images\xml_small.gif" />
     <Content Include="Install\403-3.gif" />
     <Content Include="Install\403-3.htm" />
-    <Content Include="development.config" />
     <Content Include="App_Themes\Default\Default.skin" />
     <Content Include="log4net.config" />
     <Content Include="Shared\Issue.Master" />
@@ -1425,13 +1424,22 @@
     </Content>
     <Content Include="Account\Web.config" />
     <Content Include="Administration\Web.config" />
-    <Content Include="packages.config" />
+    <None Include="packages.config" />
     <Content Include="Shared\Site.Master" />
     <Content Include="Shared\SingleColumn.master" />
     <Content Include="Shared\IssueDetail.master" />
     <None Include="Scripts\ckeditor\ckeditor.pack" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Test.config">
+      <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
   <ItemGroup>
