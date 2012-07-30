@@ -84,9 +84,9 @@
     <Reference Include="HtmlSanitizationLibrary">
       <HintPath>..\packages\AjaxControlToolkit.4.1.51116\lib\40\SanitizerProviders\HtmlSanitizationLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\log4net.dll</HintPath>
+      <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
     </Reference>
     <Reference Include="SanitizerProviders">
       <HintPath>..\packages\AjaxControlToolkit.4.1.51116\lib\40\SanitizerProviders\SanitizerProviders.dll</HintPath>
@@ -1059,15 +1059,6 @@
     <Content Include="Providers\DataProviders\SqlDataProvider\0.9.126.0.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\0.9.142.0.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\0.9.152.0.SqlDataProvider.sql" />
-    <Content Include="Providers\DataProviders\SqlDataProvider\20120421_Performance_Enhancements.sql" />
-    <Content Include="Providers\DataProviders\SqlDataProvider\20120505_Attachment_Validation.sql" />
-    <Content Include="Providers\DataProviders\SqlDataProvider\20120505_Missing_FKs.sql" />
-    <Content Include="Providers\DataProviders\SqlDataProvider\20120527-BugNet_Project_CloneProject.sql" />
-    <Content Include="Providers\DataProviders\SqlDataProvider\20120609-CustomField-sproc-tweeks.sql" />
-    <Content Include="Providers\DataProviders\SqlDataProvider\20120610-IssueLastUpdated-sproc.sql" />
-    <Content Include="Providers\DataProviders\SqlDataProvider\20120616-wrhighfield-updated.sql" />
-    <Content Include="Providers\DataProviders\SqlDataProvider\20120621-wrhighfield-custom_field_selection_length.sql" />
-    <Content Include="Providers\DataProviders\SqlDataProvider\20120623-wrhighfield-IssueCommentsView.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\BugNet.Data.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\BugNet.Schema.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\InstallCommon.sql" />
@@ -1390,7 +1381,6 @@
     <Content Include="Images\xml_small.gif" />
     <Content Include="Install\403-3.gif" />
     <Content Include="Install\403-3.htm" />
-    <Content Include="development.config" />
     <Content Include="App_Themes\Default\Default.skin" />
     <Content Include="log4net.config" />
     <Content Include="Shared\Issue.Master" />
@@ -1425,13 +1415,23 @@
     </Content>
     <Content Include="Account\Web.config" />
     <Content Include="Administration\Web.config" />
-    <Content Include="packages.config" />
+    <None Include="packages.config" />
     <Content Include="Shared\Site.Master" />
     <Content Include="Shared\SingleColumn.master" />
     <Content Include="Shared\IssueDetail.master" />
     <None Include="Scripts\ckeditor\ckeditor.pack" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Test.config">
+      <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
   <ItemGroup>

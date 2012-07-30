@@ -429,16 +429,21 @@ namespace BugNET.Providers.DataProviders
         /// <param name="queryClauseList">The query clause list.</param>
         private static void GenerateQueryClauseListFromReader(IDataReader returnData, ref List<QueryClause> queryClauseList)
         {
-            
-
             while (returnData.Read())
             {
-                var queryClause = new QueryClause((string)returnData["BooleanOperator"], (string)returnData["FieldName"], (string)returnData["ComparisonOperator"], (string)returnData["FieldValue"], (SqlDbType)returnData["DataType"], (bool)returnData["IsCustomField"]);
+                var queryClause = new QueryClause
+                {
+                    BooleanOperator = returnData["BooleanOperator"].ToString(),
+                    FieldName = returnData["FieldName"].ToString(),
+                    ComparisonOperator = returnData["ComparisonOperator"].ToString(),
+                    FieldValue = returnData["FieldValue"].ToString(),
+                    DataType = (SqlDbType)returnData["DataType"],
+                    CustomFieldQuery = returnData.GetBoolean(returnData.GetOrdinal("IsCustomField"))
+                };
+
                 queryClauseList.Add(queryClause);
                 
             }
-
-            
         }
 
         /// <summary>
@@ -889,11 +894,16 @@ namespace BugNET.Providers.DataProviders
             for (var i = 0; i < returnData.FieldCount; i++)
             {
                 var field = returnData.GetName(i);
-                if (!field.StartsWith("bgn_cf_")) continue;
+                if (!field.StartsWith(Globals.PROJECT_CUSTOM_FIELDS_PREFIX)) continue;
 
-                field = field.Replace("bgn_cf_", "");
-                var value = returnData.GetString(i);
-                entity.CustomFieldValues.Add(new KeyValuePair<string, string>(field, value));
+                entity.IssueCustomFields.Add(
+                    new IssueCustomField
+                        {
+                            DatabaseFieldName = field,
+                            FieldName = field.Replace(Globals.PROJECT_CUSTOM_FIELDS_PREFIX, ""),
+                            FieldValue = returnData.GetString(i)
+                        }
+                    );
             }
 
             return entity;

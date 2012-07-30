@@ -311,10 +311,10 @@ namespace BugNET.Install
                         UpgradeManager.MigrateUsers();
                     }
 
-                    // todo: need to wire up the custom field creation here based on the version number supported
+                    // wire up the custom field creation here based on the version number supported
                     // from here we need to create the custom field views
                     // doing this will not hurt the code if the code does not support it
-                    if (assemblyVersion <= 91610)
+                    if (databaseVersion <= 91610)
                     {
                         WriteMessage("Creating Custom Field Views<br/>", 0, true);
                         if (UpgradeManager.CreateCustomFieldViews())

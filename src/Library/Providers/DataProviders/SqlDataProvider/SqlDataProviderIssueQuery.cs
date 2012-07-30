@@ -82,6 +82,9 @@ namespace BugNET.Providers.DataProviders
                         // if the field contains a period then they might be passing in and alias so dont try and clean up
                         if (!field.Contains("."))
                         {
+                            field = field.Replace("[]", " ").Trim();    // this is used as a placeholder for spaces in custom
+                                                                        // fields used only for sorting
+
                             if (!field.EndsWith("]"))
                                 field = string.Concat(field, "]");
 
@@ -112,7 +115,7 @@ namespace BugNET.Providers.DataProviders
 
                     foreach (var qc in queryClauses)
                     {
-                        var fieldName = qc.FieldName.Trim();
+                        var fieldName = qc.DatabaseFieldName.Trim();
                         var fieldValue = qc.FieldValue;
                         var boolOper = qc.BooleanOperator.ToLower().Trim();
                         var compareOper = qc.ComparisonOperator.Trim();
@@ -149,7 +152,8 @@ namespace BugNET.Providers.DataProviders
                             criteriaBuilder.AppendFormat(" {0} {1} {2} NULL", boolOper, fieldName, compareOper);
 							continue;
                         }
-                        else if (qc.DataType == SqlDbType.DateTime)
+
+                        if (qc.DataType == SqlDbType.DateTime)
                         {
                             criteriaBuilder.AppendFormat(" {0} datediff(day, {1}, @p{3}) {2} 0", boolOper, fieldName, compareOper, i);
                         }

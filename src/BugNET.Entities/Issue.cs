@@ -19,7 +19,7 @@ namespace BugNET.Entities
             LastUpdateUserName = string.Empty;
             Title = string.Empty;
             Description = string.Empty;
-            CustomFieldValues = new List<KeyValuePair<string, string>>();
+            IssueCustomFields = new List<IssueCustomField>();
         }
 
         #endregion
@@ -29,7 +29,7 @@ namespace BugNET.Entities
         /// <summary>
         /// Gets or sets the custom field values for the issue
         /// </summary>
-        public List<KeyValuePair<string, string>> CustomFieldValues { get; set; }
+        public List<IssueCustomField> IssueCustomFields { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is closed.
