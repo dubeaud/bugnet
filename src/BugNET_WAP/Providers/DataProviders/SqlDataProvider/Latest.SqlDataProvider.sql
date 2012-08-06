@@ -1,31 +1,31 @@
 
  -- 20120421_Performance_Enhancements.sql
  IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[BugNet_IssueMilestoneCountView]'))
-DROP VIEW [BugNet_IssueMilestoneCountView]
+DROP VIEW [dbo].[BugNet_IssueMilestoneCountView]
 GO
 
 IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[BugNet_UserView]'))
-DROP VIEW [BugNet_UserView]
+DROP VIEW [dbo].[BugNet_UserView]
 GO
 
 IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[BugNet_Issue_IssueTypeCountView]'))
-DROP VIEW [BugNet_Issue_IssueTypeCountView]
+DROP VIEW [dbo].[BugNet_Issue_IssueTypeCountView]
 GO
 
 IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[BugNet_IssueStatusCountView]'))
-DROP VIEW [BugNet_IssueStatusCountView]
+DROP VIEW [dbo].[BugNet_IssueStatusCountView]
 GO
 
 IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[BugNet_IssuePriorityCountView]'))
-DROP VIEW [BugNet_IssuePriorityCountView]
+DROP VIEW [dbo].[BugNet_IssuePriorityCountView]
 GO
 
 IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[BugNet_IssuesView]'))
-DROP VIEW [BugNet_IssuesView]
+DROP VIEW [dbo].[BugNet_IssuesView]
 GO
 
 IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[BugNet_IssueAssignedToCountView]'))
-DROP VIEW [BugNet_IssueAssignedToCountView]
+DROP VIEW [dbo].[BugNet_IssueAssignedToCountView]
 GO
 
 SET ANSI_NULLS ON
@@ -34,7 +34,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE VIEW [BugNet_UserView]
+CREATE VIEW [dbo].[BugNet_UserView]
 AS
 SELECT     dbo.aspnet_Users.UserId, dbo.BugNet_UserProfiles.FirstName, dbo.BugNet_UserProfiles.LastName, dbo.BugNet_UserProfiles.DisplayName, 
 					  dbo.aspnet_Users.LoweredUserName AS UserName, dbo.aspnet_Users.MobileAlias, dbo.aspnet_Membership.LoweredEmail AS Email, 
@@ -56,7 +56,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE VIEW [BugNet_IssuesView]
+CREATE VIEW  [dbo].[BugNet_IssuesView]
 AS
 SELECT     dbo.BugNet_Issues.IssueId, dbo.BugNet_Issues.IssueTitle, dbo.BugNet_Issues.IssueDescription, dbo.BugNet_Issues.IssueStatusId, 
 					  dbo.BugNet_Issues.IssuePriorityId, dbo.BugNet_Issues.IssueTypeId, dbo.BugNet_Issues.IssueCategoryId, dbo.BugNet_Issues.ProjectId, 
@@ -112,7 +112,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE VIEW [BugNet_IssueMilestoneCountView]
+CREATE VIEW [dbo].[BugNet_IssueMilestoneCountView]
 AS
 SELECT     dbo.BugNet_IssuesView.ProjectId, ISNULL(dbo.BugNet_IssuesView.IssueMilestoneId, 0) AS MilestoneId, dbo.BugNet_IssuesView.MilestoneName, 
 					  dbo.BugNet_IssuesView.MilestoneImageUrl, ISNULL(dbo.BugNet_ProjectMilestones.SortOrder, 99999) AS SortOrder, 
@@ -132,7 +132,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 
-CREATE VIEW [BugNet_Issue_IssueTypeCountView]
+CREATE VIEW [dbo].[BugNet_Issue_IssueTypeCountView]
 AS
 SELECT     TOP (100) PERCENT dbo.BugNet_IssuesView.ProjectId, ISNULL(dbo.BugNet_IssuesView.IssueTypeId, 0) AS IssueTypeId, dbo.BugNet_IssuesView.IssueTypeName, 
 					  dbo.BugNet_IssuesView.IssueTypeImageUrl, ISNULL(dbo.BugNet_ProjectIssueTypes.SortOrder, 99) AS SortOrder, COUNT(DISTINCT dbo.BugNet_IssuesView.IssueId) 
@@ -155,7 +155,7 @@ GO
 
 
 
-CREATE VIEW [BugNet_IssueStatusCountView]
+CREATE VIEW [dbo].[BugNet_IssueStatusCountView]
 AS
 SELECT     TOP (100) PERCENT dbo.BugNet_IssuesView.ProjectId, ISNULL(dbo.BugNet_IssuesView.IssueStatusId, 0) AS StatusId, dbo.BugNet_IssuesView.StatusName, 
 					  dbo.BugNet_IssuesView.StatusImageUrl, ISNULL(dbo.BugNet_ProjectStatus.SortOrder, 99) AS SortOrder, COUNT(DISTINCT dbo.BugNet_IssuesView.IssueId) 
@@ -178,7 +178,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 
-CREATE VIEW [BugNet_IssuePriorityCountView]
+CREATE VIEW [dbo].[BugNet_IssuePriorityCountView]
 AS
 SELECT     TOP (100) PERCENT dbo.BugNet_IssuesView.ProjectId, ISNULL(dbo.BugNet_IssuesView.IssuePriorityId, '0') AS PriorityId, dbo.BugNet_IssuesView.PriorityName, 
 					  dbo.BugNet_IssuesView.PriorityImageUrl, ISNULL(dbo.BugNet_ProjectPriorities.SortOrder, 99) AS SortOrder, COUNT(DISTINCT dbo.BugNet_IssuesView.IssueId) 
@@ -199,7 +199,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE VIEW [BugNet_IssueAssignedToCountView]
+CREATE VIEW [dbo].[BugNet_IssueAssignedToCountView]
 AS
 SELECT     dbo.BugNet_IssuesView.ProjectId, ISNULL(dbo.BugNet_IssuesView.IssueAssignedUserId, '00000000-0000-0000-0000-000000000000') AS AssignedUserId, 
 					  dbo.BugNet_IssuesView.AssignedDisplayName AS AssignedName, '' AS AssignedImageUrl, CASE WHEN dbo.BugNet_IssuesView.IssueAssignedUserId IS NULL 
@@ -214,11 +214,11 @@ GO
 
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[BugNet_Issue_GetIssueMilestoneCountByProject]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [BugNet_Issue_GetIssueMilestoneCountByProject]
+DROP PROCEDURE [dbo].[BugNet_Issue_GetIssueMilestoneCountByProject]
 GO
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[BugNet_Issue_GetIssueTypeCountByProject]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [BugNet_Issue_GetIssueTypeCountByProject]
+DROP PROCEDURE [dbo].[BugNet_Issue_GetIssueTypeCountByProject]
 GO
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[BugNet_Issue_GetIssuePriorityCountByProject]') AND type in (N'P', N'PC'))
@@ -263,7 +263,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [BugNet_Issue_GetIssueUserCountByProject]
+CREATE PROCEDURE [dbo].[BugNet_Issue_GetIssueUserCountByProject]
  @ProjectId int
 AS
 
@@ -284,7 +284,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 
-CREATE PROCEDURE [BugNet_Issue_GetIssueMilestoneCountByProject] 
+CREATE PROCEDURE [dbo].[BugNet_Issue_GetIssueMilestoneCountByProject] 
 	@ProjectId int
 AS
 
@@ -308,7 +308,7 @@ GO
 
 
 
-CREATE PROCEDURE [BugNet_Issue_GetIssueTypeCountByProject]
+CREATE PROCEDURE [dbo].[BugNet_Issue_GetIssueTypeCountByProject]
 	@ProjectId int
 AS
 
@@ -334,7 +334,7 @@ GO
 
 
 
-CREATE PROCEDURE [BugNet_Issue_GetIssuePriorityCountByProject]
+CREATE PROCEDURE [dbo].[BugNet_Issue_GetIssuePriorityCountByProject]
 	@ProjectId int
 AS
 
@@ -360,7 +360,7 @@ GO
 
 
 
-CREATE PROCEDURE [BugNet_Issue_GetIssueStatusCountByProject]
+CREATE PROCEDURE [dbo].[BugNet_Issue_GetIssueStatusCountByProject]
  @ProjectId int
 AS
 SELECT 
@@ -385,7 +385,7 @@ GO
 
 
 
-CREATE PROCEDURE [BugNet_ProjectCategories_GetRootCategoriesByProjectId]
+CREATE PROCEDURE [dbo].[BugNet_ProjectCategories_GetRootCategoriesByProjectId]
 	@ProjectId int
 AS
 SELECT
@@ -416,7 +416,7 @@ GO
 
 
 
-CREATE PROCEDURE [BugNet_ProjectCategories_GetCategoriesByProjectId]
+CREATE PROCEDURE [dbo].[BugNet_ProjectCategories_GetCategoriesByProjectId]
 	@ProjectId int
 AS
 SELECT
@@ -446,7 +446,7 @@ GO
 
 
 
-CREATE PROCEDURE [BugNet_ProjectCategories_GetChildCategoriesByCategoryId]
+CREATE PROCEDURE [dbo].[BugNet_ProjectCategories_GetChildCategoriesByCategoryId]
 	@CategoryId int
 AS
 SELECT
@@ -478,7 +478,7 @@ GO
 
 
 
-CREATE PROCEDURE [BugNet_Issue_GetIssueCategoryCountByProject]
+CREATE PROCEDURE [dbo].[BugNet_Issue_GetIssueCategoryCountByProject]
 	@ProjectId int,
 	@CategoryId int = NULL
 AS
@@ -510,7 +510,7 @@ GO
 
 
 
-CREATE PROCEDURE [BugNet_ProjectCategories_GetCategoryById]
+CREATE PROCEDURE [dbo].[BugNet_ProjectCategories_GetCategoryById]
 	@CategoryId int
 AS
 SELECT
@@ -537,7 +537,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [BugNet_User_GetUserIdByUserName]
+CREATE PROCEDURE [dbo].[BugNet_User_GetUserIdByUserName]
 	@UserName NVARCHAR(75),
 	@UserId UNIQUEIDENTIFIER OUTPUT
 AS
@@ -551,11 +551,11 @@ WHERE LoweredUserName = LOWER(@UserName)
 GO
 
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[BugNet_IssueAttachment_ValidateDownload]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [BugNet_IssueAttachment_ValidateDownload]
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[BugNet_IssueAttachment_ValidateDownload]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [dbo].[BugNet_IssueAttachment_ValidateDownload]
 GO
 
-CREATE PROCEDURE [BugNet_IssueAttachment_ValidateDownload]
+CREATE PROCEDURE [dbo].[BugNet_IssueAttachment_ValidateDownload]
 	@IssueAttachmentId INT,
 	@RequestingUserId UNIQUEIDENTIFIER = NULL
 AS
@@ -658,11 +658,11 @@ RETURN @ReturnValue;
 GO
 
 -- 20120505_Attachment_Validation.sql
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[BugNet_IssueAttachment_ValidateDownload]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [BugNet_IssueAttachment_ValidateDownload]
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[BugNet_IssueAttachment_ValidateDownload]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [dbo].[BugNet_IssueAttachment_ValidateDownload]
 GO
 
-CREATE PROCEDURE [BugNet_IssueAttachment_ValidateDownload]
+CREATE PROCEDURE [dbo].[BugNet_IssueAttachment_ValidateDownload]
 	@IssueAttachmentId INT,
 	@RequestingUser VARCHAR(75) = NULL
 AS
@@ -823,74 +823,74 @@ GO
 -- 20120505_Missing_FKs.sql
 /* PROJECT MAILBOXES */
 IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[FK_BugNet_ProjectMailBoxes_aspnet_Users]') AND type = 'F')
-ALTER TABLE [BugNet_ProjectMailBoxes] DROP CONSTRAINT [FK_BugNet_ProjectMailBoxes_aspnet_Users]
+ALTER TABLE [dbo].[BugNet_ProjectMailBoxes] DROP CONSTRAINT [FK_BugNet_ProjectMailBoxes_aspnet_Users]
 GO
 
 IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[FK_BugNet_ProjectMailBoxes_BugNet_ProjectIssueTypes]') AND type = 'F')
-ALTER TABLE [BugNet_ProjectMailBoxes] DROP CONSTRAINT [FK_BugNet_ProjectMailBoxes_BugNet_ProjectIssueTypes]
+ALTER TABLE [dbo].[BugNet_ProjectMailBoxes] DROP CONSTRAINT [FK_BugNet_ProjectMailBoxes_BugNet_ProjectIssueTypes]
 GO
 
 IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[FK_BugNet_ProjectMailBoxes_aspnet_Users]') AND type = 'F')
-ALTER TABLE [BugNet_ProjectMailBoxes]  WITH CHECK ADD  CONSTRAINT [FK_BugNet_ProjectMailBoxes_aspnet_Users] FOREIGN KEY([AssignToUserId])
+ALTER TABLE [dbo].[BugNet_ProjectMailBoxes]  WITH CHECK ADD  CONSTRAINT [FK_BugNet_ProjectMailBoxes_aspnet_Users] FOREIGN KEY([AssignToUserId])
 REFERENCES [dbo].[aspnet_Users] ([UserId])
 GO
 
 IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[FK_BugNet_ProjectMailBoxes_aspnet_Users]') AND type = 'F')
-ALTER TABLE [BugNet_ProjectMailBoxes] CHECK CONSTRAINT [FK_BugNet_ProjectMailBoxes_aspnet_Users]
+ALTER TABLE [dbo].[BugNet_ProjectMailBoxes] CHECK CONSTRAINT [FK_BugNet_ProjectMailBoxes_aspnet_Users]
 GO
 
 IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[FK_BugNet_ProjectMailBoxes_BugNet_ProjectIssueTypes]') AND type = 'F')
-ALTER TABLE [BugNet_ProjectMailBoxes]  WITH CHECK ADD  CONSTRAINT [FK_BugNet_ProjectMailBoxes_BugNet_ProjectIssueTypes] FOREIGN KEY([IssueTypeId])
+ALTER TABLE [dbo].[BugNet_ProjectMailBoxes]  WITH CHECK ADD  CONSTRAINT [FK_BugNet_ProjectMailBoxes_BugNet_ProjectIssueTypes] FOREIGN KEY([IssueTypeId])
 REFERENCES [dbo].[BugNet_ProjectIssueTypes] ([IssueTypeId])
 GO
 
 IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[FK_BugNet_ProjectMailBoxes_BugNet_ProjectIssueTypes]') AND type = 'F')
-ALTER TABLE [BugNet_ProjectMailBoxes] CHECK CONSTRAINT [FK_BugNet_ProjectMailBoxes_BugNet_ProjectIssueTypes]
+ALTER TABLE [dbo].[BugNet_ProjectMailBoxes] CHECK CONSTRAINT [FK_BugNet_ProjectMailBoxes_BugNet_ProjectIssueTypes]
 GO
 
 /* ISSUE VOTES */
 IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[FK_BugNet_IssueVotes_aspnet_Users]') AND type = 'F')
-ALTER TABLE [BugNet_IssueVotes] DROP CONSTRAINT [FK_BugNet_IssueVotes_aspnet_Users]
+ALTER TABLE [dbo].[BugNet_IssueVotes] DROP CONSTRAINT [FK_BugNet_IssueVotes_aspnet_Users]
 GO
 
 IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[FK_BugNet_IssueVotes_BugNet_Issues]') AND type = 'F')
-ALTER TABLE [BugNet_IssueVotes] DROP CONSTRAINT [FK_BugNet_IssueVotes_BugNet_Issues]
+ALTER TABLE [dbo].[BugNet_IssueVotes] DROP CONSTRAINT [FK_BugNet_IssueVotes_BugNet_Issues]
 GO
 
 DELETE
-FROM BugNet_IssueVotes
+FROM [dbo].[BugNet_IssueVotes]
 WHERE IssueId NOT IN (SELECT IssueId FROM BugNet_Issues)
 GO
 
 DELETE
-FROM BugNet_IssueVotes
+FROM [dbo].[BugNet_IssueVotes]
 WHERE UserId NOT IN (SELECT UserId FROM aspnet_Users)
 GO
 
-IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[FK_BugNet_IssueVotes_aspnet_Users]') AND type = 'F')
-ALTER TABLE [BugNet_IssueVotes]  WITH CHECK ADD  CONSTRAINT [FK_BugNet_IssueVotes_aspnet_Users] FOREIGN KEY([UserId])
+IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[FK_BugNet_IssueVotes_aspnet_Users]') AND type = 'F')
+ALTER TABLE [dbo].[BugNet_IssueVotes]  WITH CHECK ADD  CONSTRAINT [FK_BugNet_IssueVotes_aspnet_Users] FOREIGN KEY([UserId])
 REFERENCES [dbo].[aspnet_Users] ([UserId])
 GO
 
-IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[FK_BugNet_IssueVotes_aspnet_Users]') AND type = 'F')
-ALTER TABLE [BugNet_IssueVotes] CHECK CONSTRAINT [FK_BugNet_IssueVotes_aspnet_Users]
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[FK_BugNet_IssueVotes_aspnet_Users]') AND type = 'F')
+ALTER TABLE [dbo].[BugNet_IssueVotes] CHECK CONSTRAINT [FK_BugNet_IssueVotes_aspnet_Users]
 GO
 
-IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[FK_BugNet_IssueVotes_BugNet_Issues]') AND type = 'F')
-ALTER TABLE [BugNet_IssueVotes]  WITH CHECK ADD  CONSTRAINT [FK_BugNet_IssueVotes_BugNet_Issues] FOREIGN KEY([IssueId])
+IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[FK_BugNet_IssueVotes_BugNet_Issues]') AND type = 'F')
+ALTER TABLE [dbo].[BugNet_IssueVotes]  WITH CHECK ADD  CONSTRAINT [FK_BugNet_IssueVotes_BugNet_Issues] FOREIGN KEY([IssueId])
 REFERENCES [dbo].[BugNet_Issues] ([IssueId])
 GO
 
-IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[FK_BugNet_IssueVotes_BugNet_Issues]') AND type = 'F')
-ALTER TABLE [BugNet_IssueVotes] CHECK CONSTRAINT [FK_BugNet_IssueVotes_BugNet_Issues]
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[FK_BugNet_IssueVotes_BugNet_Issues]') AND type = 'F')
+ALTER TABLE [dbo].[BugNet_IssueVotes] CHECK CONSTRAINT [FK_BugNet_IssueVotes_BugNet_Issues]
 GO
 
 -- 20120527-BugNet_Project_CloneProject.sql
-IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[BugNet_Project_CloneProject]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
-DROP PROCEDURE [BugNet_Project_CloneProject]
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[BugNet_Project_CloneProject]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[BugNet_Project_CloneProject]
 GO
 
-CREATE PROCEDURE [BugNet_Project_CloneProject] 
+CREATE PROCEDURE [dbo].[BugNet_Project_CloneProject] 
 (
   @ProjectId INT,
   @ProjectName NVarChar(256),
@@ -1309,16 +1309,16 @@ RETURN @NewProjectId
 GO
 
 -- 20120609-CustomField-sproc-tweeks.sql
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[BugNet_ProjectCustomField_DeleteCustomField]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [BugNet_ProjectCustomField_DeleteCustomField]
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[BugNet_ProjectCustomField_DeleteCustomField]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [dbo].[BugNet_ProjectCustomField_DeleteCustomField]
 GO
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[BugNet_ProjectCustomFieldSelection_DeleteCustomFieldSelection]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [BugNet_ProjectCustomFieldSelection_DeleteCustomFieldSelection]
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[BugNet_ProjectCustomFieldSelection_DeleteCustomFieldSelection]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [dbo].[BugNet_ProjectCustomFieldSelection_DeleteCustomFieldSelection]
 GO
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[BugNet_ProjectCustomFieldSelection_Update]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [BugNet_ProjectCustomFieldSelection_Update]
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[BugNet_ProjectCustomFieldSelection_Update]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [dbo].[BugNet_ProjectCustomFieldSelection_Update]
 GO
 
 SET ANSI_NULLS ON
@@ -1327,7 +1327,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [BugNet_ProjectCustomFieldSelection_Update]
+CREATE PROCEDURE [dbo].[BugNet_ProjectCustomFieldSelection_Update]
 	@CustomFieldSelectionId INT,
 	@CustomFieldId INT,
 	@CustomFieldSelectionName NVARCHAR(50),
@@ -1384,7 +1384,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 
-CREATE PROCEDURE [BugNet_ProjectCustomFieldSelection_DeleteCustomFieldSelection]
+CREATE PROCEDURE [dbo].[BugNet_ProjectCustomFieldSelection_DeleteCustomFieldSelection]
 	@CustomFieldSelectionIdToDelete INT
 AS
 
@@ -1414,7 +1414,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [BugNet_ProjectCustomField_DeleteCustomField]
+CREATE PROCEDURE [dbo].[BugNet_ProjectCustomField_DeleteCustomField]
 	@CustomFieldIdToDelete INT
 AS
 
@@ -1432,8 +1432,8 @@ COMMIT
 GO
 
 -- 20120610-IssueLastUpdated-sproc.sql
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[BugNet_Issue_UpdateLastUpdated]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [BugNet_Issue_UpdateLastUpdated]
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[BugNet_Issue_UpdateLastUpdated]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [dbo].[BugNet_Issue_UpdateLastUpdated]
 GO
 
 SET ANSI_NULLS ON
@@ -1442,7 +1442,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [BugNet_Issue_UpdateLastUpdated]
+CREATE PROCEDURE [dbo].[BugNet_Issue_UpdateLastUpdated]
   @IssueId Int,
   @LastUpdateUserName NVARCHAR(255)
 AS
@@ -1463,11 +1463,11 @@ COMMIT TRAN
 GO
 
 -- 20120616-wrhighfield-updated.sql
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[BugNet_Issue_GetMonitoredIssuesByUserName]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [BugNet_Issue_GetMonitoredIssuesByUserName]
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[BugNet_Issue_GetMonitoredIssuesByUserName]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [dbo].[BugNet_Issue_GetMonitoredIssuesByUserName]
 GO
 
-CREATE PROCEDURE [BugNet_Issue_GetMonitoredIssuesByUserName]
+CREATE PROCEDURE [dbo].[BugNet_Issue_GetMonitoredIssuesByUserName]
   @UserName NVARCHAR(255),
   @ExcludeClosedStatus BIT
 AS
@@ -1493,12 +1493,12 @@ AND ((@ExcludeClosedStatus = 0) OR (iv.IsClosed = 0))
 GO
 
 -- 20120621-wrhighfield-custom_field_selection_length.sql
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[BugNet_ProjectCustomFieldSelection_CreateNewCustomFieldSelection]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [BugNet_ProjectCustomFieldSelection_CreateNewCustomFieldSelection]
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[BugNet_ProjectCustomFieldSelection_CreateNewCustomFieldSelection]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [dbo].[BugNet_ProjectCustomFieldSelection_CreateNewCustomFieldSelection]
 GO
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[BugNet_ProjectCustomFieldSelection_Update]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [BugNet_ProjectCustomFieldSelection_Update]
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[BugNet_ProjectCustomFieldSelection_Update]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [dbo].[BugNet_ProjectCustomFieldSelection_Update]
 GO
 
 SET ANSI_NULLS ON
@@ -1507,7 +1507,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [BugNet_ProjectCustomFieldSelection_CreateNewCustomFieldSelection]
+CREATE PROCEDURE [dbo].[BugNet_ProjectCustomFieldSelection_CreateNewCustomFieldSelection]
 	@CustomFieldId INT,
 	@CustomFieldSelectionValue NVARCHAR(255),
 	@CustomFieldSelectionName NVARCHAR(255)
@@ -1548,7 +1548,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 
-CREATE PROCEDURE [BugNet_ProjectCustomFieldSelection_Update]
+CREATE PROCEDURE [dbo].[BugNet_ProjectCustomFieldSelection_Update]
 	@CustomFieldSelectionId INT,
 	@CustomFieldId INT,
 	@CustomFieldSelectionName NVARCHAR(255),
@@ -1599,28 +1599,17 @@ END
 
 GO
 
-BEGIN TRANSACTION
-SET QUOTED_IDENTIFIER ON
-SET ARITHABORT ON
-SET NUMERIC_ROUNDABORT OFF
-SET CONCAT_NULL_YIELDS_NULL ON
-SET ANSI_NULLS ON
-SET ANSI_PADDING ON
-SET ANSI_WARNINGS ON
-COMMIT
-BEGIN TRANSACTION
-GO
-ALTER TABLE dbo.BugNet_ProjectCustomFieldSelections
+
+ALTER TABLE [dbo].[BugNet_ProjectCustomFieldSelections]
 	DROP CONSTRAINT FK_BugNet_ProjectCustomFieldSelections_BugNet_ProjectCustomFields
 GO
-COMMIT
 
-BEGIN TRANSACTION
-GO
-ALTER TABLE dbo.BugNet_ProjectCustomFieldSelections
+
+ALTER TABLE [dbo].[BugNet_ProjectCustomFieldSelections]
 	DROP CONSTRAINT DF_BugNet_ProjectCustomFieldSelections_CustomFieldSelectionSortOrder
 GO
-CREATE TABLE dbo.Tmp_BugNet_ProjectCustomFieldSelections
+
+CREATE TABLE [dbo].[Tmp_BugNet_ProjectCustomFieldSelections]
 	(
 	CustomFieldSelectionId int NOT NULL IDENTITY (1, 1),
 	CustomFieldId int NOT NULL,
@@ -1629,29 +1618,37 @@ CREATE TABLE dbo.Tmp_BugNet_ProjectCustomFieldSelections
 	CustomFieldSelectionSortOrder int NOT NULL
 	)  ON [PRIMARY]
 GO
-ALTER TABLE dbo.Tmp_BugNet_ProjectCustomFieldSelections ADD CONSTRAINT
+
+ALTER TABLE [dbo].[Tmp_BugNet_ProjectCustomFieldSelections] ADD CONSTRAINT
 	DF_BugNet_ProjectCustomFieldSelections_CustomFieldSelectionSortOrder DEFAULT ((0)) FOR CustomFieldSelectionSortOrder
 GO
-SET IDENTITY_INSERT dbo.Tmp_BugNet_ProjectCustomFieldSelections ON
+
+SET IDENTITY_INSERT [dbo].[Tmp_BugNet_ProjectCustomFieldSelections] ON
 GO
-IF EXISTS(SELECT * FROM dbo.BugNet_ProjectCustomFieldSelections)
+
+IF EXISTS(SELECT * FROM [dbo].[BugNet_ProjectCustomFieldSelections])
 	 EXEC('INSERT INTO dbo.Tmp_BugNet_ProjectCustomFieldSelections (CustomFieldSelectionId, CustomFieldId, CustomFieldSelectionValue, CustomFieldSelectionName, CustomFieldSelectionSortOrder)
 		SELECT CustomFieldSelectionId, CustomFieldId, CONVERT(nvarchar(255), CustomFieldSelectionValue), CONVERT(nvarchar(255), CustomFieldSelectionName), CustomFieldSelectionSortOrder FROM dbo.BugNet_ProjectCustomFieldSelections WITH (HOLDLOCK TABLOCKX)')
 GO
-SET IDENTITY_INSERT dbo.Tmp_BugNet_ProjectCustomFieldSelections OFF
+
+SET IDENTITY_INSERT [dbo].[Tmp_BugNet_ProjectCustomFieldSelections] OFF
 GO
-DROP TABLE dbo.BugNet_ProjectCustomFieldSelections
+
+DROP TABLE [dbo].[BugNet_ProjectCustomFieldSelections]
 GO
-EXECUTE sp_rename N'dbo.Tmp_BugNet_ProjectCustomFieldSelections', N'BugNet_ProjectCustomFieldSelections', 'OBJECT' 
+
+EXECUTE sp_rename 'dbo.Tmp_BugNet_ProjectCustomFieldSelections', 'BugNet_ProjectCustomFieldSelections'
 GO
-ALTER TABLE dbo.BugNet_ProjectCustomFieldSelections ADD CONSTRAINT
+
+ALTER TABLE [dbo].[BugNet_ProjectCustomFieldSelections] ADD CONSTRAINT
 	PK_BugNet_ProjectCustomFieldSelections PRIMARY KEY CLUSTERED 
 	(
 	CustomFieldSelectionId
 	) WITH( STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 
 GO
-ALTER TABLE dbo.BugNet_ProjectCustomFieldSelections ADD CONSTRAINT
+
+ALTER TABLE [dbo].[BugNet_ProjectCustomFieldSelections] ADD CONSTRAINT
 	FK_BugNet_ProjectCustomFieldSelections_BugNet_ProjectCustomFields FOREIGN KEY
 	(
 	CustomFieldId
@@ -1662,19 +1659,19 @@ ALTER TABLE dbo.BugNet_ProjectCustomFieldSelections ADD CONSTRAINT
 	 ON DELETE  CASCADE 
 	
 GO
-COMMIT
-GO
 
-UPDATE BugNet_ProjectCustomFieldSelections
+
+UPDATE [dbo].[BugNet_ProjectCustomFieldSelections]
 SET CustomFieldSelectionValue = RTRIM(LTRIM(CustomFieldSelectionValue)),
 	CustomFieldSelectionName = RTRIM(LTRIM(CustomFieldSelectionName))
-
--- 20120623-wrhighfield-IssueCommentsView.sql
-IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[BugNet_IssueCommentsView]'))
-DROP VIEW [BugNet_IssueCommentsView]
 GO
 
-CREATE VIEW [BugNet_IssueCommentsView]
+-- 20120623-wrhighfield-IssueCommentsView.sql
+IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].[BugNet_IssueCommentsView]'))
+DROP VIEW [dbo].[BugNet_IssueCommentsView]
+GO
+
+CREATE VIEW [dbo].[BugNet_IssueCommentsView]
 AS
 SELECT     dbo.BugNet_IssueComments.IssueCommentId, dbo.BugNet_IssueComments.IssueId, dbo.BugNet_IssuesView.ProjectId, dbo.BugNet_IssueComments.Comment, 
 					  dbo.BugNet_IssueComments.DateCreated, dbo.BugNet_UserView.UserId AS CreatorUserId, dbo.BugNet_UserView.DisplayName AS CreatorDisplayName, 
