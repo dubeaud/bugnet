@@ -79,6 +79,7 @@
 				<include name="**\*"/>
 				<exclude name="release.config" />
 				<exclude name="**\Latest.SqlDataProvider.sql" />
+				<exclude name="**\LatestReleaseNotes.htm" />
 				<exclude name="**\obj\**" />
 				<exclude name="**\*.csproj" />
 				<exclude name="**\*.pdb" />
@@ -119,6 +120,13 @@
 			<echo message="Copying latest sql script" />
 			<copy file="${filename}"
 				tofile="${build.dir}\dist\BugNET\Providers\DataProviders\SqlDataProvider\${CCNetLabel}.0.SqlDataProvider.sql" />
+		</if>	
+		
+		<property name="filename" value=".\BugNET_WAP\Install\LatestReleaseNotes.htm" />	
+		<if test="${file::exists(filename) and file::get-length(filename) > 0}">
+			<echo message="Copying latest release notes" />
+			<copy file="${filename}"
+				tofile="${build.dir}\dist\BugNET\Install\${CCNetLabel}.htm" />
 		</if>	
 
 		<copy file=".\BugNET_WAP\release.config" 
