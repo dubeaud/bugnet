@@ -25,13 +25,9 @@
             <asp:Label ID="QuickError" Visible="false" runat="server" ForeColor="Red" />
             &nbsp;<asp:TextBox ID="txtIssueId" Height="12" Width="80" runat="Server" />
             <asp:LinkButton ID="btnSearch" OnClick="btnSearch_Click" CausesValidation="false" runat="server" Text="Search" meta:resourcekey="btnSearch" />
-            &nbsp;|
+            &nbsp;
         </p>
     </asp:Panel>
-    <p id="help">
-        <a target="_blank" href="http://bugnetproject.com/Documentation/tabid/57/topic/User%20Guide/Default.aspx">
-            <asp:Localize runat="server" ID="HelpText" Text="Help" meta:resourcekey="Help" /></a>
-    </p>
 </div>
 <div id="header">
     <h1 class="title">

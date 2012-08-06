@@ -1029,7 +1029,6 @@
     <Content Include="Images\user_delete.gif" />
     <Content Include="Images\widget.png" />
     <Content Include="Images\word.gif" />
-    <Content Include="Install\0.9.0.1.htm" />
     <Content Include="Install\LatestReleaseNotes.htm" />
     <Content Include="Install\Install.aspx" />
     <Content Include="Issues\IssueSearch.aspx" />

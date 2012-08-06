@@ -318,20 +318,9 @@ legend
 	line-height: 22px;
 	position: absolute;
 	top: 0px;
-	right: 55px;
+	right:0px;
 	padding: 0 0 0 18px;
 	margin: 0; /*background: url(../images/magnifier.gif) no-repeat 0 4px;*/
-	z-index: 1001;
-}
-#help
-{
-	line-height: 22px;
-	position: absolute;
-	top: 0px;
-	right: 10px;
-	padding: 0 0 0 18px;
-	margin: 0;
-	background: url(../../images/help.gif) no-repeat 0 3px;
 	z-index: 1001;
 }
 #search-menu
