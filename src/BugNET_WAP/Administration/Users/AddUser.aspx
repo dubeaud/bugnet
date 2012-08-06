@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Shared/SingleColumn.master" AutoEventWireup="true"
-    CodeBehind="AddUser.aspx.cs" Inherits="BugNET.Administration.Users.AddUser" meta:resourceKey="Page" %>
+    CodeBehind="AddUser.aspx.cs" Inherits="BugNET.Administration.Users.AddUser" meta:resourceKey="Page" Async="true" %>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="Content" runat="server">
     <h1 class="page-title">

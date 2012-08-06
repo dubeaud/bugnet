@@ -1,4 +1,4 @@
-<%@ Page language="c#" Inherits="BugNET.Account.Register" MasterPageFile="~/Shared/SingleColumn.master" Title="Register" Codebehind="Register.aspx.cs" meta:resourcekey="Page" %>
+<%@ Page language="c#" Inherits="BugNET.Account.Register" MasterPageFile="~/Shared/SingleColumn.master" Title="Register" Codebehind="Register.aspx.cs" meta:resourcekey="Page" Async="true" %>
 <%@ Register TagPrefix="cc2" Namespace="Clearscreen.SharpHIP" Assembly="Clearscreen.SharpHIP" %>
 
 <asp:Content runat="server" ID="Content1" ContentPlaceHolderID="Content">

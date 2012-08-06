@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Shared/SingleColumn.master" Title="Login" CodeBehind="Login.aspx.cs"
-    Inherits="BugNET.Account.Login" %>
+    Inherits="BugNET.Account.Login" Async="true" %>
 
 <%@ Register Src="~/UserControls/LoginControl.ascx" TagName="LoginControl" TagPrefix="uc1" %>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="Content">

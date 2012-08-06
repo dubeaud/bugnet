@@ -1,4 +1,4 @@
-﻿<%@ Page meta:resourceKey="Page" Language="C#" MasterPageFile="~/Shared/TwoColumn.Master" AutoEventWireup="true" CodeBehind="EditUser.aspx.cs" Inherits="BugNET.Administration.Users.EditUser" %>
+﻿<%@ Page meta:resourceKey="Page" Language="C#" MasterPageFile="~/Shared/TwoColumn.Master" AutoEventWireup="true" CodeBehind="EditUser.aspx.cs" Inherits="BugNET.Administration.Users.EditUser" Async="true" %>
 <%@ Register src="UserControls/Membership.ascx" tagname="Membership" tagprefix="bn" %>
 <%@ Register src="UserControls/Roles.ascx" tagname="Roles" tagprefix="bn" %>
 <%@ Register src="UserControls/Password.ascx" tagname="Password" tagprefix="bn" %>
