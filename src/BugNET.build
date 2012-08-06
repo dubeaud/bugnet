@@ -126,7 +126,7 @@
 		<if test="${file::exists(filename) and file::get-length(filename) > 0}">
 			<echo message="Copying latest release notes" />
 			<copy file="${filename}"
-				tofile="${build.dir}\dist\BugNET\Install\${CCNetLabel}.htm" />
+				tofile="${build.dir}\dist\BugNET\Install\${CCNetLabel}.0.htm" />
 		</if>	
 
 		<copy file=".\BugNET_WAP\release.config" 
