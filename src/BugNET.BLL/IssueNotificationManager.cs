@@ -85,7 +85,7 @@ namespace BugNET.BLL
                 try
                 {
                     //send notifications to everyone except who changed it.
-                    if (notify.NotificationUsername != Security.GetUserName())
+                    if (notify.NotificationUsername.ToLower() != Security.GetUserName().ToLower())
                     {
                         user = UserManager.GetUser(notify.NotificationUsername);
                         string Subject = String.Format(subject, issue.FullId, displayname);
@@ -139,19 +139,23 @@ namespace BugNET.BLL
             {
                 try
                 {
-                    user = UserManager.GetUser(notify.NotificationUsername);
-                    string Subject = String.Format(subject, issue.FullId, issue.ProjectName);
-                    string Body = template;
-
-
-                    MailMessage message = new MailMessage()
+                    //send notifications to everyone except who added it.
+                    if (notify.NotificationUsername.ToLower() != Security.GetUserName().ToLower())
                     {
-                        Subject = Subject,
-                        Body = Body,
-                        IsBodyHtml = true
-                    };
+                        user = UserManager.GetUser(notify.NotificationUsername);
+                        string Subject = String.Format(subject, issue.FullId, issue.ProjectName);
+                        string Body = template;
 
-                    MailService.Send(user.Email, message);
+
+                        MailMessage message = new MailMessage()
+                        {
+                            Subject = Subject,
+                            Body = Body,
+                            IsBodyHtml = true
+                        };
+
+                        MailService.Send(user.Email, message);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -210,18 +214,22 @@ namespace BugNET.BLL
             {
                 try
                 {
-                    var user = UserManager.GetUser(notify.NotificationUsername);
-                    string Subject = String.Format(subject, issue.FullId, displayname);
-                    string Body = template;
-
-                    var message = new MailMessage()
+                    //send notifications to everyone except who changed it.
+                    if (notify.NotificationUsername.ToLower() != Security.GetUserName().ToLower())
                     {
-                        Subject = Subject,
-                        Body = Body,
-                        IsBodyHtml = true
-                    };
+                        var user = UserManager.GetUser(notify.NotificationUsername);
+                        string Subject = String.Format(subject, issue.FullId, displayname);
+                        string Body = template;
 
-                    MailService.Send(user.Email, message);
+                        var message = new MailMessage()
+                        {
+                            Subject = Subject,
+                            Body = Body,
+                            IsBodyHtml = true
+                        };
+
+                        MailService.Send(user.Email, message);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -253,19 +261,22 @@ namespace BugNET.BLL
 
             try
             {
+                //send notifications to everyone except who changed it.
+                if (notification.NotificationUsername.ToLower() != Security.GetUserName().ToLower())
+                {
+                    var user = UserManager.GetUser(notification.NotificationUsername);
+                    var Subject = String.Format(subject, issue.FullId);
+                    var Body = template;
 
-                var user = UserManager.GetUser(notification.NotificationUsername);
-                var Subject = String.Format(subject, issue.FullId);
-                var Body = template;
+                    var message = new MailMessage
+                                    {
+                                        Subject = Subject,
+                                        Body = Body,
+                                        IsBodyHtml = true
+                                    };
 
-                var message = new MailMessage
-                              	{
-                    Subject = Subject,
-                    Body = Body,
-                    IsBodyHtml = true
-                };
-
-                mailService.Send(user.Email, message);
+                    mailService.Send(user.Email, message);
+                }
             }
             catch (Exception ex)
             {
@@ -304,19 +315,23 @@ namespace BugNET.BLL
             {
                 try
                 {
-                    user = UserManager.GetUser(notify.NotificationUsername);
-                    string Subject = String.Format(subject, issue.FullId, displayname);
-                    string Body = template;
-
-
-                    MailMessage message = new MailMessage()
+                    //send notifications to everyone except who changed it.
+                    if (notify.NotificationUsername.ToLower() != Security.GetUserName().ToLower())
                     {
-                        Subject = Subject,
-                        Body = Body,
-                        IsBodyHtml = true
-                    };
+                        user = UserManager.GetUser(notify.NotificationUsername);
+                        string Subject = String.Format(subject, issue.FullId, displayname);
+                        string Body = template;
 
-                    MailService.Send(user.Email, message);
+
+                        MailMessage message = new MailMessage()
+                        {
+                            Subject = Subject,
+                            Body = Body,
+                            IsBodyHtml = true
+                        };
+
+                        MailService.Send(user.Email, message);
+                    }
                 }
                 catch (Exception ex)
                 {
