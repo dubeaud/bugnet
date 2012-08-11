@@ -187,7 +187,14 @@ namespace BugNET.Issues.UserControls
 
             if (lnkAttachment != null)
             {
-                lnkAttachment.InnerText = IssueAttachmentManager.StripGuidFromFileName(currentAttachment.FileName);
+                if (ProjectManager.GetById(ProjectId).AttachmentStorageType == IssueAttachmentStorageTypes.FileSystem)
+                {
+                    lnkAttachment.InnerText = IssueAttachmentManager.StripGuidFromFileName(currentAttachment.FileName);
+                }
+                else
+                {
+                    lnkAttachment.InnerText = currentAttachment.FileName;
+                }
                 lnkAttachment.HRef = string.Concat("DownloadAttachment.axd?id=", currentAttachment.Id.ToString());
             }
 

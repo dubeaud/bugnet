@@ -106,12 +106,12 @@ namespace BugNET.UserInterfaceLayer
                         if (attachment.ContentType.ToLower().StartsWith("image/"))
                         {
                             context.Response.ContentType = attachment.ContentType;
-                            context.Response.AddHeader("Content-Disposition", string.Format("inline; filename=\"{0}\";", cleanFileName));
+                            context.Response.AddHeader("Content-Disposition", string.Format("inline; filename=\"{0}\";", fileName));
                         }
                         else
                         {
                             context.Response.ContentType = "application/octet-stream";
-                            context.Response.AddHeader("Content-Disposition", string.Format("attachment; filename=\"{0}\";", cleanFileName));
+                            context.Response.AddHeader("Content-Disposition", string.Format("attachment; filename=\"{0}\";", fileName));
                         }
                         context.Response.AddHeader("Content-Length", attachment.Attachment.Length.ToString());
                         context.Response.BinaryWrite(attachment.Attachment);
