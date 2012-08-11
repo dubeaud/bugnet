@@ -1001,6 +1001,7 @@
     <Content Include="Images\plugin_delete.gif" />
     <Content Include="Images\plus.gif" />
     <Content Include="Images\printer.gif" />
+    <Content Include="Images\Priority\critical1.png" />
     <Content Include="Images\progressbar.png" />
     <Content Include="Images\project.png" />
     <Content Include="Images\Resolution\page_red.png" />

@@ -1,7 +1,10 @@
+using System;
 using System.IO;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using BugNET.Common;
+using BugNET.UserControls;
 
 namespace BugNET.UserInterfaceLayer
 {
@@ -55,6 +58,21 @@ namespace BugNET.UserInterfaceLayer
                     //  render the table into the htmlwriter
                     table.RenderControl(htw);
 
+                    //foreach (TableRow row in table.Rows)
+                    //{
+                    //    foreach (TableCell cell in row.Cells)
+                    //    {
+                    //        var text = cell.Text.Trim().Replace("&nbsp;", "").Trim();
+
+                    //        if (text.Length > 0)
+                    //        {
+                    //            if(text.Is<DateTime>())
+                    //            {
+                    //                cell.Text = cell.Text.To<DateTime>().ToString("u");
+                    //            }
+                    //        }
+                    //    }
+                    //}
                     //  render the htmlwriter into the response
                     HttpContext.Current.Response.Write(sw.ToString());
                     HttpContext.Current.Response.End();
@@ -96,6 +114,11 @@ namespace BugNET.UserInterfaceLayer
                 {
                     control.Controls.Remove(current);
                     control.Controls.AddAt(i, new LiteralControl((current as CheckBox).Checked ? "True" : "False"));
+                }
+                else if (current is TextImage)
+                {
+                    control.Controls.Remove(current);
+                    control.Controls.AddAt(i, new LiteralControl((current as TextImage).Text));
                 }
                 else if (current is Image)
                 {
