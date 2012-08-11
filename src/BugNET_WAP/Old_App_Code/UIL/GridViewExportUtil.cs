@@ -1,7 +1,10 @@
+using System;
 using System.IO;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using BugNET.Common;
+using BugNET.UserControls;
 
 namespace BugNET.UserInterfaceLayer
 {
@@ -96,6 +99,11 @@ namespace BugNET.UserInterfaceLayer
                 {
                     control.Controls.Remove(current);
                     control.Controls.AddAt(i, new LiteralControl((current as CheckBox).Checked ? "True" : "False"));
+                }
+                else if (current is TextImage)
+                {
+                    control.Controls.Remove(current);
+                    control.Controls.AddAt(i, new LiteralControl((current as TextImage).Text));
                 }
                 else if (current is Image)
                 {
