@@ -87,7 +87,13 @@ namespace BugNET.BLL
                     //send notifications to everyone except who changed it.
                     if (notify.NotificationUsername.ToLower() != Security.GetUserName().ToLower())
                     {
+                       
                         user = UserManager.GetUser(notify.NotificationUsername);
+                       
+                        // skip to next user if this user doesn't have notifications enabled.
+                        if (!new WebProfile().GetProfile(user.UserName).RecieveEmailNotifications)
+                            continue;
+
                         string Subject = String.Format(subject, issue.FullId, displayname);
                         string Body = template;
 
@@ -143,6 +149,11 @@ namespace BugNET.BLL
                     if (notify.NotificationUsername.ToLower() != Security.GetUserName().ToLower())
                     {
                         user = UserManager.GetUser(notify.NotificationUsername);
+
+                        // skip to next user if this user doesn't have notifications enabled.
+                        if (!new WebProfile().GetProfile(user.UserName).RecieveEmailNotifications)
+                            continue;
+
                         string Subject = String.Format(subject, issue.FullId, issue.ProjectName);
                         string Body = template;
 
@@ -218,6 +229,11 @@ namespace BugNET.BLL
                     if (notify.NotificationUsername.ToLower() != Security.GetUserName().ToLower())
                     {
                         var user = UserManager.GetUser(notify.NotificationUsername);
+
+                        // skip to next user if this user doesn't have notifications enabled.
+                        if (!new WebProfile().GetProfile(user.UserName).RecieveEmailNotifications)
+                            continue;
+
                         string Subject = String.Format(subject, issue.FullId, displayname);
                         string Body = template;
 
@@ -265,6 +281,11 @@ namespace BugNET.BLL
                 if (notification.NotificationUsername.ToLower() != Security.GetUserName().ToLower())
                 {
                     var user = UserManager.GetUser(notification.NotificationUsername);
+
+                    // skip to next user if this user doesn't have notifications enabled.
+                    if (!new WebProfile().GetProfile(user.UserName).RecieveEmailNotifications)
+                        return;
+
                     var Subject = String.Format(subject, issue.FullId);
                     var Body = template;
 
@@ -319,6 +340,11 @@ namespace BugNET.BLL
                     if (notify.NotificationUsername.ToLower() != Security.GetUserName().ToLower())
                     {
                         user = UserManager.GetUser(notify.NotificationUsername);
+
+                        // skip to next user if this user doesn't have notifications enabled.
+                        if (!new WebProfile().GetProfile(user.UserName).RecieveEmailNotifications)
+                            continue;
+
                         string Subject = String.Format(subject, issue.FullId, displayname);
                         string Body = template;
 

@@ -160,7 +160,7 @@
     <value>Your profile was could not be updated</value>
   </data>
   <data name="Page.Title" xml:space="preserve">
-    <value>Page</value>
+    <value>User Profile</value>
   </data>
   <data name="Label111.Text" xml:space="preserve">
     <value>Enter your new password:</value>
@@ -171,7 +171,10 @@
   <data name="CustomSettingsUpdateError" xml:space="preserve">
     <value>Your custom settings could not be updated.</value>
   </data>
-  <data name="UpdateProfileForOpenId">
-    <value xml:space="preserve">Please take the time to validate your profile, inorder to receive notifications you will need a valid email address.</value>
+  <data name="UpdateProfileForOpenId" xml:space="preserve">
+    <value>Please take the time to validate your profile, inorder to receive notifications you will need a valid email address.</value>
+  </data>
+  <data name="AllowNotifications.Text" xml:space="preserve">
+    <value>Recieve email notifications:</value>
   </data>
 </root>

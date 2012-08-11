@@ -45,6 +45,7 @@ namespace BugNET.Account
             FullName.Text = WebProfile.Current.DisplayName;
             ddlPreferredLocale.SelectedValue = WebProfile.Current.PreferredLocale;
             IssueListItems.SelectedValue = UserManager.GetProfilePageSize().ToString();
+            AllowNotifications.Checked = WebProfile.Current.RecieveEmailNotifications;
 
             if (membershipUser == null) return;
 
@@ -165,7 +166,6 @@ namespace BugNET.Account
             {
                 Message2.ShowSuccessMessage(ex.Message);
             }
-            //else { lblCurrentPassword.Visible = true; }
         }
 
         protected void BulletedList4_Click1(object sender, BulletedListEventArgs e)
@@ -271,6 +271,7 @@ namespace BugNET.Account
         {
             WebProfile.Current.IssuesPageSize = Convert.ToInt32(IssueListItems.SelectedValue);
             WebProfile.Current.PreferredLocale = ddlPreferredLocale.SelectedValue;
+            WebProfile.Current.RecieveEmailNotifications = AllowNotifications.Checked;
 
             try
             {

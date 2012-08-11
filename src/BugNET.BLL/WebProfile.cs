@@ -36,18 +36,6 @@ namespace BugNET.BLL
             }
         }
 
-        public virtual string NotificationTypes
-        {
-            get
-            {
-                return ((string)(GetPropertyValue("NotificationTypes")));
-            }
-            set
-            {
-                SetPropertyValue("NotificationTypes", value);
-            }
-        }
-
         public virtual string PreferredLocale
         {
             get
@@ -93,6 +81,18 @@ namespace BugNET.BLL
             }
             set {
                 SetPropertyValue("DisplayName", value);
+            }
+        }
+
+        public virtual bool RecieveEmailNotifications
+        {
+            get
+            {
+                return ((bool)(GetPropertyValue("RecieveEmailNotifications")));
+            }
+            set
+            {
+                SetPropertyValue("RecieveEmailNotifications", value);
             }
         }
         

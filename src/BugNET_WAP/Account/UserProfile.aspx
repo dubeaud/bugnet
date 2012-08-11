@@ -170,10 +170,14 @@
         </asp:View>
         <asp:View ID="Notifications" runat="server">
             <bn:Message ID="Message4" runat="server" Width="650px" Visible="False" />
-            <h2>
-                <asp:literal ID="Label13" runat="server" meta:resourcekey="Notifications" Text="[Resource Needed]" /></h2>
+            <h2><asp:literal ID="Label13" runat="server" meta:resourcekey="Notifications" Text="[Resource Needed]" /></h2>
             <div class="fieldgroup  noborder">
-                <table style="width: 650px; margin-top: 1em;" border="0" summary="update customize table">
+                <ol>
+                    <li>
+                        <asp:CheckBox ID="AllowNotifications" runat="server" Text="[Resource Needed]" meta:resourceKey="AllowNotifications" />
+                    </li>
+                </ol>
+                <table style="width: 650px;" border="0" summary="update customize table">
                     <tr>
                         <td colspan="3">
                             <asp:Literal ID="Literal4" runat="server" Text="[Resource Needed]" meta:resourceKey="ReceiveProjectNotifications" />
@@ -209,17 +213,17 @@
                                 Height="110px" />
                         </td>
                     </tr>
-                    <tr>
-                        <td colspan="3" class="input-group">
-                            <div style="margin: 2em 0 0 0; border-top: 1px solid #ddd; padding-top: 5px;">
-                                <asp:ImageButton runat="server" ID="ImageButton4" OnClick="BackButton_Click" CssClass="icon"
-                                    ImageUrl="~/Images/lt.gif" />
-                                <asp:LinkButton ID="Linkbutton3" runat="server" CssClass="button" OnClick="BackButton_Click"
-                                    Text="<%$ Resources:SharedResources, Return %>" />
-                            </div>
-                        </td>
-                    </tr>
                 </table>
+            </div>
+            <div class="submit" style="margin-top:1em;">
+                <asp:ImageButton runat="server" ID="ImageButton3" OnClick="SaveCustomSettings_Click"
+                    CssClass="icon" ImageUrl="~/Images/disk.gif" />
+                <asp:LinkButton ID="LinkButton2" OnClick="SaveCustomSettings_Click" runat="server"
+                    Text="<%$ Resources:SharedResources, Save %>" />
+                <asp:ImageButton runat="server" ID="ImageButton7" OnClick="BackButton_Click" CssClass="icon"
+                    ImageUrl="~/Images/lt.gif"  />
+                <asp:LinkButton ID="Linkbutton6" runat="server" CssClass="button" OnClick="BackButton_Click"
+                    Text="<%$ Resources:SharedResources, Return %>" />
             </div>
         </asp:View>
     </asp:MultiView>

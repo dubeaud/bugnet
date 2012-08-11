@@ -10,10 +10,10 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyVersion("0.9.0.0")]
-[assembly: AssemblyFileVersion("0.9.0.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: AssemblyProduct("BugNET")]
 [assembly: ComVisible(false)]
 [assembly: AssemblyCompany("http://www.bugnetproject.com")]
-[assembly: AssemblyCopyright("Copyright © 2008-2011 BugNET Project")]
+[assembly: AssemblyCopyright("Copyright © 2008-2012 BugNET Project")]
 [assembly: AssemblyConfiguration("net-4.0.win32")]

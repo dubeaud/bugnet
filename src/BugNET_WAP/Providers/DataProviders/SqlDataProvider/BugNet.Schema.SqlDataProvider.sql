@@ -1,24 +1,31 @@
-/****** Object:  Table [dbo].[BugNet_UserProfiles]    Script Date: 07/21/2012 23:35:23 ******/
+/****** Object:  Table [dbo].[BugNet_UserProfiles]    Script Date: 08/11/2012 11:51:33 ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
+
 CREATE TABLE [dbo].[BugNet_UserProfiles](
 	[UserName] [nvarchar](50) NOT NULL,
 	[FirstName] [nvarchar](100) NULL,
 	[LastName] [nvarchar](100) NULL,
 	[DisplayName] [nvarchar](100) NULL,
 	[IssuesPageSize] [int] NULL,
-	[NotificationTypes] [nvarchar](255) NULL,
 	[PreferredLocale] [nvarchar](50) NULL,
 	[LastUpdate] [datetime] NOT NULL,
 	[SelectedIssueColumns] [nvarchar](50) NULL,
+	[RecieveEmailNotifications] [bit] NULL,
  CONSTRAINT [PK_BugNet_UserProfiles] PRIMARY KEY CLUSTERED 
 (
 	[UserName] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON)
+)
+
 GO
+
+ALTER TABLE [dbo].[BugNet_UserProfiles] ADD  CONSTRAINT [DF_BugNet_UserProfiles_RecieveEmailNotifications]  DEFAULT ((1)) FOR [RecieveEmailNotifications]
+GO
+
 /****** Object:  Table [dbo].[BugNet_RequiredFieldList]    Script Date: 07/21/2012 23:35:23 ******/
 SET ANSI_NULLS ON
 GO

@@ -489,29 +489,6 @@ namespace BugNET.BLL
         }
 
         /// <summary>
-        /// Determines whether [is notification type enabled] [the specified username].
-        /// </summary>
-        /// <param name="username">The username.</param>
-        /// <param name="notificationType">Type of the notification.</param>
-        /// <returns>
-        /// 	<c>true</c> if [is notification type enabled] [the specified username]; otherwise, <c>false</c>.
-        /// </returns>
-        public static bool IsNotificationTypeEnabled(string username, string notificationType)
-        {
-            if (string.IsNullOrEmpty(username)) throw new ArgumentNullException("username");
-            if (string.IsNullOrEmpty(notificationType)) throw new ArgumentNullException("notificationType");
-
-            var profile = new WebProfile().GetProfile(username);
-
-            if (profile != null)
-            {
-                var notificationTypes = profile.NotificationTypes.Split(';');
-                return notificationTypes.Any(s => s.Equals(notificationType));
-            }
-            return false;
-        }
-
-        /// <summary>
         /// Gets the name of the selected issue columns by user.
         /// </summary>
         /// <param name="userName">Name of the user.</param>
