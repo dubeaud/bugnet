@@ -224,7 +224,7 @@ namespace BugNET.Issues
 
             if (ViewIssuesDropDownFilter.SelectedValue == "Monitored")
             {
-                ctlDisplayIssues.RssUrl = string.Format("~/Rss.aspx?channel=15&ec={0}", ExcludeClosedIssuesFilter.Checked);
+                ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?channel=15&ec={0}", ExcludeClosedIssuesFilter.Checked);
                 ctlDisplayIssues.DataSource = 
                     IssueManager.GetMonitoredIssuesByUserName(Security.GetUserName(), ExcludeClosedIssuesFilter.Checked);
                 ctlDisplayIssues.DataBind();
@@ -242,7 +242,7 @@ namespace BugNET.Issues
 
                         queryClauses.Add(new QueryClause("AND", "iv.[IssueAssignedUserId]", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
 
-                        ctlDisplayIssues.RssUrl = string.Format("~/Rss.aspx?channel=16&ec={0}", ExcludeClosedIssuesFilter.Checked);
+                        ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?channel=7&u={0}&ec={1}", Security.GetUserName(), ExcludeClosedIssuesFilter.Checked);
 
                         break;
                     case "Closed":
@@ -251,7 +251,7 @@ namespace BugNET.Issues
 
                         queryClauses.Add(new QueryClause("AND", "iv.[IssueAssignedUserId]", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
 
-                        ctlDisplayIssues.RssUrl = string.Format("~/Rss.aspx?channel=17");
+                        ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?channel=7&u={0}&ec={1}", Security.GetUserName(), bool.FalseString);
 
                         break;
                     case "Owned":
@@ -262,9 +262,7 @@ namespace BugNET.Issues
                         }
 
                         queryClauses.Add(new QueryClause("AND", "iv.[IssueOwnerUserId]", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
-
-                        ctlDisplayIssues.RssUrl = string.Format("~/Rss.aspx?channel=18&ec={0}", ExcludeClosedIssuesFilter.Checked);
-
+                        ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?channel=7&ou={0}&ec={1}", Security.GetUserName(), ExcludeClosedIssuesFilter.Checked);
                         break;
                     case "Created":
 
@@ -274,8 +272,7 @@ namespace BugNET.Issues
                         }
 
                         queryClauses.Add(new QueryClause("AND", "iv.[IssueCreatorUserId]", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
-
-                        ctlDisplayIssues.RssUrl = string.Format("~/Rss.aspx?channel=19&ec={0}", ExcludeClosedIssuesFilter.Checked);
+                        ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?channel=7&ru={0}&ec={1}", Security.GetUserName(), bool.FalseString);
                         break;
                     default:
 

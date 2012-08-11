@@ -204,4 +204,10 @@
   <data name="OpenIssuesDescription" xml:space="preserve">
     <value>A syndication of open issues for {0}</value>
   </data>
+  <data name="MonitoredIssuesDescription" xml:space="preserve">
+    <value>A syndication of monitored issues by {0}</value>
+  </data>
+  <data name="MonitoredIssuesTitle" xml:space="preserve">
+    <value>{0} - Issues</value>
+  </data>
 </root>

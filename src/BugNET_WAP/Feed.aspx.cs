@@ -8,6 +8,7 @@ using System.Xml;
 using BugNET.BLL;
 using BugNET.Common;
 using BugNET.Entities;
+using System.Web;
 
 namespace BugNET
 {
@@ -36,15 +37,30 @@ namespace BugNET
             if (Request.QueryString["channel"] != null)
                 channelId = Convert.ToInt32(Request.Params["channel"]);
 
-            //Security Checks
-            if (!User.Identity.IsAuthenticated &&
-                ProjectManager.GetById(_projectId).AccessType == Globals.ProjectAccessType.Private)
-                Response.Redirect("~/Errors/AccessDenied.aspx", true);
+            if (!User.Identity.IsAuthenticated && _projectId == 0)
+            {
+                throw new HttpException(403, "Access Denied");
 
-            else if (User.Identity.IsAuthenticated &&
-                     ProjectManager.GetById(_projectId).AccessType == Globals.ProjectAccessType.Private &&
-                     !ProjectManager.IsUserProjectMember(User.Identity.Name, _projectId))
-                Response.Redirect("~/Errors/AccessDenied.aspx", true);
+            }
+            else if (_projectId != 0)
+            {
+                //Security Checks
+                if (!User.Identity.IsAuthenticated &&
+                    ProjectManager.GetById(_projectId).AccessType == Globals.ProjectAccessType.Private)
+                {
+                    throw new HttpException(403, "Access Denied");
+                }
+                else if (User.Identity.IsAuthenticated &&
+                            ProjectManager.GetById(_projectId).AccessType == Globals.ProjectAccessType.Private &&
+                            !ProjectManager.IsUserProjectMember(User.Identity.Name, _projectId))
+                {
+                    throw new HttpException(403, "Access Denied");
+                }
+
+            }
+            
+
+          
 
             // Determine whether we're outputting an Atom or RSS feed
             var outputRss = (Request.QueryString["Type"] == "RSS");
@@ -101,9 +117,17 @@ namespace BugNET
                 case 13:
                     QueryFeed(ref myFeed);
                     break;
-                case 14: //Missing in build 0.9.152
-                    OpenIssueFeed(ref myFeed); //add new method for open issues
+                case 14: 
+                    OpenIssueFeed(ref myFeed); 
                     break;
+                case 15: 
+                    MonitoredFeed(ref myFeed); 
+                    break;
+                //case 16:
+                //    MyIssuesAssignedFeed(ref myFeed);
+                //    break;
+              
+         
             }
 
             // Return the feed's XML content as the response
@@ -497,7 +521,12 @@ namespace BugNET
 
             if (!string.IsNullOrEmpty(AssignedUserName))
             {
-                queryClauses.Add(new QueryClause("AND", "iv.[IssueAssignedUserName]", "=", AssignedUserName, SqlDbType.NVarChar, false));
+                queryClauses.Add(new QueryClause("AND", "iv.[AssignedUserName]", "=", AssignedUserName, SqlDbType.NVarChar, false));
+            }
+
+            if (!string.IsNullOrEmpty(OwnerUserName))
+            {
+                queryClauses.Add(new QueryClause("AND", "iv.[OwnerUserName]", "=", OwnerUserName, SqlDbType.NVarChar, false));
             }
 
             if (!string.IsNullOrEmpty(IssueStatusId))
@@ -520,7 +549,7 @@ namespace BugNET
             }
 
             // exclude all closed status's
-            if (!isStatus)
+            if (!isStatus || ExcludeClosedIssues)
             {
                 queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false));
             }
@@ -529,14 +558,23 @@ namespace BugNET
 
 
             var feedItems = CreateSyndicationItemsFromIssueList(issueList);
-            var p = ProjectManager.GetById(_projectId);
+            string title;
+            if (_projectId > 0)
+            {
+                var p = ProjectManager.GetById(_projectId);
+                title = p.Name;
+            }
+            else
+            {
+                title = Security.GetDisplayName();
+            }
 
             feed.Title =
                 SyndicationContent.CreatePlaintextContent(
-                    string.Format(GetLocalResourceObject("FilteredIssuesTitle").ToString(), p.Name));
+                    string.Format(GetLocalResourceObject("FilteredIssuesTitle").ToString(), title));
             feed.Description =
                 SyndicationContent.CreatePlaintextContent(
-                    string.Format(GetLocalResourceObject("FilteredIssuesDescription").ToString(), p.Name));
+                    string.Format(GetLocalResourceObject("FilteredIssuesDescription").ToString(), title));
             feed.Items = feedItems;
         }
 
@@ -575,6 +613,26 @@ namespace BugNET
             feed.Description =
                 SyndicationContent.CreatePlaintextContent(
                     string.Format(GetLocalResourceObject("OwnedIssuesDescription").ToString(), p.Name));
+            feed.Items = feedItems;
+        }
+
+        private void MonitoredFeed(ref SyndicationFeed feed)
+        {
+            bool excludeClosedIssues = false;
+            //get feed id
+            if (Request.QueryString["ec"] != null)
+                excludeClosedIssues = Convert.ToBoolean(Request.Params["ec"]);
+
+            var issueList = IssueManager.GetMonitoredIssuesByUserName(Security.GetUserName(), excludeClosedIssues);
+            var feedItems = CreateSyndicationItemsFromIssueList(issueList);
+            var profile = new WebProfile().GetProfile(Security.GetUserName());
+
+            feed.Title =
+                SyndicationContent.CreatePlaintextContent(
+                    string.Format(GetLocalResourceObject("MonitoredIssuesTitle").ToString(), profile.DisplayName));
+            feed.Description =
+                SyndicationContent.CreatePlaintextContent(
+                    string.Format(GetLocalResourceObject("MonitoredIssuesDescription").ToString(), profile.DisplayName));
             feed.Items = feedItems;
         }
 
@@ -638,8 +696,6 @@ namespace BugNET
         /// <summary>
         /// Gets feed for open issues.
         /// </summary>
-        /// <param name="feed">SyndicationFeed</param>
-        /// <remarks>Missing in build 0.9.152</remarks>
         private void OpenIssueFeed(ref SyndicationFeed feed)
         {
             var openissueList = IssueManager.GetOpenIssues(_projectId);
@@ -738,6 +794,18 @@ namespace BugNET
         }
 
         /// <summary>
+        /// Gets the name of the owner user.
+        /// </summary>
+        /// <value>The name of the owner user.</value>
+        public string OwnerUserName
+        {
+            get
+            {
+                return Request.Get("ou", string.Empty);
+            }
+        }
+
+        /// <summary>
         /// Gets the name of the reporter user.
         /// </summary>
         /// <value>The name of the reporter user.</value>
@@ -769,6 +837,14 @@ namespace BugNET
             get
             {
                 return Request.Get("q", -1);
+            }
+        }
+
+        public bool ExcludeClosedIssues
+        {
+            get
+            {
+                return Request.Get("ec", true);
             }
         }
 
