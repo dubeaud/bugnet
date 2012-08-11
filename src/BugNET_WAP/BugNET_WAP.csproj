@@ -1029,6 +1029,7 @@
     <Content Include="Images\user_delete.gif" />
     <Content Include="Images\widget.png" />
     <Content Include="Images\word.gif" />
+    <Content Include="Install\1.0.187.0.htm" />
     <Content Include="Install\LatestReleaseNotes.htm" />
     <Content Include="Install\Install.aspx" />
     <Content Include="Issues\IssueSearch.aspx" />
@@ -1059,6 +1060,7 @@
     <Content Include="Providers\DataProviders\SqlDataProvider\0.9.126.0.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\0.9.142.0.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\0.9.152.0.SqlDataProvider.sql" />
+    <Content Include="Providers\DataProviders\SqlDataProvider\1.0.187.0.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\BugNet.Data.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\BugNet.Schema.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\InstallCommon.sql" />
