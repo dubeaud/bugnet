@@ -45,7 +45,7 @@ namespace BugNET.Account
             FullName.Text = WebProfile.Current.DisplayName;
             ddlPreferredLocale.SelectedValue = WebProfile.Current.PreferredLocale;
             IssueListItems.SelectedValue = UserManager.GetProfilePageSize().ToString();
-            AllowNotifications.Checked = WebProfile.Current.RecieveEmailNotifications;
+            AllowNotifications.Checked = WebProfile.Current.ReceiveEmailNotifications;
 
             if (membershipUser == null) return;
 
@@ -271,7 +271,7 @@ namespace BugNET.Account
         {
             WebProfile.Current.IssuesPageSize = Convert.ToInt32(IssueListItems.SelectedValue);
             WebProfile.Current.PreferredLocale = ddlPreferredLocale.SelectedValue;
-            WebProfile.Current.RecieveEmailNotifications = AllowNotifications.Checked;
+            WebProfile.Current.ReceiveEmailNotifications = AllowNotifications.Checked;
 
             try
             {

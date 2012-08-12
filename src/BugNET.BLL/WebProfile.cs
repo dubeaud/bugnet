@@ -84,15 +84,15 @@ namespace BugNET.BLL
             }
         }
 
-        public virtual bool RecieveEmailNotifications
+        public virtual bool ReceiveEmailNotifications
         {
             get
             {
-                return ((bool)(GetPropertyValue("RecieveEmailNotifications")));
+                return ((bool)(GetPropertyValue("ReceiveEmailNotifications")));
             }
             set
             {
-                SetPropertyValue("RecieveEmailNotifications", value);
+                SetPropertyValue("ReceiveEmailNotifications", value);
             }
         }
         

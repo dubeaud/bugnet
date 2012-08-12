@@ -91,7 +91,7 @@ namespace BugNET.BLL
                         user = UserManager.GetUser(notify.NotificationUsername);
                        
                         // skip to next user if this user doesn't have notifications enabled.
-                        if (!new WebProfile().GetProfile(user.UserName).RecieveEmailNotifications)
+                        if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications)
                             continue;
 
                         string Subject = String.Format(subject, issue.FullId, displayname);
@@ -151,7 +151,7 @@ namespace BugNET.BLL
                         user = UserManager.GetUser(notify.NotificationUsername);
 
                         // skip to next user if this user doesn't have notifications enabled.
-                        if (!new WebProfile().GetProfile(user.UserName).RecieveEmailNotifications)
+                        if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications)
                             continue;
 
                         string Subject = String.Format(subject, issue.FullId, issue.ProjectName);
@@ -231,7 +231,7 @@ namespace BugNET.BLL
                         var user = UserManager.GetUser(notify.NotificationUsername);
 
                         // skip to next user if this user doesn't have notifications enabled.
-                        if (!new WebProfile().GetProfile(user.UserName).RecieveEmailNotifications)
+                        if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications)
                             continue;
 
                         string Subject = String.Format(subject, issue.FullId, displayname);
@@ -283,7 +283,7 @@ namespace BugNET.BLL
                     var user = UserManager.GetUser(notification.NotificationUsername);
 
                     // skip to next user if this user doesn't have notifications enabled.
-                    if (!new WebProfile().GetProfile(user.UserName).RecieveEmailNotifications)
+                    if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications)
                         return;
 
                     var Subject = String.Format(subject, issue.FullId);
@@ -342,7 +342,7 @@ namespace BugNET.BLL
                         user = UserManager.GetUser(notify.NotificationUsername);
 
                         // skip to next user if this user doesn't have notifications enabled.
-                        if (!new WebProfile().GetProfile(user.UserName).RecieveEmailNotifications)
+                        if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications)
                             continue;
 
                         string Subject = String.Format(subject, issue.FullId, displayname);
