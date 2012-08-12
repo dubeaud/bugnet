@@ -14,7 +14,7 @@ CREATE TABLE [dbo].[BugNet_UserProfiles](
 	[PreferredLocale] [nvarchar](50) NULL,
 	[LastUpdate] [datetime] NOT NULL,
 	[SelectedIssueColumns] [nvarchar](50) NULL,
-	[RecieveEmailNotifications] [bit] NULL,
+	[RecieveEmailNotifications] [bit] NOT NULL,
  CONSTRAINT [PK_BugNet_UserProfiles] PRIMARY KEY CLUSTERED 
 (
 	[UserName] ASC

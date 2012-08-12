@@ -4,5 +4,5 @@ ALTER TABLE [dbo].[BugNet_UserProfiles]
 GO
 
 ALTER TABLE [dbo].[BugNet_UserProfiles]
-	ADD [RecieveEmailNotifications] BIT DEFAULT 1 NULL;
+	ADD [RecieveEmailNotifications] BIT DEFAULT 1 NOT NULL;
 GO
