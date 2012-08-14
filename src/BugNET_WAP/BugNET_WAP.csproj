@@ -1062,6 +1062,7 @@
     <Content Include="Providers\DataProviders\SqlDataProvider\0.9.142.0.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\0.9.152.0.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\1.0.187.0.SqlDataProvider.sql" />
+    <Content Include="Providers\DataProviders\SqlDataProvider\1.1.213.0.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\BugNet.Data.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\BugNet.Schema.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\InstallCommon.sql" />
