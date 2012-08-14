@@ -122,7 +122,7 @@ namespace BugNET
                     {
                         case Globals.UpgradeStatus.Install:
                         case Globals.UpgradeStatus.Upgrade:
-                            HttpContext.Current.Response.Redirect("~/Install/Install.aspx");
+                            HttpContext.Current.Response.Redirect("~/Install/Install.aspx", false);
                             break;
                     }
                 }

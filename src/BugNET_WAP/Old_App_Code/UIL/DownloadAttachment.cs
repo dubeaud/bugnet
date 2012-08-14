@@ -180,7 +180,7 @@ namespace BugNET.UserInterfaceLayer
             }
 
             // End the response
-            context.Response.End();
+            HttpContext.Current.ApplicationInstance.CompleteRequest();
         }
 
         #endregion
