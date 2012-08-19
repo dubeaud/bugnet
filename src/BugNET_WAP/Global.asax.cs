@@ -9,17 +9,10 @@ namespace BugNET
     /// <summary>
     /// Global Application Class
     /// </summary>
-    public class Global : System.Web.HttpApplication
-    {        
-        private static readonly ILog Log = LogManager.GetLogger(typeof(Global));
+    public class Global : HttpApplication
+    {
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:Global"/> class.
-        /// </summary>
-        public Global()
-        {}
-
-      
         /// <summary>
         /// Handles the Start event of the Application control.
         /// </summary>
@@ -27,7 +20,9 @@ namespace BugNET
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
         protected void Application_Start(object sender, EventArgs e)
         {
-			
+            LoggingManager.ConfigureLogging();
+
+            Log.Info("Application Start");
         }
 
         /// <summary>
@@ -71,8 +66,8 @@ namespace BugNET
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-            HttpApplication app = (HttpApplication)sender;
-            HttpContext context = app.Context;
+            var app = (HttpApplication)sender;
+            var context = app.Context;
 
             // Attempt to perform first request initialization
             Initialization.Init(context);
@@ -88,11 +83,10 @@ namespace BugNET
     /// <summary>
     /// Initialization class for IIS7 integrated mode
     /// </summary>
-    class Initialization
+    static class Initialization
     {
-        private static bool s_InitializedAlready = false;
-        private static Object s_lock = new Object();
-        private static readonly ILog Log = LogManager.GetLogger(typeof(Initialization));
+        private static bool _sInitializedAlready = false;
+        private static readonly Object Locker = new Object();
 
         /// <summary>
         /// Initializes only on the first request
@@ -100,14 +94,14 @@ namespace BugNET
         /// <param name="context">The context.</param>
         public static void Init(HttpContext context)
         {
-            if (s_InitializedAlready)
+            if (_sInitializedAlready)
             {
                 return;
             }
 
-            lock (s_lock)
+            lock (Locker)
             {
-                if (s_InitializedAlready)
+                if (_sInitializedAlready)
                 {
                     return;
                 }
@@ -134,17 +128,10 @@ namespace BugNET
                 //load the host settings into the application cache
                 HostSettingManager.GetHostSettings();
 
-                //configure logging
-                LoggingManager.ConfigureLogging();
-
-                Log.Info("Application Start");
-
                 // Perform first-request initialization here ...
-                s_InitializedAlready = true;
+                _sInitializedAlready = true;
 
             }
-
         }
-
     }
 }

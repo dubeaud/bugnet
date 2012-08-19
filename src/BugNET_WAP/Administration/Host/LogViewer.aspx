@@ -34,56 +34,75 @@
     <br />
     <br />
     <asp:UpdatePanel ID="UpdatePanel2" RenderMode="inline" runat="Server">
-   	    <ContentTemplate> 			
-            <BNWC:GridView ID="gvLog" 
-                runat="server" SkinID="GridView"
-                Width="100%"
+   	    <ContentTemplate>             			
+            <BNWC:GridView 
+                ID="gvLog" 
+                runat="server" 
+                SkinID="GridView"
                 AllowPaging="True" 
                 AllowSorting="True"
-                OnPageIndexChanging="gvLog_PageIndexChanging"
-                OnSorting="gvLog_Sorting"
+                ClientIDMode="Predictable"
                 PagerSettings-Mode="NumericFirstLast"
                 PagerStyle-HorizontalAlign="right"
-                BorderWidth="0px" 
-                PageSize="15" 
+                BorderWidth="1px"
+                BorderStyle="Solid" 
                 GridLines="None"  
                 AutoGenerateColumns="False"
-                OnRowDataBound="gvLog_RowDataBound" >
+                UseAccessibleHeader="true" 
+                SortAscImageUrl="~/images/bullet_arrow_up.png" 
+                SortDescImageUrl="~/images/bullet_arrow_down.png"
+                OnPageIndexChanging="gvLog_PageIndexChanging"
+                OnSorting="gvLog_Sorting"
+                OnRowDataBound="gvLog_RowDataBound">
                 <Columns>
-                    <asp:BoundField DataField="Id" HeaderText="<%$ Resources:SharedResources, Id %>" SortExpression="Id" ItemStyle-Width="50px"/>
-                     <asp:BoundField DataField="Date" HeaderText="<%$ Resources:SharedResources, Date %>" SortExpression="Date" DataFormatString="{0:d}  {0:HH\:mm\:ss}"  ItemStyle-Width="150px" ItemStyle-Wrap="false"/>
-                    <asp:TemplateField HeaderText="<%$ Resources:Level %>" SortExpression="Level">
+                    <asp:BoundField DataField="Id" HeaderText="<%$ Resources:SharedResources, Id %>" SortExpression="Id">
+                        <ItemStyle HorizontalAlign="Left" Width="60px" />
+                        <HeaderStyle HorizontalAlign="Left" Width="60px" />
+                    </asp:BoundField>
+
+                     <asp:BoundField DataField="Date" HeaderText="<%$ Resources:SharedResources, Date %>" SortExpression="Date" DataFormatString="{0:d}  {0:HH\:mm\:ss}">
                         <ItemStyle HorizontalAlign="Left" Width="100px" />
+                        <HeaderStyle HorizontalAlign="Left" Width="100px" />                         
+                     </asp:BoundField>
+
+                    <asp:TemplateField HeaderText="<%$ Resources:Level %>" SortExpression="Level">
+                        <ItemStyle HorizontalAlign="Left" Width="75px" />
+                        <HeaderStyle HorizontalAlign="Left" Width="75px" /> 
                         <ItemTemplate>
                             <asp:image id="imgLevel" runat="server" CssClass="icon" ImageUrl=""></asp:image>&nbsp;<asp:Label ID="LevelLabel" runat="server"></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="<%$ Resources:Logger %>" SortExpression="Logger"  ItemStyle-Width="300px">
+                    
+                    <asp:BoundField DataField="User" HeaderText="<%$ Resources:User %>" SortExpression="User">
+                        <ItemStyle HorizontalAlign="Left" Width="150px" />
+                        <HeaderStyle HorizontalAlign="Left" Width="150px" /> 
+                    </asp:BoundField>
+
+                    <asp:TemplateField HeaderText="<%$ Resources:Logger %>" SortExpression="Logger">
+                        <ItemStyle HorizontalAlign="Left" Width="300px" />
+                        <HeaderStyle HorizontalAlign="Left" Width="300px" />                         
                         <ItemTemplate>
                             <asp:Label ID="LoggerLabel" runat="server"></asp:Label>
                         </ItemTemplate>
-                    </asp:TemplateField>             
-                    <asp:TemplateField HeaderText="<%$ Resources:Message %>" SortExpression="Message" ItemStyle-Wrap="true" ItemStyle-Width="300px">
+                    </asp:TemplateField>                
+                    <asp:TemplateField HeaderText="<%$ Resources:Message %>" SortExpression="Message">
+                        <ItemStyle HorizontalAlign="Left" Width="300px" />
+                        <HeaderStyle HorizontalAlign="Left" Width="300px" />                           
                         <ItemTemplate>
-                            <asp:Label ID="MessageLabel" runat="server"></asp:Label>                
-                        </ItemTemplate>
-                    </asp:TemplateField>  
-                    <asp:BoundField DataField="User" HeaderText="<%$ Resources:User %>" SortExpression="User" ItemStyle-Width="50px" />
-                     <asp:TemplateField ItemStyle-Wrap="false" ItemStyle-Width="0px">
-                         <ItemTemplate>
-                  	            </td>
-				            </tr>
+                                <asp:Label ID="MessageLabel" runat="server"></asp:Label>
+                            </td>
+                            </tr> 
 				            <tr>
-					            <td colspan="7" style="width:100%;padding:0px;">
+					            <td colspan="6" style="width: 100%; padding: 0px;">
 					                <div style="display:none;background-color:#efefef;padding:10px;overflow-x:scroll;overflow-y: hidden; " id='Exception_<%#Eval("Id")%>'>
 					                    <table style="table-layout:fixed;width:100%;">
 					                        <tr>
 					                            <td><pre><asp:Label ID="ExceptionLabel"  runat="server" Width="100%"></asp:Label></pre></td>
 					                        </tr>
 					                    </table>     		                                                       
-                                    </div>
+                                    </div>                                                                     
                         </ItemTemplate>
-                    </asp:TemplateField>
+                    </asp:TemplateField> 
                 </Columns>
                 <EmptyDataTemplate>
                     <p style="font-style:italic;"> <asp:literal ID="NoEntries" runat="Server" Text="<%$ Resources:NoEntries %>"  /></p>

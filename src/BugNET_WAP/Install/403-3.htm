@@ -1,41 +1,24 @@
 <html>
-	<head>
-		<title>BugNET Configuration Error</title>
-	</head>
-	<body>
-		<center>
-			<table height="100%" width="90%">
-				<tr>
-					<td align="center" valign="middle">
-						<h1>BugNET Configuration Error</h1>
-						[MESSAGE]
-						<br>
-						<br>
-						BugNET has file upload capabilities for attachments. These features require custom security settings so that the application 
-						is able to create and remove files in your website.
-						<br>
-						<br>
-						Using Windows Explorer, browse to the root folder of the website ( 
-						C:\BugNET by default ). Right-click the folder and select Sharing and 
-						Security from the popup menu ( please note that if you are using Windows XP you 
-						may need to <a href="http://whoozoo.co.uk/winxpFilePerms.htm" target="new">Enable 
-							Simple File Sharing</a> before these options are displayed ). Select the 
-						Security tab. Add the appropriate User Account and set the Permissions.
-						<br>
-						<br>
-						<b>If using Windows 2000 - IIS5</b><br>
-						- the {Server}\ASPNET User Account must have Read, Write, and Change Control of 
-						the virtual root of your website<br>
-						<br>
-						<b>If using Windows 2003 - IIS6</b><br>
-						- the NT AUTHORITY\NETWORK SERVICE User Account must have Read, Write, and 
-						Change Control of the virtual root of your website
-						<br>
-						<br>
-						<img src="403-3.gif">
-					</td>
-				</tr>
-			</table>
-		</center>
-	</body>
+<head>
+    <title>BugNET Configuration Error</title>
+</head>
+<body>
+    <div style="text-align: center; margin: auto;">
+        <table width="90%">
+            <tr>
+                <td style="vertical-align: middle">
+                    <h1>BugNET Configuration Error</h1>
+                    [MESSAGE]
+                    <br />
+                    <br />
+                    <div>There was a problem installing BugNET please refer to the <a href="http://bugnet.codeplex.com/wikipage?title=Installing%20BugNET" target="_blank">BugNET Documentation</a> to assist you in installing.</div>
+                    <br />
+                    <br />
+                    <div>Thanks!</div>
+                    <div>BugNET Team</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
 </html>
