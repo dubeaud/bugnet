@@ -425,7 +425,6 @@ namespace BugNET.MailboxReader
             return allowed;
         }
 
-
         /// <summary>
         /// change the xpath element name to all uppercase
         /// </summary>

@@ -196,7 +196,7 @@ namespace BugNET.Issues
             // executing request.
             if (IssueId != 0)
             {
-                string title = (TitleTextBox.Text.Length >= 30) ? TitleTextBox.Text.Substring(0, 30) + " ..." : TitleTextBox.Text;
+                var title = (TitleTextBox.Text.Length >= 30) ? TitleTextBox.Text.Substring(0, 30) + " ..." : TitleTextBox.Text;
                 tempNode.Title = string.Format("{0}: {1}", lblIssueNumber.Text, title);
                 tempNode.Url = string.Concat(tempNode.Url, "?id=", IssueId);
             }
