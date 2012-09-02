@@ -3,6 +3,9 @@ using System.Web.Security;
 
 namespace BugNET.Providers.MembershipProviders
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class CustomMembershipUser : MembershipUser
     {       
         private string _FirstName;
@@ -45,7 +48,7 @@ namespace BugNET.Providers.MembershipProviders
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomMembershipUser"/> class.
         /// </summary>
-        /// <param name="providername">The providername.</param>
+        /// <param name="providername">The provider name.</param>
         /// <param name="username">The username.</param>
         /// <param name="providerUserKey">The provider user key.</param>
         /// <param name="email">The email.</param>

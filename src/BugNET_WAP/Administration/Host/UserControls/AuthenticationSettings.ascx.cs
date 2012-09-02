@@ -43,7 +43,7 @@ namespace BugNET.Administration.Host.UserControls
             UserAccountSource.SelectedValue = HostSettingManager.Get(HostSettingNames.UserAccountSource);
             ADUserName.Text = HostSettingManager.Get(HostSettingNames.ADUserName);
             ADPath.Text = HostSettingManager.Get(HostSettingNames.ADPath);
-            UserRegistration.SelectedValue = HostSettingManager.Get(HostSettingNames.UserRegistration,(int)Globals.UserRegistration.Public).ToString();
+            UserRegistration.SelectedValue = HostSettingManager.Get(HostSettingNames.UserRegistration,(int)Common.UserRegistration.Public).ToString();
             AnonymousAccess.SelectedValue = HostSettingManager.Get(HostSettingNames.AnonymousAccess, true).ToString();
             OpenIdAuthentication.SelectedValue = HostSettingManager.Get(HostSettingNames.OpenIdAuthentication);
             ADPassword.Attributes.Add("value", HostSettingManager.Get(HostSettingNames.ADPassword));

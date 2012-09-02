@@ -19,7 +19,7 @@ namespace BugNET.SvnBrowse
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
 		protected void Page_Load(object sender, System.EventArgs e)
 		{
-            //if (!ITUser.HasPermission(Convert.ToInt32(Request.Params["id"]), Globals.Permission.ADMIN_EDIT_PROJECT.ToString()))
+            //if (!ITUser.HasPermission(Convert.ToInt32(Request.Params["id"]), Common.Permission.ADMIN_EDIT_PROJECT.ToString()))
             //    Response.Redirect("~/Errors/AccessDenied.aspx");
             //add new Permission for browsing source
 

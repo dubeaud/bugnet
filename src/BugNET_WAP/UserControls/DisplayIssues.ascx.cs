@@ -177,7 +177,7 @@ namespace BugNET.UserControls
                         lstIssueColumns.Items.Remove(lstIssueColumns.Items.FindByValue("4"));
                     }
 
-                    if (Page.User.Identity.IsAuthenticated && UserManager.HasPermission(projectId, Globals.Permission.EditIssue.ToString()))
+                    if (Page.User.Identity.IsAuthenticated && UserManager.HasPermission(projectId, Common.Permission.EditIssue.ToString()))
                     {
                         LeftButtonContainerPanel.Visible = true;
 

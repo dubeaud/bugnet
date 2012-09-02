@@ -25,10 +25,10 @@ namespace BugNET.Account
             //redirect to access denied if user registration disabled
             switch (Convert.ToInt32(HostSettingManager.Get(HostSettingNames.UserRegistration)))
             {
-                case (int)Globals.UserRegistration.None:
+                case (int)UserRegistration.None:
                     Response.Redirect("~/AccessDenied.aspx", true);
                     break;
-                case (int)Globals.UserRegistration.Verified:
+                case (int)UserRegistration.Verified:
                     CreateUserWizard1.DisableCreatedUser = true;
                     CreateUserWizard1.CompleteStep.ContentTemplateContainer.FindControl("VerificationPanel").Visible = true;
                     break;
@@ -88,7 +88,7 @@ namespace BugNET.Account
                 RoleManager.AddUser(user.UserName, r.Id);
             }
 
-            if (Convert.ToBoolean(HostSettingManager.Get(HostSettingNames.UserRegistration, (int)Globals.UserRegistration.Verified)))
+            if (Convert.ToBoolean(HostSettingManager.Get(HostSettingNames.UserRegistration, (int)UserRegistration.Verified)))
             {
                 UserManager.SendUserVerificationNotification(user);
             }

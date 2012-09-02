@@ -95,20 +95,23 @@ namespace BugNET.BLL
                 if (project.AllowAttachments)
                 {
                     entity.ContentType = entity.ContentType.Replace("/x-png", "/png");
+
                     if (entity.ContentType == "image/bmp")
                     {
                         using (var ms = new MemoryStream(entity.Attachment, 0, entity.Attachment.Length))
                         {
                             ms.Write(entity.Attachment, 0, entity.Attachment.Length);
-                            Image img = Image.FromStream(ms);
+                            var img = Image.FromStream(ms);
                             img.Save(ms, ImageFormat.Png);
                             ms.Seek(0, SeekOrigin.Begin);
                             entity.Attachment = ms.ToArray();
 
                         }
+
                         entity.ContentType = "image/png";
                         entity.FileName = Path.ChangeExtension(entity.FileName, "png");
                     }
+
                     entity.Size = entity.Attachment.Length;
 
                     if (project.AttachmentStorageType == IssueAttachmentStorageTypes.Database)
@@ -134,8 +137,23 @@ namespace BugNET.BLL
                         var attachmentBytes = entity.Attachment;
                         entity.Attachment = null;    //set attachment to null    
                         entity.FileName = String.Format("{0}.{1}{2}", Path.GetFileNameWithoutExtension(entity.FileName), attachmentGuid, Path.GetExtension(entity.FileName));
-                        var uploadedFilePath = string.Format("{0}\\{1}", HttpContext.Current.Server.MapPath(string.Format("~{0}{1}", Globals.UPLOAD_FOLDER, projectPath)), entity.FileName);
 
+                        var uploadedFilePath = string.Empty;
+
+                        // added by WRH 2012-08-18
+                        // this to fix the issue where attachments from the mailbox reader cannot be saved due to the lack of a http context.
+                        // we need to supply the actual folder path on the entity
+                        if (HttpContext.Current != null)
+                        {
+                            uploadedFilePath = string.Format("{0}\\{1}", HttpContext.Current.Server.MapPath(string.Format("~{0}{1}", Globals.UPLOAD_FOLDER, projectPath)), entity.FileName);
+                        }
+                        else
+                        {
+                            if(entity.ProjectFolderPath.Trim().Length > 0)
+                            {
+                                uploadedFilePath = string.Format("{0}\\{1}", entity.ProjectFolderPath, entity.FileName);
+                            } 
+                        }
 
                         //save the attachment record to the database.
                         var tempId = DataProviderManager.Provider.CreateNewIssueAttachment(entity);
@@ -150,9 +168,8 @@ namespace BugNET.BLL
                             if(!Directory.Exists(fi.DirectoryName))
                                 Directory.CreateDirectory(fi.DirectoryName);
 
-                            var fs = File.Create(uploadedFilePath);
-                            fs.Write(attachmentBytes, 0, entity.Size);
-                            fs.Close();
+                            File.WriteAllBytes(uploadedFilePath, attachmentBytes);
+
                             return true;
                         }
 

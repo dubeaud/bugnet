@@ -84,7 +84,7 @@ namespace BugNET.Queries
             if (ProjectId == 0)
                 ErrorRedirector.TransferToSomethingMissingPage(Page);
 
-            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.AddQuery.ToString()))
+            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Common.Permission.AddQuery.ToString()))
             {
                 SaveQueryForm.Visible = false;
                 pnlSaveQuery.Visible = false;

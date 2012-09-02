@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration.Provider;
 using BugNET.Common;
 using BugNET.Entities;
+using Permission = BugNET.Entities.Permission;
 
 namespace BugNET.DAL
 {

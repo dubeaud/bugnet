@@ -269,7 +269,7 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="roleId">The role id.</param>
         /// <returns>List of permission objects</returns>
-        public static IEnumerable<Permission> GetPermissionsById(int roleId)
+        public static IEnumerable<BugNET.Entities.Permission> GetPermissionsById(int roleId)
         {
             if (roleId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("roleId"));
 

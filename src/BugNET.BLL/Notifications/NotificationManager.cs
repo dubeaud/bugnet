@@ -76,7 +76,6 @@ namespace BugNET.BLL.Notifications
                     }
 
                     xml.WriteEndElement();
-
                     return XmlXslTransform.Transform(writer.ToString(), template);
                 }   
             }

@@ -1,0 +1,269 @@
+﻿Return-Path: <support@futurama.local>
+Received: from DEVLAP01 (DEV-LAP01 [192.168.2.17]) by zapp.futurama.local with SMTP;
+   Sat, 1 Sep 2012 10:35:13 -0500
+From: "Support" <support@futurama.local>
+To: <track@futurama.local>
+Subject: TEST: HTML Message with message attachment
+Date: Sat, 1 Sep 2012 10:35:16 -0500
+Message-ID: <003601cd8857$62eb9130$28c2b390$@futurama.local>
+MIME-Version: 1.0
+Content-Type: multipart/mixed;
+	boundary="----=_NextPart_000_003B_01CD882D.7A170FD0"
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: Ac2IV2Dhf9ygbBv/RYygh0+pku5IBQ==
+Content-Language: en-us
+X-SmarterMail-TotalSpamWeight: 0 (Authenticated)
+
+This is a multipart message in MIME format.
+
+------=_NextPart_000_003B_01CD882D.7A170FD0
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_001_003C_01CD882D.7A1736E0"
+
+
+------=_NextPart_001_003C_01CD882D.7A1736E0
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+
+Lorem ipsum tristique ligula tortor molestie sapien imperdiet metus, felis
+etiam massa ullamcorper pellentesque sagittis quisque pulvinar habitant,
+risus fusce mauris aliquam eros ligula mattis velit a luctus aenean.
+
+Ornare sem magna sagittis sodales mi vulputate amet id lacus, massa a nisi
+tincidunt velit rutrum dictumst odio augue, primis tristique ullamcorper
+eleifend non vivamus tortor vivamus placerat rutrum pharetra diam adipiscing
+posuere.
+
+Phasellus blandit phasellus condimentum dui dapibus aliquet inceptos magna
+euismod, quam aliquam iaculis morbi volutpat mi quisque molestie, rhoncus
+quis conubia curae eu imperdiet libero pulvinar nec vitae suspendisse
+pretium massa.
+
+ 
+
+
+------=_NextPart_001_003C_01CD882D.7A1736E0
+Content-Type: text/html;
+	charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" =
+xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
+xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" =
+xmlns=3D"http://www.w3.org/TR/REC-html40"><head><meta =
+http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Dus-ascii"><meta name=3DGenerator content=3D"Microsoft Word 14 =
+(filtered medium)"><style><!--
+/* Font Definitions */
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri","sans-serif";}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:purple;
+	text-decoration:underline;}
+pre
+	{mso-style-priority:99;
+	mso-style-link:"HTML Preformatted Char";
+	margin:0in;
+	margin-bottom:.0001pt;
+	font-size:10.0pt;
+	font-family:"Courier New";}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri","sans-serif";
+	color:windowtext;}
+span.HTMLPreformattedChar
+	{mso-style-name:"HTML Preformatted Char";
+	mso-style-priority:99;
+	mso-style-link:"HTML Preformatted";
+	font-family:"Courier New";}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri","sans-serif";}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]--></head><body lang=3DEN-US link=3Dblue =
+vlink=3Dpurple><div class=3DWordSection1><p class=3DMsoNormal =
+style=3D'margin-bottom:15.0pt;line-height:12.75pt;background:white'><span=
+ style=3D'font-size:11.5pt;font-family:"Times New Roman","serif"'>Lorem =
+ipsum tristique ligula tortor molestie sapien imperdiet metus, felis =
+etiam massa ullamcorper pellentesque sagittis quisque pulvinar habitant, =
+risus fusce mauris aliquam eros ligula mattis velit a luctus =
+aenean.<o:p></o:p></span></p><p class=3DMsoNormal =
+style=3D'margin-bottom:15.0pt;line-height:12.75pt;background:white'><span=
+ style=3D'font-size:11.5pt;font-family:"Times New Roman","serif"'>Ornare =
+sem magna sagittis sodales mi vulputate amet id lacus, massa a nisi =
+tincidunt velit rutrum dictumst odio augue, primis tristique ullamcorper =
+eleifend non vivamus tortor vivamus placerat rutrum pharetra diam =
+adipiscing posuere.<o:p></o:p></span></p><p class=3DMsoNormal =
+style=3D'margin-bottom:15.0pt;line-height:12.75pt;background:white'><span=
+ style=3D'font-size:11.5pt;font-family:"Times New =
+Roman","serif"'>Phasellus blandit phasellus condimentum dui dapibus =
+aliquet inceptos magna euismod, quam aliquam iaculis morbi volutpat mi =
+quisque molestie, rhoncus quis conubia curae eu imperdiet libero =
+pulvinar nec vitae suspendisse pretium massa.<o:p></o:p></span></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p></div></body></html>
+------=_NextPart_001_003C_01CD882D.7A1736E0--
+
+------=_NextPart_000_003B_01CD882D.7A170FD0
+Content-Type: message/rfc822
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment
+
+Received: by 10.216.74.136 with SMTP id x8mswed;
+        Mon, 27 Aug 2012 08:33:13 -0700 (PDT)
+Received: by 10.180.88.195 with SMTP id bi3mr1847019wib.3.1346081593066;
+        Mon, 27 Aug 2012 08:33:13 -0700 (PDT)
+Received: by 10.216.212.2 with SMTP id x2ls4137365weo.2.gmail; Mon, 27 Aug
+ 2012 08:33:33 -0700 (PDT)
+Received: by 10.180.88.195 with SMTP id bi3mr1847151wib.3.1346081613576;
+        Mon, 27 Aug 2012 08:33:33 -0700 (PDT)
+Received: by 10.180.88.195 with SMTP id bi3mr1847018wib.3.1346081593052;
+        Mon, 27 Aug 2012 08:33:13 -0700 (PDT)
+Received: from chg01-1.visualsvn.net (chg01.ostyserver.net [99.198.113.202] (may be forged))
+	(authenticated bits=0)
+	by mail.authsmtp.com (8.14.2/8.14.2) with ESMTP id q7RFXAPN043264
+	for <visualsvn-announce@googlegroups.com>; Mon, 27 Aug 2012 16:33:11 +0100 (BST)
+Received: from chg-vm-03 ([10.121.43.205]) by chg01-1.visualsvn.net with Microsoft SMTPSVC(7.0.6002.18222);
+	 Mon, 27 Aug 2012 10:33:10 -0500
+Received: from outmail149059.authsmtp.com (outmail149059.authsmtp.com. [62.13.149.59])
+        by gmr-mx.google.com with ESMTP id em7si1718965wib.2.2012.08.27.08.33.12;
+        Mon, 27 Aug 2012 08:33:13 -0700 (PDT)
+Received: from mail-c193.authsmtp.com (mail-c193.authsmtp.com [62.13.128.118])
+	by punt7.authsmtp.com (8.14.2/8.14.2/Kp) with ESMTP id q7RFXCTu075847
+	for <visualsvn-announce@googlegroups.com>; Mon, 27 Aug 2012 16:33:12 +0100 (BST)
+Received: by 10.180.104.166 with SMTP id gf6mr1021268wib.1.1346081626434;
+        Mon, 27 Aug 2012 08:33:46 -0700 (PDT)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mta2.brinkster.com (Postfix) with ESMTP id 1771F128199
+	for <support@futurama.local>; Mon, 27 Aug 2012 11:33:57 -0400 (EDT)
+Received: from 65.182.109.81 (LHLO mta2.brinkster.com) (65.182.109.81) by
+ mail8b.brinkster.com with LMTP; Mon, 27 Aug 2012 08:33:59 -0700 (MST)
+Received: from mta2.brinkster.com ([127.0.0.1])
+	by localhost (mta2.brinkster.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id VAebG64FlQNa for <support@futurama.local>;
+	Mon, 27 Aug 2012 11:33:54 -0400 (EDT)
+Received: by lagp5 with SMTP id p5sf905304lag.4
+        for <support@futurama.local>; Mon, 27 Aug 2012 08:33:47 -0700 (PDT)
+Received: from mail-lpp01m010-f59.google.com (mail-lpp01m010-f59.google.com [209.85.215.59])
+	by mta2.brinkster.com (Postfix) with ESMTPS id C095D6F0005
+	for <support@futurama.local>; Mon, 27 Aug 2012 11:33:47 -0400 (EDT)
+Return-Path: <visualsvn-announce+bncCP249of8GxDOpu6BBRoE8jzsAg@googlegroups.com>
+Reply-To: <support@visualsvn.com>
+From: "VisualSVN Team" <support@visualsvn.com>
+Sender: <visualsvn-announce@googlegroups.com>
+To: <visualsvn-announce@googlegroups.com>
+Subject: VisualSVN Server 2.5.6 Released
+Date: Mon, 27 Aug 2012 10:33:10 -0500
+Message-ID: <facf0cd60d2a4ae09d723d4494d2488d@www.visualsvn.com>
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_000_0037_01CD882D.7A16E8C0"
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: AQGjfSGVNpQg1WzLcROlyVDKUMqEMQ==
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:visualsvn-announce+help@googlegroups.com>
+List-Subscribe: <http://groups.google.com/group/visualsvn-announce/subscribe?hl=en_US>, <mailto:visualsvn-announce+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/visualsvn-announce/subscribe?hl=en_US>, <mailto:googlegroups-manage+394118886565+unsubscribe@googlegroups.com>
+
+This is a multipart message in MIME format.
+
+------=_NextPart_000_0037_01CD882D.7A16E8C0
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+
+VisualSVN Server patch release 2.5.6 is available. Comparing to the previous
+release, there are the following changes in the VisualSVN Server 2.5.6: 
+
+*	Updated to Apache Subversion 1.7.6. For further details please see
+ <http://svn.apache.org/repos/asf/subversion/tags/1.7.6/CHANGES>
+http://svn.apache.org/repos/asf/subversion/tags/1.7.6/CHANGES 
+
+Upgrade is recommended for all users. You can get the latest version of
+VisualSVN Server from the official download page
+<http://www.visualsvn.com/server/download/> . 
+
+-- 
+You received this message because you are subscribed to the Google Groups
+"VisualSVN Announce" group.
+To post to this group, send email to visualsvn-announce@googlegroups.com.
+To unsubscribe from this group, send email to
+visualsvn-announce+unsubscribe@googlegroups.com.
+For more options, visit this group at
+http://groups.google.com/group/visualsvn-announce?hl=en.
+
+
+------=_NextPart_000_0037_01CD882D.7A16E8C0
+Content-Type: text/html;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+
+             =20
+              <p>
+                VisualSVN Server patch release 2.5.6 is available. =
+Comparing to the=20
+                previous release, there are the following changes in the =
+VisualSVN Server=20
+                2.5.6:
+              </p>
+
+              <ul>
+                <li><b>Updated to Apache Subversion 1.7.6.</b> For =
+further details please see<br />
+                  <a =
+href=3D"http://svn.apache.org/repos/asf/subversion/tags/1.7.6/CHANGES">
+                    =
+http://svn.apache.org/repos/asf/subversion/tags/1.7.6/CHANGES
+                  </a>
+                </li>
+              </ul>
+
+              <p>
+                Upgrade is recommended for all users. You can get the =
+latest version of=20
+                VisualSVN Server from the official <a=20
+                =
+href=3D"http://www.visualsvn.com/server/download/">download page</a>.
+              </p>
+       =20
+         =20
+
+<p></p>
+
+-- <br />
+You received this message because you are subscribed to the Google =
+Groups "VisualSVN Announce" group.<br />
+To post to this group, send email to =
+visualsvn-announce@googlegroups.com.<br />
+To unsubscribe from this group, send email to =
+visualsvn-announce+unsubscribe@googlegroups.com.<br />
+
+For more options, visit this group at =
+http://groups.google.com/group/visualsvn-announce?hl=3Den.<br />
+
+
+------=_NextPart_000_0037_01CD882D.7A16E8C0--
+
+------=_NextPart_000_003B_01CD882D.7A170FD0--

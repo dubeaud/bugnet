@@ -14,6 +14,15 @@ namespace BugNET.Administration.Host
 	/// </summary>
 	public partial class Settings : BasePage
 	{
+        /// <summary>
+        /// Message1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        public BugNET.UserControls.Message Message1;
+
         Control _ctlHostSettings;
 	    readonly Dictionary<string, string> _menuItems = new Dictionary<string, string>();
 
@@ -52,15 +61,17 @@ namespace BugNET.Administration.Host
         /// <param name="e">The <see cref="System.Web.UI.WebControls.RepeaterItemEventArgs"/> instance containing the event data.</param>
         protected void AdminMenu_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
-            {
-                KeyValuePair<string, string> dataItem = (KeyValuePair<string, string>)e.Item.DataItem;
-                HtmlGenericControl listItem = e.Item.FindControl("ListItem") as HtmlGenericControl;
-                LinkButton lb = e.Item.FindControl("MenuButton") as LinkButton;
+            if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem) return;
+
+            var dataItem = (KeyValuePair<string, string>)e.Item.DataItem;
+            var listItem = e.Item.FindControl("ListItem") as HtmlGenericControl;
+            var lb = e.Item.FindControl("MenuButton") as LinkButton;
+
+            if (listItem != null)
                 listItem.Attributes.Add("style", string.Format("background: #C4EFA1 url(../../images/{0}) no-repeat 5px 4px;", dataItem.Value));
+
+            if (lb != null) 
                 lb.Text = dataItem.Key;
-            }
-           
         }
 
         /// <summary>
@@ -135,15 +146,8 @@ namespace BugNET.Administration.Host
         /// <value>The tab id.</value>
         int TabId
         {
-            get
-            {
-                if (ViewState["TabId"] == null)
-                    return 0;
-                else
-                    return (int)ViewState["TabId"];
-            }
-
-            set { ViewState["TabId"] = value; }
+            get { return ViewState.Get("TabId", 0); }
+            set { ViewState.Set("TabId", value); }
         }
 
         /// <summary>
@@ -163,12 +167,16 @@ namespace BugNET.Administration.Host
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
         protected void cmdUpdate_Click(object sender, EventArgs e)
-		{
-            if (Page.IsValid)
-            { 
-                if (((IEditHostSettingControl)_ctlHostSettings).Update())
-                    Message1.ShowSuccessMessage(GetLocalResourceObject("SaveMessage").ToString());
+        {
+            if (!Page.IsValid) return;
+
+            if (((IEditHostSettingControl)_ctlHostSettings).Update())
+            {
+                if (Message1.Text.Trim().Length.Equals(0))
+                {
+                    Message1.ShowSuccessMessage(GetLocalResourceObject("SaveMessage").ToString());   
+                }
             }
-		}
+        }
 	}
 }

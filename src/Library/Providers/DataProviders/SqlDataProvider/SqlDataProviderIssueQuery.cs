@@ -320,7 +320,7 @@ namespace BugNET.Providers.DataProviders
 
 
         /// <summary>
-        /// Performs the query against any generic List&lt;T/&gtl;
+        /// Performs the query against any generic List&lt;T/&gt;
         /// Added SMOSS 11-May-2009
         /// Modified 13-April-2010
         /// </summary>

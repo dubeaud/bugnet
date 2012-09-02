@@ -13,7 +13,7 @@ namespace BugNET.Projects
     /// <summary>
     /// Page that displays a project calendar
     /// </summary>
-    public partial class ProjectCalendar : BugNET.UserInterfaceLayer.BasePage 
+    public partial class ProjectCalendar : UserInterfaceLayer.BasePage 
     {
         /// <summary>
         /// Handles the Load event of the Page control.
@@ -22,7 +22,7 @@ namespace BugNET.Projects
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!UserManager.HasPermission(Convert.ToInt32(Request.Params["pid"]), Globals.Permission.ViewProjectCalendar.ToString()))
+            if (!UserManager.HasPermission(Convert.ToInt32(Request.Params["pid"]), Common.Permission.ViewProjectCalendar.ToString()))
                 Response.Redirect("~/Errors/AccessDenied.aspx");
 
             if (!Page.IsPostBack)
@@ -114,7 +114,7 @@ namespace BugNET.Projects
                     List<Issue> issues = IssueManager.PerformQuery(queryClauses, ProjectId);
                     foreach (Issue issue in issues)
                     {
-                        if (issue.Visibility == (int)Globals.IssueVisibility.Private && issue.AssignedDisplayName != Security.GetUserName() && issue.CreatorDisplayName != Security.GetUserName() && (!UserManager.IsSuperUser() || !UserManager.IsInRole(issue.ProjectId, Globals.ProjectAdminRole)))
+                        if (issue.Visibility == (int)IssueVisibility.Private && issue.AssignedDisplayName != Security.GetUserName() && issue.CreatorDisplayName != Security.GetUserName() && (!UserManager.IsSuperUser() || !UserManager.IsInRole(issue.ProjectId, Globals.ProjectAdminRole)))
                             continue;
 
                         string cssClass = string.Empty;
@@ -124,7 +124,7 @@ namespace BugNET.Projects
                         else
                             cssClass = "calIssue";
 
-                        if (issue.Visibility == (int)Globals.IssueVisibility.Private)
+                        if (issue.Visibility == (int)IssueVisibility.Private)
                             cssClass += " calIssuePrivate";
 
                         string title = string.Format(@"<div id=""issue"" class=""{3}""><a href=""../Issues/IssueDetail.aspx?id={2}"">{0} - {1}</a></div>", issue.FullId.ToUpper(), issue.Title, issue.Id,cssClass);

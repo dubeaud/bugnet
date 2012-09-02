@@ -117,7 +117,7 @@ namespace BugNET.UserInterfaceLayer
             //1. Anonymous user
             //2. The project type is private
             if (!User.Identity.IsAuthenticated &&
-                myProj.AccessType == Globals.ProjectAccessType.Private)
+                myProj.AccessType == ProjectAccessType.Private)
             {
                 ErrorRedirector.TransferToLoginPage(Page);
                 return;
@@ -128,7 +128,7 @@ namespace BugNET.UserInterfaceLayer
             //2. The project type is private 
             //3. The user is not a project member
             if (User.Identity.IsAuthenticated &&
-                myProj.AccessType == Globals.ProjectAccessType.Private &&
+                myProj.AccessType == ProjectAccessType.Private &&
                 !ProjectManager.IsUserProjectMember(User.Identity.Name, projectId))
             {
                 ErrorRedirector.TransferToLoginPage(Page);

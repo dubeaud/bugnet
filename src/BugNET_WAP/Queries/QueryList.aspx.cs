@@ -23,12 +23,12 @@ namespace BugNET.Queries
 			dropQueries.DataSource = QueryManager.GetByUsername(User.Identity.Name,ProjectId);
 			dropQueries.DataBind();
 
-			if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.DeleteQuery.ToString()))
+			if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Common.Permission.DeleteQuery.ToString()))
 			{
                 pnlDeleteQuery.Visible = false;
 			}
 
-            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.EditQuery.ToString()))
+            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Common.Permission.EditQuery.ToString()))
             {
                 pnlEditQuery.Visible = false;
             }

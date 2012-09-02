@@ -1,4 +1,5 @@
 using System;
+using System.Xml.Serialization;
 using BugNET.Common;
 
 namespace BugNET.Entities
@@ -23,6 +24,8 @@ namespace BugNET.Entities
             Description = string.Empty;
             Name = string.Empty;
             UploadPath = string.Empty;
+            AttachmentStorageType = IssueAttachmentStorageTypes.None;
+            AccessType = ProjectAccessType.None;
         }
 
         #endregion
@@ -39,6 +42,7 @@ namespace BugNET.Entities
         /// Gets or sets the image.
         /// </summary>
         /// <value>The image.</value>
+        [XmlIgnore]
         public ProjectImage Image { get; set; }
 
         /// <summary>
@@ -124,7 +128,7 @@ namespace BugNET.Entities
         /// Gets or sets the type of the access.
         /// </summary>
         /// <value>The type of the access.</value>
-        public Globals.ProjectAccessType AccessType { get; set; }
+        public ProjectAccessType AccessType { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [allow attachments].

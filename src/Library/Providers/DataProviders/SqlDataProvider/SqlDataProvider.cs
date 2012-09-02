@@ -11,6 +11,7 @@ using BugNET.Common;
 using BugNET.DAL;
 using BugNET.Entities;
 using log4net;
+using Permission = BugNET.Entities.Permission;
 
 namespace BugNET.Providers.DataProviders
 {
@@ -3748,11 +3749,24 @@ namespace BugNET.Providers.DataProviders
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public override List<IssueWorkReport> GetIssueWorkReportsByProjectId(int projectId)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <param name="reporterUserName"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public override List<IssueWorkReport> GetIssueWorkReportsByUserName(int projectId, string reporterUserName)
         {
             throw new NotImplementedException();

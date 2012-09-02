@@ -114,8 +114,8 @@ namespace BugNET
                 {
                     switch (UpgradeManager.GetUpgradeStatus())
                     {
-                        case Globals.UpgradeStatus.Install:
-                        case Globals.UpgradeStatus.Upgrade:
+                        case UpgradeStatus.Install:
+                        case UpgradeStatus.Upgrade:
                             HttpContext.Current.Response.Redirect("~/Install/Install.aspx", false);
                             break;
                     }

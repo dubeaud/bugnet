@@ -88,7 +88,7 @@ namespace BugNET.Administration.Users.UserControls
                     user.FirstName = FirstName.Text;
                     user.LastName =  LastName.Text;
                     UserManager.UpdateUser(user);
-                    OnAction(new ActionEventArgs { Trigger = Globals.ActionTriggers.Save });
+                    OnAction(new ActionEventArgs { Trigger = ActionTriggers.Save });
                 }
                 ActionMessage.ShowSuccessMessage(GetLocalResourceObject("UpdateUserMessage").ToString());
             }

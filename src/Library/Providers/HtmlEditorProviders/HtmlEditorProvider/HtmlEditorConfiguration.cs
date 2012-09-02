@@ -6,7 +6,7 @@ namespace BugNET.Providers.HtmlEditorProviders
     /// Configuration handler for the html editor provider
     /// </summary>
     /// <example>
-    /// <?xml version="1.0"?>
+    /// &lt;?xml version="1.0"?>
     /// <configuration>
     ///    <configSections>
     ///      <section name="HtmlEditorProvider" 

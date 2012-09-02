@@ -54,16 +54,16 @@ namespace BugNET.Install
 
                     switch (status)
                     {
-                        case Globals.UpgradeStatus.Install:
+                        case UpgradeStatus.Install:
                             InstallApplication();
                             break;
-                        case Globals.UpgradeStatus.Upgrade:
+                        case UpgradeStatus.Upgrade:
                             UpgradeApplication();
                             break;
-                        case Globals.UpgradeStatus.None:
+                        case UpgradeStatus.None:
                             NoUpgrade();
                             break;
-                        case Globals.UpgradeStatus.Authenticated:
+                        case UpgradeStatus.Authenticated:
                             InstallerLogout();
                             break;
                         default:

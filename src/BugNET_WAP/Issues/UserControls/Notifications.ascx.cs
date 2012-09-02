@@ -48,7 +48,7 @@ namespace BugNET.Issues.UserControls
             BindNotifications();
 
             //check users role permission for subscribing to an issue
-            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.SubscribeIssue.ToString()))
+            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Common.Permission.SubscribeIssue.ToString()))
                 pnlNotifications.Visible = false;
 
             if (UserManager.IsSuperUser() || UserManager.IsInRole(ProjectId, Globals.ProjectAdminRole))

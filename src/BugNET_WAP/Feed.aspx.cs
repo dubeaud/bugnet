@@ -42,25 +42,24 @@ namespace BugNET
                 throw new HttpException(403, "Access Denied");
 
             }
-            else if (_projectId != 0)
+
+            if (_projectId != 0)
             {
                 //Security Checks
                 if (!User.Identity.IsAuthenticated &&
-                    ProjectManager.GetById(_projectId).AccessType == Globals.ProjectAccessType.Private)
-                {
-                    throw new HttpException(403, "Access Denied");
-                }
-                else if (User.Identity.IsAuthenticated &&
-                            ProjectManager.GetById(_projectId).AccessType == Globals.ProjectAccessType.Private &&
-                            !ProjectManager.IsUserProjectMember(User.Identity.Name, _projectId))
+                    ProjectManager.GetById(_projectId).AccessType == ProjectAccessType.Private)
                 {
                     throw new HttpException(403, "Access Denied");
                 }
 
+                if (User.Identity.IsAuthenticated &&
+                    ProjectManager.GetById(_projectId).AccessType == ProjectAccessType.Private &&
+                    !ProjectManager.IsUserProjectMember(User.Identity.Name, _projectId))
+                {
+                    throw new HttpException(403, "Access Denied");
+                }
             }
-            
 
-          
 
             // Determine whether we're outputting an Atom or RSS feed
             var outputRss = (Request.QueryString["Type"] == "RSS");

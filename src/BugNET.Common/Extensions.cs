@@ -97,10 +97,10 @@ namespace BugNET.Common
 
         #region XmlSerialize XmlDeserialize
 
-        /// <summary>Serialises an object of type T in to an xml string</summary>
+        /// <summary>Serializes an object of type T in to an xml string</summary>
         /// <typeparam name="T">Any class type</typeparam>
-        /// <param name="obj">Object to serialise</param>
-        /// <returns>A string that represents Xml, empty oterwise</returns>
+        /// <param name="obj">Object to serialize</param>
+        /// <returns>A string that represents Xml, empty otherwise</returns>
         public static string ToXml<T>(this T obj) where T : class
         {
             var settings = new XmlWriterSettings { OmitXmlDeclaration = true };
@@ -117,9 +117,9 @@ namespace BugNET.Common
             }
         }
 
-        /// <summary>Deserialises an xml string in to an object of Type T</summary>
+        /// <summary>De-serialize an xml string in to an object of Type T</summary>
         /// <typeparam name="T">Any class type</typeparam>
-        /// <param name="xml">Xml as string to deserialise from</param>
+        /// <param name="xml">Xml as string to De-serialize from</param>
         /// <returns>A new object of type T is successful, null if failed</returns>
         public static T FromXml<T>(this string xml) where T : class
         {
@@ -212,12 +212,12 @@ namespace BugNET.Common
         #endregion
 
         /// <summary>
-        /// Extension method for the getting typed values from the viewstate
+        /// Extension method for the getting typed values from the view state
         /// </summary>
         /// <typeparam name="T">The type of the value</typeparam>
-        /// <param name="viewState">The viewstate bag</param>
-        /// <param name="key">The key of the viewstate item</param>
-        /// <param name="defaultValue">A default value if the key item is not in the viewstate</param>
+        /// <param name="viewState">The view state bag</param>
+        /// <param name="key">The key of the view state item</param>
+        /// <param name="defaultValue">A default value if the key item is not in the view state</param>
         /// <returns></returns>
         public static T Get<T>(this StateBag viewState, string key, T defaultValue)
         {
@@ -227,11 +227,11 @@ namespace BugNET.Common
         }
 
         /// <summary>
-        /// Extension method for setting typed values to the viewstate
+        /// Extension method for setting typed values to the view state
         /// </summary>
-        /// <param name="viewState">The viewstate bag</param>
-        /// <param name="key">The key of the viewstate item</param>
-        /// <param name="value">The value to set in the viewstate for the supplied key</param>
+        /// <param name="viewState">The view state bag</param>
+        /// <param name="key">The key of the view state item</param>
+        /// <param name="value">The value to set in the view state for the supplied key</param>
         public static void Set(this StateBag viewState, string key, object value)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException("key");
@@ -258,7 +258,7 @@ namespace BugNET.Common
                     conv.ConvertFrom(input);
                     return true;
                 }
-                catch { } //hacky yes but the only way to deal with the typeconverter not being to conver the type
+                catch { } //hacky yes but the only way to deal with the type converter not being to convert the type
             }
             return false;
         }

@@ -35,10 +35,10 @@ namespace BugNET.UserInterfaceLayer.WebControls
                 if (HttpContext.Current.User.Identity.IsAuthenticated)
                 {
                     //check add issue permission
-                    if (UserManager.HasPermission(projectId, Globals.Permission.AddIssue.ToString()))
+                    if (UserManager.HasPermission(projectId, Common.Permission.AddIssue.ToString()))
                         Items.Add(new SuckerMenuItem(string.Format("~/Issues/IssueDetail.aspx?pid={0}", projectId),Resources.SharedResources.NewIssue,this));
 
-                    if (UserManager.HasPermission(projectId, Globals.Permission.ViewProjectCalendar.ToString()))
+                    if (UserManager.HasPermission(projectId, Common.Permission.ViewProjectCalendar.ToString()))
                         oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/ProjectCalendar.aspx?pid={0}", projectId),Resources.SharedResources.Calendar, this));
                 }
             }

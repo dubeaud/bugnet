@@ -62,11 +62,18 @@ namespace BugNET.BLL.Notifications
 
             try
             {
+#if(DEBUG)
+                client.Send(message);
+#else
                 client.SendAsync(message, null);
+#endif
             }
             catch (Exception)
             {
+#if(DEBUG)
+#else
                 client.SendAsyncCancel();
+#endif
                 client.SendCompleted -= SendCompletedCallback;
                 client.Dispose();
                 throw;

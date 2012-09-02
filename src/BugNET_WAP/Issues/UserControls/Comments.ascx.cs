@@ -49,7 +49,7 @@ namespace BugNET.Issues.UserControls
             BindComments();
 
             //check users role permission for adding a comment
-            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.AddComment.ToString()))
+            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Common.Permission.AddComment.ToString()))
                 pnlAddComment.Visible = false;
         }
 
@@ -140,20 +140,20 @@ namespace BugNET.Issues.UserControls
                 cmdEditComment.Visible = false;
 
                 // Check if the current user is Authenticated and has permission to edit a comment.//If user can edit comments
-                if (Page.User.Identity.IsAuthenticated && UserManager.HasPermission(ProjectId, Globals.Permission.EditComment.ToString()))
+                if (Page.User.Identity.IsAuthenticated && UserManager.HasPermission(ProjectId, Common.Permission.EditComment.ToString()))
                     cmdEditComment.Visible = true;
                     // Check if the project admin or a super user trying to edit the comment.
                 else if ((Page.User.Identity.IsAuthenticated && UserManager.IsSuperUser()) || (Page.User.Identity.IsAuthenticated && UserManager.IsInRole(ProjectId, Globals.ProjectAdminRole)))
                     cmdEditComment.Visible = true;
                     // Check if it is the original user, the project admin or a super user trying to edit the comment.
-                else if (currentComment.CreatorUserName.ToLower() == Context.User.Identity.Name.ToLower() && UserManager.HasPermission(ProjectId, Globals.Permission.OwnerEditComment.ToString()))
+                else if (currentComment.CreatorUserName.ToLower() == Context.User.Identity.Name.ToLower() && UserManager.HasPermission(ProjectId, Common.Permission.OwnerEditComment.ToString()))
                     cmdEditComment.Visible = true;
             }
 
             var cmdDeleteComment = e.Item.FindControl("cmdDeleteComment") as ImageButton;
 
             // Check if the current user is Authenticated and has the permission to delete a comment			
-            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.DeleteComment.ToString())) return;
+            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Common.Permission.DeleteComment.ToString())) return;
 
             if (cmdDeleteComment == null) return;
 

@@ -53,7 +53,7 @@ namespace BugNET.Issues
                     ProjectId = _currentProject.Id;
 
                     //security check: add issue
-                    if (!UserManager.HasPermission(ProjectId, Globals.Permission.AddIssue.ToString()))
+                    if (!UserManager.HasPermission(ProjectId, Common.Permission.AddIssue.ToString()))
                     {
                         ErrorRedirector.TransferToLoginPage(Page);
                     }
@@ -70,7 +70,7 @@ namespace BugNET.Issues
                     VoteButton.Visible = false;
 
                     //check users role permission for adding an attachment
-                    if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.AddAttachment.ToString()))
+                    if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Common.Permission.AddAttachment.ToString()))
                     {
                         pnlAddAttachment.Visible = false;
                     }
@@ -105,17 +105,16 @@ namespace BugNET.Issues
                     if (_currentProject == null)
                     {
                         ErrorRedirector.TransferToNotFoundPage(Page);
-                    }
-                    else 
-                    { 
-                        ProjectId = _currentProject.Id;
+                        return;
                     }
 
-                    if (_currentProject.AccessType == Globals.ProjectAccessType.Private && !User.Identity.IsAuthenticated)
+                    ProjectId = _currentProject.Id;
+
+                    if (_currentProject.AccessType == ProjectAccessType.Private && !User.Identity.IsAuthenticated)
                     {
                         ErrorRedirector.TransferToLoginPage(Page);
                     }
-                    else if (User.Identity.IsAuthenticated && _currentProject.AccessType == Globals.ProjectAccessType.Private 
+                    else if (User.Identity.IsAuthenticated && _currentProject.AccessType == ProjectAccessType.Private 
                         && !ProjectManager.IsUserProjectMember(User.Identity.Name, ProjectId))
                     {
                         ErrorRedirector.TransferToLoginPage(Page);
@@ -621,33 +620,33 @@ namespace BugNET.Issues
             if (User.Identity.IsAuthenticated)
             {
                 //enable editing of description if user has permission or in admin role
-                if ((UserManager.IsInRole(ProjectId, Globals.ProjectAdminRole) || UserManager.HasPermission(ProjectId, Globals.Permission.EditIssueDescription.ToString())) && !DescriptionHtmlEditor.Visible)
+                if ((UserManager.IsInRole(ProjectId, Globals.ProjectAdminRole) || UserManager.HasPermission(ProjectId, Common.Permission.EditIssueDescription.ToString())) && !DescriptionHtmlEditor.Visible)
                     EditDescription.Visible = true;
 
-                if ((UserManager.IsInRole(ProjectId, Globals.ProjectAdminRole) || UserManager.HasPermission(ProjectId, Globals.Permission.EditIssueTitle.ToString())) && !TitleTextBox.Visible)
+                if ((UserManager.IsInRole(ProjectId, Globals.ProjectAdminRole) || UserManager.HasPermission(ProjectId, Common.Permission.EditIssueTitle.ToString())) && !TitleTextBox.Visible)
                     EditTitle.Visible = true;
 
                 //edit issue permission check
-                if (!UserManager.HasPermission(ProjectId, Globals.Permission.EditIssue.ToString()))
+                if (!UserManager.HasPermission(ProjectId, Common.Permission.EditIssue.ToString()))
                     LockFields();
 
                 //assign issue permission check
-                if (!UserManager.HasPermission(ProjectId, Globals.Permission.AssignIssue.ToString()))
+                if (!UserManager.HasPermission(ProjectId, Common.Permission.AssignIssue.ToString()))
                     DropAssignedTo.Enabled = false;
 
                 //delete issue
-                if (UserManager.HasPermission(ProjectId, Globals.Permission.DeleteIssue.ToString()))
+                if (UserManager.HasPermission(ProjectId, Common.Permission.DeleteIssue.ToString()))
                     IssueActionDelete.Visible = true;
 
                 //security check: assign issue
-                if (!UserManager.HasPermission(ProjectId, Globals.Permission.AssignIssue.ToString()))
+                if (!UserManager.HasPermission(ProjectId, Common.Permission.AssignIssue.ToString()))
                     DropAssignedTo.Enabled = false;
 
-                if (!UserManager.HasPermission(ProjectId, Globals.Permission.ChangeIssueStatus.ToString()))
+                if (!UserManager.HasPermission(ProjectId, Common.Permission.ChangeIssueStatus.ToString()))
                     DropStatus.Enabled = false;
 
                 //remove closed status' if user does not have access
-                if (!UserManager.HasPermission(ProjectId, Globals.Permission.CloseIssue.ToString()))
+                if (!UserManager.HasPermission(ProjectId, Common.Permission.CloseIssue.ToString()))
                 {
                     var stat = (DropDownList)DropStatus.FindControl("dropStatus");
                     var status = StatusManager.GetByProjectId(ProjectId).FindAll(st => st.IsClosedState);
