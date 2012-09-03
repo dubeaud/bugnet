@@ -12,13 +12,13 @@ namespace BugNET.Providers.DataProviders
     public partial class SqlDataProvider
     {
         /// <summary>
-        /// Perform a query agains the issues stored
+        /// Perform a query against the issues stored
         /// </summary>
         /// <param name="queryClauses">Criteria for the query</param>
         /// <param name="sortFields">The name / sort direction of the sort fields</param>
         /// <param name="projectId">The project id</param>
         /// <returns></returns>
-        /// <remarks>This mehtod does not filter the issues by any criteria, that means disabled and closed issues will be returned by default.
+        /// <remarks>This method does not filter the issues by any criteria, that means disabled and closed issues will be returned by default.
         /// It is up to the client caller to define the filters before hand.  For filtering closed and disabled issues use iv.[IsClosed] = 0 and 
         /// iv.[Disabled] = 0
         /// </remarks>

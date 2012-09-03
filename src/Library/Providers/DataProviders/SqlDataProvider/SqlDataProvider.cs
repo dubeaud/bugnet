@@ -5,8 +5,6 @@ using System.Configuration;
 using System.Configuration.Provider;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
 using BugNET.Common;
 using BugNET.DAL;
 using BugNET.Entities;
@@ -1990,6 +1988,10 @@ namespace BugNET.Providers.DataProviders
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_QUERY_GETSAVEDQUERY);
 
                 var queryClauses = new List<QueryClause>();
+
+                // add the disabled query filter since the UI cannot add this
+                queryClauses.Insert(0, new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int, false));
+
                 ExecuteReaderCmd(sqlCmd, GenerateQueryClauseListFromReader, ref queryClauses);
 
                 return PerformQuery(queryClauses, null, projectId);   

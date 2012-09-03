@@ -21,10 +21,12 @@ namespace BugNET.UserControls
         /// Datasource 
         /// </summary>
         private List<Issue> _dataSource;
+
         /// <summary>
-        /// Event that fires on a databind
+        /// Event that fires on a data bind
         /// </summary>
         public event EventHandler RebindCommand;
+
         /// <summary>
         /// Array of issue columns
         /// </summary>
