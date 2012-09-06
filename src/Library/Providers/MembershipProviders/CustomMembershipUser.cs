@@ -7,30 +7,20 @@ namespace BugNET.Providers.MembershipProviders
     /// 
     /// </summary>
     public class CustomMembershipUser : MembershipUser
-    {       
-        private string _FirstName;
-        private string _LastName;
-        private string _DisplayName;
+    {
+        private string _displayName;
 
         /// <summary>
         /// Gets or sets the first name.
         /// </summary>
         /// <value>The first name.</value>
-        public string FirstName
-        {
-            get { return _FirstName; }
-            set { _FirstName = value; }
-        }
+        public string FirstName { get; set; }
 
         /// <summary>
         /// Gets or sets the last name.
         /// </summary>
         /// <value>The last name.</value>
-        public string LastName
-        {
-            get { return _LastName; }
-            set { _LastName = value; }
-        }
+        public string LastName { get; set; }
 
         /// <summary>
         /// Gets or sets the display name.
@@ -39,9 +29,9 @@ namespace BugNET.Providers.MembershipProviders
         public string DisplayName
         {
             get {
-                return string.IsNullOrEmpty(_DisplayName) ? base.UserName : _DisplayName;
+                return string.IsNullOrEmpty(_displayName) ? base.UserName : _displayName;
             }
-            set { _DisplayName = value; }
+            set { _displayName = value; }
         }
 
 
@@ -94,9 +84,9 @@ namespace BugNET.Providers.MembershipProviders
                                        lastPasswordChangedDate,
                                        lastLockedOutDate)
         {
-            this.FirstName = firstName;
-            this.LastName = lastName;
-            this.DisplayName = displayName;
+            FirstName = firstName;
+            LastName = lastName;
+            DisplayName = displayName;
         }
     }
 }

@@ -256,6 +256,24 @@ namespace BugNET.UserControls {
         protected global::BugNET.UserControls.PickDate DueDate;
         
         /// <summary>
+        /// chkDueDateReset control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkDueDateReset;
+        
+        /// <summary>
+        /// litResetDueDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litResetDueDate;
+        
+        /// <summary>
         /// ctlCustomFields control.
         /// </summary>
         /// <remarks>

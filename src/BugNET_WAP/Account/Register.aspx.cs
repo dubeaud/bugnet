@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web.UI.WebControls;
 using BugNET.BLL;
@@ -39,6 +41,25 @@ namespace BugNET.Account
             {
                 Response.Redirect("~/", true);
             }
+
+            if (IsPostBack) return;
+
+            var preferredLanguage = CreateUserWizardStep0.ContentTemplateContainer.FindControl("PreferredLanguage") as DropDownList;
+
+            if (preferredLanguage == null) return;
+
+            var resources = ResourceManager.GetInstalledLanguageResources().ToList();
+            preferredLanguage.Items.Clear();
+
+            foreach (var resource in resources)
+            {
+                var cultureInfo = new CultureInfo(resource);
+                preferredLanguage.Items.Add(new ListItem(cultureInfo.DisplayName, cultureInfo.Name));
+            }
+
+            preferredLanguage.DataBind();
+
+            preferredLanguage.SelectedValue = HostSettingManager.Get(HostSettingNames.ApplicationDefaultLanguage);
         }
 
         /// <summary>
@@ -73,12 +94,15 @@ namespace BugNET.Account
             var firstName = (TextBox)CreateUserWizardStep0.ContentTemplateContainer.FindControl("FirstName");
             var lastName = (TextBox)CreateUserWizardStep0.ContentTemplateContainer.FindControl("LastName");
             var fullName = (TextBox)CreateUserWizardStep0.ContentTemplateContainer.FindControl("FullName");
+            var preferredLanguage = CreateUserWizardStep0.ContentTemplateContainer.FindControl("PreferredLanguage") as DropDownList;
 
             var profile = new WebProfile().GetProfile(user.UserName);
 
             profile.FirstName = firstName.Text;
             profile.LastName = lastName.Text;
             profile.DisplayName = fullName.Text;
+            if (preferredLanguage != null) profile.PreferredLocale = preferredLanguage.SelectedValue;
+
             profile.Save();
 
             //auto assign user to roles

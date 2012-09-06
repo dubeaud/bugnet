@@ -1306,6 +1306,8 @@
     <Content Include="Scripts\themes\default\d.png" />
     <Content Include="Scripts\themes\default\style.css" />
     <Content Include="Scripts\themes\default\throbber.gif" />
+    <Content Include="Templates\Html\PasswordReminder.nl-NL.xslt" />
+    <Content Include="Templates\Html\PasswordReminder.xslt" />
     <Content Include="Templates\Html\IssueAdded.nl-NL.xslt" />
     <Content Include="Templates\Html\IssueAdded.xslt" />
     <Content Include="Templates\Html\IssueUpdated.nl-NL.xslt" />
@@ -1333,6 +1335,8 @@
     <Content Include="Templates\Text\NewAssignee.xslt" />
     <Content Include="Templates\Text\NewIssueComment.nl-NL.xslt" />
     <Content Include="Templates\Text\NewIssueComment.xslt" />
+    <Content Include="Templates\Text\PasswordReminder.nl-NL.xslt" />
+    <Content Include="Templates\Text\PasswordReminder.xslt" />
     <Content Include="Templates\Text\PasswordReset.nl-NL.xslt" />
     <Content Include="Templates\Text\PasswordReset.xslt" />
     <Content Include="Templates\Text\UserRegistered.nl-NL.xslt" />
@@ -1683,7 +1687,9 @@
     <Content Include="Projects\App_LocalResources\ProjectCalendar.aspx.resx">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="UserControls\App_LocalResources\DisplayIssues.ascx.resx" />
+    <Content Include="UserControls\App_LocalResources\DisplayIssues.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Queries\App_LocalResources\QueryList.aspx.resx">
       <SubType>Designer</SubType>
     </Content>
@@ -1797,7 +1803,9 @@
     <Content Include="Queries\App_LocalResources\QueryList.aspx.es-ES.resx" />
     <Content Include="UserControls\App_LocalResources\Banner.ascx.es-ES.resx" />
     <Content Include="UserControls\App_LocalResources\CategoryTreeView.ascx.es-ES.resx" />
-    <Content Include="UserControls\App_LocalResources\DisplayIssues.ascx.es-ES.resx" />
+    <Content Include="UserControls\App_LocalResources\DisplayIssues.ascx.es-ES.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="UserControls\App_LocalResources\LoginControl.ascx.es-ES.resx" />
     <Content Include="UserControls\App_LocalResources\PickCategory.ascx.es-ES.resx" />
     <Content Include="UserControls\App_LocalResources\PickImage.ascx.es-ES.resx" />

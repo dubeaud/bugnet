@@ -11,12 +11,12 @@
 
     <xsl:template match="/root">
         <h1>Welcome to <xsl:value-of select="HostSetting_ApplicationTitle" />!</h1>
-		<p>Hello, <xsl:value-of select="User/DisplayName" disable-output-escaping="yes" />.  You are receiving this email because you recently created
+		<p>Hello, <xsl:value-of select="NotificationUser/DisplayName" disable-output-escaping="yes" />.  You are receiving this email because you recently created
         a new account at <xsl:value-of select="HostSetting_ApplicationTitle" />. Before you can login, however, you need to first visit the following link 
 		to confirm your account: </p>
 		<p>
-			<a href="{HostSetting_DefaultUrl}Account/Verify.aspx?ID={User/Id}" target="_blank">
-                <xsl:value-of select="HostSetting_DefaultUrl" />Account/Verify.aspx?ID=<xsl:value-of select="User/Id" />
+			<a href="{HostSetting_DefaultUrl}Account/Verify.aspx?ID={NotificationUser/Id}" target="_blank">
+                <xsl:value-of select="HostSetting_DefaultUrl" />Account/Verify.aspx?ID=<xsl:value-of select="NotificationUser/Id" />
             </a>
 		</p>
 		<p>After visiting the above link you can log into the site!</p>

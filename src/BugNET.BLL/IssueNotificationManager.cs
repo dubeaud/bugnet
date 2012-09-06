@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Mail;
 using System.Web;
-using System.Web.Security;
 using BugNET.BLL.Notifications;
 using BugNET.Common;
 using BugNET.DAL;
@@ -64,50 +64,62 @@ namespace BugNET.BLL
             if (issueId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("issueId"));
 
             // TODO - create this via dependency injection at some point.
-            IMailDeliveryService MailService = new SmtpMailDeliveryService();
+            IMailDeliveryService mailService = new SmtpMailDeliveryService();
 
             var issue = DataProviderManager.Provider.GetIssueById(issueId);
             var issNotifications = DataProviderManager.Provider.GetIssueNotificationsByIssueId(issueId);
             var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
 
-            //load template 
-            var template = NotificationManager.LoadEmailNotificationTemplate("IssueUpdated", emailFormatType);
-            var data = new Dictionary<string, object> {{"Issue", issue}};
-            template = NotificationManager.GenerateNotificationContent(template, data);
-
-            var subject = NotificationManager.LoadNotificationTemplate("IssueUpdatedSubject");
+            var data = new Dictionary<string, object> { { "Issue", issue } };
+ 
             var displayname = UserManager.GetUserDisplayName(Security.GetUserName());
 
-            MembershipUser user;
+            var templateCache = new List<CultureNotificationContent>();
+            var emailFormatKey = (emailFormatType == EmailFormatType.Text) ? "" : "HTML";
+            const string subjectKey = "IssueUpdatedSubject";
+            var bodyKey = string.Concat("IssueUpdated", emailFormatKey);
 
-            foreach (var notify in issNotifications)
+            // get a list of distinct cultures
+            var distinctCultures = (from c in issNotifications
+                                    select c.NotificationCulture
+                                   ).Distinct().ToList();
+
+            // populate the template cache of the cultures needed
+            foreach (var culture in from culture in distinctCultures let notificationContent = templateCache.FirstOrDefault(p => p.CultureString == culture) where notificationContent == null select culture)
+            {
+                templateCache.Add(new CultureNotificationContent().LoadContent(culture, subjectKey, bodyKey));
+            }
+
+            foreach (var notification in issNotifications)
             {
                 try
                 {
                     //send notifications to everyone except who changed it.
-                    if (notify.NotificationUsername.ToLower() != Security.GetUserName().ToLower())
-                    {
+                    if (notification.NotificationUsername.ToLower() == Security.GetUserName().ToLower()) continue;
+
+                    var user = UserManager.GetUser(notification.NotificationUsername);
                        
-                        user = UserManager.GetUser(notify.NotificationUsername);
-                       
-                        // skip to next user if this user doesn't have notifications enabled.
-                        if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications)
-                            continue;
+                    // skip to next user if this user doesn't have notifications enabled.
+                    if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications) continue;
 
-                        string Subject = String.Format(subject, issue.FullId, displayname);
-                        string Body = template;
+                    var nc = templateCache.First(p => p.CultureString == notification.NotificationCulture);
 
+                    var emailSubject = nc.CultureContents
+                        .First(p => p.ContentKey == subjectKey)
+                        .FormatContent(issue.FullId, displayname);
 
-                        MailMessage message = new MailMessage()
+                    var bodyContent = nc.CultureContents
+                        .First(p => p.ContentKey == bodyKey)
+                        .TransformContent(data);
+
+                    var message = new MailMessage()
                         {
-                            Subject = Subject,
-                            Body = Body,
+                            Subject = emailSubject,
+                            Body = bodyContent,
                             IsBodyHtml = true
                         };
 
-                        MailService.Send(user.Email, message);
-                    }
-                        
+                    mailService.Send(user.Email, message);
                 }
                 catch (Exception ex)
                 {
@@ -126,47 +138,60 @@ namespace BugNET.BLL
             if (issueId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("issueId"));
 
             // TODO - create this via dependency injection at some point.
-            IMailDeliveryService MailService = new SmtpMailDeliveryService();
-            MembershipUser user;
+            IMailDeliveryService mailService = new SmtpMailDeliveryService();
 
             var issue = DataProviderManager.Provider.GetIssueById(issueId);
             var issNotifications = DataProviderManager.Provider.GetIssueNotificationsByIssueId(issueId);
             var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
 
-            //load template
-            var template = NotificationManager.LoadEmailNotificationTemplate("IssueAdded", emailFormatType);
             var data = new Dictionary<string, object> {{"Issue", issue}};
 
-            template = NotificationManager.GenerateNotificationContent(template, data);
+            var templateCache = new List<CultureNotificationContent>();
+            var emailFormatKey = (emailFormatType == EmailFormatType.Text) ? "" : "HTML";
+            const string subjectKey = "IssueAddedSubject";
+            var bodyKey = string.Concat("IssueAdded", emailFormatKey);
 
-            var subject = NotificationManager.LoadNotificationTemplate("IssueAddedSubject");
+            // get a list of distinct cultures
+            var distinctCultures = (from c in issNotifications
+                                    select c.NotificationCulture
+                                   ).Distinct().ToList();
 
-            foreach (var notify in issNotifications)
+            // populate the template cache of the cultures needed
+            foreach (var culture in from culture in distinctCultures let notificationContent = templateCache.FirstOrDefault(p => p.CultureString == culture) where notificationContent == null select culture)
+            {
+                templateCache.Add(new CultureNotificationContent().LoadContent(culture, subjectKey, bodyKey));
+            }
+
+            foreach (var notification in issNotifications)
             {
                 try
                 {
                     //send notifications to everyone except who added it.
-                    if (notify.NotificationUsername.ToLower() != Security.GetUserName().ToLower())
-                    {
-                        user = UserManager.GetUser(notify.NotificationUsername);
+                    if (notification.NotificationUsername.ToLower() == Security.GetUserName().ToLower()) continue;
 
-                        // skip to next user if this user doesn't have notifications enabled.
-                        if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications)
-                            continue;
+                    var user = UserManager.GetUser(notification.NotificationUsername);
 
-                        string Subject = String.Format(subject, issue.FullId, issue.ProjectName);
-                        string Body = template;
+                    // skip to next user if this user doesn't have notifications enabled.
+                    if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications) continue;
 
+                    var nc = templateCache.First(p => p.CultureString == notification.NotificationCulture);
 
-                        MailMessage message = new MailMessage()
+                    var emailSubject = nc.CultureContents
+                        .First(p => p.ContentKey == subjectKey)
+                        .FormatContent(issue.FullId, issue.ProjectName);
+
+                    var bodyContent = nc.CultureContents
+                        .First(p => p.ContentKey == bodyKey)
+                        .TransformContent(data);
+
+                    var message = new MailMessage
                         {
-                            Subject = Subject,
-                            Body = Body,
+                            Subject = emailSubject,
+                            Body = bodyContent,
                             IsBodyHtml = true
                         };
 
-                        MailService.Send(user.Email, message);
-                    }
+                    mailService.Send(user.Email, message);
                 }
                 catch (Exception ex)
                 {
@@ -174,7 +199,6 @@ namespace BugNET.BLL
                 }
             }
         }
-
 
         /// <summary>
         /// Sends the issue notifications.
@@ -190,14 +214,12 @@ namespace BugNET.BLL
             }
 
             // TODO - create this via dependency injection at some point.
-            IMailDeliveryService MailService = new SmtpMailDeliveryService();
+            IMailDeliveryService mailService = new SmtpMailDeliveryService();
 
             var issue = DataProviderManager.Provider.GetIssueById(issueId);
             var issNotifications = DataProviderManager.Provider.GetIssueNotificationsByIssueId(issueId);
             var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
 
-            //load template 
-            var template = NotificationManager.LoadEmailNotificationTemplate("IssueUpdatedWithChanges", emailFormatType);
             var data = new Dictionary<string, object> {{"Issue", issue}};
 
             var writer = new System.IO.StringWriter();
@@ -216,36 +238,54 @@ namespace BugNET.BLL
                 data.Add("RawXml_Changes", writer.ToString());
             }
 
-            template = NotificationManager.GenerateNotificationContent(template, data);
+            var templateCache = new List<CultureNotificationContent>();
+            var emailFormatKey = (emailFormatType == EmailFormatType.Text) ? "" : "HTML";
+            const string subjectKey = "IssueUpdatedSubject";
+            var bodyKey = string.Concat("IssueUpdatedWithChanges", emailFormatKey);
 
-            var subject = NotificationManager.LoadNotificationTemplate("IssueUpdatedSubject");
+            // get a list of distinct cultures
+            var distinctCultures = (from c in issNotifications
+                                    select c.NotificationCulture
+                                   ).Distinct().ToList();
+
+            // populate the template cache of the cultures needed
+            foreach (var culture in from culture in distinctCultures let notificationContent = templateCache.FirstOrDefault(p => p.CultureString == culture) where notificationContent == null select culture)
+            {
+                templateCache.Add(new CultureNotificationContent().LoadContent(culture, subjectKey, bodyKey));
+            }
+
             var displayname = UserManager.GetUserDisplayName(Security.GetUserName());
 
-            foreach (var notify in issNotifications)
+            foreach (var notification in issNotifications)
             {
                 try
                 {
                     //send notifications to everyone except who changed it.
-                    if (notify.NotificationUsername.ToLower() != Security.GetUserName().ToLower())
-                    {
-                        var user = UserManager.GetUser(notify.NotificationUsername);
+                    if (notification.NotificationUsername.ToLower() == Security.GetUserName().ToLower()) continue;
 
-                        // skip to next user if this user doesn't have notifications enabled.
-                        if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications)
-                            continue;
+                    var user = UserManager.GetUser(notification.NotificationUsername);
 
-                        string Subject = String.Format(subject, issue.FullId, displayname);
-                        string Body = template;
+                    // skip to next user if this user doesn't have notifications enabled.
+                    if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications) continue;
 
-                        var message = new MailMessage()
+                    var nc = templateCache.First(p => p.CultureString == notification.NotificationCulture);
+
+                    var emailSubject = nc.CultureContents
+                        .First(p => p.ContentKey == subjectKey)
+                        .FormatContent(issue.FullId, displayname);
+
+                    var bodyContent = nc.CultureContents
+                        .First(p => p.ContentKey == bodyKey)
+                        .TransformContent(data);
+
+                    var message = new MailMessage
                         {
-                            Subject = Subject,
-                            Body = Body,
+                            Subject = emailSubject,
+                            Body = bodyContent,
                             IsBodyHtml = true
                         };
 
-                        MailService.Send(user.Email, message);
-                    }
+                    mailService.Send(user.Email, message);
                 }
                 catch (Exception ex)
                 {
@@ -269,35 +309,41 @@ namespace BugNET.BLL
         	var issue = DataProviderManager.Provider.GetIssueById(notification.IssueId);
             var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
 
-            //load template
-            var template = NotificationManager.LoadEmailNotificationTemplate("NewAssignee", emailFormatType);
-            var data = new Dictionary<string, object> {{"Issue", issue}};
-            template = NotificationManager.GenerateNotificationContent(template, data);
-            var subject = NotificationManager.LoadNotificationTemplate("NewAssigneeSubject");
+            // data for template
+            var data = new Dictionary<string, object> { { "Issue", issue } };
+            var emailFormatKey = (emailFormatType == EmailFormatType.Text) ? "" : "HTML";
+            const string subjectKey = "NewAssigneeSubject";
+            var bodyKey = string.Concat("NewAssignee", emailFormatKey);
+
+            var nc = new CultureNotificationContent().LoadContent(notification.NotificationCulture, subjectKey, bodyKey);
 
             try
             {
                 //send notifications to everyone except who changed it.
-                if (notification.NotificationUsername.ToLower() != Security.GetUserName().ToLower())
-                {
-                    var user = UserManager.GetUser(notification.NotificationUsername);
+                if (notification.NotificationUsername.ToLower() == Security.GetUserName().ToLower()) return;
 
-                    // skip to next user if this user doesn't have notifications enabled.
-                    if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications)
-                        return;
+                var user = UserManager.GetUser(notification.NotificationUsername);
 
-                    var Subject = String.Format(subject, issue.FullId);
-                    var Body = template;
+                // skip to next user if this user doesn't have notifications enabled.
+                if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications)
+                    return;
 
-                    var message = new MailMessage
-                                    {
-                                        Subject = Subject,
-                                        Body = Body,
-                                        IsBodyHtml = true
-                                    };
+                var emailSubject = nc.CultureContents
+                    .First(p => p.ContentKey == subjectKey)
+                    .FormatContent(issue.FullId);
 
-                    mailService.Send(user.Email, message);
-                }
+                var bodyContent = nc.CultureContents
+                    .First(p => p.ContentKey == bodyKey)
+                    .TransformContent(data);
+
+                var message = new MailMessage
+                    {
+                        Subject = emailSubject,
+                        Body = bodyContent,
+                        IsBodyHtml = true
+                    };
+
+                mailService.Send(user.Email, message);
             }
             catch (Exception ex)
             {
@@ -316,48 +362,62 @@ namespace BugNET.BLL
             if (newComment == null) throw new ArgumentNullException("newComment");
 
             // TODO - create this via dependency injection at some point.
-            IMailDeliveryService MailService = new SmtpMailDeliveryService();
-            MembershipUser user;
+            IMailDeliveryService mailService = new SmtpMailDeliveryService();
 
             var issue = DataProviderManager.Provider.GetIssueById(issueId);
             var issNotifications = DataProviderManager.Provider.GetIssueNotificationsByIssueId(issueId);
             var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
 
-            //load template 
-            var template = NotificationManager.LoadEmailNotificationTemplate("NewIssueComment", emailFormatType);
+            // data for template
             var data = new Dictionary<string, object> {{"Issue", issue}, {"Comment", newComment}};
-
-            template = NotificationManager.GenerateNotificationContent(template, data);
-
-            var subject = NotificationManager.LoadNotificationTemplate("NewIssueCommentSubject");
             var displayname = UserManager.GetUserDisplayName(Security.GetUserName());
 
-            foreach (var notify in issNotifications)
+            var templateCache = new List<CultureNotificationContent>();
+            var emailFormatKey = (emailFormatType == EmailFormatType.Text) ? "" : "HTML";
+            const string subjectKey = "NewIssueCommentSubject";
+            var bodyKey = string.Concat("NewIssueComment", emailFormatKey);
+
+            // get a list of distinct cultures
+            var distinctCultures = (from c in issNotifications
+                                    select c.NotificationCulture
+                                   ).Distinct().ToList();
+
+            // populate the template cache of the cultures needed
+            foreach (var culture in from culture in distinctCultures let notificationContent = templateCache.FirstOrDefault(p => p.CultureString == culture) where notificationContent == null select culture)
             {
+                templateCache.Add(new CultureNotificationContent().LoadContent(culture, subjectKey, bodyKey));
+            }
+
+            foreach (var notification in issNotifications)
+            {
+                var nc = templateCache.First(p => p.CultureString == notification.NotificationCulture);
+
+                var emailSubject = nc.CultureContents
+                    .First(p => p.ContentKey == subjectKey)
+                    .FormatContent(issue.FullId, displayname);
+
+                var bodyContent = nc.CultureContents
+                    .First(p => p.ContentKey == bodyKey)
+                    .TransformContent(data);
+
                 try
                 {
                     //send notifications to everyone except who changed it.
-                    if (notify.NotificationUsername.ToLower() != Security.GetUserName().ToLower())
-                    {
-                        user = UserManager.GetUser(notify.NotificationUsername);
+                    if (notification.NotificationUsername.ToLower() == Security.GetUserName().ToLower()) continue;
 
-                        // skip to next user if this user doesn't have notifications enabled.
-                        if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications)
-                            continue;
+                    var user = UserManager.GetUser(notification.NotificationUsername);
 
-                        string Subject = String.Format(subject, issue.FullId, displayname);
-                        string Body = template;
+                    // skip to next user if this user doesn't have notifications enabled.
+                    if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications) continue;
 
-
-                        MailMessage message = new MailMessage()
+                    var message = new MailMessage
                         {
-                            Subject = Subject,
-                            Body = Body,
+                            Subject = emailSubject,
+                            Body = bodyContent,
                             IsBodyHtml = true
                         };
 
-                        MailService.Send(user.Email, message);
-                    }
+                    mailService.Send(user.Email, message);
                 }
                 catch (Exception ex)
                 {

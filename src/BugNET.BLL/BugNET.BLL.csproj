@@ -73,6 +73,8 @@
     <Compile Include="IssueWorkReportManager.cs" />
     <Compile Include="LoggingManager.cs" />
     <Compile Include="MilestoneManager.cs" />
+    <Compile Include="Notifications\CultureContent.cs" />
+    <Compile Include="Notifications\CultureNotificationContent.cs" />
     <Compile Include="Notifications\IMailDeliveryService.cs" />
     <Compile Include="Notifications\NotificationManager.cs">
       <SubType>Code</SubType>

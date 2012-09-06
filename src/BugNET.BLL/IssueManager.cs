@@ -63,8 +63,21 @@ namespace BugNET.BLL
 
                     if (entity.SendNewAssigneeNotification)
                     {
+                        
+
                         //add this user to notifications and send them a notification
-                        var notification = new IssueNotification() { IssueId = entity.Id, NotificationUsername = entity.AssignedUserName };
+                        var notification = new IssueNotification
+                            {
+                                IssueId = entity.Id, 
+                                NotificationUsername = entity.AssignedUserName,
+                                NotificationCulture = string.Empty
+                            };
+
+                        var profile = new WebProfile().GetProfile(entity.AssignedUserName);
+                        if (profile != null && !string.IsNullOrWhiteSpace(profile.PreferredLocale))
+                        {
+                            notification.NotificationCulture = profile.PreferredLocale;
+                        }
 
                         IssueNotificationManager.SaveOrUpdate(notification);
                         IssueNotificationManager.SendNewAssigneeNotification(notification);

@@ -17,7 +17,7 @@
                     <b>Datum:</b>
                 </td>
                 <td>
-                    <xsl:value-of select="helpers:FormatShortDateAnd12HTime(User/CreationDate)" />
+                    <xsl:value-of select="helpers:FormatShortDateAnd12HTime(NotificationUser/CreationDate)" />
                 </td>
             </tr>
             <tr>
@@ -25,19 +25,19 @@
                     <b>Naam:</b>
                 </td>
                 <td>
-                    <xsl:value-of select="User/DisplayName" disable-output-escaping="yes" />
+                    <xsl:value-of select="NotificationUser/DisplayName" disable-output-escaping="yes" />
                 </td>
             </tr>
             <tr>
                 <td><b>Gebruikersnaam:</b> </td>
                 <td>
-                    <xsl:value-of select="User/UserName" />
+                    <xsl:value-of select="NotificationUser/UserName" />
                 </td>
             </tr>
             <tr>
                 <td><b>Email:</b> </td>
                 <td>
-                    <xsl:value-of select="User/Email" />
+                    <xsl:value-of select="NotificationUser/Email" />
                 </td>
             </tr>
         </table>

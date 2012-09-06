@@ -14,12 +14,12 @@
         <xsl:text>!</xsl:text>
         <xsl:text>&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
-        <xsl:text>Hallo, </xsl:text><xsl:value-of select="User/DisplayName" disable-output-escaping="yes" />
+        <xsl:text>Hallo, </xsl:text><xsl:value-of select="NotificationUser/DisplayName" disable-output-escaping="yes" />
         <xsl:text>. U ontvang deze email omdat u recent een gebruikersaccount heeft aangemaakt op </xsl:text><xsl:value-of select="HostSetting_ApplicationTitle" />
         <xsl:text>. Voordat u kunt inloggen, moet u de volgende link gebruiken om uw account te activeren: </xsl:text>
         <xsl:text>&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
-        <xsl:value-of select="HostSetting_DefaultUrl" />Account/Verify.aspx?ID=<xsl:value-of select="User/Id" />
+        <xsl:value-of select="HostSetting_DefaultUrl" />Account/Verify.aspx?ID=<xsl:value-of select="NotificationUser/Id" />
         <xsl:text>&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
         <xsl:text>Nadat u de bovenstaande link heeft gebruikt kunt u inloggen op de website!</xsl:text>

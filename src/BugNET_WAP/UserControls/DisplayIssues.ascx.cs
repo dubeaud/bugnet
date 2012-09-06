@@ -205,6 +205,7 @@ namespace BugNET.UserControls
                         dropAssigned.DataBind();
                         dropResolution.DataSource = ResolutionManager.GetByProjectId(projectId);
                         dropResolution.DataBind();
+                        chkDueDateReset.Checked = false;
                     }
                     else
                     {
@@ -307,10 +308,18 @@ namespace BugNET.UserControls
 
                     if (issue == null) continue;
 
-                    var dueDate = DateTime.MinValue;
-
                     if (DueDate.SelectedValue != null)
-                        dueDate = (DateTime)DueDate.SelectedValue;
+                    {
+                        var dueDate = (DateTime)DueDate.SelectedValue;
+
+                        if (dueDate != null)
+                        issue.DueDate = dueDate;
+                    }
+
+                    if (chkDueDateReset.Checked)
+                    {
+                        issue.DueDate = DateTime.MinValue;
+                    }
 
                     issue.CategoryId = dropCategory.SelectedValue != 0 ? dropCategory.SelectedValue : issue.CategoryId;
                     issue.CategoryName = dropCategory.SelectedValue != 0 ? dropCategory.SelectedText : issue.CategoryName;
@@ -338,8 +347,6 @@ namespace BugNET.UserControls
 
                     issue.StatusId = dropStatus.SelectedValue != 0 ? dropStatus.SelectedValue : issue.StatusId;
                     issue.StatusName = dropStatus.SelectedValue != 0 ? dropStatus.SelectedText : issue.StatusName;
-
-                    issue.DueDate = dueDate;
 
                     issue.LastUpdateDisplayName = Security.GetDisplayName();
                     issue.LastUpdateUserName = Security.GetUserName();

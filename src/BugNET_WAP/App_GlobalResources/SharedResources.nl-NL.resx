@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-	<!-- 
+  <!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,386 +59,389 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-		<xsd:element name="root" msdata:IsDataSet="true">
-			<xsd:complexType>
-				<xsd:choice maxOccurs="unbounded">
-					<xsd:element name="metadata">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" />
-							</xsd:sequence>
-							<xsd:attribute name="name" use="required" type="xsd:string" />
-							<xsd:attribute name="type" type="xsd:string" />
-							<xsd:attribute name="mimetype" type="xsd:string" />
-							<xsd:attribute ref="xml:space" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="assembly">
-						<xsd:complexType>
-							<xsd:attribute name="alias" type="xsd:string" />
-							<xsd:attribute name="name" type="xsd:string" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="data">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-							<xsd:attribute ref="xml:space" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="resheader">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" />
-						</xsd:complexType>
-					</xsd:element>
-				</xsd:choice>
-			</xsd:complexType>
-		</xsd:element>
-	</xsd:schema>
-	<resheader name="resmimetype">
-		<value>text/microsoft-resx</value>
-	</resheader>
-	<resheader name="version">
-		<value>2.0</value>
-	</resheader>
-	<resheader name="reader">
-		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<resheader name="writer">
-		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<data name="Search" xml:space="preserve">
-		<value>Zoeken</value>
-	</data>
-	<data name="FirstName" xml:space="preserve">
-		<value>Voornaam</value>
-	</data>
-	<data name="Home" xml:space="preserve">
-		<value>Home</value>
-	</data>
-	<data name="Id" xml:space="preserve">
-		<value>Id</value>
-	</data>
-	<data name="Image" xml:space="preserve">
-		<value>Plaatje</value>
-	</data>
-	<data name="IssueId" xml:space="preserve">
-		<value>Punt id</value>
-	</data>
-	<data name="Issues" xml:space="preserve">
-		<value>Punten</value>
-	</data>
-	<data name="IssueType" xml:space="preserve">
-		<value>Punt type</value>
-	</data>
-	<data name="Milestone" xml:space="preserve">
-		<value>Mijlpaal</value>
-	</data>
-	<data name="Months" xml:space="preserve">
-		<value>maanden</value>
-	</data>
-	<data name="NoIssueResults" xml:space="preserve">
-		<value>Geen resultaten gevonden</value>
-	</data>
-	<data name="Progress" xml:space="preserve">
-		<value>Voortgang</value>
-	</data>
-	<data name="Project" xml:space="preserve">
-		<value>Project</value>
-	</data>
-	<data name="Projects" xml:space="preserve">
-		<value>Projecten</value>
-	</data>
-	<data name="Queries" xml:space="preserve">
-		<value>Zoekopdrachten</value>
-	</data>
-	<data name="Status" xml:space="preserve">
-		<value>Status</value>
-	</data>
-	<data name="Title" xml:space="preserve">
-		<value>Titel</value>
-	</data>
-	<data name="Today" xml:space="preserve">
-		<value>vandaag</value>
-	</data>
-	<data name="Tomorrow" xml:space="preserve">
-		<value>morgen</value>
-	</data>
-	<data name="Type" xml:space="preserve">
-		<value>Type</value>
-	</data>
-	<data name="Update" xml:space="preserve">
-		<value>Bijwerken</value>
-	</data>
-	<data name="UserAccounts" xml:space="preserve">
-		<value>Gebruikers accounts</value>
-	</data>
-	<data name="Username" xml:space="preserve">
-		<value>Gebruikersnaam</value>
-	</data>
-	<data name="UsernameRequiredErrorMessage" xml:space="preserve">
-		<value>Gebruikersnaam is verplicht</value>
-	</data>
-	<data name="Votes" xml:space="preserve">
-		<value>Stemmen</value>
-	</data>
-	<data name="Weeks" xml:space="preserve">
-		<value>weken</value>
-	</data>
-	<data name="Years" xml:space="preserve">
-		<value>jaar</value>
-	</data>
-	<data name="Yes" xml:space="preserve">
-		<value>Ja</value>
-	</data>
-	<data name="Yesterday" xml:space="preserve">
-		<value>gisteren</value>
-	</data>
-	<data name="RelatedIssue" xml:space="preserve">
-		<value>Gerelateerde punten</value>
-	</data>
-	<data name="ProjectLabel" xml:space="preserve">
-		<value>Project:</value>
-	</data>
-	<data name="True" xml:space="preserve">
-		<value>Waar</value>
-	</data>
-	<data name="Empty" xml:space="preserve">
-		<value>Leeg</value>
-	</data>
-	<data name="Edit" xml:space="preserve">
-		<value>Bewerken</value>
-	</data>
-	<data name="EditProject" xml:space="preserve">
-		<value>Bewerk project</value>
-	</data>
-	<data name="Email" xml:space="preserve">
-		<value>Email</value>
-	</data>
-	<data name="Enable" xml:space="preserve">
-		<value>Inschakelen</value>
-	</data>
-	<data name="Estimation" xml:space="preserve">
-		<value>Schatting</value>
-	</data>
-	<data name="EstimationHours" xml:space="preserve">
-		<value>Schatting (uur)</value>
-	</data>
-	<data name="LastName" xml:space="preserve">
-		<value>Achternaam</value>
-	</data>
-	<data name="LastUpdate" xml:space="preserve">
-		<value>Laatst bijgewerkt</value>
-	</data>
-	<data name="LastUpdateUser" xml:space="preserve">
-		<value>Laatst bijgewerkt door</value>
-	</data>
-	<data name="MyIssues" xml:space="preserve">
-		<value>Mijn punten</value>
-	</data>
-	<data name="Name" xml:space="preserve">
-		<value>Naam</value>
-	</data>
-	<data name="NewIssue" xml:space="preserve">
-		<value>Nieuw punt</value>
-	</data>
-	<data name="No" xml:space="preserve">
-		<value>Nee</value>
-	</data>
-	<data name="Notes" xml:space="preserve">
-		<value>Notities</value>
-	</data>
-	<data name="Order" xml:space="preserve">
-		<value>Volgorde</value>
-	</data>
-	<data name="Password" xml:space="preserve">
-		<value>Wachtwoord</value>
-	</data>
-	<data name="Priority" xml:space="preserve">
-		<value>Prioriteit</value>
-	</data>
-	<data name="NotAvailable" xml:space="preserve">
-		<value>Niet beschikbaar</value>
-	</data>
-	<data name="NotAvailableAbbr" xml:space="preserve">
-		<value>Niet beschikbaar</value>
-	</data>
-	<data name="Add" xml:space="preserve">
-		<value>Toevoegen</value>
-	</data>
-	<data name="ApplicationConfiguration" xml:space="preserve">
-		<value>Applicatie instellingen</value>
-	</data>
-	<data name="Assigned" xml:space="preserve">
-		<value>Toegewezen</value>
-	</data>
-	<data name="AssignedTo" xml:space="preserve">
-		<value>Toegewezen aan</value>
-	</data>
-	<data name="AssignedToUser" xml:space="preserve">
-		<value>Toegewezen aan mij</value>
-	</data>
-	<data name="Calendar" xml:space="preserve">
-		<value>Planning</value>
-	</data>
-	<data name="Cancel" xml:space="preserve">
-		<value>Annuleren</value>
-	</data>
-	<data name="Category" xml:space="preserve">
-		<value>Categorie</value>
-	</data>
-	<data name="Added" xml:space="preserve">
-		<value>Toegevoegd</value>
-	</data>
-	<data name="Attachment" xml:space="preserve">
-		<value>Bijlage</value>
-	</data>
-	<data name="ChangePassword" xml:space="preserve">
-		<value>Wijzig wachtwoord</value>
-	</data>
-	<data name="CompletedMilestone" xml:space="preserve">
-		<value>Afgesloten mijlpaal</value>
-	</data>
-	<data name="ConfirmPassword" xml:space="preserve">
-		<value>Bevestig wachtwoord</value>
-	</data>
-	<data name="Date" xml:space="preserve">
-		<value>Datum</value>
-	</data>
-	<data name="Days" xml:space="preserve">
-		<value>dagen</value>
-	</data>
-	<data name="Delete" xml:space="preserve">
-		<value>Verwijderen</value>
-	</data>
-	<data name="Description" xml:space="preserve">
-		<value>Omschrijving</value>
-	</data>
-	<data name="Disable" xml:space="preserve">
-		<value>Uitschakelen</value>
-	</data>
-	<data name="DisplayName" xml:space="preserve">
-		<value>Weergave naam</value>
-	</data>
-	<data name="Deleted" xml:space="preserve">
-		<value>Verwijderd</value>
-	</data>
-	<data name="Required" xml:space="preserve">
-		<value>Verplicht</value>
-	</data>
-	<data name="Resolution" xml:space="preserve">
-		<value>Oplossing</value>
-	</data>
-	<data name="Save" xml:space="preserve">
-		<value>Opslaan</value>
-	</data>
-	<data name="Remove" xml:space="preserve">
-		<value>Verwijderen</value>
-	</data>
-	<data name="False" xml:space="preserve">
-		<value>Niet waar</value>
-	</data>
-	<data name="Admin" xml:space="preserve">
-		<value>Adminstratie</value>
-	</data>
-	<data name="CloneProject" xml:space="preserve">
-		<value>Project klonen</value>
-	</data>
-	<data name="Due" xml:space="preserve">
-		<value>vervaldag</value>
-	</data>
-	<data name="DueDate" xml:space="preserve">
-		<value>Verval dag</value>
-	</data>
-	<data name="DueIn" xml:space="preserve">
-		<value>vervalt over</value>
-	</data>
-	<data name="Finished" xml:space="preserve">
-		<value>gereed</value>
-	</data>
-	<data name="Late" xml:space="preserve">
-		<value>te laat</value>
-	</data>
-	<data name="ValidationSummaryHeaderText" xml:space="preserve">
-		<value>De volgende velden zijn niet correct ingevuld:</value>
-	</data>
-	<data name="Roadmap" xml:space="preserve">
-		<value>Draaiboek</value>
-	</data>
-	<data name="ReleaseDate" xml:space="preserve">
-		<value>Release datum</value>
-	</data>
-	<data name="Submit" xml:space="preserve">
-		<value>Opslaan</value>
-	</data>
-	<data name="TimeLogged" xml:space="preserve">
-		<value>Tijd besteed</value>
-	</data>
-	<data name="TimeLoggedHours" xml:space="preserve">
-		<value>Tijd besteed (uur)</value>
-	</data>
-	<data name="TotalHours" xml:space="preserve">
-		<value>Totaal besteede uren</value>
-	</data>
-	<data name="AffectedMilestone" xml:space="preserve">
-		<value>Betrokken mijlpaal</value>
-	</data>
-	<data name="Authorized" xml:space="preserve">
-		<value>Gemachtigd</value>
-	</data>
-	<data name="ChangeLog" xml:space="preserve">
-		<value>Logboek</value>
-	</data>
-	<data name="ParentIssue" xml:space="preserve">
-		<value>Hoofd punt</value>
-	</data>
-	<data name="LogViewer" xml:space="preserve">
-		<value>Logboek viewer</value>
-	</data>
-	<data name="Return" xml:space="preserve">
-		<value>Terug</value>
-	</data>
-	<data name="Owner" xml:space="preserve">
-		<value>Verantwoordelijke</value>
-	</data>
-	<data name="Repository" xml:space="preserve">
-		<value>Repository</value>
-	</data>
-	<data name="ConfirmPasswordErrorMessage" xml:space="preserve">
-		<value>Het wachtwoord en de bevestiging dienen overeen te komen</value>
-	</data>
-	<data name="SecurityAnswer" xml:space="preserve">
-		<value>Antwoord op beveiligings vraag</value>
-	</data>
-	<data name="SecurityAnswerRequiredErrorMessage" xml:space="preserve">
-		<value>Antwoord op beveiligings vraag is verplicht.</value>
-	</data>
-	<data name="SecurityQuestion" xml:space="preserve">
-		<value>Beveiligings vraag</value>
-	</data>
-	<data name="SecurityQuestionRequiredErrorMessage" xml:space="preserve">
-		<value>Beveiligings vraag is verplicht.</value>
-	</data>
-	<data name="Created" xml:space="preserve">
-		<value>Aangemaakt op</value>
-	</data>
-	<data name="Creator" xml:space="preserve">
-		<value>Aangemaakt door</value>
-	</data>
-	<data name="ChildIssue" xml:space="preserve">
-		<value>Sub punt</value>
-	</data>
-	<data name="Size" xml:space="preserve">
-		<value>Grootte</value>
-	</data>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Search" xml:space="preserve">
+    <value>Zoeken</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>Voornaam</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>Plaatje</value>
+  </data>
+  <data name="IssueId" xml:space="preserve">
+    <value>Punt id</value>
+  </data>
+  <data name="Issues" xml:space="preserve">
+    <value>Punten</value>
+  </data>
+  <data name="IssueType" xml:space="preserve">
+    <value>Punt type</value>
+  </data>
+  <data name="Milestone" xml:space="preserve">
+    <value>Mijlpaal</value>
+  </data>
+  <data name="Months" xml:space="preserve">
+    <value>maanden</value>
+  </data>
+  <data name="NoIssueResults" xml:space="preserve">
+    <value>Geen resultaten gevonden</value>
+  </data>
+  <data name="Progress" xml:space="preserve">
+    <value>Voortgang</value>
+  </data>
+  <data name="Project" xml:space="preserve">
+    <value>Project</value>
+  </data>
+  <data name="Projects" xml:space="preserve">
+    <value>Projecten</value>
+  </data>
+  <data name="Queries" xml:space="preserve">
+    <value>Zoekopdrachten</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Titel</value>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>vandaag</value>
+  </data>
+  <data name="Tomorrow" xml:space="preserve">
+    <value>morgen</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Bijwerken</value>
+  </data>
+  <data name="UserAccounts" xml:space="preserve">
+    <value>Gebruikers accounts</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Gebruikersnaam</value>
+  </data>
+  <data name="UsernameRequiredErrorMessage" xml:space="preserve">
+    <value>Gebruikersnaam is verplicht</value>
+  </data>
+  <data name="Votes" xml:space="preserve">
+    <value>Stemmen</value>
+  </data>
+  <data name="Weeks" xml:space="preserve">
+    <value>weken</value>
+  </data>
+  <data name="Years" xml:space="preserve">
+    <value>jaar</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+  <data name="Yesterday" xml:space="preserve">
+    <value>gisteren</value>
+  </data>
+  <data name="RelatedIssue" xml:space="preserve">
+    <value>Gerelateerde punten</value>
+  </data>
+  <data name="ProjectLabel" xml:space="preserve">
+    <value>Project:</value>
+  </data>
+  <data name="True" xml:space="preserve">
+    <value>Waar</value>
+  </data>
+  <data name="Empty" xml:space="preserve">
+    <value>Leeg</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Bewerken</value>
+  </data>
+  <data name="EditProject" xml:space="preserve">
+    <value>Bewerk project</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Enable" xml:space="preserve">
+    <value>Inschakelen</value>
+  </data>
+  <data name="Estimation" xml:space="preserve">
+    <value>Schatting</value>
+  </data>
+  <data name="EstimationHours" xml:space="preserve">
+    <value>Schatting (uur)</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Achternaam</value>
+  </data>
+  <data name="LastUpdate" xml:space="preserve">
+    <value>Laatst bijgewerkt</value>
+  </data>
+  <data name="LastUpdateUser" xml:space="preserve">
+    <value>Laatst bijgewerkt door</value>
+  </data>
+  <data name="MyIssues" xml:space="preserve">
+    <value>Mijn punten</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Naam</value>
+  </data>
+  <data name="NewIssue" xml:space="preserve">
+    <value>Nieuw punt</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Nee</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notities</value>
+  </data>
+  <data name="Order" xml:space="preserve">
+    <value>Volgorde</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Wachtwoord</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>Prioriteit</value>
+  </data>
+  <data name="NotAvailable" xml:space="preserve">
+    <value>Niet beschikbaar</value>
+  </data>
+  <data name="NotAvailableAbbr" xml:space="preserve">
+    <value>Niet beschikbaar</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Toevoegen</value>
+  </data>
+  <data name="ApplicationConfiguration" xml:space="preserve">
+    <value>Applicatie instellingen</value>
+  </data>
+  <data name="Assigned" xml:space="preserve">
+    <value>Toegewezen</value>
+  </data>
+  <data name="AssignedTo" xml:space="preserve">
+    <value>Toegewezen aan</value>
+  </data>
+  <data name="AssignedToUser" xml:space="preserve">
+    <value>Toegewezen aan mij</value>
+  </data>
+  <data name="Calendar" xml:space="preserve">
+    <value>Planning</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Annuleren</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Categorie</value>
+  </data>
+  <data name="Added" xml:space="preserve">
+    <value>Toegevoegd</value>
+  </data>
+  <data name="Attachment" xml:space="preserve">
+    <value>Bijlage</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Wijzig wachtwoord</value>
+  </data>
+  <data name="CompletedMilestone" xml:space="preserve">
+    <value>Afgesloten mijlpaal</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Bevestig wachtwoord</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Datum</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>dagen</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Verwijderen</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Omschrijving</value>
+  </data>
+  <data name="Disable" xml:space="preserve">
+    <value>Uitschakelen</value>
+  </data>
+  <data name="DisplayName" xml:space="preserve">
+    <value>Weergave naam</value>
+  </data>
+  <data name="Deleted" xml:space="preserve">
+    <value>Verwijderd</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Verplicht</value>
+  </data>
+  <data name="Resolution" xml:space="preserve">
+    <value>Oplossing</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Opslaan</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Verwijderen</value>
+  </data>
+  <data name="False" xml:space="preserve">
+    <value>Niet waar</value>
+  </data>
+  <data name="Admin" xml:space="preserve">
+    <value>Adminstratie</value>
+  </data>
+  <data name="CloneProject" xml:space="preserve">
+    <value>Project klonen</value>
+  </data>
+  <data name="Due" xml:space="preserve">
+    <value>vervaldag</value>
+  </data>
+  <data name="DueDate" xml:space="preserve">
+    <value>Verval dag</value>
+  </data>
+  <data name="DueIn" xml:space="preserve">
+    <value>vervalt over</value>
+  </data>
+  <data name="Finished" xml:space="preserve">
+    <value>gereed</value>
+  </data>
+  <data name="Late" xml:space="preserve">
+    <value>te laat</value>
+  </data>
+  <data name="ValidationSummaryHeaderText" xml:space="preserve">
+    <value>De volgende velden zijn niet correct ingevuld:</value>
+  </data>
+  <data name="Roadmap" xml:space="preserve">
+    <value>Draaiboek</value>
+  </data>
+  <data name="ReleaseDate" xml:space="preserve">
+    <value>Release datum</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Opslaan</value>
+  </data>
+  <data name="TimeLogged" xml:space="preserve">
+    <value>Tijd besteed</value>
+  </data>
+  <data name="TimeLoggedHours" xml:space="preserve">
+    <value>Tijd besteed (uur)</value>
+  </data>
+  <data name="TotalHours" xml:space="preserve">
+    <value>Totaal besteede uren</value>
+  </data>
+  <data name="AffectedMilestone" xml:space="preserve">
+    <value>Betrokken mijlpaal</value>
+  </data>
+  <data name="Authorized" xml:space="preserve">
+    <value>Gemachtigd</value>
+  </data>
+  <data name="ChangeLog" xml:space="preserve">
+    <value>Logboek</value>
+  </data>
+  <data name="ParentIssue" xml:space="preserve">
+    <value>Hoofd punt</value>
+  </data>
+  <data name="LogViewer" xml:space="preserve">
+    <value>Logboek viewer</value>
+  </data>
+  <data name="Return" xml:space="preserve">
+    <value>Terug</value>
+  </data>
+  <data name="Owner" xml:space="preserve">
+    <value>Verantwoordelijke</value>
+  </data>
+  <data name="Repository" xml:space="preserve">
+    <value>Repository</value>
+  </data>
+  <data name="ConfirmPasswordErrorMessage" xml:space="preserve">
+    <value>Het wachtwoord en de bevestiging dienen overeen te komen</value>
+  </data>
+  <data name="SecurityAnswer" xml:space="preserve">
+    <value>Antwoord op beveiligings vraag</value>
+  </data>
+  <data name="SecurityAnswerRequiredErrorMessage" xml:space="preserve">
+    <value>Antwoord op beveiligings vraag is verplicht.</value>
+  </data>
+  <data name="SecurityQuestion" xml:space="preserve">
+    <value>Beveiligings vraag</value>
+  </data>
+  <data name="SecurityQuestionRequiredErrorMessage" xml:space="preserve">
+    <value>Beveiligings vraag is verplicht.</value>
+  </data>
+  <data name="Created" xml:space="preserve">
+    <value>Aangemaakt op</value>
+  </data>
+  <data name="Creator" xml:space="preserve">
+    <value>Aangemaakt door</value>
+  </data>
+  <data name="ChildIssue" xml:space="preserve">
+    <value>Sub punt</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>Grootte</value>
+  </data>
+  <data name="Visibility" xml:space="preserve">
+    <value>Visibility</value>
+  </data>
 </root>

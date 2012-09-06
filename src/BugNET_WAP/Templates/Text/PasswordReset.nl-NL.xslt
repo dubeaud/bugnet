@@ -8,9 +8,9 @@
     <xsl:output omit-xml-declaration="yes" method="text" />
     <xsl:strip-space elements="*" />
     <xsl:template match="/root">
-        <xsl:value-of select="User/DisplayName" />,
+        <xsl:value-of select="NotificationUser/DisplayName" />,
         <xsl:text>&#10;</xsl:text>
-        <xsl:text>Uw wachtwoord is gereset naar &#160;&#160;</xsl:text><xsl:value-of select="Password" />&#160; Log u alstublieft hier in. <xsl:value-of select="HostSetting_DefaultUrl" />Login.aspx
+        <xsl:text>Uw wachtwoord is gereset naar &#160;&#160;</xsl:text><xsl:value-of select="Password" />&#160; Log u alstublieft hier in. <xsl:value-of select="HostSetting_DefaultUrl" />Account/Login.aspx
         <xsl:text>&#10;</xsl:text>
         <xsl:text>Houd u er rekening mee dat dit wachtwoord hoofdletter gevoelig is.</xsl:text>
         <xsl:text>&#10;</xsl:text>

@@ -162,4 +162,7 @@
   <data name="TitleLabel.Text" xml:space="preserve">
     <value>Sign up for your new account</value>
   </data>
+  <data name="PreferredLanguageLabel.Text" xml:space="preserve">
+    <value>Preferred Language:</value>
+  </data>
 </root>

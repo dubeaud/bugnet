@@ -78,6 +78,7 @@
     <Compile Include="MailboxEntry.cs" />
     <Compile Include="MemberRoles.cs" />
     <Compile Include="Milestone.cs" />
+    <Compile Include="NotificationUser.cs" />
     <Compile Include="Permission.cs" />
     <Compile Include="Priority.cs" />
     <Compile Include="Project.cs" />

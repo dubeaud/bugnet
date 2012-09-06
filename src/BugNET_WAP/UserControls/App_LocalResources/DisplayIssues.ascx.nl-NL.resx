@@ -135,4 +135,7 @@
 	<data name="SetPropertiesLabel.Text" xml:space="preserve">
 		<value>Zet eigenschappen voor de geselecteerde punten:</value>
 	</data>
+  <data name="litResetDueDate.Text">
+    <value xml:space="preserve">Reset Due Date</value>
+  </data>
 </root>

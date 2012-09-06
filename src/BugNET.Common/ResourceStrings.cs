@@ -1,4 +1,6 @@
-﻿using System.Web;
+﻿using System.Globalization;
+using System.Threading;
+using System.Web;
 
 namespace BugNET.Common
 {
@@ -20,9 +22,15 @@ namespace BugNET.Common
         /// <returns></returns>
         public static string GetGlobalResource(GlobalResources classKey, string resourceKey, string defaultValue = "")
         {
-            if(HttpContext.Current != null)
+            var cultureInfo = Thread.CurrentThread.CurrentUICulture;
+            return GetGlobalResource(classKey, resourceKey, cultureInfo, defaultValue);
+        }
+
+        public static string GetGlobalResource(GlobalResources classKey, string resourceKey, CultureInfo culture, string defaultValue = "")
+        {
+            if (HttpContext.Current != null)
             {
-                var resource = HttpContext.GetGlobalResourceObject(classKey.ToString(), resourceKey);
+                var resource = HttpContext.GetGlobalResourceObject(classKey.ToString(), resourceKey, culture);
                 if (resource != null) return resource.ToString();
             }
 

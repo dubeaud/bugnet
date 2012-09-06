@@ -79,7 +79,7 @@ namespace BugNET.Providers.DataProviders
                         if (!direction.Equals("asc") && !direction.Equals("desc"))
                             direction = "asc";
 
-                        // if the field contains a period then they might be passing in and alias so dont try and clean up
+                        // if the field contains a period then they might be passing in and alias so don't try and clean up
                         if (!field.Contains("."))
                         {
                             field = field.Replace("[]", " ").Trim();    // this is used as a placeholder for spaces in custom
@@ -136,7 +136,7 @@ namespace BugNET.Providers.DataProviders
                             }
                         }
 
-                        // handle when we want to create nested boolean logic in the query clauses
+                        // handle when we want to create nested Boolean logic in the query clauses
                         // this of course means the order of the query clauses must be correct
                         if (boolOper.EndsWith(")"))
                         {
@@ -165,7 +165,7 @@ namespace BugNET.Providers.DataProviders
                         i++;
                     }
 
-                    // swap out the placeholders for the critiera and the sort fields
+                    // swap out the placeholders for the criteria and the sort fields
                     commandBuilder = commandBuilder.Replace("@CRITERIA@", criteriaBuilder.ToString());
                     commandBuilder = commandBuilder.Replace("@SORT_FIELDS@", sortSql);
 

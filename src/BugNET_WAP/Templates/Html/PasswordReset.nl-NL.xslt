@@ -9,13 +9,13 @@
     <xsl:strip-space elements="*" />
     <xsl:template match="/root">
         <p>
-            <xsl:value-of select="User/DisplayName" />,
+            <xsl:value-of select="NotificationUser/DisplayName" />,
             <br/>
             <br/>
-            Uw wachtwoord is gereset naar &#160;<span style="color:blue;font-weight:bold;">
+            Uw wachtwoord is gereset naar &#160;<span style="font-family: Courier New; font-weight: bold;">
                 <xsl:value-of select="Password" />
             </span>&#160;&#160; Logt u alstublieft
-            <a href="{HostSetting_DefaultUrl}Login.aspx" target="_blank">
+            <a href="{HostSetting_DefaultUrl}Account/Login.aspx" target="_blank">
                 hier
             </a> in.
         </p>

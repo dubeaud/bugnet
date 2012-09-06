@@ -1,8 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Web;
 using BugNET.Common;
 using log4net;
@@ -35,6 +33,18 @@ namespace BugNET.BLL.Notifications
         /// <summary>
         /// Loads the notification template.
         /// </summary>
+        /// <param name="templatePath">Path of the template.</param>
+        /// <returns></returns>
+        public static string LoadXsltNotificationTemplate(string templatePath)
+        {
+            //load template path from host settings
+            var path = HostSettingManager.TemplatePath;
+            return XmlXslTransform.LoadEmailXslTemplate(templatePath, path);
+        }
+
+        /// <summary>
+        /// Loads the notification template.
+        /// </summary>
         /// <param name="templateName">Name of the template.</param>
         /// <returns></returns>
         public static string LoadNotificationTemplate(string templateName)
@@ -56,8 +66,10 @@ namespace BugNET.BLL.Notifications
                 {
                     xml.WriteStartElement("root");
 
-                    foreach (DictionaryEntry de in HostSettingManager.GetHostSettings())
+                    foreach (var de in HostSettingManager.GetHostSettings().Cast<DictionaryEntry>().Where(de => !de.Key.ToString().ToLower().Equals("welcomemessage")))
+                    {
                         xml.WriteElementString(string.Concat("HostSetting_", de.Key), de.Value.ToString());
+                    }
 
                     foreach (var item in data.Keys)
                     {
@@ -76,6 +88,9 @@ namespace BugNET.BLL.Notifications
                     }
 
                     xml.WriteEndElement();
+#if(DEBUG)
+                    System.Diagnostics.Debug.WriteLine(writer.ToString()); 
+#endif
                     return XmlXslTransform.Transform(writer.ToString(), template);
                 }   
             }

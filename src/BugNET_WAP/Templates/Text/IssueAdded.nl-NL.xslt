@@ -34,6 +34,6 @@
         <xsl:value-of select="HostSetting_DefaultUrl" />Issues/IssueDetail.aspx?id=<xsl:value-of select="Issue/Id" />
         <xsl:text>&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
-        Als u geen meldingen meer wenst te ontvangen, ga dan naar <xsl:value-of select="HostSetting_DefaultUrl" />UserProfile.aspx en wijzig uw meldings opties.
+        Als u geen meldingen meer wenst te ontvangen, ga dan naar <xsl:value-of select="HostSetting_DefaultUrl" />Account/UserProfile.aspx en wijzig uw meldings opties.
     </xsl:template>
 </xsl:stylesheet>

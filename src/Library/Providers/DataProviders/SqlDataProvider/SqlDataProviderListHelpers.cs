@@ -125,7 +125,8 @@ namespace BugNET.Providers.DataProviders
                         IssueId = returnData.GetInt32(returnData.GetOrdinal("IssueId")),
                         NotificationUsername = returnData.GetString(returnData.GetOrdinal("NotificationUsername")),
                         NotificationEmail = returnData.GetString(returnData.GetOrdinal("NotificationEmail")),
-                        NotificationDisplayName = returnData.GetString(returnData.GetOrdinal("NotificationDisplayName"))
+                        NotificationDisplayName = returnData.GetString(returnData.GetOrdinal("NotificationDisplayName")),
+                        NotificationCulture = returnData.GetString(returnData.GetOrdinal("NotificationCulture"))
                     });
             }
         }

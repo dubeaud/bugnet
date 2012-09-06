@@ -209,7 +209,7 @@ namespace BugNET.BLL
         }
 
         /// <summary>
-        /// Determines if the user is in the superuser role
+        /// Determines if the user is in the super user role
         /// </summary>
         /// <returns>
         /// <c>true</c> if is in role otherwise, <c>false</c>.
@@ -335,21 +335,46 @@ namespace BugNET.BLL
         public static void SendUserPasswordReminderNotification(MembershipUser user, string passwordAnswer)
         {
             if (user == null) throw new ArgumentNullException("user");
+            if(user.ProviderUserKey == null) throw new ArgumentNullException("user");
 
             // TODO - create this via dependency injection at some point.
             IMailDeliveryService mailService = new SmtpMailDeliveryService();
 
-            //TODO: Move this to xslt notification
-            //load template and replace the tokens
-            var template = NotificationManager.LoadNotificationTemplate("PasswordReminder");
-            var subject = NotificationManager.LoadNotificationTemplate("PasswordReminderSubject");
-            var displayname = GetUserDisplayName(user.UserName);
-            string Body = String.Format(template, HostSettingManager.Get(HostSettingNames.ApplicationTitle), user.GetPassword(passwordAnswer));
+            var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
+            var emailFormatKey = (emailFormatType == EmailFormatType.Text) ? "" : "HTML";
+            const string subjectKey = "PasswordReminderSubject";
+            var bodyKey = string.Concat("PasswordReminder", emailFormatKey);
+            var profile = new WebProfile().GetProfile(user.UserName);
 
-            var message = new MailMessage()
+            var nc = new CultureNotificationContent().LoadContent(profile.PreferredLocale, subjectKey, bodyKey);
+
+            var notificationUser = new NotificationUser
+                {
+                    Id = (Guid)user.ProviderUserKey,
+                    CreationDate = user.CreationDate,
+                    Email = user.Email,
+                    UserName = user.UserName,
+                    DisplayName = profile.DisplayName,
+                    FirstName = profile.FirstName,
+                    LastName = profile.LastName,
+                    Password = user.GetPassword(passwordAnswer),
+                    IsApproved = user.IsApproved
+                };
+
+            var data = new Dictionary<string, object> { { "User", notificationUser } };
+
+            var emailSubject = nc.CultureContents
+                .First(p => p.ContentKey == subjectKey)
+                .FormatContent();
+
+            var bodyContent = nc.CultureContents
+                .First(p => p.ContentKey == bodyKey)
+                .TransformContent(data);
+
+            var message = new MailMessage
             {
-                Subject = subject,
-                Body = Body,
+                Subject = emailSubject,
+                Body = bodyContent,
                 IsBodyHtml = true
             };
 
@@ -363,85 +388,49 @@ namespace BugNET.BLL
         public static void SendUserVerificationNotification(MembershipUser user)
         {
             if (user == null) throw new ArgumentNullException("user");
+            if (user.ProviderUserKey == null) throw new ArgumentNullException("user");
 
             // TODO - create this via dependency injection at some point.
-            IMailDeliveryService MailService = new SmtpMailDeliveryService();
+            IMailDeliveryService mailService = new SmtpMailDeliveryService();
 
             var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
+            var emailFormatKey = (emailFormatType == EmailFormatType.Text) ? "" : "HTML";
+            const string subjectKey = "UserVerificationSubject";
+            var bodyKey = string.Concat("UserVerification", emailFormatKey);
+            var profile = new WebProfile().GetProfile(user.UserName);
 
-            //load template and replace the tokens
-            var template = NotificationManager.LoadEmailNotificationTemplate("UserVerification", emailFormatType);
-            var subject = NotificationManager.LoadNotificationTemplate("UserVerification");
+            var nc = new CultureNotificationContent().LoadContent(profile.PreferredLocale, subjectKey, bodyKey);
 
-            var data = new Dictionary<string, object>();
-
-            if (user.ProviderUserKey != null)
+            var notificationUser = new NotificationUser
             {
-                var u = new ITUser
-                            {
-                        Id = (Guid)user.ProviderUserKey,
-                        CreationDate = user.CreationDate,
-                        Email = user.Email,
-                        UserName = user.UserName,
-                        DisplayName = new WebProfile().GetProfile(user.UserName).DisplayName,
-                        IsApproved = user.IsApproved
-                    };
+                Id = (Guid)user.ProviderUserKey,
+                CreationDate = user.CreationDate,
+                Email = user.Email,
+                UserName = user.UserName,
+                DisplayName = profile.DisplayName,
+                FirstName = profile.FirstName,
+                LastName = profile.LastName,
+                IsApproved = user.IsApproved
+            };
 
-                data.Add("User", u);
-            }
-            template = NotificationManager.GenerateNotificationContent(template, data);
+            var data = new Dictionary<string, object> { { "User", notificationUser } };
 
-            MailMessage message = new MailMessage()
+            var emailSubject = nc.CultureContents
+                .First(p => p.ContentKey == subjectKey)
+                .FormatContent();
+
+            var bodyContent = nc.CultureContents
+                .First(p => p.ContentKey == bodyKey)
+                .TransformContent(data);
+
+            var message = new MailMessage
             {
-                Subject = subject,
-                Body = template,
+                Subject = emailSubject,
+                Body = bodyContent,
                 IsBodyHtml = true
             };
 
-            MailService.Send(user.Email, message);
-        }
-
-        /// <summary>
-        /// Sends the user new password notification.
-        /// </summary>
-        /// <param name="user">The user.</param>
-        /// <param name="newPassword">The new password.</param>
-        public static void SendUserNewPasswordNotification(MembershipUser user, string newPassword)
-        {
-            if (user == null) throw new ArgumentNullException("user");
-            if (string.IsNullOrEmpty(newPassword)) throw new ArgumentNullException("newPassword");
-
-            // TODO - create this via dependency injection at some point.
-            IMailDeliveryService MailService = new SmtpMailDeliveryService();
-
-            var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
-
-            //load template and replace the tokens
-            var template = NotificationManager.LoadEmailNotificationTemplate("PasswordReset", emailFormatType);
-            var subject = NotificationManager.LoadNotificationTemplate("PasswordResetSubject");
-            var data = new Dictionary<string, object>();
-
-            var u = new ITUser
-                {
-                    CreationDate = user.CreationDate,
-                    Email = user.Email,
-                    UserName = user.UserName,
-                    DisplayName = new WebProfile().GetProfile(user.UserName).DisplayName,
-                    IsApproved = user.IsApproved
-                };
-
-            data.Add("User", u);
-            data.Add("RawXml_Password", string.Format("<Password>{0}</Password>", newPassword));
-            template = NotificationManager.GenerateNotificationContent(template, data);
-
-            MailMessage message = new MailMessage()
-            {
-                Subject = subject,
-                Body = template,
-                IsBodyHtml = true
-            };
-
-            MailService.Send(user.Email, message);
+            mailService.Send(user.Email, message);
         }
 
         /// <summary>
@@ -452,40 +441,108 @@ namespace BugNET.BLL
         {
             if (userName == "") throw new ArgumentNullException("userName");
 
-            // TODO - create this via dependency injection at some point.
-            IMailDeliveryService MailService = new SmtpMailDeliveryService();
-
             var user = GetUser(userName);
+            if (user.ProviderUserKey == null) throw new ArgumentNullException("userName");
+
+            // TODO - create this via dependency injection at some point.
+            IMailDeliveryService mailService = new SmtpMailDeliveryService();
+
             var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
+            var emailFormatKey = (emailFormatType == EmailFormatType.Text) ? "" : "HTML";
+            const string subjectKey = "UserRegisteredSubject";
+            var bodyKey = string.Concat("UserRegistered", emailFormatKey);
+            var profile = new WebProfile().GetProfile(user.UserName);
 
-            //load template and replace the tokens
-            var template = NotificationManager.LoadEmailNotificationTemplate("UserRegistered", emailFormatType);
-            var subject = NotificationManager.LoadNotificationTemplate("UserRegisteredSubject");
-            var data = new Dictionary<string, object>();
+            var nc = new CultureNotificationContent().LoadContent(profile.PreferredLocale, subjectKey, bodyKey);
 
-            var u = new ITUser
-                {
-                    CreationDate = user.CreationDate,
-                    Email = user.Email,
-                    UserName = user.UserName,
-                    DisplayName = new WebProfile().GetProfile(user.UserName).DisplayName,
-                    IsApproved = user.IsApproved
-                };
-
-            data.Add("User", u);
-            template = NotificationManager.GenerateNotificationContent(template, data);
-
-            //all admin notifications sent to admin user defined in host settings, 
-            var adminNotificationUsername = HostSettingManager.Get(HostSettingNames.AdminNotificationUsername);
-
-            MailMessage message = new MailMessage()
+            var notificationUser = new NotificationUser
             {
-                Subject = subject,
-                Body = template,
+                Id = (Guid)user.ProviderUserKey,
+                CreationDate = user.CreationDate,
+                Email = user.Email,
+                UserName = user.UserName,
+                DisplayName = profile.DisplayName,
+                FirstName = profile.FirstName,
+                LastName = profile.LastName,
+                IsApproved = user.IsApproved
+            };
+
+            var data = new Dictionary<string, object> { { "User", notificationUser } };
+
+            var emailSubject = nc.CultureContents
+                .First(p => p.ContentKey == subjectKey)
+                .FormatContent();
+
+            var bodyContent = nc.CultureContents
+                .First(p => p.ContentKey == bodyKey)
+                .TransformContent(data);
+
+            var message = new MailMessage
+            {
+                Subject = emailSubject,
+                Body = bodyContent,
                 IsBodyHtml = true
             };
 
-            MailService.Send(user.Email, message);
+            mailService.Send(user.Email, message);
+        }
+
+        /// <summary>
+        /// Sends the user new password notification.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="newPassword">The new password.</param>
+        public static void SendUserNewPasswordNotification(MembershipUser user, string newPassword)
+        {
+            if (user == null) throw new ArgumentNullException("user");
+            if (user.ProviderUserKey == null) throw new ArgumentNullException("user");
+            if (string.IsNullOrEmpty(newPassword)) throw new ArgumentNullException("newPassword");
+
+            // TODO - create this via dependency injection at some point.
+            IMailDeliveryService mailService = new SmtpMailDeliveryService();
+
+            var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
+            var emailFormatKey = (emailFormatType == EmailFormatType.Text) ? "" : "HTML";
+            const string subjectKey = "PasswordResetSubject";
+            var bodyKey = string.Concat("PasswordReset", emailFormatKey);
+            var profile = new WebProfile().GetProfile(user.UserName);
+
+            var nc = new CultureNotificationContent().LoadContent(profile.PreferredLocale, subjectKey, bodyKey);
+
+            var notificationUser = new NotificationUser
+            {
+                Id = (Guid)user.ProviderUserKey,
+                CreationDate = user.CreationDate,
+                Email = user.Email,
+                UserName = user.UserName,
+                DisplayName = profile.DisplayName,
+                FirstName = profile.FirstName,
+                LastName = profile.LastName,
+                IsApproved = user.IsApproved
+            };
+
+            var data = new Dictionary<string, object>
+                {
+                    {"User", notificationUser},
+                    {"RawXml_Password", string.Format("<Password>{0}</Password>", newPassword)}
+                };
+
+            var emailSubject = nc.CultureContents
+                .First(p => p.ContentKey == subjectKey)
+                .FormatContent();
+
+            var bodyContent = nc.CultureContents
+                .First(p => p.ContentKey == bodyKey)
+                .TransformContent(data);
+
+            var message = new MailMessage
+            {
+                Subject = emailSubject,
+                Body = bodyContent,
+                IsBodyHtml = true
+            };
+
+            mailService.Send(user.Email, message);
         }
 
         /// <summary>

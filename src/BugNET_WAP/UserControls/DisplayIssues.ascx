@@ -123,7 +123,7 @@
                                     <asp:Label ID="Label9" runat="server" AssociatedControlID="DueDate:DateTextBox" Text="<%$ Resources:SharedResources, DueDate %>" />:
                                 </td>
                                 <td>
-                                    <bn:PickDate ID="DueDate" runat="server" />
+                                    <bn:PickDate ID="DueDate" runat="server" />&nbsp;<asp:CheckBox ID="chkDueDateReset" runat="server"/>&nbsp;<span><asp:Literal ID="litResetDueDate" meta:resourcekey="litResetDueDate" runat="server"></asp:Literal></span>
                                 </td>
                             </tr>
                         </table>

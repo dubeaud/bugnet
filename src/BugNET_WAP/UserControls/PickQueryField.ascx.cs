@@ -67,7 +67,7 @@ namespace BugNET.UserControls
         /// that we check whether the posted value actually exists in the drop down list.
         ///  We do this to prevent SQL Injection Attacks.
         /// </summary>
-        /// <value>The boolean operator.</value>
+        /// <value>The Boolean operator.</value>
         public string BooleanOperator
         {
             get
@@ -138,7 +138,7 @@ namespace BugNET.UserControls
                     case "LastUpdate":
                     case "DateCreated":
                     case "IssueDueDate":
-                        return DateValue.SelectedValue != null ? ((DateTime)DateValue.SelectedValue).ToShortDateString() : string.Empty;
+                        return DateValue.SelectedValue != null ? ((DateTime)DateValue.SelectedValue).ToString("yyyy-MM-dd") : string.Empty;
                     default:
                         if (CustomFieldQuery)
                         {
@@ -201,9 +201,21 @@ namespace BugNET.UserControls
                 if (dropField.SelectedValue == "0" && BooleanOperator.Trim().Equals(")"))
                     return new QueryClause(BooleanOperator, "", "", "", SqlDbType.NVarChar, false);
 
+                var fieldName = FieldName;
+
+                if (fieldName.ToLower().Equals("issueid"))
+                {
+                    fieldName = "iv.[IssueId]";
+                }
+
+                if (fieldName.ToLower().Equals("projectid"))
+                {
+                    fieldName = "iv.[ProjectId]";
+                }
+
                 return dropField.SelectedValue == "0" ?
                     null :
-                    new QueryClause(BooleanOperator, FieldName, ComparisonOperator, FieldValue, DataType, CustomFieldQuery);
+                    new QueryClause(BooleanOperator, fieldName, ComparisonOperator, FieldValue, DataType, CustomFieldQuery);
             }
             set
             {
@@ -217,13 +229,13 @@ namespace BugNET.UserControls
                     dropField.DataSource = CustomFieldManager.GetByProjectId(ProjectId);
                     dropField.DataTextField = "Name";
                     dropField.DataValueField = "Name";
-                    dropField.DataBind();// bind to the new datasource.
+                    dropField.DataBind();// bind to the new data source.
                     dropField.Items.Add("--Reset Fields--");
                     dropField.Items.Insert(0, new ListItem("-- Select Custom Field --", "0"));
                     CustomFieldQuery = true;
                 }
 
-                // need to be set to true if we are setting the values otherwise the value property would be readonly
+                // need to be set to true if we are setting the values otherwise the value property would be read only
                 txtValue.Visible = true;
                 DateValue.Visible = true;
                 dropField.Visible = true;

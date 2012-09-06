@@ -41,7 +41,9 @@
             <asp:ListItem Text="NOT EQUALS" Value="<>" />
 			<asp:ListItem Text="LIKE" Value="LIKE" />
 			<asp:ListItem Text="GREATER THAN" Value="&gt;" />
+            <asp:ListItem Text="GREATER THAN EQUALS" Value="&gt;=" />
 			<asp:ListItem Text="LESS THAN" Value="&lt;" />
+            <asp:ListItem Text="LESS THAN EQUALS" Value="&lt;=" />
 		</asp:DropDownList>
 	</td>
 	<td>
