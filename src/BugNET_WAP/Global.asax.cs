@@ -20,9 +20,7 @@ namespace BugNET
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
         protected void Application_Start(object sender, EventArgs e)
         {
-            LoggingManager.ConfigureLogging();
-
-            Log.Info("Application Start");
+           
         }
 
         /// <summary>
@@ -87,6 +85,7 @@ namespace BugNET
     {
         private static bool _sInitializedAlready = false;
         private static readonly Object Locker = new Object();
+        private static readonly ILog Log = LogManager.GetLogger(typeof(Initialization));
 
         /// <summary>
         /// Initializes only on the first request
@@ -127,6 +126,10 @@ namespace BugNET
 
                 //load the host settings into the application cache
                 HostSettingManager.GetHostSettings();
+
+                LoggingManager.ConfigureLogging();
+
+                Log.Info("Application Start");
 
                 // Perform first-request initialization here ...
                 _sInitializedAlready = true;
