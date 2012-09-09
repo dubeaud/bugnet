@@ -92,6 +92,7 @@ namespace BugNET.Install
             WriteHeader("logout");
             WriteMessage(string.Format("<h3>You were logged in as user '{0}'</h3>", tmpuser));
             WriteMessage("<h3>You have been logged out of the system automatically.</h3>");
+            WriteMessage("<br/><h2>Please make sure you are using Forms authentication and run the install process from a browser that doesn't have your login credentials remembered.</h2>");
             WriteMessage("<br/><h2><a href='../Install/Install.aspx'>Click Here to retry the installation.</a></h2>");
             WriteFooter();
         }
