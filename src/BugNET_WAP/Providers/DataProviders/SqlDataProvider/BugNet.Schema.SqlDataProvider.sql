@@ -23,7 +23,7 @@ CREATE TABLE [dbo].[BugNet_UserProfiles](
 
 GO
 
-ALTER TABLE [dbo].[BugNet_UserProfiles] ADD  CONSTRAINT [DF_BugNet_UserProfiles_RecieveEmailNotifications]  DEFAULT ((1)) FOR [RecieveEmailNotifications]
+ALTER TABLE [dbo].[BugNet_UserProfiles] ADD  CONSTRAINT [DF_BugNet_UserProfiles_RecieveEmailNotifications]  DEFAULT ((1)) FOR [ReceiveEmailNotifications]
 GO
 
 /****** Object:  Table [dbo].[BugNet_RequiredFieldList]    Script Date: 07/21/2012 23:35:23 ******/
