@@ -1386,7 +1386,9 @@
     <Content Include="Install\403-3.gif" />
     <Content Include="Install\403-3.htm" />
     <Content Include="App_Themes\Default\Default.skin" />
-    <Content Include="log4net.config" />
+    <Content Include="log4net.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Shared\Issue.Master" />
     <Content Include="Issues\IssueDetail.aspx" />
     <Content Include="Issues\IssueList.aspx" />
