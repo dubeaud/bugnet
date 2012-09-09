@@ -387,10 +387,13 @@ namespace BugNET.Providers.DataProviders
                         FieldName = returnData["FieldName"].ToString(),
                         ComparisonOperator = returnData["ComparisonOperator"].ToString(),
                         FieldValue = returnData["FieldValue"].ToString(),
-                        DataType = (SqlDbType) returnData["DataType"],
-                        CustomFieldQuery = returnData.GetBoolean(returnData.GetOrdinal("IsCustomField"))
+                        DataType = (SqlDbType) returnData["DataType"]
                     };
 
+                if (!returnData.IsDBNull(returnData.GetOrdinal("CustomFieldId")))
+                {
+                    queryClause.CustomFieldId = returnData.GetInt32(returnData.GetOrdinal("CustomFieldId"));
+                }
                 queryClauseList.Add(queryClause);
             }
         }

@@ -503,7 +503,7 @@ namespace BugNET.Webservices
             }
             else
             {
-                queryClauses.Add(new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int, false));
+                queryClauses.Add(new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int));
 
                 foreach (var item in Filter.Split('&'))
                 {
@@ -511,25 +511,25 @@ namespace BugNET.Webservices
                     {
                         if (item.EndsWith("=notclosed", StringComparison.CurrentCultureIgnoreCase))
                         {
-                            queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false));
+                            queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int));
                         }
                         else if (item.EndsWith("=new", StringComparison.CurrentCultureIgnoreCase))
                         {
-                            queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false));
-                            queryClauses.Add(new QueryClause("AND", "iv.[IssueAssignedUserId]", "IS", null, SqlDbType.Int, false));
+                            queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int));
+                            queryClauses.Add(new QueryClause("AND", "iv.[IssueAssignedUserId]", "IS", null, SqlDbType.Int));
                         }
                     }
                     else if (item.StartsWith("owner=", StringComparison.CurrentCultureIgnoreCase))
                     {
-                        queryClauses.Add(new QueryClause("AND", "iv.[OwnerUsername]", "=", item.Substring(item.IndexOf('=') + 1, item.Length - item.IndexOf('=') - 1), SqlDbType.NVarChar, false));
+                        queryClauses.Add(new QueryClause("AND", "iv.[OwnerUsername]", "=", item.Substring(item.IndexOf('=') + 1, item.Length - item.IndexOf('=') - 1), SqlDbType.NVarChar));
                     }
                     else if (item.StartsWith("reporter=", StringComparison.CurrentCultureIgnoreCase))
                     {
-                        queryClauses.Add(new QueryClause("AND", "iv.[CreatorUsername]", "=", item.Substring(item.IndexOf('=') + 1, item.Length - item.IndexOf('=') - 1), SqlDbType.NVarChar, false));
+                        queryClauses.Add(new QueryClause("AND", "iv.[CreatorUsername]", "=", item.Substring(item.IndexOf('=') + 1, item.Length - item.IndexOf('=') - 1), SqlDbType.NVarChar));
                     }
                     else if (item.StartsWith("assigned=", StringComparison.CurrentCultureIgnoreCase))
                     {
-                        queryClauses.Add(new QueryClause("AND", "iv.[AssignedUsername]", "=", item.Substring(item.IndexOf('=') + 1, item.Length - item.IndexOf('=') - 1), SqlDbType.NVarChar, false));
+                        queryClauses.Add(new QueryClause("AND", "iv.[AssignedUsername]", "=", item.Substring(item.IndexOf('=') + 1, item.Length - item.IndexOf('=') - 1), SqlDbType.NVarChar));
                     }
                 }
 

@@ -253,6 +253,7 @@ namespace BugNET.Providers.DataProviders
             using (var conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
+
                 foreach (var command in sql.Select(stmt => new SqlCommand(stmt, conn)))
                 {
                     command.ExecuteNonQuery();

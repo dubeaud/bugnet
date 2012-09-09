@@ -153,15 +153,9 @@ namespace BugNET.Providers.DataProviders
 							continue;
                         }
 
-                        if (qc.DataType == SqlDbType.DateTime)
-                        {
-                            criteriaBuilder.AppendFormat(" {0} datediff(day, {1}, @p{3}) {2} 0", boolOper, fieldName, compareOper, i);
-                        }
-                        else
-                        {
-                            criteriaBuilder.AppendFormat(" {0} {1} {2} @p{3}", boolOper, fieldName, compareOper, i);
-                        }
-
+                        criteriaBuilder.AppendFormat(qc.DataType == SqlDbType.DateTime
+                                ? " {0} DATEDIFF(D, @p{3}, {1}) {2} 0"
+                                : " {0} {1} {2} @p{3}", boolOper, fieldName, compareOper, i);
                         i++;
                     }
 
@@ -185,8 +179,22 @@ namespace BugNET.Providers.DataProviders
                         {
                             //skip if value null
                             if (string.IsNullOrEmpty(qc.FieldValue)) continue;
-                            var par = new SqlParameter("@p" + i, qc.DataType) { Value = qc.FieldValue };
+
+                            var value = qc.FieldValue;
+
+                            if (qc.DataType == SqlDbType.DateTime)
+                            {
+                                DateTime dateTimeValue;
+                                if (DateTime.TryParse(value, out dateTimeValue))
+                                {
+                                    value = dateTimeValue.ToString("yyyy-MM-dd");
+                                }
+                            }
+
+                            var par = new SqlParameter("@p" + i, qc.DataType) { Value = value };
+
                             sqlCmd.Parameters.Add(par);
+
                             commandBuilder.AppendFormat("{0} = {1} | ", par, par.Value);
                             i++;
                         }
@@ -224,7 +232,7 @@ namespace BugNET.Providers.DataProviders
             {
                 // Build Command Text
                 var commandBuilder = new StringBuilder();
-                //'DSS customfields in the same query   
+                //'DSS custom fields in the same query   
                 commandBuilder.Append(projectId != 0
                                           ? "SELECT DISTINCT * FROM BugNet_GetIssuesByProjectIdAndCustomFieldView WHERE ProjectId = @ProjectId AND IssueId IN (SELECT IssueId FROM BugNet_IssuesView WHERE 1 = 1 "
                                           : "SELECT DISTINCT * FROM BugNet_GetIssuesByProjectIdAndCustomFieldView WHERE IssueId IN (SELECT IssueId FROM BugNet_IssuesView WHERE 1 = 1 ");
@@ -347,7 +355,7 @@ namespace BugNET.Providers.DataProviders
             //RW check for Standard Query
             foreach (var qc in queryClauses.Where(qc => !qc.CustomFieldQuery))
             {
-                // if Field Value is null or empty do a null comparision
+                // if Field Value is null or empty do a null comparison
                 // But only if the operator is not blank
                 // "William Highfield" Method
                 if (string.IsNullOrEmpty(qc.FieldValue))

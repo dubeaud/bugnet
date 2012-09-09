@@ -285,7 +285,7 @@ namespace BugNET.Queries
                     }
 
                     // add the disabled query filter since the UI cannot add this
-                    queryClauses.Insert(0, new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int, false));
+                    queryClauses.Insert(0, new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int));
 
                     var colIssues = IssueManager.PerformQuery(queryClauses, sortColumns, ProjectId);
                     ctlDisplayIssues.DataSource = colIssues;

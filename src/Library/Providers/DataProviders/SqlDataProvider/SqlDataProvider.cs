@@ -52,6 +52,11 @@ namespace BugNET.Providers.DataProviders
 
         }
 
+        public override string ConnectionString
+        {
+            get { return _connectionString; }
+        }
+
         #region Issue history methods
         /// <summary>
         /// Creates the new issue history.
@@ -1453,6 +1458,7 @@ namespace BugNET.Providers.DataProviders
         #endregion
 
         #region Category methods
+
         /// <summary>
         /// Creates the new category.
         /// </summary>
@@ -1901,7 +1907,7 @@ namespace BugNET.Providers.DataProviders
                     cmdClause.Parameters["@ComparisonOperator"].Value = clause.ComparisonOperator;
                     cmdClause.Parameters["@FieldValue"].Value = clause.FieldValue;
                     cmdClause.Parameters["@DataType"].Value = clause.DataType;
-                    cmdClause.Parameters["@IsCustomField"].Value = clause.CustomFieldQuery;
+                    cmdClause.Parameters["@CustomFieldId"].Value = clause.CustomFieldId;
                     ExecuteScalarCmd(cmdClause);
                 }
 
@@ -1947,7 +1953,7 @@ namespace BugNET.Providers.DataProviders
                 cmdClause.Parameters.Add("@ComparisonOperator", SqlDbType.NVarChar, 50);
                 cmdClause.Parameters.Add("@FieldValue", SqlDbType.NVarChar, 50);
                 cmdClause.Parameters.Add("@DataType", SqlDbType.Int);
-                cmdClause.Parameters.Add("@IsCustomField", SqlDbType.Bit);
+                cmdClause.Parameters.Add("@CustomFieldId", SqlDbType.Int);
 
                 ExecuteScalarCmd(sqlCmd);
 
@@ -1961,7 +1967,7 @@ namespace BugNET.Providers.DataProviders
                     cmdClause.Parameters["@ComparisonOperator"].Value = clause.ComparisonOperator;
                     cmdClause.Parameters["@FieldValue"].Value = clause.FieldValue;
                     cmdClause.Parameters["@DataType"].Value = clause.DataType;
-                    cmdClause.Parameters["@IsCustomField"].Value = clause.CustomFieldQuery;
+                    cmdClause.Parameters["@CustomFieldId"].Value = clause.CustomFieldId;
                     ExecuteScalarCmd(cmdClause);
                 }
 
@@ -1990,7 +1996,7 @@ namespace BugNET.Providers.DataProviders
                 var queryClauses = new List<QueryClause>();
 
                 // add the disabled query filter since the UI cannot add this
-                queryClauses.Insert(0, new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int, false));
+                queryClauses.Insert(0, new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int));
 
                 ExecuteReaderCmd(sqlCmd, GenerateQueryClauseListFromReader, ref queryClauses);
 

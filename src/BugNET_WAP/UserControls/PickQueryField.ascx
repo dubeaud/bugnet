@@ -26,8 +26,8 @@
 			<asp:ListItem Text="Assigned" value="IssueAssignedUserId" />
 			<asp:ListItem Text="Owner" value="IssueOwnerUserId" />
 			<asp:ListItem Text="Creator" value="IssueCreatorUserId" />
-			<asp:ListItem Text="Date Created" value="DateCreated" />
-			<asp:ListItem Text="Last Update" value="LastUpdate" />
+			<asp:ListItem Text="Date Created" value="DateCreatedAsDate" />
+			<asp:ListItem Text="Last Update" value="LastUpdateAsDate" />
 		    <asp:ListItem Text="Resolution" value="IssueResolutionId" />
 		    <asp:ListItem Text="Affected Milestone" value="IssueAffectedMilestoneId" />
 		    <asp:ListItem Text="Due Date" value="IssueDueDate" />

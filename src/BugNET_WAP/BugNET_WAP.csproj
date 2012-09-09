@@ -439,6 +439,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SharedResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\SharedResources.es-ES.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SharedResources.es-ES.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\SharedResources.nl-NL.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SharedResources.nl-NL.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\Web.sitemap.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1780,7 +1790,9 @@
     <Content Include="Errors\App_LocalResources\NotFound.aspx.es-ES.resx" />
     <Content Include="Errors\App_LocalResources\SessionExpired.aspx.es-ES.resx" />
     <Content Include="Errors\App_LocalResources\SomethingMissing.es-ES.resx" />
-    <Content Include="Issues\App_LocalResources\IssueDetail.aspx.es-ES.resx" />
+    <Content Include="Issues\App_LocalResources\IssueDetail.aspx.es-ES.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Issues\App_LocalResources\IssueList.aspx.es-ES.resx" />
     <Content Include="Issues\App_LocalResources\IssueSearch.aspx.es-ES.resx" />
     <Content Include="Issues\App_LocalResources\MyIssues.aspx.es-ES.resx" />

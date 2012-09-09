@@ -528,9 +528,14 @@ namespace BugNET.UserControls
             // set the custom field values
             var i = FIXED_COLUMNS + 1;
 
-            foreach (var customFieldValue in issue.IssueCustomFields)
+            foreach (var value in issue.IssueCustomFields.Select(customFieldValue => customFieldValue.FieldValue))
             {
-                e.Row.Cells[i].Text = customFieldValue.FieldValue;
+                DateTime dt;
+                e.Row.Cells[i].Text = value;
+                if(DateTime.TryParse(value, out dt))
+                {
+                    e.Row.Cells[i].Text = dt.ToShortDateString();
+                }
                 i++;
             }
 

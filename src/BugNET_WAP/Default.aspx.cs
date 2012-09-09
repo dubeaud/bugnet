@@ -167,8 +167,8 @@ namespace BugNET
                     //get total open issues
                     var queryClauses = new List<QueryClause>
                     {
-                        new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false),
-                        new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int, false)
+                        new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int),
+                        new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int)
                     };
 
                     var issueList = IssueManager.PerformQuery(queryClauses, null, p.Id);

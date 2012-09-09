@@ -71,9 +71,9 @@ namespace BugNET.Projects
 
             var queryClauses = new List<QueryClause>
         	{
-        	    new QueryClause("AND", "iv.[IssueTypeId]", "=", issueType.Id.ToString(), SqlDbType.Int, false),
-                new QueryClause("AND", "iv.[IssueMilestoneId]", "=", MilestoneId.ToString(), SqlDbType.Int, false),
-				new QueryClause("AND", "iv.[IsClosed]", "=", "1", SqlDbType.Int, false)
+        	    new QueryClause("AND", "iv.[IssueTypeId]", "=", issueType.Id.ToString(), SqlDbType.Int),
+                new QueryClause("AND", "iv.[IssueMilestoneId]", "=", MilestoneId.ToString(), SqlDbType.Int),
+				new QueryClause("AND", "iv.[IsClosed]", "=", "1", SqlDbType.Int)
         	};
 
             var sortList = new List<KeyValuePair<string, string>>

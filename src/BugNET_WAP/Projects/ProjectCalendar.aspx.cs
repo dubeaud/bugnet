@@ -108,7 +108,7 @@ namespace BugNET.Projects
             switch (dropView.SelectedValue)
             {
                 case "IssueDueDates":
-                    QueryClause q = new QueryClause("AND", "IssueDueDate", "=", e.Day.Date.ToShortDateString(), SqlDbType.DateTime, false);
+                    QueryClause q = new QueryClause("AND", "IssueDueDate", "=", e.Day.Date.ToShortDateString(), SqlDbType.DateTime);
                     queryClauses.Add(q);
 
                     List<Issue> issues = IssueManager.PerformQuery(queryClauses, ProjectId);

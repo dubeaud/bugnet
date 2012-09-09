@@ -54,11 +54,11 @@ namespace BugNET.Issues
 
                 foreach (var project in projects)
                 {
-                    queryClauses.Add(new QueryClause((first) ? "AND (" : "OR", "iv.[ProjectId]", "=", project.ToString(), SqlDbType.NVarChar, false));
+                    queryClauses.Add(new QueryClause((first) ? "AND (" : "OR", "iv.[ProjectId]", "=", project.ToString(), SqlDbType.NVarChar));
                     first = false;
                 }
 
-                queryClauses.Add(new QueryClause(")", "", "", "", SqlDbType.NVarChar, false));
+                queryClauses.Add(new QueryClause(")", "", "", "", SqlDbType.NVarChar));
             }
 
             return queryClauses;
@@ -78,13 +78,13 @@ namespace BugNET.Issues
             var queryClauses = new List<QueryClause>
             {
                 // do not include disabled projects
-                new QueryClause("AND", "iv.[ProjectDisabled]", "=", "0", SqlDbType.Int, false),
+                new QueryClause("AND", "iv.[ProjectDisabled]", "=", "0", SqlDbType.Int),
 
                 // do not include disabled issues
-                new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int, false),
+                new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int),
 
                 // add the user id to the filtered field
-                new QueryClause("AND", "iv.[IssueAssignedUserId]", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false)
+                new QueryClause("AND", "iv.[IssueAssignedUserId]", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar)
             };
 
             // return the projects in the list box, this represents all the projects the user has access to
@@ -108,13 +108,13 @@ namespace BugNET.Issues
             var queryClauses = new List<QueryClause>
             {
                 // do not include disabled projects
-                new QueryClause("AND", "iv.[ProjectDisabled]", "=", "0", SqlDbType.Int, false),
+                new QueryClause("AND", "iv.[ProjectDisabled]", "=", "0", SqlDbType.Int),
 
                 // do not include disabled issues
-                new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int, false),
+                new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int),
 
                 // add the user id to the filtered field
-                new QueryClause("AND", "iv.[IssueCreatorUserId]", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false)
+                new QueryClause("AND", "iv.[IssueCreatorUserId]", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar)
             };
 
             // return the projects in the list box, this represents all the projects the user has access to
@@ -138,16 +138,16 @@ namespace BugNET.Issues
             var queryClauses = new List<QueryClause>
             {
                 // do not include disabled projects
-                new QueryClause("AND", "iv.[ProjectDisabled]", "=", "0", SqlDbType.Int, false),
+                new QueryClause("AND", "iv.[ProjectDisabled]", "=", "0", SqlDbType.Int),
 
                 // do not include disabled issues
-                new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int, false),
+                new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int),
 
                 // only closed issue
-                new QueryClause("AND", "iv.[IsClosed]", "=", "1", SqlDbType.Int, false),
+                new QueryClause("AND", "iv.[IsClosed]", "=", "1", SqlDbType.Int),
 
                 // add the user id to the filtered field
-                new QueryClause("AND", "iv.[IssueAssignedUserId]", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false)
+                new QueryClause("AND", "iv.[IssueAssignedUserId]", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar)
             };
 
             // return the projects in the list box, this represents all the projects the user has access to
@@ -171,13 +171,13 @@ namespace BugNET.Issues
             var queryClauses = new List<QueryClause>
             {
                 // do not include disabled projects
-                new QueryClause("AND", "iv.[ProjectDisabled]", "=", "0", SqlDbType.Int, false),
+                new QueryClause("AND", "iv.[ProjectDisabled]", "=", "0", SqlDbType.Int),
 
                 // do not include disabled issues
-                new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int, false),
+                new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int),
 
                 // add the user id to the filtered field
-                new QueryClause("AND", "iv.[IssueOwnerUserId]", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false)
+                new QueryClause("AND", "iv.[IssueOwnerUserId]", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar)
             };
 
             // return the projects in the list box, this represents all the projects the user has access to
@@ -209,10 +209,10 @@ namespace BugNET.Issues
             var queryClauses = new List<QueryClause>
             {
                 // do not include disabled projects
-                new QueryClause("AND", "iv.[ProjectDisabled]", "=", "0", SqlDbType.Int, false),
+                new QueryClause("AND", "iv.[ProjectDisabled]", "=", "0", SqlDbType.Int),
 
                 // do not include disabled issues
-                new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int, false),
+                new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int),
             };
 
             // return the projects selected in the list box, this represents all the projects the user has access to
@@ -237,19 +237,19 @@ namespace BugNET.Issues
 
                         if (ExcludeClosedIssuesFilter.Checked)
                         {
-                            queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false));
+                            queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int));
                         }
 
-                        queryClauses.Add(new QueryClause("AND", "iv.[IssueAssignedUserId]", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
+                        queryClauses.Add(new QueryClause("AND", "iv.[IssueAssignedUserId]", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar));
 
                         ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?channel=7&u={0}&ec={1}", Security.GetUserName(), ExcludeClosedIssuesFilter.Checked);
 
                         break;
                     case "Closed":
 
-                        queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "1", SqlDbType.Int, false));
+                        queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "1", SqlDbType.Int));
 
-                        queryClauses.Add(new QueryClause("AND", "iv.[IssueAssignedUserId]", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
+                        queryClauses.Add(new QueryClause("AND", "iv.[IssueAssignedUserId]", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar));
 
                         ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?channel=7&u={0}&ec={1}", Security.GetUserName(), bool.FalseString);
 
@@ -258,27 +258,27 @@ namespace BugNET.Issues
 
                         if (ExcludeClosedIssuesFilter.Checked)
                         {
-                            queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false));
+                            queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int));
                         }
 
-                        queryClauses.Add(new QueryClause("AND", "iv.[IssueOwnerUserId]", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
+                        queryClauses.Add(new QueryClause("AND", "iv.[IssueOwnerUserId]", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar));
                         ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?channel=7&ou={0}&ec={1}", Security.GetUserName(), ExcludeClosedIssuesFilter.Checked);
                         break;
                     case "Created":
 
                         if (ExcludeClosedIssuesFilter.Checked)
                         {
-                            queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false));
+                            queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int));
                         }
 
-                        queryClauses.Add(new QueryClause("AND", "iv.[IssueCreatorUserId]", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar, false));
+                        queryClauses.Add(new QueryClause("AND", "iv.[IssueCreatorUserId]", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar));
                         ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?channel=7&ru={0}&ec={1}", Security.GetUserName(), bool.FalseString);
                         break;
                     default:
 
                         if (ExcludeClosedIssuesFilter.Checked)
                         {
-                            queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false));
+                            queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int));
                         }
                         break;
                 }

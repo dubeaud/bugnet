@@ -18,6 +18,8 @@ namespace BugNET.DAL
         //*** ABSTRACT METHODS ***/
         public abstract DataAccessException ProcessException(Exception ex);
 
+        public abstract string ConnectionString { get; }
+
         // Installation Helper Methods
         public abstract string GetProviderPath();
         public abstract string GetDatabaseVersion();

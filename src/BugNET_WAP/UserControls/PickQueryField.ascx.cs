@@ -12,26 +12,6 @@ namespace BugNET.UserControls
     /// </summary>
     public partial class PickQueryField : System.Web.UI.UserControl
     {
-        #region Web Form Designer generated code
-        override protected void OnInit(EventArgs e)
-        {
-            //
-            // CODEGEN: This call is required by the ASP.NET Web Form Designer.
-            //
-            InitializeComponent();
-            base.OnInit(e);
-        }
-
-        /// <summary>
-        ///		Required method for Designer support - do not modify
-        ///		the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
-
-        }
-        #endregion
-
         /// <summary>
         /// The ProjectId property is used to retrieve the proper status, milestone,
         /// and priority values for the current project.
@@ -48,18 +28,29 @@ namespace BugNET.UserControls
         }
 
         /// <summary>
+        /// The custom field id.
+        /// </summary>
+        /// <returns>The id of the custom field selected, otherwise null</returns>
+        public int? CustomFieldId
+        {
+            get { return ViewState.Get<int?>("CustomFieldId", null); }
+            set { ViewState.Set("CustomFieldId", value); }
+        }
+
+        /// <summary>
         /// Identify whether each control is a custom field builder.
         /// </summary>
         /// <value><c>true</c> if [custom field query]; otherwise, <c>false</c>.</value>
-        public bool CustomFieldQuery
+        public bool CustomFieldSelected
         {
-            get
-            {
-                if (ViewState["CustomFieldQuery"] == null) return false;
+            get { return ViewState.Get("CustomFieldSelected", false); }
+            set { ViewState.Set("CustomFieldSelected", value); }
+        }
 
-                return (bool)ViewState["CustomFieldQuery"];
-            }
-            set { ViewState["CustomFieldQuery"] = value; }
+        ValidationDataType CustomFieldDataType
+        {
+            get { return ViewState.Get("CustomFieldDataType", ValidationDataType.String); }
+            set { ViewState.Set("CustomFieldDataType", value); }
         }
 
         /// <summary>
@@ -135,20 +126,25 @@ namespace BugNET.UserControls
                     case "IssueResolutionId":
                     case "IssueAffectedMilestoneId":
                         return dropValue.SelectedValue;
-                    case "LastUpdate":
-                    case "DateCreated":
+                    case "LastUpdateAsDate":
+                    case "DateCreatedAsDate":
                     case "IssueDueDate":
                         return DateValue.SelectedValue != null ? ((DateTime)DateValue.SelectedValue).ToString("yyyy-MM-dd") : string.Empty;
                     default:
-                        if (CustomFieldQuery)
+                        if (CustomFieldSelected)
                         {
                             var cf = CustomFieldManager.GetByProjectId(ProjectId).Find(c => c.Name == dropField.SelectedValue);
 
-                            if (cf.FieldType == CustomFieldType.DropDownList)
-                                return dropValue.SelectedValue;
+                            if (cf != null)
+                            {
+                                CustomFieldId = cf.Id;
 
-                            if (cf.FieldType == CustomFieldType.Date)
-                                return DateValue.SelectedValue != null ? ((DateTime)DateValue.SelectedValue).ToShortDateString() : string.Empty;
+                                if (cf.FieldType == CustomFieldType.DropDownList)
+                                    return dropValue.SelectedValue;
+
+                                if (cf.FieldType == CustomFieldType.Date)
+                                    return DateValue.SelectedValue != null ? ((DateTime)DateValue.SelectedValue).ToString("yyyy-MM-dd") : string.Empty;   
+                            }
                         }
                         return txtValue.Text;
                 }
@@ -163,7 +159,6 @@ namespace BugNET.UserControls
         {
             get
             {
-
                 switch (dropField.SelectedValue)
                 {
                     case "IssueId":
@@ -179,11 +174,31 @@ namespace BugNET.UserControls
                     case "IssueOwnerUserId":
                     case "IssueCreatorUserId":
                         return SqlDbType.NVarChar;
-                    case "DateCreated":
-                    case "LastUpdate":
+                    case "DateCreatedAsDate":
+                    case "LastUpdateAsDate":
                     case "IssueDueDate":
                         return SqlDbType.DateTime;
                     default:
+
+                        if (CustomFieldId.HasValue)
+                        {
+                            switch (CustomFieldDataType)
+                            {
+                                case ValidationDataType.String:
+                                    return SqlDbType.NVarChar;
+                                case ValidationDataType.Integer:
+                                    return SqlDbType.Int;
+                                case ValidationDataType.Double:
+                                    return SqlDbType.Float;
+                                case ValidationDataType.Date:
+                                    return SqlDbType.DateTime;
+                                case ValidationDataType.Currency:
+                                    return SqlDbType.Money;
+                                default:
+                                    return SqlDbType.NVarChar;
+                            }
+                        }
+
                         return SqlDbType.NVarChar;
                 }
 
@@ -199,7 +214,7 @@ namespace BugNET.UserControls
             get
             {
                 if (dropField.SelectedValue == "0" && BooleanOperator.Trim().Equals(")"))
-                    return new QueryClause(BooleanOperator, "", "", "", SqlDbType.NVarChar, false);
+                    return new QueryClause(BooleanOperator, "", "", "", SqlDbType.NVarChar);
 
                 var fieldName = FieldName;
 
@@ -215,7 +230,7 @@ namespace BugNET.UserControls
 
                 return dropField.SelectedValue == "0" ?
                     null :
-                    new QueryClause(BooleanOperator, fieldName, ComparisonOperator, FieldValue, DataType, CustomFieldQuery);
+                    new QueryClause(BooleanOperator, fieldName, ComparisonOperator, FieldValue, DataType, CustomFieldId);
             }
             set
             {
@@ -230,9 +245,9 @@ namespace BugNET.UserControls
                     dropField.DataTextField = "Name";
                     dropField.DataValueField = "Name";
                     dropField.DataBind();// bind to the new data source.
-                    dropField.Items.Add("--Reset Fields--");
-                    dropField.Items.Insert(0, new ListItem("-- Select Custom Field --", "0"));
-                    CustomFieldQuery = true;
+                    dropField.Items.Add(GetGlobalResourceObject("SharedResources", "DropDown_ResetFields").ToString());
+                    dropField.Items.Insert(0, new ListItem(GetGlobalResourceObject("SharedResources", "DropDown_SelectCustomField").ToString(), "0"));
+                    CustomFieldSelected = true;
                 }
 
                 // need to be set to true if we are setting the values otherwise the value property would be read only
@@ -241,8 +256,14 @@ namespace BugNET.UserControls
                 dropField.Visible = true;
 
                 dropField.SelectedValue = value.FieldName;
-                CustomFieldQuery = value.CustomFieldQuery;
+                CustomFieldId = value.CustomFieldId;
                 txtValue.Text = value.FieldValue;
+
+                if (value.CustomFieldId.HasValue)
+                {
+                    var cf = CustomFieldManager.GetById(value.CustomFieldId.Value);
+                    CustomFieldDataType = cf.DataType;
+                }
 
                 try
                 {
@@ -256,7 +277,7 @@ namespace BugNET.UserControls
                         }
                     }
                 }
-                catch { }
+                catch (Exception) { }
 
                 dropFieldSelectedIndexChanged(this, new EventArgs());
 
@@ -268,7 +289,7 @@ namespace BugNET.UserControls
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void Page_PreRender(object sender, System.EventArgs e)
+        protected void Page_PreRender(object sender, EventArgs e)
         {
             //hide votes column if issue voting is disabled
             if (!ProjectManager.GetById(ProjectId).AllowIssueVoting)
@@ -373,37 +394,38 @@ namespace BugNET.UserControls
                     dropValue.DataTextField = "DisplayName";
                     dropValue.DataValueField = "Id";
                     break;
-                case "DateCreated":
-                case "LastUpdate":
+                case "DateCreatedAsDate":
+                case "LastUpdateAsDate":
                 case "IssueDueDate":
                     DateValue.Visible = true;
                     break;
                 case "CustomFieldName":
+
                     dropValue.Visible = false;
                     txtValue.Visible = true;  //show the text value field. Not needed.
+                    CustomFieldSelected = true;
+
                     if (CustomFieldManager.GetByProjectId(ProjectId).Count > 0)
                     {
                         dropField.DataSource = CustomFieldManager.GetByProjectId(ProjectId);
                         dropField.DataTextField = "Name";
                         dropField.DataValueField = "Name";
-                        dropField.DataBind();// bind to the new datasource.
-                        dropField.Items.Add("--Reset Fields--");
-                        dropField.Items.Insert(0, new ListItem("-- Select Custom Field --", "0"));
-                        CustomFieldQuery = true;
+                        dropField.DataBind();// bind to the new data source.
+                        dropField.Items.Add(GetGlobalResourceObject("SharedResources", "DropDown_ResetFields").ToString());
+                        dropField.Items.Insert(0, new ListItem(GetGlobalResourceObject("SharedResources", "DropDown_SelectCustomField").ToString(), "0"));
                     }
                     break;
                 default:
-                    if (dropField.SelectedItem.Text.Equals("-- Select Custom Field --")) return;
+                    if (dropField.SelectedItem.Text.Equals(GetGlobalResourceObject("SharedResources", "DropDown_SelectCustomField").ToString())) return;
 
                     // The user decides to reset the fields
-                    if (dropField.SelectedItem.Text.Equals("--Reset Fields--"))
+                    if (dropField.SelectedItem.Text.Equals(GetGlobalResourceObject("SharedResources", "DropDown_ResetFields").ToString()))
                     {
                         dropField.DataSource = null;
                         dropField.DataSource = RequiredFieldManager.GetRequiredFields();
                         dropField.DataTextField = "Name";
                         dropField.DataValueField = "Value";
                         dropField.DataBind();
-                        CustomFieldQuery = false;
                     }
 
                     //RW Once the list is populated with any varying type of name,
@@ -412,7 +434,12 @@ namespace BugNET.UserControls
                     {
                         //check the type of this custom field and load the appropriate values.
                         var cf = CustomFieldManager.GetByProjectId(ProjectId).Find(c => c.Name == dropField.SelectedValue);
+
                         if (cf == null) return;
+
+                        CustomFieldSelected = true;
+                        CustomFieldId = cf.Id;
+                        CustomFieldDataType = cf.DataType;
 
                         switch (cf.FieldType)
                         {
