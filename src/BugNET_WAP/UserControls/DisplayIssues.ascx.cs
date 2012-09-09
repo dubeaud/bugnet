@@ -244,7 +244,7 @@ namespace BugNET.UserControls
             pager.PageSize = 10000000;
             gvIssues.PageIndex = 1;
 
-            GridViewExportUtil.Export("Issues.xls", gvIssues);
+            GridViewExportUtil.Export(DateTime.Today.ToString("yyyyMMdd") + "-Issues.xls", gvIssues);
 
             CurrentPageIndex = currentPage;
             pager.PageSize = currentPageSize;
