@@ -1,0 +1,553 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7AB36CCF-5FFD-4780-A54E-A102ECA028B5}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>LumiSoft.Net</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>LumiSoft.Net</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>LumiSoft.Net.xml</DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>LumiSoft.Net.xml</DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AsyncOP.cs" />
+    <Compile Include="AsyncOP_State.cs" />
+    <Compile Include="AUTH\AUTH_e_Authenticate.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AUTH\AUTH_e_UserInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AUTH\AUTH_Gmail_OAuth1_3leg.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AUTH\Auth_HttpDigest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AUTH\Auth_HttpDigest_NonceManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AUTH\AUTH_SASL_Client.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AUTH\AUTH_SASL_Client_CramMd5.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AUTH\AUTH_SASL_Client_DigestMd5.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AUTH\AUTH_SASL_Client_Login.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AUTH\AUTH_SASL_Client_Ntlm.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AUTH\AUTH_SASL_Client_Plain.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AUTH\AUTH_SASL_Client_XOAuth.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AUTH\AUTH_SASL_DigestMD5_Challenge.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AUTH\AUTH_SASL_DigestMD5_Response.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AUTH\AUTH_SASL_ServerMechanism.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AUTH\AUTH_SASL_ServerMechanism_CramMd5.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AUTH\AUTH_SASL_ServerMechanism_DigestMd5.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AUTH\AUTH_SASL_ServerMechanism_Login.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AUTH\AUTH_SASL_ServerMechanism_Plain.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ByteBuilder.cs" />
+    <Compile Include="ErrorEventHandler.cs" />
+    <Compile Include="Error_EventArgs.cs" />
+    <Compile Include="FTP\Client\FTP_Client.cs" />
+    <Compile Include="FTP\Client\FTP_ClientException.cs" />
+    <Compile Include="FTP\FTP_ListItem.cs" />
+    <Compile Include="FTP\FTP_TransferMode.cs" />
+    <Compile Include="HostEntry.cs" />
+    <Compile Include="IAsyncOP.cs" />
+    <Compile Include="IMAP\Client\IMAP_Client.cs" />
+    <Compile Include="IMAP\Client\IMAP_ClientException.cs" />
+    <Compile Include="IMAP\Client\IMAP_Client_CmdPart.cs" />
+    <Compile Include="IMAP\Client\IMAP_Client_CmdPart_Type.cs" />
+    <Compile Include="IMAP\Client\IMAP_Client_e_FetchGetStoreStream.cs" />
+    <Compile Include="IMAP\Client\IMAP_Client_SelectedFolder.cs" />
+    <Compile Include="IMAP\IMAP_Acl_Entry.cs" />
+    <Compile Include="IMAP\IMAP_ACL_Flags.cs" />
+    <Compile Include="IMAP\IMAP_Flags_SetType.cs" />
+    <Compile Include="IMAP\IMAP_Mailbox_Encoding.cs" />
+    <Compile Include="IMAP\IMAP_Namespace_Entry.cs" />
+    <Compile Include="IMAP\IMAP_Quota_Entry.cs" />
+    <Compile Include="IMAP\IMAP_r.cs" />
+    <Compile Include="IMAP\IMAP_r_ServerStatus.cs" />
+    <Compile Include="IMAP\IMAP_r_u.cs" />
+    <Compile Include="IMAP\IMAP_r_u_Acl.cs" />
+    <Compile Include="IMAP\IMAP_r_u_Bye.cs" />
+    <Compile Include="IMAP\IMAP_r_u_Capability.cs" />
+    <Compile Include="IMAP\IMAP_r_u_Enable.cs" />
+    <Compile Include="IMAP\IMAP_r_u_Exists.cs" />
+    <Compile Include="IMAP\IMAP_r_u_Expunge.cs" />
+    <Compile Include="IMAP\IMAP_r_u_Fetch.cs" />
+    <Compile Include="IMAP\IMAP_r_u_Flags.cs" />
+    <Compile Include="IMAP\IMAP_r_u_List.cs" />
+    <Compile Include="IMAP\IMAP_r_u_ListRights.cs" />
+    <Compile Include="IMAP\IMAP_r_u_LSub.cs" />
+    <Compile Include="IMAP\IMAP_r_u_MyRights.cs" />
+    <Compile Include="IMAP\IMAP_r_u_Namespace.cs" />
+    <Compile Include="IMAP\IMAP_r_u_Quota.cs" />
+    <Compile Include="IMAP\IMAP_r_u_QuotaRoot.cs" />
+    <Compile Include="IMAP\IMAP_r_u_Recent.cs" />
+    <Compile Include="IMAP\IMAP_r_u_Search.cs" />
+    <Compile Include="IMAP\IMAP_r_u_ServerStatus.cs" />
+    <Compile Include="IMAP\IMAP_r_u_Status.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_Answered.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_Bcc.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_Before.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_Body.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_Cc.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_Deleted.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_Draft.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_Flagged.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_From.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_Group.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_Header.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_Keyword.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_Lager.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_New.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_Not.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_Old.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_On.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_Or.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_Recent.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_Seen.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_SentBefore.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_SentOn.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_SentSince.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_SeqSet.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_Since.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_Smaller.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_Subject.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_Text.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_To.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_Uid.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_Unanswered.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_Undeleted.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_Undraft.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_Unflagged.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_Unkeyword.cs" />
+    <Compile Include="IMAP\IMAP_Search_Key_Unseen.cs" />
+    <Compile Include="IMAP\IMAP_t_Capabilities.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_i.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_i_Body.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_i_BodyPeek.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_i_BodyS.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_i_BodyStructure.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_i_Envelope.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_i_Flags.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_i_InternalDate.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_i_Rfc822.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_i_Rfc822Header.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_i_Rfc822Size.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_i_Rfc822Text.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_i_Uid.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_i_X_GM_MSGID.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_i_X_GM_THRID.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_r_i.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_r_i_Body.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_r_i_BodyS.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_r_i_BodyStructure.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_r_i_Envelope.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_r_i_Flags.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_r_i_InternalDate.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_r_i_Rfc822.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_r_i_Rfc822Header.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_r_i_Rfc822Size.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_r_i_Rfc822Text.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_r_i_Uid.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_r_i_X_GM_MSGID.cs" />
+    <Compile Include="IMAP\IMAP_t_Fetch_r_i_X_GM_THRID.cs" />
+    <Compile Include="IMAP\IMAP_t_MsgFlags.cs" />
+    <Compile Include="IMAP\IMAP_t_orc.cs" />
+    <Compile Include="IMAP\IMAP_t_orc_Alert.cs" />
+    <Compile Include="IMAP\IMAP_t_orc_AppendUid.cs" />
+    <Compile Include="IMAP\IMAP_t_orc_BadCharset.cs" />
+    <Compile Include="IMAP\IMAP_t_orc_Capability.cs" />
+    <Compile Include="IMAP\IMAP_t_orc_CopyUid.cs" />
+    <Compile Include="IMAP\IMAP_t_orc_Parse.cs" />
+    <Compile Include="IMAP\IMAP_t_orc_PermanentFlags.cs" />
+    <Compile Include="IMAP\IMAP_t_orc_ReadOnly.cs" />
+    <Compile Include="IMAP\IMAP_t_orc_ReadWrite.cs" />
+    <Compile Include="IMAP\IMAP_t_orc_TryCreate.cs" />
+    <Compile Include="IMAP\IMAP_t_orc_UidNext.cs" />
+    <Compile Include="IMAP\IMAP_t_orc_UidValidity.cs" />
+    <Compile Include="IMAP\IMAP_t_orc_Unknown.cs" />
+    <Compile Include="IMAP\IMAP_t_orc_Unseen.cs" />
+    <Compile Include="IMAP\IMAP_t_SeqSet.cs" />
+    <Compile Include="IMAP\IMAP_Utils.cs" />
+    <Compile Include="IMAP\Server\IMAP_e_Append.cs" />
+    <Compile Include="IMAP\Server\IMAP_e_Copy.cs" />
+    <Compile Include="IMAP\Server\IMAP_e_DeleteAcl.cs" />
+    <Compile Include="IMAP\Server\IMAP_e_Expunge.cs" />
+    <Compile Include="IMAP\Server\IMAP_e_Fetch.cs" />
+    <Compile Include="IMAP\Server\IMAP_e_Folder.cs" />
+    <Compile Include="IMAP\Server\IMAP_e_GetAcl.cs" />
+    <Compile Include="IMAP\Server\IMAP_e_GetQuota.cs" />
+    <Compile Include="IMAP\Server\IMAP_e_GetQuotaRoot.cs" />
+    <Compile Include="IMAP\Server\IMAP_e_List.cs" />
+    <Compile Include="IMAP\Server\IMAP_e_ListRights.cs" />
+    <Compile Include="IMAP\Server\IMAP_e_Login.cs" />
+    <Compile Include="IMAP\Server\IMAP_e_LSub.cs" />
+    <Compile Include="IMAP\Server\IMAP_e_MessagesInfo.cs" />
+    <Compile Include="IMAP\Server\IMAP_e_MyRights.cs" />
+    <Compile Include="IMAP\Server\IMAP_e_Namespace.cs" />
+    <Compile Include="IMAP\Server\IMAP_e_Rename.cs" />
+    <Compile Include="IMAP\Server\IMAP_e_Search.cs" />
+    <Compile Include="IMAP\Server\IMAP_e_Select.cs" />
+    <Compile Include="IMAP\Server\IMAP_e_SetAcl.cs" />
+    <Compile Include="IMAP\Server\IMAP_e_Started.cs" />
+    <Compile Include="IMAP\Server\IMAP_e_Store.cs" />
+    <Compile Include="IMAP\Server\IMAP_Fetch_DataType.cs" />
+    <Compile Include="IMAP\Server\IMAP_MessageInfo.cs" />
+    <Compile Include="IMAP\Server\IMAP_Server.cs" />
+    <Compile Include="IMAP\Server\IMAP_Session.cs" />
+    <Compile Include="IO\Base64.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\Base64Stream.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\DataSizeExceededException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\FifoBuffer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\IncompleteDataException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\JunkingStream.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\LineSizeExceededException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\MemoryStreamEx.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\MultiStream.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\PartialStream.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\QuotedPrintableStream.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\ReadWriteControlledStream.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\SizeExceededAction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IO\SmartStream.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mail\Mail_h_AddressList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mail\Mail_h_DispositionNotificationOptions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mail\Mail_h_Mailbox.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mail\Mail_h_MailboxList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mail\Mail_h_Received.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mail\Mail_h_ReturnPath.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mail\Mail_Message.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mail\Mail_t_Address.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mail\Mail_t_AddressList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mail\Mail_t_Group.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mail\Mail_t_Mailbox.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mail\Mail_t_MailboxList.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mail\Mail_t_TcpInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mail\Mail_Utils.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Net_Utils.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ParseException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PortRange.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Range_long.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SslMode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="StringReader.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TCP\TCP_Client.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TCP\TCP_Server.cs" />
+    <Compile Include="TCP\TCP_ServerSession.cs" />
+    <Compile Include="TCP\TCP_ServerSessionEventArgs.cs" />
+    <Compile Include="TCP\TCP_Session.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TCP\TCP_SessionCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TextUtils.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TimerEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="_MD4.cs" />
+    <Compile Include="KeyValueCollection.cs" />
+    <Compile Include="MIME\MIME_b.cs" />
+    <Compile Include="MIME\MIME_b_Application.cs" />
+    <Compile Include="MIME\MIME_b_ApplicationPkcs7Mime.cs" />
+    <Compile Include="MIME\MIME_b_Audio.cs" />
+    <Compile Include="MIME\MIME_b_Image.cs" />
+    <Compile Include="MIME\MIME_b_Message.cs" />
+    <Compile Include="MIME\MIME_b_MessageDeliveryStatus.cs">
+    </Compile>
+    <Compile Include="MIME\MIME_b_MessageRfc822.cs" />
+    <Compile Include="MIME\MIME_b_Multipart.cs" />
+    <Compile Include="MIME\MIME_b_MultipartAlternative.cs" />
+    <Compile Include="MIME\MIME_b_MultipartDigest.cs" />
+    <Compile Include="MIME\MIME_b_MultipartEncrypted.cs" />
+    <Compile Include="MIME\MIME_b_MultipartFormData.cs" />
+    <Compile Include="MIME\MIME_b_MultipartMixed.cs" />
+    <Compile Include="MIME\MIME_b_MultipartParallel.cs" />
+    <Compile Include="MIME\MIME_b_MultipartRelated.cs" />
+    <Compile Include="MIME\MIME_b_MultipartReport.cs" />
+    <Compile Include="MIME\MIME_b_MultipartSigned.cs" />
+    <Compile Include="MIME\MIME_b_Provider.cs" />
+    <Compile Include="MIME\MIME_b_SinglepartBase.cs" />
+    <Compile Include="MIME\MIME_b_Text.cs" />
+    <Compile Include="MIME\MIME_b_Unknown.cs" />
+    <Compile Include="MIME\MIME_b_Video.cs" />
+    <Compile Include="MIME\MIME_Encoding_EncodedWord.cs" />
+    <Compile Include="MIME\MIME_h.cs" />
+    <Compile Include="MIME\MIME_h_Collection.cs" />
+    <Compile Include="MIME\MIME_h_ContentDisposition.cs" />
+    <Compile Include="MIME\MIME_h_ContentType.cs" />
+    <Compile Include="MIME\MIME_h_Provider.cs" />
+    <Compile Include="MIME\MIME_h_Parameter.cs" />
+    <Compile Include="MIME\MIME_h_ParameterCollection.cs" />
+    <Compile Include="MIME\MIME_h_Unparsed.cs" />
+    <Compile Include="MIME\MIME_h_Unstructured.cs" />
+    <Compile Include="BalanceMode.cs" />
+    <Compile Include="EventArgs.cs" />
+    <Compile Include="ExceptionEventArgs.cs" />
+    <Compile Include="HostEndPoint.cs" />
+    <Compile Include="Log\WriteLogEventArgs.cs" />
+    <Compile Include="MIME\MIME_DispositionTypes .cs" />
+    <Compile Include="MIME\MIME_MediaTypes.cs" />
+    <Compile Include="MIME\MIME_EncodedWordEncoding.cs" />
+    <Compile Include="MIME\MIME_Entity.cs" />
+    <Compile Include="MIME\MIME_EntityCollection.cs" />
+    <Compile Include="MIME\MIME_Message.cs" />
+    <Compile Include="MIME\MIME_Reader.cs" />
+    <Compile Include="MIME\MIME_TransferEncodings.cs" />
+    <Compile Include="MIME\MIME_Utils.cs" />
+    <Compile Include="POP3\Client\POP3_ClientException.cs" />
+    <Compile Include="POP3\Client\POP3_ClientMessage.cs" />
+    <Compile Include="POP3\Client\POP3_ClientMessageCollection.cs" />
+    <Compile Include="_Obsolete\IMAP\IMAP_Client_FetchHandler.cs" />
+    <Compile Include="_Obsolete\IMAP\IMAP_Client_Fetch_Body_EArgs.cs" />
+    <Compile Include="_Obsolete\IMAP\IMAP_Client_Fetch_Rfc822_EArgs.cs" />
+    <Compile Include="_Obsolete\IMAP\IMAP_Envelope.cs" />
+    <Compile Include="_Obsolete\IMAP\IMAP_Fetch_DataItem.cs" />
+    <Compile Include="_Obsolete\IMAP\IMAP_Fetch_DataItem_Envelope.cs" />
+    <Compile Include="_Obsolete\IMAP\IMAP_MessageFlags.cs" />
+    <Compile Include="_Obsolete\IMAP\IMAP_Response_MyRights.cs" />
+    <Compile Include="_Obsolete\IMAP\IMAP_SequenceSet.cs" />
+    <Compile Include="_Obsolete\StreamLineReader.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <None Include="POP3\POP3_ExtendedCapabilities.cs" />
+    <Compile Include="Log\LogEntry.cs" />
+    <Compile Include="Log\LogEntryType.cs" />
+    <Compile Include="Log\Logger.cs" />
+    <Compile Include="POP3\Client\POP3_Client.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WellKnownPorts.cs" />
+    <Compile Include="_AsyncResultState.cs" />
+    <Compile Include="IPBindInfo.cs" />
+    <Compile Include="CircleCollection.cs" />
+    <Compile Include="BindInfoProtocol.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="license.txt" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

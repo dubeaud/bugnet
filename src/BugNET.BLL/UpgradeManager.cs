@@ -213,21 +213,21 @@ namespace BugNET.BLL
         /// The order of the various checks in this method is very important.
         /// </summary>
         /// <returns></returns>
-        public static Globals.UpgradeStatus GetUpgradeStatus()
+        public static UpgradeStatus GetUpgradeStatus()
         {
             string version = DataProviderManager.Provider.GetDatabaseVersion();
 
             if (string.IsNullOrEmpty(version))
-                return Globals.UpgradeStatus.Install;
+                return UpgradeStatus.Install;
             else if (version.StartsWith("ERROR"))
-                return Globals.UpgradeStatus.None;
+                return UpgradeStatus.None;
 
             // Now check if the user is authenticated.
             if (HttpContext.Current != null && HttpContext.Current.User != null && HttpContext.Current.User.Identity.IsAuthenticated && (HttpContext.Current.User.Identity.AuthenticationType != "NTLM" || HttpContext.Current.User.Identity.AuthenticationType != "Negotiate"))
-                return Globals.UpgradeStatus.Authenticated;
+                return UpgradeStatus.Authenticated;
 
             // Now test for upgrade.
-            return DataProviderManager.Provider.GetDatabaseVersion() != GetCurrentVersion() ? Globals.UpgradeStatus.Upgrade : Globals.UpgradeStatus.None;
+            return DataProviderManager.Provider.GetDatabaseVersion() != GetCurrentVersion() ? UpgradeStatus.Upgrade : UpgradeStatus.None;
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace BugNET.BLL
         /// <returns>True is BugNET is installed</returns>
         public static bool IsInstalled()
         {
-            return GetUpgradeStatus() != Globals.UpgradeStatus.Install;
+            return GetUpgradeStatus() != UpgradeStatus.Install;
         }
 
         /// <summary>

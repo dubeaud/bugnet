@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BodyTemplate" xml:space="preserve">
-    <value>Body Template</value>
+    <value>Issue Detail Template</value>
   </data>
   <data name="DeleteProcessedMessages" xml:space="preserve">
     <value>Delete Processed Messages</value>
@@ -146,5 +146,14 @@
   </data>
   <data name="SSL" xml:space="preserve">
     <value>SSL</value>
+  </data>
+  <data name="MailboxReaderModuleMissing" xml:space="preserve">
+    <value>You are attempting to enable the Mailbox Reader Module but it is not loaded.  Please un-comment the MailBoxReaderModule section in the web.config file or refer to the &lt;a href="http://bugnet.codeplex.com/wikipage?title=Configure%20Receiving%20Email%20with%20POP3&amp;referringTitle=Documentation" target="_blank"&gt;installation notes&lt;/a&gt;.</value>
+  </data>
+  <data name="POP3ProcessAttachments" xml:space="preserve">
+    <value>Process Attachments</value>
+  </data>
+  <data name="POP3InlineAttachedPictures" xml:space="preserve">
+    <value>Process Inline Attachments</value>
   </data>
 </root>

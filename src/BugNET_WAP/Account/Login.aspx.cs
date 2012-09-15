@@ -168,7 +168,7 @@ namespace BugNET.Account
 
                                 // Part of BGN-1860
                                 if (Convert.ToInt32(HostSettingManager.Get(HostSettingNames.UserRegistration)) ==
-                                    (int)Globals.UserRegistration.None)
+                                    (int)UserRegistration.None)
                                 {
                                     loginFailedLabel.Text += GetLocalResourceObject("RegistrationDisabled").ToString();
                                     loginFailedLabel.Visible = true;

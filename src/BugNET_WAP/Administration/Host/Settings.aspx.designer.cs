@@ -31,15 +31,6 @@ namespace BugNET.Administration.Host {
         protected global::System.Web.UI.WebControls.Repeater AdminMenu;
         
         /// <summary>
-        /// Message1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::BugNET.UserControls.Message Message1;
-        
-        /// <summary>
         /// plhSettingsControl control.
         /// </summary>
         /// <remarks>

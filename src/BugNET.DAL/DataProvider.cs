@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration.Provider;
 using BugNET.Common;
 using BugNET.Entities;
+using Permission = BugNET.Entities.Permission;
 
 namespace BugNET.DAL
 {
@@ -16,6 +17,8 @@ namespace BugNET.DAL
 
         //*** ABSTRACT METHODS ***/
         public abstract DataAccessException ProcessException(Exception ex);
+
+        public abstract string ConnectionString { get; }
 
         // Installation Helper Methods
         public abstract string GetProviderPath();

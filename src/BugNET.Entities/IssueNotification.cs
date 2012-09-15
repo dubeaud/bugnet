@@ -15,6 +15,7 @@ namespace BugNET.Entities
         {
             NotificationUsername = string.Empty;
             NotificationEmail = string.Empty;
+            NotificationCulture = "en-US";
         }
 
         /// <summary>
@@ -45,6 +46,11 @@ namespace BugNET.Entities
         /// Gets the notification email.
         /// </summary>
         /// <value>The notification email.</value>
-        public string NotificationEmail { get; set; } 
+        public string NotificationEmail { get; set; }
+
+        /// <summary>
+        /// The culture string to use for the email content
+        /// </summary>
+        public string NotificationCulture { get; set; }
     }
 }

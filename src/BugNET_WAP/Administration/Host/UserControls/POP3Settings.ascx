@@ -23,8 +23,8 @@
             <asp:TextBox id="POP3Password" TextMode="Password"  Runat="Server" />
         </li>
         <li>
-            <asp:Label ID="label29" runat="server" AssociatedControlID="POP3UseSSL" CssClass="col1b" Text="<%$ Resources:SSL %>" />
-            <td class="input-group"><asp:CheckBox ID="POP3UseSSL" runat="server" />
+            <asp:Label ID="label29" runat="server" AssociatedControlID="POP3UseSSL" Text="<%$ Resources:SSL %>" />
+            <asp:CheckBox ID="POP3UseSSL" runat="server" />
         </li>
         <li>
             <asp:Label ID="label17" runat="server" AssociatedControlID="POP3Interval" Text="<%$ Resources:PollingInterval %>" />
@@ -32,15 +32,19 @@
         </li>
          <li>
             <asp:Label ID="label18" runat="server" AssociatedControlID="POP3DeleteMessages" Text="<%$ Resources:DeleteProcessedMessages %>" />
-            <td class="input-group"><asp:checkbox id="POP3DeleteMessages" runat="server"></asp:checkbox>
+            <asp:checkbox id="POP3DeleteMessages" runat="server"></asp:checkbox>
         </li>
          <li>
-            <asp:Label ID="label19" runat="server" AssociatedControlID="POP3ProcessAttachments" Text="Process Attachments" />
-            <td class="input-group"><asp:checkbox id="POP3ProcessAttachments" runat="server"></asp:checkbox>
+            <asp:Label ID="label2" runat="server" AssociatedControlID="POP3ProcessAttachments" Text="<%$ Resources:POP3ProcessAttachments %>" />
+            <asp:checkbox id="POP3ProcessAttachments" runat="server"></asp:checkbox>
         </li>
          <li>
-            <td valign="top"><asp:Label ID="label20" runat="server" AssociatedControlID="POP3BodyTemplate" Text="<%$ Resources:BodyTemplate %>" />
-            <asp:TextBox id="POP3BodyTemplate" Runat="Server" TextMode="MultiLine" Height="100px" Width="250px"/>
+            <asp:Label ID="label19" runat="server" AssociatedControlID="POP3InlineAttachedPictures" Text="<%$ Resources:POP3InlineAttachedPictures %>" />
+            <asp:checkbox id="POP3InlineAttachedPictures" runat="server"></asp:checkbox>
+        </li>
+         <li>
+            <asp:Label ID="label20" runat="server" AssociatedControlID="POP3BodyTemplate" Text="<%$ Resources:BodyTemplate %>" />
+            <asp:TextBox id="POP3BodyTemplate" Runat="Server" />
         </li>
          <li>
             <asp:Label ID="label21" runat="server" AssociatedControlID="POP3ReportingUsername" Text="<%$ Resources:ReportingUsername %>" />

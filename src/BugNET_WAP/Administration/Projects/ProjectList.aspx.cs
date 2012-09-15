@@ -98,7 +98,7 @@ namespace BugNET.Administration.Projects
                 GetGlobalResourceObject("SharedResources", "No").ToString();
 
             //permission check to edit project
-            if (!UserManager.HasPermission(p.Id, Globals.Permission.AdminEditProject.ToString()))
+            if (!UserManager.HasPermission(p.Id, Common.Permission.AdminEditProject.ToString()))
                 e.Item.Visible = false;
         }
 

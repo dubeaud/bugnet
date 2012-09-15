@@ -52,7 +52,7 @@
             </a>
         </p>
         <p style="text-align:center;font-size:8pt;padding:5px;">
-            Als u geen meldingen meer wenst te ontvangen, ga dan naar <a href="{HostSetting_DefaultUrl}UserProfile.aspx" target="_blank">uw profiel</a> en wijzig uw meldings opties.
+            Als u geen meldingen meer wenst te ontvangen, ga dan naar <a href="{HostSetting_DefaultUrl}Account/UserProfile.aspx" target="_blank">uw profiel</a> en wijzig uw meldings opties.
         </p>
     </xsl:template>
 </xsl:stylesheet>

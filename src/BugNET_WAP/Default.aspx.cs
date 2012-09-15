@@ -111,13 +111,13 @@ namespace BugNET
 			{
 				Project p = (Project)e.Item.DataItem;
 
-				if(!Context.User.Identity.IsAuthenticated || !UserManager.HasPermission(p.Id,Globals.Permission.AddIssue.ToString()))
+				if(!Context.User.Identity.IsAuthenticated || !UserManager.HasPermission(p.Id,Common.Permission.AddIssue.ToString()))
 					e.Item.FindControl("ReportIssue").Visible=false;
 
-                if (!Context.User.Identity.IsAuthenticated || !UserManager.HasPermission(p.Id, Globals.Permission.AdminEditProject.ToString()))
+                if (!Context.User.Identity.IsAuthenticated || !UserManager.HasPermission(p.Id, Common.Permission.AdminEditProject.ToString()))
                     e.Item.FindControl("Settings").Visible = false;
 
-                if (!Context.User.Identity.IsAuthenticated || !UserManager.HasPermission(p.Id, Globals.Permission.ViewProjectCalendar.ToString()))
+                if (!Context.User.Identity.IsAuthenticated || !UserManager.HasPermission(p.Id, Common.Permission.ViewProjectCalendar.ToString()))
                     e.Item.FindControl("ProjectCalendar").Visible = false;
 
                 Image ProjectImage = (Image)e.Item.FindControl("ProjectImage");                 
@@ -167,8 +167,8 @@ namespace BugNET
                     //get total open issues
                     var queryClauses = new List<QueryClause>
                     {
-                        new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false),
-                        new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int, false)
+                        new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int),
+                        new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int)
                     };
 
                     var issueList = IssueManager.PerformQuery(queryClauses, null, p.Id);

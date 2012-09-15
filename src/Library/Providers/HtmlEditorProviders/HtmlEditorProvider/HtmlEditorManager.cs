@@ -4,6 +4,9 @@ using System.Web.Configuration;
 
 namespace BugNET.Providers.HtmlEditorProviders
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class HtmlEditorManager
     {
         //Initialization related variables and logic

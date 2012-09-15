@@ -189,7 +189,6 @@ namespace BugNET.Tests
                 BooleanOperator = "OR",
                 ComparisonOperator = "=",
                 DataType = SqlDbType.Int,
-                CustomFieldQuery = false,
                 FieldName = "IssueCategoryId",
                 FieldValue = null
 
@@ -201,7 +200,6 @@ namespace BugNET.Tests
                 BooleanOperator = "AND",
                 ComparisonOperator = "<>",
                 DataType = SqlDbType.Int,
-                CustomFieldQuery = false,
                 FieldName = "IssueStatusId",
                 FieldValue = "3"
 
@@ -231,7 +229,6 @@ namespace BugNET.Tests
                 BooleanOperator = "AND",
                 ComparisonOperator = "=",
                 DataType = SqlDbType.Int,
-                CustomFieldQuery = false,
                 FieldName = "IssueStatusId",
                 FieldValue = "16"
 
@@ -243,10 +240,9 @@ namespace BugNET.Tests
                 BooleanOperator = "AND",
                 ComparisonOperator = "=",
                 DataType = SqlDbType.NVarChar,
-                CustomFieldQuery = true,
                 FieldName = "Browser",
-                FieldValue = "2"
-
+                FieldValue = "2",
+                CustomFieldId = 1
             };   
 
             clauses.Add(q);

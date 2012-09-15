@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web.UI.WebControls;
 using BugNET.BLL;
@@ -25,10 +27,10 @@ namespace BugNET.Account
             //redirect to access denied if user registration disabled
             switch (Convert.ToInt32(HostSettingManager.Get(HostSettingNames.UserRegistration)))
             {
-                case (int)Globals.UserRegistration.None:
+                case (int)UserRegistration.None:
                     Response.Redirect("~/AccessDenied.aspx", true);
                     break;
-                case (int)Globals.UserRegistration.Verified:
+                case (int)UserRegistration.Verified:
                     CreateUserWizard1.DisableCreatedUser = true;
                     CreateUserWizard1.CompleteStep.ContentTemplateContainer.FindControl("VerificationPanel").Visible = true;
                     break;
@@ -39,6 +41,25 @@ namespace BugNET.Account
             {
                 Response.Redirect("~/", true);
             }
+
+            if (IsPostBack) return;
+
+            var preferredLanguage = CreateUserWizardStep0.ContentTemplateContainer.FindControl("PreferredLanguage") as DropDownList;
+
+            if (preferredLanguage == null) return;
+
+            var resources = ResourceManager.GetInstalledLanguageResources().ToList();
+            preferredLanguage.Items.Clear();
+
+            foreach (var resource in resources)
+            {
+                var cultureInfo = new CultureInfo(resource);
+                preferredLanguage.Items.Add(new ListItem(cultureInfo.DisplayName, cultureInfo.Name));
+            }
+
+            preferredLanguage.DataBind();
+
+            preferredLanguage.SelectedValue = HostSettingManager.Get(HostSettingNames.ApplicationDefaultLanguage);
         }
 
         /// <summary>
@@ -73,12 +94,15 @@ namespace BugNET.Account
             var firstName = (TextBox)CreateUserWizardStep0.ContentTemplateContainer.FindControl("FirstName");
             var lastName = (TextBox)CreateUserWizardStep0.ContentTemplateContainer.FindControl("LastName");
             var fullName = (TextBox)CreateUserWizardStep0.ContentTemplateContainer.FindControl("FullName");
+            var preferredLanguage = CreateUserWizardStep0.ContentTemplateContainer.FindControl("PreferredLanguage") as DropDownList;
 
             var profile = new WebProfile().GetProfile(user.UserName);
 
             profile.FirstName = firstName.Text;
             profile.LastName = lastName.Text;
             profile.DisplayName = fullName.Text;
+            if (preferredLanguage != null) profile.PreferredLocale = preferredLanguage.SelectedValue;
+
             profile.Save();
 
             //auto assign user to roles
@@ -88,7 +112,7 @@ namespace BugNET.Account
                 RoleManager.AddUser(user.UserName, r.Id);
             }
 
-            if (Convert.ToBoolean(HostSettingManager.Get(HostSettingNames.UserRegistration, (int)Globals.UserRegistration.Verified)))
+            if (Convert.ToBoolean(HostSettingManager.Get(HostSettingNames.UserRegistration, (int)UserRegistration.Verified)))
             {
                 UserManager.SendUserVerificationNotification(user);
             }

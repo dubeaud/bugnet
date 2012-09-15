@@ -211,35 +211,35 @@ namespace BugNET.Issues
                 var queryClauses = new List<QueryClause>();
 
                 // filter out disabled issues
-                queryClauses.Add(new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int, false));
+                queryClauses.Add(new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int));
 
                 // if the user wants to exclude closed issues then filter the closed flag otherwise don't bother
                 if (chkExcludeClosedIssues.Checked)
-                    queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false));
+                    queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int));
 
                 if(chkSearchTitle.Checked || chkSearchDesc.Checked)
                 {
-                    queryClauses.Add(new QueryClause("AND (", "1", "=", "2", SqlDbType.NVarChar, false));
+                    queryClauses.Add(new QueryClause("AND (", "1", "=", "2", SqlDbType.NVarChar));
 
                     if(chkSearchTitle.Checked)
                     {
-                        queryClauses.Add(new QueryClause("OR", "iv.[IssueTitle]", "LIKE", strLike, SqlDbType.NVarChar, false));
+                        queryClauses.Add(new QueryClause("OR", "iv.[IssueTitle]", "LIKE", strLike, SqlDbType.NVarChar));
                          if (srchHtmlcode)
                          {
-                             queryClauses.Add(new QueryClause("OR", "iv.[IssueTitle]", "LIKE", strHtmlLike, SqlDbType.NVarChar, false)); 
+                             queryClauses.Add(new QueryClause("OR", "iv.[IssueTitle]", "LIKE", strHtmlLike, SqlDbType.NVarChar)); 
                          }
                     }
 
                     if (chkSearchDesc.Checked)
                     {
-                        queryClauses.Add(new QueryClause("OR", "iv.[IssueDescription]", "LIKE", strLike, SqlDbType.NVarChar, false));
+                        queryClauses.Add(new QueryClause("OR", "iv.[IssueDescription]", "LIKE", strLike, SqlDbType.NVarChar));
                         if (srchHtmlcode)
                         {
-                            queryClauses.Add(new QueryClause("OR", "iv.[IssueDescription]", "LIKE", strHtmlLike, SqlDbType.NVarChar, false));
+                            queryClauses.Add(new QueryClause("OR", "iv.[IssueDescription]", "LIKE", strHtmlLike, SqlDbType.NVarChar));
                         }
                     }
 
-                    queryClauses.Add(new QueryClause(")", "", "", "", SqlDbType.NVarChar, false));
+                    queryClauses.Add(new QueryClause(")", "", "", "", SqlDbType.NVarChar));
                 }
 
                 // Use the new Generic way to search with those QueryClauses
@@ -260,12 +260,12 @@ namespace BugNET.Issues
                 issueComments.Clear();
                 foundComments.Clear();
 
-                queryClauses.Add(new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int, false));
+                queryClauses.Add(new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int));
 
                 // if the user wants to exclude closed issues then filter the closed flag otherwise don't bother
-                // stuff the citeria into the first spot becuase we have an open nested criteria going on
+                // stuff the criteria into the first spot because we have an open nested criteria going on
                 if (chkExcludeClosedIssues.Checked)
-                    queryClauses.Insert(0, new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false));
+                    queryClauses.Insert(0, new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int));
 
                 // Get ALL issues
                 issues = IssueManager.PerformQuery(queryClauses, null, p.Id);
@@ -279,7 +279,7 @@ namespace BugNET.Issues
                     // Using the Generic Interface
                     var qryComment = new List<QueryClause>
                                          {
-                                             new QueryClause("AND (", "Comment", "LIKE", strLike, SqlDbType.VarChar, false)
+                                             new QueryClause("AND (", "Comment", "LIKE", strLike, SqlDbType.NVarChar)
                                          };
 
                     // NOTE WE ARE OPENING A PARENTHISES using the 
@@ -288,14 +288,14 @@ namespace BugNET.Issues
 
                     if (srchHtmlcode)
                     {
-                        qryComment.Add(new QueryClause("OR", "Comment", "LIKE", strHtmlLike, SqlDbType.VarChar, false));
+                        qryComment.Add(new QueryClause("OR", "Comment", "LIKE", strHtmlLike, SqlDbType.NVarChar));
                     }
 
                     // NOW TO CLOSE PARENTHISES
                     //
                     // Using the "William Highfield" trick ;)
                     //
-                    qryComment.Add(new QueryClause(")", "", "", "", SqlDbType.NVarChar, false));
+                    qryComment.Add(new QueryClause(")", "", "", "", SqlDbType.NVarChar));
 
                     //if (srchUserName)
                     //{

@@ -18,7 +18,7 @@ namespace BugNET.UserControls
         protected void Page_Load(object sender, EventArgs e)
         {
             //hide user registration if disabled in host settings
-            if (!Page.User.Identity.IsAuthenticated && Convert.ToInt32(HostSettingManager.Get(HostSettingNames.UserRegistration)) == (int)Globals.UserRegistration.None)
+            if (!Page.User.Identity.IsAuthenticated && Convert.ToInt32(HostSettingManager.Get(HostSettingNames.UserRegistration)) == (int)UserRegistration.None)
             {
                 if (LoginView1.FindControl("lnkRegister") != null)
                     LoginView1.FindControl("lnkRegister").Visible = false;

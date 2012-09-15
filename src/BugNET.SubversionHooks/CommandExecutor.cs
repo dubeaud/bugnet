@@ -5,23 +5,14 @@ using System.Text.RegularExpressions;
 
 namespace BugNET.SubversionHooks
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class CommandExecutor
     {
       
-        private static Dictionary<int, string> errors = new Dictionary<int, string>();
+        private static readonly Dictionary<int, string> Errors = new Dictionary<int, string>();
 
-
-        /// <summary>
-        /// Runs a seperate process and returns the standard outout and error text. This is intended for command line apps only.
-        /// If the process does not end in 5minutes it will be killed.
-        /// </summary>
-        /// <param name="command"></param>
-        /// <param name="args"></param>
-        /// <returns></returns>
-        public static string RunCommand(string command, string args)
-        {
-            return RunCommand(command, args, 300, true);
-        }
 
         /// <summary>
         /// Runs the command.
@@ -36,15 +27,15 @@ namespace BugNET.SubversionHooks
         }
 
 
-
         /// <summary>
-        /// Runs a seperate process and returns the standard outout and error text. This is intended for command line apps only.
+        /// Runs a separate process and returns the standard output and error text. This is intended for command line apps only.
         /// </summary>
         /// <param name="command"></param>
         /// <param name="args"></param>
         /// <param name="killAfterSeconds"></param>
+        /// <param name="echoCommand"> </param>
         /// <returns></returns>
-        public static string RunCommand(string command, string args, int killAfterSeconds, bool echoCommand)
+        public static string RunCommand(string command, string args, int killAfterSeconds = 300, bool echoCommand = true)
         {
             Process proc = null;
             log4net.ILog logger = log4net.LogManager.GetLogger("CommandExecutor");
@@ -53,33 +44,34 @@ namespace BugNET.SubversionHooks
 
             try
             {
-                var startInfo = new ProcessStartInfo(command, args);
-                startInfo.CreateNoWindow = true;
-                startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                startInfo.UseShellExecute = false;
-                startInfo.RedirectStandardOutput = true;
-                startInfo.RedirectStandardError = true;
+                var startInfo = new ProcessStartInfo(command, args)
+                    {
+                        CreateNoWindow = true,
+                        WindowStyle = ProcessWindowStyle.Hidden,
+                        UseShellExecute = false,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true
+                    };
 
-                proc = new Process();
-                proc.StartInfo = startInfo;
-                proc.ErrorDataReceived += new DataReceivedEventHandler(CommandProcess_ErrorDataReceived);
+                proc = new Process {StartInfo = startInfo};
+                proc.ErrorDataReceived += CommandProcessErrorDataReceived;
                 proc.Start();
 
                 proc.BeginErrorReadLine();
 
-                string retVal = proc.StandardOutput.ReadToEnd();
+                var retVal = proc.StandardOutput.ReadToEnd();
 
                 if (!proc.WaitForExit(killAfterSeconds * 1000))
                     proc.Kill();
 
-                if (errors.ContainsKey(proc.Id))
-                    retVal += Environment.NewLine + "Error: " + Environment.NewLine + errors[proc.Id];
+                if (Errors.ContainsKey(proc.Id))
+                    retVal += Environment.NewLine + "Error: " + Environment.NewLine + Errors[proc.Id];
 
                 if (echoCommand)
                 {
                     // hide password from being displayed
-                    Regex RegexObj = new Regex("--password\\s+\\S+\\s", RegexOptions.IgnoreCase);
-                    args = RegexObj.Replace(args, "--password **** ");
+                    var regexObj = new Regex("--password\\s+\\S+\\s", RegexOptions.IgnoreCase);
+                    args = regexObj.Replace(args, "--password **** ");
 
 
                     return command + " " + args + Environment.NewLine + retVal;
@@ -99,8 +91,8 @@ namespace BugNET.SubversionHooks
             {
                 if (proc != null)
                 {
-                    if (errors.ContainsKey(proc.Id))
-                        errors.Remove(proc.Id);
+                    if (Errors.ContainsKey(proc.Id))
+                        Errors.Remove(proc.Id);
 
                     proc.Dispose();
                 }
@@ -109,31 +101,30 @@ namespace BugNET.SubversionHooks
         }
 
         /// <summary>
-        /// Event handler to capture error data. At least one of the output streams has to be read asyncronously
+        /// Event handler to capture error data. At least one of the output streams has to be read asynchronously
         /// to avoid a deadlock.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        static void CommandProcess_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+        static void CommandProcessErrorDataReceived(object sender, DataReceivedEventArgs e)
         {
             // RC: Sometimes an error occurres in here. I think the process is ending while we are getting the data, but Im not sure.
             // I'm stuffing it for now.
             try
             {
-                if (sender != null)
-                {
-                    if (e.Data != null && e.Data.Length > 0)
-                    {
-                        int id = ((Process)sender).Id;
+                if (sender == null) return;
 
-                        if (errors.ContainsKey(id))
-                            errors[id] += Environment.NewLine + e.Data;
-                        else
-                            errors.Add(id, e.Data);
-                    }
-                }
+                if (string.IsNullOrEmpty(e.Data)) return;
+
+                var id = ((Process)sender).Id;
+
+                if (Errors.ContainsKey(id))
+                    Errors[id] += Environment.NewLine + e.Data;
+                else
+                    Errors.Add(id, e.Data);
             }
-            catch { }
+            catch (Exception)
+            { }
         }
     }
 }

@@ -54,16 +54,16 @@ namespace BugNET.Install
 
                     switch (status)
                     {
-                        case Globals.UpgradeStatus.Install:
+                        case UpgradeStatus.Install:
                             InstallApplication();
                             break;
-                        case Globals.UpgradeStatus.Upgrade:
+                        case UpgradeStatus.Upgrade:
                             UpgradeApplication();
                             break;
-                        case Globals.UpgradeStatus.None:
+                        case UpgradeStatus.None:
                             NoUpgrade();
                             break;
-                        case Globals.UpgradeStatus.Authenticated:
+                        case UpgradeStatus.Authenticated:
                             InstallerLogout();
                             break;
                         default:
@@ -148,8 +148,9 @@ namespace BugNET.Install
 
 
                 WriteMessage(string.Format("<h2>Version: {0}</h2>", UpgradeManager.GetCurrentVersion()));
-                WriteMessage(string.Empty);
+                WriteMessage("&nbsp;");
                 WriteMessage("<h2>Installation Status Report</h2>");
+
                 if (!InstallBugNET())
                 {
                     WriteMessage("<h2>Installation Failed!</h2>");
@@ -190,21 +191,58 @@ namespace BugNET.Install
                     WriteMessage("Installing BugNET Default Data:<br/>", 0, true);
                     ExecuteSqlInFile(string.Format("{0}BugNET.Data.SqlDataProvider.sql", providerPath));
                     WriteMessage("Creating Administrator Account", 0, true);
+
                     //create admin user
                     MembershipCreateStatus status;
+
                     var newUser = Membership.CreateUser("Admin", "password", "admin@yourdomain.com", "no question", "no answer", true, out status);
-                    if (newUser != null)
+
+                    switch (status)
+                    {
+                        case MembershipCreateStatus.Success:
+                            WriteMessage("Created Administrator Account Successfully", 0, true);
+                            break;
+                        case MembershipCreateStatus.InvalidUserName:
+                        case MembershipCreateStatus.InvalidPassword:
+                        case MembershipCreateStatus.InvalidQuestion:
+                        case MembershipCreateStatus.InvalidAnswer:
+                        case MembershipCreateStatus.InvalidEmail:
+                        case MembershipCreateStatus.DuplicateUserName:
+                        case MembershipCreateStatus.DuplicateEmail:
+                        case MembershipCreateStatus.UserRejected:
+                        case MembershipCreateStatus.InvalidProviderUserKey:
+                        case MembershipCreateStatus.DuplicateProviderUserKey:
+                        case MembershipCreateStatus.ProviderError:
+                            var message = string.Format("Creating Administrator Account Failed, status returned: {0}", status);
+                            WriteMessage(message, 0, true);
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+
+                    WriteMessage("Creating Administrator Account default profile", 0, true);
+
+                    if (status == MembershipCreateStatus.Success)
                     {
                         //add the admin user to the Super Users role.
                         RoleManager.AddUser("Admin", 1);
+
                         //add user profile information
                         var profile = new WebProfile().GetProfile("Admin");
                         profile.FirstName = "Admin";
                         profile.LastName = "Admin";
                         profile.DisplayName = "Administrator";
                         profile.Save();
+
+                        WriteMessage("Created Administrator Account default profile", 0, true);
+                        WriteScriptSuccessError(true);
                     }
-                    WriteScriptSuccessError(true);
+                    else
+                    {
+                        WriteMessage("Created Administrator Account default profile failed, due to status returned from account creation", 0, true);
+                        WriteScriptSuccessError(false);
+                    }
+
                     UpgradeManager.UpdateDatabaseVersion(UpgradeManager.GetCurrentVersion());
                 }
                 else
@@ -530,6 +568,8 @@ namespace BugNET.Install
         /// <param name="showTime">if set to <c>true</c> [show time].</param>
         private void WriteMessage(string message, int indent = 0, bool showTime = false)
         {
+            if (message.Trim().Length.Equals(0)) return;
+
             var spacer = string.Empty;
             for (var i = 0; i < indent; i++)
                 spacer += "&nbsp;";

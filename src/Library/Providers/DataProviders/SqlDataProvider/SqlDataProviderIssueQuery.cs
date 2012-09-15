@@ -12,13 +12,13 @@ namespace BugNET.Providers.DataProviders
     public partial class SqlDataProvider
     {
         /// <summary>
-        /// Perform a query agains the issues stored
+        /// Perform a query against the issues stored
         /// </summary>
         /// <param name="queryClauses">Criteria for the query</param>
         /// <param name="sortFields">The name / sort direction of the sort fields</param>
         /// <param name="projectId">The project id</param>
         /// <returns></returns>
-        /// <remarks>This mehtod does not filter the issues by any criteria, that means disabled and closed issues will be returned by default.
+        /// <remarks>This method does not filter the issues by any criteria, that means disabled and closed issues will be returned by default.
         /// It is up to the client caller to define the filters before hand.  For filtering closed and disabled issues use iv.[IsClosed] = 0 and 
         /// iv.[Disabled] = 0
         /// </remarks>
@@ -79,7 +79,7 @@ namespace BugNET.Providers.DataProviders
                         if (!direction.Equals("asc") && !direction.Equals("desc"))
                             direction = "asc";
 
-                        // if the field contains a period then they might be passing in and alias so dont try and clean up
+                        // if the field contains a period then they might be passing in and alias so don't try and clean up
                         if (!field.Contains("."))
                         {
                             field = field.Replace("[]", " ").Trim();    // this is used as a placeholder for spaces in custom
@@ -136,7 +136,7 @@ namespace BugNET.Providers.DataProviders
                             }
                         }
 
-                        // handle when we want to create nested boolean logic in the query clauses
+                        // handle when we want to create nested Boolean logic in the query clauses
                         // this of course means the order of the query clauses must be correct
                         if (boolOper.EndsWith(")"))
                         {
@@ -153,19 +153,13 @@ namespace BugNET.Providers.DataProviders
 							continue;
                         }
 
-                        if (qc.DataType == SqlDbType.DateTime)
-                        {
-                            criteriaBuilder.AppendFormat(" {0} datediff(day, {1}, @p{3}) {2} 0", boolOper, fieldName, compareOper, i);
-                        }
-                        else
-                        {
-                            criteriaBuilder.AppendFormat(" {0} {1} {2} @p{3}", boolOper, fieldName, compareOper, i);
-                        }
-
+                        criteriaBuilder.AppendFormat(qc.DataType == SqlDbType.DateTime
+                                ? " {0} DATEDIFF(D, @p{3}, {1}) {2} 0"
+                                : " {0} {1} {2} @p{3}", boolOper, fieldName, compareOper, i);
                         i++;
                     }
 
-                    // swap out the placeholders for the critiera and the sort fields
+                    // swap out the placeholders for the criteria and the sort fields
                     commandBuilder = commandBuilder.Replace("@CRITERIA@", criteriaBuilder.ToString());
                     commandBuilder = commandBuilder.Replace("@SORT_FIELDS@", sortSql);
 
@@ -185,8 +179,22 @@ namespace BugNET.Providers.DataProviders
                         {
                             //skip if value null
                             if (string.IsNullOrEmpty(qc.FieldValue)) continue;
-                            var par = new SqlParameter("@p" + i, qc.DataType) { Value = qc.FieldValue };
+
+                            var value = qc.FieldValue;
+
+                            if (qc.DataType == SqlDbType.DateTime)
+                            {
+                                DateTime dateTimeValue;
+                                if (DateTime.TryParse(value, out dateTimeValue))
+                                {
+                                    value = dateTimeValue.ToString("yyyy-MM-dd");
+                                }
+                            }
+
+                            var par = new SqlParameter("@p" + i, qc.DataType) { Value = value };
+
                             sqlCmd.Parameters.Add(par);
+
                             commandBuilder.AppendFormat("{0} = {1} | ", par, par.Value);
                             i++;
                         }
@@ -224,7 +232,7 @@ namespace BugNET.Providers.DataProviders
             {
                 // Build Command Text
                 var commandBuilder = new StringBuilder();
-                //'DSS customfields in the same query   
+                //'DSS custom fields in the same query   
                 commandBuilder.Append(projectId != 0
                                           ? "SELECT DISTINCT * FROM BugNet_GetIssuesByProjectIdAndCustomFieldView WHERE ProjectId = @ProjectId AND IssueId IN (SELECT IssueId FROM BugNet_IssuesView WHERE 1 = 1 "
                                           : "SELECT DISTINCT * FROM BugNet_GetIssuesByProjectIdAndCustomFieldView WHERE IssueId IN (SELECT IssueId FROM BugNet_IssuesView WHERE 1 = 1 ");
@@ -320,7 +328,7 @@ namespace BugNET.Providers.DataProviders
 
 
         /// <summary>
-        /// Performs the query against any generic List&lt;T/&gtl;
+        /// Performs the query against any generic List&lt;T/&gt;
         /// Added SMOSS 11-May-2009
         /// Modified 13-April-2010
         /// </summary>
@@ -347,7 +355,7 @@ namespace BugNET.Providers.DataProviders
             //RW check for Standard Query
             foreach (var qc in queryClauses.Where(qc => !qc.CustomFieldQuery))
             {
-                // if Field Value is null or empty do a null comparision
+                // if Field Value is null or empty do a null comparison
                 // But only if the operator is not blank
                 // "William Highfield" Method
                 if (string.IsNullOrEmpty(qc.FieldValue))

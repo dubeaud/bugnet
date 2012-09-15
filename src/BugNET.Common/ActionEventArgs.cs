@@ -4,7 +4,7 @@ namespace BugNET.Common
     {
         public ActionEventArgs() { }
         public bool Success;
-        public Globals.ActionTriggers Trigger;
+        public ActionTriggers Trigger;
         public object ExtraData;
     }
 }

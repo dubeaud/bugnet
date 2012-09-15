@@ -340,6 +340,33 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to -- Reset Fields --.
+        /// </summary>
+        internal static string DropDown_ResetFields {
+            get {
+                return ResourceManager.GetString("DropDown_ResetFields", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to -- Select Custom Field --.
+        /// </summary>
+        internal static string DropDown_SelectCustomField {
+            get {
+                return ResourceManager.GetString("DropDown_SelectCustomField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to -- Select One --.
+        /// </summary>
+        internal static string DropDown_SelectOne {
+            get {
+                return ResourceManager.GetString("DropDown_SelectOne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to due.
         /// </summary>
         internal static string Due {
@@ -1047,6 +1074,15 @@ namespace Resources {
         internal static string ValidationSummaryHeaderText {
             get {
                 return ResourceManager.GetString("ValidationSummaryHeaderText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visibility.
+        /// </summary>
+        internal static string Visibility {
+            get {
+                return ResourceManager.GetString("Visibility", resourceCulture);
             }
         }
         

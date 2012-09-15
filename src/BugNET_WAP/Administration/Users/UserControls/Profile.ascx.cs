@@ -65,7 +65,7 @@ namespace BugNET.Administration.Users.UserControls
                     profile.Save();
 
                     ActionMessage.ShowSuccessMessage(GetLocalResourceObject("UpdateProfile").ToString());
-                    OnAction(new ActionEventArgs { Trigger = Globals.ActionTriggers.Save });
+                    OnAction(new ActionEventArgs { Trigger = ActionTriggers.Save });
                 }
             }
             catch

@@ -64,10 +64,10 @@ namespace BugNET.Issues.UserControls
 
             BindTimeEntries();
 
-            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.AddTimeEntry.ToString()))
+            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Common.Permission.AddTimeEntry.ToString()))
                 AddTimeEntryPanel.Visible = false;
 
-            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.DeleteTimeEntry.ToString()))
+            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Common.Permission.DeleteTimeEntry.ToString()))
                 TimeEntriesDataGrid.Columns[4].Visible = false;
         }
 

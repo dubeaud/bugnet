@@ -21,7 +21,7 @@ namespace BugNET.Common
         }
 
         /// <summary>
-        /// Parses a BugNet status code from a database raiserror exception
+        /// Parses a BugNet status code from a database raise error exception
         /// </summary>
         /// <param name="errorMessage">The error message from the database</param>
         /// <returns></returns>
@@ -41,12 +41,12 @@ namespace BugNET.Common
                     var statusCode = statusCodeParts[1];
 
                     // if we cannot convert the code to a proper status code then do the safe thing and not allow access
-                    return statusCode.ToOrDefault(Globals.DownloadAttachmentStatusCodes.NoAccess.To<int>());
+                    return statusCode.ToOrDefault(DownloadAttachmentStatusCodes.NoAccess.To<int>());
                 }
             }
 
             // if we cannot parse the code out then do the safe thing and not allow access
-            return Globals.DownloadAttachmentStatusCodes.NoAccess.To<int>();
+            return DownloadAttachmentStatusCodes.NoAccess.To<int>();
         }
 
         /// <summary>

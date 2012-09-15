@@ -187,11 +187,20 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You have requested a password reminder from {0}. Your password is: {1}.
+        ///   Looks up a localized string similar to Text\PasswordReminder.xslt.
         /// </summary>
         internal static string PasswordReminder {
             get {
                 return ResourceManager.GetString("PasswordReminder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HTML\PasswordReminder.xslt.
+        /// </summary>
+        internal static string PasswordReminderHTML {
+            get {
+                return ResourceManager.GetString("PasswordReminderHTML", resourceCulture);
             }
         }
         

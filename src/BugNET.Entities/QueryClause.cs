@@ -11,9 +11,9 @@ namespace BugNET.Entities
     public class QueryClause
     {
         /// <summary>
-        /// Gets the boolean operator.
+        /// Gets the Boolean operator.
         /// </summary>
-        /// <value>The boolean operator.</value>
+        /// <value>The Boolean operator.</value>
         public string BooleanOperator { get; set; }
 
         /// <summary>
@@ -57,28 +57,37 @@ namespace BugNET.Entities
         public SqlDbType DataType { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether [custom field query].
+        /// Gets a value indicating whether [custom field query].
         /// </summary>
         /// <value><c>true</c> if [custom field query]; otherwise, <c>false</c>.</value>
-        public bool CustomFieldQuery { get; set; }
+        public bool CustomFieldQuery
+        {
+            get { return CustomFieldId.HasValue; }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating what custom field is used.
+        /// </summary>
+        /// <returns>The custom field id, otherwise null</returns>
+        public int? CustomFieldId { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="QueryClause"/> class.
         /// </summary>
-        /// <param name="booleanOperator">The boolean operator.</param>
+        /// <param name="booleanOperator">The Boolean operator.</param>
         /// <param name="fieldName">Name of the field.</param>
         /// <param name="comparisonOperator">The comparison operator.</param>
         /// <param name="fieldValue">The field value.</param>
         /// <param name="dataType">Type of the data.</param>
-        /// <param name="isCustomField"></param>
-        public QueryClause(string booleanOperator, string fieldName, string comparisonOperator, string fieldValue, SqlDbType dataType, bool isCustomField)
+        /// <param name="customFieldId"> </param>
+        public QueryClause(string booleanOperator, string fieldName, string comparisonOperator, string fieldValue, SqlDbType dataType, int? customFieldId = null)
         {
             BooleanOperator = booleanOperator;
             FieldName = fieldName;
             ComparisonOperator = comparisonOperator;
             FieldValue = fieldValue;
             DataType = dataType;
-            CustomFieldQuery = isCustomField;
+            CustomFieldId = customFieldId;
         }
 
         /// <summary>

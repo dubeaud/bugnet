@@ -3,6 +3,9 @@ using System.Configuration.Provider;
 
 namespace BugNET.Providers.HtmlEditorProviders
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class HtmlEditorProviderCollection : ProviderCollection
     {
         /// <summary>
@@ -28,7 +31,7 @@ namespace BugNET.Providers.HtmlEditorProviders
         }
 
         /// <summary>
-        /// Gets the <see cref="BugNET.Providers.HtmlEditorProvider.HtmlEditorProvider"/> with the specified name.
+        /// GetHtmlEditorProvidertmlEditorProvider"/> with the specified name.
         /// </summary>
         /// <value></value>
         new public HtmlEditorProvider this[string name]

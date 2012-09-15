@@ -33,12 +33,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net40\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,11 +53,12 @@
     <Compile Include="..\Common\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="MailboxReaderThreadState.cs" />
+    <Compile Include="IMailboxReaderConfig.cs" />
+    <Compile Include="ISmtpConfig.cs" />
     <Compile Include="MailboxReader.cs" />
-    <Compile Include="POP3Client\Pop3MailClient.cs" />
-    <Compile Include="POP3Client\Pop3MimeClient.cs" />
-    <Compile Include="POP3Client\QuotedPrintable.cs" />
-    <Compile Include="POP3Client\RxMailMessage.cs" />
+    <Compile Include="MailboxReaderConfig.cs" />
+    <Compile Include="MailboxReaderResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -68,6 +73,10 @@
     <ProjectReference Include="..\BugNET.Entities\BugNET.Entities.csproj">
       <Project>{5A0AE67B-1F8C-4A6D-A02B-B57BB219288F}</Project>
       <Name>BugNET.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LumiSoft.Net\LumiSoft.Net.csproj">
+      <Project>{7AB36CCF-5FFD-4780-A54E-A102ECA028B5}</Project>
+      <Name>LumiSoft.Net</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

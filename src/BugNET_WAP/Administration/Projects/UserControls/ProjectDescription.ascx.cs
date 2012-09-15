@@ -107,7 +107,7 @@ namespace BugNET.Administration.Projects.UserControls
 		{
 			if (Page.IsValid) 
 			{
-                var at = (rblAccessType.SelectedValue == "Public") ? Globals.ProjectAccessType.Public : Globals.ProjectAccessType.Private;
+                var at = (rblAccessType.SelectedValue == "Public") ? ProjectAccessType.Public : ProjectAccessType.Private;
                 var attachmentStorageType = (AttachmentStorageType.SelectedValue == "2") ? IssueAttachmentStorageTypes.Database : IssueAttachmentStorageTypes.FileSystem;
 
 			    ProjectImage projectImage = null;

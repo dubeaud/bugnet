@@ -53,6 +53,7 @@
     </Compile>
     <Compile Include="ActionEventArgs.cs" />
     <Compile Include="AdminMenuItem.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="DataAccessException.cs" />
     <Compile Include="EmailFormatType.cs" />
     <Compile Include="IsEmail.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="IssueRelationTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceStrings.cs" />
+    <Compile Include="ResultStatuses.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="XmlXslTransform.cs" />
     <Compile Include="XslHelpers.cs" />

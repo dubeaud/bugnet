@@ -42,25 +42,24 @@ namespace BugNET
                 throw new HttpException(403, "Access Denied");
 
             }
-            else if (_projectId != 0)
+
+            if (_projectId != 0)
             {
                 //Security Checks
                 if (!User.Identity.IsAuthenticated &&
-                    ProjectManager.GetById(_projectId).AccessType == Globals.ProjectAccessType.Private)
-                {
-                    throw new HttpException(403, "Access Denied");
-                }
-                else if (User.Identity.IsAuthenticated &&
-                            ProjectManager.GetById(_projectId).AccessType == Globals.ProjectAccessType.Private &&
-                            !ProjectManager.IsUserProjectMember(User.Identity.Name, _projectId))
+                    ProjectManager.GetById(_projectId).AccessType == ProjectAccessType.Private)
                 {
                     throw new HttpException(403, "Access Denied");
                 }
 
+                if (User.Identity.IsAuthenticated &&
+                    ProjectManager.GetById(_projectId).AccessType == ProjectAccessType.Private &&
+                    !ProjectManager.IsUserProjectMember(User.Identity.Name, _projectId))
+                {
+                    throw new HttpException(403, "Access Denied");
+                }
             }
-            
 
-          
 
             // Determine whether we're outputting an Atom or RSS feed
             var outputRss = (Request.QueryString["Type"] == "RSS");
@@ -471,14 +470,14 @@ namespace BugNET
             var isStatus = false;
 
             // add the disabled field as the first order of business
-            var q = new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int, false);
+            var q = new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int);
             queryClauses.Add(q);
 
             if (!string.IsNullOrEmpty(IssueCategoryId))
             {
                 q = IssueCategoryId == "0" ?
-                    new QueryClause("AND", "iv.[IssueCategoryId]", "IS", null, SqlDbType.Int, false) :
-                    new QueryClause("AND", "iv.[IssueCategoryId]", "=", IssueCategoryId, SqlDbType.Int, false);
+                    new QueryClause("AND", "iv.[IssueCategoryId]", "IS", null, SqlDbType.Int) :
+                    new QueryClause("AND", "iv.[IssueCategoryId]", "=", IssueCategoryId, SqlDbType.Int);
 
                 queryClauses.Add(q);
             }
@@ -486,8 +485,8 @@ namespace BugNET
             if (!string.IsNullOrEmpty(IssueTypeId))
             {
                 q = IssueTypeId == "0" ?
-                    new QueryClause("AND", "iv.[IssueTypeId]", "IS", null, SqlDbType.Int, false) :
-                    new QueryClause("AND", "iv.[IssueTypeId]", "=", IssueTypeId, SqlDbType.Int, false);
+                    new QueryClause("AND", "iv.[IssueTypeId]", "IS", null, SqlDbType.Int) :
+                    new QueryClause("AND", "iv.[IssueTypeId]", "=", IssueTypeId, SqlDbType.Int);
 
                 queryClauses.Add(q);
             }
@@ -495,8 +494,8 @@ namespace BugNET
             if (!string.IsNullOrEmpty(IssuePriorityId))
             {
                 q = IssuePriorityId == "0" ?
-                    new QueryClause("AND", "iv.[IssuePriorityId]", "IS", null, SqlDbType.Int, false) :
-                    new QueryClause("AND", "iv.[IssuePriorityId]", "=", IssuePriorityId, SqlDbType.Int, false);
+                    new QueryClause("AND", "iv.[IssuePriorityId]", "IS", null, SqlDbType.Int) :
+                    new QueryClause("AND", "iv.[IssuePriorityId]", "=", IssuePriorityId, SqlDbType.Int);
 
                 queryClauses.Add(q);
             }
@@ -504,8 +503,8 @@ namespace BugNET
             if (!string.IsNullOrEmpty(IssueMilestoneId))
             {
                 q = IssueMilestoneId == "0" ?
-                    new QueryClause("AND", "iv.[IssueMilestoneId]", "IS", null, SqlDbType.Int, false) :
-                    new QueryClause("AND", "iv.[IssueMilestoneId]", "=", IssueMilestoneId, SqlDbType.Int, false);
+                    new QueryClause("AND", "iv.[IssueMilestoneId]", "IS", null, SqlDbType.Int) :
+                    new QueryClause("AND", "iv.[IssueMilestoneId]", "=", IssueMilestoneId, SqlDbType.Int);
 
                 queryClauses.Add(q);
             }
@@ -513,20 +512,20 @@ namespace BugNET
             if (!string.IsNullOrEmpty(IssueResolutionId))
             {
                 q = IssueResolutionId == "0" ?
-                    new QueryClause("AND", "iv.[IssueResolutionId]", "IS", null, SqlDbType.Int, false) :
-                    new QueryClause("AND", "iv.[IssueResolutionId]", "=", IssueResolutionId, SqlDbType.Int, false);
+                    new QueryClause("AND", "iv.[IssueResolutionId]", "IS", null, SqlDbType.Int) :
+                    new QueryClause("AND", "iv.[IssueResolutionId]", "=", IssueResolutionId, SqlDbType.Int);
 
                 queryClauses.Add(q);
             }
 
             if (!string.IsNullOrEmpty(AssignedUserName))
             {
-                queryClauses.Add(new QueryClause("AND", "iv.[AssignedUserName]", "=", AssignedUserName, SqlDbType.NVarChar, false));
+                queryClauses.Add(new QueryClause("AND", "iv.[AssignedUserName]", "=", AssignedUserName, SqlDbType.NVarChar));
             }
 
             if (!string.IsNullOrEmpty(OwnerUserName))
             {
-                queryClauses.Add(new QueryClause("AND", "iv.[OwnerUserName]", "=", OwnerUserName, SqlDbType.NVarChar, false));
+                queryClauses.Add(new QueryClause("AND", "iv.[OwnerUserName]", "=", OwnerUserName, SqlDbType.NVarChar));
             }
 
             if (!string.IsNullOrEmpty(IssueStatusId))
@@ -536,22 +535,22 @@ namespace BugNET
                     isStatus = true;
 
                     q = IssueStatusId == "0" ?
-                        new QueryClause("AND", "iv.[IssueStatusId]", "IS", null, SqlDbType.Int, false) :
-                        new QueryClause("AND", "iv.[IssueStatusId]", "=", IssueStatusId, SqlDbType.Int, false);
+                        new QueryClause("AND", "iv.[IssueStatusId]", "IS", null, SqlDbType.Int) :
+                        new QueryClause("AND", "iv.[IssueStatusId]", "=", IssueStatusId, SqlDbType.Int);
 
                     queryClauses.Add(q);
                 }
                 else
                 {
                     isStatus = true;
-                    queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false));
+                    queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int));
                 }
             }
 
             // exclude all closed status's
             if (!isStatus || ExcludeClosedIssues)
             {
-                queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int, false));
+                queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int));
             }
 
             var issueList = IssueManager.PerformQuery(queryClauses, null, _projectId);

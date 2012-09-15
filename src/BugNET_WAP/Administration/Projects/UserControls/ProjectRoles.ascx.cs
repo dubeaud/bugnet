@@ -263,104 +263,104 @@ namespace BugNET.Administration.Projects.UserControls
         {
             //adds
             if (chkAddIssue.Checked)
-            { RoleManager.AddPermission(roleId, (int)Globals.Permission.AddIssue); }
+            { RoleManager.AddPermission(roleId, (int)Common.Permission.AddIssue); }
             else
-            { RoleManager.DeletePermission(roleId, (int)Globals.Permission.AddIssue); }
+            { RoleManager.DeletePermission(roleId, (int)Common.Permission.AddIssue); }
             if (chkAddComment.Checked)
-            { RoleManager.AddPermission(roleId, (int)Globals.Permission.AddComment); }
+            { RoleManager.AddPermission(roleId, (int)Common.Permission.AddComment); }
             else
-            { RoleManager.DeletePermission(roleId, (int)Globals.Permission.AddComment); }
+            { RoleManager.DeletePermission(roleId, (int)Common.Permission.AddComment); }
             if (chkAddAttachment.Checked)
-            { RoleManager.AddPermission(roleId, (int)Globals.Permission.AddAttachment); }
+            { RoleManager.AddPermission(roleId, (int)Common.Permission.AddAttachment); }
             else
-            { RoleManager.DeletePermission(roleId, (int)Globals.Permission.AddAttachment); }
+            { RoleManager.DeletePermission(roleId, (int)Common.Permission.AddAttachment); }
             if (chkAddRelated.Checked)
-            { RoleManager.AddPermission(roleId, (int)Globals.Permission.AddRelated); }
+            { RoleManager.AddPermission(roleId, (int)Common.Permission.AddRelated); }
             else
-            { RoleManager.DeletePermission(roleId, (int)Globals.Permission.AddRelated); }
+            { RoleManager.DeletePermission(roleId, (int)Common.Permission.AddRelated); }
             if (chkAddTimeEntry.Checked)
-            { RoleManager.AddPermission(roleId, (int)Globals.Permission.AddTimeEntry); }
+            { RoleManager.AddPermission(roleId, (int)Common.Permission.AddTimeEntry); }
             else
-            { RoleManager.DeletePermission(roleId, (int)Globals.Permission.AddTimeEntry); }
+            { RoleManager.DeletePermission(roleId, (int)Common.Permission.AddTimeEntry); }
 
-            if (chkAddQuery.Checked) RoleManager.AddPermission(roleId, (int)Globals.Permission.AddQuery); else RoleManager.DeletePermission(roleId, (int)Globals.Permission.AddQuery);
-            if (chkAddSubIssue.Checked) RoleManager.AddPermission(roleId, (int)Globals.Permission.AddSubIssue); else RoleManager.DeletePermission(roleId,(int)Globals.Permission.AddSubIssue);
-            if (chkAddParentIssue.Checked) RoleManager.AddPermission(roleId, (int)Globals.Permission.AddParentIssue); else RoleManager.DeletePermission(roleId, (int)Globals.Permission.AddParentIssue);
+            if (chkAddQuery.Checked) RoleManager.AddPermission(roleId, (int)Common.Permission.AddQuery); else RoleManager.DeletePermission(roleId, (int)Common.Permission.AddQuery);
+            if (chkAddSubIssue.Checked) RoleManager.AddPermission(roleId, (int)Common.Permission.AddSubIssue); else RoleManager.DeletePermission(roleId,(int)Common.Permission.AddSubIssue);
+            if (chkAddParentIssue.Checked) RoleManager.AddPermission(roleId, (int)Common.Permission.AddParentIssue); else RoleManager.DeletePermission(roleId, (int)Common.Permission.AddParentIssue);
 
             //edits
-            if (chkEditProject.Checked) RoleManager.AddPermission(roleId, (int)Globals.Permission.AdminEditProject); else RoleManager.DeletePermission(roleId, (int)Globals.Permission.AdminEditProject);
-            if (chkDeleteProject.Checked) RoleManager.AddPermission(roleId, (int)Globals.Permission.AdminDeleteProject); else RoleManager.DeletePermission(roleId, (int)Globals.Permission.AdminDeleteProject);
-            if (chkCloneProject.Checked) RoleManager.AddPermission(roleId, (int)Globals.Permission.AdminCloneProject); else RoleManager.DeletePermission(roleId, (int)Globals.Permission.AdminCloneProject);
-            if (chkCreateProject.Checked) RoleManager.AddPermission(roleId, (int)Globals.Permission.AdminCreateProject); else RoleManager.DeletePermission(roleId, (int)Globals.Permission.AdminCreateProject);
-            if (chkViewProjectCalendar.Checked) RoleManager.AddPermission(roleId, (int)Globals.Permission.ViewProjectCalendar); else RoleManager.DeletePermission(roleId, (int)Globals.Permission.ViewProjectCalendar);
-            if (chkChangeIssueStatus.Checked) RoleManager.AddPermission(roleId, (int)Globals.Permission.ChangeIssueStatus); else RoleManager.DeletePermission(roleId, (int)Globals.Permission.ChangeIssueStatus);
-            if (chkEditQuery.Checked) RoleManager.AddPermission(roleId, (int)Globals.Permission.EditQuery); else RoleManager.DeletePermission(roleId, (int)Globals.Permission.EditQuery);
+            if (chkEditProject.Checked) RoleManager.AddPermission(roleId, (int)Common.Permission.AdminEditProject); else RoleManager.DeletePermission(roleId, (int)Common.Permission.AdminEditProject);
+            if (chkDeleteProject.Checked) RoleManager.AddPermission(roleId, (int)Common.Permission.AdminDeleteProject); else RoleManager.DeletePermission(roleId, (int)Common.Permission.AdminDeleteProject);
+            if (chkCloneProject.Checked) RoleManager.AddPermission(roleId, (int)Common.Permission.AdminCloneProject); else RoleManager.DeletePermission(roleId, (int)Common.Permission.AdminCloneProject);
+            if (chkCreateProject.Checked) RoleManager.AddPermission(roleId, (int)Common.Permission.AdminCreateProject); else RoleManager.DeletePermission(roleId, (int)Common.Permission.AdminCreateProject);
+            if (chkViewProjectCalendar.Checked) RoleManager.AddPermission(roleId, (int)Common.Permission.ViewProjectCalendar); else RoleManager.DeletePermission(roleId, (int)Common.Permission.ViewProjectCalendar);
+            if (chkChangeIssueStatus.Checked) RoleManager.AddPermission(roleId, (int)Common.Permission.ChangeIssueStatus); else RoleManager.DeletePermission(roleId, (int)Common.Permission.ChangeIssueStatus);
+            if (chkEditQuery.Checked) RoleManager.AddPermission(roleId, (int)Common.Permission.EditQuery); else RoleManager.DeletePermission(roleId, (int)Common.Permission.EditQuery);
 
             if (chkEditIssue.Checked)
-            { RoleManager.AddPermission(roleId, (int)Globals.Permission.EditIssue); }
+            { RoleManager.AddPermission(roleId, (int)Common.Permission.EditIssue); }
             else
-            { RoleManager.DeletePermission(roleId, (int)Globals.Permission.EditIssue); }
+            { RoleManager.DeletePermission(roleId, (int)Common.Permission.EditIssue); }
             if (chkEditComment.Checked)
-            { RoleManager.AddPermission(roleId, (int)Globals.Permission.EditComment); }
+            { RoleManager.AddPermission(roleId, (int)Common.Permission.EditComment); }
             else
-            { RoleManager.DeletePermission(roleId, (int)Globals.Permission.EditComment); }
+            { RoleManager.DeletePermission(roleId, (int)Common.Permission.EditComment); }
             if (chkEditOwnComment.Checked)
-            { RoleManager.AddPermission(roleId, (int)Globals.Permission.OwnerEditComment); }
+            { RoleManager.AddPermission(roleId, (int)Common.Permission.OwnerEditComment); }
             else
-            { RoleManager.DeletePermission(roleId, (int)Globals.Permission.OwnerEditComment); }
+            { RoleManager.DeletePermission(roleId, (int)Common.Permission.OwnerEditComment); }
             if (chkEditIssueDescription.Checked)
-            { RoleManager.AddPermission(roleId, (int)Globals.Permission.EditIssueDescription); }
+            { RoleManager.AddPermission(roleId, (int)Common.Permission.EditIssueDescription); }
             else
-            { RoleManager.DeletePermission(roleId, (int)Globals.Permission.EditIssueDescription); }
+            { RoleManager.DeletePermission(roleId, (int)Common.Permission.EditIssueDescription); }
             if (chkEditIssueSummary.Checked)
-            { RoleManager.AddPermission(roleId, (int)Globals.Permission.EditIssueTitle); }
+            { RoleManager.AddPermission(roleId, (int)Common.Permission.EditIssueTitle); }
             else
-            { RoleManager.DeletePermission(roleId, (int)Globals.Permission.EditIssueTitle); }
+            { RoleManager.DeletePermission(roleId, (int)Common.Permission.EditIssueTitle); }
 
             //deletes
             if (chkDeleteIssue.Checked)
-            { RoleManager.AddPermission(roleId, (int)Globals.Permission.DeleteIssue); }
+            { RoleManager.AddPermission(roleId, (int)Common.Permission.DeleteIssue); }
             else
-            { RoleManager.DeletePermission(roleId, (int)Globals.Permission.DeleteIssue); }
+            { RoleManager.DeletePermission(roleId, (int)Common.Permission.DeleteIssue); }
             if (chkDeleteComment.Checked)
-            { RoleManager.AddPermission(roleId, (int)Globals.Permission.DeleteComment); }
+            { RoleManager.AddPermission(roleId, (int)Common.Permission.DeleteComment); }
             else
-            { RoleManager.DeletePermission(roleId, (int)Globals.Permission.DeleteComment); }
+            { RoleManager.DeletePermission(roleId, (int)Common.Permission.DeleteComment); }
             if (chkDeleteAttachment.Checked)
-            { RoleManager.AddPermission(roleId, (int)Globals.Permission.DeleteAttachment); }
+            { RoleManager.AddPermission(roleId, (int)Common.Permission.DeleteAttachment); }
             else
-            { RoleManager.DeletePermission(roleId, (int)Globals.Permission.DeleteAttachment); }
+            { RoleManager.DeletePermission(roleId, (int)Common.Permission.DeleteAttachment); }
             if (chkDeleteRelated.Checked)
-            { RoleManager.AddPermission(roleId, (int)Globals.Permission.DeleteRelated); }
+            { RoleManager.AddPermission(roleId, (int)Common.Permission.DeleteRelated); }
             else
-            { RoleManager.DeletePermission(roleId, (int)Globals.Permission.DeleteRelated); }
+            { RoleManager.DeletePermission(roleId, (int)Common.Permission.DeleteRelated); }
 
-            if (chkDeleteQuery.Checked) RoleManager.AddPermission(roleId, (int)Globals.Permission.DeleteQuery); else RoleManager.DeletePermission(roleId, (int)Globals.Permission.DeleteQuery);
-            if (chkDeleteParentIssue.Checked) RoleManager.AddPermission(roleId, (int)Globals.Permission.DeleteParentIssue); else RoleManager.DeletePermission(roleId, (int)Globals.Permission.DeleteParentIssue);
-            if (chkDeleteSubIssue.Checked) RoleManager.AddPermission(roleId, (int)Globals.Permission.DeleteSubIssue); else RoleManager.DeletePermission(roleId, (int)Globals.Permission.DeleteSubIssue);
+            if (chkDeleteQuery.Checked) RoleManager.AddPermission(roleId, (int)Common.Permission.DeleteQuery); else RoleManager.DeletePermission(roleId, (int)Common.Permission.DeleteQuery);
+            if (chkDeleteParentIssue.Checked) RoleManager.AddPermission(roleId, (int)Common.Permission.DeleteParentIssue); else RoleManager.DeletePermission(roleId, (int)Common.Permission.DeleteParentIssue);
+            if (chkDeleteSubIssue.Checked) RoleManager.AddPermission(roleId, (int)Common.Permission.DeleteSubIssue); else RoleManager.DeletePermission(roleId, (int)Common.Permission.DeleteSubIssue);
 
 
             //misc
             if (chkAssignIssue.Checked)
-            { RoleManager.AddPermission(roleId, (int)Globals.Permission.AssignIssue); }
+            { RoleManager.AddPermission(roleId, (int)Common.Permission.AssignIssue); }
             else
-            { RoleManager.DeletePermission(roleId, (int)Globals.Permission.AssignIssue); }
+            { RoleManager.DeletePermission(roleId, (int)Common.Permission.AssignIssue); }
             if (chkSubscribeIssue.Checked)
-            { RoleManager.AddPermission(roleId, (int)Globals.Permission.SubscribeIssue); }
+            { RoleManager.AddPermission(roleId, (int)Common.Permission.SubscribeIssue); }
             else
-            { RoleManager.DeletePermission(roleId, (int)Globals.Permission.SubscribeIssue); }
+            { RoleManager.DeletePermission(roleId, (int)Common.Permission.SubscribeIssue); }
 
             if (chkReOpenIssue.Checked)
-            { RoleManager.AddPermission(roleId, (int)Globals.Permission.ReopenIssue); }
+            { RoleManager.AddPermission(roleId, (int)Common.Permission.ReopenIssue); }
             else
-            { RoleManager.DeletePermission(roleId, (int)Globals.Permission.ReopenIssue); }
+            { RoleManager.DeletePermission(roleId, (int)Common.Permission.ReopenIssue); }
             
-            if (chkCloseIssue.Checked) RoleManager.AddPermission(roleId, (int)Globals.Permission.CloseIssue); else RoleManager.DeletePermission(roleId, (int)Globals.Permission.CloseIssue); 
+            if (chkCloseIssue.Checked) RoleManager.AddPermission(roleId, (int)Common.Permission.CloseIssue); else RoleManager.DeletePermission(roleId, (int)Common.Permission.CloseIssue); 
 
             if (chkDeleteTimeEntry.Checked)
-            { RoleManager.AddPermission(roleId, (int)Globals.Permission.DeleteTimeEntry); }
+            { RoleManager.AddPermission(roleId, (int)Common.Permission.DeleteTimeEntry); }
             else
-            { RoleManager.DeletePermission(roleId, (int)Globals.Permission.DeleteTimeEntry); }
+            { RoleManager.DeletePermission(roleId, (int)Common.Permission.DeleteTimeEntry); }
         }
 
         /// <summary>
@@ -403,106 +403,106 @@ namespace BugNET.Administration.Projects.UserControls
 
             var permissions = RoleManager.GetPermissionsById(RoleId);
 
-            foreach (var permission in permissions.Select(p => p.Key.ToEnum(true, Globals.Permission.None)))
+            foreach (var permission in permissions.Select(p => p.Key.ToEnum(true, Common.Permission.None)))
             {
                 switch (permission)
                 {
-                    case Globals.Permission.None:
+                    case Common.Permission.None:
                         break;
-                    case Globals.Permission.CloseIssue:
+                    case Common.Permission.CloseIssue:
                         chkCloseIssue.Checked = true;
                         break;
-                    case Globals.Permission.AddIssue:
+                    case Common.Permission.AddIssue:
                         chkAddIssue.Checked = true;
                         break;
-                    case Globals.Permission.AssignIssue:
+                    case Common.Permission.AssignIssue:
                         chkAssignIssue.Checked = true;
                         break;
-                    case Globals.Permission.EditIssue:
+                    case Common.Permission.EditIssue:
                         chkEditIssue.Checked = true;
                         break;
-                    case Globals.Permission.SubscribeIssue:
+                    case Common.Permission.SubscribeIssue:
                         chkSubscribeIssue.Checked = true;
                         break;
-                    case Globals.Permission.DeleteIssue:
+                    case Common.Permission.DeleteIssue:
                         chkDeleteIssue.Checked = true;
                         break;
-                    case Globals.Permission.AddComment:
+                    case Common.Permission.AddComment:
                         chkAddComment.Checked = true;
                         break;
-                    case Globals.Permission.EditComment:
+                    case Common.Permission.EditComment:
                         chkEditComment.Checked = true;
                         break;
-                    case Globals.Permission.DeleteComment:
+                    case Common.Permission.DeleteComment:
                         chkDeleteComment.Checked = true;
                         break;
-                    case Globals.Permission.AddAttachment:
+                    case Common.Permission.AddAttachment:
                         chkAddAttachment.Checked = true;
                         break;
-                    case Globals.Permission.DeleteAttachment:
+                    case Common.Permission.DeleteAttachment:
                         chkDeleteAttachment.Checked = true;
                         break;
-                    case Globals.Permission.AddRelated:
+                    case Common.Permission.AddRelated:
                         chkAddRelated.Checked = true;
                         break;
-                    case Globals.Permission.DeleteRelated:
+                    case Common.Permission.DeleteRelated:
                         chkDeleteRelated.Checked = true;
                         break;
-                    case Globals.Permission.ReopenIssue:
+                    case Common.Permission.ReopenIssue:
                         chkReOpenIssue.Checked = true;
                         break;
-                    case Globals.Permission.OwnerEditComment:
+                    case Common.Permission.OwnerEditComment:
                         chkEditOwnComment.Checked = true;
                         break;
-                    case Globals.Permission.EditIssueDescription:
+                    case Common.Permission.EditIssueDescription:
                         chkEditIssueDescription.Checked = true;
                         break;
-                    case Globals.Permission.EditIssueTitle:
+                    case Common.Permission.EditIssueTitle:
                         chkEditIssueSummary.Checked = true;
                         break;
-                    case Globals.Permission.AdminEditProject:
+                    case Common.Permission.AdminEditProject:
                         chkEditProject.Checked = true;
                         break;
-                    case Globals.Permission.AddTimeEntry:
+                    case Common.Permission.AddTimeEntry:
                         chkAddTimeEntry.Checked = true;
                         break;
-                    case Globals.Permission.DeleteTimeEntry:
+                    case Common.Permission.DeleteTimeEntry:
                         chkDeleteTimeEntry.Checked = true;
                         break;
-                    case Globals.Permission.AdminCreateProject:
+                    case Common.Permission.AdminCreateProject:
                         chkCreateProject.Checked = true;
                         break;
-                    case Globals.Permission.AddQuery:
+                    case Common.Permission.AddQuery:
                         chkAddQuery.Checked = true;
                         break;
-                    case Globals.Permission.DeleteQuery:
+                    case Common.Permission.DeleteQuery:
                         chkDeleteQuery.Checked = true;
                         break;
-                    case Globals.Permission.AdminCloneProject:
+                    case Common.Permission.AdminCloneProject:
                         chkCloneProject.Checked = true;
                         break;
-                    case Globals.Permission.AddSubIssue:
+                    case Common.Permission.AddSubIssue:
                         chkAddSubIssue.Checked = true;
                         break;
-                    case Globals.Permission.DeleteSubIssue:
+                    case Common.Permission.DeleteSubIssue:
                         chkDeleteSubIssue.Checked = true;
                         break;
-                    case Globals.Permission.AddParentIssue:
+                    case Common.Permission.AddParentIssue:
                         chkAddParentIssue.Checked = true;
                         break;
-                    case Globals.Permission.DeleteParentIssue:
+                    case Common.Permission.DeleteParentIssue:
                         chkDeleteParentIssue.Checked = true;
                         break;
-                    case Globals.Permission.AdminDeleteProject:
+                    case Common.Permission.AdminDeleteProject:
                         chkDeleteProject.Checked = true;
                         break;
-                    case Globals.Permission.ViewProjectCalendar:
+                    case Common.Permission.ViewProjectCalendar:
                         chkViewProjectCalendar.Checked = true;
                         break;
-                    case Globals.Permission.ChangeIssueStatus:
+                    case Common.Permission.ChangeIssueStatus:
                         chkChangeIssueStatus.Checked = true;
                         break;
-                    case Globals.Permission.EditQuery:
+                    case Common.Permission.EditQuery:
                         chkEditQuery.Checked = true;
                         break;
                     default:

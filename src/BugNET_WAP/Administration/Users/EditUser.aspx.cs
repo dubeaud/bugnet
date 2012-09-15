@@ -101,7 +101,7 @@ namespace BugNET.Administration.Users
         {
             switch (args.Trigger)
             {
-                case Globals.ActionTriggers.Save:
+                case ActionTriggers.Save:
                     if (UserId != Guid.Empty)
                     {
                         var user = UserManager.GetUser(UserId);
@@ -127,7 +127,7 @@ namespace BugNET.Administration.Users
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!UserManager.HasPermission(ProjectId, Globals.Permission.AdminEditProject.ToString()))
+            if (!UserManager.HasPermission(ProjectId, Common.Permission.AdminEditProject.ToString()))
                 Response.Redirect("~/Errors/AccessDenied.aspx");
 
             if (UserId != Guid.Empty)

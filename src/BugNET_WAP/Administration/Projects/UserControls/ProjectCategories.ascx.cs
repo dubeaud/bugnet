@@ -90,7 +90,7 @@ namespace BugNET.Administration.Projects.UserControls
             {
                 var queryClauses = new List<QueryClause>
                 {
-                    new QueryClause("AND", "iv.[IssueCategoryId]", "=", HiddenField1.Value, SqlDbType.Int, false)
+                    new QueryClause("AND", "iv.[IssueCategoryId]", "=", HiddenField1.Value, SqlDbType.Int)
                 };
 
                 var issues = IssueManager.PerformQuery(queryClauses, null, ProjectId);

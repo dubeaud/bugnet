@@ -43,18 +43,21 @@ namespace BugNET.BLL
 
         public static T Get<T>(HostSettingNames key, T defaultValue) where T : IConvertible
         {
+            return Get(GetHostSettings(), key, defaultValue);
+        }
+
+        public static T Get<T>(Hashtable settingsTable, HostSettingNames key, T defaultValue) where T : IConvertible
+        {
             var val = defaultValue;
 
-            if (GetHostSettings().Contains(key.ToString()))
+            if (settingsTable.Contains(key.ToString()))
             {
-                var setting = Convert.ToString(GetHostSettings()[key.ToString()]);
+                var setting = Convert.ToString(settingsTable[key.ToString()]);
 
                 var converter = TypeDescriptor.GetConverter(typeof(T));
-                if (converter != null)
-                {
-                    // this will throw an exception when conversion is not possible
-                    val = (T)converter.ConvertFromString(setting);
-                }
+
+                // this will throw an exception when conversion is not possible
+                val = (T)converter.ConvertFromString(setting);
             }
 
             return val;
@@ -68,11 +71,16 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static bool Get(HostSettingNames key, bool defaultValue)
         {
+            return Get(GetHostSettings(), key, defaultValue);
+        }
+
+        public static bool Get(Hashtable settingsTable, HostSettingNames key, bool defaultValue)
+        {
             var val = defaultValue;
 
-            if (GetHostSettings().Contains(key.ToString()))
+            if (settingsTable.Contains(key.ToString()))
             {
-                var setting = Convert.ToString(GetHostSettings()[key.ToString()]).ToLower();
+                var setting = Convert.ToString(settingsTable[key.ToString()]).ToLower();
                 if (setting.Equals("1")) return true;
 
                 if (bool.TryParse(setting.ToLower(), out val))
@@ -88,23 +96,38 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static Hashtable GetHostSettings()
         {
-            var h = (Hashtable)HttpRuntime.Cache["HostSettings"];
+            if(HttpRuntime.Cache == null)
+            {
+                return LoadHostSettings();
+            }
+
+            var h = HttpRuntime.Cache["HostSettings"] as Hashtable;
 
             if (h == null)
             {
-                h = new Hashtable();
-
-                var al = DataProviderManager.Provider.GetHostSettings();
-
-                foreach (var hs in al)
-                {
-                    h.Add(hs.SettingName, hs.SettingValue);
-                }
-
+                h = LoadHostSettings();
                 HttpRuntime.Cache.Insert("HostSettings", h);
             }
 
             return h;
+        }
+
+        /// <summary>
+        /// Loads the host settings from the database 
+        /// </summary>
+        /// <returns></returns>
+        public static Hashtable LoadHostSettings()
+        {
+            var hostSettings = new Hashtable();
+
+            var al = DataProviderManager.Provider.GetHostSettings();
+
+            foreach (var hs in al)
+            {
+                hostSettings.Add(hs.SettingName, hs.SettingValue);
+            }
+
+            return hostSettings;
         }
 
         /// <summary>

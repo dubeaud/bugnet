@@ -11,10 +11,10 @@
 
     <xsl:template match="/root">
         <h1>Welkom bij<xsl:value-of select="HostSetting_ApplicationTitle" />!</h1>
-		<p>Hallo, <xsl:value-of select="User/DisplayName" disable-output-escaping="yes" />.  U ontvang deze email omdat u recent een gebruikersaccount heeft aangemaakt op <xsl:value-of select="HostSetting_ApplicationTitle" />. Voordat u kunt inloggen, moet u de volgende link gebruiken om uw account te activeren: </p>
+		<p>Hallo, <xsl:value-of select="NotificationUser/DisplayName" disable-output-escaping="yes" />.  U ontvang deze email omdat u recent een gebruikersaccount heeft aangemaakt op <xsl:value-of select="HostSetting_ApplicationTitle" />. Voordat u kunt inloggen, moet u de volgende link gebruiken om uw account te activeren: </p>
 		<p>
-			<a href="{HostSetting_DefaultUrl}Account/Verify.aspx?ID={User/Id}" target="_blank">
-                <xsl:value-of select="HostSetting_DefaultUrl" />Account/Verify.aspx?ID=<xsl:value-of select="User/Id" />
+			<a href="{HostSetting_DefaultUrl}Account/Verify.aspx?ID={NotificationUser/Id}" target="_blank">
+                <xsl:value-of select="HostSetting_DefaultUrl" />Account/Verify.aspx?ID=<xsl:value-of select="NotificationUser/Id" />
             </a>
 		</p>
 		<p>Nadat u de bovenstaande link heeft gebruikt kunt u inloggen op de website!</p>

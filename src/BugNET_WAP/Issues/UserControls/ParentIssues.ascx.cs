@@ -61,7 +61,7 @@ namespace BugNET.Issues.UserControls
             if (entity == null) return;
 
             // allow delete if user had the permission, the project admin or a super user trying to delete the comment.
-            if (!UserManager.IsInRole(ProjectId, Globals.Permission.DeleteParentIssue.ToString()) &&
+            if (!UserManager.IsInRole(ProjectId, Common.Permission.DeleteParentIssue.ToString()) &&
                 !UserManager.IsSuperUser() && !UserManager.IsInRole(ProjectId, Globals.ProjectAdminRole)) return;
 
             cmdDelete.Visible = true;
@@ -181,11 +181,11 @@ namespace BugNET.Issues.UserControls
         {
             BindRelated();
 
-            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.DeleteParentIssue.ToString()))
+            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Common.Permission.DeleteParentIssue.ToString()))
                 IssuesDataGrid.Columns[4].Visible = false;
 
             //check users role permission for adding a related issue
-            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.AddParentIssue.ToString()))
+            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Common.Permission.AddParentIssue.ToString()))
                 AddParentIssuePanel.Visible = false;
         }
 

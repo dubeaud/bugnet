@@ -21,10 +21,12 @@ namespace BugNET.UserControls
         /// Datasource 
         /// </summary>
         private List<Issue> _dataSource;
+
         /// <summary>
-        /// Event that fires on a databind
+        /// Event that fires on a data bind
         /// </summary>
         public event EventHandler RebindCommand;
+
         /// <summary>
         /// Array of issue columns
         /// </summary>
@@ -177,7 +179,7 @@ namespace BugNET.UserControls
                         lstIssueColumns.Items.Remove(lstIssueColumns.Items.FindByValue("4"));
                     }
 
-                    if (Page.User.Identity.IsAuthenticated && UserManager.HasPermission(projectId, Globals.Permission.EditIssue.ToString()))
+                    if (Page.User.Identity.IsAuthenticated && UserManager.HasPermission(projectId, Common.Permission.EditIssue.ToString()))
                     {
                         LeftButtonContainerPanel.Visible = true;
 
@@ -203,6 +205,7 @@ namespace BugNET.UserControls
                         dropAssigned.DataBind();
                         dropResolution.DataSource = ResolutionManager.GetByProjectId(projectId);
                         dropResolution.DataBind();
+                        chkDueDateReset.Checked = false;
                     }
                     else
                     {
@@ -305,10 +308,18 @@ namespace BugNET.UserControls
 
                     if (issue == null) continue;
 
-                    var dueDate = DateTime.MinValue;
-
                     if (DueDate.SelectedValue != null)
-                        dueDate = (DateTime)DueDate.SelectedValue;
+                    {
+                        var dueDate = (DateTime)DueDate.SelectedValue;
+
+                        if (dueDate != null)
+                        issue.DueDate = dueDate;
+                    }
+
+                    if (chkDueDateReset.Checked)
+                    {
+                        issue.DueDate = DateTime.MinValue;
+                    }
 
                     issue.CategoryId = dropCategory.SelectedValue != 0 ? dropCategory.SelectedValue : issue.CategoryId;
                     issue.CategoryName = dropCategory.SelectedValue != 0 ? dropCategory.SelectedText : issue.CategoryName;
@@ -336,8 +347,6 @@ namespace BugNET.UserControls
 
                     issue.StatusId = dropStatus.SelectedValue != 0 ? dropStatus.SelectedValue : issue.StatusId;
                     issue.StatusName = dropStatus.SelectedValue != 0 ? dropStatus.SelectedText : issue.StatusName;
-
-                    issue.DueDate = dueDate;
 
                     issue.LastUpdateDisplayName = Security.GetDisplayName();
                     issue.LastUpdateUserName = Security.GetUserName();
@@ -519,9 +528,14 @@ namespace BugNET.UserControls
             // set the custom field values
             var i = FIXED_COLUMNS + 1;
 
-            foreach (var customFieldValue in issue.IssueCustomFields)
+            foreach (var value in issue.IssueCustomFields.Select(customFieldValue => customFieldValue.FieldValue))
             {
-                e.Row.Cells[i].Text = customFieldValue.FieldValue;
+                DateTime dt;
+                e.Row.Cells[i].Text = value;
+                if(DateTime.TryParse(value, out dt))
+                {
+                    e.Row.Cells[i].Text = dt.ToShortDateString();
+                }
                 i++;
             }
 

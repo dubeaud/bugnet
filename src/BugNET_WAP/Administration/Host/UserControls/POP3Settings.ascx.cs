@@ -1,12 +1,20 @@
 ﻿using System;
+using System.Web;
+using System.Linq;
 using BugNET.BLL;
 using BugNET.Common;
 using BugNET.UserInterfaceLayer;
+using log4net;
 
 namespace BugNET.Administration.Host.UserControls
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class POP3Settings : System.Web.UI.UserControl, IEditHostSettingControl
     {
+        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         /// <summary>
         /// Handles the Load event of the Page control.
         /// </summary>
@@ -23,7 +31,9 @@ namespace BugNET.Administration.Host.UserControls
         /// Updates this instance.
         /// </summary>
         public bool Update()
-        {    
+        {
+            var currentState = Boolean.Parse(HostSettingManager.Get(HostSettingNames.Pop3ReaderEnabled));
+
             HostSettingManager.UpdateHostSetting(HostSettingNames.Pop3ReaderEnabled, POP3ReaderEnabled.Checked.ToString());
             HostSettingManager.UpdateHostSetting(HostSettingNames.Pop3Server, POP3Server.Text);
             HostSettingManager.UpdateHostSetting(HostSettingNames.Pop3UseSSL, POP3UseSSL.Checked.ToString());
@@ -31,11 +41,43 @@ namespace BugNET.Administration.Host.UserControls
             HostSettingManager.UpdateHostSetting(HostSettingNames.Pop3Password, POP3Password.Text);
             HostSettingManager.UpdateHostSetting(HostSettingNames.Pop3Interval, POP3Interval.Text);
             HostSettingManager.UpdateHostSetting(HostSettingNames.Pop3DeleteAllMessages, POP3DeleteMessages.Checked.ToString());
-            HostSettingManager.UpdateHostSetting(HostSettingNames.Pop3InlineAttachedPictures, POP3ProcessAttachments.Checked.ToString());
+            HostSettingManager.UpdateHostSetting(HostSettingNames.Pop3InlineAttachedPictures, POP3InlineAttachedPictures.Checked.ToString());
             HostSettingManager.UpdateHostSetting(HostSettingNames.Pop3BodyTemplate, POP3BodyTemplate.Text);
             HostSettingManager.UpdateHostSetting(HostSettingNames.Pop3ReportingUsername, POP3ReportingUsername.Text);
             HostSettingManager.UpdateHostSetting(HostSettingNames.Pop3Port, POP3Port.Text);
             HostSettingManager.UpdateHostSetting(HostSettingNames.Pop3ProcessAttachments, POP3ProcessAttachments.Checked.ToString());
+
+            try
+            {
+                var moduleFound = false;
+
+                if ((currentState != POP3ReaderEnabled.Checked))
+                {
+                    var modules = HttpContext.Current.ApplicationInstance.Modules;
+
+                    // should only be one
+                    foreach (var module in modules.Keys.Cast<string>().Select(key => modules[key]).Where(module => module.GetType().ToString().Contains("MailboxReaderModule")))
+                    {
+                        moduleFound = true;
+                        module.Init(HttpContext.Current.ApplicationInstance);
+                    }
+
+                    if( POP3ReaderEnabled.Checked && !moduleFound)
+                    {
+                        var parentPage = Page as Settings;
+
+                        if(parentPage != null)
+                        {
+                            parentPage.Message1.ShowWarningMessage(GetLocalResourceObject("MailboxReaderModuleMissing").ToString(), true);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Warn(ex.Message);
+            }
+
             return true;
         }
 
@@ -56,6 +98,7 @@ namespace BugNET.Administration.Host.UserControls
             POP3Password.Attributes.Add("value", HostSettingManager.Get(HostSettingNames.Pop3Password));
             POP3Port.Text = HostSettingManager.Get(HostSettingNames.Pop3Port);
             POP3ProcessAttachments.Checked = Boolean.Parse(HostSettingManager.Get(HostSettingNames.Pop3ProcessAttachments));
+            POP3InlineAttachedPictures.Checked = Boolean.Parse(HostSettingManager.Get(HostSettingNames.Pop3InlineAttachedPictures));
         }
 
         #endregion

@@ -44,7 +44,7 @@ namespace BugNET.HttpModules
         /// <param name="context">An <see cref="T:System.Web.HttpApplication"></see> that provides access to the methods, properties, and events common to all application objects within an ASP.NET application</param>
         public void Init(HttpApplication context)
         {
-            context.AuthenticateRequest += new EventHandler(context_AuthenticateRequest);
+            context.AuthenticateRequest += context_AuthenticateRequest;
         }
 
         /// <summary>

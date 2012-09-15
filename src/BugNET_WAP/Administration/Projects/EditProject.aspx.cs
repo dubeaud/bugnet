@@ -26,7 +26,7 @@ namespace BugNET.Administration.Projects
 		{
             if (!UserManager.IsSuperUser())
             {
-                if (!UserManager.HasPermission(ProjectId, Globals.Permission.AdminEditProject.ToString()))
+                if (!UserManager.HasPermission(ProjectId, Permission.AdminEditProject.ToString()))
                 {
                     Response.Redirect("~/Errors/AccessDenied.aspx");
                 }   
@@ -43,13 +43,13 @@ namespace BugNET.Administration.Projects
                 message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), litProjectName.Text);
                 DeleteButton.OnClientClick = String.Format("return confirm('{0}');", message);
 
-                if (!UserManager.HasPermission(ProjectId, Globals.Permission.AdminDeleteProject.ToString()))
+                if (!UserManager.HasPermission(ProjectId, Permission.AdminDeleteProject.ToString()))
                 {
                     DeleteButton.Visible = false;
                     Image1.Visible = false;
                 }
 
-                if (!UserManager.HasPermission(ProjectId, Globals.Permission.AdminCloneProject.ToString()))
+                if (!UserManager.HasPermission(ProjectId, Permission.AdminCloneProject.ToString()))
                 {
                     imgCloneProject.Visible = false;
                     linkCloneProject.Visible = false;

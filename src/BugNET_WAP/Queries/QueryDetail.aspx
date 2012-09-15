@@ -72,9 +72,8 @@
         <tr>
             <td>
                 <hr />
-                <h1>
-                    Results</h1>
-                <it:DisplayIssues ID="ctlDisplayIssues" runat="Server" />
+                <h1>Results</h1>
+                <it:DisplayIssues ID="ctlDisplayIssues" runat="Server" OnRebindCommand="IssuesRebind" />
             </td>
         </tr>
     </table>

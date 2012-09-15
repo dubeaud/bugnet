@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Web;
 using BugNET.Common;
 using BugNET.DAL;
 using BugNET.Entities;
@@ -42,26 +43,51 @@ namespace BugNET.BLL
                     return false;
                 }
 
-                //existing issue
-                entity.LastUpdate = DateTime.Now;
-                entity.LastUpdateUserName = Security.GetUserName();
-
-                var issueChanges = GetIssueChanges(GetById(entity.Id), entity);
-
-                DataProviderManager.Provider.UpdateIssue(entity);
-                        
-                UpdateHistory(issueChanges);
-                    
-                IssueNotificationManager.SendIssueNotifications(entity.Id, issueChanges);
-
-                if (entity.SendNewAssigneeNotification)
+                // this is here due to issue with updating the issue from the Mailbox reader
+                // to fix the inline images.  we don't have an http context so we are limited to what we can
+                // do from here.  in any case the mailbox reader is creating and updating concurrently so
+                // we are not missing anything.
+                if(HttpContext.Current != null)
                 {
-                    //add this user to notifications and send them a notification
-                    var notification = new IssueNotification() { IssueId = entity.Id, NotificationUsername = entity.AssignedUserName };
+                    //existing issue
+                    entity.LastUpdate = DateTime.Now;
+                    entity.LastUpdateUserName = Security.GetUserName();
 
-                    IssueNotificationManager.SaveOrUpdate(notification);
-                    IssueNotificationManager.SendNewAssigneeNotification(notification);
+                    var issueChanges = GetIssueChanges(GetById(entity.Id), entity);
+
+                    DataProviderManager.Provider.UpdateIssue(entity);
+
+                    UpdateHistory(issueChanges);
+
+                    IssueNotificationManager.SendIssueNotifications(entity.Id, issueChanges);
+
+                    if (entity.SendNewAssigneeNotification)
+                    {
+                        
+
+                        //add this user to notifications and send them a notification
+                        var notification = new IssueNotification
+                            {
+                                IssueId = entity.Id, 
+                                NotificationUsername = entity.AssignedUserName,
+                                NotificationCulture = string.Empty
+                            };
+
+                        var profile = new WebProfile().GetProfile(entity.AssignedUserName);
+                        if (profile != null && !string.IsNullOrWhiteSpace(profile.PreferredLocale))
+                        {
+                            notification.NotificationCulture = profile.PreferredLocale;
+                        }
+
+                        IssueNotificationManager.SaveOrUpdate(notification);
+                        IssueNotificationManager.SendNewAssigneeNotification(notification);
+                    }
                 }
+                else
+                {
+                    DataProviderManager.Provider.UpdateIssue(entity);
+                }
+
                 return true;
             }
             catch(Exception ex)
@@ -570,7 +596,7 @@ namespace BugNET.BLL
             if (UserManager.IsSuperUser()) return true;
 
             // if the issue is private and current user does not have project admin rights
-            if (issue.Visibility == Globals.IssueVisibility.Private.To<int>() && !UserManager.IsInRole(issue.ProjectId, Globals.ProjectAdminRole))
+            if (issue.Visibility == IssueVisibility.Private.To<int>() && !UserManager.IsInRole(issue.ProjectId, Globals.ProjectAdminRole))
             {
                 // if the current user is either the assigned / creator / owner then they can see the private issue
                 return (

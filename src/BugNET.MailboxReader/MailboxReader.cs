@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Mail;
+using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using BugNET.BLL;
-using BugNET.MailboxReader.POP3Client;
+using BugNET.BLL.Notifications;
+using BugNET.Common;
 using BugNET.Entities;
+using HtmlAgilityPack;
+using LumiSoft.Net.Log;
+using LumiSoft.Net.MIME;
+using LumiSoft.Net.Mail;
+using LumiSoft.Net.POP3.Client;
 using log4net;
 
 namespace BugNET.MailboxReader
@@ -15,251 +22,460 @@ namespace BugNET.MailboxReader
     /// </summary>
     public class MailboxReader
     {
-        string _Server;
-        string _Username;
-        string _Password;
-        bool _ProcessInlineAttachedPictures;
-        bool _DeleteAllMessages;
-        string _ReportingUserName;
-        string _BodyTemplate;
-        int _Port;
-        bool _UseSSL;
-        bool _ProcessAttachments;
+        static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        private static readonly ILog Log = LogManager.GetLogger(typeof(MailboxReader));
+        MailboxReaderConfig Config { get; set; }
 
         /// <summary>
-        /// Processes the exception.
+        /// Initializes a new instance of the <see cref="MailboxReader"/> class.
         /// </summary>
-        /// <param name="ex">The exception.</param>
-        /// <returns></returns>
-        private ApplicationException ProcessException(Exception ex)
+        /// <param name="configuration">Options to configure the mail reader</param>
+        public MailboxReader(IMailboxReaderConfig configuration)
         {
+            Config = configuration as MailboxReaderConfig;
 
-            if (Log.IsErrorEnabled)
-                Log.Error("Mailbox Reader Error", ex);
-
-            return new ApplicationException(LoggingManager.GetErrorMessageResource("MailboxReaderError"), ex);
+            if (configuration == null) throw new ArgumentNullException("configuration");
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MailboxReader2"/> class.
+        /// Reads the mail.
         /// </summary>
-        /// <param name="server">The server.</param>
-        /// <param name="userName">Name of the user.</param>
-        /// <param name="password">The password.</param>
-        /// <param name="processInlineAttachedPictures">if set to <c>true</c> [process inline attached pictures].</param>
-        /// <param name="bodyTemplate">The body template.</param>
-        /// <param name="deleteAllMessages">if set to <c>true</c> [delete all messages].</param>
-        /// <param name="reportingUserName">Name of the reporting user.</param>
-        public MailboxReader(string server, int port, bool useSSL, string userName, string password, bool processInlineAttachedPictures, string bodyTemplate,
-           bool deleteAllMessages, string reportingUserName, bool processAttachments)
+        public MailboxReaderResult ReadMail()
         {
-            _Server = server;
-            _Port = port;
-            _UseSSL = useSSL;
-            _Username = userName;
-            _Password = password;
-            _ProcessInlineAttachedPictures = processInlineAttachedPictures;
-            _BodyTemplate = bodyTemplate;
-            _DeleteAllMessages = deleteAllMessages;
-            _ReportingUserName = reportingUserName;
-            _ProcessAttachments = processAttachments;
+            var result = new MailboxReaderResult();
+            IList<Project> projects = new List<Project>();
+
+            LogInfo("MailboxReader: Begin read mail.");
+
+            try
+            {
+                using (var pop3Client = new POP3_Client())
+                {
+                    // configure the logger
+                    pop3Client.Logger = new Logger();
+                    pop3Client.Logger.WriteLog += LogPop3Client;
+
+                    // connect to the server
+                    pop3Client.Connect(Config.Server, Config.Port, Config.UseSsl);
+
+                    // authenticate
+                    pop3Client.Login(Config.Username, Config.Password);
+
+                    // process the messages on the server
+                    foreach (POP3_ClientMessage message in pop3Client.Messages)
+                    {
+                        var mailHeader = Mail_Message.ParseFromByte(message.HeaderToByte());
+
+                        if (mailHeader != null)
+                        {
+                            var messageFrom = string.Empty;
+
+                            if (mailHeader.From.Count > 0)
+                            {
+                                messageFrom = string.Join("; ", mailHeader.From.ToList().Select(p => p.Address).ToArray()).Trim();
+                            }
+
+                            var recipients = mailHeader.To.Mailboxes.Select(mailbox => mailbox.Address).ToList();
+
+                            if (mailHeader.Cc != null)
+                            {
+                                recipients.AddRange(mailHeader.Cc.Mailboxes.Select(mailbox => mailbox.Address));
+                            }
+
+                            if (mailHeader.Bcc != null)
+                            {
+                                recipients.AddRange(mailHeader.Bcc.Mailboxes.Select(mailbox => mailbox.Address));
+                            }
+
+                            // loop through the mailboxes
+                            foreach (var address in recipients)
+                            {
+                                var pmbox = ProjectMailboxManager.GetByMailbox(address);
+                                
+                                // cannot find the mailbox skip the rest
+                                if (pmbox == null)
+                                {
+                                    LogWarning(string.Format("MailboxReader: could not find project mailbox: {0} skipping.", address));
+                                    continue;
+                                }
+
+                                var project = projects.FirstOrDefault(p => p.Id == pmbox.ProjectId);
+
+                                if(project == null)
+                                {
+                                    project = ProjectManager.GetById(pmbox.ProjectId);
+
+                                    // project is disabled skip
+                                    if (project.Disabled)
+                                    {
+                                        LogWarning(string.Format("MailboxReader: Project {0} - {1} is flagged as disabled skipping.", project.Id, project.Code));
+                                        continue;
+                                    }
+
+                                    projects.Add(project);
+                                }
+
+                                var entry = new MailboxEntry
+                                {
+                                    Title = mailHeader.Subject.Trim(),
+                                    From = messageFrom,
+                                    ProjectMailbox = pmbox,
+                                    Date = mailHeader.Date,
+                                    Project = project,
+                                    Content = "Email Body could not be parsed."
+                                };
+
+                                var mailbody = Mail_Message.ParseFromByte(message.MessageToByte());
+
+                                if (string.IsNullOrEmpty(mailbody.BodyHtmlText)) // no html must be text
+                                {
+                                    entry.Content = mailbody.BodyText.Replace("\n\r", "<br/>").Replace("\r\n", "<br/>").Replace("\r", "");
+                                }
+                                else
+                                {
+                                    //TODO: Enhancements could include regular expressions / string matching or not matching 
+                                    // for particular strings values in the subject or body.
+                                    // strip the <body> out of the message (using code from below)
+                                    var bodyExtractor = new Regex("<body.*?>(?<content>.*)</body>", RegexOptions.IgnoreCase | RegexOptions.Singleline);
+                                    var match = bodyExtractor.Match(mailbody.BodyHtmlText);
+
+                                    var emailContent = match.Success && match.Groups["content"] != null
+                                        ? match.Groups["content"].Value
+                                        : mailbody.BodyHtmlText;
+
+                                    entry.Content = emailContent.Replace("&lt;", "<").Replace("&gt;", ">");
+                                    entry.IsHtml = true;
+                                }
+
+                                if (Config.ProcessAttachments && project.AllowAttachments)
+                                {
+                                    foreach (var attachment in mailbody.GetAttachments(Config.ProcessInlineAttachedPictures).Where(p => p.ContentType != null))
+                                    {
+                                        entry.MailAttachments.Add(attachment);
+                                    }
+                                }
+
+                                //save this message
+                                SaveMailboxEntry(entry);
+
+                                // add the entry if the save did not throw any exceptions
+                                result.MailboxEntries.Add(entry);
+
+                                LogInfo(string.Format(
+                                    "MailboxReader: Message #{0} processing finished, found [{1}] attachments, total saved [{2}].",
+                                    message.SequenceNumber,
+                                    entry.MailAttachments.Count, entry.AttachmentsSavedCount));
+
+                                // delete the message?.
+                                if (!Config.DeleteAllMessages) continue;
+
+                                try
+                                {
+                                    message.MarkForDeletion();
+                                }
+                                catch (Exception)
+                                {
+
+                                }
+                            }
+                        }
+                        else
+                        {
+                            LogWarning(string.Format("pop3Client: Message #{0} header could not be parsed.", message.SequenceNumber));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex);
+                result.LastException = ex;
+                result.Status = ResultStatuses.FailedWithException;
+            }
+
+            LogInfo("MailboxReader: End read mail.");
+
+            return result;
+        }
+
+        /// <summary>
+        /// Logs an exception.
+        /// </summary>
+        /// <param name="ex">The exception.</param>
+        /// <returns></returns>
+        static void LogException(Exception ex)
+        {
+            if (Log == null) return;
+
+            if (Log.IsErrorEnabled)
+                Log.Error("Mailbox Reader Error", ex);
+        }
+
+        /// <summary>
+        /// Logs an information message
+        /// </summary>
+        /// <param name="message">The message to log</param>
+        static void LogInfo(string message)
+        {
+            if (Log == null) return;
+
+            if (Log.IsInfoEnabled)
+                Log.Info(message);
+        }
+
+        /// <summary>
+        /// Logs a warning message
+        /// </summary>
+        /// <param name="message"></param>
+        static void LogWarning(string message)
+        {
+            if (Log == null) return;
+
+            if (Log.IsWarnEnabled)
+                Log.Warn(message);
         }
 
         /// <summary>
         /// Saves the mailbox entry.
         /// </summary>
         /// <param name="entry">The entry.</param>
-        public void SaveMailboxEntry(MailboxEntry entry)
+        void SaveMailboxEntry(MailboxEntry entry)
         {
             try
             {
-                // TODO Should use XSLT templates BGN-1591
-                string body = string.Format(this._BodyTemplate, entry.Content.ToString().Trim(), entry.From, entry.Date.ToString());
-                int projectId = entry.ProjectMailbox.ProjectId;
+                //load template 
+                var body = string.Format("<div >Sent by:{1} on: {2}<br/>{0}</div>", entry.Content.Trim(), entry.From, entry.Date);
 
-                var mailIssue = IssueManager.GetDefaultIssueByProjectId(projectId, entry.Title.Trim(), body.Trim(), entry.ProjectMailbox.AssignToUserName, this._ReportingUserName);
-
-                if (IssueManager.SaveOrUpdate(mailIssue))
+                if(Config.BodyTemplate.Trim().Length > 0)
                 {
-                    //If there is an attached file present then add it to the database 
-                    //and copy it to the directory specified in the web.config file
-                    foreach (Attachment attMail in entry.MailAttachments)
+                    var data = new Dictionary<string, object> { { "MailboxEntry", entry } };
+                    body = NotificationManager.GenerateNotificationContent(Config.BodyTemplate, data);
+                }
+
+                var projectId = entry.ProjectMailbox.ProjectId;
+
+                var mailIssue = IssueManager.GetDefaultIssueByProjectId(
+                    projectId, 
+                    entry.Title.Trim(), 
+                    body.Trim(),                
+                    entry.ProjectMailbox.AssignToUserName,                                               
+                    Config.ReportingUserName);
+
+                if (!IssueManager.SaveOrUpdate(mailIssue)) return;
+
+                entry.IssueId = mailIssue.Id;
+                entry.WasProcessed = true;
+
+                var project = ProjectManager.GetById(projectId);
+
+                var projectFolderPath = Path.Combine(Config.UploadsFolderPath, project.UploadPath);
+
+                var doc = new HtmlDocument();
+                doc.LoadHtml(mailIssue.Description); // load the issue body to we can process it for inline images (if exist)
+
+                //If there is an attached file present then add it to the database 
+                //and copy it to the directory specified in the web.config file
+                foreach (MIME_Entity mimeEntity in entry.MailAttachments)
+                {
+                    string fileName;
+                    var isInline = false;
+                    var contentType = mimeEntity.ContentType.Type.ToLower();
+
+                    var attachment = new IssueAttachment
+                        {
+                            Id = 0,
+                            Description = "File attached by mailbox reader",
+                            DateCreated = DateTime.Now,
+                            ContentType = mimeEntity.ContentType.TypeWithSubtype,
+                            CreatorDisplayName = Config.ReportingUserName,
+                            CreatorUserName = Config.ReportingUserName,
+                            IssueId = mailIssue.Id,
+                            ProjectFolderPath = projectFolderPath
+                        };
+
+                    switch (contentType)
                     {
-                        var attachmentBytes = new byte[attMail.ContentStream.Length];
-                        ReadWholeArray(attMail.ContentStream, attachmentBytes);
+                        case"application":
+                            attachment.Attachment = ((MIME_b_SinglepartBase)mimeEntity.Body).Data;
+                            break;
+                        case "attachment":
+                        case "image":
+                        case "video":
+                        case "audio":
 
-                        var attachment = new IssueAttachment()
-                                             {
-                                                 Id = 0,
-                                                 Attachment = attachmentBytes,
-                                                 Description = "Attached via email",
-                                                 DateCreated = DateTime.Now,
-                                                 ContentType = attMail.ContentType.ToString(),
-                                                 CreatorDisplayName = _ReportingUserName,
-                                                 CreatorUserName = _ReportingUserName,
-                                                 FileName = attMail.ContentDisposition.FileName, 
-                                                 IssueId = mailIssue.Id,
-                                                 Size = attachmentBytes.Length
-                                             };
+                            attachment.Attachment = ((MIME_b_SinglepartBase) mimeEntity.Body).Data;
+                            break;
+                        case"message":
 
-                        if (!IssueAttachmentManager.SaveOrUpdate(attachment))
-                            if (Log.IsWarnEnabled) Log.Warn("Attachment was not added via mailbox reader");
+                            // we need to pull the actual email message out of the entity, and strip the "content type" out so that
+                            // email programs will read the file properly
+                            var messageBody = mimeEntity.ToString().Replace(mimeEntity.Header.ToString(), "");
+                            if (messageBody.StartsWith("\r\n"))
+                            {
+                                messageBody = messageBody.Substring(2);
+                            }
+
+                            attachment.Attachment = Encoding.UTF8.GetBytes(messageBody);
+
+                            break;
+                        default:
+                            LogWarning(string.Format("MailboxReader: Attachment type could not be processed {0}", mimeEntity.ContentType.Type));
+                            break;
                     }
+
+                    if (contentType.Equals("attachment")) // this is an attached email
+                    {
+                        fileName = mimeEntity.ContentDisposition.Param_FileName;
+                    }
+                    else if (contentType.Equals("message")) // message has no filename so we create one
+                    {
+                        fileName = string.Format("Attached_Message_{0}.eml", entry.AttachmentsSavedCount);
+                    }
+                    else
+                    {
+                        isInline = true;
+                        fileName = string.IsNullOrWhiteSpace(mimeEntity.ContentType.Param_Name) ? 
+                            string.Format("untitled.{0}", mimeEntity.ContentType.SubType) : 
+                            mimeEntity.ContentType.Param_Name;
+                    }
+
+                    attachment.FileName = fileName;
+
+                    var saveFile = IsAllowedFileExtension(fileName);
+                    var fileSaved = false;
+
+                    // can we save the file?
+                    if(saveFile)
+                    {
+                        fileSaved = IssueAttachmentManager.SaveOrUpdate(attachment);
+
+                        if (fileSaved)
+                        {
+                            entry.AttachmentsSavedCount++;
+                        }
+                        else
+                        {
+                            LogWarning("MailboxReader: Attachment could not be saved, please see previous logs");
+                        }
+                    }
+
+                    if (!entry.IsHtml || !isInline) continue;
+
+                    if (string.IsNullOrWhiteSpace(mimeEntity.ContentID)) continue;
+
+                    var contentId = mimeEntity.ContentID.Replace("<", "").Replace(">", "").Replace("[", "").Replace("]", "");
+
+                    // this is pretty greedy but since people might be sending screenshots I doubt they will send in dozens of images
+                    // embedded in the email.  one would hope
+                    foreach (var node in doc.DocumentNode.SelectNodes(XpathElementCaseInsensitive("img")).ToList())
+                    {
+                        var attr = node.Attributes.FirstOrDefault(p => p.Name.ToLowerInvariant() == "src");// get the src attribute
+
+                        if (attr == null) continue; // image has no src attribute
+                        if (!attr.Value.Contains(contentId)) continue; // is the attribute value the content id?
+
+                        // swap out the content of the parent node html will our link to the image
+                        var anchor = string.Format("<span class='inline-mail-attachment'>Inline Attachment: <a href='DownloadAttachment.axd?id={0}' target='_blank'>{1}</a></span>", attachment.Id, fileName);
+
+                        // for each image in the body if the file was saved swap out the inline link for a link to the saved attachment
+                        // otherwise blank out the content link so we don't get a missing image link
+                        node.ParentNode.InnerHtml = fileSaved ? anchor : "";
+                    }
+
+                    mailIssue.Description = doc.DocumentNode.InnerHtml;
+                    mailIssue.LastUpdateUserName = mailIssue.OwnerUserName;
+                    mailIssue.LastUpdate = DateTime.Now;
+
+                    IssueManager.SaveOrUpdate(mailIssue);
                 }
             }
             catch (Exception ex)
             {
-                throw ProcessException(ex);
+                LogException(ex);
+                throw;
             }
         }
 
         /// <summary>
-        /// Reads the whole array.
+        /// Check if the file has an allowed file extension
         /// </summary>
-        /// <param name="stream">The stream.</param>
-        /// <param name="data">The data.</param>
-        private void ReadWholeArray(Stream stream, byte[] data)
+        /// <param name="fileName">The file to check</param>
+        /// <returns>True if the file is allowed, otherwise false</returns>
+        bool IsAllowedFileExtension(string fileName)
         {
-            int offset = 0;
-            int remaining = data.Length;
-            while (remaining > 0)
+            fileName = fileName.Trim().ToLower();
+            var allowedExtensions = Config.AllowedFileExtensions.ToLower().Trim();
+
+            if (allowedExtensions.Length.Equals(0)) return false; // nothing saved so allow nothing
+
+            var allowedFileTypes = allowedExtensions.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+
+            // allow all types
+            if (allowedFileTypes.FirstOrDefault(p => p == "*.*") != null) return true;
+            if (allowedFileTypes.FirstOrDefault(p => p == ".") != null) return true;
+
+            // match extension in allowed extensions list
+            var allowed = allowedFileTypes.Select(allowedFileType => allowedFileType.Replace("*", "")).Any(fileType => fileName.EndsWith(fileType));
+
+            if(!allowed)
             {
-                int read = stream.Read(data, offset, remaining);
-                if (read <= 0)
-                    throw new EndOfStreamException
-                        (String.Format("End of stream reached with {0} bytes left to read", remaining));
-                remaining -= read;
-                offset += read;
+                LogWarning(string.Format("MailboxReader: Attachment {0} was not one of the allowed attachment extensions {1} skipping.", fileName, Config.AllowedFileExtensions.ToLower()));
             }
+
+            return allowed;
         }
 
         /// <summary>
-        /// Reads the mail.
+        /// change the xpath element name to all uppercase
         /// </summary>
-        public void ReadMail()
+        /// <param name="elementName">The element name</param>
+        /// <returns></returns>
+        static string XpathElementCaseInsensitive(string elementName)
         {
-            Pop3MimeClient mailClient = new Pop3MimeClient(_Server, _Port, _UseSSL, _Username, _Password);
+            //*[translate(name(), 'abc','ABC')='ABC']"
+            return string.Format("//*[translate(name(), '{0}', '{1}') = '{1}']", elementName.ToLower(), elementName.ToUpper());
+        }
 
+        /// <summary>
+        /// Log the pop 3 client events
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        static void LogPop3Client(object sender, WriteLogEventArgs e)
+        {
             try
             {
-                mailClient.Connect();
-                List<int> messageIds;
-                mailClient.GetEmailIdList(out messageIds);
+                var message = "";
 
-                for (int i = 0; i < messageIds.Count; i++)
+                switch (e.LogEntry.EntryType)
                 {
-                    bool messageWasProcessed = false;
-                    RxMailMessage message;
-
-                    if (mailClient.GetEmail(messageIds[i], out message))
-                    {
-                        string messageFrom = string.Empty;
-
-                        if (message.From.Address.Length > 0)
-                        {
-                            messageFrom = message.From.Address;
-                        }
-
-                        List<string> recipients = new List<string>();
-
-                        foreach (MailAddress address in message.To)
-                            recipients.Add(address.Address);
-                        foreach (MailAddress address in message.CC)
-                            recipients.Add(address.Address);
-                        foreach (MailAddress address in message.Bcc)
-                            recipients.Add(address.Address);
-
-                        foreach (string mailbox in recipients)
-                        {
-                            ProjectMailbox pmbox = ProjectMailboxManager.GetByMailbox(mailbox);
-                            if (pmbox != null)
-                            {
-                                MailboxEntry entry = new MailboxEntry();
-                                Project project = ProjectManager.GetById(pmbox.ProjectId);
-
-                                //TODO: Enhancements could include regex / string matching or not matching 
-                                //for particular strings values in the subject or body.
-                                entry.Title = message.Subject.Trim();
-                                entry.From = messageFrom;
-                                entry.ProjectMailbox = pmbox;
-                                entry.Date = message.DeliveryDate;
-
-                                if (message.Entities.Count > 0)
-                                {
-                                    //find if there is an html version.                                  
-                                    if (message.Entities.FindAll(m => m.IsBodyHtml).Count > 0)
-                                    {
-                                        List<RxMailMessage> htmlMessages = message.Entities.FindAll(m => m.IsBodyHtml);
-                                        if (htmlMessages.Count > 0)
-                                            message = htmlMessages[0];
-                                    }
-
-                                }
-                                if (!message.IsBodyHtml)
-                                    entry.Content.Append(message.Body.Replace("\n", "<br />"));
-                                else
-                                {
-                                    // Strip the <body> out of the message (using code from below)
-                                    Regex bodyExtractor = new Regex("<body.*?>(?<content>.*)</body>", RegexOptions.IgnoreCase | RegexOptions.Singleline);
-                                    Match match = bodyExtractor.Match(message.Body);
-                                    if (match != null && match.Success && match.Groups["content"] != null)
-                                    {
-                                        entry.Content.Append(match.Groups["content"].Value);
-                                    }
-                                    else
-                                    {
-                                        entry.Content.Append(message.Body);
-                                    }
-                                }
-
-                                if (_ProcessAttachments)
-                                {
-                                    foreach (Attachment attachment in message.Attachments)
-                                    {
-                                        if (attachment.ContentStream != null && attachment.ContentDisposition.FileName != null && attachment.ContentDisposition.FileName.Length > 0)
-                                        {
-                                            entry.MailAttachments.Add(attachment);
-                                        }
-                                    }
-                                }
-
-                                //save this message the mark the message as processed
-                                SaveMailboxEntry(entry);
-                                messageWasProcessed = true;
-
-                                //if delete all messages AND the message was processed delete the message from the server.
-                                if (_DeleteAllMessages && messageWasProcessed)
-                                    mailClient.DeleteEmail(messageIds[i]);
-                            }
-                            else
-                            {
-                                if (Log.IsWarnEnabled)
-                                    Log.WarnFormat("Project Mailbox Not Found: {0}", message.To.ToString());
-                            }
-                        }
-                    }
-
-
+                    case LogEntryType.Read:
+                        message = string.Format("pop3Client: {0} >> {1}", ObjectToString(e.LogEntry.RemoteEndPoint), e.LogEntry.Text);
+                        break;
+                    case LogEntryType.Write:
+                        message = string.Format("pop3Client: {0} << {1}", ObjectToString(e.LogEntry.RemoteEndPoint), e.LogEntry.Text);
+                        break;
+                    case LogEntryType.Text:
+                        message = string.Format("pop3Client: {0} xx {1}", ObjectToString(e.LogEntry.RemoteEndPoint), e.LogEntry.Text);
+                        break;
                 }
+
+                LogInfo(message);
             }
             catch (Exception ex)
             {
-                if (Log.IsErrorEnabled)
-                    Log.Error("Mailbox Reader Error", ex);
-            }
-            finally
-            {
-                try
-                {
-                    mailClient.Disconnect();
-                }
-                catch
-                { }
+                LogException(ex);
             }
         }
 
-
+        /// <summary>
+        /// Calls obj.ToSting() if o is not null, otherwise returns "".
+        /// </summary>
+        /// <param name="o">Object.</param>
+        /// <returns>Returns obj.ToSting() if o is not null, otherwise returns "".</returns>
+        static string ObjectToString(object o)
+        {
+            return o == null ? "" : o.ToString();
+        }
     }
 }

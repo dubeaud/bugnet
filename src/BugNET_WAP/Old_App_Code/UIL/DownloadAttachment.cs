@@ -149,7 +149,7 @@ namespace BugNET.UserInterfaceLayer
                 {
                     if(dx.StatusCode > 0)
                     {
-                        var statusCode = dx.StatusCode.ToEnum(Globals.DownloadAttachmentStatusCodes.NoAccess);
+                        var statusCode = dx.StatusCode.ToEnum(DownloadAttachmentStatusCodes.NoAccess);
 
                         var url = context.Request.Url.PathAndQuery.Trim().ToLower();
                         var fullPath = context.Request.Url.ToString().ToLower();
@@ -160,16 +160,16 @@ namespace BugNET.UserInterfaceLayer
 
                         switch(statusCode)
                         {
-                            case Globals.DownloadAttachmentStatusCodes.InvalidAttachmentId:
+                            case DownloadAttachmentStatusCodes.InvalidAttachmentId:
                                 context.Response.Write("<h1>Attachment Not Found.</h1>  It may have been deleted from the server.");
                                 break;
-                            case Globals.DownloadAttachmentStatusCodes.AuthenticationRequired:
+                            case DownloadAttachmentStatusCodes.AuthenticationRequired:
                                 context.Response.Redirect(redirectUrl);
                                 break;
-                            case Globals.DownloadAttachmentStatusCodes.ProjectOrIssueDisabled:
+                            case DownloadAttachmentStatusCodes.ProjectOrIssueDisabled:
                                 context.Response.Write("<h1>Attachment Not Found.</h1>  It may have been deleted from the server.");
                                 break;
-                            case Globals.DownloadAttachmentStatusCodes.NoAccess:
+                            case DownloadAttachmentStatusCodes.NoAccess:
                                 context.Response.Write("<h1>Access Denied.</h1>  You do not have proper permissions to access this Attachment.");
                                 break;
                             default:

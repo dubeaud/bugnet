@@ -166,13 +166,13 @@ namespace BugNET.Administration.Host.UserControls {
         protected global::System.Web.UI.WebControls.CheckBox POP3DeleteMessages;
         
         /// <summary>
-        /// label19 control.
+        /// label2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label label19;
+        protected global::System.Web.UI.WebControls.Label label2;
         
         /// <summary>
         /// POP3ProcessAttachments control.
@@ -182,6 +182,24 @@ namespace BugNET.Administration.Host.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox POP3ProcessAttachments;
+        
+        /// <summary>
+        /// label19 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label label19;
+        
+        /// <summary>
+        /// POP3InlineAttachedPictures control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox POP3InlineAttachedPictures;
         
         /// <summary>
         /// label20 control.

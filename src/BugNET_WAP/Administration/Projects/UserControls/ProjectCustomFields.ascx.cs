@@ -80,7 +80,7 @@ namespace BugNET.Administration.Projects.UserControls
         /// </summary>
         private void BindCustomFields()
         {
-            //check if we are editing the subgrid - needed to fire updatecommand on the nested grid.
+            //check if we are editing the sub grid - needed to fire update command on the nested grid.
             if (ViewState["EditingSubGrid"] == null)
             {
                 grdCustomFields.DataSource = CustomFieldManager.GetByProjectId(ProjectId);

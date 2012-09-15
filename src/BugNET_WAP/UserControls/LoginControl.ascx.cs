@@ -53,7 +53,7 @@ namespace BugNET.UserControls
             subLoginControl.Focus();
 
             //hide the registration link if we have disabled registration
-            if (HostSettingManager.Get(HostSettingNames.UserRegistration, 0) == (int)Globals.UserRegistration.None)
+            if (HostSettingManager.Get(HostSettingNames.UserRegistration, 0) == (int)UserRegistration.None)
             {
                 var registerPanel = subLoginControl.FindControl("RegisterPanel") as Panel;
 

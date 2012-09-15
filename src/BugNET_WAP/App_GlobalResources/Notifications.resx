@@ -160,7 +160,10 @@
     <value>Issue {0} has a new comment</value>
   </data>
   <data name="PasswordReminder" xml:space="preserve">
-    <value>You have requested a password reminder from {0}. Your password is: {1}</value>
+    <value>Text\PasswordReminder.xslt</value>
+  </data>
+  <data name="PasswordReminderHTML" xml:space="preserve">
+    <value>HTML\PasswordReminder.xslt</value>
   </data>
   <data name="PasswordReminderSubject" xml:space="preserve">
     <value>Password Reminder</value>

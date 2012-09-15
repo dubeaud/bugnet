@@ -9,13 +9,13 @@
     <xsl:strip-space elements="*" />
     <xsl:template match="/root">
         <p>
-            <xsl:value-of select="User/DisplayName" />,
+            <xsl:value-of select="NotificationUser/DisplayName" />,
             <br/>
             <br/>
-            Your password has been reset to &#160;<span style="color:blue;font-weight:bold;">
+            Your password has been reset to &#160;<span style="font-family: Courier New; font-weight: bold;">
                 <xsl:value-of select="Password" />
             </span>&#160;&#160; Please login
-            <a href="{HostSetting_DefaultUrl}Login.aspx" target="_blank">
+            <a href="{HostSetting_DefaultUrl}Account/Login.aspx" target="_blank">
                 here.
             </a>
         </p>

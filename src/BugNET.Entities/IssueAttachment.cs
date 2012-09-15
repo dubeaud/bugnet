@@ -94,6 +94,11 @@ namespace BugNET.Entities
         /// <value>The description.</value>
         public string Description { get; set; }
 
+        /// <summary>
+        /// Gets or sets the path where to save the attachment to (for overriding the default path)
+        /// </summary>
+        public string ProjectFolderPath { get; set; }
+
         #endregion
     }
 }

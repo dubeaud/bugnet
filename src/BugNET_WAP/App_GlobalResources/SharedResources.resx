@@ -462,4 +462,16 @@
   <data name="Comment" xml:space="preserve">
     <value>Comment</value>
   </data>
+  <data name="Visibility" xml:space="preserve">
+    <value>Visibility</value>
+  </data>
+  <data name="DropDown_SelectOne" xml:space="preserve">
+    <value>-- Select One --</value>
+  </data>
+  <data name="DropDown_ResetFields" xml:space="preserve">
+    <value>-- Reset Fields --</value>
+  </data>
+  <data name="DropDown_SelectCustomField" xml:space="preserve">
+    <value>-- Select Custom Field --</value>
+  </data>
 </root>

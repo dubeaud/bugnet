@@ -5,12 +5,11 @@ using System.Configuration;
 using System.Configuration.Provider;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
 using BugNET.Common;
 using BugNET.DAL;
 using BugNET.Entities;
 using log4net;
+using Permission = BugNET.Entities.Permission;
 
 namespace BugNET.Providers.DataProviders
 {
@@ -51,6 +50,11 @@ namespace BugNET.Providers.DataProviders
             if (string.IsNullOrEmpty(_providerPath))
                 throw new ProviderException("providerPath folder value not specified in web.config for SqlDataProvider");
 
+        }
+
+        public override string ConnectionString
+        {
+            get { return _connectionString; }
         }
 
         #region Issue history methods
@@ -1454,6 +1458,7 @@ namespace BugNET.Providers.DataProviders
         #endregion
 
         #region Category methods
+
         /// <summary>
         /// Creates the new category.
         /// </summary>
@@ -1902,7 +1907,7 @@ namespace BugNET.Providers.DataProviders
                     cmdClause.Parameters["@ComparisonOperator"].Value = clause.ComparisonOperator;
                     cmdClause.Parameters["@FieldValue"].Value = clause.FieldValue;
                     cmdClause.Parameters["@DataType"].Value = clause.DataType;
-                    cmdClause.Parameters["@IsCustomField"].Value = clause.CustomFieldQuery;
+                    cmdClause.Parameters["@CustomFieldId"].Value = clause.CustomFieldId;
                     ExecuteScalarCmd(cmdClause);
                 }
 
@@ -1948,7 +1953,7 @@ namespace BugNET.Providers.DataProviders
                 cmdClause.Parameters.Add("@ComparisonOperator", SqlDbType.NVarChar, 50);
                 cmdClause.Parameters.Add("@FieldValue", SqlDbType.NVarChar, 50);
                 cmdClause.Parameters.Add("@DataType", SqlDbType.Int);
-                cmdClause.Parameters.Add("@IsCustomField", SqlDbType.Bit);
+                cmdClause.Parameters.Add("@CustomFieldId", SqlDbType.Int);
 
                 ExecuteScalarCmd(sqlCmd);
 
@@ -1962,7 +1967,7 @@ namespace BugNET.Providers.DataProviders
                     cmdClause.Parameters["@ComparisonOperator"].Value = clause.ComparisonOperator;
                     cmdClause.Parameters["@FieldValue"].Value = clause.FieldValue;
                     cmdClause.Parameters["@DataType"].Value = clause.DataType;
-                    cmdClause.Parameters["@IsCustomField"].Value = clause.CustomFieldQuery;
+                    cmdClause.Parameters["@CustomFieldId"].Value = clause.CustomFieldId;
                     ExecuteScalarCmd(cmdClause);
                 }
 
@@ -1989,6 +1994,10 @@ namespace BugNET.Providers.DataProviders
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_QUERY_GETSAVEDQUERY);
 
                 var queryClauses = new List<QueryClause>();
+
+                // add the disabled query filter since the UI cannot add this
+                queryClauses.Insert(0, new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int));
+
                 ExecuteReaderCmd(sqlCmd, GenerateQueryClauseListFromReader, ref queryClauses);
 
                 return PerformQuery(queryClauses, null, projectId);   
@@ -3748,11 +3757,24 @@ namespace BugNET.Providers.DataProviders
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public override List<IssueWorkReport> GetIssueWorkReportsByProjectId(int projectId)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <param name="reporterUserName"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public override List<IssueWorkReport> GetIssueWorkReportsByUserName(int projectId, string reporterUserName)
         {
             throw new NotImplementedException();

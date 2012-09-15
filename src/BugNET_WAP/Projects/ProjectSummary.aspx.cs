@@ -1,4 +1,5 @@
 using System;
+using System.Web;
 using System.Web.UI.WebControls;
 using BugNET.BLL;
 using BugNET.Common;
@@ -30,12 +31,35 @@ namespace BugNET.Projects
                 ErrorRedirector.TransferToNotFoundPage(Page);
  
 	        BindProjectSummary();
+
+            SiteMap.SiteMapResolve += ExpandPaths;
 		}
+
+        protected void Page_Unload(object sender, EventArgs e)
+        {
+            //remove the event handler
+            SiteMap.SiteMapResolve -= ExpandPaths;
+        }
+
+        private SiteMapNode ExpandPaths(Object sender, SiteMapResolveEventArgs e)
+        {
+            if (SiteMap.CurrentNode == null) return null;
+
+            var currentNode = SiteMap.CurrentNode.Clone(true);
+            var tempNode = currentNode;
+
+            if ((null != (tempNode = tempNode.ParentNode)))
+            {
+                tempNode.Url = string.Format("~/Issues/IssueList.aspx?pid={0}", ProjectId);
+            }
+
+            return currentNode;
+        }
 
 	    /// <summary>
         /// Binds the project summary.
         /// </summary>
-        private void BindProjectSummary()
+        void BindProjectSummary()
         {
             lnkRSSIssuesByCategory.NavigateUrl = string.Format("~/Feed.aspx?pid={0}&channel=2",ProjectId);
             lnkRSSIssuesByAssignee.NavigateUrl = string.Format("~/Feed.aspx?pid={0}&channel=6",ProjectId);

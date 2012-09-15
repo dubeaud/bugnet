@@ -64,10 +64,10 @@ namespace BugNET.Issues.UserControls
             BindAttachments();
 
             //check users role permission for adding an attachment
-            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.AddAttachment.ToString()))
+            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Common.Permission.AddAttachment.ToString()))
                 pnlAddAttachment.Visible = false;
 
-            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.DeleteAttachment.ToString()))
+            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Common.Permission.DeleteAttachment.ToString()))
                 AttachmentsDataGrid.Columns[5].Visible = false;
         }
 
@@ -221,7 +221,7 @@ namespace BugNET.Issues.UserControls
             var cmdDelete = e.Item.FindControl("cmdDelete") as ImageButton;
 
             // Check if the current user is Authenticated and has the permission to delete a comment			
-            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.DeleteAttachment.ToString())) return;
+            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Common.Permission.DeleteAttachment.ToString())) return;
 
             if (cmdDelete == null) return;
 

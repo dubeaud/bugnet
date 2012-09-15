@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using BugNET.BLL;
@@ -14,31 +15,12 @@ namespace BugNET.Queries
     /// This page displays the interface for building a query against the
     /// issues database.
     /// </summary>
-    public partial class QueryDetail : UserInterfaceLayer.BasePage
+    public partial class QueryDetail : BasePage
     {
+
         protected DisplayIssues ctlDisplayIssues;
+
         int _queryId;
-
-        #region Web Form Designer generated code
-        override protected void OnInit(EventArgs e)
-        {
-            //
-            // CODEGEN: This call is required by the ASP.NET Web Form Designer.
-            //
-            InitializeComponent();
-            base.OnInit(e);
-        }
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
-            //this.dropProjects.SelectedIndexChanged += new System.EventHandler(this.ProjectSelectedIndexChanged);
-            this.ctlDisplayIssues.RebindCommand += new System.EventHandler(this.IssuesRebind);
-        }
-        #endregion
 
         /// <summary>
         ///  The number of query clauses is stored in view state so that the
@@ -47,13 +29,8 @@ namespace BugNET.Queries
         /// <value>The clause count.</value>
         int ClauseCount
         {
-            get
-            {
-                if (ViewState["ClauseCount"] == null)
-                    return 0;
-                return (int)ViewState["ClauseCount"];
-            }
-            set { ViewState["ClauseCount"] = value; }
+            get { return ViewState.Get("ClauseCount", 0); }
+            set { ViewState.Set("ClauseCount", value); }
         }
 
         /// <summary>
@@ -84,7 +61,7 @@ namespace BugNET.Queries
             if (ProjectId == 0)
                 ErrorRedirector.TransferToSomethingMissingPage(Page);
 
-            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.AddQuery.ToString()))
+            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Common.Permission.AddQuery.ToString()))
             {
                 SaveQueryForm.Visible = false;
                 pnlSaveQuery.Visible = false;
@@ -165,11 +142,11 @@ namespace BugNET.Queries
         /// <summary>
         ///When a user pages or sorts the issues displayed by the DisplayIssues
         /// user control, this method is called. This method simply calls the ExecuteQuery()
-        /// method to rebind the DisplayIssues control to its datasource.
+        /// method to rebind the DisplayIssues control to its data source.
         /// </summary>
         /// <param name="s">The s.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        void IssuesRebind(Object s, EventArgs e)
+        public void IssuesRebind(Object s, EventArgs e)
         {
             ExecuteQuery();
         }
@@ -306,6 +283,9 @@ namespace BugNET.Queries
                             sortColumns.Add(new KeyValuePair<string, string>(args[0], args[1]));
 
                     }
+
+                    // add the disabled query filter since the UI cannot add this
+                    queryClauses.Insert(0, new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int));
 
                     var colIssues = IssueManager.PerformQuery(queryClauses, sortColumns, ProjectId);
                     ctlDisplayIssues.DataSource = colIssues;

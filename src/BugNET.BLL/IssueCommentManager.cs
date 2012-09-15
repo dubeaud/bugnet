@@ -130,7 +130,7 @@ namespace BugNET.BLL
         public static List<IssueComment> PerformQuery(int issueId, List<QueryClause> queryClauses)
         {
             if (issueId < 0) throw new ArgumentOutOfRangeException("issueId", "issueId must be bigger than 0");
-            queryClauses.Add(new QueryClause("AND", "IssueId", "=", issueId.ToString(), SqlDbType.Int, false));
+            queryClauses.Add(new QueryClause("AND", "IssueId", "=", issueId.ToString(), SqlDbType.Int));
 
             return PerformQuery(queryClauses);
         }

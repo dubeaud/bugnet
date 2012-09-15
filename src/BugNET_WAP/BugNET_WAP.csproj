@@ -439,6 +439,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SharedResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\SharedResources.es-ES.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SharedResources.es-ES.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\SharedResources.nl-NL.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SharedResources.nl-NL.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\Web.sitemap.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1306,6 +1316,8 @@
     <Content Include="Scripts\themes\default\d.png" />
     <Content Include="Scripts\themes\default\style.css" />
     <Content Include="Scripts\themes\default\throbber.gif" />
+    <Content Include="Templates\Html\PasswordReminder.nl-NL.xslt" />
+    <Content Include="Templates\Html\PasswordReminder.xslt" />
     <Content Include="Templates\Html\IssueAdded.nl-NL.xslt" />
     <Content Include="Templates\Html\IssueAdded.xslt" />
     <Content Include="Templates\Html\IssueUpdated.nl-NL.xslt" />
@@ -1322,6 +1334,7 @@
     <Content Include="Templates\Html\UserRegistered.xslt" />
     <Content Include="Templates\Html\UserVerification.nl-NL.xslt" />
     <Content Include="Templates\Html\UserVerification.xslt" />
+    <Content Include="Templates\NewMailboxIssue.xslt" />
     <Content Include="Templates\Text\IssueAdded.nl-NL.xslt" />
     <Content Include="Templates\Text\IssueAdded.xslt" />
     <Content Include="Templates\Text\IssueUpdated.nl-NL.xslt" />
@@ -1332,6 +1345,8 @@
     <Content Include="Templates\Text\NewAssignee.xslt" />
     <Content Include="Templates\Text\NewIssueComment.nl-NL.xslt" />
     <Content Include="Templates\Text\NewIssueComment.xslt" />
+    <Content Include="Templates\Text\PasswordReminder.nl-NL.xslt" />
+    <Content Include="Templates\Text\PasswordReminder.xslt" />
     <Content Include="Templates\Text\PasswordReset.nl-NL.xslt" />
     <Content Include="Templates\Text\PasswordReset.xslt" />
     <Content Include="Templates\Text\UserRegistered.nl-NL.xslt" />
@@ -1455,7 +1470,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Administration\Host\UserControls\App_LocalResources\NotificationSettings.ascx.resx" />
-    <Content Include="Administration\Host\UserControls\App_LocalResources\POP3Settings.ascx.resx" />
+    <Content Include="Administration\Host\UserControls\App_LocalResources\POP3Settings.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Administration\Host\UserControls\App_LocalResources\SubversionSettings.ascx.resx" />
     <Content Include="Administration\Projects\App_LocalResources\AddProject.aspx.resx" />
     <Content Include="Administration\Projects\App_LocalResources\CloneProject.aspx.resx">
@@ -1680,7 +1697,9 @@
     <Content Include="Projects\App_LocalResources\ProjectCalendar.aspx.resx">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="UserControls\App_LocalResources\DisplayIssues.ascx.resx" />
+    <Content Include="UserControls\App_LocalResources\DisplayIssues.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Queries\App_LocalResources\QueryList.aspx.resx">
       <SubType>Designer</SubType>
     </Content>
@@ -1771,7 +1790,9 @@
     <Content Include="Errors\App_LocalResources\NotFound.aspx.es-ES.resx" />
     <Content Include="Errors\App_LocalResources\SessionExpired.aspx.es-ES.resx" />
     <Content Include="Errors\App_LocalResources\SomethingMissing.es-ES.resx" />
-    <Content Include="Issues\App_LocalResources\IssueDetail.aspx.es-ES.resx" />
+    <Content Include="Issues\App_LocalResources\IssueDetail.aspx.es-ES.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Issues\App_LocalResources\IssueList.aspx.es-ES.resx" />
     <Content Include="Issues\App_LocalResources\IssueSearch.aspx.es-ES.resx" />
     <Content Include="Issues\App_LocalResources\MyIssues.aspx.es-ES.resx" />
@@ -1794,7 +1815,9 @@
     <Content Include="Queries\App_LocalResources\QueryList.aspx.es-ES.resx" />
     <Content Include="UserControls\App_LocalResources\Banner.ascx.es-ES.resx" />
     <Content Include="UserControls\App_LocalResources\CategoryTreeView.ascx.es-ES.resx" />
-    <Content Include="UserControls\App_LocalResources\DisplayIssues.ascx.es-ES.resx" />
+    <Content Include="UserControls\App_LocalResources\DisplayIssues.ascx.es-ES.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="UserControls\App_LocalResources\LoginControl.ascx.es-ES.resx" />
     <Content Include="UserControls\App_LocalResources\PickCategory.ascx.es-ES.resx" />
     <Content Include="UserControls\App_LocalResources\PickImage.ascx.es-ES.resx" />
@@ -1891,6 +1914,10 @@
     <ProjectReference Include="..\BugNET.Entities\BugNET.Entities.csproj">
       <Project>{5A0AE67B-1F8C-4A6D-A02B-B57BB219288F}</Project>
       <Name>BugNET.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BugNET.MailboxReader\BugNET.MailboxReader.csproj">
+      <Project>{D10EDECB-ADB2-4E5F-93A6-00D09E86B906}</Project>
+      <Name>BugNET.MailboxReader</Name>
     </ProjectReference>
     <ProjectReference Include="..\Library\Providers\HtmlEditorProviders\HtmlEditorProvider\Provider.HtmlEditorProvider.csproj">
       <Project>{C7D90E4C-AD95-4ADD-8242-2CD66F0BC89B}</Project>

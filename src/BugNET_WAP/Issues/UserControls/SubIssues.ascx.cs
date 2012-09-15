@@ -13,6 +13,9 @@ namespace BugNET.Issues.UserControls
 	/// </summary>
 	public partial class SubIssues : System.Web.UI.UserControl, IIssueTab
 	{
+        /// <summary>
+        /// 
+        /// </summary>
         protected SubIssues()
         {
             ProjectId = 0;
@@ -62,7 +65,7 @@ namespace BugNET.Issues.UserControls
             if (entity == null) return;
 
             // allow delete if user had the permission, the project admin or a super user trying to delete the comment.
-            if (!UserManager.IsInRole(ProjectId, Globals.Permission.DeleteSubIssue.ToString()) &&
+            if (!UserManager.IsInRole(ProjectId, Common.Permission.DeleteSubIssue.ToString()) &&
                 !UserManager.IsSuperUser() && !UserManager.IsInRole(ProjectId, Globals.ProjectAdminRole)) return;
 
             cmdDelete.Visible = true;
@@ -182,11 +185,11 @@ namespace BugNET.Issues.UserControls
         {
             BindRelated();
 
-            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.DeleteSubIssue.ToString()))
+            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Common.Permission.DeleteSubIssue.ToString()))
                 grdIssues.Columns[4].Visible = false;
 
             //check users role permission for adding a related issue
-            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Globals.Permission.AddSubIssue.ToString()))
+            if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Common.Permission.AddSubIssue.ToString()))
                 AddSubIssuePanel.Visible = false;
         }
         #endregion

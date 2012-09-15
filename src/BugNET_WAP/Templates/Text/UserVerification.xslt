@@ -14,14 +14,12 @@
         <xsl:text>!</xsl:text>
         <xsl:text>&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
-        <xsl:text>Hello, </xsl:text><xsl:value-of select="User/DisplayName" disable-output-escaping="yes" />
-        <xsl:text>.  You are receiving this email because you recently created
-		a new account at </xsl:text><xsl:value-of select="HostSetting_ApplicationTitle" />
-        <xsl:text>. Before you can login, however, you need to first visit the following link  
-		to confirm your account: </xsl:text>
+        <xsl:text>Hello, </xsl:text><xsl:value-of select="NotificationUser/DisplayName" disable-output-escaping="yes" />
+        <xsl:text>.  You are receiving this email because you recently created a new account at </xsl:text><xsl:value-of select="HostSetting_ApplicationTitle" />
+        <xsl:text>. Before you can login, however, you need to first visit the following link to confirm your account: </xsl:text>
         <xsl:text>&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
-        <xsl:value-of select="HostSetting_DefaultUrl" />Account/Verify.aspx?ID=<xsl:value-of select="User/Id" />
+        <xsl:value-of select="HostSetting_DefaultUrl" />Account/Verify.aspx?ID=<xsl:value-of select="NotificationUser/Id" />
         <xsl:text>&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
         <xsl:text>After visiting the above link you can log into the site!</xsl:text>

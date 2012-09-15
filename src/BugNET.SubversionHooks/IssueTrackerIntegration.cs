@@ -7,6 +7,9 @@ using BugNET.SubversionHooks.WebServices;
 
 namespace BugNET.SubversionHooks
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class IssueTrackerIntegration
     {
         log4net.ILog logger = log4net.LogManager.GetLogger("IssueTrackerIntegration");

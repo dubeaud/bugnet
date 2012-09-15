@@ -13,12 +13,12 @@
     <xsl:text>De volgende gebruiker heeft zich zojuist geregistreerd:</xsl:text>
     <xsl:text>&#10;</xsl:text>
     <xsl:text>&#10;</xsl:text>
-    <xsl:text>Datum: </xsl:text><xsl:value-of select="helpers:FormatShortDateAnd12HTime(User/CreationDate)" />
+    <xsl:text>Datum: </xsl:text><xsl:value-of select="helpers:FormatShortDateAnd12HTime(NotificationUser/CreationDate)" />
     <xsl:text>&#10;</xsl:text>
-    <xsl:text>Naam: </xsl:text><xsl:value-of select="User/DisplayName" />
+    <xsl:text>Naam: </xsl:text><xsl:value-of select="NotificationUser/DisplayName" />
     <xsl:text>&#10;</xsl:text>
-    <xsl:text>Gebruikersnaam: </xsl:text><xsl:value-of select="User/UserName" />
+    <xsl:text>Gebruikersnaam: </xsl:text><xsl:value-of select="NotificationUser/UserName" />
     <xsl:text>&#10;</xsl:text>
-    <xsl:text>Email: </xsl:text><xsl:value-of select="User/Email" />
+    <xsl:text>Email: </xsl:text><xsl:value-of select="NotificationUser/Email" />
   </xsl:template>
 </xsl:stylesheet>
