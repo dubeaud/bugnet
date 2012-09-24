@@ -1040,7 +1040,6 @@
     <Content Include="Images\user_delete.gif" />
     <Content Include="Images\widget.png" />
     <Content Include="Images\word.gif" />
-    <Content Include="Install\1.0.187.0.htm" />
     <Content Include="Install\LatestReleaseNotes.htm" />
     <Content Include="Install\Install.aspx" />
     <Content Include="Issues\IssueSearch.aspx" />

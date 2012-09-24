@@ -6,6 +6,18 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'BugNet_IssueRevisions' AND COLUMN_NAME = 'Branch')
+BEGIN
+	ALTER TABLE dbo.BugNet_IssueRevisions ADD Branch nvarchar(255) NULL
+END
+GO
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'BugNet_IssueRevisions' AND COLUMN_NAME = 'Changeset')
+BEGIN
+	ALTER TABLE dbo.BugNet_IssueRevisions ADD Changeset nvarchar(100) NULL
+END
+GO
+
 /* 
 	update the current query fields from the old field names [DateCreated, LastUpdate] to the 
 	new field names [DateCreatedAsDate, LastUpdateAsDate]
