@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BugNET.BusinessLogicLayer;
+using BugNET.BLL;
+using BugNET.Entities;
 using System.Web.Security;
 using BugNET.Providers.MembershipProviders;
 
@@ -34,7 +35,7 @@ namespace IssueGenerator.Helpers
         /// <returns>username</returns>
         public string GetUsername()
         {
-            List<ITUser> usrs = ITUser.GetUsersByProjectId(p.Id);
+            List<ITUser> usrs = UserManager.GetUsersByProjectId(p.Id);
             return usrs[rng.Next(0, usrs.Count)].UserName;          
         }
 
@@ -46,7 +47,7 @@ namespace IssueGenerator.Helpers
         /// <returns>category</returns>
         public Category GetCategory()
         {
-            List<Category> cats = Category.GetCategoriesByProjectId(p.Id);
+            List<Category> cats = CategoryManager.GetByProjectId(p.Id);
             return cats[rng.Next(0, cats.Count)];
         }
 
@@ -57,7 +58,7 @@ namespace IssueGenerator.Helpers
         /// <returns>Random Milestone</returns>
         public Milestone GetMilestone()
         {
-            List<Milestone> miles = Milestone.GetMilestoneByProjectId(p.Id);
+            List<Milestone> miles = MilestoneManager.GetByProjectId(p.Id);
             return miles[rng.Next(0, miles.Count)];
         }
 
@@ -68,7 +69,7 @@ namespace IssueGenerator.Helpers
         /// <returns>Random Priority</returns>
         public Priority GetPriority()
         {
-            List<Priority> prs = Priority.GetPrioritiesByProjectId(p.Id);
+            List<Priority> prs = PriorityManager.GetByProjectId(p.Id);
             return prs[rng.Next(0, prs.Count)];
         }
 
@@ -79,7 +80,7 @@ namespace IssueGenerator.Helpers
         /// <returns>Random IssueType</returns>
         public IssueType GetIssueType()
         {
-            List<IssueType> IssueTypes = IssueType.GetIssueTypesByProjectId(p.Id);
+            List<IssueType> IssueTypes = IssueTypeManager.GetByProjectId(p.Id);
             return IssueTypes[rng.Next(0, IssueTypes.Count)];
         }
 
@@ -91,7 +92,7 @@ namespace IssueGenerator.Helpers
         /// <returns>Random Resolution</returns>
         public Resolution GetResolution()
         {
-            List<Resolution> Resolutions = Resolution.GetResolutionsByProjectId(p.Id);
+            List<Resolution> Resolutions = ResolutionManager.GetByProjectId(p.Id);
             return Resolutions[rng.Next(0, Resolutions.Count)];
         }
 
@@ -103,7 +104,7 @@ namespace IssueGenerator.Helpers
         /// <returns>Random Status</returns>
         public Status GetStatus()
         {
-            List<Status> Statuses = Status.GetStatusByProjectId(p.Id);
+            List<Status> Statuses = StatusManager.GetByProjectId(p.Id);
             return Statuses[rng.Next(0, Statuses.Count)];
         }
 

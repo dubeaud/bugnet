@@ -31,6 +31,8 @@ namespace BugNET.BLL
             return true;
         }
 
+        private const string RolePermissionCache = "RolePermission";
+
         /// <summary>
         /// Associates the default roles created at installation to a project.
         /// </summary>
@@ -195,7 +197,7 @@ namespace BugNET.BLL
             if (roleId <= Globals.NEW_ID) throw new ArgumentOutOfRangeException("roleId");
 
             DataProviderManager.Provider.AddUserToRole(userName, roleId);
-            HttpContext.Current.Cache.Remove("RolePermission");
+            HttpContext.Current.Cache.Remove(RolePermissionCache);
         }
 
         /// <summary>
@@ -209,7 +211,7 @@ namespace BugNET.BLL
             if (roleId <= 0) throw new ArgumentOutOfRangeException("roleId");
 
             DataProviderManager.Provider.RemoveUserFromRole(userName, roleId);
-            HttpContext.Current.Cache.Remove("RolePermission");
+            HttpContext.Current.Cache.Remove(RolePermissionCache);
         }
 
         /// <summary>
@@ -223,7 +225,7 @@ namespace BugNET.BLL
 
             if (DataProviderManager.Provider.DeleteRole(roleId))
             {
-                HttpContext.Current.Cache.Remove("RolePermission");
+                HttpContext.Current.Cache.Remove(RolePermissionCache);
                 return true;
             }
 
@@ -237,12 +239,12 @@ namespace BugNET.BLL
         /// <returns>Role Permissions DataView</returns>
         private static List<RolePermission> GetPermissions()
         {
-            var permissions = (List<RolePermission>)HttpContext.Current.Cache["RolePermission"];
+            var permissions = (List<RolePermission>)HttpContext.Current.Cache[RolePermissionCache];
 
             if (permissions == null)
             {
                 permissions = DataProviderManager.Provider.GetRolePermissions();
-                HttpContext.Current.Cache.Insert("RolePermission", permissions);
+                HttpContext.Current.Cache.Insert(RolePermissionCache, permissions);
             }
 
             return permissions;
@@ -289,7 +291,7 @@ namespace BugNET.BLL
 
             if (DataProviderManager.Provider.DeletePermission(roleId, permissionId))
             {
-                HttpContext.Current.Cache.Remove("Permission");
+                HttpContext.Current.Cache.Remove(RolePermissionCache);
                 return true;
             }
             return false;
@@ -308,7 +310,7 @@ namespace BugNET.BLL
 
             if (DataProviderManager.Provider.AddPermission(roleId, permissionId))
             {
-                HttpContext.Current.Cache.Remove("Permission");
+                HttpContext.Current.Cache.Remove(RolePermissionCache);
                 return true;
             }
 

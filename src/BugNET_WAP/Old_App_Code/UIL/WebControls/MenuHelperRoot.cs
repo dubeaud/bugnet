@@ -31,7 +31,7 @@
             oBuilder.Append(">");
             foreach (var oItem in Items)
                 oBuilder.Append(oItem.GetHtml());
-            oBuilder.Append("</ul");
+            oBuilder.Append("</ul>");
             return oBuilder.ToString();
         }
 
