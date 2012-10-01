@@ -2386,6 +2386,8 @@ namespace BugNET.Providers.DataProviders
                     AddParamToSqlCmd(sqlCmd, "@RevisionAuthor", SqlDbType.NVarChar, 100, ParameterDirection.Input, newIssueRevision.Author);
                     AddParamToSqlCmd(sqlCmd, "@RevisionDate", SqlDbType.NVarChar, 100, ParameterDirection.Input, newIssueRevision.RevisionDate);
                     AddParamToSqlCmd(sqlCmd, "@RevisionMessage", SqlDbType.NText, 0, ParameterDirection.Input, newIssueRevision.Message);
+                    AddParamToSqlCmd(sqlCmd, "@Changeset", SqlDbType.NVarChar, 100, ParameterDirection.Input, newIssueRevision.Changeset);
+                    AddParamToSqlCmd(sqlCmd, "@Branch", SqlDbType.NVarChar, 255, ParameterDirection.Input, newIssueRevision.Branch);
 
                     SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_ISSUEREVISION_CREATE);
                     ExecuteScalarCmd(sqlCmd);

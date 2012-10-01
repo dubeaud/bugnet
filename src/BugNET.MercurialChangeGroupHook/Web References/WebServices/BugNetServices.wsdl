@@ -738,10 +738,10 @@
   </wsdl:binding>
   <wsdl:service name="BugNetServices">
     <wsdl:port name="BugNetServicesSoap" binding="tns:BugNetServicesSoap">
-      <soap:address location="http://localhost:59847/Webservices/BugNetServices.asmx" />
+      <soap:address location="http://localhost:59847/WebServices/BugNetServices.asmx" />
     </wsdl:port>
     <wsdl:port name="BugNetServicesSoap12" binding="tns:BugNetServicesSoap12">
-      <soap12:address location="http://localhost:59847/Webservices/BugNetServices.asmx" />
+      <soap12:address location="http://localhost:59847/WebServices/BugNetServices.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

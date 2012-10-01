@@ -21,6 +21,21 @@ namespace BugNET.Webservices
     [ScriptService]
     public class BugNetServices : LogInWebService
     {
+        /// <summary>
+        /// Checks to see if the issue id passed in is valid or not
+        /// </summary>
+        /// <param name="issueId">The issue id.</param>
+        /// <returns>True if the issue is valid otherwise false</returns>
+        [PrincipalPermission(SecurityAction.Demand, Authenticated = true)]
+        [WebMethod(EnableSession = true)]
+        public bool ValidIssue(int issueId)
+        {
+            if (issueId <= 0) throw new ArgumentOutOfRangeException("issueId");
+
+            var issue = IssueManager.GetById(issueId);
+
+            return issue != null;
+        }
 
         /// <summary>
         /// Creates the new issue revision.
@@ -31,28 +46,33 @@ namespace BugNET.Webservices
         /// <param name="revisionAuthor">The revision author.</param>
         /// <param name="revisionDate">The revision date.</param>
         /// <param name="revisionMessage">The revision message.</param>
+        /// <param name="changeset">The revision changeset</param>
+        /// <param name="branch">The revision branch</param>
         /// <returns>The new id of the revision</returns>
         [PrincipalPermission(SecurityAction.Demand, Authenticated = true)]
         [WebMethod(EnableSession = true)]
-        public bool CreateNewIssueRevision(int revision, int issueId, string repository, string revisionAuthor, string revisionDate, string revisionMessage)
+        public bool CreateNewIssueRevision(int revision, int issueId, string repository, string revisionAuthor, string revisionDate, string revisionMessage, string changeset = "", string branch = "")
         {
             if (issueId <= 0) throw new ArgumentOutOfRangeException("issueId");
 
             var projectId = IssueManager.GetById(issueId).ProjectId;
 
             //authentication checks against user access to project
-            if (ProjectManager.GetById(projectId).AccessType == Common.ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(UserName, projectId))
+            if (ProjectManager.GetById(projectId).AccessType == ProjectAccessType.Private && !ProjectManager.IsUserProjectMember(UserName, projectId))
                 throw new UnauthorizedAccessException(string.Format(LoggingManager.GetErrorMessageResource("ProjectAccessDenied"), UserName));
 
-            var issueRevision = new IssueRevision()
-                                    {
-                                        Revision = revision,
-                                        IssueId = issueId,
-                                        Author = revisionAuthor,
-                                        Message = revisionMessage,
-                                        Repository = repository,
-                                        RevisionDate = revisionDate
-                                    };
+            var issueRevision = new IssueRevision
+                {
+                    Revision = revision,
+                    IssueId = issueId,
+                    Author = revisionAuthor,
+                    Message = revisionMessage,
+                    Repository = repository,
+                    RevisionDate = revisionDate,
+                    Changeset = changeset,
+                    Branch = branch
+                };
+
             return IssueRevisionManager.SaveOrUpdate(issueRevision);
         }
 

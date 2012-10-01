@@ -474,7 +474,9 @@ namespace BugNET.Providers.DataProviders
                         Message = returnData.GetString(returnData.GetOrdinal("RevisionMessage")),
                         Repository = returnData.GetString(returnData.GetOrdinal("Repository")),
                         RevisionDate = returnData.GetString(returnData.GetOrdinal("RevisionDate")),
-                        Revision = returnData.GetInt32(returnData.GetOrdinal("Revision"))
+                        Revision = returnData.GetInt32(returnData.GetOrdinal("Revision")),
+                        Changeset = returnData.GetString(returnData.GetOrdinal("Changeset")),
+                        Branch = returnData.GetString(returnData.GetOrdinal("Branch"))
                     });
             }
         }

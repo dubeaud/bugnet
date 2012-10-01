@@ -15,7 +15,7 @@
       <Value Profile="(Default)">\[?([A-Za-z]{1,50}-(\d+))\]?</Value>
     </Setting>
     <Setting Name="BugNetServicesUrl" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">http://localhost/BugNET/WebServices/BugNetServices.asmx</Value>
+      <Value Profile="(Default)">http://localhost:59847/Webservices/BugNetServices.asmx</Value>
     </Setting>
     <Setting Name="BugNetWindowsAuthentication" Type="System.String" Scope="Application">
       <Value Profile="(Default)">False</Value>
@@ -24,7 +24,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="BugNET_SubversionHooks_BugNetServices_BugNetServices" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://localhost/BugNET/WebServices/BugNetServices.asmx</Value>
+      <Value Profile="(Default)">http://localhost:59847/Webservices/BugNetServices.asmx</Value>
     </Setting>
   </Settings>
 </SettingsFile>

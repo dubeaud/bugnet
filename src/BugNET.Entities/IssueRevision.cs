@@ -20,6 +20,8 @@ namespace BugNET.Entities
             Repository = string.Empty;
             DateCreated = DateTime.Now;
             RevisionDate = string.Empty;
+            Changeset = string.Empty;
+            Branch = string.Empty;
         }
 
         #endregion
@@ -73,6 +75,18 @@ namespace BugNET.Entities
         /// </summary>
         /// <value>The date created.</value>
         public DateTime DateCreated { get; set; }
+
+        /// <summary>
+        /// Gets or sets the branch.
+        /// </summary>
+        /// <value>The branch.</value>
+        public string Branch { get; set; }
+
+        /// <summary>
+        /// Gets or sets the changeset.
+        /// </summary>
+        /// <value>The changeset.</value>
+        public string Changeset { get; set; }
 
         #endregion
 

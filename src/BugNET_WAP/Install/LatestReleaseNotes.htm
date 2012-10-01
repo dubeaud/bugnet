@@ -1,5 +1,5 @@
 ﻿<div id="upgrade-notes">
-    <h3>Upgrade Notes</h3>
+    <h3>Update Notes</h3>
     <div id="upgrade-notes-content">
         <ul>
             <li>A new profile setting has been added to allow email notifications (enabled by default) and can be disabled via the user profile settings.</li>
@@ -10,7 +10,17 @@
             <li style="list-style-type: none; margin: 0px; padding: 0px;">
                 <ul style="margin-top: 0px;">
                     <li style="list-style-type: none;"><strong style="color: red">NOTE</strong></li>
-                    <li>Currently the field names for the Issue Changes (in the email) will not be culture specific, this is due to how BugNET currently generates the change history for emails.  This will need to be looked at later on.</li>
+                    <li>Currently the field names for the Issue Changes (in the email) will not be culture specific, this is due to how BugNET currently generates the change history for emails.  This will need to be looked at later on</li>
+                </ul>                
+            </li>
+        </ul>
+        <h5>Source Control Hooks</h5>
+        <ul>
+            <li>BugNET.SubversionHooks.exe has been updated (will need to replace existing hook exe) for calling the new BugNet web service method to create revisions</li>
+            <li>Mercurial support</li>
+            <li style="list-style-type: none; margin: 0px; padding: 0px;">
+                <ul style="margin-top: 0px;">
+                    <li>An new source control hook for integrating BugNet with Mercurial to create issue revisions when BugNET issue id's are placed in the Branch name or the commit message.  Please read the README.txt file in the BugNET.MercurialChangeGroupHook folder for information on how to configure the hook</li>
                 </ul>                
             </li>
         </ul>

@@ -1744,7 +1744,9 @@
     <Content Include="Issues\UserControls\App_LocalResources\Notifications.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\ParentIssues.ascx.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\RelatedIssues.ascx.resx" />
-    <Content Include="Issues\UserControls\App_LocalResources\Revisions.ascx.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\Revisions.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Issues\UserControls\App_LocalResources\SubIssues.ascx.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\TimeTracking.ascx.resx">
       <SubType>Designer</SubType>

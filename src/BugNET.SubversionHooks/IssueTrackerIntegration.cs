@@ -95,7 +95,17 @@ namespace BugNET.SubversionHooks
                         {
                             logger.Info("Creating new issue revision...");
                             logger.DebugFormat("\n Revision:{0} Id:{1} Repository:{2} Author:{3} DateTime:{4} LogMessage:{5}", revision, id, GetRepositoryName(repository), author, dateTime, Regex.Replace(logMessage, Settings.Default.IssueIdRegEx.ToString(), "<a href=\"IssueDetail.aspx?id=$2#top\"><b>$1</b></a>"));
-                            bool success = services.CreateNewIssueRevision(int.Parse(revision), id, GetRepositoryName(repository), author, dateTime, Regex.Replace(logMessage, Settings.Default.IssueIdRegEx.ToString(), "<a href=\"IssueDetail.aspx?id=$2#top\"><b>$1</b></a>"));
+
+                            bool success = services.CreateNewIssueRevision(
+                                int.Parse(revision), 
+                                id, 
+                                GetRepositoryName(repository), 
+                                author, 
+                                dateTime, 
+                                Regex.Replace(logMessage, Settings.Default.IssueIdRegEx.ToString(), "<a href=\"IssueDetail.aspx?id=$2#top\"><b>$1</b></a>"),
+                                revision,
+                                "");
+
                             if (success)
                                 logger.Info("Successfully added new issue revision...");
                             else

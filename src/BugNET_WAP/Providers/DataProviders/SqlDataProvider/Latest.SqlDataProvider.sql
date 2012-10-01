@@ -18,6 +18,24 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'BugNet_IssueRevisions' AND COLUMN_NAME = 'Changeset')
+BEGIN
+	ALTER TABLE dbo.BugNet_IssueRevisions ADD Changeset nvarchar(100) NULL
+END
+GO
+
+/* update changeset to revision for svn, the svn hook now passes in the revision for the changeset */
+UPDATE BugNet_IssueRevisions
+SET Changeset = CAST(Revision AS NVARCHAR)
+WHERE Changeset IS NULL
+GO
+
+/* update branch to empty string */
+UPDATE BugNet_IssueRevisions
+SET Branch = ''
+WHERE Branch IS NULL
+GO
+
 /* 
 	update the current query fields from the old field names [DateCreated, LastUpdate] to the 
 	new field names [DateCreatedAsDate, LastUpdateAsDate]
@@ -233,4 +251,61 @@ BEGIN TRAN
 	FROM BugNet_ProjectCustomFields 
 	WHERE CustomFieldId = @CustomFieldIdToDelete
 COMMIT
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[BugNet_IssueRevision_CreateNewIssueRevision]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [BugNet_IssueRevision_CreateNewIssueRevision]
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[BugNet_IssueRevision_GetIssueRevisionsByIssueId]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [BugNet_IssueRevision_GetIssueRevisionsByIssueId]
+GO
+
+CREATE PROCEDURE [BugNet_IssueRevision_CreateNewIssueRevision]
+	@IssueId int,
+	@Revision int,
+	@Repository nvarchar(400),
+	@RevisionDate nvarchar(100),
+	@RevisionAuthor nvarchar(100),
+	@RevisionMessage ntext,
+	@Changeset nvarchar(100),
+	@Branch nvarchar(255)
+AS
+
+INSERT BugNet_IssueRevisions
+(
+	Revision,
+	IssueId,
+	Repository,
+	RevisionAuthor,
+	RevisionDate,
+	RevisionMessage,
+	DateCreated,
+	Changeset,
+	Branch
+) 
+VALUES 
+(
+	@Revision,
+	@IssueId,
+	@Repository,
+	@RevisionAuthor,
+	@RevisionDate,
+	@RevisionMessage,
+	GETDATE(),
+	@Changeset,
+	@Branch
+)
+
+RETURN SCOPE_IDENTITY()
+
+GO
+
+CREATE PROCEDURE [BugNet_IssueRevision_GetIssueRevisionsByIssueId] 
+	@IssueId Int
+AS
+
+SELECT *
+FROM BugNet_IssueRevisions
+WHERE IssueId = @IssueId
 GO

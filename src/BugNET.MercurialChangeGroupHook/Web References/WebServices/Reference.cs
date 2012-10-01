@@ -13,7 +13,7 @@
 // 
 #pragma warning disable 1591
 
-namespace BugNET.SubversionHooks.WebServices {
+namespace BugNET.MercurialChangeGroupHook.WebServices {
     using System;
     using System.Web.Services;
     using System.Diagnostics;
@@ -68,7 +68,7 @@ namespace BugNET.SubversionHooks.WebServices {
         
         /// <remarks/>
         public BugNetServices() {
-            this.Url = global::BugNET.SubversionHooks.Properties.Settings.Default.BugNET_SubversionHooks_BugNetServices_BugNetServices;
+            this.Url = global::BugNET.MercurialChangeGroupHook.Properties.Settings.Default.BugNET_MercurialChangeGroupHook_WebServices_BugNetServices;
             if ((this.IsLocalFileSystemWebService(this.Url) == true)) {
                 this.UseDefaultCredentials = true;
                 this.useDefaultCredentialsSetExplicitly = false;
