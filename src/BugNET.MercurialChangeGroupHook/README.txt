@@ -10,11 +10,23 @@ http://trueclarity.wordpress.com/2012/06/06/setting-up-mercurial-2-2-on-iis7/
 The following describes the configuration of the Mercurial ChangeGroup Hook
 
 Configuring your repositories
-For each repository you want the hook to run you will need to add the following lines to the file
-.hg\hgrc in the repository.  Change the PATH_TO_EXE to the location of the hooks executable.
+For each repository you want the hook to run you will need to copy the following lines to the file
+.hg\hgrc in the repository.
+
+* Change the PATH_TO_EXE to the location of the hooks executable.
+* Change the localhost to the url/domain of your BugNet site.
+
+++++++++ COPY BELOW THIS LINE ++++++++
 
 [hooks]
 changegroup.MercurialChangeGroupHook = "PATH_TO_EXE\BugNET.MercurialChangeGroupHook.exe"
+
+[tortoisehg]
+issue.regex = \[?([A-Za-z]{1,50}-(\d+))\]?
+issue.link = http://localhost/Issues/IssueDetail.aspx?id={2}
+
+++++++++ COPY ABOVE THIS LINE ++++++++
+
 
 Configuring the Hook
 Configure the BugNET.MercurialChangeGroupHook.exe.config appSettings properties for your environment.
