@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute name="name" use="required" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="assembly">
+						<xsd:complexType>
+							<xsd:attribute name="alias" type="xsd:string" />
+							<xsd:attribute name="name" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="ExcludeClosedIssuesFilter.Text" xml:space="preserve">
+    <value>Escludi le segnalazioni chiuse</value>
+  </data>
+	<data name="MyIssuesPage_Title.Text" xml:space="preserve">
+    <value>Riepilogo segnalazioni per &lt;span&gt;{0}&lt;/span&gt;</value>
+  </data>
+	<data name="OwnedByYou.Text" xml:space="preserve">
+    <value>Tue</value>
+  </data>
+	<data name="Page.Title" xml:space="preserve">
+    <value>Le mie segnalazioni</value>
+  </data>
+	<data name="ProjectListBoxFilter_SelectAll.Text" xml:space="preserve">
+    <value>Tutte</value>
+  </data>
+	<data name="ProjectListFilterLabel.Text" xml:space="preserve">
+    <value>Progetto:</value>
+  </data>
+	<data name="Statistics_Title.Text" xml:space="preserve">
+    <value>Statistiche &lt;span style="font-size:11px;"&gt;(Segnalazioni totali)&lt;/span&gt;</value>
+  </data>
+	<data name="ViewIssuesDropDownFilter_Assigned.Text" xml:space="preserve">
+    <value>Assegnate a te</value>
+  </data>
+	<data name="ViewIssuesDropDownFilter_Closed.Text" xml:space="preserve">
+    <value>Chiuse da te</value>
+  </data>
+	<data name="ViewIssuesDropDownFilter_Created.Text" xml:space="preserve">
+    <value>Create da te</value>
+  </data>
+	<data name="ViewIssuesDropDownFilter_Monitored.Text" xml:space="preserve">
+    <value>Osservate da te</value>
+  </data>
+	<data name="ViewIssuesDropDownFilter_Owned.Text" xml:space="preserve">
+    <value>Tue</value>
+  </data>
+	<data name="ViewIssuesDropDownFilter_Relevant.Text" xml:space="preserve">
+    <value>Pertinenti per te</value>
+  </data>
+	<data name="ViewIssuesDropDownFilter_Select.Text" xml:space="preserve">
+    <value>-- seleziona una vista --</value>
+  </data>
+	<data name="ViewIssuesFilterLabel.Text" xml:space="preserve">
+    <value>Mostra segnalazioni:</value>
+  </data>
+	<data name="AffectedMilestoneLabel.Text" xml:space="preserve">
+		<value>Passo interessato:</value>
+	</data>
+	<data name="AssignedToLabel.Text" xml:space="preserve">
+		<value>Assegnata a:</value>
+	</data>
+	<data name="ByLabel.Text" xml:space="preserve">
+		<value>da</value>
+	</data>
+	<data name="CategoryLabel.Text" xml:space="preserve">
+		<value>Categoria:</value>
+	</data>
+	<data name="Closed" xml:space="preserve">
+		<value>chiusa</value>
+	</data>
+	<data name="DateCreatedLabel.Text" xml:space="preserve">
+		<value>Creata</value>
+	</data>
+	<data name="DeleteIssue" xml:space="preserve">
+		<value>Confermi l'eliminazione di questa segnalazione?</value>
+	</data>
+	<data name="DetailsLabel.Text" xml:space="preserve">
+		<value>Dettagli</value>
+	</data>
+	<data name="DueDateLabel.Text" xml:space="preserve">
+		<value>Prevista per:</value>
+	</data>
+	<data name="EstimationLabel.Text" xml:space="preserve">
+		<value>Stima:</value>
+	</data>
+	<data name="HoursLabel.Text" xml:space="preserve">
+		<value>(ore)</value>
+	</data>
+	<data name="IssueLabel.Text" xml:space="preserve">
+		<value>Segnalazione</value>
+	</data>
+	<data name="IssueTitleRequiredErrorMessage" xml:space="preserve">
+		<value>Il titolo della segnalazione è obbligatorio.</value>
+	</data>
+	<data name="IssueTitleWaterMark" xml:space="preserve">
+		<value>Indica il titolo della segnalazione</value>
+	</data>
+	<data name="IssueTypeLabel.Text" xml:space="preserve">
+		<value>Tipo:</value>
+	</data>
+	<data name="LastUpdateLabel.Text" xml:space="preserve">
+		<value>Modificata</value>
+	</data>
+	<data name="LoggedLabel.Text" xml:space="preserve">
+		<value>Loggato:</value>
+	</data>
+	<data name="MilestoneLabel.Text" xml:space="preserve">
+		<value>Passo:</value>
+	</data>
+	<data name="OwnedByLabel.Text" xml:space="preserve">
+		<value>Proprietario:</value>
+	</data>
+	<data name="PageTitleNewIssue" xml:space="preserve">
+		<value>Nuova segnalazione</value>
+	</data>
+	<data name="PriorityLabel.Text" xml:space="preserve">
+		<value>Priorità:</value>
+	</data>
+	<data name="PrivateLabel.Text" xml:space="preserve">
+		<value>Privata:</value>
+	</data>
+	<data name="ResolutionLabel.Text" xml:space="preserve">
+		<value>Soluzione:</value>
+	</data>
+	<data name="SaveReturn.Text" xml:space="preserve">
+		<value>Salva e chiudi</value>
+	</data>
+	<data name="StatusLabel.Text" xml:space="preserve">
+		<value>Stato:</value>
+	</data>
+	<data name="TimeLabel.Text" xml:space="preserve">
+		<value>Ora</value>
+	</data>
+	<data name="TitleLabel.Text" xml:space="preserve">
+		<value>Titolo:</value>
+	</data>
+	<data name="Voted" xml:space="preserve">
+		<value>valutata</value>
+	</data>
+	<data name="Votes" xml:space="preserve">
+		<value>voti</value>
+	</data>
+	<data name="ProgressLabel.Text" xml:space="preserve">
+		<value>Percentuale:</value>
+	</data>
+	<data name="Attachment.Text" xml:space="preserve">
+		<value>Allegato</value>
+	</data>
+	<data name="ListItem1.Text" xml:space="preserve">
+		<value>Pertinenti per te</value>
+	</data>
+	<data name="ListItem2.Text" xml:space="preserve">
+		<value>Assegnate a te</value>
+	</data>
+	<data name="ListItem3.Text" xml:space="preserve">
+		<value>Di tua proprietà</value>
+	</data>
+	<data name="ListItem4.Text" xml:space="preserve">
+		<value>Create da te</value>
+	</data>
+	<data name="ListItem5.Text" xml:space="preserve">
+		<value>Tutte</value>
+	</data>
+	<data name="ListItem6.Text" xml:space="preserve">
+		<value>-- seleziona vista --</value>
+	</data>
+	<data name="ListItem7.Text" xml:space="preserve">
+		<value>Segnalazioni aperte</value>
+	</data>
+	<data name="ViewIssuesLabel.Text" xml:space="preserve">
+		<value>Mostra segnalazioni:</value>
+	</data>
+	<data name="ExcludeClosedIssues.Text" xml:space="preserve">
+		<value>Escludi le segnalazioni chiuse</value>
+	</data>
+	<data name="IncludeUsernameFields.Text" xml:space="preserve">
+		<value>Includi i nomi utente</value>
+	</data>
+	<data name="SearchComments.Text" xml:space="preserve">
+		<value>Cerca nei commenti (può essere lenta)</value>
+	</data>
+	<data name="SearchCommentUsernames.Text" xml:space="preserve">
+		<value>Cerca tra i nomi utente</value>
+	</data>
+	<data name="SearchDescription.Text" xml:space="preserve">
+		<value>Cerca nelle descrizioni</value>
+	</data>
+	<data name="SearchHistoryRecords.Text" xml:space="preserve">
+		<value>Cerca nello storico (può essere lenta)</value>
+	</data>
+	<data name="SearchMessage.Text" xml:space="preserve">
+		<value>Sarà effettuata una ricerca nelle descrizioni ed i riepiloghi di tutte le segnalazioni alle quali hai accesso.</value>
+	</data>
+	<data name="SearchTitle.Text" xml:space="preserve">
+		<value>Cerca tra i titoli</value>
+	</data>
+	<data name="SearchWatermark" xml:space="preserve">
+		<value>Cerca in tutti i progetti</value>
+	</data>
+	<data name="SearchOptions.Text" xml:space="preserve">
+		<value>Opzioni...</value>
+	</data>
+	<data name="SearchHTMLEncoded.Text" xml:space="preserve">
+		<value>Cerca anche tra gli elementi HTML (BETA)</value>
+	</data>
+	<data name="SearchInstructions" xml:space="preserve">
+		<value>Indica il testo che desideri trovare e seleziona le opzioni per filtrare le segnalazioni come desideri.</value>
+	</data>
+	<data name="SearchNoResults" xml:space="preserve">
+		<value>La ricerca non ha prodotto nessun risultato.</value>
+	</data>
+</root>

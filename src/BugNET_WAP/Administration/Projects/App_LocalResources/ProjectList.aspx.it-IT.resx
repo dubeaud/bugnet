@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute name="name" use="required" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="assembly">
+						<xsd:complexType>
+							<xsd:attribute name="alias" type="xsd:string" />
+							<xsd:attribute name="name" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="CreatedBy" xml:space="preserve">
+    <value>Creato da</value>
+  </data>
+	<data name="CreateNewProject.Text" xml:space="preserve">
+    <value>Crea nuovo progetto</value>
+  </data>
+	<data name="Disabled" xml:space="preserve">
+    <value>Disattivato</value>
+  </data>
+	<data name="Page.Title" xml:space="preserve">
+    <value>Elenco progetto</value>
+  </data>
+	<data name="Project" xml:space="preserve">
+    <value>Progetto</value>
+  </data>
+	<data name="ProjectListTitle.Text" xml:space="preserve">
+    <value>Progetti</value>
+  </data>
+	<data name="ProjectManager" xml:space="preserve">
+    <value>Amministratore</value>
+  </data>
+	<data name="GenerateCustomFieldViews" xml:space="preserve">
+    <value>Genera viste proprietà personalizzate</value>
+  </data>
+	<data name="ConfirmCustomFieldViewCreation" xml:space="preserve">
+    <value>Saranno rigenerate le viste delle proprietà personalizzate di tutti i progetti, vuoi procedere?</value>
+  </data>
+	<data name="Back" xml:space="preserve">
+		<value>Indietro</value>
+	</data>
+	<data name="Finish" xml:space="preserve">
+		<value>Fine</value>
+	</data>
+	<data name="NewProjectTitle.Text" xml:space="preserve">
+		<value>Procedura guidata nuovo progetto</value>
+	</data>
+	<data name="Next" xml:space="preserve">
+		<value>Avanti</value>
+	</data>
+	<data name="Of" xml:space="preserve">
+		<value>di</value>
+	</data>
+	<data name="Step" xml:space="preserve">
+		<value>Passo</value>
+	</data>
+	<data name="CloneProject" xml:space="preserve">
+		<value>Duplicazione progetto</value>
+	</data>
+	<data name="DescriptionLabel.Text" xml:space="preserve">
+		<value>Quando duplichi un progetto, ne crei una copia inclusi le categorie, i passi, le proprietà personalizzate, ecc. Le segnalazioni invece non vengono copiate.</value>
+	</data>
+	<data name="ExistingProjectNameLabel.Text" xml:space="preserve">
+		<value>Progetto da duplicare</value>
+	</data>
+	<data name="NewProjectNameLabel.Text" xml:space="preserve">
+		<value>Nome nuovo progetto</value>
+	</data>
+	<data name="Categories" xml:space="preserve">
+		<value>Categorie</value>
+	</data>
+	<data name="ConfirmDelete" xml:space="preserve">
+		<value>Vuoi davvero eliminare il progetto \"{0}\" ?</value>
+	</data>
+	<data name="CustomFields" xml:space="preserve">
+		<value>Proprietà personalizzate</value>
+	</data>
+	<data name="DeleteProject" xml:space="preserve">
+		<value>Elimina progetto</value>
+	</data>
+	<data name="Details" xml:space="preserve">
+		<value>Dettagli</value>
+	</data>
+	<data name="DisableProject" xml:space="preserve">
+		<value>Disattiva progetto</value>
+	</data>
+	<data name="EditProjectTitle.Text" xml:space="preserve">
+		<value>Amministrazione progetto</value>
+	</data>
+	<data name="IssueTypes" xml:space="preserve">
+		<value>Tipi segnalazione</value>
+	</data>
+	<data name="Mailboxes" xml:space="preserve">
+		<value>Caselle di posta</value>
+	</data>
+	<data name="Members" xml:space="preserve">
+		<value>Membri</value>
+	</data>
+	<data name="Milestones" xml:space="preserve">
+		<value>Passi</value>
+	</data>
+	<data name="Notifications" xml:space="preserve">
+		<value>Notifiche</value>
+	</data>
+	<data name="Priorities" xml:space="preserve">
+		<value>Priorità</value>
+	</data>
+	<data name="ProjectUpdated" xml:space="preserve">
+		<value>Il progetto è stato aggiornato con successo.</value>
+	</data>
+	<data name="Resolutions" xml:space="preserve">
+		<value>Soluzioni</value>
+	</data>
+	<data name="RestoreProject" xml:space="preserve">
+		<value>ripristina progetto</value>
+	</data>
+	<data name="SecurityRoles" xml:space="preserve">
+		<value>Regole di sicurezza</value>
+	</data>
+	<data name="Status" xml:space="preserve">
+		<value>Stato</value>
+	</data>
+	<data name="Subversion" xml:space="preserve">
+		<value>Subversion</value>
+	</data>
+</root>
