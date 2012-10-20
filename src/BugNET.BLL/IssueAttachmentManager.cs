@@ -342,6 +342,7 @@ namespace BugNET.BLL
         {
             inValidReason = String.Empty;
             fileName = fileName.Trim();
+            fileName = Path.GetFileName(fileName);
 
             // empty file name
             if (String.IsNullOrEmpty(fileName))
