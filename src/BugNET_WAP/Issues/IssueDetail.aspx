@@ -21,25 +21,25 @@
             <ul id="horizontal-list">
                 <li id="IssueActionSave" runat="server">
                     <span style="padding-right: 5px; border-right: 1px dotted #ccc">
-                        <asp:ImageButton ID="imgSave" OnClick="LnkSaveClick" runat="server" CssClass="icon" ImageUrl="~\images\disk.gif" />
+                        <asp:ImageButton ID="imgSave" OnClick="LnkSaveClick" runat="server" CssClass="icon" ImageUrl="~\images\disk.gif" alternatetext="<%$ Resources:SharedResources, Save %>" />
                         <asp:LinkButton ID="lnkSave" OnClick="LnkSaveClick" runat="server" Text="<%$ Resources:SharedResources, Save %>" />
                     </span>
                 </li>
                 <li id="IssueActionSaveAndReturn" runat="server">
                     <span style="padding-right: 5px; padding-left: 10px; border-right: 1px dotted #ccc">
-                        <asp:ImageButton ID="imgDone" OnClick="LnkDoneClick" runat="server" CssClass="icon" ImageUrl="~\images\disk.gif" />
+                        <asp:ImageButton ID="imgDone" OnClick="LnkDoneClick" runat="server" CssClass="icon" ImageUrl="~\images\disk.gif" alternatetext="<%$ Resources:SaveReturn.Text %>" />
                         <asp:LinkButton ID="lnkDone" OnClick="LnkDoneClick" runat="server" meta:resourcekey="SaveReturn" Text="Save &amp; Return" />
                     </span>                
                 </li>
                 <li id="IssueActionDelete" runat="server">
                     <span style="padding-left: 10px; padding-right: 5px; border-right: 1px dotted #ccc">
-                        <asp:ImageButton ID="imgDelete" OnClick="LnkDeleteClick" runat="server" CssClass="icon" ImageUrl="~\images\cross.gif" />
+                        <asp:ImageButton ID="imgDelete" OnClick="LnkDeleteClick" runat="server" CssClass="icon" ImageUrl="~\images\cross.gif" alternatetext="<%$ Resources:SharedResources, Delete %>" />
                         <asp:LinkButton ID="lnkDelete" OnClick="LnkDeleteClick" CausesValidation="false" runat="server" Text="<%$ Resources:SharedResources, Delete %>" />
                     </span>                   
                 </li>
                 <li id="IssueActionCancel" runat="server">
                     <span style="padding-right: 5px; padding-left: 10px;">
-                        <asp:ImageButton ID="imgCancel" OnClick="CancelButtonClick" CausesValidation="false" runat="server" CssClass="icon" ImageUrl="~\images\lt.gif" />
+                        <asp:ImageButton ID="imgCancel" OnClick="CancelButtonClick" CausesValidation="false" runat="server" CssClass="icon" ImageUrl="~\images\lt.gif" alternatetext="<%$ Resources:SharedResources, Cancel %>" />
                         <asp:LinkButton ID="lnkCancel" OnClick="CancelButtonClick" CausesValidation="false" runat="server" Text="<%$ Resources:SharedResources, Cancel %>" />
                     </span>                  
                 </li>

@@ -68,7 +68,7 @@ namespace BugNET.Issues
                     Page.Title = GetLocalResourceObject("PageTitleNewIssue").ToString();
                     lblIssueNumber.Text = GetGlobalResourceObject("SharedResources", "NotAvailableAbbr").ToString();
                     VoteButton.Visible = false;
-
+                    IssueActionDelete.Visible = false;
                     //check users role permission for adding an attachment
                     if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Common.Permission.AddAttachment.ToString()))
                     {
@@ -129,6 +129,7 @@ namespace BugNET.Issues
                     TimeLoggedLabel.Visible = true;
                     chkNotifyAssignedTo.Visible = false;
                     chkNotifyOwner.Visible = false;
+                    IssueActionDelete.Visible = true;
 
                     SetFieldSecurity();
                 }
