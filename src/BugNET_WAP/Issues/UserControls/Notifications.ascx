@@ -32,7 +32,7 @@ runat="server" AutoGenerateColumns="false" ShowHeader="false">
     </table>
 </asp:Panel>
 <asp:panel ID="pnlNotifications" runat="server" style="padding:15px 15px 15px 0px;">
-    <asp:Button Text="Receive Notifications" meta:resourcekey="btnReceiveNotifications" OnClick="btnReceiveNotifications_Click" CssClass="button" Runat="server" CausesValidation="false" id="btnReceiveNotifications" />
+    <asp:Button Text="Receive Notifications" meta:resourcekey="btnReceiveNotifications" OnClick="btnReceiveNotifications_Click" Runat="server" CausesValidation="false" id="btnReceiveNotifications" />
     &nbsp;
-    <asp:Button Text="Don't Receive Notifications" meta:resourcekey="btnDontRecieveNotfictaions" OnClick="btnDontRecieveNotfictaions_Click" CssClass="button" CausesValidation="false"  Runat="server" id="btnDontRecieveNotfictaions" />
+    <asp:Button Text="Don't Receive Notifications" meta:resourcekey="btnDontRecieveNotfictaions" OnClick="btnDontRecieveNotfictaions_Click" CausesValidation="false"  Runat="server" id="btnDontRecieveNotfictaions" />
 </asp:panel>
