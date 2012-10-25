@@ -309,3 +309,6 @@ SELECT *
 FROM BugNet_IssueRevisions
 WHERE IssueId = @IssueId
 GO
+
+INSERT INTO [dbo].[BugNet_Languages] ([CultureCode], [CultureName], [FallbackCulture]) VALUES('it-IT', 'Italian (Italy)', 'en-US')
+GO
