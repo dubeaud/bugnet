@@ -4,7 +4,7 @@
 	<property name="nant.settings.currentframework" value="net-4.0" />
 	<property name="configuration" value="release" />
 	<property name="project.name" value="BugNET" />
-	<property name="project.version" value="1.1" />
+	<property name="project.version" value="1.2" />
 	<property name="publishdirectory" value="C:\Projects\BugNET\publish" />
 	<property name="build.dir" value="C:\Projects\bugnet\src\build" />
 	<property name="outputdirectory" value="C:\Projects\bugnet\src\build\output"/>
@@ -98,6 +98,7 @@
 				<include name="**\*.xml" />
 			    <exclude name="**\nunit*"/>
 				<exclude name="**\BugNET.SubversionHooks\*"/>
+				<exclude name="**\BugNET.MercurialChangeGroupHook\*"/>
 				<exclude name="**\Rhino*"/>
 				<exclude name="**\BugNet.UnitTests.*"/>
 			</fileset>
