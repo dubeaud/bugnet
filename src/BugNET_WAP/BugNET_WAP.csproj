@@ -433,10 +433,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Exceptions.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\Exceptions.it-IT.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Exceptions.it-IT.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\Notifications.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Notifications.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Notifications.it-IT.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Notifications.it-IT.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\SharedResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -448,6 +458,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SharedResources.es-ES.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\SharedResources.it-IT.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SharedResources.it-IT.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\SharedResources.nl-NL.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -457,6 +472,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Web.sitemap.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Web.sitemap.it-IT.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Web.sitemap.it-IT.resx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -1719,6 +1739,42 @@
     <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectStatus.ascx.nl-NL.resx" />
     <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectSubversion.ascx.es-ES.resx" />
     <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectSubversion.ascx.nl-NL.resx" />
+    <Content Include="Account\App_LocalResources\UserProfile.aspx.it-IT.resx" />
+    <Content Include="Account\App_LocalResources\Verify.aspx.it-IT.resx" />
+    <Content Include="Account\App_LocalResources\Register.aspx.it-IT.resx" />
+    <Content Include="Account\App_LocalResources\Login.aspx.it-IT.resx" />
+    <Content Include="Account\App_LocalResources\ForgotPassword.aspx.it-IT.resx" />
+    <Content Include="Administration\App_LocalResources\Admin.aspx.it-IT.resx" />
+    <Content Include="Administration\Host\App_LocalResources\LogViewer.aspx.it-IT.resx" />
+    <Content Include="Administration\Host\App_LocalResources\Settings.aspx.it-IT.resx" />
+    <Content Include="Administration\Host\UserControls\App_LocalResources\AttachmentSettings.ascx.it-IT.resx" />
+    <Content Include="Administration\Host\UserControls\App_LocalResources\AuthenticationSettings.ascx.it-IT.resx" />
+    <Content Include="Administration\Host\UserControls\App_LocalResources\BasicSettings.ascx.it-IT.resx" />
+    <Content Include="Administration\Host\UserControls\App_LocalResources\LanguageSettings.ascx.it-IT.resx" />
+    <Content Include="Administration\Host\UserControls\App_LocalResources\LoggingSettings.ascx.it-IT.resx" />
+    <Content Include="Administration\Host\UserControls\App_LocalResources\MailSettings.ascx.it-IT.resx" />
+    <Content Include="Administration\Host\UserControls\App_LocalResources\NotificationSettings.ascx.it-IT.resx" />
+    <Content Include="Administration\Host\UserControls\App_LocalResources\POP3Settings.ascx.it-IT.resx" />
+    <Content Include="Administration\Host\UserControls\App_LocalResources\SubversionSettings.ascx.it-IT.resx" />
+    <Content Include="Administration\Projects\App_LocalResources\AddProject.aspx.it-IT.resx" />
+    <Content Include="Administration\Projects\App_LocalResources\CloneProject.aspx.it-IT.resx" />
+    <Content Include="Administration\Projects\App_LocalResources\EditProject.aspx.it-IT.resx" />
+    <Content Include="Administration\Projects\App_LocalResources\ProjectList.aspx.it-IT.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\NewProjectIntro.ascx.it-IT.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\NewProjectSummary.ascx.it-IT.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectCategories.ascx.it-IT.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectCustomFields.ascx.it-IT.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectDescription.ascx.it-IT.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectIssueTypes.ascx.it-IT.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectMailbox.ascx.it-IT.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectMembers.ascx.it-IT.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectMilestones.ascx.it-IT.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectNotifications.ascx.it-IT.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectPriorities.ascx.it-IT.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectResolutions.ascx.it-IT.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectRoles.ascx.it-IT.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectStatus.ascx.it-IT.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectSubversion.ascx.it-IT.resx" />
     <EmbeddedResource Include="Administration\Projects\UserControls\ProjectPriorities.ascx.resx">
       <DependentUpon>ProjectPriorities.ascx.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -2032,6 +2088,55 @@
     <Content Include="UserControls\App_LocalResources\PickSingleUser.ascx.nl-NL.resx" />
     <Content Include="UserControls\App_LocalResources\PickStatus.ascx.nl-NL.resx" />
     <Content Include="UserControls\App_LocalResources\PickType.ascx.nl-NL.resx" />
+    <Content Include="Administration\Users\App_LocalResources\AddUser.aspx.it-IT.resx" />
+    <Content Include="Administration\Users\App_LocalResources\EditUser.aspx.it-IT.resx" />
+    <Content Include="Administration\Users\App_LocalResources\ManageUser.aspx.it-IT.resx" />
+    <Content Include="Administration\Users\App_LocalResources\UserList.aspx.it-IT.resx" />
+    <Content Include="Administration\Users\UserControls\App_LocalResources\DeleteUser.ascx.it-IT.resx" />
+    <Content Include="Administration\Users\UserControls\App_LocalResources\Membership.ascx.it-IT.resx" />
+    <Content Include="Administration\Users\UserControls\App_LocalResources\Password.ascx.it-IT.resx" />
+    <Content Include="Administration\Users\UserControls\App_LocalResources\Profile.ascx.it-IT.resx" />
+    <Content Include="Administration\Users\UserControls\App_LocalResources\Roles.ascx.it-IT.resx" />
+    <Content Include="App_GlobalResources\Exceptions.it-IT.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Exceptions.it-IT.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Notifications.it-IT.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Notifications.it-IT.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\SharedResources.it-IT.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SharedResources.it-IT.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Web.sitemap.it-IT.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Web.sitemap.it-IT.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="Projects\App_LocalResources\ChangeLog.aspx.it-IT.resx" />
+    <Content Include="Projects\App_LocalResources\ProjectCalendar.aspx.it-IT.resx" />
+    <Content Include="Projects\App_LocalResources\ProjectSummary.aspx.it-IT.resx" />
+    <Content Include="Projects\App_LocalResources\ReleaseNotes.aspx.it-IT.resx" />
+    <Content Include="Projects\App_LocalResources\Roadmap.aspx.it-IT.resx" />
+    <Content Include="Queries\App_LocalResources\QueryDetail.aspx.it-IT.resx" />
+    <Content Include="Queries\App_LocalResources\QueryList.aspx.it-IT.resx" />
+    <Content Include="UserControls\App_LocalResources\Banner.ascx.it-IT.resx" />
+    <Content Include="UserControls\App_LocalResources\CategoryTreeView.ascx.it-IT.resx" />
+    <Content Include="UserControls\App_LocalResources\DisplayIssues.ascx.it-IT.resx" />
+    <Content Include="UserControls\App_LocalResources\Footer.ascx.it-IT.resx" />
+    <Content Include="UserControls\App_LocalResources\LoginControl.ascx.it-IT.resx" />
+    <Content Include="UserControls\App_LocalResources\PickCategory.ascx.it-IT.resx" />
+    <Content Include="UserControls\App_LocalResources\PickImage.ascx.it-IT.resx" />
+    <Content Include="UserControls\App_LocalResources\PickMilestone.ascx.it-IT.resx" />
+    <Content Include="UserControls\App_LocalResources\PickPriority.ascx.it-IT.resx" />
+    <Content Include="UserControls\App_LocalResources\PickProject.ascx.it-IT.resx" />
+    <Content Include="UserControls\App_LocalResources\PickQuery.ascx.it-IT.resx" />
+    <Content Include="UserControls\App_LocalResources\PickResolution.ascx.it-IT.resx" />
+    <Content Include="UserControls\App_LocalResources\PickSingleUser.ascx.it-IT.resx" />
+    <Content Include="UserControls\App_LocalResources\PickStatus.ascx.it-IT.resx" />
+    <Content Include="UserControls\App_LocalResources\PickType.ascx.it-IT.resx" />
+    <Content Include="App_LocalResources\Default.aspx.it-IT.resx" />
+    <Content Include="App_LocalResources\Feed.aspx.it-IT.resx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BugNET.BLL\BugNET.BLL.csproj">
