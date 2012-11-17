@@ -146,6 +146,21 @@
 				<exclude name="**\BugNet.UnitTests.*"/>
 			</fileset>
 		</copy>	
+		
+		<!-- copy hg hooks utility-->
+		<copy todir="${build.dir}\dist\BugNET.MercurialChangeGroupHook">
+			<fileset basedir="${outputdirectory}\BugNET.MercurialChangeGroupHook">
+				<include name="**\*.dll"/>
+				<include name="**\*.bat"/>
+				<include name="**\*.exe"/>
+				<include name="**\*.txt"/>
+				<include name="**\*.config"/>
+				<include name="**\*.xml" />
+			    <exclude name="**\nunit*"/>
+				<exclude name="**\Rhino*"/>
+				<exclude name="**\BugNet.UnitTests.*"/>
+			</fileset>
+		</copy>	
 	</target>
 	
 	<target name="archive" description="Archives the build as a zip file">
