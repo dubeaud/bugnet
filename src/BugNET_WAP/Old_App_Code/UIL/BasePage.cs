@@ -124,10 +124,11 @@ namespace BugNET.UserInterfaceLayer
             }
 
             //Security check using the following rules:
-            //1. Authenticated user
-            //2. The project type is private 
-            //3. The user is not a project member
-            if (User.Identity.IsAuthenticated &&
+            //1. Not Super user
+            //2. Authenticated user
+            //3. The project type is private 
+            //4. The user is not a project member
+            if (User.Identity.IsAuthenticated && !UserManager.IsSuperUser() &&
                 myProj.AccessType == ProjectAccessType.Private &&
                 !ProjectManager.IsUserProjectMember(User.Identity.Name, projectId))
             {
