@@ -52,7 +52,7 @@ INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'ErrorLoggingEmailAddress', N'myemail@mysmtpserver.com')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'FileSizeLimit', N'2024')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'HostEmailAddress', N'noreply@mysmtpserver.com')
-INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'Pop3BodyTemplate', N'&lt;div &gt;Sent by:{1} on: {2}&lt;br&gt;{0}&lt;/div&gt;')
+INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'Pop3BodyTemplate', N'templates/NewMailboxIssue.xslt')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'Pop3DeleteAllMessages', N'False')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'Pop3InlineAttachedPictures', N'False')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'Pop3Interval', N'6000')
