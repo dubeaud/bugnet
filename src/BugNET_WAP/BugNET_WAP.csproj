@@ -433,15 +433,35 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Exceptions.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\Exceptions.ru-RU.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Exceptions.ru-RU.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Notifications.ru-RU.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Notifications.ru-RU.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\SharedResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SharedResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\SharedResources.ru-RU.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SharedResources.ru-RU.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\Web.sitemap.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Web.sitemap.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Web.sitemap.ru-RU.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Web.sitemap.ru-RU.resx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -1428,7 +1448,13 @@
     <Content Include="Scripts\themes\default\d.png" />
     <Content Include="Scripts\themes\default\style.css" />
     <Content Include="Scripts\themes\default\throbber.gif" />
+    <Content Include="Templates\Html\IssueAdded.ru-RU.xslt" />
+    <Content Include="Templates\Html\IssueUpdated.ru-RU.xslt" />
+    <Content Include="Templates\Html\IssueUpdatedWithChanges.ru-RU.xslt" />
+    <Content Include="Templates\Html\NewAssignee.ru-RU.xslt" />
+    <Content Include="Templates\Html\NewIssueComment.ru-RU.xslt" />
     <Content Include="Templates\Html\PasswordReminder.nl-NL.xslt" />
+    <Content Include="Templates\Html\PasswordReminder.ru-RU.xslt" />
     <Content Include="Templates\Html\PasswordReminder.xslt" />
     <Content Include="Templates\Html\IssueAdded.nl-NL.xslt" />
     <Content Include="Templates\Html\IssueAdded.xslt" />
@@ -1441,29 +1467,41 @@
     <Content Include="Templates\Html\NewIssueComment.nl-NL.xslt" />
     <Content Include="Templates\Html\NewIssueComment.xslt" />
     <Content Include="Templates\Html\PasswordReset.nl-NL.xslt" />
+    <Content Include="Templates\Html\PasswordReset.ru-RU.xslt" />
     <Content Include="Templates\Html\PasswordReset.xslt" />
     <Content Include="Templates\Html\UserRegistered.nl-NL.xslt" />
+    <Content Include="Templates\Html\UserRegistered.ru-RU.xslt" />
     <Content Include="Templates\Html\UserRegistered.xslt" />
     <Content Include="Templates\Html\UserVerification.nl-NL.xslt" />
+    <Content Include="Templates\Html\UserVerification.ru-RU.xslt" />
     <Content Include="Templates\Html\UserVerification.xslt" />
     <Content Include="Templates\NewMailboxIssue.xslt" />
     <Content Include="Templates\Text\IssueAdded.nl-NL.xslt" />
+    <Content Include="Templates\Text\IssueAdded.ru-RU.xslt" />
     <Content Include="Templates\Text\IssueAdded.xslt" />
     <Content Include="Templates\Text\IssueUpdated.nl-NL.xslt" />
+    <Content Include="Templates\Text\IssueUpdated.ru-RU.xslt" />
     <Content Include="Templates\Text\IssueUpdated.xslt" />
     <Content Include="Templates\Text\IssueUpdatedWithChanges.nl-NL.xslt" />
+    <Content Include="Templates\Text\IssueUpdatedWithChanges.ru-RU.xslt" />
     <Content Include="Templates\Text\IssueUpdatedWithChanges.xslt" />
     <Content Include="Templates\Text\NewAssignee.nl-NL.xslt" />
+    <Content Include="Templates\Text\NewAssignee.ru-RU.xslt" />
     <Content Include="Templates\Text\NewAssignee.xslt" />
     <Content Include="Templates\Text\NewIssueComment.nl-NL.xslt" />
+    <Content Include="Templates\Text\NewIssueComment.ru-RU.xslt" />
     <Content Include="Templates\Text\NewIssueComment.xslt" />
     <Content Include="Templates\Text\PasswordReminder.nl-NL.xslt" />
+    <Content Include="Templates\Text\PasswordReminder.ru-RU.xslt" />
     <Content Include="Templates\Text\PasswordReminder.xslt" />
     <Content Include="Templates\Text\PasswordReset.nl-NL.xslt" />
+    <Content Include="Templates\Text\PasswordReset.ru-RU.xslt" />
     <Content Include="Templates\Text\PasswordReset.xslt" />
     <Content Include="Templates\Text\UserRegistered.nl-NL.xslt" />
+    <Content Include="Templates\Text\UserRegistered.ru-RU.xslt" />
     <Content Include="Templates\Text\UserRegistered.xslt" />
     <Content Include="Templates\Text\UserVerification.nl-NL.xslt" />
+    <Content Include="Templates\Text\UserVerification.ru-RU.xslt" />
     <Content Include="Templates\Text\UserVerification.xslt" />
     <Content Include="UserControls\Banner.ascx" />
     <Content Include="UserControls\CategoryTreeView.ascx" />
@@ -1741,6 +1779,33 @@
     <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectRoles.ascx.it-IT.resx" />
     <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectStatus.ascx.it-IT.resx" />
     <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectSubversion.ascx.it-IT.resx" />
+    <Content Include="Account\App_LocalResources\ForgotPassword.aspx.ru-RU.resx" />
+    <Content Include="Account\App_LocalResources\Login.aspx.ru-RU.resx" />
+    <Content Include="Account\App_LocalResources\Register.aspx.ru-RU.resx" />
+    <Content Include="Account\App_LocalResources\UserProfile.aspx.ru-RU.resx" />
+    <Content Include="Account\App_LocalResources\Verify.aspx.ru-RU.resx" />
+    <Content Include="Administration\App_LocalResources\Admin.aspx.ru-RU.resx" />
+    <Content Include="Administration\Host\App_LocalResources\LogViewer.aspx.ru-RU.resx" />
+    <Content Include="Administration\Host\App_LocalResources\Settings.aspx.ru-RU.resx" />
+    <Content Include="Administration\Projects\App_LocalResources\AddProject.aspx.ru-RU.resx" />
+    <Content Include="Administration\Projects\App_LocalResources\CloneProject.aspx.ru-RU.resx" />
+    <Content Include="Administration\Projects\App_LocalResources\EditProject.aspx.ru-RU.resx" />
+    <Content Include="Administration\Projects\App_LocalResources\ProjectList.aspx.ru-RU.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\NewProjectIntro.ascx.ru-RU.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\NewProjectSummary.ascx.ru-RU.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectCategories.ascx.ru-RU.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectCustomFields.ascx.ru-RU.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectDescription.ascx.ru-RU.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectIssueTypes.ascx.ru-RU.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectMailbox.ascx.ru-RU.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectMembers.ascx.ru-RU.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectMilestones.ascx.ru-RU.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectNotifications.ascx.ru-RU.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectPriorities.ascx.ru-RU.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectResolutions.ascx.ru-RU.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectRoles.ascx.ru-RU.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectStatus.ascx.ru-RU.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectSubversion.ascx.ru-RU.resx" />
     <EmbeddedResource Include="Administration\Projects\UserControls\ProjectPriorities.ascx.resx">
       <DependentUpon>ProjectPriorities.ascx.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -2103,6 +2168,87 @@
     <Content Include="UserControls\App_LocalResources\PickType.ascx.it-IT.resx" />
     <Content Include="App_LocalResources\Default.aspx.it-IT.resx" />
     <Content Include="App_LocalResources\Feed.aspx.it-IT.resx" />
+    <Content Include="App_GlobalResources\Exceptions.ru-RU.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Exceptions.ru-RU.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Notifications.ru-RU.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Notifications.ru-RU.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\SharedResources.ru-RU.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SharedResources.ru-RU.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Web.sitemap.ru-RU.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Web.sitemap.ru-RU.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="Administration\Users\App_LocalResources\AddUser.aspx.ru-RU.resx" />
+    <Content Include="Administration\Users\App_LocalResources\EditUser.aspx.ru-RU.resx" />
+    <Content Include="Administration\Users\App_LocalResources\ManageUser.aspx.ru-RU.resx" />
+    <Content Include="App_LocalResources\Default.aspx.ru-RU.resx" />
+    <Content Include="App_LocalResources\Feed.aspx.ru-RU.resx" />
+    <Content Include="Errors\App_LocalResources\AccessDenied.aspx.it-IT.resx" />
+    <Content Include="Errors\App_LocalResources\AccessDenied.aspx.ru-RU.resx" />
+    <Content Include="Errors\App_LocalResources\Error.aspx.it-IT.resx" />
+    <Content Include="Errors\App_LocalResources\Error.aspx.ru-RU.resx" />
+    <Content Include="Errors\App_LocalResources\NotFound.aspx.ru-RU.resx" />
+    <Content Include="Errors\App_LocalResources\NotFound.aspx.it-IT.resx" />
+    <Content Include="Errors\App_LocalResources\SessionExpired.aspx.it-IT.resx" />
+    <Content Include="Errors\App_LocalResources\SessionExpired.aspx.ru-RU.resx" />
+    <Content Include="Errors\App_LocalResources\SomethingMissing.it-IT.resx" />
+    <Content Include="Errors\App_LocalResources\SomethingMissing.ru-RU.resx" />
+    <Content Include="Issues\App_LocalResources\IssueDetail.aspx.it-IT.resx" />
+    <Content Include="Issues\App_LocalResources\IssueDetail.aspx.ru-RU.resx" />
+    <Content Include="Issues\App_LocalResources\IssueList.aspx.it-IT.resx" />
+    <Content Include="Issues\App_LocalResources\IssueList.aspx.ru-RU.resx" />
+    <Content Include="Issues\App_LocalResources\IssueSearch.aspx.it-IT.resx" />
+    <Content Include="Issues\App_LocalResources\IssueSearch.aspx.ru-RU.resx" />
+    <Content Include="Issues\App_LocalResources\MyIssues.aspx.it-IT.resx" />
+    <Content Include="Issues\App_LocalResources\MyIssues.aspx.ru-RU.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\Attachments.ascx.it-IT.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\Attachments.ascx.ru-RU.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\Comments.ascx.it-IT.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\Comments.ascx.ru-RU.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\History.ascx.it-IT.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\History.ascx.ru-RU.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\IssueTabs.ascx.it-IT.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\IssueTabs.ascx.ru-RU.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\Notifications.it-IT.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\Notifications.ru-RU.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\ParentIssues.ascx.it-IT.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\ParentIssues.ascx.ru-RU.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\RelatedIssues.ascx.it-IT.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\RelatedIssues.ascx.ru-RU.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\Revisions.ascx.it-IT.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\Revisions.ascx.ru-RU.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\SubIssues.ascx.it-IT.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\SubIssues.ascx.ru-RU.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\TimeTracking.ascx.it-IT.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\TimeTracking.ascx.ru-RU.resx" />
+    <Content Include="Projects\App_LocalResources\ChangeLog.aspx.ru-RU.resx" />
+    <Content Include="Projects\App_LocalResources\ProjectCalendar.aspx.ru-RU.resx" />
+    <Content Include="Projects\App_LocalResources\ProjectSummary.aspx.ru-RU.resx" />
+    <Content Include="Projects\App_LocalResources\ReleaseNotes.aspx.ru-RU.resx" />
+    <Content Include="Projects\App_LocalResources\Roadmap.aspx.ru-RU.resx" />
+    <Content Include="Queries\App_LocalResources\QueryDetail.aspx.ru-RU.resx" />
+    <Content Include="Queries\App_LocalResources\QueryList.aspx.ru-RU.resx" />
+    <Content Include="UserControls\App_LocalResources\Banner.ascx.ru-RU.resx" />
+    <Content Include="UserControls\App_LocalResources\CategoryTreeView.ascx.ru-RU.resx" />
+    <Content Include="UserControls\App_LocalResources\DisplayIssues.ascx.ru-RU.resx" />
+    <Content Include="UserControls\App_LocalResources\Footer.ascx.ru-RU.resx" />
+    <Content Include="UserControls\App_LocalResources\LoginControl.ascx.ru-RU.resx" />
+    <Content Include="UserControls\App_LocalResources\PickCategory.ascx.ru-RU.resx" />
+    <Content Include="UserControls\App_LocalResources\PickImage.ascx.ru-RU.resx" />
+    <Content Include="UserControls\App_LocalResources\PickMilestone.ascx.ru-RU.resx" />
+    <Content Include="UserControls\App_LocalResources\PickPriority.ascx.ru-RU.resx" />
+    <Content Include="UserControls\App_LocalResources\PickProject.ascx.ru-RU.resx" />
+    <Content Include="UserControls\App_LocalResources\PickQuery.ascx.ru-RU.resx" />
+    <Content Include="UserControls\App_LocalResources\PickResolution.ascx.ru-RU.resx" />
+    <Content Include="UserControls\App_LocalResources\PickSingleUser.ascx.ru-RU.resx" />
+    <Content Include="UserControls\App_LocalResources\PickStatus.ascx.ru-RU.resx" />
+    <Content Include="UserControls\App_LocalResources\PickType.ascx.ru-RU.resx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BugNET.BLL\BugNET.BLL.csproj">
