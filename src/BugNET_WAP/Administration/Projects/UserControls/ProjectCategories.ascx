@@ -162,7 +162,7 @@
 </div>
 <asp:Panel ID="pnlDeleteCategory" runat="server" CssClass="ModalPopup">
     <asp:Panel ID="pnlHeader" runat="server" CssClass="ModalHeader">Delete Category</asp:Panel>
-    Please select between the following options:
+    <asp:Literal ID="SelectOption" runat="Server" meta:resourcekey="SelectOption" />
     <br />
     <br />
     <table cellspacing="10" style="margin-left: 10px; text-align: left;">

@@ -23,7 +23,7 @@ namespace BugNET
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
 		protected void Page_Load(object sender, System.EventArgs e)
 		{
-            Page.Title = string.Format("{0} - {1}", "Home", HostSettingManager.Get(HostSettingNames.ApplicationTitle));
+            Page.Title = string.Format("{0} - {1}", GetLocalResourceObject("Page.Title"), HostSettingManager.Get(HostSettingNames.ApplicationTitle));
 
             if (!Page.IsPostBack)
             {

@@ -165,4 +165,7 @@
   <data name="SameCategorySelected" xml:space="preserve">
     <value>You can not reassign the issues to the same category</value>
   </data>
+  <data name="SelectOption.Text" xml:space="preserve">
+    <value>Please select between the following options:</value>
+  </data>
 </root>
