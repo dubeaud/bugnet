@@ -117,6 +117,7 @@ INSERT INTO [dbo].[BugNet_Languages] ([CultureCode], [CultureName], [FallbackCul
 INSERT INTO [dbo].[BugNet_Languages] ([CultureCode], [CultureName], [FallbackCulture]) VALUES('es-ES', 'Spanish (Spain)', 'en-US')
 INSERT INTO [dbo].[BugNet_Languages] ([CultureCode], [CultureName], [FallbackCulture]) VALUES('nl-NL', 'Dutch (Netherlands)', 'en-US')
 INSERT INTO [dbo].[BugNet_Languages] ([CultureCode], [CultureName], [FallbackCulture]) VALUES('it-IT', 'Italian (Italy)', 'en-US')
+INSERT INTO [dbo].[BugNet_Languages] ([CultureCode], [CultureName], [FallbackCulture]) VALUES('ru-RU', 'Russian (Russia)', 'en-US')
 
 -- Roles and Permissions 
 PRINT 'Add Default Roles & Permissions'
