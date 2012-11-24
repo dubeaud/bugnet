@@ -182,8 +182,11 @@
 			<zip zipfile="${publishdirectory}\${project.name}-${CCNetLabel}-Source.zip">
 				<fileset basedir="C:\Projects\BugNET">
 					<include name="**\*" />
+					<exclude name="**\obj\**" />
+					<exclude name="**\bin\**" />
+					<exclude name="**\packages" />
 					<exclude name="**\Help"/>
-					<exclude name="**build**"/>
+					<exclude name="**\build"/>
 					<exclude name="**\*.suo"/>
 					<exclude name="**\*.user"/>
 					<exclude name="**\tools"/>
