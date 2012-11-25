@@ -33,7 +33,7 @@
                             <ul style="width: 140px">
                                 <li>
                                     <a href="Projects/ProjectSummary.aspx?pid=<%# ((Project)Container.DataItem).Id %>">
-                                    Project Summary</a></li>
+                                    <asp:Localize runat="server" ID="Localize33" Text="Project Summary" meta:resourcekey="ProjectSummary" /></a></li>
                                 <li>
                                     <a href="Queries/QueryList.aspx?pid=<%# ((Project)Container.DataItem).Id %>">
                                     <asp:Localize runat="server" ID="Localize4" Text="<%$ Resources:SharedResources, Queries %>" /></a>

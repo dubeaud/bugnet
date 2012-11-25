@@ -118,48 +118,51 @@
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
 	<data name="AddCategory.Text" xml:space="preserve">
-		<value>Добавить категорию</value>
-	</data>
+    <value>Добавить категорию</value>
+  </data>
 	<data name="CancelButton.Text" xml:space="preserve">
-		<value>Отмена</value>
-	</data>
+    <value>Отмена</value>
+  </data>
 	<data name="CannotDeleteRootCategory" xml:space="preserve">
-		<value>Невозможно удалить корневую категорию</value>
-	</data>
+    <value>Невозможно удалить корневую категорию</value>
+  </data>
 	<data name="CategoriesTitle.Text" xml:space="preserve">
-		<value>Категории</value>
-	</data>
+    <value>Категории</value>
+  </data>
 	<data name="CategoryValidator.ErrorMessage" xml:space="preserve">
-		<value>Необходимо добавить хотя бы одну категорию</value>
-	</data>
+    <value>Необходимо добавить хотя бы одну категорию</value>
+  </data>
 	<data name="DeleteCategoriesMessage" xml:space="preserve">
-		<value>Необходимо сначала удалить все дочерние категории у данной родительской категории</value>
-	</data>
+    <value>Необходимо сначала удалить все дочерние категории у данной родительской категории</value>
+  </data>
 	<data name="DeleteCategory.Text" xml:space="preserve">
-		<value>Удалить категорию</value>
-	</data>
+    <value>Удалить категорию</value>
+  </data>
 	<data name="DeleteCategoryRadioButton.Text" xml:space="preserve">
-		<value>&amp;nbsp;&amp;nbsp;Удалить эту категорию и все связанные задания.</value>
-	</data>
+    <value>&amp;nbsp;&amp;nbsp;Удалить эту категорию и все связанные задания.</value>
+  </data>
 	<data name="DeleteCategoryRadioButton1.Text" xml:space="preserve">
-		<value>&amp;nbsp;&amp;nbsp;Назначить все задания существующей категории.</value>
-	</data>
+    <value>&amp;nbsp;&amp;nbsp;Назначить все задания существующей категории:</value>
+  </data>
 	<data name="DeleteCategoryRadioButton2.Text" xml:space="preserve">
-		<value>&amp;nbsp;&amp;nbsp;Назначить все задания новой категории.</value>
-	</data>
+    <value>&amp;nbsp;&amp;nbsp;Назначить все задания новой категории:</value>
+  </data>
 	<data name="DescriptionLabel.Text" xml:space="preserve">
-		<value>При создании задания Вы назначаете ему категорию. Добавьте категории, нажав соответствующую кнопку и введите название категории. Вы можете добавить подкатегории, выбрав родительскую категорию из дерева ниже.</value>
-	</data>
+    <value>При создании задания Вы назначаете ему категорию. Добавьте категории, нажав соответствующую кнопку и введите название категории. Вы можете добавить подкатегории, выбрав родительскую категорию из дерева ниже.</value>
+  </data>
 	<data name="NewCategoryNotEntered" xml:space="preserve">
-		<value>Необходимо ввести название новой категории для назначения заданий</value>
-	</data>
+    <value>Необходимо ввести название новой категории для назначения заданий</value>
+  </data>
 	<data name="NewCategoryWatermark.WatermarkText" xml:space="preserve">
-		<value>Введите название новой категории</value>
-	</data>
+    <value>Введите название новой категории:</value>
+  </data>
 	<data name="NoCategorySelected" xml:space="preserve">
-		<value>Необходимо выбрать категорию для переназначения заданий.</value>
-	</data>
+    <value>Необходимо выбрать категорию для переназначения заданий.</value>
+  </data>
 	<data name="SameCategorySelected" xml:space="preserve">
-		<value>Нельзя переназначить задания той же самой категории</value>
-	</data>
+    <value>Нельзя переназначить задания той же самой категории</value>
+  </data>
+	<data name="SelectOption.Text" xml:space="preserve">
+    <value>Пожалуйста выберите одну из опций:</value>
+  </data>
 </root>

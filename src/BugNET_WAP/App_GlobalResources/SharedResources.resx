@@ -474,4 +474,7 @@
   <data name="DropDown_SelectCustomField" xml:space="preserve">
     <value>-- Select Custom Field --</value>
   </data>
+  <data name="PasswordRequired" xml:space="preserve">
+    <value>Password is required.</value>
+  </data>
 </root>
