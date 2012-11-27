@@ -177,7 +177,7 @@
   <data name="AllowNotifications.Text" xml:space="preserve">
     <value>Recieve email notifications:</value>
   </data>
-  <data name="Label7.Text" xml:space="preserve">
+  <data name="CurrentPassword.Text" xml:space="preserve">
     <value>Enter your old password:</value>
   </data>
   <data name="PasswordStrength.PrefixText" xml:space="preserve">

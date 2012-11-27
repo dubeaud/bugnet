@@ -177,7 +177,7 @@
   <data name="CustomSettingsUpdateError" xml:space="preserve">
     <value>Настройки не удалось изменить.</value>
   </data>
-  <data name="Label7.Text" xml:space="preserve">
+  <data name="CurrentPassword.Text" xml:space="preserve">
     <value>Ваш текущий пароль:</value>
   </data>
   <data name="PasswordRequired" xml:space="preserve">

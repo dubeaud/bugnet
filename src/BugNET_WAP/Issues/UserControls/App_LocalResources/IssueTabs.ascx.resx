@@ -132,6 +132,9 @@
   <data name="ParentIssues" xml:space="preserve">
     <value>Parent Issues</value>
   </data>
+  <data name="PleaseWaitMessage" xml:space="preserve">
+    <value>&lt;h1&gt;Please wait...&lt;/h1&gt;</value>
+  </data>
   <data name="RelatedIssues" xml:space="preserve">
     <value>Related Issues</value>
   </data>

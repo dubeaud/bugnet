@@ -11,6 +11,7 @@
 <%@ Register Src="TimeTracking.ascx" TagName="TimeTracking" TagPrefix="IssueTab" %>
 
 <script type="text/javascript">
+    var pleaseWaitMessage = '<%= GetLocalResourceObject("PleaseWaitMessage") %>';
     $(document).ready(function () {
         var shift = 130;
         $('.scrollButtons .left').click(function () {
@@ -26,17 +27,15 @@
                 var newPos = $(".scrollable").width() - $(".issueTabs").width();
             }
             content.animate({ left: pos }, 200);
-
         });
         $("ul.issueTabs a").removeAttr('href');
-
     });
 
     Sys.WebForms.PageRequestManager.getInstance().add_beginRequest(BeginRequestHandler);
     Sys.WebForms.PageRequestManager.getInstance().add_endRequest(EndRequestHandler);
     
     function BeginRequestHandler(sender, args) {
-        $('div.issueTabsContainer').block({ css: {
+        $('div.issueTabsContainer').block({ message: pleaseWaitMessage, css: {
             border: 'none',
             padding: '10px',
             backgroundColor: '#efefef',

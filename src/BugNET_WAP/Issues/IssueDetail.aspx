@@ -63,11 +63,11 @@
                                     <div class="votebox">
                                         <div class="top">
                                             <asp:Label ID="IssueVoteCount" runat="server" CssClass="count" Text="1" />
-                                            <asp:Label ID="Votes" runat="server" Text="vote" CssClass="votes" />
+                                            <asp:Label ID="Votes" runat="server" Text="<%$ Resources: Vote %>" CssClass="votes" />
                                         </div>
                                         <div class="bottom">
-                                            <asp:LinkButton ID="VoteButton" OnClick="VoteButtonClick" CausesValidation="false" runat="server" Text="vote" />
-                                            <asp:Label ID="VotedLabel" runat="Server" Text="voted" />
+                                            <asp:LinkButton ID="VoteButton" OnClick="VoteButtonClick" CausesValidation="false" runat="server" Text="vote" meta:resourcekey="VoteButton" />
+                                            <asp:Label ID="VotedLabel" runat="Server" Text="<%$ Resources: Voted %>" />
                                         </div>
                                     </div>
                                 </td>
@@ -97,14 +97,14 @@
                     <asp:Label ID="DateCreatedLabel" runat="server" meta:resourcekey="DateCreatedLabel"></asp:Label>
                     <asp:Label ID="ByLabel" runat="server" meta:resourcekey="ByLabel" Text="By" />
                     <asp:Label ID="lblReporter" runat="server" />
-                    on
+                    <asp:Label ID="Label8" runat="server" meta:resourcekey="OnLabel" Text="On" />
                     <asp:Label ID="lblDateCreated" runat="server" />
                 </td>
                 <td colspan="2" style="padding-bottom: 13px;">
                     <asp:Label ID="LastModifiedLabel" runat="server" meta:resourcekey="LastUpdateLabel"></asp:Label>
                     <asp:Label ID="Label2" runat="server" meta:resourcekey="ByLabel" Text="By" />
                     <asp:Label ID="lblLastUpdateUser" runat="server" />
-                    on
+                    <asp:Label ID="Label9" runat="server" meta:resourcekey="OnLabel" Text="On" />
                     <asp:Label ID="lblLastModified" runat="server" />
                 </td>
             </tr>
@@ -120,7 +120,7 @@
                 </td>
                 <td style="width: 35%;">
                     <it:PickSingleUser ID="DropOwned" DisplayDefault="True" Required="false" runat="Server" />
-                    <asp:CheckBox ID="chkNotifyOwner" runat="server" Text="Notify" Checked="True"></asp:CheckBox>
+                    <asp:CheckBox ID="chkNotifyOwner" runat="server" Text="Notify" Checked="True" meta:resourceKey="NotifyCheckBox"></asp:CheckBox>
                 </td>
             </tr>
             <tr>
@@ -143,7 +143,7 @@
                 </td>
                 <td style="width: 35%;">
                     <it:PickSingleUser ID="DropAssignedTo" DisplayUnassigned="False" DisplayDefault="True" Required="false" runat="Server" />
-                    <asp:CheckBox ID="chkNotifyAssignedTo" runat="server" Text="Notify" Checked="True"></asp:CheckBox>
+                    <asp:CheckBox ID="chkNotifyAssignedTo" runat="server" Text="Notify" Checked="True" meta:resourceKey="NotifyCheckBox"></asp:CheckBox>
                 </td>
                 <td style="width: 15%;">
                     <asp:Label ID="PrivateLabel" AssociatedControlID="chkPrivate" runat="server" meta:resourcekey="PrivateLabel" Text="Private:" />
@@ -236,18 +236,18 @@
                     <asp:Label ID="lblAddAttachment" runat="server" meta:resourcekey="Attachment" Text="Attachment"></asp:Label></strong></p>
             <ol>
                 <li>
-                    <asp:Label ID="Label6" runat="server" Text="File:" AssociatedControlID="AspUploadFile" />
+                    <asp:Label ID="Label6" runat="server" Text="File:" AssociatedControlID="AspUploadFile" meta:resourcekey="AttachmentFileLabel" />
                     <asp:FileUpload ID="AspUploadFile" runat="server" />
                 </li>
                 <li>
-                    <asp:Label ID="Label7" runat="server" Text="Description:" AssociatedControlID="AttachmentDescription" />
-                    <asp:TextBox ID="AttachmentDescription" Width="350px" runat="server" />&nbsp;<span style="font-style: italic; font-size: 8pt">Optional</span>
+                    <asp:Label ID="Label7" runat="server" Text="Description:" AssociatedControlID="AttachmentDescription" meta:resourcekey="AttachmentDescriptionLabel"/>
+                    <asp:TextBox ID="AttachmentDescription" Width="350px" runat="server" />&nbsp;<span style="font-style: italic; font-size: 8pt"><asp:Localize ID="Localize1" runat="server" Text="Optional" meta:resourcekey="AttachmentOptionalLocalize" /></span>
                 </li>
             </ol>
         </asp:Panel>
     </div>
     <ajaxToolkit:SliderExtender ID="SliderExtender2" runat="server" Steps="21" TargetControlID="ProgressSlider" BoundControlID="ProgressSlider_BoundControl"
-        Orientation="Horizontal" TooltipText="{0}% Complete" EnableHandleAnimation="true" />
+        Orientation="Horizontal" TooltipText="{0}% Complete" EnableHandleAnimation="true"  meta:resourcekey="ProgressSlider"/>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="IssueTabs" runat="Server">
     <it:IssueTabs ID="ctlIssueTabs" runat="server" Visible="False"></it:IssueTabs>

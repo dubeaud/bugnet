@@ -157,4 +157,7 @@
   <data name="SearchNoResults" xml:space="preserve">
     <value>No results were found for the criteria you have supplied, please modify your criteria.</value>
   </data>
+  <data name="SearchButton.Text" xml:space="preserve">
+    <value>Search</value>
+  </data>
 </root>

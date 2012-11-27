@@ -77,8 +77,8 @@
                         <asp:Label ID="Label10" AssociatedControlID="AttachmentStorageType" meta:resourcekey="AttachmentStorageTypeLabel" runat="server" Text="Storage Type:"></asp:Label>
                          <div class="labelgroup">
                             <asp:RadioButtonList ID="AttachmentStorageType"  OnSelectedIndexChanged="AttachmentStorageType_Changed"  RepeatDirection="Horizontal" AutoPostBack="true" runat="server">
-                                <asp:ListItem Text="Database (recommended)" Selected="True" Value="2" />
-                                <asp:ListItem Text="File System" Value="1" />
+                                <asp:ListItem Text="Database (recommended)" Selected="True" Value="2" meta:resourcekey="AttachmentStorageTypeDb"/>
+                                <asp:ListItem Text="File System" Value="1"  meta:resourcekey="AttachmentStorageTypeFs"/>
                             </asp:RadioButtonList>
                         </div>
                     </li>

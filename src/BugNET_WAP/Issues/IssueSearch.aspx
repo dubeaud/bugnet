@@ -38,7 +38,7 @@
     </p>
     <br />
     <asp:TextBox ID="txtSearch" runat="server"></asp:TextBox>&nbsp;
-    <asp:Button ID="btnGlobalSearch" runat="server" OnClick="Button1_Click" Text="Search" />
+    <asp:Button ID="btnGlobalSearch" runat="server" OnClick="Button1_Click" Text="Search" meta:resourcekey="SearchButton" />
     <ajaxToolkit:TextBoxWatermarkExtender ID="TBWE2" runat="server" TargetControlID="txtSearch" WatermarkText="<%$ Resources:SearchWatermark %>"
         WatermarkCssClass="watermarked" />
     &nbsp;<asp:HyperLink ID="srchOptions" runat="server" Visible="False" meta:resourcekey="SearchOptions">Options...</asp:HyperLink>

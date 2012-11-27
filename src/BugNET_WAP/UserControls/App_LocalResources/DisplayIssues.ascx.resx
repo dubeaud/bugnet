@@ -135,7 +135,13 @@
   <data name="SetPropertiesLabel.Text" xml:space="preserve">
     <value>Set properties for selected issues:</value>
   </data>
-  <data name="litResetDueDate.Text">
-    <value xml:space="preserve">Reset Due Date</value>
+  <data name="litResetDueDate.Text" xml:space="preserve">
+    <value>Reset Due Date</value>
+  </data>
+  <data name="ExportExcelButton.Text" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="ForSelectedLabel.Text" xml:space="preserve">
+    <value>For Selected:</value>
   </data>
 </root>

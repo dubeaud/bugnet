@@ -162,4 +162,7 @@
   <data name="CommentOptional.Text" xml:space="preserve">
     <value>(optional - will be added as an issue comment)</value>
   </data>
+  <data name="hrsLiteral.Text" xml:space="preserve">
+    <value>hrs</value>
+  </data>
 </root>

@@ -66,7 +66,7 @@
                     <asp:Label ID="Label12" runat="server" Text="<%$ Resources:SharedResources, ChangePassword %>"></asp:Label></h3>
                 <ol>
                     <li>
-                        <asp:Label ID="Label7" runat="server" AssociatedControlID="CurrentPassword" Text="Enter your old password:" meta:resourceKey="Label7" />
+                        <asp:Label ID="Label7" runat="server" AssociatedControlID="CurrentPassword" Text="Enter your old password:" meta:resourceKey="CurrentPassword" />
                         <asp:TextBox ID="CurrentPassword" runat="server" TextMode="Password"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="CurrentPassword"
                             SetFocusOnError="True" ErrorMessage="<%$ Resources:SharedResources, PasswordRequired %>" ToolTip="<%$ Resources:SharedResources, PasswordRequired %>"

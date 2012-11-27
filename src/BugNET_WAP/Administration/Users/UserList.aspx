@@ -17,7 +17,7 @@
     <asp:Panel ID="plLetterSearch" Runat="server" HorizontalAlign="Center">
         <asp:Repeater ID="LetterSearch" runat="server">
             <ItemTemplate>    
-		        <asp:linkbutton ID="FilterButton" OnClick="FilterButtonClick" runat="server" CssClass="CommandButton"  CommandArgument="<%# Container.DataItem %>" CommandName="Filter" Text='<%# Container.DataItem %>'>
+		        <asp:linkbutton ID="FilterButton" OnClick="FilterButtonClick" runat="server" CssClass="CommandButton"  CommandArgument="<%# Container.DataItem %>" CommandName="Filter" Text='<%# GetLocalizedText(Container.DataItem) %>'>
 		        </asp:linkbutton>&nbsp;&nbsp;
 	        </ItemTemplate>
         </asp:Repeater>
