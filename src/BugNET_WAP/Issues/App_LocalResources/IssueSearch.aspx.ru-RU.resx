@@ -133,7 +133,7 @@
     <value>Искать в описаниях</value>
   </data>
   <data name="SearchHistoryRecords.Text" xml:space="preserve">
-    <value>Искать в истории (может быть медленным)</value>
+    <value>Искать в истории (может работать медленно)</value>
   </data>
   <data name="SearchMessage.Text" xml:space="preserve">
     <value>Будет произведён поиск среди всех описаний, по всем полям всех заданий в системе, к которым у Вас есть доступ.</value>
@@ -158,5 +158,14 @@
   </data>
   <data name="SearchButton.Text" xml:space="preserve">
     <value>Искать</value>
+  </data>
+  <data name="IssuesAndCommentsFound" xml:space="preserve">
+    <value>Найдено заданий: {0}.&lt;br /&gt;Найдено комментариев: {1}.</value>
+  </data>
+  <data name="IssuesFound" xml:space="preserve">
+    <value>Найдено заданий: {0}.</value>
+  </data>
+  <data name="MatchingCommentsFound" xml:space="preserve">
+    <value>Для задания {1} в комментариях найдено совпадений: {0}</value>
   </data>
 </root>

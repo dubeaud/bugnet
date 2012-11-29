@@ -162,10 +162,10 @@ namespace BugNET.Issues
                 pnlSearchResults.Visible = true;
             }
 
-
-            lblSearchSummary.Text = _mainComments.Count > 0 ? 
-                string.Format("{0} Issues found.<br />{1} Matching Comment(s) found.", _mainIssues.Count, _mainComments.Count) : 
-                string.Format("{0} Issues found.", _mainIssues.Count);
+            if (_mainComments.Count > 0)
+                lblSearchSummary.Text = string.Format(GetLocalResourceObject("IssuesAndCommentsFound").ToString(), _mainIssues.Count, _mainComments.Count);
+            else
+                lblSearchSummary.Text = string.Format(GetLocalResourceObject("IssuesFound").ToString(), _mainIssues.Count);
         }
 
         /// <summary>
@@ -174,7 +174,6 @@ namespace BugNET.Issues
         /// <param name="searchProjects">A List of projects to search through.</param>
         private void PerformIssueSearch(IEnumerable<Project> searchProjects)
         {
-
             var foundComments = new List<IssueComment>();
             var issueComments = new List<IssueComment>();
 
@@ -394,7 +393,7 @@ namespace BugNET.Issues
             // Are there any results
             if (filteredIssues.Count > 0)
             {
-                ((HyperLink)e.Item.FindControl("IssuesCount")).Text = string.Format("{0} Issues found.", filteredIssues.Count);
+                ((HyperLink)e.Item.FindControl("IssuesCount")).Text = string.Format(GetLocalResourceObject("IssuesFound").ToString(), filteredIssues.Count);
 
                 rptr.DataSource = filteredIssues;
                 rptr.DataBind();
@@ -441,11 +440,12 @@ namespace BugNET.Issues
             // Are there any results
             if (filteredComm.Count > 0)
             {
-                //((HyperLink)e.Item.FindControl("IssuesCount")).Text = FilteredIssues.Count.ToString() + (FilteredIssues.Count == 1 ? " Issues found." : " Issues found.");
                 var rptr = ((Repeater)e.Item.FindControl("IssuesCommentList"));
 
                 var lbl1 = (Label)pnl1.FindControl("lblCommentCount");
-                lbl1.Text = string.Format("<em>{0} matching comment(s) found for <a href='../Issues/IssueDetail.aspx?id={2}'>{1}</a>.</em>", filteredComm.Count.ToString(), i.FullId, i.Id.ToString());
+                var linkText = string.Format("<a href='../Issues/IssueDetail.aspx?id={0}'>{1}</a>", i.Id, i.FullId);
+                var fullText = string.Format(GetLocalResourceObject("MatchingCommentsFound").ToString(), filteredComm.Count, linkText);
+                lbl1.Text = string.Format("<em>{0}.</em>", fullText);
 
                 rptr.DataSource = filteredComm;
                 rptr.DataBind();
