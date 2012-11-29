@@ -129,7 +129,6 @@ namespace BugNET.Issues
                     TimeLoggedLabel.Visible = true;
                     chkNotifyAssignedTo.Visible = false;
                     chkNotifyOwner.Visible = false;
-                    IssueActionDelete.Visible = true;
 
                     SetFieldSecurity();
                 }
@@ -636,8 +635,7 @@ namespace BugNET.Issues
                     DropAssignedTo.Enabled = false;
 
                 //delete issue
-                if (UserManager.HasPermission(ProjectId, Common.Permission.DeleteIssue.ToString()))
-                    IssueActionDelete.Visible = true;
+				IssueActionDelete.Visible = UserManager.HasPermission(ProjectId, Common.Permission.DeleteIssue.ToString());
 
                 //security check: assign issue
                 if (!UserManager.HasPermission(ProjectId, Common.Permission.AssignIssue.ToString()))
