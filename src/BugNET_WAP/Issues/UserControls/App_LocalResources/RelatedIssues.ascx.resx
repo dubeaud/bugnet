@@ -132,4 +132,7 @@
   <data name="RemoveRelatedIssue" xml:space="preserve">
     <value>Are you sure you want to remove this related issue?</value>
   </data>
+  <data name="btnAdd.Text" xml:space="preserve">
+    <value>Add Related Issue</value>
+  </data>
 </root>

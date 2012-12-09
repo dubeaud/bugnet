@@ -32,6 +32,6 @@
         </li>
     </ol>    
     <div class="submit">
-        <asp:Button Text="Add Related Issue" meta:resourcekey="lblAddRelatedIssue" CausesValidation="True" runat="server" id="Button1"  OnClick="CmdAddRelatedIssueClick" ValidationGroup="AddRelatedIssue" />
+        <asp:Button Text="Add Related Issue" meta:resourcekey="btnAdd" CausesValidation="True" runat="server" id="Button1"  OnClick="CmdAddRelatedIssueClick" ValidationGroup="AddRelatedIssue" />
     </div>
 </asp:panel>
