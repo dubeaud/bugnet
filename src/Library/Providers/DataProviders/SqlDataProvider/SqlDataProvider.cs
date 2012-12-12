@@ -1888,7 +1888,7 @@ namespace BugNET.Providers.DataProviders
                 cmdClause.Parameters.Add("@ComparisonOperator", SqlDbType.NVarChar, 50);
                 cmdClause.Parameters.Add("@FieldValue", SqlDbType.NVarChar, 50);
                 cmdClause.Parameters.Add("@DataType", SqlDbType.Int);
-                cmdClause.Parameters.Add("@IsCustomField", SqlDbType.Bit);
+                cmdClause.Parameters.Add("@CustomFieldId", SqlDbType.Int);
 
                 SetCommandType(cmdClause, CommandType.StoredProcedure, SP_QUERY_SAVEQUERYCLAUSE);
 
