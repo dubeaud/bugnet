@@ -34,7 +34,7 @@
             <asp:Panel ID="OptionsContainerPanel" runat="server" CssClass="issueListOptionsContainer">
                 <div style="height: 25px; background-color: #F1F2EC; width: 100%;">
                     <asp:Panel ID="LeftButtonContainerPanel" CssClass="leftButtonContainerPanel" runat="server">
-                        For Selected:&nbsp; <span id="EditIssueProperties"><a href="#" id="editProperties">
+                            <asp:Label ID="ForSelectedLabel" runat="server" Text="For Selected" meta:resourceKey="ForSelectedLabel"/>&nbsp;<span id="EditIssueProperties"><a href="#" id="editProperties">
                             <asp:Label ID="EditPropertiesLabel" meta:resourcekey="EditPropertiesLabel" Text="Test" runat="server"></asp:Label>
                         </a></span>
                     </asp:Panel>
@@ -44,7 +44,7 @@
                                 <asp:Label ID="Label12" meta:resourcekey="SelectColumnsLinkButton" runat="server"></asp:Label></a>
                         </p>
                         <p id="ExportExcel">
-                            <asp:LinkButton ID="ExportExcelButton" runat="server" OnClick="ExportExcelButton_Click">Export</asp:LinkButton>
+                            <asp:LinkButton ID="ExportExcelButton" runat="server" OnClick="ExportExcelButton_Click" Text="Export"  meta:resourcekey="ExportExcelButton"/>
                         </p>
                         <p id="Rss">
                             <asp:HyperLink ID="lnkRSS" runat="server">RSS</asp:HyperLink>

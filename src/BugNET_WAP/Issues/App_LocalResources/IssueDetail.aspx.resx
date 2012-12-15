@@ -210,4 +210,28 @@
   <data name="Attachment.Text" xml:space="preserve">
     <value>Attachment</value>
   </data>
+  <data name="AttachmentDescriptionLabel.Text" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="AttachmentFileLabel.Text" xml:space="preserve">
+    <value>File:</value>
+  </data>
+  <data name="AttachmentOptionalLocalize.Text" xml:space="preserve">
+    <value>Optional</value>
+  </data>
+  <data name="NotifyCheckBox.Text" xml:space="preserve">
+    <value>Notify</value>
+  </data>
+  <data name="ProgressSlider.TooltipText" xml:space="preserve">
+    <value>{0}% Complete</value>
+  </data>
+  <data name="OnLabel.Text" xml:space="preserve">
+    <value>on</value>
+  </data>
+  <data name="Vote" xml:space="preserve">
+    <value>vote</value>
+  </data>
+  <data name="VoteButton.Text" xml:space="preserve">
+    <value>vote</value>
+  </data>
 </root>

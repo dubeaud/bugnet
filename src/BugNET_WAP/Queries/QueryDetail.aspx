@@ -38,7 +38,7 @@
                     <asp:Panel ID="SaveQueryForm" runat="server">
                         <ol>
                             <li>
-                                <asp:Label ID="Label1" runat="server" Text="Query Name" AssociatedControlID="txtQueryName" />
+                                <asp:Label ID="Label1" runat="server" Text="Query Name" AssociatedControlID="txtQueryName" meta:resourcekey="txtQueryName" />
                                 <asp:TextBox ID="txtQueryName" runat="Server" />
                             </li>
                             <li>

@@ -22,7 +22,7 @@
 	</Columns>
 </asp:DataGrid>
 <asp:Panel ID="AddParentIssuePanel" runat="server"  CssClass="fieldgroup">
-    <h3>Add Parent Issue</h3>
+    <h3><asp:Literal runat="server" meta:resourcekey="TitleLiteral" Text="Add Parent Issue"/></h3>
     <ol>
         <li>
             <asp:label ID="IssueIdLabel" runat="server" AssociatedControlID="IssueIdTextBox" Text="<%$ Resources:SharedResources, IssueId %>"/>

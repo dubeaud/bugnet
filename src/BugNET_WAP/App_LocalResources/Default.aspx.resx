@@ -171,4 +171,7 @@
   <data name="AssignedToUser.Text" xml:space="preserve">
     <value>Assigned to me</value>
   </data>
+  <data name="ProjectSummary.Text" xml:space="preserve">
+    <value>Project Summary</value>
+  </data>
 </root>

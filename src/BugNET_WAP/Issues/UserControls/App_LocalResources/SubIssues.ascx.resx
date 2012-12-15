@@ -132,4 +132,7 @@
   <data name="NoSubIssues" xml:space="preserve">
     <value>There are no sub issues.</value>
   </data>
+  <data name="TitleLiteral.Text" xml:space="preserve">
+    <value>Add Sub Issue</value>
+  </data>
 </root>

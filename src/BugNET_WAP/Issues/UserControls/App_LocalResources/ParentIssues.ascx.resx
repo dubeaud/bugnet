@@ -132,4 +132,7 @@
   <data name="NoParentIssues" xml:space="preserve">
     <value>There are no parent issues.</value>
   </data>
+  <data name="TitleLiteral.Text" xml:space="preserve">
+    <value>Add Parent Issue</value>
+  </data>
 </root>

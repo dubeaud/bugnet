@@ -7,12 +7,11 @@ using BugNET.UserInterfaceLayer;
 
 namespace BugNET.Administration.Users
 {
-	/// <summary>
-	/// Summary description for UserList.
-	/// </summary>
-	public partial class UserList : BasePage
-	{
-
+    /// <summary>
+    /// Summary description for UserList.
+    /// </summary>
+    public partial class UserList : BasePage
+    {
         /// <summary>
         /// Gets or sets the sort field.
         /// </summary>
@@ -72,8 +71,8 @@ namespace BugNET.Administration.Users
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		protected void Page_Load(object sender, EventArgs e)
-		{
+        protected void Page_Load(object sender, EventArgs e)
+        {
             if (!UserManager.IsSuperUser())
                 Response.Redirect("~/Errors/AccessDenied.aspx");
 
@@ -81,7 +80,7 @@ namespace BugNET.Administration.Users
 
             CreateLetterSearch();
             BindData(string.Empty);
-		}
+        }
 
         /// <summary>
         /// Handles the RowCommand event of the gvUsers control.
@@ -103,6 +102,19 @@ namespace BugNET.Administration.Users
                     break;
             }
 
+        }
+
+        protected string GetLocalizedText(object dataItem)
+        {
+            var s = dataItem.ToString();
+            switch (s)
+            {
+                case "All":
+                case "Unauthorized":
+                    return GetLocalResourceObject(s).ToString();
+                default:
+                    return s;
+            }
         }
 
         /// <summary>
@@ -243,6 +255,5 @@ namespace BugNET.Administration.Users
             gvUsers.PageIndex = ddlPages.SelectedIndex;
             BindData(SearchFilter);
         }
-
-	}
+    }
 }

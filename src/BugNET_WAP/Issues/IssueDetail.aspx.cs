@@ -257,7 +257,9 @@ namespace BugNET.Issues
             ProgressSlider.Text = currentIssue.Progress.ToString();
             IssueVoteCount.Text = currentIssue.Votes.ToString();
 
-            if (currentIssue.Votes > 1)
+            if (currentIssue.Votes == 1)
+                Votes.Text = GetLocalResourceObject("Vote").ToString();
+            else
                 Votes.Text = GetLocalResourceObject("Votes").ToString();
 
             if (User.Identity.IsAuthenticated && IssueVoteManager.HasUserVoted(currentIssue.Id, Security.GetUserName()))
@@ -545,7 +547,10 @@ namespace BugNET.Issues
 
             var count = Convert.ToInt32(IssueVoteCount.Text) + 1;
 
-            Votes.Text = GetLocalResourceObject("Votes").ToString();
+            if (count == 1)
+                Votes.Text = GetLocalResourceObject("Vote").ToString();
+            else
+                Votes.Text = GetLocalResourceObject("Votes").ToString();
 
             IssueVoteCount.Text = count.ToString();
             VoteButton.Visible = false;

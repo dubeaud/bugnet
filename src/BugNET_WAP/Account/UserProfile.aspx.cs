@@ -28,6 +28,8 @@ namespace BugNET.Account
         {
             if (Page.IsPostBack) return;
 
+            litUserProfile.Text = Page.Title;
+
             foreach (ListItem li in BulletedList4.Items)
                 li.Attributes.Add("class", "off");
 
@@ -159,12 +161,12 @@ namespace BugNET.Account
                 }
                 if (securityQuestionChanged)
                 {
-                    Message2.ShowSuccessMessage("Security question was changed successfully");
+                    Message2.ShowSuccessMessage(GetLocalResourceObject("SecurityQuestionChanged").ToString()); // "Security question was changed successfully"
                 }
             }
             catch (Exception ex)
             {
-                Message2.ShowSuccessMessage(ex.Message);
+                Message2.ShowErrorMessage(ex.Message);
             }
         }
 

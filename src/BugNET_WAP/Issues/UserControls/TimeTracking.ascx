@@ -42,7 +42,7 @@
         </li>
         <li>
             <asp:label  runat="server"  meta:resourcekey="lblDuration"  AssociatedControlID="DurationTextBox" ID="lblDuration" Text="Duration:" />
-            <asp:textbox id="DurationTextBox" runat="server"  Width="80" style="text-align:right" MaxLength="5"></asp:textbox>&nbsp;hrs
+            <asp:textbox id="DurationTextBox" runat="server"  Width="80" style="text-align:right" MaxLength="5"></asp:textbox>&nbsp;<asp:Literal ID="hrsLiteral" runat="server" Text="hrs" meta:resourcekey="hrsLiteral"/>
              <asp:RequiredFieldValidator  SetFocusOnError="True" ID="RequiredFieldValidator4" ControlToValidate="DurationTextBox" ValidationGroup="AddTimeEntry"  runat="server" ErrorMessage=" *"></asp:RequiredFieldValidator>
             <asp:rangevalidator id="RangeValidator1" Display="Dynamic" runat="server" meta:resourcekey="RangeValidator1"  ErrorMessage="Duration is out of range." Type="Double"
                 MaximumValue="24" MinimumValue="0.01" ControlToValidate="DurationTextBox"></asp:rangevalidator>

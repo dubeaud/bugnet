@@ -141,4 +141,13 @@
   <data name="SelectFiles" xml:space="preserve">
     <value>Select files</value>
   </data>
+  <data name="btnAddAttachment.Text" xml:space="preserve">
+    <value>Add Attachment</value>
+  </data>
+  <data name="DescriptionLabel.Text" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="FileLabel.Text" xml:space="preserve">
+    <value>File:</value>
+  </data>
 </root>

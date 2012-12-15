@@ -157,4 +157,16 @@
   <data name="SearchNoResults" xml:space="preserve">
     <value>No results were found for the criteria you have supplied, please modify your criteria.</value>
   </data>
+  <data name="SearchButton.Text" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="IssuesAndCommentsFound" xml:space="preserve">
+    <value>{0} Issues found.&lt;br /&gt;{1} Matching Comment(s) found.</value>
+  </data>
+  <data name="IssuesFound" xml:space="preserve">
+    <value>{0} Issues found.</value>
+  </data>
+  <data name="MatchingCommentsFound" xml:space="preserve">
+    <value>{0} matching comment(s) found for {1}</value>
+  </data>
 </root>

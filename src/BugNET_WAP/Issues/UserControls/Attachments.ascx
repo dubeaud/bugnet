@@ -43,16 +43,16 @@
             </h3>
             <ol>
                 <li>
-                    <asp:Label ID="Label1" runat="server" Text="File:" AssociatedControlID="AspUploadFile" />
+                    <asp:Label ID="Label1" runat="server" Text="File:" AssociatedControlID="AspUploadFile" meta:resourcekey="FileLabel" />
                     <asp:FileUpload ID="AspUploadFile" runat="server" />
                 </li>
                 <li>
-                    <asp:Label ID="Label7" runat="server" Text="Description:" AssociatedControlID="AttachmentDescription" />
+                    <asp:Label ID="Label7" runat="server" Text="Description:" AssociatedControlID="AttachmentDescription" meta:resourcekey="DescriptionLabel"/>
                     <asp:TextBox ID="AttachmentDescription" Width="350" runat="server" />
                 </li>
             </ol>
             <div class="submit">
-                <asp:Button ID="UploadButton" runat="server" OnClick="UploadDocument" meta:resourcekey="lblAddAttachment" ValidationGroup="AddAttachment"
+                <asp:Button ID="UploadButton" runat="server" OnClick="UploadDocument" meta:resourcekey="btnAddAttachment" ValidationGroup="AddAttachment"
                     Text="Add Attachment" />
             </div>
         </asp:Panel>    

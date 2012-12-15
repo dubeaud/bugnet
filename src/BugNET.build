@@ -184,9 +184,10 @@
 					<include name="**\*" />
 					<exclude name="**\obj\**" />
 					<exclude name="**\bin\**" />
-					<exclude name="**\packages" />
-					<exclude name="**\Help"/>
-					<exclude name="**\build"/>
+					<exclude name="**\packages\**" />
+					<exclude name="**\Help\**"/>
+					<exclude name="**\build\**"/>
+					<exclude name="**\publish\**"/>
 					<exclude name="**\*.suo"/>
 					<exclude name="**\*.user"/>
 					<exclude name="**\tools"/>

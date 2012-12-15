@@ -1806,6 +1806,15 @@
     <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectRoles.ascx.ru-RU.resx" />
     <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectStatus.ascx.ru-RU.resx" />
     <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectSubversion.ascx.ru-RU.resx" />
+    <Content Include="Administration\Host\UserControls\App_LocalResources\AttachmentSettings.ascx.ru-RU.resx" />
+    <Content Include="Administration\Host\UserControls\App_LocalResources\AuthenticationSettings.ascx.ru-RU.resx" />
+    <Content Include="Administration\Host\UserControls\App_LocalResources\BasicSettings.ascx.ru-RU.resx" />
+    <Content Include="Administration\Host\UserControls\App_LocalResources\LanguageSettings.ascx.ru-RU.resx" />
+    <Content Include="Administration\Host\UserControls\App_LocalResources\LoggingSettings.ascx.ru-RU.resx" />
+    <Content Include="Administration\Host\UserControls\App_LocalResources\MailSettings.ascx.ru-RU.resx" />
+    <Content Include="Administration\Host\UserControls\App_LocalResources\NotificationSettings.ascx.ru-RU.resx" />
+    <Content Include="Administration\Host\UserControls\App_LocalResources\POP3Settings.ascx.ru-RU.resx" />
+    <Content Include="Administration\Host\UserControls\App_LocalResources\SubversionSettings.ascx.ru-RU.resx" />
     <EmbeddedResource Include="Administration\Projects\UserControls\ProjectPriorities.ascx.resx">
       <DependentUpon>ProjectPriorities.ascx.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -1982,7 +1991,9 @@
     <Content Include="UserControls\App_LocalResources\CategoryTreeView.ascx.resx" />
     <Content Include="Errors\App_LocalResources\AccessDenied.aspx.resx" />
     <Content Include="Administration\Users\App_LocalResources\EditUser.aspx.resx" />
-    <Content Include="Administration\Users\UserControls\App_LocalResources\DeleteUser.ascx.resx" />
+    <Content Include="Administration\Users\UserControls\App_LocalResources\DeleteUser.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_GlobalResources\Web.sitemap.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Web.sitemap.Designer.cs</LastGenOutput>
@@ -1992,6 +2003,7 @@
     <Content Include="App_GlobalResources\Exceptions.es-ES.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Exceptions.es-ES.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_GlobalResources\Notifications.es-ES.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
@@ -2050,6 +2062,7 @@
     <Content Include="App_GlobalResources\Exceptions.nl-NL.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Exceptions.nl-NL.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_GlobalResources\Notifications.nl-NL.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
@@ -2070,7 +2083,9 @@
     <Content Include="Administration\Users\App_LocalResources\UserList.aspx.es-ES.resx" />
     <Content Include="Administration\Users\App_LocalResources\UserList.aspx.nl-NL.resx" />
     <Content Include="Administration\Users\UserControls\App_LocalResources\DeleteUser.ascx.es-ES.resx" />
-    <Content Include="Administration\Users\UserControls\App_LocalResources\DeleteUser.ascx.nl-NL.resx" />
+    <Content Include="Administration\Users\UserControls\App_LocalResources\DeleteUser.ascx.nl-NL.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Administration\Users\UserControls\App_LocalResources\Membership.ascx.es-ES.resx" />
     <Content Include="Administration\Users\UserControls\App_LocalResources\Membership.ascx.nl-NL.resx" />
     <Content Include="Administration\Users\UserControls\App_LocalResources\Password.ascx.es-ES.resx" />
@@ -2123,7 +2138,9 @@
     <Content Include="Administration\Users\App_LocalResources\EditUser.aspx.it-IT.resx" />
     <Content Include="Administration\Users\App_LocalResources\ManageUser.aspx.it-IT.resx" />
     <Content Include="Administration\Users\App_LocalResources\UserList.aspx.it-IT.resx" />
-    <Content Include="Administration\Users\UserControls\App_LocalResources\DeleteUser.ascx.it-IT.resx" />
+    <Content Include="Administration\Users\UserControls\App_LocalResources\DeleteUser.ascx.it-IT.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Administration\Users\UserControls\App_LocalResources\Membership.ascx.it-IT.resx" />
     <Content Include="Administration\Users\UserControls\App_LocalResources\Password.ascx.it-IT.resx" />
     <Content Include="Administration\Users\UserControls\App_LocalResources\Profile.ascx.it-IT.resx" />
@@ -2131,6 +2148,7 @@
     <Content Include="App_GlobalResources\Exceptions.it-IT.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Exceptions.it-IT.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_GlobalResources\Notifications.it-IT.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
@@ -2249,6 +2267,12 @@
     <Content Include="UserControls\App_LocalResources\PickSingleUser.ascx.ru-RU.resx" />
     <Content Include="UserControls\App_LocalResources\PickStatus.ascx.ru-RU.resx" />
     <Content Include="UserControls\App_LocalResources\PickType.ascx.ru-RU.resx" />
+    <Content Include="Administration\Users\UserControls\App_LocalResources\DeleteUser.ascx.ru-RU.resx" />
+    <Content Include="Administration\Users\UserControls\App_LocalResources\Membership.ascx.ru-RU.resx" />
+    <Content Include="Administration\Users\UserControls\App_LocalResources\Password.ascx.ru-RU.resx" />
+    <Content Include="Administration\Users\UserControls\App_LocalResources\Profile.ascx.ru-RU.resx" />
+    <Content Include="Administration\Users\UserControls\App_LocalResources\Roles.ascx.ru-RU.resx" />
+    <Content Include="Administration\Users\App_LocalResources\UserList.aspx.ru-RU.resx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BugNET.BLL\BugNET.BLL.csproj">

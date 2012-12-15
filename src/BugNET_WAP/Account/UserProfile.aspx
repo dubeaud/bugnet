@@ -3,7 +3,7 @@
 
 <asp:Content ID="Content3" runat="server" ContentPlaceHolderID="PageTitle">
     <h1 class="page-title">
-        User Profile -
+        <asp:Literal ID="litUserProfile" runat="server" /> -
         <asp:Literal ID="litUserName" runat="Server" /></h1>
 </asp:Content>
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="Content">
@@ -66,10 +66,10 @@
                     <asp:Label ID="Label12" runat="server" Text="<%$ Resources:SharedResources, ChangePassword %>"></asp:Label></h3>
                 <ol>
                     <li>
-                        <asp:Label ID="Label7" runat="server" AssociatedControlID="CurrentPassword">Enter your old password:</asp:Label>
+                        <asp:Label ID="Label7" runat="server" AssociatedControlID="CurrentPassword" Text="Enter your old password:" meta:resourceKey="CurrentPassword" />
                         <asp:TextBox ID="CurrentPassword" runat="server" TextMode="Password"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="CurrentPassword"
-                            SetFocusOnError="True" ErrorMessage="Password is required." ToolTip="Password is required."
+                            SetFocusOnError="True" ErrorMessage="<%$ Resources:SharedResources, PasswordRequired %>" ToolTip="<%$ Resources:SharedResources, PasswordRequired %>"
                             ValidationGroup="pwdReset">*</asp:RequiredFieldValidator>
                     </li>
                     <li>
@@ -109,7 +109,7 @@
                         <asp:TextBox ID="SecurityAnswer" runat="server"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="AnswerRequired" runat="server" ControlToValidate="SecurityAnswer"
                             SetFocusOnError="True" ErrorMessage="<%$ Resources:SharedResources, SecurityAnswerRequiredErrorMessage %>"
-                            ToolTip="Security answer is required." ValidationGroup="pwdReset">*</asp:RequiredFieldValidator>
+                            ToolTip="<%$ Resources:SharedResources, SecurityAnswerRequiredErrorMessage %>" ValidationGroup="pwdReset">*</asp:RequiredFieldValidator>
                     </li>
                 </ol>
             </div>
@@ -127,7 +127,7 @@
                 DisplayPosition="RightSide" StrengthIndicatorType="Text" PreferredPasswordLength="10"
                 PrefixText="Strength:" TextCssClass="TextIndicator_TextBox1" MinimumNumericCharacters="0"
                 MinimumSymbolCharacters="0" RequiresUpperAndLowerCaseCharacters="false" TextStrengthDescriptions="Very Poor;Weak;Average;Strong;Excellent"
-                CalculationWeightings="50;15;15;20" />
+                CalculationWeightings="50;15;15;20" meta:resourceKey="PasswordStrength" />
         </asp:View>
         <asp:View ID="Customize" runat="server">
             <bn:Message ID="Message3" runat="server" Width="650px" Visible="False" />

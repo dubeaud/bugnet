@@ -161,19 +161,19 @@
     <asp:LinkButton ID="lbDeleteCategory" runat="server" Text="nil" Style="display: none" />
 </div>
 <asp:Panel ID="pnlDeleteCategory" runat="server" CssClass="ModalPopup">
-    <asp:Panel ID="pnlHeader" runat="server" CssClass="ModalHeader">Delete Category</asp:Panel>
+    <asp:Panel ID="pnlHeader" runat="server" CssClass="ModalHeader"><asp:Literal runat="server" meta:resourcekey="DeleteCategory"/></asp:Panel>
     <asp:Literal ID="SelectOption" runat="Server" meta:resourcekey="SelectOption" />
     <br />
     <br />
     <table cellspacing="10" style="margin-left: 10px; text-align: left;">
         <tr>
             <td>
-                <asp:RadioButton ID="RadioButton1" GroupName="DeleteCategory" runat="server" Checked="true" Height="30px" Text="&nbsp;&nbsp;Delete this category and all assigned issues." />
+                <asp:RadioButton ID="RadioButton1" GroupName="DeleteCategory" runat="server" Checked="true" Height="30px" Text="&nbsp;&nbsp;Delete this category and all assigned issues." meta:resourcekey="DeleteCategoryRadioButton" />
             </td>
         </tr>
         <tr>
             <td>
-                <asp:RadioButton ID="RadioButton2" GroupName="DeleteCategory" runat="server" Height="30px" Text="&nbsp;&nbsp;Assign all issues to an existing category." />
+                <asp:RadioButton ID="RadioButton2" GroupName="DeleteCategory" runat="server" Height="30px" Text="&nbsp;&nbsp;Assign all issues to an existing category." meta:resourcekey="DeleteCategoryRadioButton1"/>
                 <div style="margin: 0 0 0 35px;">
                     <it:PickCategory ID="DropCategory" DisplayDefault="true" Required="false" runat="Server" />
                 </div>
@@ -181,7 +181,7 @@
         </tr>
         <tr>
             <td>
-                <asp:RadioButton ID="RadioButton3" GroupName="DeleteCategory" runat="server" Height="30px" Text="&nbsp;&nbsp;Assign all issues to a new category. " />
+                <asp:RadioButton ID="RadioButton3" GroupName="DeleteCategory" runat="server" Height="30px" Text="&nbsp;&nbsp;Assign all issues to a new category." meta:resourcekey="DeleteCategoryRadioButton2" />
                 <div style="margin: 0 0 0 35px;">
                     <asp:TextBox ID="NewCategoryTextBox" runat="server" Text=""></asp:TextBox>
                 </div>
