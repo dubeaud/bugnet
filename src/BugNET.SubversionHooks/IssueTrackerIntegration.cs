@@ -41,11 +41,14 @@ namespace BugNET.SubversionHooks
                 try
                 {
                     issueIds.Add(int.Parse(MatchResults.Groups[1].Value.Substring(MatchResults.Groups[1].Value.IndexOf("-") + 1)));
-                    MatchResults = MatchResults.NextMatch();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     logger.ErrorFormat("An error occurred parsing the issue id: {0} \n\n {1}", ex.Message, ex.StackTrace);
+                }
+                finally
+                {
+                    MatchResults = MatchResults.NextMatch();
                 }
             }
 
