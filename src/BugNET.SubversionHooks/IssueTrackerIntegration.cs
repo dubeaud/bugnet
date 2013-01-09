@@ -30,9 +30,16 @@ namespace BugNET.SubversionHooks
             logger.DebugFormat("svnlook output: {0}", infoOutput);        
             logger.DebugFormat("Looking for search pattern in revision:{0} and repository:{1}...", revision, repository);
 
+            var lines = infoOutput.Split(new char[] { '\n' }, 5);
+            string command = lines[0];
+            string author = lines[1];
+            string dateTime = lines[2];
+            string logSize = lines[3];
+            string logMessage = lines[4];
+
             // get all the matching issue id's
             Regex RegexObj = new Regex(Settings.Default.IssueIdRegEx.ToString());
-            Match MatchResults = RegexObj.Match(infoOutput);
+            Match MatchResults = RegexObj.Match(logMessage);
 
             logger.InfoFormat("Found {0} matches...",MatchResults.Groups.Count);
 
@@ -54,20 +61,12 @@ namespace BugNET.SubversionHooks
 
             if (issueIds.Count > 0)
             {             
-                var lines = infoOutput.Split(new char[] {'\n'}, 5);
-                string command = lines[0];
-                string author = lines[1];
-                string dateTime = lines[2];
-                string logSize = lines[3];
-                string logMessage = lines[4];
 
                 BugNetServices services = new BugNetServices();
                 services.CookieContainer = new System.Net.CookieContainer();
                 services.Url = Settings.Default.BugNetServicesUrl;
                 if (Convert.ToBoolean(Settings.Default.BugNetWindowsAuthentication))
                     services.UseDefaultCredentials = true;
-
-                
 
                 try
                 {
