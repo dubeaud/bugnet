@@ -54,14 +54,12 @@ namespace BugNET.SubversionHooks
 
             if (issueIds.Count > 0)
             {             
-                var lines = infoOutput.Split('\n');
+                var lines = infoOutput.Split(new char[] {'\n'}, 5);
                 string command = lines[0];
                 string author = lines[1];
                 string dateTime = lines[2];
-                string logSize = lines[4];
-
-                logger.Info("Getting svn log message.");
-                string logMessage = CommandExecutor.RunCommand(svnlook, string.Format("log -r {0} \"{1}\"", revision, repository),false);
+                string logSize = lines[3];
+                string logMessage = lines[4];
 
                 BugNetServices services = new BugNetServices();
                 services.CookieContainer = new System.Net.CookieContainer();
