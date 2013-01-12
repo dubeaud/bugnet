@@ -242,7 +242,7 @@ namespace BugNET.Issues
             TitleTextBox.Text = Server.HtmlDecode(currentIssue.Title);
             DisplayTitleLabel.Text = currentIssue.Title;
 
-            Label5.Text = currentIssue.IssueTypeName;
+            IssueLabel.Text = currentIssue.IssueTypeId.Equals(0) ? GetGlobalResourceObject("SharedResources", "Unassigned").ToString() :  currentIssue.IssueTypeName;
             lblDateCreated.Text = currentIssue.DateCreated.ToString("g");
             lblLastModified.Text = currentIssue.LastUpdate.ToString("g");
             lblIssueNumber.Text = currentIssue.FullId;

@@ -22,6 +22,15 @@ namespace BugNET.Queries {
         protected global::System.Web.UI.WebControls.HiddenField ConfirmDeleteText;
         
         /// <summary>
+        /// lblQuery control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblQuery;
+        
+        /// <summary>
         /// dropQueries control.
         /// </summary>
         /// <remarks>

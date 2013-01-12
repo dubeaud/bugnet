@@ -46,7 +46,7 @@
             </ul>
         </div>
         <div class="float-left text-bold">
-            <asp:Label ID="Label5" Font-Size="12px" runat="server" Text="Issue:" />
+            <asp:Label ID="IssueLabel" Font-Size="12px" runat="server" Text="Issue:" meta:resourcekey="IssueLabel" />
             <asp:Label ID="lblIssueNumber" Font-Size="12px" runat="server"></asp:Label>
         </div>
     </asp:Panel>
