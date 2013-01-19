@@ -142,7 +142,7 @@ namespace BugNET.Projects
                             summaryLink.Text = data.Name.Trim();
 
                             // if the item is unassigned then apply the item name from the resource file
-                            if (data.Id.Equals(0))
+                            if (data.Id.Equals(0) || data.Id.Equals(Guid.Empty))
                                 summaryLink.Text = GetGlobalResourceObject("SharedResources", "Unassigned").ToString();
                         }
 

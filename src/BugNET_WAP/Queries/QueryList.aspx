@@ -7,7 +7,7 @@
     <asp:HiddenField ID="ConfirmDeleteText" runat="server"/>
     <table class="queryList">
         <tr>
-            <td>Query:</td>
+            <td><asp:Label ID="lblQuery" runat="server" Text="Query:" meta:resourcekey="lblQuery"/></td>
             <td><it:PickQuery ID="dropQueries" CssClass="standardText" DisplayDefault="true" runat="Server" /></td>
             <td>
                 <asp:ImageButton runat="server" ID="imgPerformQuery" CssClass="icon" ToolTip="<%$ Resources: btnPerformQuery.Text %>" ImageUrl="~/Images/execute_sql.png"

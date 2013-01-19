@@ -166,7 +166,7 @@
     <value>(часов)</value>
   </data>
   <data name="IssueLabel.Text" xml:space="preserve">
-    <value>Задание</value>
+    <value>Задание:</value>
   </data>
   <data name="IssueTitleRequiredErrorMessage" xml:space="preserve">
     <value>Требуется указать заголовок задания</value>
