@@ -3,7 +3,11 @@
 <%@ Register TagPrefix="it" TagName="TextImage" Src="~/UserControls/TextImage.ascx" %>
 
 <asp:Content runat="server" ID="Content1" ContentPlaceHolderID="Content">
-
+    <asp:ScriptManagerProxy ID="ScriptManagerProxy1" runat="server">
+        <Scripts>
+            <asp:ScriptReference Path="~/Scripts/jquery.cookie.js" />
+        </Scripts>
+    </asp:ScriptManagerProxy>
     <script type="text/javascript">
         $(document).ready(function () {
             // Todo: BGN-1829 Change the css class names etc below 
