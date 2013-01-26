@@ -48,29 +48,31 @@ namespace BugNET.HttpModules
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void context_PreRequestHandlerExecute(object sender, EventArgs e)
-        {
-            if (HttpContext.Current.User == null || HttpContext.Current.Profile == null
-                || HttpContext.Current.Request.Url.LocalPath.ToLower().EndsWith("install.aspx") ||
-                !HttpContext.Current.User.Identity.IsAuthenticated)
+        {        
+            if (HttpContext.Current.Request.Url.LocalPath.ToLower().EndsWith("install.aspx"))
                 return;
 
             string culture;
 
-            if (HttpContext.Current.Profile["PreferredLocale"] != null &&
-                !string.IsNullOrEmpty(HttpContext.Current.Profile["PreferredLocale"].ToString()))
-            {
-                //retrieve culture
-                culture = HttpContext.Current.Profile["PreferredLocale"].ToString();
-
-                //set culture
-                Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(culture);
-                Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture);
-            }
-            else //use default selected culture
+            if (HttpContext.Current.User == null || HttpContext.Current.Profile == null || !HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 culture = HostSettingManager.Get(HostSettingNames.ApplicationDefaultLanguage);
                 Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(culture);
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture);
+            }
+            else
+            {
+                if (HttpContext.Current.Profile["PreferredLocale"] != null &&
+                !string.IsNullOrEmpty(HttpContext.Current.Profile["PreferredLocale"].ToString()))
+                {
+                    //retrieve culture
+                    culture = HttpContext.Current.Profile["PreferredLocale"].ToString();
+
+                    //set culture
+                    Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(culture);
+                    Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture);
+                }
+
             }
         }
     }
