@@ -4141,8 +4141,8 @@ SELECT     dbo.BugNet_Issues.IssueId, dbo.BugNet_Issues.IssueTitle, dbo.BugNet_I
                               FROM         dbo.BugNet_IssueVotes AS V
                               WHERE     (IssueId = dbo.BugNet_Issues.IssueId)), 0) AS IssueVotes, dbo.BugNet_Issues.Disabled, dbo.BugNet_Issues.IssueProgress, 
                       dbo.BugNet_ProjectMilestones.MilestoneDueDate, dbo.BugNet_Projects.ProjectDisabled, CAST(COALESCE (dbo.BugNet_ProjectStatus.IsClosedState, 0) AS BIT) 
-                      AS IsClosed, CAST(CONVERT(VARCHAR(10), dbo.BugNet_Issues.LastUpdate, 120) AS DATETIME) AS LastUpdateAsDate, CAST(CONVERT(VARCHAR(10), 
-                      dbo.BugNet_Issues.DateCreated, 120) AS DATETIME) AS DateCreatedAsDate
+                      AS IsClosed, CAST(CONVERT(VARCHAR(8), dbo.BugNet_Issues.LastUpdate, 112) AS DATETIME) AS LastUpdateAsDate, 
+					  CAST(CONVERT(VARCHAR(8), dbo.BugNet_Issues.DateCreated, 112) AS DATETIME) AS DateCreatedAsDate
 FROM         dbo.BugNet_Issues LEFT OUTER JOIN
                       dbo.BugNet_ProjectIssueTypes ON dbo.BugNet_Issues.IssueTypeId = dbo.BugNet_ProjectIssueTypes.IssueTypeId LEFT OUTER JOIN
                       dbo.BugNet_ProjectPriorities ON dbo.BugNet_Issues.IssuePriorityId = dbo.BugNet_ProjectPriorities.PriorityId LEFT OUTER JOIN

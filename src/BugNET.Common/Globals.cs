@@ -127,6 +127,7 @@ namespace BugNET.Common
                 (int)Permission.EditComment,
                 (int)Permission.EditIssueDescription,
                 (int)Permission.EditIssueTitle,
+                (int)Permission.EditQuery,
                 (int)Permission.DeleteQuery,
                 (int)Permission.DeleteAttachment,
                 (int)Permission.DeleteComment,
@@ -140,6 +141,7 @@ namespace BugNET.Common
                 (int)Permission.CloseIssue,
                 (int)Permission.AdminEditProject,
                 (int)Permission.ChangeIssueStatus,
+                (int)Permission.ReopenIssue,
                 (int)Permission.ViewProjectCalendar
             };
 
