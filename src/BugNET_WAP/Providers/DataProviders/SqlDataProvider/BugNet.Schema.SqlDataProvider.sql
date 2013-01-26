@@ -2391,7 +2391,7 @@ SELECT
 FROM
   BugNet_ProjectCategories
 WHERE
-  ProjectId = @ProjectId  
+  ProjectId = @ProjectId  AND Disabled = 0
 
 
 CREATE TABLE #OldCategories
