@@ -1966,7 +1966,7 @@
     <Content Include="Issues\UserControls\App_LocalResources\Attachments.ascx.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\Comments.ascx.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\History.ascx.resx" />
-    <Content Include="Issues\UserControls\App_LocalResources\Notifications.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\Notifications.ascx.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\ParentIssues.ascx.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\RelatedIssues.ascx.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\Revisions.ascx.resx">
@@ -2030,7 +2030,7 @@
     <Content Include="Issues\UserControls\App_LocalResources\Comments.ascx.es-ES.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\History.ascx.es-ES.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\IssueTabs.ascx.es-ES.resx" />
-    <Content Include="Issues\UserControls\App_LocalResources\Notifications.es-ES.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\Notifications.ascx.es-ES.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\ParentIssues.ascx.es-ES.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\RelatedIssues.ascx.es-ES.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\Revisions.ascx.es-ES.resx" />
@@ -2107,7 +2107,7 @@
     <Content Include="Issues\UserControls\App_LocalResources\Comments.ascx.nl-NL.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\History.ascx.nl-NL.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\IssueTabs.ascx.nl-NL.resx" />
-    <Content Include="Issues\UserControls\App_LocalResources\Notifications.nl-NL.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\Notifications.ascx.nl-NL.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\ParentIssues.ascx.nl-NL.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\RelatedIssues.ascx.nl-NL.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\Revisions.ascx.nl-NL.resx" />
@@ -2233,8 +2233,8 @@
     <Content Include="Issues\UserControls\App_LocalResources\History.ascx.ru-RU.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\IssueTabs.ascx.it-IT.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\IssueTabs.ascx.ru-RU.resx" />
-    <Content Include="Issues\UserControls\App_LocalResources\Notifications.it-IT.resx" />
-    <Content Include="Issues\UserControls\App_LocalResources\Notifications.ru-RU.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\Notifications.ascx.it-IT.resx" />
+    <Content Include="Issues\UserControls\App_LocalResources\Notifications.ascx.ru-RU.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\ParentIssues.ascx.it-IT.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\ParentIssues.ascx.ru-RU.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\RelatedIssues.ascx.it-IT.resx" />
