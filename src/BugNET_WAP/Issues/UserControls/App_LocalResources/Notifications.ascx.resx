@@ -129,6 +129,9 @@
   <data name="btnReceiveNotifications.Text" xml:space="preserve">
     <value>Receive Notifications</value>
   </data>
+  <data name="lblDescription.Text" xml:space="preserve">
+    <value>The following person(s) receive email notifications when this issue is updated:</value>
+  </data>
   <data name="pnlNotificationAdmin.GroupingText" xml:space="preserve">
     <value>Add Remove Notifications (Managers Only)</value>
   </data>

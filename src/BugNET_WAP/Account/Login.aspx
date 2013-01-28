@@ -14,7 +14,7 @@
     <p>&nbsp;</p>
     <div id="login-widget">
         <div id="login-widget-content">
-            <asp:ValidationSummary ID="ValidationSummary1" DisplayMode="BulletList" ValidationGroup="ctl00$Login1" HeaderText="Please correct the following" CssClass="validationSummary" runat="server" />
+            <asp:ValidationSummary ID="ValidationSummary1" DisplayMode="BulletList" ValidationGroup="ctl00$Login1" HeaderText="<%$ Resources:SharedResources, ValidationSummaryHeaderText %>" CssClass="validationSummary" runat="server" />
             <asp:Menu 
                 ID="LoginTabsMenu" 
                 OnMenuItemClick="LoginTabsMenu_Click" 
@@ -48,7 +48,7 @@
                             <asp:Localize runat="server" ID="Localize1" Text="You can login using your OpenID" meta:resourcekey="LoginOpenIDAccount" />
                         </div>
                         <openAuth:OpenIdLogin ID="OpenIdLogin1" runat="server" EnableRequestProfile="true" RequestNickname="Require" OnLoggedIn="OpenIdLogin1_LoggedIn"
-                            RequestEmail="Require" RequestFullName="Require" OnLoggingIn="OpenIdLogin1_LoggingIn" />
+                            RequestEmail="Require" RequestFullName="Require" OnLoggingIn="OpenIdLogin1_LoggingIn" meta:resourcekey="OpenIdLogin" />
                     </div>
                 </asp:View> 
             </asp:MultiView> 

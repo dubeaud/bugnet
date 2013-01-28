@@ -157,7 +157,7 @@
     <value>Быстрые ссылки / Фильтры</value>
   </data>
   <data name="RegisterAndLoginMessage" xml:space="preserve">
-    <value>Вам необходимо войти, чтобы просматривать проекты на этом сайте.</value>
+    <value>Вам необходимо войти в систему, чтобы просматривать проекты на этом сайте.</value>
   </data>
   <data name="UpdatedRecently.Text" xml:space="preserve">
     <value>Недавно обновлённые</value>

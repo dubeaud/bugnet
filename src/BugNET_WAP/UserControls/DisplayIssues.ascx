@@ -8,7 +8,7 @@
 <%@ Register TagPrefix="it" TagName="PickSingleUser" Src="~/UserControls/PickSingleUser.ascx" %>
 <%@ Register TagPrefix="it" TagName="PickResolution" Src="~/UserControls/PickResolution.ascx" %>
 <%@ Register TagPrefix="it" TagName="DisplayCustomFields" Src="~/UserControls/DisplayCustomFields.ascx" %>
-<%@ Register TagPrefix="bn" TagName="PickDate" Src="~/UserControls/PickDate.ascx" %>
+<%@ Register TagPrefix="it" TagName="PickDate" Src="~/UserControls/PickDate.ascx" %>
 <%@ Register Assembly="BugNET" Namespace="BugNET.UserInterfaceLayer.WebControls" TagPrefix="BNWC" %>
 
 <script type="text/javascript">
@@ -123,7 +123,7 @@
                                     <asp:Label ID="Label9" runat="server" AssociatedControlID="DueDate:DateTextBox" Text="<%$ Resources:SharedResources, DueDate %>" />:
                                 </td>
                                 <td>
-                                    <bn:PickDate ID="DueDate" runat="server" />&nbsp;<asp:CheckBox ID="chkDueDateReset" runat="server"/>&nbsp;<span><asp:Literal ID="litResetDueDate" meta:resourcekey="litResetDueDate" runat="server"></asp:Literal></span>
+                                    <it:PickDate ID="DueDate" runat="server" />&nbsp;<asp:CheckBox ID="chkDueDateReset" runat="server"/>&nbsp;<span><asp:Literal ID="litResetDueDate" meta:resourcekey="litResetDueDate" runat="server"></asp:Literal></span>
                                 </td>
                             </tr>
                         </table>

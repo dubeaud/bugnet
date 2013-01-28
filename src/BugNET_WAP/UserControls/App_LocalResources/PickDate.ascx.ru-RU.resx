@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,55 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ConfirmPasswordRequiredErrorMessage" xml:space="preserve">
-    <value>Требуется указать подтверждение пароля.</value>
-  </data>
-  <data name="EmailRequiredErrorMessage" xml:space="preserve">
-    <value>Требуется указать адрес электронной почты.</value>
-  </data>
-  <data name="FirstNameRequiredErrorMessage" xml:space="preserve">
-    <value>Требуется указать имя.</value>
-  </data>
-  <data name="FullNameRequiredErrorMessage" xml:space="preserve">
-    <value>Требуется указать полное имя.</value>
-  </data>
-  <data name="InstructionsLabel.Text" xml:space="preserve">
-    <value>Введите сведения и подтвердите Ваш пароль для регистрации учётной записи.</value>
-  </data>
-  <data name="InvalidEmailErrorMessage" xml:space="preserve">
-    <value>Формат адреса электронной почты неверен.</value>
-  </data>
-  <data name="LastNameRequiredErrorMessage" xml:space="preserve">
-    <value>Требуется указать фамилию.</value>
-  </data>
-  <data name="Page.Title" xml:space="preserve">
-    <value>Регистрация</value>
-  </data>
-  <data name="PasswordRequiredErrorMessage" xml:space="preserve">
-    <value>Требуется указать пароль.</value>
-  </data>
-  <data name="SecurityAnswerRequiredErrorMessage" xml:space="preserve">
-    <value>Требуется указать ответ на секретный вопрос.</value>
-  </data>
-  <data name="SecurityQuestionRequiredErrorMessage" xml:space="preserve">
-    <value>Требуется указать секретный вопрос.</value>
-  </data>
-  <data name="UsernameRequiredErrorMessage" xml:space="preserve">
-    <value>Требуется указать имя пользователя.</value>
-  </data>
-  <data name="VerificationInsructions.Text" xml:space="preserve">
-    <value>На указанный Вами адрес электронной почты отправлены инструкции по активации Вашей учётной записи.</value>
-  </data>
-  <data name="VerificationInsructionsTitle.Text" xml:space="preserve">
-    <value>Спасибо за регистрацию</value>
-  </data>
-  <data name="TitleLabel.Text" xml:space="preserve">
-    <value>Зарегистрировать новую учётную запись</value>
-  </data>
-  <data name="PreferredLanguageLabel.Text" xml:space="preserve">
-    <value>Предпочитаемый язык</value>
-  </data>
-  <data name="Capcha.ControlMessage" xml:space="preserve">
-    <value>Введите код с картинки</value>
+  <data name="InvalidDateErrorMessage" xml:space="preserve">
+    <value>* Введите правильную дату</value>
   </data>
 </root>
