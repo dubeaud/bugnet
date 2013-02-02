@@ -477,3 +477,45 @@ WHERE
   ProjectId = @ProjectId
 
 RETURN @NewProjectId
+GO
+
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueNotification_GetIssueNotificationsByIssueId]    Script Date: 2/2/2013 11:43:18 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROCEDURE [dbo].[BugNet_IssueNotification_GetIssueNotificationsByIssueId] 
+	@IssueId Int
+AS
+
+/* This will return multiple results if the user is 
+subscribed at the project level and issue level
+*/
+
+SET NOCOUNT ON
+
+DECLARE
+	@DefaultCulture NVARCHAR(50)
+
+SET @DefaultCulture = (SELECT ISNULL(SettingValue, 'en-US') FROM BugNet_HostSettings WHERE SettingName = 'ApplicationDefaultLanguage')
+
+SELECT 
+	IssueNotificationId,
+	IssueId,
+	U.UserId AS NotificationUserId,
+	U.UserName AS NotificationUsername,
+	ISNULL(DisplayName,'') AS NotificationDisplayName,
+	M.Email AS NotificationEmail,
+	ISNULL(UP.PreferredLocale, @DefaultCulture) AS NotificationCulture
+FROM
+	BugNet_IssueNotifications
+	INNER JOIN aspnet_Users U ON BugNet_IssueNotifications.UserId = U.UserId
+	INNER JOIN aspnet_Membership M ON BugNet_IssueNotifications.UserId = M.UserId
+	LEFT OUTER JOIN BugNet_UserProfiles UP ON U.UserName = UP.UserName
+WHERE
+	IssueId = @IssueId
+ORDER BY
+	DisplayName
+
+GO
