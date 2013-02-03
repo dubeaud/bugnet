@@ -43,9 +43,9 @@
                  <asp:TextBox ID="Email" runat="server" />
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ErrorMessage="<%$ Resources:EmailRequiredErrorMessage %>"
                     Text=" *" ControlToValidate="Email" Display="Dynamic"></asp:RequiredFieldValidator>
-                <asp:RegularExpressionValidator ID="regexEmailValid" runat="server" 
-                    ValidationExpression="\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" 
-                    ControlToValidate="Email" ErrorMessage="<%$ Resources:EmailFormatErrorMessage %>" Text="Invalid Email Format" />
+                <asp:RegularExpressionValidator ID="regexEmailValid" runat="server"  
+                    ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"
+                    ControlToValidate="Email"  ErrorMessage="<%$ Resources:EmailFormatErrorMessage %>" Text="Invalid Email Format" />
             </li>
             <li id="SecretQuestionRow" runat="server" visible="false">
                 <asp:Label ID="Label4" runat="server" AssociatedControlID="SecretQuestion" Text="<%$ Resources:SecurityQuestion %>" />

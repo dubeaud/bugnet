@@ -4,4 +4,4 @@
 <ajaxToolkit:CalendarExtender ID="CalendarExtender1" runat="server" TargetControlID="DateTextBox"
     PopupButtonID="imgCalendar" />
 <asp:CompareValidator ID="CompareValidator1" runat="server" Display="Dynamic" ControlToValidate="DateTextBox"
-    ErrorMessage="* Enter a valid date" Operator="DataTypeCheck" Type="Date" />
+    ErrorMessage="<%$ Resources:InvalidDateErrorMessage %>" Operator="DataTypeCheck" Type="Date" />

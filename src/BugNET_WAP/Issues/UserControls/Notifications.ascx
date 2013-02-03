@@ -1,5 +1,5 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Notifications.ascx.cs" Inherits="BugNET.Issues.UserControls.Notifications" %>
- <asp:label ID="lblDescription" meta:resourcekey="lblDescription"  runat="server" Text="The following person(s) receive email notifications when this issue is updated:"></asp:label>
+ <asp:label ID="lblDescription" meta:resourcekey="lblDescription" runat="server" Text="The following person(s) receive email notifications when this issue is updated:"></asp:label>
 <asp:datagrid id="NotificationsDataGrid"  SkinID="DataGrid" width="600" style="margin-left:15px;margin-top:1px;" 
 runat="server" AutoGenerateColumns="false" ShowHeader="false">
     <Columns>	
@@ -13,7 +13,7 @@ runat="server" AutoGenerateColumns="false" ShowHeader="false">
                 <asp:ListBox ID="lstProjectUsers" DataTextField="DisplayName" DataValueField="Username" runat="server" Rows="5" Width="130" SelectionMode="Single"></asp:ListBox>
             </td>
             <td>
-                <asp:Button runat="server" ID="btnAddNot" Text="Add >>" meta:resourcekey="btnAddNot"  style="border:1px outset;width:100px;" CausesValidation="false" OnClick="btnAddNot_Click" />
+                <asp:Button runat="server" ID="btnAddNot" Text="Add >>" meta:resourcekey="btnAddNot" style="border:1px outset;width:100px;" CausesValidation="false" OnClick="btnAddNot_Click" />
             </td>
             <td rowspan="3">
                 <asp:ListBox ID="lstNotificationUsers"  DataTextField="NotificationDisplayName" DataValueField="NotificationUsername" runat="server" Rows="5" Width="130" SelectionMode="Single"></asp:ListBox>
@@ -26,7 +26,7 @@ runat="server" AutoGenerateColumns="false" ShowHeader="false">
         </tr>
         <tr>
             <td>
-                <asp:Button runat="server" ID="btnDelNot" Text="<< Remove" CausesValidation="false" style="border:1px outset;width:100px;" OnClick="btnDelNot_Click" />
+                <asp:Button runat="server" ID="btnDelNot" Text="<< Remove" CausesValidation="false" style="border:1px outset;width:100px;" OnClick="btnDelNot_Click" meta:resourcekey="btnDelNot"/>
             </td>
         </tr>
     </table>

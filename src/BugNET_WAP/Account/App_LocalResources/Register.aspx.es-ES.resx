@@ -163,6 +163,6 @@
     <value>Regístrese para obtener su cuenta de usuario</value>
   </data>
   <data name="PreferredLanguageLabel.Text" xml:space="preserve">
-    <value>Preferred Language:</value>
+    <value>Preferred Language</value>
   </data>
 </root>

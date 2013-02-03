@@ -2012,6 +2012,7 @@
     <Content Include="App_GlobalResources\SharedResources.es-ES.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>SharedResources.es-ES.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_LocalResources\Default.aspx.es-ES.resx" />
     <Content Include="App_LocalResources\Feed.aspx.es-ES.resx" />
@@ -2197,6 +2198,7 @@
     <Content Include="App_GlobalResources\SharedResources.ru-RU.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>SharedResources.ru-RU.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_GlobalResources\Web.sitemap.ru-RU.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
@@ -2273,6 +2275,8 @@
     <Content Include="Administration\Users\UserControls\App_LocalResources\Profile.ascx.ru-RU.resx" />
     <Content Include="Administration\Users\UserControls\App_LocalResources\Roles.ascx.ru-RU.resx" />
     <Content Include="Administration\Users\App_LocalResources\UserList.aspx.ru-RU.resx" />
+    <Content Include="UserControls\App_LocalResources\PickDate.ascx.resx" />
+    <Content Include="UserControls\App_LocalResources\PickDate.ascx.ru-RU.resx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BugNET.BLL\BugNET.BLL.csproj">

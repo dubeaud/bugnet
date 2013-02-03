@@ -12,28 +12,28 @@
         <TitleTextStyle CssClass="header" />
         <LabelStyle CssClass="label" HorizontalAlign="Left" />
         <LayoutTemplate>
-            <table>
+            <table style="width:100%">
                 <tr>
                     <td class="align-center" colspan="2" style="color: red; padding-bottom: 10px;">
                         <asp:Literal ID="FailureText" runat="server" EnableViewState="False"/>&nbsp;
                     </td>
-                </tr>                
+                </tr>
                 <tr>
-                    <td class="label align-right" style="padding-right: 5px; width: 100px;">
+                    <td class="label align-right" style="padding-right: 5px; width: 200px;">
                         <asp:Label ID="UserNameLabel" runat="server" AssociatedControlID="UserName" Text="<%$ Resources:SharedResources, Username %>">Username:</asp:Label>
                     </td>
                     <td>
-                        <asp:TextBox ID="UserName" runat="server" Width="175" onblur="Page_ClientValidate('All')"></asp:TextBox>
+                        <asp:TextBox ID="UserName" runat="server" Width="200" onblur="Page_ClientValidate('All')"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="UserNameRequired" runat="server" ControlToValidate="UserName" ErrorMessage="Username is required."
                             meta:resourcekey="UserNameRequired" ToolTip="Username is required." ValidationGroup="ctl00$Login1">*</asp:RequiredFieldValidator>
                     </td>
                 </tr>
                 <tr>
-                    <td class="label align-right" style="padding-right: 5px; width: 100px;">
+                    <td class="label align-right" style="padding-right: 5px; width: 200px;">
                         <asp:Label ID="PasswordLabel" runat="server" AssociatedControlID="Password" Text="<%$ Resources:SharedResources, Password %>">Password:</asp:Label>
                     </td>
                     <td>
-                        <asp:TextBox ID="Password" runat="server" TextMode="Password" Width="175" onblur="Page_ClientValidate('All')"></asp:TextBox>
+                        <asp:TextBox ID="Password" runat="server" TextMode="Password" Width="200" onblur="Page_ClientValidate('All')"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="PasswordRequired" runat="server" ControlToValidate="Password" ErrorMessage="Password is required."
                             meta:resourcekey="PasswordRequired" ToolTip="Password is required." ValidationGroup="ctl00$Login1">*</asp:RequiredFieldValidator>
                     </td>
@@ -58,7 +58,7 @@
                 <div style="font-size: 90%;">
                     <asp:Localize runat="server" ID="Localize3" Text="If you don&#39;t have an account yet you can" meta:resourcekey="NoAccount" />
                     <asp:HyperLink ID="CreateUserLink" runat="server" meta:resourcekey="CreateUserLink" NavigateUrl="~/Account/Register.aspx">click here to get one</asp:HyperLink>.
-                </div>                
+                </div>
             </asp:Panel>
         </LayoutTemplate>
     </asp:Login>

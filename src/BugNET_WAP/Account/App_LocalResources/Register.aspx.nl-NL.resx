@@ -163,6 +163,6 @@
     <value>Er word u een email gestuurd naar het door u opgegeven email adres met instructies hoe u uw account kunt inschakelen.</value>
   </data>
   <data name="PreferredLanguageLabel.Text" xml:space="preserve">
-    <value>Preferred Language:</value>
+    <value>Preferred Language</value>
   </data>
 </root>

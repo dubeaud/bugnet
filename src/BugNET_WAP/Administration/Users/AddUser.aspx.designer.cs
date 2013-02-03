@@ -31,15 +31,6 @@ namespace BugNET.Administration.Users {
         protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary1;
         
         /// <summary>
-        /// MessageContainer control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::BugNET.UserControls.Message MessageContainer;
-        
-        /// <summary>
         /// DescriptionLabel control.
         /// </summary>
         /// <remarks>
@@ -425,5 +416,7 @@ namespace BugNET.Administration.Users {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink ReturnLink;
+
+        protected global::BugNET.UserControls.Message MessageContainer;
     }
 }

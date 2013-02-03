@@ -49,7 +49,7 @@
                             </li>
                             <li>
                                 <asp:Label ID="PreferredLanguageLabel" runat="server" AssociatedControlID="FullName" meta:resourcekey="PreferredLanguageLabel">Preferred Language:</asp:Label>
-                                 <asp:DropDownList ID="PreferredLanguage" runat="server"/>
+                                 <asp:DropDownList ID="PreferredLanguage" runat="server" Width="250" />
                             </li>
                             <li>
                                 <asp:Label ID="PasswordLabel" runat="server" Text="<%$ Resources:SharedResources, Password %>" AssociatedControlID="Password">Password:</asp:Label>
@@ -67,23 +67,21 @@
                             <li>
                                 <asp:Label ID="EmailLabel" runat="server" Text="<%$ Resources:SharedResources, Email %>"  AssociatedControlID="Email"/>
                                 <asp:TextBox ID="Email" runat="server"></asp:TextBox>
-                                <asp:RequiredFieldValidator ID="EmailRequired"   runat="server"  Display="Dynamic" ControlToValidate="Email"
+                                <asp:RequiredFieldValidator ID="EmailRequired" runat="server"  Display="Dynamic" ControlToValidate="Email"
                                     ErrorMessage="<%$ Resources:EmailRequiredErrorMessage %>" ToolTip="<%$ Resources:EmailRequiredErrorMessage %>" ValidationGroup="CreateUserWizard1">*</asp:RequiredFieldValidator>
                                  <asp:RegularExpressionValidator ID="regexEmailValid" runat="server" 
                                     ValidationExpression="\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"  ValidationGroup="CreateUserWizard1"
                                     ControlToValidate="Email" ErrorMessage="<%$ Resources:InvalidEmailErrorMessage %>" Text="<%$ Resources:InvalidEmailErrorMessage %>" />
                             </li>
                             <li>
-                                <asp:Label ID="QuestionLabel" runat="server" AssociatedControlID="Question">
-                                    Security Question:</asp:Label>
+                                <asp:Label ID="QuestionLabel" runat="server" AssociatedControlID="Question" Text="<%$ Resources:SharedResources, SecurityQuestion %>" />
                                 <asp:TextBox ID="Question" runat="server"></asp:TextBox>
                                 <asp:RequiredFieldValidator ID="QuestionRequired" runat="server" ControlToValidate="Question"
                                     ErrorMessage="<%$ Resources:SecurityQuestionRequiredErrorMessage %>" ToolTip="<%$ Resources:SecurityQuestionRequiredErrorMessage %>"
                                     ValidationGroup="CreateUserWizard1">*</asp:RequiredFieldValidator>
                             </li>
                             <li>
-                                <asp:Label ID="AnswerLabel" runat="server" AssociatedControlID="Answer">
-                                    Security Answer:</asp:Label>
+                                <asp:Label ID="AnswerLabel" runat="server" AssociatedControlID="Answer" Text="<%$ Resources:SharedResources, SecurityAnswer %>" />
                                   <asp:TextBox ID="Answer" runat="server"></asp:TextBox>
                                 <asp:RequiredFieldValidator ID="AnswerRequired" runat="server" ControlToValidate="Answer"
                                     ErrorMessage="<%$ Resources: SecurityAnswerRequiredErrorMessage %>" ToolTip="<%$ Resources: SecurityAnswerRequiredErrorMessage %>"
@@ -93,7 +91,7 @@
                                     ValidationGroup="CreateUserWizard1">*</asp:CompareValidator>
                             </li>
                             <li>
-                               <cc2:hipcontrol id="CapchaTest" runat="server" 
+                               <cc2:hipcontrol id="CapchaTest" runat="server" meta:resourcekey="Capcha"
                                    TrustAuthenticatedUsers="False" AutoRedirect="False"  ImageWidth="160" ImageHeight="40" TextPatternColor="Blue" 
                                     JavascriptURLDetection="False" ValidationMode="ViewState" Width="300px" />
                             </li>
@@ -114,6 +112,6 @@
         <InstructionTextStyle Height="35px" />
     </asp:CreateUserWizard>
 </asp:Content>
-			
+
 
 

@@ -163,6 +163,9 @@
     <value>Sign up for your new account</value>
   </data>
   <data name="PreferredLanguageLabel.Text" xml:space="preserve">
-    <value>Preferred Language:</value>
+    <value>Preferred Language</value>
+  </data>
+  <data name="Capcha.ControlMessage" xml:space="preserve">
+    <value>Enter the code you see</value>
   </data>
 </root>

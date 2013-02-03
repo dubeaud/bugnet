@@ -331,16 +331,16 @@
     <value>Поиск</value>
   </data>
   <data name="SecurityAnswer" xml:space="preserve">
-    <value>Ответ на секретный вопрос</value>
+    <value>Ответ на контрольный вопрос</value>
   </data>
   <data name="SecurityAnswerRequiredErrorMessage" xml:space="preserve">
-    <value>Требуется указать ответ на секретный вопрос.</value>
+    <value>Требуется указать ответ на контрольный вопрос.</value>
   </data>
   <data name="SecurityQuestion" xml:space="preserve">
-    <value>Секретный вопрос</value>
+    <value>Контрольный вопрос</value>
   </data>
   <data name="SecurityQuestionRequiredErrorMessage" xml:space="preserve">
-    <value>Требуется указать секретный вопрос.</value>
+    <value>Требуется указать контрольный вопрос.</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>Статус</value>

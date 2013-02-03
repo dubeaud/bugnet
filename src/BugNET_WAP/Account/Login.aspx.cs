@@ -203,6 +203,7 @@ namespace BugNET.Account
                                     profile.DisplayName = fullname;
                                     profile.FirstName = firstName;
                                     profile.LastName = lastName;
+                                    profile.PreferredLocale = HostSettingManager.Get(HostSettingNames.ApplicationDefaultLanguage);
 
                                     profile.Save();
 
@@ -263,7 +264,7 @@ namespace BugNET.Account
                         default:
                             loginFailedLabel.Visible = true;
                             e.Cancel = true;
-                            break; // unsecure break should be a return                        
+                            break; // unsecure break should be a return
                     }
 
                 }
