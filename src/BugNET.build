@@ -116,11 +116,29 @@
 			</fileset>
 		</copy>	
 		
+		<copy todir="${build.dir}\source\">
+			<fileset basedir="C:\Projects\BugNET">
+				<include name="**\*" />
+				<exclude name="**\obj\**" />
+				<exclude name="**\bin\**" />
+				<exclude name="**\Latest.SqlDataProvider.sql" />
+				<exclude name="**\packages\**" />
+				<exclude name="**\Help\**"/>
+				<exclude name="**\build\**"/>
+				<exclude name="**\publish\**"/>
+				<exclude name="**\*.suo"/>
+				<exclude name="**\*.user"/>
+				<exclude name="**\tools"/>
+			</fileset>
+		</copy>	
+		
 		<property name="filename" value=".\BugNET_WAP\Providers\DataProviders\SqlDataProvider\Latest.SqlDataProvider.sql" />	
 		<if test="${file::exists(filename) and file::get-length(filename) > 0}">
 			<echo message="Copying latest sql script" />
 			<copy file="${filename}"
 				tofile="${build.dir}\dist\BugNET\Providers\DataProviders\SqlDataProvider\${CCNetLabel}.0.SqlDataProvider.sql" />
+			<copy file="${filename}"
+				tofile="${build.dir}\source\BugNET\Providers\DataProviders\SqlDataProvider\${CCNetLabel}.0.SqlDataProvider.sql" />
 		</if>	
 		
 		<property name="filename" value=".\BugNET_WAP\Install\LatestReleaseNotes.htm" />	
@@ -180,6 +198,13 @@
 			
 			<!-- zip the source -->
 			<zip zipfile="${publishdirectory}\${project.name}-${CCNetLabel}-Source.zip">
+				<fileset basedir="${build.dir}\source">
+					<include name="**\*" />
+				</fileset>
+			</zip>
+			
+			<!--
+			<zip zipfile="${publishdirectory}\${project.name}-${CCNetLabel}-Source.zip">
 				<fileset basedir="C:\Projects\BugNET">
 					<include name="**\*" />
 					<exclude name="**\obj\**" />
@@ -192,7 +217,7 @@
 					<exclude name="**\*.user"/>
 					<exclude name="**\tools"/>
 				</fileset>
-			</zip>
+			</zip>-->
 			
 			<copy todir="${CCNetArtifactDirectory}\${CCNetLabel}\">
 				<fileset basedir="${publishdirectory}">
