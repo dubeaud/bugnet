@@ -138,7 +138,7 @@
 			<copy file="${filename}"
 				tofile="${build.dir}\dist\BugNET\Providers\DataProviders\SqlDataProvider\${CCNetLabel}.0.SqlDataProvider.sql" />
 			<copy file="${filename}"
-				tofile="${build.dir}\source\BugNET\Providers\DataProviders\SqlDataProvider\${CCNetLabel}.0.SqlDataProvider.sql" />
+				tofile="${build.dir}\source\src\BugNET_WAP\Providers\DataProviders\SqlDataProvider\${CCNetLabel}.0.SqlDataProvider.sql" />
 		</if>	
 		
 		<property name="filename" value=".\BugNET_WAP\Install\LatestReleaseNotes.htm" />	

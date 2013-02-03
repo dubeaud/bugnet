@@ -4036,7 +4036,9 @@ CREATE PROCEDURE [dbo].[BugNet_IssueRevision_CreateNewIssueRevision]
 	@Repository nvarchar(400),
 	@RevisionDate nvarchar(100),
 	@RevisionAuthor nvarchar(100),
-	@RevisionMessage ntext
+	@RevisionMessage ntext,
+	@Changeset nvarchar(100),
+	@Branch nvarchar(255)
 AS
 
 INSERT BugNet_IssueRevisions
@@ -4047,6 +4049,8 @@ INSERT BugNet_IssueRevisions
 	RevisionAuthor,
 	RevisionDate,
 	RevisionMessage,
+	Changeset,
+	Branch,
 	DateCreated
 ) 
 VALUES 
@@ -4057,6 +4061,8 @@ VALUES
 	@RevisionAuthor,
 	@RevisionDate,
 	@RevisionMessage,
+	@Changeset,
+	@Branch,
 	GetDate()
 )
 
