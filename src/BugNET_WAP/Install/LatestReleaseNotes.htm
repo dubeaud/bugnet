@@ -2,68 +2,11 @@
     <h3>Update Notes</h3>
     <div id="upgrade-notes-content">
         <ul>
-            <li>A new profile setting has been added to allow email notifications (enabled by default) and can be disabled via the user profile settings.</li>
-            <li>Removed the NotificationTypes profile provider setting</li>
-            <li>Added the ReceiveEmailNotifications profile provider setting</li>
-            <li>A [Reset Due Date] checkbox on issue edit properties (this must be checked to null out the Due Date), found issue where due dates were being nulled out for all selected issues</li>
-            <li>Culture aware notifications (Issue, Password Reset & Reminder, User Verification and Register)</li>
-            <li style="list-style-type: none; margin: 0px; padding: 0px;">
-                <ul style="margin-top: 0px;">
-                    <li style="list-style-type: none;"><strong style="color: red">NOTE</strong></li>
-                    <li>Currently the field names for the Issue Changes (in the email) will not be culture specific, this is due to how BugNET currently generates the change history for emails.  This will need to be looked at later on</li>
-                </ul>                
-            </li>
+            <li>General bug fixes.</li>          
         </ul>
-        <h5>Source Control Hooks</h5>
+        <h5>Localization</h5>
         <ul>
-            <li>BugNET.SubversionHooks.exe has been updated (will need to replace existing hook exe) for calling the new BugNet web service method to create revisions</li>
-            <li>Mercurial support</li>
-            <li style="list-style-type: none; margin: 0px; padding: 0px;">
-                <ul style="margin-top: 0px;">
-                    <li>An new source control hook for integrating BugNet with Mercurial to create issue revisions when BugNET issue id's are placed in the Branch name or the commit message.  Please read the README.txt file in the BugNET.MercurialChangeGroupHook folder for information on how to configure the hook</li>
-                </ul>                
-            </li>
-        </ul>
-        <h5>POP3 Mailbox Reader</h5>
-        <ul>
-            <li>Has been re-written/tested to be more stable</li>
-            <li>Implements more verbose logging (log4net WARN and INFO) entries</li>
-            <li>Implemented a xslt template for issue description upon import</li>
-            <li>Xslt template can be changed see Application Configuration -> POP3 Mailbox -> [Issue Detail Template] for location and to change to a different template</li>
-            <li>Will strip inline/in body images from the html and replace with a link to the created issue attachment</li>
-            <li>Will save attached email messages as ".eml" files</li>
-            <li>When Application Configuration -> POP3 Mailbox -> [Enabled] flag is toggled the mailbox reader is enabled/disabled in real time</li>
-            <li>If enabled and http module is not loaded (commented out in web.config) user receives a link to online documentation to configure it</li>
-            <li>Enabled host setting Application Configuration -> POP3 Mailbox -> [Process Inline Attachments]</li>
-            <li>Honors project [Allow Attachments] flag (if false attachments are not saved)</li>
-            <li>Honors project [Disabled] flag (if project disabled emails will not be processed (will not be deleted either))</li>
-            <li>Honors host setting [Allowed File Extensions] (will only save for listed extensions when present and will log a WARN if skipped)</li>
-            <li style="list-style-type: none; margin: 0px; padding: 0px;">
-                <ul style="margin-top: 0px;">
-                    <li style="list-style-type: none;"><strong style="color: red">NOTE</strong></li>
-                    <li>When [Allowed File Extensions] is implemented message attachments might be dropped due to the extensions being used which is based on the sending email system/client, the mailbox reader saves them as a *.eml file but they may not arrive with that extension.  You may have to have your users send you a sample email with mail attachments to an alternate email address first 
-                        so you can allow the extension type for the message.&nbsp; Common extensions are (*.eml, *.msg, *.dat (used when outlook 
-                        sends RTF formatted emails)).</li>
-                </ul>                
-            </li>
-        </ul>
-        <h5>Queries</h5>
-        <ul>
-            <li>Added "GREATER THAN EQUALS" and "LESS THAN EQUALS" options to queries operators (useful for date fields)</li>
-            <li>Date field values in queries (including custom fields that are date fields) are saved and executed in the format "yyyy-MM-dd" (culture neutral format).  The reason for this is when queries are saved/executed the date could be in any culture format which may be different than other users running public queries, such as the case with Can/UK and US the month/days are swapped 06/05/2012 could be June 05, 2012 or May 06, 2012.  Existing query clauses will not have this format, to update you will need to open the query and save it manually.</li>
-            <li>Query clauses now store the actual custom field id along with the proper data type for the custom field used</li>
-            <li style="list-style-type: none; margin: 0px; padding: 0px;">
-                <ul style="margin-top: 0px;">
-                    <li style="list-style-type: none;"><strong style="color: red">NOTE</strong></li>
-                    <li>This change allows for a better searching for the queries as well the ability to remove custom fields from queries when the custom field is deleted from the project</li>
-                    <li>Filters on BugNet date fields (Last Updated and Date Created) are now inclusive meaning the time portion is <strong>NOT</strong> part of the filter</li>
-                </ul>
-            </li>
-        </ul>
-        <h5>Custom Fields</h5>
-        <ul>
-            <li>Date fields on issues are saved in the format "yyyy-MM-dd" (culture neutral format), will be formatted in culture format for display</li>
-            <li>The reasons for this are the same for query clauses; as well the added bonus is that sorting on date custom fields will work properly now.  Older saved data will not an may not sort properly</li>
+            <li>Added Russian translations to BugNET - thanks to eLVik</li>
         </ul>
         <p>For the full list of changes please see our <a href="http://support.bugnetproject.com/Projects/ChangeLog.aspx?pid=1">change log</a>.</p>
     </div>
