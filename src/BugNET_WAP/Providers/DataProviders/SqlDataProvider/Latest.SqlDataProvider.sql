@@ -519,3 +519,47 @@ ORDER BY
 	DisplayName
 
 GO
+
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueRevision_CreateNewIssueRevision]    Script Date: 2/3/2013 1:24:10 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[BugNet_IssueRevision_CreateNewIssueRevision]
+	@IssueId int,
+	@Revision int,
+	@Repository nvarchar(400),
+	@RevisionDate nvarchar(100),
+	@RevisionAuthor nvarchar(100),
+	@RevisionMessage ntext,
+	@Changeset nvarchar(100),
+	@Branch nvarchar(255)
+AS
+
+INSERT BugNet_IssueRevisions
+(
+	Revision,
+	IssueId,
+	Repository,
+	RevisionAuthor,
+	RevisionDate,
+	RevisionMessage,
+	Changeset,
+	Branch,
+	DateCreated
+) 
+VALUES 
+(
+	@Revision,
+	@IssueId,
+	@Repository,
+	@RevisionAuthor,
+	@RevisionDate,
+	@RevisionMessage,
+	@Changeset,
+	@Branch,
+	GetDate()
+)
+
+RETURN scope_identity()
+GO
