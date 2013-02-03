@@ -50,7 +50,8 @@ namespace BugNET.SubversionHooks
                         WindowStyle = ProcessWindowStyle.Hidden,
                         UseShellExecute = false,
                         RedirectStandardOutput = true,
-                        RedirectStandardError = true
+                        RedirectStandardError = true,
+                        StandardOutputEncoding = System.Text.Encoding.Default
                     };
 
                 proc = new Process {StartInfo = startInfo};
