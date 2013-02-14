@@ -8,7 +8,7 @@
                     <asp:LoginName ID="LoginName1" FormatString='<%# DisplayName %>' runat="server" />
                 </asp:LinkButton>
                 <asp:Label ID="lblBar" runat="server" Text=" | " />
-                <asp:LoginStatus ID="LoginStatus1" LogoutPageUrl="~/Default.aspx" LogoutAction="Redirect" meta:resourcekey="LoginStatus1"
+                <asp:LoginStatus ID="LoginStatus1" LogoutPageUrl="~/Default.aspx" LogoutAction="Redirect" meta:resourcekey="LoginStatus1" OnLoggingOut="LoginStatus1_LoggingOut"
                     runat="server" />
             </span>
         </LoggedInTemplate>
