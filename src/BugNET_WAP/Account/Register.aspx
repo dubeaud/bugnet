@@ -8,8 +8,8 @@
         <asp:Label ID="InstructionsLabel" runat="server" meta:resourcekey="InstructionsLabel" Text="Please enter your details and confirm your password to register an account."/>
     </p>
     <asp:ValidationSummary ID="ValidationSummary1" runat="server"  ValidationGroup="CreateUserWizard1" HeaderText="<%$ Resources:SharedResources, ValidationSummaryHeaderText %>" DisplayMode="BulletList"  CssClass="validationSummary"/>
-    <asp:CreateUserWizard 
-        ID="CreateUserWizard1"  
+    <asp:CreateUserWizard meta:resourcekey="Wizard"
+        ID="CreateUserWizard1" 
         OnCreatingUser="CreatingUser" 
         Width="500px"
         runat="server" 
@@ -19,7 +19,6 @@
             <asp:CreateUserWizardStep ID="CreateUserWizardStep0"  runat="server">
                 <ContentTemplate>
                  <asp:Literal ID="ErrorMessage" runat="server" EnableViewState="False" />
-
                     <div class="fieldgroup">
                         <ol>
                             <li>
@@ -65,7 +64,7 @@
                                     ValidationGroup="CreateUserWizard1">*</asp:RequiredFieldValidator>
                             </li>
                             <li>
-                                <asp:Label ID="EmailLabel" runat="server" Text="<%$ Resources:SharedResources, Email %>"  AssociatedControlID="Email"/>
+                                <asp:Label ID="EmailLabel" runat="server" Text="<%$ Resources:SharedResources, Email %>" AssociatedControlID="Email"/>
                                 <asp:TextBox ID="Email" runat="server"></asp:TextBox>
                                 <asp:RequiredFieldValidator ID="EmailRequired" runat="server"  Display="Dynamic" ControlToValidate="Email"
                                     ErrorMessage="<%$ Resources:EmailRequiredErrorMessage %>" ToolTip="<%$ Resources:EmailRequiredErrorMessage %>" ValidationGroup="CreateUserWizard1">*</asp:RequiredFieldValidator>

@@ -177,8 +177,6 @@ namespace BugNET.Projects
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void prjCalendar_PreRender(object sender, EventArgs e)
         {
-         
-         
         }
 
         /// <summary>

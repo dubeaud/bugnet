@@ -168,4 +168,7 @@
   <data name="Capcha.ControlMessage" xml:space="preserve">
     <value>Введите код с картинки</value>
   </data>
+  <data name="Wizard.CreateUserButtonText" xml:space="preserve">
+    <value>Создать пользователя</value>
+  </data>
 </root>
