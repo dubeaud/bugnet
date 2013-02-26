@@ -1,31 +1,31 @@
 ﻿input.textInput
-{  
-    height:16px;
+{
+	height:16px;
 	font-size:100%;
 	font-family:Verdana,Arial,Sans-serif;
-    margin:0;
+	margin:0;
 }
 input[type=text]{
-    width: 335px;
+	width: 335px;
 }
 label, a span{
   cursor: pointer;
 }
 
 input[type=text], input[type=password] {
-    width: 250px;
-    padding:0; 
+	width: 250px;
+	padding:0; 
 }
 input[type=submit]{
-    margin:0;
+	margin:0;
 }
 /*label{
-    display: block;
-    float: left;
-    line-height: 1;
-    padding: 3px 10px 0px 0px;
-    text-align: right;
-    width: 110px;
+	display: block;
+	float: left;
+	line-height: 1;
+	padding: 3px 10px 0px 0px;
+	text-align: right;
+	width: 110px;
 }*/
 
 /* form styles */
@@ -37,60 +37,58 @@ input[type=submit]{
 .fieldgroup h3{
 	margin-top:0.5em;
 }
-.fieldgroup ol {   
-
-    padding: 15px 0px;
+.fieldgroup ol {
+	padding: 15px 0px;
 	/*padding: 0em 1em 0 1em;   */
 	list-style: none;  
-    /*border-bottom: 1px solid #CCC;*/
-
-}  
-.fieldgroup li {   
+	/*border-bottom: 1px solid #CCC;*/
+}
+.fieldgroup li {
 	padding-bottom: 1em;
-	white-space:nowrap; 
+	white-space:nowrap;
 	vertical-align:top;
-}  
+}
 .fieldgroup li span.cke_skin_kama { 
 	display:inline-block;
 }
-.fieldgroup label, .fieldgroup span.label {    
+.fieldgroup label, .fieldgroup span.label {
 	display: block;
-    line-height:20px;
-	float: left;    
-    white-space:normal;
-    text-align:right;
-	width: 15em;   
-	margin-right: 1em;   
+	line-height:20px;
+	float: left;
+	white-space:normal;
+	text-align:right;
+	width: 18em;
+	margin-right: 1em;
 }
 .fieldgroup table label{
-    float:right;
-    width: auto; 
+	float:right;
+	width: auto; 
 }
 div.labelgroup{
 	 max-width:575px;
 	 display:inline-block;
 }
 div.labelgroup label{
-	float: left;    
-	width: auto; 
-    line-height:20px;
-    vertical-align:top;   
+	float: left;
+	width: auto;
+	line-height:20px;
+	vertical-align:top;
 }
 div.labelgroup input{
 	margin:0 1em 0 0;
 	padding:0;
-    vertical-align:top;   
+	vertical-align:top;
 }
-div.submit {  
-	margin:0 0 2em 0;       
-	width: auto;     
-	border-style: none;     
-	padding-left: 15em;     
-	background-color: transparent;    
+div.submit {
+	margin:0 0 2em 0;
+	width: auto;
+	border-style: none;
+	padding-left: 15em;
+	background-color: transparent;
 }
 .checkbox label, .checkbox input, .checkbox span.label{
-    float:left;
-    margin-right:10px;  
+	float:left;
+	margin-right:10px;
 }
 .checkbox{ margin: 9px 0 0 122px;}
 .noborder{ border-top:none;}

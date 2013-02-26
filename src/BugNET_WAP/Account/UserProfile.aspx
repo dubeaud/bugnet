@@ -174,7 +174,8 @@
             <div class="fieldgroup  noborder">
                 <ol>
                     <li>
-                        <asp:CheckBox ID="AllowNotifications" runat="server" Text="[Resource Needed]" meta:resourceKey="AllowNotifications" />
+                        <asp:Label runat="server" Text="[Resource Needed]" meta:resourceKey="AllowNotifications" AssociatedControlID="AllowNotifications"/>
+                        <asp:CheckBox ID="AllowNotifications" runat="server" Text=""/>
                     </li>
                 </ol>
                 <table style="width: 650px;" border="0" summary="update customize table">

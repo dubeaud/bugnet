@@ -1,7 +1,7 @@
-<%@ Page language="c#" Inherits="BugNET.Administration.Users.UserList" MasterPageFile="~/Shared/SingleColumn.master" Title="User List" Codebehind="UserList.aspx.cs" %>
+<%@ Page language="c#" Inherits="BugNET.Administration.Users.UserList" MasterPageFile="~/Shared/SingleColumn.master" Title="<%$ Resources:ManageUserAccounts %>" Codebehind="UserList.aspx.cs" %>
 <%@ Register Assembly="BugNET" Namespace="BugNET.UserInterfaceLayer.WebControls" TagPrefix="BNWC" %>
 
-<asp:Content ContentPlaceHolderID="content" ID="Content1" runat="server">	
+<asp:Content ContentPlaceHolderID="content" ID="Content1" runat="server">
     <h1 class="page-title"><asp:literal ID="Title1" runat="Server" Text="<%$ Resources:ManageUserAccounts %>" /></h1>  
     <asp:Panel ID="pnlSearch" Runat="server" HorizontalAlign="Center">
         <asp:Label ID="Label1" runat="server" Text="<%$ Resources:SharedResources, Search %>"></asp:Label>
@@ -16,10 +16,10 @@
     </asp:Panel> 
     <asp:Panel ID="plLetterSearch" Runat="server" HorizontalAlign="Center">
         <asp:Repeater ID="LetterSearch" runat="server">
-            <ItemTemplate>    
-		        <asp:linkbutton ID="FilterButton" OnClick="FilterButtonClick" runat="server" CssClass="CommandButton"  CommandArgument="<%# Container.DataItem %>" CommandName="Filter" Text='<%# GetLocalizedText(Container.DataItem) %>'>
-		        </asp:linkbutton>&nbsp;&nbsp;
-	        </ItemTemplate>
+            <ItemTemplate>
+                <asp:linkbutton ID="FilterButton" OnClick="FilterButtonClick" runat="server" CssClass="CommandButton"  CommandArgument="<%# Container.DataItem %>" CommandName="Filter" Text='<%# GetLocalizedText(Container.DataItem) %>'>
+                </asp:linkbutton>&nbsp;&nbsp;
+            </ItemTemplate>
         </asp:Repeater>
     </asp:Panel>
 
@@ -88,16 +88,16 @@
                 <asp:Label ID="NoResultsLabel" runat="server" Text="<%$ Resources:NoUsersFound %>"></asp:Label>
             </div>
         </EmptyDataTemplate>
-    </BNWC:GridView>	
+    </BNWC:GridView>
     <div class="pager">
         <asp:DataPager ID="pager" runat="server" PageSize="10" PagedControlID="gvUsers">
-            <Fields>                  
-                <BNWC:BugNetPagerField   
+            <Fields>
+                <BNWC:BugNetPagerField
                     NextPageImageUrl="~/App_Themes/Default/Images/resultset_next.gif" 
                     PreviousPageImageUrl="~/App_Themes/Default/Images/resultset_previous.gif" 
-                    LastPageImageUrl="~/App_Themes/Default/Images/resultset_last.gif"   
-                    FirstPageImageUrl="~/App_Themes/Default/Images/resultset_first.gif" />                         
-            </Fields>                            
+                    LastPageImageUrl="~/App_Themes/Default/Images/resultset_last.gif"
+                    FirstPageImageUrl="~/App_Themes/Default/Images/resultset_first.gif" />
+            </Fields>
         </asp:DataPager>
     </div> 
 </asp:Content>
