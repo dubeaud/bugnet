@@ -10,11 +10,11 @@
     <xsl:strip-space elements="*" />
 
     <xsl:template match="/root">
-        <p>В системе зарегистрирован новый пользователь:</p>
+        <p>Р’ СЃРёСЃС‚РµРјРµ Р±С‹Р» Р·Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°РЅ РЅРѕРІС‹Р№ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ:</p>
         <table border="0">
             <tr>
                 <td width="90px">
-                    <b>Дата:</b>
+                    <b>Р”Р°С‚Р°:</b>
                 </td>
                 <td>
                     <xsl:value-of select="helpers:FormatShortDateAnd12HTime(User/CreationDate)" />
@@ -22,14 +22,14 @@
             </tr>
             <tr>
                 <td>
-                    <b>Имя:</b>
+                    <b>РћС‚РѕР±СЂР°Р¶Р°РµРјРѕРµ РёРјСЏ:</b>
                 </td>
                 <td>
                     <xsl:value-of select="User/DisplayName" disable-output-escaping="yes" />
                 </td>
             </tr>
             <tr>
-                <td><b>Имя пользователя:</b> </td>
+                <td><b>РРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ:</b> </td>
                 <td>
                     <xsl:value-of select="User/UserName" />
                 </td>

@@ -10,30 +10,30 @@
     <xsl:strip-space elements="*" />
 
     <xsl:template match="/root">
-        <xsl:text>Задание добавлено в наблюдаемый Вами проект.</xsl:text>
+        <xsl:text>Р’ РїСЂРѕРµРєС‚ РґРѕР±Р°РІР»РµРЅРѕ РЅРѕРІРѕРµ Р·Р°РґР°РЅРёРµ.</xsl:text>
         <xsl:text>&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
-        <xsl:text>Название: </xsl:text><xsl:value-of select="Issue/Title" />
+        <xsl:text>Р—Р°РіРѕР»РѕРІРѕРє: </xsl:text><xsl:value-of select="Issue/Title" />
         <xsl:text>&#10;</xsl:text>
-        <xsl:text>Проект: </xsl:text><xsl:value-of select="Issue/ProjectName" />
+        <xsl:text>РџСЂРѕРµРєС‚: </xsl:text><xsl:value-of select="Issue/ProjectName" />
         <xsl:text>&#10;</xsl:text>
-        <xsl:text>Создан: </xsl:text> <xsl:value-of select="Issue/CreatorDisplayName" />
+        <xsl:text>РЎРѕР·РґР°С‚РµР»СЊ: </xsl:text> <xsl:value-of select="Issue/CreatorDisplayName" />
         <xsl:text>&#10;</xsl:text>
-        <xsl:text>Этап: </xsl:text><xsl:value-of select="Issue/MilestoneName" />
+        <xsl:text>Р­С‚Р°Рї: </xsl:text><xsl:value-of select="Issue/MilestoneName" />
         <xsl:text>&#10;</xsl:text>
-        <xsl:text>Категория: </xsl:text><xsl:value-of select="Issue/CategoryName" />
+        <xsl:text>РљР°С‚РµРіРѕСЂРёСЏ: </xsl:text><xsl:value-of select="Issue/CategoryName" />
         <xsl:text>&#10;</xsl:text>
-        <xsl:text>Приоритет: </xsl:text> <xsl:value-of select="Issue/PriorityName" />
+        <xsl:text>РџСЂРёРѕСЂРёС‚РµС‚: </xsl:text> <xsl:value-of select="Issue/PriorityName" />
         <xsl:text>&#10;</xsl:text>
-        <xsl:text>Тип: </xsl:text><xsl:value-of select="Issue/IssueTypeName" />
+        <xsl:text>РўРёРї: </xsl:text><xsl:value-of select="Issue/IssueTypeName" />
         <xsl:text>&#10;</xsl:text>
-        <xsl:text>Описание: </xsl:text><xsl:value-of select="helpers:StripHTML2(Issue/Description)" />
+        <xsl:text>РћРїРёСЃР°РЅРёРµ: </xsl:text><xsl:value-of select="helpers:StripHTML2(Issue/Description)" />
         <xsl:text>&#10;</xsl:text>
-		    <xsl:text>&#10;</xsl:text>
-        <xsl:text> Больше информации по данному заданию можно найти по ссылке </xsl:text>
+        <xsl:text>&#10;</xsl:text>
+        <xsl:text> Р”Р»СЏ РїРѕР»СѓС‡РµРЅРёСЏ Р±РѕР»РµРµ РїРѕРґСЂРѕР±РЅРѕР№ РёРЅС„РѕСЂРјР°С†РёРё РѕР± СЌС‚РѕРј Р·Р°РґР°РЅРёРё РїСЂРѕР№РґРёС‚Рµ РїРѕ СЃСЃС‹Р»РєРµ </xsl:text>
         <xsl:value-of select="HostSetting_DefaultUrl" />Issues/IssueDetail.aspx?id=<xsl:value-of select="Issue/Id" />
         <xsl:text>&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
-        Если Вы больше не хотите получать уведомления, то пройдите по ссылке <xsl:value-of select="HostSetting_DefaultUrl" />Account/UserProfile.aspx и измените настройки уведомлений.
+        Р•СЃР»Рё Р’С‹ Р±РѕР»СЊС€Рµ РЅРµ С…РѕС‚РёС‚Рµ РїРѕР»СѓС‡Р°С‚СЊ РґР°РЅРЅС‹Рµ СѓРІРµРґРѕРјР»РµРЅРёСЏ, С‚Рѕ РїРѕСЃРµС‚РёС‚Рµ СЃС‚СЂР°РЅРёС†Сѓ Р’Р°С€РµРіРѕ РїСЂРѕС„РёР»СЏ <xsl:value-of select="HostSetting_DefaultUrl" />Account/UserProfile.aspx Рё РёР·РјРµРЅРёС‚Рµ РЅР°СЃС‚СЂРѕР№РєРё СѓРІРµРґРѕРјР»РµРЅРёР№.
     </xsl:template>
 </xsl:stylesheet>

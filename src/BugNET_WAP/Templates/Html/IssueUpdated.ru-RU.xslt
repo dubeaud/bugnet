@@ -10,11 +10,11 @@
     <xsl:strip-space elements="*" />
 
     <xsl:template match="/root">
-        <p>Следующее задание обновлено пользователем <xsl:value-of select="Issue/LastUpdateDisplayName" disable-output-escaping="yes" />:</p>
+        <p>РЎР»РµРґСѓСЋС‰РµРµ Р·Р°РґР°РЅРёРµ Р±С‹Р»Рѕ РѕР±РЅРѕРІР»РµРЅРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј <xsl:value-of select="Issue/LastUpdateDisplayName" disable-output-escaping="yes" />:</p>
         <table border="0">
             <tr>
                 <td width="90px" valign="top">
-                    <b>Название:</b>
+                    <b>Р—Р°РіРѕР»РѕРІРѕРє:</b>
                 </td>
                 <td>
                     <xsl:value-of select="Issue/Title" disable-output-escaping="yes" />
@@ -22,14 +22,14 @@
             </tr>
             <tr>
                 <td>
-                    <b>Проект:</b>
+                    <b>РџСЂРѕРµРєС‚:</b>
                 </td>
                 <td>
                     <xsl:value-of select="Issue/ProjectName" disable-output-escaping="yes" />
                 </td>
             </tr>
             <tr>
-                <td colspan="2"><b>Изменения:</b> </td>
+                <td colspan="2"><b>РР·РјРµРЅРµРЅРёСЏ:</b> </td>
             </tr>
             <tr>
                 <td colspan="2">
@@ -37,7 +37,7 @@
                         <ul>
                             <xsl:for-each select="IssueHistoryChanges/IssueHistory">
                                 <li>
-                                    <xsl:value-of select="FieldChanged" /> изменилось с "<xsl:value-of select="OldValue" disable-output-escaping="yes" />" на "<xsl:value-of select="NewValue" disable-output-escaping="yes" />"
+                                    <xsl:value-of select="FieldChanged" /> РёР·РјРµРЅРµРЅРѕ СЃ <b>"<xsl:value-of select="OldValue" disable-output-escaping="yes" />"</b> РЅР° <b>"<xsl:value-of select="NewValue" disable-output-escaping="yes" />"</b>
                                 </li>
                             </xsl:for-each>
                         </ul>
@@ -46,13 +46,13 @@
             </tr>
         </table>
         <p>
-            Больше информации по данному заданию можно найти по ссылке
+            Р”Р»СЏ РїРѕР»СѓС‡РµРЅРёСЏ Р±РѕР»РµРµ РїРѕРґСЂРѕР±РЅРѕР№ РёРЅС„РѕСЂРјР°С†РёРё РѕР± СЌС‚РѕРј Р·Р°РґР°РЅРёРё РїСЂРѕР№РґРёС‚Рµ РїРѕ СЃСЃС‹Р»РєРµ
             <a href="{HostSetting_DefaultUrl}Issues/IssueDetail.aspx?id={Issue/Id}" target="_blank">
                 <xsl:value-of select="HostSetting_DefaultUrl" />Issues/IssueDetail.aspx?id=<xsl:value-of select="Issue/Id" />
             </a>
         </p>
         <p style="text-align:center;font-size:8pt;padding:5px;">
-            Если Вы больше не хотите получать уведомления, то откройте <a href="{HostSetting_DefaultUrl}Account/UserProfile.aspx" target="_blank">Ваш профиль</a> и измените настройки уведомлений.
+            Р•СЃР»Рё Р’С‹ Р±РѕР»СЊС€Рµ РЅРµ С…РѕС‚РёС‚Рµ РїРѕР»СѓС‡Р°С‚СЊ РґР°РЅРЅС‹Рµ СѓРІРµРґРѕРјР»РµРЅРёСЏ, С‚Рѕ РїРѕСЃРµС‚РёС‚Рµ СЃС‚СЂР°РЅРёС†Сѓ <a href="{HostSetting_DefaultUrl}Account/UserProfile.aspx" target="_blank">Р’Р°С€РµРіРѕ РїСЂРѕС„РёР»СЏ</a> Рё РёР·РјРµРЅРёС‚Рµ РЅР°СЃС‚СЂРѕР№РєРё СѓРІРµРґРѕРјР»РµРЅРёР№.
         </p>
     </xsl:template>
 </xsl:stylesheet>

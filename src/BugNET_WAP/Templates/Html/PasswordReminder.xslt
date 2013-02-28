@@ -14,7 +14,7 @@
     <span>Here is your requested password </span><span style="font-family: Courier New; font-weight: bold;"><xsl:value-of select="NotificationUser/Password" /></span>
     <br/>
     <br/>
-    <span>Please login here <a href="{HostSetting_DefaultUrl}Account/Login.aspx" target="_blank">here.</a></span>
+    <span>Please login <a href="{HostSetting_DefaultUrl}Account/Login.aspx" target="_blank">here.</a></span>
     <br/>
     <br/>
     <span>Please note that this password is case-sensitive.</span>
