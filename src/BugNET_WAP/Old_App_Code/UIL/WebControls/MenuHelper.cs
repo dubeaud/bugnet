@@ -36,7 +36,7 @@ namespace BugNET.UserInterfaceLayer.WebControls
                 {
                     //check add issue permission
                     if (UserManager.HasPermission(projectId, Common.Permission.AddIssue.ToString()))
-                        Items.Add(new SuckerMenuItem(string.Format("~/Issues/IssueDetail.aspx?pid={0}", projectId),Resources.SharedResources.NewIssue,this));
+                        Items.Add(new SuckerMenuItem(string.Format("~/Issues/CreateIssue.aspx?pid={0}", projectId),Resources.SharedResources.NewIssue,this));
 
                     if (UserManager.HasPermission(projectId, Common.Permission.ViewProjectCalendar.ToString()))
                         oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/ProjectCalendar.aspx?pid={0}", projectId),Resources.SharedResources.Calendar, this));

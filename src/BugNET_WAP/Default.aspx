@@ -48,7 +48,7 @@
                                     <a href="Projects/ProjectCalendar.aspx?pid=<%# ((Project)Container.DataItem).Id %>">
                                     <asp:Localize runat="server" ID="Localize7" Text="<%$ Resources:SharedResources, Calendar %>" /></a></li>
                                 <li id="ReportIssue" runat="server">
-                                    <a href="Issues/IssueDetail.aspx?pid=<%# ((Project)Container.DataItem).Id %>">
+                                    <a href="Issues/CreateIssue.aspx?pid=<%# ((Project)Container.DataItem).Id %>">
                                     <asp:Localize runat="server" ID="Localize8" Text="<%$ Resources:SharedResources, NewIssue %>" /></a></li>
                                 <li id="Settings" runat="server">
                                     <a href="Administration/Projects/EditProject.aspx?pid=<%# ((Project)Container.DataItem).Id %>&amp;tid=1">

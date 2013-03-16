@@ -14,7 +14,7 @@
             <siteMapNode url="~/SvnBrowse/SubversionBrowser.aspx" resourceKey="SubversionBrowser"/>
         </siteMapNode>
         <siteMapNode url="~/Issues/IssueList.aspx" resourceKey="Issues">
-            <siteMapNode url="~/Issues/IssueDetail.aspx#" resourceKey="NewIssue"/>
+            <siteMapNode url="~/Issues/CreateIssue.aspx" resourceKey="NewIssue"/>
             <siteMapNode url="~/Issues/IssueDetail.aspx" resourceKey="IssueDetail" Visible="False" />
             <siteMapNode url="~/Issues/IssueSearch.aspx" resourceKey="IssueSearch" />
         </siteMapNode>
@@ -34,6 +34,5 @@
                 <siteMapNode url="~/Administration/Users/AddUser.aspx" resourceKey="AddUser"/>
             </siteMapNode>
         </siteMapNode>
-        <!--<siteMapNode url="~/Reports/SelectReport.aspx" title="Reports" description="Reports" />-->
     </siteMapNode>
 </siteMap>

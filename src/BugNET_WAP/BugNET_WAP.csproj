@@ -518,6 +518,13 @@
     <Compile Include="Install\Install.aspx.designer.cs">
       <DependentUpon>Install.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Issues\CreateIssue.aspx.cs">
+      <DependentUpon>CreateIssue.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Issues\CreateIssue.aspx.designer.cs">
+      <DependentUpon>CreateIssue.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Issues\IssueDetail.aspx.cs">
       <DependentUpon>IssueDetail.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1051,6 +1058,7 @@
     <Content Include="Images\word.gif" />
     <Content Include="Install\LatestReleaseNotes.htm" />
     <Content Include="Install\Install.aspx" />
+    <Content Include="Issues\CreateIssue.aspx" />
     <Content Include="Issues\IssueSearch.aspx" />
     <Content Include="Issues\MyIssues.aspx" />
     <Content Include="Projects\ReleaseNotes.aspx" />
@@ -2277,6 +2285,9 @@
     <Content Include="Administration\Users\App_LocalResources\UserList.aspx.ru-RU.resx" />
     <Content Include="UserControls\App_LocalResources\PickDate.ascx.resx" />
     <Content Include="UserControls\App_LocalResources\PickDate.ascx.ru-RU.resx" />
+    <Content Include="Issues\App_LocalResources\CreateIssue.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BugNET.BLL\BugNET.BLL.csproj">
