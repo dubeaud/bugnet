@@ -230,25 +230,10 @@
                 </div>
             </ContentTemplate>
         </asp:UpdatePanel>
-        <asp:Panel ID="pnlAddAttachment" CssClass="fieldgroup" Visible="false" runat="server">
-            <p style="padding: 8px 0 8px 0;">
-                <strong>
-                    <asp:Label ID="lblAddAttachment" runat="server" meta:resourcekey="Attachment" Text="Attachment"></asp:Label></strong></p>
-            <ol>
-                <li>
-                    <asp:Label ID="Label6" runat="server" Text="File:" AssociatedControlID="AspUploadFile" meta:resourcekey="AttachmentFileLabel" />
-                    <asp:FileUpload ID="AspUploadFile" runat="server" />
-                </li>
-                <li>
-                    <asp:Label ID="Label7" runat="server" Text="Description:" AssociatedControlID="AttachmentDescription" meta:resourcekey="AttachmentDescriptionLabel"/>
-                    <asp:TextBox ID="AttachmentDescription" Width="350px" runat="server" />&nbsp;<span style="font-style: italic; font-size: 8pt"><asp:Localize ID="Localize1" runat="server" Text="Optional" meta:resourcekey="AttachmentOptionalLocalize" /></span>
-                </li>
-            </ol>
-        </asp:Panel>
     </div>
     <ajaxToolkit:SliderExtender ID="SliderExtender2" runat="server" Steps="21" TargetControlID="ProgressSlider" BoundControlID="ProgressSlider_BoundControl"
         Orientation="Horizontal" TooltipText="{0}% Complete" EnableHandleAnimation="true"  meta:resourcekey="ProgressSlider"/>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="IssueTabs" runat="Server">
-    <it:IssueTabs ID="ctlIssueTabs" runat="server" Visible="False"></it:IssueTabs>
+    <it:IssueTabs ID="ctlIssueTabs" runat="server"></it:IssueTabs>
 </asp:Content>
