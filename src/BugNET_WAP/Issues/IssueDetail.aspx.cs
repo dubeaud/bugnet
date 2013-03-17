@@ -33,112 +33,66 @@ namespace BugNET.Issues
                 imgDelete.Attributes.Add("onclick", string.Format("return confirm('{0}');", GetLocalResourceObject("DeleteIssue").ToString().Trim().JsEncode()));
 
                 IssueId = Request.QueryString.Get("id", 0);
-                ProjectId = Request.QueryString.Get("pid", 0);
 
-                // If don't know project or issue then redirect to something missing page
-                if (ProjectId == 0 && IssueId == 0)
+                // If don't know issue id then redirect to something missing page
+                if (IssueId == 0)
                     ErrorRedirector.TransferToSomethingMissingPage(Page);
+                
+                //set up global properties
+                _currentIssue = IssueManager.GetById(IssueId);
 
-                // Initialize for Adding or Editing
-                if (IssueId == 0) // new issue
+                if (_currentIssue == null || _currentIssue.Disabled)
                 {
-                    _currentProject = ProjectManager.GetById(ProjectId);
-
-                    if (_currentProject == null)
-                    {
-                        ErrorRedirector.TransferToNotFoundPage(Page);
-                        return;
-                    }
-
-                    ProjectId = _currentProject.Id;
-
-                    //security check: add issue
-                    if (!UserManager.HasPermission(ProjectId, Common.Permission.AddIssue.ToString()))
-                    {
-                        ErrorRedirector.TransferToLoginPage(Page);
-                    }
-              
-                    BindOptions();
-                   
-                    TitleTextBox.Visible = true;
-                    DescriptionHtmlEditor.Visible = true;
-                    Description.Visible = false;
-                    TitleLabel.Visible = false;
-                    DisplayTitleLabel.Visible = false;
-                    Page.Title = GetLocalResourceObject("PageTitleNewIssue").ToString();
-                    lblIssueNumber.Text = GetGlobalResourceObject("SharedResources", "NotAvailableAbbr").ToString();
-                    VoteButton.Visible = false;
-                    IssueActionDelete.Visible = false;
-                    //check users role permission for adding an attachment
-                    if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Common.Permission.AddAttachment.ToString()))
-                    {
-                        pnlAddAttachment.Visible = false;
-                    }
-                    else
-                    {
-                        pnlAddAttachment.Visible = true;
-                    }
-
+                    ErrorRedirector.TransferToNotFoundPage(Page);
+                    return;
                 }
-                else //existing issue
+
+                //private issue check
+                var issueVisible = IssueManager.CanViewIssue(_currentIssue, Security.GetUserName());
+
+                //private issue check
+                if (!issueVisible)
                 {
-                    //set up global properties
-                    _currentIssue = IssueManager.GetById(IssueId);
-
-                    if (_currentIssue == null || _currentIssue.Disabled)
-                    {
-                        ErrorRedirector.TransferToNotFoundPage(Page);
-                        return;
-                    }
-
-                    //private issue check
-                    var issueVisible = IssueManager.CanViewIssue(_currentIssue, Security.GetUserName());
-
-                    //private issue check
-                    if (!issueVisible)
-                    {
-                        ErrorRedirector.TransferToLoginPage(Page);
-                    }
-
-                    _currentProject = ProjectManager.GetById(_currentIssue.ProjectId);
-
-                    if (_currentProject == null)
-                    {
-                        ErrorRedirector.TransferToNotFoundPage(Page);
-                        return;
-                    }
-
-                    ProjectId = _currentProject.Id;
-
-                    if (_currentProject.AccessType == ProjectAccessType.Private && !User.Identity.IsAuthenticated)
-                    {
-                        ErrorRedirector.TransferToLoginPage(Page);
-                    }
-                    else if (User.Identity.IsAuthenticated && _currentProject.AccessType == ProjectAccessType.Private 
-                        && !ProjectManager.IsUserProjectMember(User.Identity.Name, ProjectId))
-                    {
-                        ErrorRedirector.TransferToLoginPage(Page);
-                    }
-
-                    BindValues(_currentIssue);
-
-                    Page.Title = string.Concat(_currentIssue.FullId, ": ", Server.HtmlDecode(_currentIssue.Title));
-                    lblIssueNumber.Text = string.Format("{0}-{1}", _currentProject.Code, IssueId);
-                    ctlIssueTabs.Visible = true;
-                    TimeLogged.Visible = true;
-                    TimeLoggedLabel.Visible = true;
-                    chkNotifyAssignedTo.Visible = false;
-                    chkNotifyOwner.Visible = false;
-
-                    SetFieldSecurity();
+                    ErrorRedirector.TransferToLoginPage(Page);
                 }
+
+                _currentProject = ProjectManager.GetById(_currentIssue.ProjectId);
+
+                if (_currentProject == null)
+                {
+                    ErrorRedirector.TransferToNotFoundPage(Page);
+                    return;
+                }
+
+                ProjectId = _currentProject.Id;
+
+                if (_currentProject.AccessType == ProjectAccessType.Private && !User.Identity.IsAuthenticated)
+                {
+                    ErrorRedirector.TransferToLoginPage(Page);
+                }
+                else if (User.Identity.IsAuthenticated && _currentProject.AccessType == ProjectAccessType.Private 
+                    && !ProjectManager.IsUserProjectMember(User.Identity.Name, ProjectId))
+                {
+                    ErrorRedirector.TransferToLoginPage(Page);
+                }
+
+                BindValues(_currentIssue);
+
+                Page.Title = string.Concat(_currentIssue.FullId, ": ", Server.HtmlDecode(_currentIssue.Title));
+                lblIssueNumber.Text = string.Format("{0}-{1}", _currentProject.Code, IssueId);
+                ctlIssueTabs.Visible = true;
+                TimeLogged.Visible = true;
+                TimeLoggedLabel.Visible = true;
+                chkNotifyAssignedTo.Visible = false;
+                chkNotifyOwner.Visible = false;
+
+                SetFieldSecurity();
 
                 if (!_currentProject.AllowIssueVoting)
                 { 
                     VoteBox.Visible = false;
                 }
-
-              
+          
                 //set the referrer url
                 if (Request.UrlReferrer != null)
                 {
@@ -153,10 +107,7 @@ namespace BugNET.Issues
             }
 
             //need to rebind these on every postback because of dynamic controls
-            ctlCustomFields.DataSource = IssueId == 0 ?
-                CustomFieldManager.GetByProjectId(ProjectId) :
-                CustomFieldManager.GetByIssueId(IssueId);
-
+            ctlCustomFields.DataSource = CustomFieldManager.GetByIssueId(IssueId);
             ctlCustomFields.DataBind();
 
             // The ExpandIssuePaths method is called to handle
@@ -194,14 +145,9 @@ namespace BugNET.Issues
             // The current node, and its parents, can be modified to include
             // dynamic query string information relevant to the currently
             // executing request.
-            if (IssueId != 0)
-            {
-                var title = (TitleTextBox.Text.Length >= 30) ? TitleTextBox.Text.Substring(0, 30) + " ..." : TitleTextBox.Text;
-                tempNode.Title = string.Format("{0}: {1}", lblIssueNumber.Text, title);
-                tempNode.Url = string.Concat(tempNode.Url, "?id=", IssueId);
-            }
-            else
-                tempNode.Title = GetGlobalResourceObject("SharedResources", "NewIssue").ToString();
+            var title = (TitleTextBox.Text.Length >= 30) ? TitleTextBox.Text.Substring(0, 30) + " ..." : TitleTextBox.Text;
+            tempNode.Title = string.Format("{0}: {1}", lblIssueNumber.Text, title);
+            tempNode.Url = string.Concat(tempNode.Url, "?id=", IssueId);
 
             if ((null != (tempNode = tempNode.ParentNode)))
             {
@@ -305,10 +251,7 @@ namespace BugNET.Issues
             DropCategory.DataBind();
 
             //Get milestones
-            DropMilestone.DataSource = (IssueId == 0) ?
-                MilestoneManager.GetByProjectId(ProjectId, false) :
-                MilestoneManager.GetByProjectId(ProjectId);
-
+            DropMilestone.DataSource = MilestoneManager.GetByProjectId(ProjectId);
             DropMilestone.DataBind();
 
             DropAffectedMilestone.DataSource = MilestoneManager.GetByProjectId(ProjectId);
@@ -319,10 +262,7 @@ namespace BugNET.Issues
             DropAssignedTo.DataBind();
 
             DropOwned.DataSource = users;
-            DropOwned.DataBind();
-            if (IssueId == 0)
-                DropOwned.SelectedValue = User.Identity.Name;
-          
+            DropOwned.DataBind();         
 
             DropStatus.DataSource = StatusManager.GetByProjectId(ProjectId);
             DropStatus.DataBind();
@@ -345,8 +285,6 @@ namespace BugNET.Issues
             decimal estimation;
             decimal.TryParse(txtEstimation.Text.Trim(), out estimation);
             var dueDate = DueDatePicker.SelectedValue == null ? DateTime.MinValue : (DateTime)DueDatePicker.SelectedValue;
-
-            var isNewIssue = (IssueId <= 0);
 
             // WARNING: DO NOT ENCODE THE HTMLEDITOR TEXT. 
             // It expects raw input. So pass through a raw string. 
@@ -419,101 +357,6 @@ namespace BugNET.Issues
                 Message1.ShowErrorMessage(Resources.Exceptions.SaveCustomFieldValuesError);
                 return false;
             }
-
-            //if new issue check if notify owner and assigned is checked.
-            if (isNewIssue)
-            {
-           
-                //add attachment if present.
-                if (AspUploadFile.HasFile)
-                {
-                    // get the current file
-                    var uploadFile = AspUploadFile.PostedFile;
-                    string inValidReason;
-                    var validFile = IssueAttachmentManager.IsValidFile(uploadFile.FileName, out inValidReason);
-
-                    if (validFile)
-                    {
-                        if (uploadFile.ContentLength > 0)
-                        {
-                            byte[] fileBytes;
-                            using (var input = uploadFile.InputStream)
-                            {
-                                fileBytes = new byte[uploadFile.ContentLength];
-                                input.Read(fileBytes, 0, uploadFile.ContentLength);
-                            }
-
-                            var issueAttachment = new IssueAttachment
-                            {
-                                Id = Globals.NEW_ID,
-                                Attachment = fileBytes,
-                                Description = AttachmentDescription.Text.Trim(),
-                                DateCreated = DateTime.Now,
-                                ContentType = uploadFile.ContentType,
-                                CreatorDisplayName = string.Empty,
-                                CreatorUserName = Security.GetUserName(),
-                                FileName = uploadFile.FileName,
-                                IssueId = IssueId,
-                                Size = fileBytes.Length
-                            };
-
-                            if (!IssueAttachmentManager.SaveOrUpdate(issueAttachment))
-                            {
-                                Message1.ShowErrorMessage(string.Format(GetGlobalResourceObject("Exceptions", "SaveAttachmentError").ToString(), uploadFile.FileName));
-                            }
-                        }
-
-                    }
-                    else
-                    {
-                        Message1.ShowErrorMessage(inValidReason);
-                        return false;
-                    }
-                }
-
-                //create a vote for the new issue
-                var vote = new IssueVote { IssueId = IssueId, VoteUsername = Security.GetUserName() };
-
-                if (!IssueVoteManager.SaveOrUpdate(vote))
-                { 
-                    Message1.ShowErrorMessage(Resources.Exceptions.SaveIssueVoteError);
-                    return false;
-                }
-
-                if (chkNotifyOwner.Checked && !string.IsNullOrEmpty(issue.OwnerUserName))
-                {
-                    var oUser = UserManager.GetUser(issue.OwnerUserName);
-                    if (oUser != null)
-                    {
-                        var notify = new IssueNotification { IssueId = IssueId, NotificationUsername = oUser.UserName };
-                        IssueNotificationManager.SaveOrUpdate(notify);
-                    }
-                }
-                if (chkNotifyAssignedTo.Checked && !string.IsNullOrEmpty(issue.AssignedUserName))
-                {
-                    var oUser = UserManager.GetUser(issue.AssignedUserName);
-                    if (oUser != null)
-                    {
-                        var notify = new IssueNotification { IssueId = IssueId, NotificationUsername = oUser.UserName };
-                        IssueNotificationManager.SaveOrUpdate(notify);
-                    }
-                }
-
-                // add all users subscribed at the project level to the issue level
-                IEnumerable<ProjectNotification> subscriptions = ProjectNotificationManager.GetByProjectId(ProjectId);
-                foreach (ProjectNotification sub in subscriptions)
-                {
-                    IssueNotificationManager.SaveOrUpdate(new IssueNotification()
-                    {
-                        IssueId = IssueId,
-                        NotificationUsername = sub.NotificationUsername
-                    });
-                }
-
-                //send issue notifications
-                IssueNotificationManager.SendIssueAddNotifications(IssueId);
-            }
-
 
             return true;
         }
@@ -707,16 +550,6 @@ namespace BugNET.Issues
         {
             get { return ViewState.Get("IssueId", 0); }
             set { ViewState.Set("IssueId", value); }
-        }
-
-        /// <summary>
-        /// Gets or sets the project id.
-        /// </summary>
-        /// <value>The project id.</value>
-        public override int ProjectId
-        {
-            get { return ViewState.Get("ProjectId", 0); }
-            set { ViewState.Set("ProjectId", value); }
         }
 
         #endregion

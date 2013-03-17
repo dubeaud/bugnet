@@ -64,8 +64,7 @@
                                     </div>
                                 </td>
                                 <td style="vertical-align: top;"> 
-                                    <asp:Label ID="TitleLabel" runat="server" AssociatedControlID="TitleTextBox" meta:resourcekey="TitleLabel"></asp:Label>
-                                    <asp:TextBox ID="TitleTextBox" Width="95%" runat="server" />
+                                    <asp:TextBox ID="TitleTextBox" Width="100%" runat="server" />
                                     <asp:RequiredFieldValidator ControlToValidate="TitleTextBox" ErrorMessage="<%$ Resources:IssueTitleRequiredErrorMessage %>"
                                                 Text="<%$ Resources:SharedResources, Required %>" Display="Dynamic" CssClass="req" runat="server" ID="TitleRequired" />
                                     <ajaxToolkit:TextBoxWatermarkExtender ID="TBWE2" runat="server" TargetControlID="TitleTextBox" WatermarkText="<%$ Resources:IssueTitleWaterMark %>"
