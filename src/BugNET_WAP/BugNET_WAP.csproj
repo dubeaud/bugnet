@@ -292,6 +292,13 @@
     <Compile Include="Administration\Projects\UserControls\ProjectCustomFields.ascx.designer.cs">
       <DependentUpon>ProjectCustomFields.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Administration\Projects\UserControls\ProjectDefaultValues.ascx.cs">
+      <DependentUpon>ProjectDefaultValues.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\Projects\UserControls\ProjectDefaultValues.ascx.designer.cs">
+      <DependentUpon>ProjectDefaultValues.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Administration\Projects\UserControls\ProjectDescription.ascx.cs">
       <DependentUpon>ProjectDescription.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -921,6 +928,7 @@
     <Content Include="Administration\Projects\ProjectList.aspx" />
     <Content Include="Administration\Projects\UserControls\ProjectCategories.ascx" />
     <Content Include="Administration\Projects\UserControls\ProjectCustomFields.ascx" />
+    <Content Include="Administration\Projects\UserControls\ProjectDefaultValues.ascx" />
     <Content Include="Administration\Projects\UserControls\ProjectDescription.ascx" />
     <Content Include="Administration\Projects\UserControls\ProjectMailbox.ascx" />
     <Content Include="Administration\Projects\UserControls\ProjectMembers.ascx" />
@@ -1090,6 +1098,7 @@
     <Content Include="Providers\DataProviders\SqlDataProvider\1.0.187.0.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\1.1.213.0.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\1.2.231.0.SqlDataProvider.sql" />
+    <Content Include="Providers\DataProviders\SqlDataProvider\1.3.242.0.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\BugNet.Data.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\BugNet.Schema.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\InstallCommon.sql" />

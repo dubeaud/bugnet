@@ -1,8 +1,135 @@
-INSERT INTO [dbo].[BugNet_Languages] ([CultureCode], [CultureName], [FallbackCulture]) VALUES('ru-RU', 'Russian (Russia)', 'en-US')
+/****** Object:  Table [dbo].[BugNet_DefaultValues]    Script Date: 4/5/2013 11:17:22 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[BugNet_DefaultValues](
+	[ProjectId] [int] NOT NULL,
+	[DefaultType] [int] NULL,
+	[StatusId] [int] NULL,
+	[IssueOwnerUserId] [uniqueidentifier] NULL,
+	[IssuePriorityId] [int] NULL,
+	[IssueAffectedMilestoneId] [int] NULL,
+	[IssueAssignedUserId] [uniqueidentifier] NULL,
+	[IssueVisibility] [int] NULL,
+	[IssueCategoryId] [int] NULL,
+	[IssueDueDate] [int] NULL,
+	[IssueProgress] [int] NULL,
+	[IssueMilestoneId] [int] NULL,
+	[IssueEstimation] [decimal](5, 2) NULL,
+	[IssueResolutionId] [int] NULL,
+	[OwnedByNotify] [bit] NULL,
+	[AssignedToNotify] [bit] NULL,
+ CONSTRAINT [PK_BugNet_DefaultValues] PRIMARY KEY CLUSTERED 
+(
+	[ProjectId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[BugNet_DefaultValues] ADD  CONSTRAINT [DF_BugNet_DefaultValues_OwnedByNotify]  DEFAULT ((1)) FOR [OwnedByNotify]
+GO
+
+ALTER TABLE [dbo].[BugNet_DefaultValues] ADD  CONSTRAINT [DF_BugNet_DefaultValues_AssignedTo]  DEFAULT ((1)) FOR [AssignedToNotify]
+GO
+
+ALTER TABLE [dbo].[BugNet_DefaultValues]  WITH CHECK ADD  CONSTRAINT [FK_BugNet_DefaultValues_aspnet_Users] FOREIGN KEY([IssueOwnerUserId])
+REFERENCES [dbo].[aspnet_Users] ([UserId])
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[BugNet_DefaultValues] CHECK CONSTRAINT [FK_BugNet_DefaultValues_aspnet_Users]
+GO
+
+ALTER TABLE [dbo].[BugNet_DefaultValues]  WITH CHECK ADD  CONSTRAINT [FK_BugNet_DefaultValues_aspnet_Users1] FOREIGN KEY([IssueAssignedUserId])
+REFERENCES [dbo].[aspnet_Users] ([UserId])
+GO
+
+ALTER TABLE [dbo].[BugNet_DefaultValues] CHECK CONSTRAINT [FK_BugNet_DefaultValues_aspnet_Users1]
+GO
+
+ALTER TABLE [dbo].[BugNet_DefaultValues]  WITH CHECK ADD  CONSTRAINT [FK_BugNet_DefaultValues_BugNet_Projects] FOREIGN KEY([ProjectId])
+REFERENCES [dbo].[BugNet_Projects] ([ProjectId])
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[BugNet_DefaultValues] CHECK CONSTRAINT [FK_BugNet_DefaultValues_BugNet_Projects]
+GO
+
+/****** Object:  Table [dbo].[BugNet_DefaultValuesVisibility]    Script Date: 4/5/2013 11:17:47 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[BugNet_DefaultValuesVisibility](
+	[ProjectId] [int] NOT NULL,
+	[StatusVisibility] [bit] NOT NULL,
+	[OwnedByVisibility] [bit] NOT NULL,
+	[PriorityVisibility] [bit] NOT NULL,
+	[AssignedToVisibility] [bit] NOT NULL,
+	[PrivateVisibility] [bit] NOT NULL,
+	[CategoryVisibility] [bit] NOT NULL,
+	[DueDateVisibility] [bit] NOT NULL,
+	[TypeVisibility] [bit] NOT NULL,
+	[PercentCompleteVisibility] [bit] NOT NULL,
+	[MilestoneVisibility] [bit] NOT NULL,
+	[EstimationVisibility] [bit] NOT NULL,
+	[ResolutionVisibility] [bit] NOT NULL,
+	[AffectedMilestoneVisibility] [bit] NOT NULL,
+ CONSTRAINT [PK_Bugnet_DefaultValuesVisibility] PRIMARY KEY CLUSTERED 
+(
+	[ProjectId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_StatusVisibility]  DEFAULT ((1)) FOR [StatusVisibility]
+GO
+
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_OwnedByVisibility]  DEFAULT ((1)) FOR [OwnedByVisibility]
+GO
+
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_PriorityVisibility]  DEFAULT ((1)) FOR [PriorityVisibility]
+GO
+
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_AssignedToVisibility]  DEFAULT ((1)) FOR [AssignedToVisibility]
+GO
+
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_PrivateVisibility]  DEFAULT ((1)) FOR [PrivateVisibility]
+GO
+
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_CategoryVisibility]  DEFAULT ((1)) FOR [CategoryVisibility]
+GO
+
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_DueDateVisibility]  DEFAULT ((1)) FOR [DueDateVisibility]
+GO
+
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_TypeVisibility]  DEFAULT ((1)) FOR [TypeVisibility]
+GO
+
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_PercentCompleteVisibility]  DEFAULT ((1)) FOR [PercentCompleteVisibility]
+GO
+
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_MilestoneVisibility]  DEFAULT ((1)) FOR [MilestoneVisibility]
+GO
+
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_EstimationVisibility]  DEFAULT ((1)) FOR [EstimationVisibility]
+GO
+
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_ResolutionVisibility]  DEFAULT ((1)) FOR [ResolutionVisibility]
+GO
+
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_AffectedMilestoneVisivility]  DEFAULT ((1)) FOR [AffectedMilestoneVisibility]
 GO
 
 
-/****** Object:  View [dbo].[BugNet_IssuesView]    Script Date: 1/26/2013 10:21:37 AM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_DefaultValues_GetByProjectId]    Script Date: 4/5/2013 11:20:11 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -10,556 +137,190 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 
-ALTER VIEW [dbo].[BugNet_IssuesView]
+CREATE PROCEDURE [dbo].[BugNet_DefaultValues_GetByProjectId]
+	@ProjectId int
+As
+SELECT * FROM BugNet_DefaultValView 
+WHERE 
+	ProjectId= @ProjectId
+	
+
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[BugNet_DefaultValues_Set]    Script Date: 4/5/2013 11:20:25 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[BugNet_DefaultValues_Set]
+	@Type nvarchar(50),
+	@ProjectId Int,
+	@StatusId Int,
+	@IssueOwnerUserName NVarChar(255),
+	@IssuePriorityId Int,
+	@IssueAssignedUserName NVarChar(255),
+	@IssueVisibility int,
+	@IssueCategoryId Int,
+	@IssueAffectedMilestoneId Int,
+	@IssueDueDate int,
+	@IssueProgress Int,
+	@IssueMilestoneId Int,
+	@IssueEstimation decimal(5,2),
+	@IssueResolutionId Int,
+	@StatusVisibility		 Bit,
+	@OwnedByVisibility		 Bit,
+	@PriorityVisibility		 Bit,
+	@AssignedToVisibility	 Bit,
+	@PrivateVisibility		 Bit,
+	@CategoryVisibility		 Bit,
+	@DueDateVisibility		 Bit,
+	@TypeVisibility			 Bit,
+	@PercentCompleteVisibility Bit,
+	@MilestoneVisibility	Bit, 
+	@EstimationVisibility	 Bit,
+	@ResolutionVisibility	 Bit,
+	@AffectedMilestoneVisibility Bit,
+	@OwnedByNotify Bit,
+	@AssignedToNotify Bit
 AS
-SELECT     dbo.BugNet_Issues.IssueId, dbo.BugNet_Issues.IssueTitle, dbo.BugNet_Issues.IssueDescription, dbo.BugNet_Issues.IssueStatusId, 
-                      dbo.BugNet_Issues.IssuePriorityId, dbo.BugNet_Issues.IssueTypeId, dbo.BugNet_Issues.IssueCategoryId, dbo.BugNet_Issues.ProjectId, 
-                      dbo.BugNet_Issues.IssueResolutionId, dbo.BugNet_Issues.IssueCreatorUserId, dbo.BugNet_Issues.IssueAssignedUserId, dbo.BugNet_Issues.IssueOwnerUserId, 
-                      dbo.BugNet_Issues.IssueDueDate, dbo.BugNet_Issues.IssueMilestoneId, dbo.BugNet_Issues.IssueAffectedMilestoneId, dbo.BugNet_Issues.IssueVisibility, 
-                      dbo.BugNet_Issues.IssueEstimation, dbo.BugNet_Issues.DateCreated, dbo.BugNet_Issues.LastUpdate, dbo.BugNet_Issues.LastUpdateUserId, 
-                      dbo.BugNet_Projects.ProjectName, dbo.BugNet_Projects.ProjectCode, ISNULL(dbo.BugNet_ProjectPriorities.PriorityName, N'Unassigned') AS PriorityName, 
-                      ISNULL(dbo.BugNet_ProjectIssueTypes.IssueTypeName, N'Unassigned') AS IssueTypeName, ISNULL(dbo.BugNet_ProjectCategories.CategoryName, N'Unassigned') 
-                      AS CategoryName, ISNULL(dbo.BugNet_ProjectStatus.StatusName, N'Unassigned') AS StatusName, ISNULL(dbo.BugNet_ProjectMilestones.MilestoneName, 
-                      N'Unassigned') AS MilestoneName, ISNULL(AffectedMilestone.MilestoneName, N'Unassigned') AS AffectedMilestoneName, 
-                      ISNULL(dbo.BugNet_ProjectResolutions.ResolutionName, 'Unassigned') AS ResolutionName, LastUpdateUsers.UserName AS LastUpdateUserName, 
-                      ISNULL(AssignedUsers.UserName, N'Unassigned') AS AssignedUsername, ISNULL(AssignedUsersProfile.DisplayName, N'Unassigned') AS AssignedDisplayName, 
-                      CreatorUsers.UserName AS CreatorUserName, ISNULL(CreatorUsersProfile.DisplayName, N'Unassigned') AS CreatorDisplayName, ISNULL(OwnerUsers.UserName, 
-                      'Unassigned') AS OwnerUserName, ISNULL(OwnerUsersProfile.DisplayName, N'Unassigned') AS OwnerDisplayName, ISNULL(LastUpdateUsersProfile.DisplayName, 
-                      'Unassigned') AS LastUpdateDisplayName, ISNULL(dbo.BugNet_ProjectPriorities.PriorityImageUrl, '') AS PriorityImageUrl, 
-                      ISNULL(dbo.BugNet_ProjectIssueTypes.IssueTypeImageUrl, '') AS IssueTypeImageUrl, ISNULL(dbo.BugNet_ProjectStatus.StatusImageUrl, '') AS StatusImageUrl, 
-                      ISNULL(dbo.BugNet_ProjectMilestones.MilestoneImageUrl, '') AS MilestoneImageUrl, ISNULL(dbo.BugNet_ProjectResolutions.ResolutionImageUrl, '') 
-                      AS ResolutionImageUrl, ISNULL(AffectedMilestone.MilestoneImageUrl, '') AS AffectedMilestoneImageUrl, ISNULL
-                          ((SELECT     SUM(Duration) AS Expr1
-                              FROM         dbo.BugNet_IssueWorkReports AS WR
-                              WHERE     (IssueId = dbo.BugNet_Issues.IssueId)), 0.00) AS TimeLogged, ISNULL
-                          ((SELECT     COUNT(IssueId) AS Expr1
-                              FROM         dbo.BugNet_IssueVotes AS V
-                              WHERE     (IssueId = dbo.BugNet_Issues.IssueId)), 0) AS IssueVotes, dbo.BugNet_Issues.Disabled, dbo.BugNet_Issues.IssueProgress, 
-                      dbo.BugNet_ProjectMilestones.MilestoneDueDate, dbo.BugNet_Projects.ProjectDisabled, CAST(COALESCE (dbo.BugNet_ProjectStatus.IsClosedState, 0) AS BIT) 
-                      AS IsClosed, CAST(CONVERT(VARCHAR(8), dbo.BugNet_Issues.LastUpdate, 112) AS DATETIME) AS LastUpdateAsDate, 
-					  CAST(CONVERT(VARCHAR(8), dbo.BugNet_Issues.DateCreated, 112) AS DATETIME) AS DateCreatedAsDate
-FROM         dbo.BugNet_Issues LEFT OUTER JOIN
-                      dbo.BugNet_ProjectIssueTypes ON dbo.BugNet_Issues.IssueTypeId = dbo.BugNet_ProjectIssueTypes.IssueTypeId LEFT OUTER JOIN
-                      dbo.BugNet_ProjectPriorities ON dbo.BugNet_Issues.IssuePriorityId = dbo.BugNet_ProjectPriorities.PriorityId LEFT OUTER JOIN
-                      dbo.BugNet_ProjectCategories ON dbo.BugNet_Issues.IssueCategoryId = dbo.BugNet_ProjectCategories.CategoryId LEFT OUTER JOIN
-                      dbo.BugNet_ProjectStatus ON dbo.BugNet_Issues.IssueStatusId = dbo.BugNet_ProjectStatus.StatusId LEFT OUTER JOIN
-                      dbo.BugNet_ProjectMilestones AS AffectedMilestone ON dbo.BugNet_Issues.IssueAffectedMilestoneId = AffectedMilestone.MilestoneId LEFT OUTER JOIN
-                      dbo.BugNet_ProjectMilestones ON dbo.BugNet_Issues.IssueMilestoneId = dbo.BugNet_ProjectMilestones.MilestoneId LEFT OUTER JOIN
-                      dbo.BugNet_ProjectResolutions ON dbo.BugNet_Issues.IssueResolutionId = dbo.BugNet_ProjectResolutions.ResolutionId LEFT OUTER JOIN
-                      dbo.aspnet_Users AS AssignedUsers ON dbo.BugNet_Issues.IssueAssignedUserId = AssignedUsers.UserId LEFT OUTER JOIN
-                      dbo.aspnet_Users AS LastUpdateUsers ON dbo.BugNet_Issues.LastUpdateUserId = LastUpdateUsers.UserId LEFT OUTER JOIN
-                      dbo.aspnet_Users AS CreatorUsers ON dbo.BugNet_Issues.IssueCreatorUserId = CreatorUsers.UserId LEFT OUTER JOIN
-                      dbo.aspnet_Users AS OwnerUsers ON dbo.BugNet_Issues.IssueOwnerUserId = OwnerUsers.UserId LEFT OUTER JOIN
-                      dbo.BugNet_UserProfiles AS CreatorUsersProfile ON CreatorUsers.UserName = CreatorUsersProfile.UserName LEFT OUTER JOIN
+DECLARE @IssueAssignedUserId	UNIQUEIDENTIFIER
+DECLARE @IssueOwnerUserId		UNIQUEIDENTIFIER
+
+SELECT @IssueOwnerUserId = UserId FROM aspnet_users WHERE UserName = @IssueOwnerUserName
+SELECT @IssueAssignedUserId = UserId FROM aspnet_users WHERE UserName = @IssueAssignedUserName
+BEGIN
+	BEGIN TRAN
+		DECLARE @defVisExists int
+		SELECT @defVisExists = COUNT(*) 
+		FROM Bugnet_DefaultValuesVisibility
+			WHERE Bugnet_DefaultValuesVisibility.ProjectId = @ProjectId
+				IF(@defVisExists>0)
+					BEGIN
+						UPDATE Bugnet_DefaultValuesVisibility
+						SET 								
+							StatusVisibility = @StatusVisibility,			
+							OwnedByVisibility = @OwnedByVisibility,				
+							PriorityVisibility = @PriorityVisibility,			
+							AssignedToVisibility = @AssignedToVisibility,			
+							PrivateVisibility= @PrivateVisibility,			
+							CategoryVisibility= @CategoryVisibility,			
+							DueDateVisibility= @DueDateVisibility,				
+							TypeVisibility	= @TypeVisibility,				
+							PercentCompleteVisibility = @PercentCompleteVisibility,		
+							MilestoneVisibility	= @MilestoneVisibility,			
+							EstimationVisibility = @EstimationVisibility,			
+							ResolutionVisibility = @ResolutionVisibility,
+							AffectedMilestoneVisibility = @AffectedMilestoneVisibility		
+					WHERE ProjectId = @ProjectId							
+					END
+				ELSE
+					BEGIN
+					INSERT INTO Bugnet_DefaultValuesVisibility
+					VALUES 
+					(
+						@ProjectId				 ,  
+						@StatusVisibility		 ,
+						@OwnedByVisibility		 ,
+						@PriorityVisibility		 ,
+						@AssignedToVisibility	 ,
+						@PrivateVisibility		 ,
+						@CategoryVisibility		 ,
+						@DueDateVisibility		 ,
+						@TypeVisibility			 ,
+						@PercentCompleteVisibility,
+						@MilestoneVisibility	,	 
+						@EstimationVisibility	 ,
+						@ResolutionVisibility	,
+						@AffectedMilestoneVisibility	  					
+					)
+					END
+
+
+		DECLARE @defExists int
+		SELECT @defExists = COUNT(*) 
+			FROM BugNet_DefaultValues
+			WHERE BugNet_DefaultValues.ProjectId = @ProjectId
+		
+		IF (@defExists > 0)
+		BEGIN
+			UPDATE BugNet_DefaultValues 
+				SET DefaultType = @Type,
+					StatusId = @StatusId,
+					IssueOwnerUserId = @IssueOwnerUserId,
+					IssuePriorityId = @IssuePriorityId,
+					IssueAffectedMilestoneId = @IssueAffectedMilestoneId,
+					IssueAssignedUserId = @IssueAssignedUserId,
+					IssueVisibility = @IssueVisibility,
+					IssueCategoryId = @IssueCategoryId,
+					IssueDueDate = @IssueDueDate,
+					IssueProgress = @IssueProgress,
+					IssueMilestoneId = @IssueMilestoneId,
+					IssueEstimation = @IssueEstimation,
+					IssueResolutionId = @IssueResolutionId,
+					OwnedByNotify = @OwnedByNotify,
+					AssignedToNotify = @AssignedToNotify
+				WHERE ProjectId = @ProjectId
+		END
+		ELSE
+		BEGIN
+			INSERT INTO BugNet_DefaultValues 
+				VALUES (
+					@ProjectId,
+					@Type,
+					@StatusId,
+					@IssueOwnerUserId,
+					@IssuePriorityId,
+					@IssueAffectedMilestoneId,
+					@IssueAssignedUserId,
+					@IssueVisibility,
+					@IssueCategoryId,
+					@IssueDueDate,
+					@IssueProgress,
+					@IssueMilestoneId,
+					@IssueEstimation,
+					@IssueResolutionId,
+					@OwnedByNotify,
+					@AssignedToNotify 
+				)
+		END
+	COMMIT TRAN
+END
+
+GO
+
+/****** Object:  View [dbo].[BugNet_DefaultValView]    Script Date: 4/5/2013 11:25:14 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE VIEW [dbo].[BugNet_DefaultValView]
+AS
+SELECT     dbo.BugNet_DefaultValues.DefaultType, dbo.BugNet_DefaultValues.StatusId, dbo.BugNet_DefaultValues.IssueOwnerUserId, 
+                      dbo.BugNet_DefaultValues.IssuePriorityId, dbo.BugNet_DefaultValues.IssueAffectedMilestoneId, dbo.BugNet_DefaultValues.ProjectId, 
+                      ISNULL(OwnerUsers.UserName, N'none') AS OwnerUserName, ISNULL(OwnerUsersProfile.DisplayName, N'none') AS OwnerDisplayName, 
+                      ISNULL(AssignedUsers.UserName, N'none') AS AssignedUsername, ISNULL(AssignedUsersProfile.DisplayName, N'none') AS AssignedDisplayName, 
+                      dbo.BugNet_DefaultValues.IssueAssignedUserId, dbo.BugNet_DefaultValues.IssueCategoryId, dbo.BugNet_DefaultValues.IssueVisibility, 
+                      dbo.BugNet_DefaultValues.IssueDueDate, dbo.BugNet_DefaultValues.IssueProgress, dbo.BugNet_DefaultValues.IssueMilestoneId, 
+                      dbo.BugNet_DefaultValues.IssueEstimation, dbo.BugNet_DefaultValues.IssueResolutionId, dbo.Bugnet_DefaultValuesVisibility.StatusVisibility, 
+                      dbo.Bugnet_DefaultValuesVisibility.PriorityVisibility, dbo.Bugnet_DefaultValuesVisibility.OwnedByVisibility, 
+                      dbo.Bugnet_DefaultValuesVisibility.AssignedToVisibility, dbo.Bugnet_DefaultValuesVisibility.PrivateVisibility, 
+                      dbo.Bugnet_DefaultValuesVisibility.CategoryVisibility, dbo.Bugnet_DefaultValuesVisibility.DueDateVisibility, 
+                      dbo.Bugnet_DefaultValuesVisibility.TypeVisibility, dbo.Bugnet_DefaultValuesVisibility.PercentCompleteVisibility, 
+                      dbo.Bugnet_DefaultValuesVisibility.MilestoneVisibility, dbo.Bugnet_DefaultValuesVisibility.ResolutionVisibility, 
+                      dbo.Bugnet_DefaultValuesVisibility.EstimationVisibility, dbo.Bugnet_DefaultValuesVisibility.AffectedMilestoneVisibility, 
+                      dbo.BugNet_DefaultValues.OwnedByNotify, dbo.BugNet_DefaultValues.AssignedToNotify
+FROM         dbo.BugNet_DefaultValues LEFT OUTER JOIN
+                      dbo.aspnet_Users AS OwnerUsers ON dbo.BugNet_DefaultValues.IssueOwnerUserId = OwnerUsers.UserId LEFT OUTER JOIN
+                      dbo.aspnet_Users AS AssignedUsers ON dbo.BugNet_DefaultValues.IssueAssignedUserId = AssignedUsers.UserId LEFT OUTER JOIN
                       dbo.BugNet_UserProfiles AS AssignedUsersProfile ON AssignedUsers.UserName = AssignedUsersProfile.UserName LEFT OUTER JOIN
                       dbo.BugNet_UserProfiles AS OwnerUsersProfile ON OwnerUsers.UserName = OwnerUsersProfile.UserName LEFT OUTER JOIN
-                      dbo.BugNet_UserProfiles AS LastUpdateUsersProfile ON LastUpdateUsers.UserName = LastUpdateUsersProfile.UserName LEFT OUTER JOIN
-                      dbo.BugNet_Projects ON dbo.BugNet_Issues.ProjectId = dbo.BugNet_Projects.ProjectId
-GO
-
-/****** Object:  StoredProcedure [dbo].[BugNet_Project_CloneProject]    Script Date: 1/26/2013 11:03:42 AM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-ALTER PROCEDURE [dbo].[BugNet_Project_CloneProject] 
-(
-  @ProjectId INT,
-  @ProjectName NVarChar(256),
-  @CloningUsername VARCHAR(75) = NULL
-)
-AS
-
-DECLARE
-	@CreatorUserId UNIQUEIDENTIFIER
-
-SET NOCOUNT OFF
-
-SET @CreatorUserId = (SELECT ProjectCreatorUserId FROM BugNet_Projects WHERE ProjectId = @ProjectId)
-
-IF(@CloningUsername IS NOT NULL OR LTRIM(RTRIM(@CloningUsername)) != '')
-	EXEC dbo.BugNet_User_GetUserIdByUserName @UserName = @CloningUsername, @UserId = @CreatorUserId OUTPUT
-
--- Copy Project
-INSERT BugNet_Projects
-(
-  ProjectName,
-  ProjectCode,
-  ProjectDescription,
-  AttachmentUploadPath,
-  DateCreated,
-  ProjectDisabled,
-  ProjectAccessType,
-  ProjectManagerUserId,
-  ProjectCreatorUserId,
-  AllowAttachments,
-  AttachmentStorageType,
-  SvnRepositoryUrl 
-)
-SELECT
-  @ProjectName,
-  ProjectCode,
-  ProjectDescription,
-  AttachmentUploadPath,
-  GetDate(),
-  ProjectDisabled,
-  ProjectAccessType,
-  ProjectManagerUserId,
-  @CreatorUserId,
-  AllowAttachments,
-  AttachmentStorageType,
-  SvnRepositoryUrl
-FROM 
-  BugNet_Projects
-WHERE
-  ProjectId = @ProjectId
-  
-DECLARE @NewProjectId INT
-SET @NewProjectId = SCOPE_IDENTITY()
-
--- Copy Milestones
-INSERT BugNet_ProjectMilestones
-(
-  ProjectId,
-  MilestoneName,
-  MilestoneImageUrl,
-  SortOrder,
-  DateCreated
-)
-SELECT
-  @NewProjectId,
-  MilestoneName,
-  MilestoneImageUrl,
-  SortOrder,
-  GetDate()
-FROM
-  BugNet_ProjectMilestones
-WHERE
-  ProjectId = @ProjectId  
-
--- Copy Project Members
-INSERT BugNet_UserProjects
-(
-  UserId,
-  ProjectId,
-  DateCreated
-)
-SELECT
-  UserId,
-  @NewProjectId,
-  GetDate()
-FROM
-  BugNet_UserProjects
-WHERE
-  ProjectId = @ProjectId
-
--- Copy Project Roles
-INSERT BugNet_Roles
-( 
-	ProjectId,
-	RoleName,
-	RoleDescription,
-	AutoAssign
-)
-SELECT 
-	@NewProjectId,
-	RoleName,
-	RoleDescription,
-	AutoAssign
-FROM
-	BugNet_Roles
-WHERE
-	ProjectId = @ProjectId
-
-CREATE TABLE #OldRoles
-(
-  OldRowNumber INT IDENTITY,
-  OldRoleId INT,
-)
-
-INSERT #OldRoles
-(
-  OldRoleId
-)
-SELECT
-	RoleId
-FROM
-	BugNet_Roles
-WHERE
-	ProjectId = @ProjectId
-ORDER BY 
-	RoleId
-
-CREATE TABLE #NewRoles
-(
-  NewRowNumber INT IDENTITY,
-  NewRoleId INT,
-)
-
-INSERT #NewRoles
-(
-  NewRoleId
-)
-SELECT
-	RoleId
-FROM
-	BugNet_Roles
-WHERE
-	ProjectId = @NewProjectId
-ORDER BY 
-	RoleId
-
-INSERT BugNet_UserRoles
-(
-	UserId,
-	RoleId
-)
-SELECT 
-	UserId,
-	RoleId = NewRoleId
-FROM 
-	#OldRoles 
-INNER JOIN #NewRoles ON  OldRowNumber = NewRowNumber
-INNER JOIN BugNet_UserRoles UR ON UR.RoleId = OldRoleId
-
--- Copy Role Permissions
-INSERT BugNet_RolePermissions
-(
-   PermissionId,
-   RoleId
-)
-SELECT Perm.PermissionId, NewRoles.RoleId
-FROM BugNet_RolePermissions Perm
-INNER JOIN BugNet_Roles OldRoles ON Perm.RoleId = OldRoles.RoleID
-INNER JOIN BugNet_Roles NewRoles ON NewRoles.RoleName = OldRoles.RoleName
-WHERE OldRoles.ProjectId = @ProjectId 
-	  and NewRoles.ProjectId = @NewProjectId
+                      dbo.Bugnet_DefaultValuesVisibility ON dbo.BugNet_DefaultValues.ProjectId = dbo.Bugnet_DefaultValuesVisibility.ProjectId
 
 
--- Copy Custom Fields
-INSERT BugNet_ProjectCustomFields
-(
-  ProjectId,
-  CustomFieldName,
-  CustomFieldRequired,
-  CustomFieldDataType,
-  CustomFieldTypeId
-)
-SELECT
-  @NewProjectId,
-  CustomFieldName,
-  CustomFieldRequired,
-  CustomFieldDataType,
-  CustomFieldTypeId
-FROM
-  BugNet_ProjectCustomFields
-WHERE
-  ProjectId = @ProjectId
-  
--- Copy Custom Field Selections
-CREATE TABLE #OldCustomFields
-(
-  OldRowNumber INT IDENTITY,
-  OldCustomFieldId INT,
-)
-INSERT #OldCustomFields
-(
-  OldCustomFieldId
-)
-SELECT
-	CustomFieldId
-FROM
-  BugNet_ProjectCustomFields
-WHERE
-  ProjectId = @ProjectId
-ORDER BY CustomFieldId
-
-CREATE TABLE #NewCustomFields
-(
-  NewRowNumber INT IDENTITY,
-  NewCustomFieldId INT,
-)
-
-INSERT #NewCustomFields
-(
-  NewCustomFieldId
-)
-SELECT
-  CustomFieldId
-FROM
-  BugNet_ProjectCustomFields
-WHERE
-  ProjectId = @NewProjectId
-ORDER BY CustomFieldId
-
-INSERT BugNet_ProjectCustomFieldSelections
-(
-	CustomFieldId,
-	CustomFieldSelectionValue,
-	CustomFieldSelectionName,
-	CustomFieldSelectionSortOrder
-)
-SELECT 
-	CustomFieldId = NewCustomFieldId,
-	CustomFieldSelectionValue,
-	CustomFieldSelectionName,
-	CustomFieldSelectionSortOrder
-FROM 
-	#OldCustomFields 
-INNER JOIN #NewCustomFields ON  OldRowNumber = NewRowNumber
-INNER JOIN BugNet_ProjectCustomFieldSelections CFS ON CFS.CustomFieldId = OldCustomFieldId
-
--- Copy Project Mailboxes
-INSERT BugNet_ProjectMailBoxes
-(
-  MailBox,
-  ProjectId,
-  AssignToUserId,
-  IssueTypeId
-)
-SELECT
-  Mailbox,
-  @NewProjectId,
-  AssignToUserId,
-  IssueTypeId
-FROM
-  BugNet_ProjectMailBoxes
-WHERE
-  ProjectId = @ProjectId
-
--- Copy Categories
-INSERT BugNet_ProjectCategories
-(
-  ProjectId,
-  CategoryName,
-  ParentCategoryId
-)
-SELECT
-  @NewProjectId,
-  CategoryName,
-  ParentCategoryId
-FROM
-  BugNet_ProjectCategories
-WHERE
-  ProjectId = @ProjectId AND Disabled = 0 
-
-
-CREATE TABLE #OldCategories
-(
-  OldRowNumber INT IDENTITY,
-  OldCategoryId INT,
-)
-
-INSERT #OldCategories
-(
-  OldCategoryId
-)
-SELECT
-  CategoryId
-FROM
-  BugNet_ProjectCategories
-WHERE
-  ProjectId = @ProjectId
-ORDER BY CategoryId
-
-CREATE TABLE #NewCategories
-(
-  NewRowNumber INT IDENTITY,
-  NewCategoryId INT,
-)
-
-INSERT #NewCategories
-(
-  NewCategoryId
-)
-SELECT
-  CategoryId
-FROM
-  BugNet_ProjectCategories
-WHERE
-  ProjectId = @NewProjectId
-ORDER BY CategoryId
-
-UPDATE BugNet_ProjectCategories SET
-  ParentCategoryId = NewCategoryId
-FROM
-  #OldCategories INNER JOIN #NewCategories ON OldRowNumber = NewRowNumber
-WHERE
-  ProjectId = @NewProjectId
-  And ParentCategoryID = OldCategoryId 
-
--- Copy Status's
-INSERT BugNet_ProjectStatus
-(
-  ProjectId,
-  StatusName,
-  StatusImageUrl,
-  SortOrder,
-  IsClosedState
-)
-SELECT
-  @NewProjectId,
-  StatusName,
-  StatusImageUrl,
-  SortOrder,
-  IsClosedState
-FROM
-  BugNet_ProjectStatus
-WHERE
-  ProjectId = @ProjectId 
- 
--- Copy Priorities
-INSERT BugNet_ProjectPriorities
-(
-  ProjectId,
-  PriorityName,
-  PriorityImageUrl,
-  SortOrder
-)
-SELECT
-  @NewProjectId,
-  PriorityName,
-  PriorityImageUrl,
-  SortOrder
-FROM
-  BugNet_ProjectPriorities
-WHERE
-  ProjectId = @ProjectId 
-
--- Copy Resolutions
-INSERT BugNet_ProjectResolutions
-(
-  ProjectId,
-  ResolutionName,
-  ResolutionImageUrl,
-  SortOrder
-)
-SELECT
-  @NewProjectId,
-  ResolutionName,
-  ResolutionImageUrl,
-  SortOrder
-FROM
-  BugNet_ProjectResolutions
-WHERE
-  ProjectId = @ProjectId
- 
--- Copy Issue Types
-INSERT BugNet_ProjectIssueTypes
-(
-  ProjectId,
-  IssueTypeName,
-  IssueTypeImageUrl,
-  SortOrder
-)
-SELECT
-  @NewProjectId,
-  IssueTypeName,
-  IssueTypeImageUrl,
-  SortOrder
-FROM
-  BugNet_ProjectIssueTypes
-WHERE
-  ProjectId = @ProjectId
-
--- Copy Project Notifications
-INSERT BugNet_ProjectNotifications
-(
-  ProjectId,
-  UserId
-)
-SELECT
-  @NewProjectId,
-  UserId
-FROM
-  BugNet_ProjectNotifications
-WHERE
-  ProjectId = @ProjectId
-
-RETURN @NewProjectId
-GO
-
-/****** Object:  StoredProcedure [dbo].[BugNet_IssueNotification_GetIssueNotificationsByIssueId]    Script Date: 2/2/2013 11:43:18 AM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
-ALTER PROCEDURE [dbo].[BugNet_IssueNotification_GetIssueNotificationsByIssueId] 
-	@IssueId Int
-AS
-
-/* This will return multiple results if the user is 
-subscribed at the project level and issue level
-*/
-
-SET NOCOUNT ON
-
-DECLARE
-	@DefaultCulture NVARCHAR(50)
-
-SET @DefaultCulture = (SELECT ISNULL(SettingValue, 'en-US') FROM BugNet_HostSettings WHERE SettingName = 'ApplicationDefaultLanguage')
-
-SELECT 
-	IssueNotificationId,
-	IssueId,
-	U.UserId AS NotificationUserId,
-	U.UserName AS NotificationUsername,
-	ISNULL(DisplayName,'') AS NotificationDisplayName,
-	M.Email AS NotificationEmail,
-	ISNULL(UP.PreferredLocale, @DefaultCulture) AS NotificationCulture
-FROM
-	BugNet_IssueNotifications
-	INNER JOIN aspnet_Users U ON BugNet_IssueNotifications.UserId = U.UserId
-	INNER JOIN aspnet_Membership M ON BugNet_IssueNotifications.UserId = M.UserId
-	LEFT OUTER JOIN BugNet_UserProfiles UP ON U.UserName = UP.UserName
-WHERE
-	IssueId = @IssueId
-ORDER BY
-	DisplayName
-
-GO
-
-/****** Object:  StoredProcedure [dbo].[BugNet_IssueRevision_CreateNewIssueRevision]    Script Date: 2/3/2013 1:24:10 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-ALTER PROCEDURE [dbo].[BugNet_IssueRevision_CreateNewIssueRevision]
-	@IssueId int,
-	@Revision int,
-	@Repository nvarchar(400),
-	@RevisionDate nvarchar(100),
-	@RevisionAuthor nvarchar(100),
-	@RevisionMessage ntext,
-	@Changeset nvarchar(100),
-	@Branch nvarchar(255)
-AS
-
-INSERT BugNet_IssueRevisions
-(
-	Revision,
-	IssueId,
-	Repository,
-	RevisionAuthor,
-	RevisionDate,
-	RevisionMessage,
-	Changeset,
-	Branch,
-	DateCreated
-) 
-VALUES 
-(
-	@Revision,
-	@IssueId,
-	@Repository,
-	@RevisionAuthor,
-	@RevisionDate,
-	@RevisionMessage,
-	@Changeset,
-	@Branch,
-	GetDate()
-)
-
-RETURN scope_identity()
 GO

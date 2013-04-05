@@ -59,6 +59,10 @@ namespace BugNET.DAL
         public abstract string GetSelectedIssueColumnsByUserName(string userName, int projectId);
         public abstract void SetSelectedIssueColumnsByUserName(string userName, int projectId, string columns);
 
+        // Default values
+        public abstract List<DefaultValue> GetDefaultIssueTypeByProjectId(int projectId);
+        public abstract bool SetDefaultIssueTypeByProjectId(DefaultValue defaultVal);
+
 
         // Related Issues
         public abstract List<RelatedIssue> GetChildIssues(int issueId);

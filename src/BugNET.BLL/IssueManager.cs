@@ -608,5 +608,30 @@ namespace BugNET.BLL
 
             return true;
         }
+
+
+        /// <summary>
+        /// Gets the default issue type by project id.
+        /// </summary>
+        /// <param name="projectId">The project id.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentOutOfRangeException">projectId</exception>
+        public static List<DefaultValue> GetDefaultIssueTypeByProjectId(int projectId)
+        {
+            if (projectId <= Globals.NEW_ID)
+                throw (new ArgumentOutOfRangeException("projectId"));
+
+            return (DataProviderManager.Provider.GetDefaultIssueTypeByProjectId(projectId));
+        }
+
+        /// <summary>
+        /// Saves the default values.
+        /// </summary>
+        /// <param name="defaultValues">The default values.</param>
+        /// <returns></returns>
+        public static bool SaveDefaultValues(DefaultValue defaultValues)
+        {
+            return DataProviderManager.Provider.SetDefaultIssueTypeByProjectId(defaultValues);
+        }
     }
 }

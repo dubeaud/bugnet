@@ -58,6 +58,7 @@
     <Compile Include="Category.cs" />
     <Compile Include="CustomField.cs" />
     <Compile Include="CustomFieldSelection.cs" />
+    <Compile Include="DefaultValue.cs" />
     <Compile Include="DistinctIssueComparer.cs" />
     <Compile Include="HostSetting.cs">
       <SubType>Code</SubType>

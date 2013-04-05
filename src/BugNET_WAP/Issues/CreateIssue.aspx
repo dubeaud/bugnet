@@ -46,6 +46,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="IssueFields" runat="Server">
     <div style="background: #F1F2EC none repeat scroll 0 0; border: 1px solid #D7D7D7; margin-bottom: 20px; padding: 6px;">
+        
         <table width="100%" class="issue-detail">
             <tr>
                 <td colspan="4">
@@ -75,114 +76,100 @@
                     </table>
                 </td>
             </tr>
-            <tr>
-                <td style="width: 15%;">
-                    <asp:Label ID="StatusLabel" runat="server" AssociatedControlID="DropStatus" meta:resourcekey="StatusLabel" />
-                </td>
-                <td style="width: 35%;">
-                    <it:PickStatus ID="DropStatus" runat="Server" DisplayDefault="true" />
-                </td>
-                <td style="width: 15%;">
-                    <asp:Label ID="OwnerLabel" runat="server" AssociatedControlID="DropOwned" meta:resourcekey="OwnedByLabel" Text="Owned By:" />
-                </td>
-                <td style="width: 35%;">
-                    <it:PickSingleUser ID="DropOwned" DisplayDefault="True" Required="false" runat="Server" />
-                    <asp:CheckBox ID="chkNotifyOwner" runat="server" Text="Notify" Checked="True" meta:resourceKey="NotifyCheckBox"></asp:CheckBox>
-                </td>
-            </tr>
-            <tr>
-                <td style="width: 15%;">
-                    <asp:Label ID="PriorityLabel" runat="server" AssociatedControlID="DropPriority" meta:resourcekey="PriorityLabel" Text="Priority:" />
-                </td>
-                <td style="width: 35%;">
-                    <it:PickPriority ID="DropPriority" DisplayDefault="true" runat="Server" />
-                </td>
-                <td>
-                    <asp:Label ID="Label4" AssociatedControlID="DropAffectedMilestone" meta:resourcekey="AffectedMilestoneLabel" runat="server" />
-                </td>
-                <td>
-                    <it:PickMilestone ID="DropAffectedMilestone" DisplayDefault="True" runat="Server" />
-                </td>
-            </tr>
-            <tr>
-                <td style="width: 15%;">
-                    <asp:Label ID="AssignedToLabel" runat="server" AssociatedControlID="DropAssignedTo" meta:resourcekey="AssignedToLabel" Text="Assigned To:" />
-                </td>
-                <td style="width: 35%;">
-                    <it:PickSingleUser ID="DropAssignedTo" DisplayUnassigned="False" DisplayDefault="True" Required="false" runat="Server" />
-                    <asp:CheckBox ID="chkNotifyAssignedTo" runat="server" Text="Notify" Checked="True" meta:resourceKey="NotifyCheckBox"></asp:CheckBox>
-                </td>
-                <td style="width: 15%;">
-                    <asp:Label ID="PrivateLabel" AssociatedControlID="chkPrivate" runat="server" meta:resourcekey="PrivateLabel" Text="Private:" />
-                </td>
-                <td style="width: 35%;">
-                    <asp:CheckBox ID="chkPrivate" runat="server" />
-                </td>
-            </tr>
-            <tr>
-                <td style="width: 15%;">
-                    <asp:Label ID="CategoryLabel" AssociatedControlID="DropCategory" meta:resourcekey="CategoryLabel" Text="Category:" runat="server" />
-                </td>
-                <td style="width: 35%;">
-                    <it:PickCategory ID="DropCategory" DisplayDefault="true" Required="false" runat="Server" />
-                </td>
-                <td style="width: 15%;">
-                    <asp:Label runat="server" AssociatedControlID="DueDatePicker:DateTextBox" ID="DueDateLabel" meta:resourcekey="DueDateLabel"
-                        Text="Due Date:" />
-                </td>
-                <td style="width: 35%;">
-                    <bn:PickDate ID="DueDatePicker" runat="server" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <asp:Label ID="IssueTypeLabel" AssociatedControlID="DropIssueType:ddlType" runat="server" meta:resourcekey="IssueTypeLabel" />
-                </td>
-                <td>
-                    <it:PickType ID="DropIssueType" DisplayDefault="True" runat="Server" />
-                </td>
-                <td style="width: 15%;">
-                    <asp:Label ID="Label3" runat="server" AssociatedControlID="DropOwned" meta:resourcekey="ProgressLabel" Text="Percent Complete:" />
-                </td>
-                <td style="width: 35%;">
-                    <span style="float: left; margin-left: 160px;">
-                        <asp:Label ID="ProgressSlider_BoundControl" runat="server" />%</span>
-                    <asp:TextBox ID="ProgressSlider" runat="server" Text="0" />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <asp:Label ID="MilestoneLabel" AssociatedControlID="DropMilestone" meta:resourcekey="MilestoneLabel" runat="server" />
-                </td>
-                <td>
-                    <it:PickMilestone ID="DropMilestone" DisplayDefault="True" runat="Server" />
-                </td>
-                <td style="width: 15%;">
-                    <asp:Label ID="EstimationLabel" runat="server" Text="Estimation:" meta:resourcekey="EstimationLabel" AssociatedControlID="txtEstimation" />
-                </td>
-                <td style="width: 35%;">
-                    <asp:TextBox ID="txtEstimation" Style="text-align: right;" Width="80px" runat="server" />
-                    &nbsp;<small><asp:Label ID="HoursLabel" meta:resourcekey="HoursLabel" runat="server" Text="hrs"></asp:Label></small>
-                    <asp:RangeValidator ID="RangeValidator2" runat="server" ErrorMessage="Estimation must be a sensible number." ControlToValidate="txtEstimation"
-                        MaximumValue="999" MinimumValue="0" SetFocusOnError="True" Display="Dynamic"></asp:RangeValidator>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <asp:Label ID="ResolutionLabel" runat="server" AssociatedControlID="DropResolution" meta:resourcekey="ResolutionLabel" Text="Resolution:" />
-                </td>
-                <td>
-                    <it:PickResolution ID="DropResolution" DisplayDefault="True" runat="Server" />
-                </td>
-                <td runat="Server" id="TimeLoggedLabel" visible="false">
-                    <asp:Label ID="LoggedLabel" runat="server" meta:resourcekey="LoggedLabel" Text="Logged:" />
-                </td>
-                <td runat="Server" id="TimeLogged" visible="false">
-                    <asp:Label ID="lblLoggedTime" runat="server" Style="text-align: right;" />&nbsp; <small>
-                        <asp:Label ID="Label1" meta:resourcekey="HoursLabel" runat="server" Text="hrs" /></small>
-                </td>
-            </tr>
         </table>
+        <div class="issue-form" style="margin-left:4px;width:96%">
+            <div class="grid_1">
+               <asp:Label ID="StatusLabel" runat="server" AssociatedControlID="DropStatus" meta:resourcekey="StatusLabel" />
+            </div>
+            <div class="grid_2">
+                <it:PickStatus ID="DropStatus" runat="Server" DisplayDefault="true" />
+            </div>
+            <div class="grid_3">
+                <asp:Label ID="OwnerLabel" runat="server" AssociatedControlID="DropOwned" meta:resourcekey="OwnedByLabel" Text="Owned By:" />
+            </div>
+            <div class="grid_4">
+               <it:PickSingleUser ID="DropOwned" DisplayDefault="True" Required="false" runat="Server" />
+                <asp:CheckBox ID="chkNotifyOwner" runat="server" Text="Notify" Checked="True" meta:resourceKey="NotifyCheckBox"></asp:CheckBox>
+            </div>
+            <div class="grid_1">
+                <asp:Label ID="PriorityLabel" runat="server" AssociatedControlID="DropPriority" meta:resourcekey="PriorityLabel" Text="Priority:" />
+            </div>
+            <div class="grid_2">
+                <it:PickPriority ID="DropPriority" DisplayDefault="true" runat="Server" />
+            </div>
+            <div class="grid_3">
+                <asp:Label ID="Label4" AssociatedControlID="DropAffectedMilestone" meta:resourcekey="AffectedMilestoneLabel" runat="server" />
+            </div>
+            <div class="grid_4">
+                 <it:PickMilestone ID="DropAffectedMilestone" DisplayDefault="True" runat="Server" />
+            </div>
+            <div class="grid_1">
+                <asp:Label ID="AssignedToLabel" runat="server" AssociatedControlID="DropAssignedTo" meta:resourcekey="AssignedToLabel" Text="Assigned To:" />
+            </div>
+            <div class="grid_2">
+                <it:PickSingleUser ID="DropAssignedTo" DisplayUnassigned="False" DisplayDefault="True" Required="false" runat="Server" />
+                <asp:CheckBox ID="chkNotifyAssignedTo" runat="server" Text="Notify" Checked="True" meta:resourceKey="NotifyCheckBox"></asp:CheckBox>
+            </div>
+             <div class="grid_3">
+                <asp:Label ID="PrivateLabel" AssociatedControlID="chkPrivate" runat="server" meta:resourcekey="PrivateLabel" Text="Private:" />
+            </div>
+            <div class="grid_4"><asp:CheckBox ID="chkPrivate" runat="server" CssClass="checkbox" /></div>
+            <div class="grid_1">
+                <asp:Label ID="CategoryLabel" AssociatedControlID="DropCategory" meta:resourcekey="CategoryLabel" Text="Category:" runat="server" />
+            </div>
+            <div class="grid_2">
+                  <it:PickCategory ID="DropCategory" DisplayDefault="true" Required="false" runat="Server" />
+            </div>
+
+            <div class="grid_3">
+                <asp:Label runat="server" AssociatedControlID="DueDatePicker:DateTextBox" ID="DueDateLabel" meta:resourcekey="DueDateLabel"
+                            Text="Due Date:" />
+            </div>
+            <div class="grid_4">
+                  <bn:PickDate ID="DueDatePicker" runat="server" />
+            </div>
+            <div class="grid_1">
+                <asp:Label ID="IssueTypeLabel" AssociatedControlID="DropIssueType:ddlType" runat="server" meta:resourcekey="IssueTypeLabel" />
+            </div>
+            <div class="grid_2">
+                 <it:PickType ID="DropIssueType" DisplayDefault="True" runat="Server" />
+            </div>
+            <div class="grid_3">
+                <asp:Label ID="Label3" runat="server" AssociatedControlID="DropOwned" meta:resourcekey="ProgressLabel" Text="Percent Complete:" />
+            </div>
+            <div class="grid_4">
+                <span class="float-left" style="margin-left:160px;" id="PercentLabel" runat="server">
+                    <asp:Label ID="ProgressSlider_BoundControl" runat="server" />%</span>
+                <asp:TextBox ID="ProgressSlider" runat="server" Text="0" />
+            </div>
+            <div class="grid_1">
+                <asp:Label ID="MilestoneLabel" AssociatedControlID="DropMilestone" meta:resourcekey="MilestoneLabel" runat="server" />
+            </div>
+            <div class="grid_2">
+                 <it:PickMilestone ID="DropMilestone" DisplayDefault="True" runat="Server" />
+            </div>
+            <div class="grid_3">
+                <asp:Label ID="EstimationLabel" runat="server" Text="Estimation:" meta:resourcekey="EstimationLabel" AssociatedControlID="txtEstimation" />
+            </div>
+            <div class="grid_4">
+                <asp:TextBox ID="txtEstimation" Style="text-align: right;" Width="80px" runat="server" /><small><asp:Label ID="HoursLabel" meta:resourcekey="HoursLabel" runat="server" Text="hrs"></asp:Label></small>
+                <asp:RangeValidator ID="RangeValidator2" runat="server" ErrorMessage="Estimation must be a sensible number." ControlToValidate="txtEstimation"
+                            MaximumValue="999" MinimumValue="0" SetFocusOnError="True" Display="Dynamic"></asp:RangeValidator>
+            </div>
+            <div class="grid_1">
+                <asp:Label ID="ResolutionLabel" runat="server" AssociatedControlID="DropResolution" meta:resourcekey="ResolutionLabel" Text="Resolution:" />
+            </div>
+            <div class="grid_2">
+                <it:PickResolution ID="DropResolution" DisplayDefault="True" runat="Server" />
+            </div>
+            <div class="grid_3">
+                <asp:Label ID="LoggedLabel" runat="server" meta:resourcekey="LoggedLabel" Text="Logged:" />
+            </div>
+            <div class="grid_4">
+                 <asp:Label ID="lblLoggedTime" runat="server" Style="text-align: right;" /><small>
+                <asp:Label ID="Label1" meta:resourcekey="HoursLabel" runat="server" Text="hrs" /></small>
+            </div>
+        </div>
         <it:DisplayCustomFields ID="ctlCustomFields" EnableValidation="true" runat="server" />
         <div class="issueDescription">
             <bn:HtmlEditor ID="DescriptionHtmlEditor" runat="server" />

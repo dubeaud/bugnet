@@ -400,15 +400,6 @@ namespace BugNET.Issues {
         protected global::BugNET.UserControls.PickSingleUser DropOwned;
         
         /// <summary>
-        /// chkNotifyOwner control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkNotifyOwner;
-        
-        /// <summary>
         /// PriorityLabel control.
         /// </summary>
         /// <remarks>
@@ -461,15 +452,6 @@ namespace BugNET.Issues {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::BugNET.UserControls.PickSingleUser DropAssignedTo;
-        
-        /// <summary>
-        /// chkNotifyAssignedTo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkNotifyAssignedTo;
         
         /// <summary>
         /// PrivateLabel control.

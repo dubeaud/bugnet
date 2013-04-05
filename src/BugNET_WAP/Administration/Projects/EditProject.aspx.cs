@@ -72,6 +72,7 @@ namespace BugNET.Administration.Projects
             _menuItems.Add(GetLocalResourceObject("CustomFields").ToString(), "textfield.gif");
             _menuItems.Add(GetLocalResourceObject("Mailboxes").ToString(), "email.gif");
             _menuItems.Add(GetLocalResourceObject("Subversion").ToString(), "svnLogo_sm.jpg");
+            _menuItems.Add(GetLocalResourceObject("Default").ToString(), "Default.png");
 
             AdminMenu.DataSource = _menuItems;
             AdminMenu.DataBind();    
@@ -189,6 +190,9 @@ namespace BugNET.Administration.Projects
                     break;
                 case 12:
                     controlName = "ProjectSubversion.ascx";
+                    break;
+                case 13:
+                    controlName = "ProjectDefaultValues.ascx";
                     break;
 				
 			}

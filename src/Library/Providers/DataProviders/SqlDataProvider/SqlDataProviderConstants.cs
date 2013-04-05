@@ -75,6 +75,9 @@
         private const string SP_ISSUE_GETISSUECATEGORYCOUNTBYPROJECT = "BugNet_Issue_GetIssueCategoryCountByProject";
         private const string SP_ISSUE_GETOPENISSUES = "BugNet_Issue_GetOpenIssues";
 
+        private const string SP_DEFAULTVALUES_SET = "BugNet_DefaultValues_Set";
+        private const string SP_DEFAULTVALUES_GETBYPROJECTID = "BugNet_DefaultValues_GetByProjectId";
+
         private const string SP_QUERY_GETQUERIESBYUSERNAME = "BugNet_Query_GetQueriesByUsername";
         private const string SP_QUERY_SAVEQUERY = "BugNet_Query_SaveQuery";
         private const string SP_QUERY_UPDATEQUERY = "BugNet_Query_UpdateQuery";

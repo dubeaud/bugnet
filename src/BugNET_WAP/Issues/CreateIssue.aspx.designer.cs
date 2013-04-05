@@ -391,6 +391,15 @@ namespace BugNET.Issues {
         protected global::System.Web.UI.WebControls.Label Label3;
         
         /// <summary>
+        /// PercentLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl PercentLabel;
+        
+        /// <summary>
         /// ProgressSlider_BoundControl control.
         /// </summary>
         /// <remarks>
@@ -481,15 +490,6 @@ namespace BugNET.Issues {
         protected global::BugNET.UserControls.PickResolution DropResolution;
         
         /// <summary>
-        /// TimeLoggedLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell TimeLoggedLabel;
-        
-        /// <summary>
         /// LoggedLabel control.
         /// </summary>
         /// <remarks>
@@ -497,15 +497,6 @@ namespace BugNET.Issues {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LoggedLabel;
-        
-        /// <summary>
-        /// TimeLogged control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell TimeLogged;
         
         /// <summary>
         /// lblLoggedTime control.

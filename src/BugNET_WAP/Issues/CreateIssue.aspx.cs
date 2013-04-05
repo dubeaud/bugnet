@@ -7,6 +7,7 @@ using BugNET.BLL;
 using BugNET.Common;
 using BugNET.Entities;
 using BugNET.UserInterfaceLayer;
+using System.Linq;
 
 namespace BugNET.Issues
 {
@@ -48,7 +49,8 @@ namespace BugNET.Issues
      
                 Page.Title = GetLocalResourceObject("PageTitleNewIssue").ToString();
                 lblIssueNumber.Text = GetGlobalResourceObject("SharedResources", "NotAvailableAbbr").ToString();
-        
+
+                BindDefaultValues();
 
                 //check users role permission for adding an attachment
                 if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Common.Permission.AddAttachment.ToString()))
@@ -147,6 +149,65 @@ namespace BugNET.Issues
 
             DropStatus.DataSource = StatusManager.GetByProjectId(ProjectId);
             DropStatus.DataBind();
+        }
+
+
+        /// <summary>
+        /// Binds the default values.
+        /// </summary>
+        private void BindDefaultValues()
+        {
+
+            List<DefaultValue> defValues = IssueManager.GetDefaultIssueTypeByProjectId(ProjectId);
+            DefaultValue selectedValue = defValues.FirstOrDefault();
+
+            if (selectedValue != null)
+            {
+                DropIssueType.SelectedValue = selectedValue.IssueTypeId;
+                DropPriority.SelectedValue = selectedValue.PriorityId;
+                DropResolution.SelectedValue = selectedValue.ResolutionId;
+                DropCategory.SelectedValue = selectedValue.CategoryId;
+                DropMilestone.SelectedValue = selectedValue.MilestoneId;
+                DropAffectedMilestone.SelectedValue = selectedValue.AffectedMilestoneId;
+
+                if (selectedValue.AssignedUserName != "none")
+                    DropAssignedTo.SelectedValue = selectedValue.AssignedUserName;
+
+                if (selectedValue.OwnerUserName != "none")
+                    DropOwned.SelectedValue = selectedValue.OwnerUserName;
+
+                DropStatus.SelectedValue = selectedValue.StatusId;
+
+                if (selectedValue.IssueVisibility == 0) chkPrivate.Checked = false;
+                if (selectedValue.IssueVisibility == 1) chkPrivate.Checked = true;
+
+                //Date 
+                DateTime date = DateTime.Today;
+                date = date.AddDays(selectedValue.DueDate);
+
+                DueDatePicker.SelectedValue = date;
+
+                ProgressSlider.Text = selectedValue.Progress.ToString();
+                txtEstimation.Text = selectedValue.Estimation.ToString();
+
+                //Visibility Section
+                DropIssueType.Visible = IssueTypeLabel.Visible = selectedValue.TypeVisibility;
+                DropStatus.Visible = StatusLabel.Visible = selectedValue.StatusVisibility;
+                chkNotifyOwner.Visible = DropOwned.Visible = OwnerLabel.Visible = selectedValue.OwnedByVisibility;
+                DropPriority.Visible = PriorityLabel.Visible = selectedValue.PriorityVisibility;
+                chkNotifyAssignedTo.Visible = DropAssignedTo.Visible = AssignedToLabel.Visible = selectedValue.AssignedToVisibility;
+                chkPrivate.Visible = PrivateLabel.Visible = selectedValue.PrivateVisibility;
+                DropCategory.Visible = CategoryLabel.Visible = selectedValue.CategoryVisibility;
+                DueDatePicker.Visible = DueDateLabel.Visible = selectedValue.DueDateVisibility;
+                Label3.Visible = ProgressSlider.Visible = ProgressSlider_BoundControl.Visible = PercentLabel.Visible = selectedValue.PercentCompleteVisibility;
+                DropMilestone.Visible = MilestoneLabel.Visible = selectedValue.MilestoneVisibility;
+                HoursLabel.Visible = txtEstimation.Visible = EstimationLabel.Visible = selectedValue.EstimationVisibility;
+                DropResolution.Visible = ResolutionLabel.Visible = selectedValue.ResolutionVisibility;
+                DropAffectedMilestone.Visible = Label4.Visible = selectedValue.AffectedMilestoneVisibility;
+                chkNotifyAssignedTo.Checked = selectedValue.AssignedToNotify;
+                chkNotifyOwner.Checked = selectedValue.OwnedByNotify;
+            }
+
         }
 
         /// <summary>

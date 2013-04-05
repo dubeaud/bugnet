@@ -83,8 +83,6 @@ namespace BugNET.Issues
                 ctlIssueTabs.Visible = true;
                 TimeLogged.Visible = true;
                 TimeLoggedLabel.Visible = true;
-                chkNotifyAssignedTo.Visible = false;
-                chkNotifyOwner.Visible = false;
 
                 SetFieldSecurity();
 

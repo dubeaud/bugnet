@@ -1693,3 +1693,23 @@ ul.permissions li
 .text-color-lightgrey{color:lightgray;} 
 .word-wrap{word-wrap:break-word;}
 .wide-textarea { width: 100% !Important; }
+
+.grid_1,
+.grid_2,
+.grid_3,
+.grid_4 {
+	display:inline;
+	float: left;
+	position: relative;
+}
+
+.grid_1, .grid_3 {
+	width:15%;
+}
+
+.grid_2, .grid_4{
+	width:35%;
+}
+.issue-form select{
+     width:184px;
+}

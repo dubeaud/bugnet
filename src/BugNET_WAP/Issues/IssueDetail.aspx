@@ -120,7 +120,6 @@
                 </td>
                 <td style="width: 35%;">
                     <it:PickSingleUser ID="DropOwned" DisplayDefault="True" Required="false" runat="Server" />
-                    <asp:CheckBox ID="chkNotifyOwner" runat="server" Text="Notify" Checked="True" meta:resourceKey="NotifyCheckBox"></asp:CheckBox>
                 </td>
             </tr>
             <tr>
@@ -143,7 +142,6 @@
                 </td>
                 <td style="width: 35%;">
                     <it:PickSingleUser ID="DropAssignedTo" DisplayUnassigned="False" DisplayDefault="True" Required="false" runat="Server" />
-                    <asp:CheckBox ID="chkNotifyAssignedTo" runat="server" Text="Notify" Checked="True" meta:resourceKey="NotifyCheckBox"></asp:CheckBox>
                 </td>
                 <td style="width: 15%;">
                     <asp:Label ID="PrivateLabel" AssociatedControlID="chkPrivate" runat="server" meta:resourcekey="PrivateLabel" Text="Private:" />

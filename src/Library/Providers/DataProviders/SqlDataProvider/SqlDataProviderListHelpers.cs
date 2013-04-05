@@ -16,6 +16,47 @@ namespace BugNET.Providers.DataProviders
         /// </summary>
         public const string TOTAL_ROW_COUNT_FIELD_NAME = "TotalRecordCount";
 
+        public void TGenerateDefaultValueListFromReader<T>(SqlDataReader returnData, ref List<DefaultValue> defaultList)
+        {
+            while (returnData.Read())
+            {
+                DefaultValue defaultValues = new DefaultValue()
+                {
+                    IssueTypeId = (int)returnData["DefaultType"],
+                    StatusId = (int)returnData["StatusId"],
+                    OwnerUserName = (string)returnData["OwnerUserName"],
+                    PriorityId =  returnData["IssuePriorityId"] == DBNull.Value ? 1 : (int)returnData["IssuePriorityId"],
+                    AffectedMilestoneId = returnData["IssueAffectedMilestoneId"] == DBNull.Value ? 1 : (int)returnData["IssueAffectedMilestoneId"],
+                    IssueVisibility = returnData["IssueVisibility"] == DBNull.Value ? 0 : (int)returnData["IssueVisibility"],
+                    CategoryId =  returnData["IssueCategoryId"] == DBNull.Value ? 0 : (int)returnData["IssueCategoryId"],
+                    DueDate = returnData["IssueDueDate"] == DBNull.Value ? 0 : (int)returnData["IssueDueDate"],
+                    Progress = returnData["IssueProgress"] == DBNull.Value ? 0 : (int)returnData["IssueProgress"],
+                    MilestoneId = returnData["IssueMilestoneId"] == DBNull.Value ? 0 : (int)returnData["IssueMilestoneId"],
+                    Estimation = returnData["IssueEstimation"] == DBNull.Value ? 0 : (decimal)returnData["IssueEstimation"],
+                    ResolutionId = returnData["IssueResolutionId"] == DBNull.Value ? 0 : (int)returnData["IssueResolutionId"],
+                    StatusVisibility= returnData["StatusVisibility"] == DBNull.Value ? true : (bool)returnData["StatusVisibility"],
+                    OwnedByVisibility =  returnData["OwnedByVisibility"] == DBNull.Value ? true : (bool)returnData["OwnedByVisibility"],
+                    PriorityVisibility = returnData["PriorityVisibility"] == DBNull.Value ? true : (bool)returnData["PriorityVisibility"],
+                    AssignedToVisibility = returnData["AssignedToVisibility"] == DBNull.Value ? true : (bool)returnData["AssignedToVisibility"],
+                    PrivateVisibility = returnData["PrivateVisibility"] == DBNull.Value ? true : (bool)returnData["PrivateVisibility"],
+                    CategoryVisibility = returnData["CategoryVisibility"] == DBNull.Value ? true : (bool)returnData["CategoryVisibility"],
+                    DueDateVisibility = returnData["DueDateVisibility"] == DBNull.Value ? true : (bool)returnData["DueDateVisibility"],
+                    TypeVisibility = returnData["TypeVisibility"] == DBNull.Value ? true : (bool)returnData["TypeVisibility"],
+                    PercentCompleteVisibility = returnData["PercentCompleteVisibility"] == DBNull.Value ? true : (bool)returnData["PercentCompleteVisibility"],
+                    MilestoneVisibility = returnData["MilestoneVisibility"] == DBNull.Value ? true : (bool)returnData["MilestoneVisibility"],
+                    EstimationVisibility = returnData["EstimationVisibility"] == DBNull.Value ? true : (bool)returnData["EstimationVisibility"],
+                    ResolutionVisibility = returnData["ResolutionVisibility"] == DBNull.Value ? true : (bool)returnData["ResolutionVisibility"],
+                    AffectedMilestoneVisibility = returnData["AffectedMilestoneVisibility"] == DBNull.Value ? true : (bool)returnData["AffectedMilestoneVisibility"],
+                    AssignedToNotify = returnData["AssignedToNotify"] == DBNull.Value ? true : (bool)returnData["AssignedToNotify"],
+                    OwnedByNotify =  returnData["OwnedByNotify"] == DBNull.Value ? true : (bool)returnData["OwnedByNotify"],
+                    AssignedUserName = (string)returnData["AssignedUserName"]
+                };
+
+                defaultList.Add(defaultValues);
+            }
+        }
+
+
         /// <summary>
         /// Ts the generate issue comment list from reader.
         /// </summary>
