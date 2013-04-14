@@ -323,7 +323,18 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<ITUser> GetUsersByProjectId(int projectId)
         {
-            return DataProviderManager.Provider.GetUsersByProjectId(projectId);
+            return DataProviderManager.Provider.GetUsersByProjectId(projectId, false);
+        }
+
+        /// <summary>
+        /// Gets the users by project id.
+        /// </summary>
+        /// <param name="projectId">The project id.</param>
+        /// <param name="excludeReadOnlyUsers">if set to <c>true</c> [exclude read only users].</param>
+        /// <returns></returns>
+        public static List<ITUser> GetUsersByProjectId(int projectId, bool excludeReadOnlyUsers = true)
+        {
+            return DataProviderManager.Provider.GetUsersByProjectId(projectId, excludeReadOnlyUsers);
         }
 
         /// <summary>

@@ -864,15 +864,27 @@ namespace BugNET.Providers.DataProviders
         /// <returns></returns>
         public override List<ITUser> GetUsersByProjectId(int projectId)
         {
+            return this.GetUsersByProjectId(projectId, false);
+        }
+
+        /// <summary>
+        /// Gets the users by project id.
+        /// </summary>
+        /// <param name="projectId">The project id.</param>
+        /// <param name="excludeReadOnlyUsers">if set to <c>true</c> [exclude read only users].</param>
+        /// <returns></returns>
+        public override List<ITUser> GetUsersByProjectId(int projectId, bool excludeReadOnlyUsers = true)
+        {
             using (var sqlCmd = new SqlCommand())
             {
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_USER_GETUSERSBYPROJECTID);
 
                 AddParamToSqlCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
+                AddParamToSqlCmd(sqlCmd, "@ExcludeReadonlyUsers", SqlDbType.Bit, 0, ParameterDirection.Input, excludeReadOnlyUsers);
 
                 var userList = new List<ITUser>();
                 ExecuteReaderCmd(sqlCmd, GenerateUserListFromReader, ref userList);
-                return userList;   
+                return userList;
             }
         }
         #endregion

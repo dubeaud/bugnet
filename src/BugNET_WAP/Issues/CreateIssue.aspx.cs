@@ -114,7 +114,8 @@ namespace BugNET.Issues
         /// </summary>
         private void BindOptions()
         {
-            List<ITUser> users = UserManager.GetUsersByProjectId(ProjectId);
+            List<ITUser> users = UserManager.GetUsersByProjectId(ProjectId, true);
+           
             //Get Type
             DropIssueType.DataSource = IssueTypeManager.GetByProjectId(ProjectId);
             DropIssueType.DataBind();

@@ -161,14 +161,7 @@
             </div>
             <div class="grid_2">
                 <it:PickResolution ID="DropResolution" DisplayDefault="True" runat="Server" />
-            </div>
-            <div class="grid_3">
-                <asp:Label ID="LoggedLabel" runat="server" meta:resourcekey="LoggedLabel" Text="Logged:" />
-            </div>
-            <div class="grid_4">
-                 <asp:Label ID="lblLoggedTime" runat="server" Style="text-align: right;" /><small>
-                <asp:Label ID="Label1" meta:resourcekey="HoursLabel" runat="server" Text="hrs" /></small>
-            </div>
+            </div> 
         </div>
         <it:DisplayCustomFields ID="ctlCustomFields" EnableValidation="true" runat="server" />
         <div class="issueDescription">

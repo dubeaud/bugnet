@@ -202,6 +202,7 @@ namespace BugNET.DAL
 
         //Users
         public abstract List<ITUser> GetUsersByProjectId(int projectId);
+        public abstract List<ITUser> GetUsersByProjectId(int projectId, bool excludeReadOnlyUsers);
 
         // Role
         public abstract List<Role> GetAllRoles();
