@@ -353,3 +353,6 @@ GO
 
 DROP PROCEDURE [dbo].[BugNet_Project_GetChangeLog]
 GO
+
+DROP PROCEDURE [dbo].[BugNet_Project_GetRoadMap]
+GO

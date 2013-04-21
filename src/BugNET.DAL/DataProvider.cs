@@ -138,7 +138,6 @@ namespace BugNET.DAL
         public abstract Project GetProjectByCode(string projectCode);
         public abstract List<Project> GetPublicProjects();
         public abstract bool IsUserProjectMember(string userName, int projectId);
-        public abstract List<RoadMapIssue> GetProjectRoadmap(int projectId);
         public abstract int[] GetProjectRoadmapProgress(int projectId, int milestoneId);
         public abstract List<MemberRoles> GetProjectMembersRoles(int projectId);
         public abstract ProjectImage GetProjectImageById(int projectId);

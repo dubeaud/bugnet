@@ -325,18 +325,6 @@ namespace BugNET.BLL
         }
 
         /// <summary>
-        /// Gets the road map.
-        /// </summary>
-        /// <param name="projectId">The project id.</param>
-        /// <returns></returns>
-        public static List<RoadMapIssue> GetRoadMap(int projectId)
-        {
-            if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
-
-            return DataProviderManager.Provider.GetProjectRoadmap(projectId);
-        }
-
-        /// <summary>
         /// Gets the road map progress.
         /// </summary>
         /// <param name="projectId">The project id.</param>

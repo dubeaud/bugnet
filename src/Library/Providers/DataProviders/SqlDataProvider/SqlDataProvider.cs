@@ -1342,35 +1342,6 @@ namespace BugNET.Providers.DataProviders
         }
 
         /// <summary>
-        /// Gets the project roadmap.
-        /// </summary>
-        /// <param name="projectId">The project id.</param>
-        /// <returns></returns>
-        public override List<RoadMapIssue> GetProjectRoadmap(int projectId)
-        {
-            if (projectId <= 0) throw (new ArgumentOutOfRangeException("projectId"));
-
-            try
-            {
-                using (var sqlCmd = new SqlCommand())
-                {
-                    AddParamToSqlCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
-                    AddParamToSqlCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
-
-                    SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_PROJECT_GETROADMAP);
-                    var issueList = new List<RoadMapIssue>();
-                    ExecuteReaderCmd(sqlCmd, GenerateRoadmapIssueListFromReader, ref issueList);
-                    return issueList;   
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ProcessException(ex);
-            }
-        }
-
-
-        /// <summary>
         /// Gets the project roadmap progress.
         /// </summary>
         /// <param name="projectId">The project id.</param>
