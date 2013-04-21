@@ -61,7 +61,7 @@ namespace BugNET.Queries
 			{
 				var colIssues = IssueManager.PerformSavedQuery(ProjectId,dropQueries.SelectedValue);
 				ctlDisplayIssues.DataSource = colIssues;
-				ctlDisplayIssues.RssUrl = string.Format("~/Rss.aspx?pid={1}&q={0}&channel=13",dropQueries.SelectedValue,ProjectId);
+				ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?pid={1}&q={0}&channel=13",dropQueries.SelectedValue,ProjectId);
 
 				// Only bind results if there is no error.                
 				ctlDisplayIssues.DataBind();
