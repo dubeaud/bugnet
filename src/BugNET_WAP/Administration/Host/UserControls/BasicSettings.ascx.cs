@@ -28,7 +28,7 @@ namespace BugNET.Administration.Host.UserControls
            
                 HostSettingManager.UpdateHostSetting(HostSettingNames.WelcomeMessage, WelcomeMessageHtmlEditor.Text.Trim());
                 HostSettingManager.UpdateHostSetting(HostSettingNames.ApplicationTitle, ApplicationTitle.Text.Trim());
-                HostSettingManager.UpdateHostSetting(HostSettingNames.DefaultUrl, DefaultUrl.Text);
+                HostSettingManager.UpdateHostSetting(HostSettingNames.DefaultUrl, DefaultUrl.Text.EndsWith("/") ? DefaultUrl.Text : DefaultUrl.Text = DefaultUrl.Text + "/");
                 HostSettingManager.UpdateHostSetting(HostSettingNames.EnableGravatar, EnableGravatar.Checked.ToString());
                 return true;
         }
