@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+		Microsoft ResX Schema
+
+		Version 1.3
+
+		The primary goals of this format is to allow a simple XML format 
+		that is mostly human readable. The generation and parsing of the 
+		various data types are done through the TypeConverter classes 
+		associated with the data types.
+
+		Example:
+
+		... ado.net/XML headers & schema ...
+		<resheader name="resmimetype">text/microsoft-resx</resheader>
+		<resheader name="version">1.3</resheader>
+		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+		<data name="Name1">this is my long string</data>
+		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+			[base64 mime encoded serialized .NET Framework object]
+		</data>
+		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+			[base64 mime encoded string representing a byte array form of the .NET Framework object]
+		</data>
+
+		There are any number of "resheader" rows that contain simple 
+		name/value pairs.
+
+		Each data row contains a name, and value. The row also contains a 
+		type or mimetype. Type corresponds to a .NET class that support 
+		text/value conversion through the TypeConverter architecture. 
+		Classes that don't support this are serialized and stored with the 
+		mimetype set.
+
+		The mimetype is used for serialized objects, and tells the 
+		ResXResourceReader how to depersist the object. This is currently not 
+		extensible. For a given mimetype the value must be set accordingly:
+
+		Note - application/x-microsoft.net.object.binary.base64 is the format 
+		that the ResXResourceWriter will generate, however the reader can 
+		read any of the formats listed below.
+
+		mimetype: application/x-microsoft.net.object.binary.base64
+		value   : The object must be serialized with 
+			: System.Serialization.Formatters.Binary.BinaryFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.soap.base64
+		value   : The object must be serialized with 
+			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.bytearray.base64
+		value   : The object must be serialized into a byte array 
+			: using a System.ComponentModel.TypeConverter
+			: and then encoded with base64 encoding.
+	-->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddProject.description" xml:space="preserve">
+    <value>Nouveau projet</value>
+  </data>
+  <data name="AddUser.description" xml:space="preserve">
+    <value>Ajouter un utilisateur</value>
+  </data>
+  <data name="Admin.description" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="ChangeLog.description" xml:space="preserve">
+    <value>Journal des modifications</value>
+  </data>
+  <data name="EditProject.description" xml:space="preserve">
+    <value>Modifier le projet</value>
+  </data>
+  <data name="ForgotPassword.description" xml:space="preserve">
+    <value>Mot de passe oublié</value>
+  </data>
+  <data name="Home.description" xml:space="preserve">
+    <value>Accueil</value>
+  </data>
+  <data name="Home.title" xml:space="preserve">
+    <value>Accueil</value>
+  </data>
+  <data name="IssueDetail.description" xml:space="preserve">
+    <value>Détail de l'anomalie</value>
+  </data>
+  <data name="Issues.description" xml:space="preserve">
+    <value>Anomalies</value>
+  </data>
+  <data name="IssueSearch.description" xml:space="preserve">
+    <value>Recherche en texte intégral</value>
+  </data>
+  <data name="Login.description" xml:space="preserve">
+    <value>Connexion</value>
+  </data>
+  <data name="Login.title" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="LogViewer.description" xml:space="preserve">
+    <value>Visionneuse du journal</value>
+  </data>
+  <data name="ManageUser.description" xml:space="preserve">
+    <value>Modifier compte usager</value>
+  </data>
+  <data name="MyIssues.description" xml:space="preserve">
+    <value>Mes anomalies</value>
+  </data>
+  <data name="NewIssue.description" xml:space="preserve">
+    <value>Modifier compte usager</value>
+  </data>
+  <data name="ProjectCalendar.description" xml:space="preserve">
+    <value>Calendrier</value>
+  </data>
+  <data name="ProjectList.description" xml:space="preserve">
+    <value>Projets</value>
+  </data>
+  <data name="Projects.description" xml:space="preserve">
+    <value>Projets</value>
+  </data>
+  <data name="ProjectSummary.description" xml:space="preserve">
+    <value>Résumé du projet</value>
+  </data>
+  <data name="QueryDetail.description" xml:space="preserve">
+    <value>Créez la nouvelle requête</value>
+  </data>
+  <data name="QueryList.description" xml:space="preserve">
+    <value>Requêtes</value>
+  </data>
+  <data name="Register.description" xml:space="preserve">
+    <value>S'enregister</value>
+  </data>
+  <data name="Roadmap.description" xml:space="preserve">
+    <value>Feuille de route</value>
+  </data>
+  <data name="Settings.description" xml:space="preserve">
+    <value>Configuration Application </value>
+  </data>
+  <data name="SubversionBrowser.description" xml:space="preserve">
+    <value>Référentiel</value>
+  </data>
+  <data name="UserList.description" xml:space="preserve">
+    <value>Utilisateurs</value>
+  </data>
+  <data name="UserProfile.description" xml:space="preserve">
+    <value>Profil Utilisateurs</value>
+  </data>
+  <data name="AddProject.title" xml:space="preserve">
+    <value>Nouveau projet</value>
+  </data>
+  <data name="AddUser.title" xml:space="preserve">
+    <value>Ajouter un utilisateur</value>
+  </data>
+  <data name="Admin.title" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="ChangeLog.title" xml:space="preserve">
+    <value>Journal des modifications</value>
+  </data>
+  <data name="EditProject.title" xml:space="preserve">
+    <value>Modifier le projet</value>
+  </data>
+  <data name="ForgotPassword.title" xml:space="preserve">
+    <value>Mot de passe oublié</value>
+  </data>
+  <data name="IssueDetail.title" xml:space="preserve">
+    <value>Détail de l'anomalie</value>
+  </data>
+  <data name="Issues.title" xml:space="preserve">
+    <value>Anomalies</value>
+  </data>
+  <data name="IssueSearch.title" xml:space="preserve">
+    <value>Recherche en texte intégral</value>
+  </data>
+  <data name="LogViewer.title" xml:space="preserve">
+    <value>Visionneuse du journal</value>
+  </data>
+  <data name="ManageUser.title" xml:space="preserve">
+    <value>Modifier compte usager</value>
+  </data>
+  <data name="MyIssues.title" xml:space="preserve">
+    <value>Modifier compte usager</value>
+  </data>
+  <data name="NewIssue.title" xml:space="preserve">
+    <value>Modifier compte usager</value>
+  </data>
+  <data name="ProjectCalendar.title" xml:space="preserve">
+    <value>Calendrier</value>
+  </data>
+  <data name="ProjectList.title" xml:space="preserve">
+    <value>Projets</value>
+  </data>
+  <data name="Projects.title" xml:space="preserve">
+    <value>Projects</value>
+  </data>
+  <data name="ProjectSummary.title" xml:space="preserve">
+    <value>Résumé</value>
+  </data>
+  <data name="QueryDetail.title" xml:space="preserve">
+    <value>Détail de la requête</value>
+  </data>
+  <data name="QueryList.title" xml:space="preserve">
+    <value>Requêtes</value>
+  </data>
+  <data name="Register.title" xml:space="preserve">
+    <value>S'enregister</value>
+  </data>
+  <data name="Roadmap.title" xml:space="preserve">
+    <value>Feuille de route</value>
+  </data>
+  <data name="Settings.title" xml:space="preserve">
+    <value>Configuration Application </value>
+  </data>
+  <data name="SubversionBrowser.title" xml:space="preserve">
+    <value>Référentiel</value>
+  </data>
+  <data name="UserList.title" xml:space="preserve">
+    <value>Utilisateurs</value>
+  </data>
+  <data name="UserProfile.title" xml:space="preserve">
+    <value>Profil Utilisateurs</value>
+  </data>
+</root>
