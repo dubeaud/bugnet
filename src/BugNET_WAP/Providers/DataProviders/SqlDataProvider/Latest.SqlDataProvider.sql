@@ -346,7 +346,7 @@ JOIN BugNet_Roles R
 	ON UR.RoleId = R.RoleId
 WHERE
 	BugNet_UserProjects.ProjectId = @ProjectId 
-	AND M.IsApproved = 1 AND (@ExcludeReadonlyUsers = 0 OR @ExcludeReadonlyUsers = 1 AND R.RoleName != 'Read Only')
+	AND M.IsApproved = 1 AND (@ExcludeReadonlyUsers = 0 OR @ExcludeReadonlyUsers = 1 AND R.RoleName != 'Read Only' AND R.RoleName != 'Reporter')
 ORDER BY DisplayName ASC
 
 GO

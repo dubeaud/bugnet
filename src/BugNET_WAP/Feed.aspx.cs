@@ -72,7 +72,6 @@ namespace BugNET
             var myFeed = new SyndicationFeed();
             myFeed.Links.Add(SyndicationLink.CreateAlternateLink(new Uri(GetFullyQualifiedUrl("~/Default.aspx"))));
             myFeed.Links.Add(SyndicationLink.CreateSelfLink(new Uri(GetFullyQualifiedUrl(Request.RawUrl))));
-            //myFeed.Copyright = TextSyndicationContent.CreatePlaintextContent("Copyright Nile.com Bookstore");
             myFeed.Language = "en-us";
 
             switch (channelId)
