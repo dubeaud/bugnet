@@ -44,7 +44,7 @@
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ErrorMessage="<%$ Resources:EmailRequiredErrorMessage %>"
                     Text=" *" ControlToValidate="Email" Display="Dynamic"></asp:RequiredFieldValidator>
                 <asp:RegularExpressionValidator ID="regexEmailValid" runat="server"  
-                    ValidationExpression="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[A-Z]{2}|com|org|net|edu|gov|mil|biz|info|mobi|name|aero|asia|jobs|museum)\b"
+                    ValidationExpression="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
                     ControlToValidate="Email"  ErrorMessage="<%$ Resources:EmailFormatErrorMessage %>" Text="Invalid Email Format" />
             </li>
             <li id="SecretQuestionRow" runat="server" visible="false">
