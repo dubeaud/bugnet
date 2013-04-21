@@ -351,19 +351,6 @@ namespace BugNET.BLL
         }
 
         /// <summary>
-        /// Gets the change log.
-        /// </summary>
-        /// <param name="projectId">The project id.</param>
-        /// <returns></returns>
-        public static List<Issue> GetChangeLog(int projectId)
-        {
-            if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
-
-            return DataProviderManager.Provider.GetProjectChangeLog(projectId);
-        }
-
-        ///Iman Mayes
-        /// <summary>
         /// Gets the users and roles by project id.
         /// </summary>
         /// <param name="projectId">The project id.</param>

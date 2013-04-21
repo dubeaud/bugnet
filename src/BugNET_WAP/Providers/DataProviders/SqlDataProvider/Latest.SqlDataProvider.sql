@@ -144,8 +144,6 @@ SELECT * FROM BugNet_DefaultValView
 WHERE 
 	ProjectId= @ProjectId
 	
-
-
 GO
 
 /****** Object:  StoredProcedure [dbo].[BugNet_DefaultValues_Set]    Script Date: 4/5/2013 11:20:25 AM ******/
@@ -351,4 +349,7 @@ WHERE
 	AND M.IsApproved = 1 AND (@ExcludeReadonlyUsers = 0 OR @ExcludeReadonlyUsers = 1 AND R.RoleName != 'Read Only')
 ORDER BY DisplayName ASC
 
+GO
+
+DROP PROCEDURE [dbo].[BugNet_Project_GetChangeLog]
 GO

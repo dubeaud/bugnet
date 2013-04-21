@@ -1414,34 +1414,6 @@ namespace BugNET.Providers.DataProviders
             }
         }
 
-
-        /// <summary>
-        /// Gets the project change log.
-        /// </summary>
-        /// <param name="projectId">The project id.</param>
-        /// <returns></returns>
-        public override List<Issue> GetProjectChangeLog(int projectId)
-        {
-            if (projectId <= 0) throw (new ArgumentOutOfRangeException("projectId"));
-
-            try
-            {
-                using (var sqlCmd = new SqlCommand())
-                {
-                    AddParamToSqlCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
-                    AddParamToSqlCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
-
-                    SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_PROJECT_GETCHANGELOG);
-                    var issueList = new List<Issue>();
-                    ExecuteReaderCmd(sqlCmd, GenerateIssueListFromReader, ref issueList);
-                    return issueList;   
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ProcessException(ex);
-            }
-        }
         #endregion
 
         #region Project notification methods

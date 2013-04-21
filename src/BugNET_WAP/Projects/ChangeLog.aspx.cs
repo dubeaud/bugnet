@@ -326,7 +326,8 @@ namespace BugNET.Projects
         	var queryClauses = new List<QueryClause>
         	{
         	    new QueryClause("AND", "iv.[IssueMilestoneId]", "=", m.Id.ToString(), SqlDbType.Int),
-				new QueryClause("AND", "iv.[IsClosed]", "=", "1", SqlDbType.Int)
+				new QueryClause("AND", "iv.[IsClosed]", "=", "1", SqlDbType.Int),
+                new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int)
         	};
 
         	var sortString = (SortAscending) ? "ASC" : "DESC";

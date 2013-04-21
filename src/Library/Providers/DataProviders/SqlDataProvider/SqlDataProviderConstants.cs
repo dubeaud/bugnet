@@ -18,8 +18,6 @@
         private const string SP_PROJECT_CLONEPROJECT = "BugNet_Project_CloneProject";
         private const string SP_PROJECT_GETROADMAP = "BugNet_Project_GetRoadMap";
         private const string SP_PROJECT_GETROADMAPPROGRESS = "BugNet_Project_GetRoadMapProgress";
-        private const string SP_PROJECT_GETCHANGELOG = "BugNet_Project_GetChangeLog";
-
         private const string SP_PROJECT_ISUSERPROJECTMEMBER = "BugNet_Project_IsUserProjectMember";
 
         private const string SP_PROJECTMAILBOX_GETPROJECTBYMAILBOX = "BugNet_ProjectMailbox_GetProjectByMailbox";
