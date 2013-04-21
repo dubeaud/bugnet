@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute name="name" use="required" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="assembly">
+						<xsd:complexType>
+							<xsd:attribute name="alias" type="xsd:string" />
+							<xsd:attribute name="name" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="AddAttachments.Text" xml:space="preserve">
+    <value>Adauga Atasament</value>
+  </data>
+	<data name="AddComments.Text" xml:space="preserve">
+    <value>Adauga Comentarii</value>
+  </data>
+	<data name="AddIssues.Text" xml:space="preserve">
+    <value>Adauga Probleme</value>
+  </data>
+	<data name="AddLabel.Text" xml:space="preserve">
+    <value>Adauga</value>
+  </data>
+	<data name="AddNewRole.AlternateText" xml:space="preserve">
+    <value>Adauga Rol Nou</value>
+  </data>
+	<data name="AddNewRole.Text" xml:space="preserve">
+    <value>Adauga Rol Nou</value>
+  </data>
+	<data name="AddParentIssues.Text" xml:space="preserve">
+    <value>Adauga Probleme Parinte</value>
+  </data>
+	<data name="AddQueries.Text" xml:space="preserve">
+    <value>Adauga Interogari</value>
+  </data>
+	<data name="AddRelatedIssues.Text" xml:space="preserve">
+    <value>Adauga Probleme Relevante</value>
+  </data>
+	<data name="AddRoleButton.Text" xml:space="preserve">
+    <value>Adauga Rol</value>
+  </data>
+	<data name="AddSubIssues.Text" xml:space="preserve">
+    <value>Adauga Probleme Copil</value>
+  </data>
+	<data name="AddTimeEntries.Text" xml:space="preserve">
+    <value>Adauga Intrari Temporale</value>
+  </data>
+	<data name="AssignIssue" xml:space="preserve">
+    <value>Atribuie Problema</value>
+  </data>
+	<data name="AssignIssues.Text" xml:space="preserve">
+    <value>Atribuie Probleme</value>
+  </data>
+	<data name="Attachments" xml:space="preserve">
+    <value>Atasamente</value>
+  </data>
+	<data name="AutoAssignment.Text" xml:space="preserve">
+    <value>Auto Atribuire</value>
+  </data>
+	<data name="AutoAssignmentColumnHeader.HeaderText" xml:space="preserve">
+    <value>Auto Atribuire</value>
+  </data>
+	<data name="ChangeIssueStatus.Text" xml:space="preserve">
+    <value>Schimba Stare Problema</value>
+  </data>
+	<data name="CloneProject.Text" xml:space="preserve">
+    <value>Cloneaza Proiect</value>
+  </data>
+	<data name="CloseIssue" xml:space="preserve">
+    <value>Inchide Problema</value>
+  </data>
+	<data name="CloseIssues.Text" xml:space="preserve">
+    <value>Inchide Problemele</value>
+  </data>
+	<data name="Comments" xml:space="preserve">
+    <value>Comentarii</value>
+  </data>
+	<data name="ConfirmDelete" xml:space="preserve">
+    <value>Sunteti sigur ca vreti sa stergeti Rolu-ul \"{0}\"?</value>
+  </data>
+	<data name="CreateProject.Text" xml:space="preserve">
+    <value>Creaza Proiect</value>
+  </data>
+	<data name="DeleteAttachments.Text" xml:space="preserve">
+    <value>Sterge Atasamente</value>
+  </data>
+	<data name="DeleteComments.Text" xml:space="preserve">
+    <value>Sterge Comentarii</value>
+  </data>
+	<data name="DeleteIssues.Text" xml:space="preserve">
+    <value>Sterge Probleme</value>
+  </data>
+	<data name="DeleteLabel.Text" xml:space="preserve">
+    <value>Sterge</value>
+  </data>
+	<data name="DeleteParentIssues.Text" xml:space="preserve">
+    <value>Sterge Probleme Parinte</value>
+  </data>
+	<data name="DeleteProject.Text" xml:space="preserve">
+    <value>Sterge Proiect</value>
+  </data>
+	<data name="DeleteQueries.Text" xml:space="preserve">
+    <value>Sterge Interogari</value>
+  </data>
+	<data name="DeleteRelatedIssues.Text" xml:space="preserve">
+    <value>Sterge Probleme Relevante</value>
+  </data>
+	<data name="DeleteRoleButton.Text" xml:space="preserve">
+    <value>Delete Role</value>
+  </data>
+	<data name="DeleteSubIssues.Text" xml:space="preserve">
+    <value>Sterge Probleme Copil</value>
+  </data>
+	<data name="DeleteTimeEntries.Text" xml:space="preserve">
+    <value>Sterge Intrari Temporale</value>
+  </data>
+	<data name="DescriptionLabel.Text" xml:space="preserve">
+    <value>Fiecare proiect poate avea propriile roluri in grupul de utilizatori si permisiunii. In mod implicit atunci cand un nou proiect este creat mai multe roluri sunt predefinite. Daca aveti nevoie sa creati un rol particularizat clic pe butonul Adauga Rol Nou si atribuiti permisiuni.</value>
+  </data>
+	<data name="EditComments.Text" xml:space="preserve">
+    <value>Modificare Comentarii</value>
+  </data>
+	<data name="EditIssueDescriptions.Text" xml:space="preserve">
+    <value>Modificare Descrieri Probleme</value>
+  </data>
+	<data name="EditIssues.Text" xml:space="preserve">
+    <value>Modificare Probleme</value>
+  </data>
+	<data name="EditIssueTitles.Text" xml:space="preserve">
+    <value>Modificare Titluri Probleme</value>
+  </data>
+	<data name="EditLabel.Text" xml:space="preserve">
+    <value>EditLabel.Text</value>
+  </data>
+	<data name="EditOwnComments.Text" xml:space="preserve">
+    <value>Modificare Comentarii Proprii</value>
+  </data>
+	<data name="EditProject.Text" xml:space="preserve">
+    <value>Modificare Proiecte</value>
+  </data>
+	<data name="EditQueries.Text" xml:space="preserve">
+    <value>Modificare Interogari</value>
+  </data>
+	<data name="Issue" xml:space="preserve">
+    <value>Probleme</value>
+  </data>
+	<data name="IssueDescription" xml:space="preserve">
+    <value>Descriere Problema</value>
+  </data>
+	<data name="IssueTitle" xml:space="preserve">
+    <value>Titlu Problema</value>
+  </data>
+	<data name="NewRoleDescriptionLabel.Text" xml:space="preserve">
+    <value>Pentru a crea un rol nou introduceti numele, descrierea si bifati permisiunile dupa care salvati.</value>
+  </data>
+	<data name="OtherLabel.Text" xml:space="preserve">
+    <value>Alta</value>
+  </data>
+	<data name="OwnComments" xml:space="preserve">
+    <value>Comentarii Proprii</value>
+  </data>
+	<data name="ParentIssue" xml:space="preserve">
+    <value>Problema Parinte</value>
+  </data>
+	<data name="PermissionsTitle.Text" xml:space="preserve">
+    <value>Permisiuni</value>
+  </data>
+	<data name="Queries.Text" xml:space="preserve">
+    <value>Interogari</value>
+  </data>
+	<data name="Query" xml:space="preserve">
+    <value>Intergoare</value>
+  </data>
+	<data name="RelatedIssue" xml:space="preserve">
+    <value>Probleme Relevante</value>
+  </data>
+	<data name="ReOpenIssues.Text" xml:space="preserve">
+    <value>Redeschidere Probleme</value>
+  </data>
+	<data name="RoleName.Text" xml:space="preserve">
+    <value>Denumire Rol</value>
+  </data>
+	<data name="RoleNameTitle.Text" xml:space="preserve">
+    <value>Administrare Rol Securitate -</value>
+  </data>
+	<data name="RolesTitle.Text" xml:space="preserve">
+    <value>Administrare Rol Securitate</value>
+  </data>
+	<data name="SubIssue" xml:space="preserve">
+    <value>Sub Problema</value>
+  </data>
+	<data name="SubscribeIssue" xml:space="preserve">
+    <value>Subscrie la Problema</value>
+  </data>
+	<data name="SubscribeIssues.Text" xml:space="preserve">
+    <value>Subscrie la Probleme</value>
+  </data>
+	<data name="TimeEntry" xml:space="preserve">
+    <value>Intrare Temporala</value>
+  </data>
+	<data name="UpdateRole" xml:space="preserve">
+    <value>Actualizare Rol</value>
+  </data>
+	<data name="ViewCalendar.Text" xml:space="preserve">
+    <value>Vizualizare Calendar</value>
+  </data>
+	<data name="IssueTracking.Text" xml:space="preserve">
+    <value>Urmarire Problema</value>
+  </data>
+</root>

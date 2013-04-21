@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute name="name" use="required" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="assembly">
+						<xsd:complexType>
+							<xsd:attribute name="alias" type="xsd:string" />
+							<xsd:attribute name="name" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="AccessDenied" xml:space="preserve">
+    <value>Accesul Interzis</value>
+  </data>
+	<data name="AddRoleError" xml:space="preserve">
+    <value>Nu am putut sa adaug Rolul</value>
+  </data>
+	<data name="AttachmentDeleteError" xml:space="preserve">
+    <value>A aparut o eroare la stergerea atasamentului unei probleme</value>
+  </data>
+	<data name="CloneProjectError" xml:space="preserve">
+    <value>Nu se poate clona proiectul</value>
+  </data>
+	<data name="CreateProjectUploadFolderError" xml:space="preserve">
+    <value>Nu se poate creea directorul pt upload {0} pentru proiectul {1}</value>
+  </data>
+	<data name="DatabaseError" xml:space="preserve">
+    <value>A aparut o eroare la accesarea bazei de date.</value>
+  </data>
+	<data name="DeleteCustomFieldError" xml:space="preserve">
+    <value>Nu se poate sterge campul personalizat</value>
+  </data>
+	<data name="DeleteIssueTypeError" xml:space="preserve">
+    <value>Nu se poate sterge tipul problemei.</value>
+  </data>
+	<data name="DeleteItemAssignedToIssueError" xml:space="preserve">
+    <value>'{0}' nu poate fi sters pentru ca este asociat cu o problema. Trebuie sa asociati problemei un alt {1} pentru a putea sterge!</value>
+    <comment>{0} is the name of the item, {1} is a context specific name ie. milestone</comment>
+  </data>
+	<data name="DeleteMailboxError" xml:space="preserve">
+    <value>Casuta postala nu poate fi stearsa</value>
+  </data>
+	<data name="DeleteMilestoneError" xml:space="preserve">
+    <value>Reperul nu poate fi sters</value>
+  </data>
+	<data name="DeletePriorityError" xml:space="preserve">
+    <value>Prioritatea nu poate fi stearsa</value>
+  </data>
+	<data name="DeleteProjectUploadFolderError" xml:space="preserve">
+    <value>Directorul de upload {0} nu poate fi sters pentru proeictul {1}</value>
+  </data>
+	<data name="DeleteResolutionError" xml:space="preserve">
+    <value>Rezolutia nu poate fi stearsa</value>
+  </data>
+	<data name="DeleteRoleError" xml:space="preserve">
+    <value>Rolul nu poate fi sters</value>
+  </data>
+	<data name="DeleteStatusError" xml:space="preserve">
+    <value>Statusul nu poate fi sters</value>
+  </data>
+	<data name="DeleteUserError" xml:space="preserve">
+    <value>A aparut o eroare la stergerea utilizatorului.</value>
+  </data>
+	<data name="InvalidFileName" xml:space="preserve">
+    <value>Numele fisierului selectat este invalid.</value>
+  </data>
+	<data name="InvalidFileType" xml:space="preserve">
+    <value>{0} nu respecta tipurile de fisiere permise.</value>
+  </data>
+	<data name="InvalidIssueId" xml:space="preserve">
+    <value>ID-ul problemei furnizat [{0}] nu este valid.</value>
+  </data>
+	<data name="InvalidProjectId" xml:space="preserve">
+    <value>ID-ul proiectului furnizat [{0}] nu este valid.</value>
+  </data>
+	<data name="InvalidQuickSearchText" xml:space="preserve">
+    <value>ID-ul problemei sau ID-ul BugNET este invalid.</value>
+  </data>
+	<data name="InvalidRepositoryName" xml:space="preserve">
+    <value>Numele depozitului nu este formatat corect.Numai caractere alfa-numerice, \"-\", si \"_\" sunt permise.</value>
+  </data>
+	<data name="InvalidRepositoryTagName" xml:space="preserve">
+    <value>Numele tag-ului nu este formatat corect. Numai caractere alfa-numerice, \"-\", si \"_\" sunt permise.</value>
+  </data>
+	<data name="MailboxReaderError" xml:space="preserve">
+    <value>A aparut o eroare la procesarea cititorului de email.</value>
+  </data>
+	<data name="MissingQuickSearchText" xml:space="preserve">
+    <value>Valoarea de cautare nu poate fi goala, va rugam introduceti un id de problema sau un id BugNET</value>
+  </data>
+	<data name="PasswordChangeError" xml:space="preserve">
+    <value>Parola nu a fost schimbata. Va rugam sa verificati daca parola respecta cerintele de setare ala parolelelor.</value>
+  </data>
+	<data name="PasswordResetError" xml:space="preserve">
+    <value>Eroare resetare parola.</value>
+  </data>
+	<data name="ProfileUpdateError" xml:space="preserve">
+    <value>A aparut o eroare la actualizarea profilului.</value>
+  </data>
+	<data name="ProjectAccessDenied" xml:space="preserve">
+    <value>Utilizatorul {0} nu are drepturi in acest proiect.</value>
+  </data>
+	<data name="ProjectNotFoundError" xml:space="preserve">
+    <value>Proiectul cu ID-ul [{0}] nu a fost gasit.</value>
+  </data>
+	<data name="QueryStringError" xml:space="preserve">
+    <value>Paramentrul interogarii utilizatorului nu este formatat corect.</value>
+  </data>
+	<data name="RepositoryCommentRequired" xml:space="preserve">
+    <value>Un comentariu este necesar pentru a crea o eticheta</value>
+  </data>
+	<data name="RepositoryProjectSaveError" xml:space="preserve">
+    <value>Proiectul nu a fost salvat. Va rugam verificati daca data este corecta.</value>
+  </data>
+	<data name="SaveAttachmentError" xml:space="preserve">
+    <value>A aparut o eroare la salvarea atasamentului {0}.</value>
+  </data>
+	<data name="SaveCustomFieldError" xml:space="preserve">
+    <value>Nu am putut salva campul personalizat.</value>
+  </data>
+	<data name="SaveCustomFieldValuesError" xml:space="preserve">
+    <value>Nu am putut salva campul personalizat al problemei.</value>
+  </data>
+	<data name="SaveIssueError" xml:space="preserve">
+    <value>A aparut o eroare la salvarea problemei.</value>
+  </data>
+	<data name="SaveIssueTypeError" xml:space="preserve">
+    <value>Nu am putut salva tipul problemei.</value>
+  </data>
+	<data name="SaveIssueVoteError" xml:space="preserve">
+    <value>Nu am putut salva votul problemei</value>
+  </data>
+	<data name="SaveMilestoneError" xml:space="preserve">
+    <value>Nu am putut salva reperul problemei</value>
+  </data>
+	<data name="SavePriorityError" xml:space="preserve">
+    <value>Nu am putut salva prioritatea</value>
+  </data>
+	<data name="SaveProjectError" xml:space="preserve">
+    <value>Nu am putut salva proiectul, va rugam verificati daca denumirea proiectului si codul au valori unice.</value>
+  </data>
+	<data name="SaveResolutionError" xml:space="preserve">
+    <value>Nu am putut salva rezolutia</value>
+  </data>
+	<data name="SaveStatusError" xml:space="preserve">
+    <value>Nu am putut salva statusul</value>
+  </data>
+	<data name="UpdateUserError" xml:space="preserve">
+    <value>A aparut o eroare la actualizarea utilizatorului.</value>
+  </data>
+	<data name="UploadPathInvalid" xml:space="preserve">
+    <value>Calea de upload este invalida</value>
+  </data>
+	<data name="UploadPathNotDefined" xml:space="preserve">
+    <value>Calea de upload  nu a fost definita pentru proiectul {0}.</value>
+  </data>
+	<data name="UploadPathNotFound" xml:space="preserve">
+    <value>Directorul de upload {0} nu exista. Va rugam sa verificati la administrator daca directorul exista pe server.</value>
+  </data>
+	<data name="UserAuthorizedError" xml:space="preserve">
+    <value>A aparut o eroare la autorizarea utilizatorului.</value>
+  </data>
+	<data name="UserUnAuthorizedError" xml:space="preserve">
+    <value>A aparut o eroare la deautorizarea utilizatorului.</value>
+  </data>
+</root>
