@@ -1938,14 +1938,6 @@
     <Content Include="Administration\Projects\App_LocalResources\EditProject.aspx.fr-CA.resx" />
     <Content Include="Administration\Projects\App_LocalResources\ProjectList.aspx.fr-CA.resx" />
     <Content Include="Account\App_LocalResources\ForgotPassword.aspx.fr-CA.resx" />
-    <EmbeddedResource Include="Administration\Projects\UserControls\ProjectPriorities.ascx.resx">
-      <DependentUpon>ProjectPriorities.ascx.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Administration\Projects\UserControls\ProjectStatus.ascx.resx">
-      <DependentUpon>ProjectStatus.ascx.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <Content Include="Administration\Host\UserControls\AttachmentSettings.ascx" />
     <Content Include="Administration\Host\UserControls\AuthenticationSettings.ascx" />
     <Content Include="Administration\Host\UserControls\BasicSettings.ascx" />
