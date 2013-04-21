@@ -1,5 +1,6 @@
 using System;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI.WebControls;
 using BugNET.BLL;
 using BugNET.Common;
@@ -9,7 +10,6 @@ namespace BugNET.UserControls
 {
     public partial class Banner : System.Web.UI.UserControl
     {
-
         /// <summary>
         /// Handles the Load event of the Page control.
         /// </summary>
@@ -185,6 +185,14 @@ namespace BugNET.UserControls
             // Display secondary search error
             QuickError.Visible = true;
             QuickError.Text = invalidMessage;
+        }
+
+        protected void LoginStatus1_LoggingOut(object sender, LoginCancelEventArgs e)
+        {
+            // fix for BGN-2174
+            var membershipUser = Membership.GetUser(HttpContext.Current.User.Identity.Name);
+            membershipUser.LastActivityDate = DateTime.UtcNow.AddMinutes(-(Membership.UserIsOnlineTimeWindow + 1));
+            Membership.UpdateUser(membershipUser);
         }
     }
 }

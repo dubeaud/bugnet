@@ -11,16 +11,16 @@
 
     <xsl:template match="/root">
         <h1>Добро пожаловать в приложение &quot;<xsl:value-of select="HostSetting_ApplicationTitle" />&quot;!</h1>
-		<p>Здравствуйте, <xsl:value-of select="User/DisplayName" disable-output-escaping="yes" />.  Вы получили это письмо, так как недавно
-		создали учётную запись в приложении &quot;<xsl:value-of select="HostSetting_ApplicationTitle" />&quot;. Пройдите по следующей ссылке
-		для подтверждения Вашей учётной записи: </p>
-		<p>
-			<a href="{HostSetting_DefaultUrl}Account/Verify.aspx?ID={User/Id}" target="_blank">
+        <p>Здравствуйте, <xsl:value-of select="User/DisplayName" disable-output-escaping="yes" />.  Вы получили это письмо, так как недавно
+        создали учётную запись в приложении &quot;<xsl:value-of select="HostSetting_ApplicationTitle" />&quot;. Пройдите по следующей ссылке
+        для подтверждения Вашей учётной записи: </p>
+        <p>
+            <a href="{HostSetting_DefaultUrl}Account/Verify.aspx?ID={User/Id}" target="_blank">
                 <xsl:value-of select="HostSetting_DefaultUrl" />Account/Verify.aspx?ID=<xsl:value-of select="User/Id" />
             </a>
-		</p>
-		<p>После подтверждения учётной записи Вы сможете войти в систему!</p>
-		<p>Если у Вас возникли проблемы с подтверждением учётной записи, ответьте на данное письмо для связи с администратором системы.</p>
-		<p>Спасибо!</p>
+        </p>
+        <p>После подтверждения учётной записи Вы сможете войти в систему!</p>
+        <p>Если у Вас возникли проблемы с подтверждением учётной записи, ответьте на данное письмо для связи с администратором системы.</p>
+        <p>Спасибо!</p>
     </xsl:template>
 </xsl:stylesheet>

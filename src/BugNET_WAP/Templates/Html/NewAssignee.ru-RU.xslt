@@ -10,11 +10,11 @@
     <xsl:strip-space elements="*" />
 
     <xsl:template match="/root">
-        <p>Вам назначено новое задание:</p>
+        <p>Р’Р°Рј РЅР°Р·РЅР°С‡РµРЅРѕ РЅРѕРІРѕРµ Р·Р°РґР°РЅРёРµ:</p>
         <table border="0">
             <tr>
                 <td width="90px" valign="top">
-                    <b>Название:</b>
+                    <b>Р—Р°РіРѕР»РѕРІРѕРє:</b>
                 </td>
                 <td>
                     <xsl:value-of select="Issue/Title"  disable-output-escaping="yes"/>
@@ -22,7 +22,7 @@
             </tr>
             <tr>
                 <td>
-                    <b>Проект:</b>
+                    <b>РџСЂРѕРµРєС‚:</b>
                 </td>
                 <td>
                     <xsl:value-of select="Issue/ProjectName" disable-output-escaping="yes" />
@@ -30,13 +30,13 @@
             </tr>
         </table>
         <p>
-            Больше информации по данному заданию можно найти по ссылке
+            Р”Р»СЏ РїРѕР»СѓС‡РµРЅРёСЏ Р±РѕР»РµРµ РїРѕРґСЂРѕР±РЅРѕР№ РёРЅС„РѕСЂРјР°С†РёРё РѕР± СЌС‚РѕРј Р·Р°РґР°РЅРёРё РїСЂРѕР№РґРёС‚Рµ РїРѕ СЃСЃС‹Р»РєРµ
             <a href="{HostSetting_DefaultUrl}Issues/IssueDetail.aspx?id={Issue/Id}" target="_blank">
                 <xsl:value-of select="HostSetting_DefaultUrl" />Issues/IssueDetail.aspx?id=<xsl:value-of select="Issue/Id" />
             </a>
         </p>
         <p style="text-align:center;font-size:8pt;padding:5px;">
-            Если Вы больше не хотите получать уведомления, то откройте <a href="{HostSetting_DefaultUrl}Account/UserProfile.aspx" target="_blank">Ваш профиль</a> и измените настройки уведомлений.
+            Р•СЃР»Рё Р’С‹ Р±РѕР»СЊС€Рµ РЅРµ С…РѕС‚РёС‚Рµ РїРѕР»СѓС‡Р°С‚СЊ РґР°РЅРЅС‹Рµ СѓРІРµРґРѕРјР»РµРЅРёСЏ, С‚Рѕ РїРѕСЃРµС‚РёС‚Рµ СЃС‚СЂР°РЅРёС†Сѓ <a href="{HostSetting_DefaultUrl}Account/UserProfile.aspx" target="_blank">Р’Р°С€РµРіРѕ РїСЂРѕС„РёР»СЏ</a> Рё РёР·РјРµРЅРёС‚Рµ РЅР°СЃС‚СЂРѕР№РєРё СѓРІРµРґРѕРјР»РµРЅРёР№.
         </p>
     </xsl:template>
 </xsl:stylesheet>

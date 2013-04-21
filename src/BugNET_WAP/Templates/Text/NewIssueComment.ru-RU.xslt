@@ -10,24 +10,24 @@
   <xsl:strip-space elements="*" />
 
   <xsl:template match="/root">
-    <xsl:text>В следующее задание был добавлен новый комментарий.</xsl:text>
+    <xsl:text>Рљ СЃР»РµРґСѓСЋС‰РµРјСѓ Р·Р°РґР°РЅРёСЋ Р±С‹Р» РґРѕР±Р°РІР»РµРЅ РЅРѕРІС‹Р№ РєРѕРјРјРµРЅС‚Р°СЂРёР№.</xsl:text>
     <xsl:text>&#10;</xsl:text>
     <xsl:text>&#10;</xsl:text>
-    <xsl:text>Название: </xsl:text><xsl:value-of select="Issue/Title" />
+    <xsl:text>Р—Р°РіРѕР»РѕРІРѕРє: </xsl:text><xsl:value-of select="Issue/Title" />
     <xsl:text>&#10;</xsl:text>
-    <xsl:text>Проект: </xsl:text><xsl:value-of select="Issue/ProjectName" />
+    <xsl:text>РџСЂРѕРµРєС‚: </xsl:text><xsl:value-of select="Issue/ProjectName" />
     <xsl:text>&#10;</xsl:text>
-    <xsl:text>Автор: </xsl:text><xsl:value-of select="IssueComment/CreatorDisplayName" />
+    <xsl:text>РђРІС‚РѕСЂ: </xsl:text><xsl:value-of select="IssueComment/CreatorDisplayName" />
     <xsl:text>&#10;</xsl:text>
-    <xsl:text>Дата: </xsl:text><xsl:value-of select="helpers:FormatShortDateAnd12HTime(IssueComment/DateCreated)" />
+    <xsl:text>Р”Р°С‚Р°: </xsl:text><xsl:value-of select="helpers:FormatShortDateAnd12HTime(IssueComment/DateCreated)" />
     <xsl:text>&#10;</xsl:text>
-    <xsl:text>Комментарий: </xsl:text><xsl:value-of select="helpers:StripHTML2(IssueComment/Comment)" />
+    <xsl:text>РљРѕРјРјРµРЅС‚Р°СЂРёР№: </xsl:text><xsl:value-of select="helpers:StripHTML2(IssueComment/Comment)" />
       <xsl:text>&#10;</xsl:text>
       <xsl:text>&#10;</xsl:text>
-      <xsl:text> Больше информации по данному заданию можно найти по ссылке </xsl:text>
+      <xsl:text> Р”Р»СЏ РїРѕР»СѓС‡РµРЅРёСЏ Р±РѕР»РµРµ РїРѕРґСЂРѕР±РЅРѕР№ РёРЅС„РѕСЂРјР°С†РёРё РѕР± СЌС‚РѕРј Р·Р°РґР°РЅРёРё РїСЂРѕР№РґРёС‚Рµ РїРѕ СЃСЃС‹Р»РєРµ </xsl:text>
       <xsl:value-of select="HostSetting_DefaultUrl" />Issues/IssueDetail.aspx?id=<xsl:value-of select="Issue/Id" />
       <xsl:text>&#10;</xsl:text>
       <xsl:text>&#10;</xsl:text>
-      Если Вы больше не хотите получать уведомления, то пройдите по ссылке <xsl:value-of select="HostSetting_DefaultUrl" />Account/UserProfile.aspx и измените настройки уведомлений.
+      Р•СЃР»Рё Р’С‹ Р±РѕР»СЊС€Рµ РЅРµ С…РѕС‚РёС‚Рµ РїРѕР»СѓС‡Р°С‚СЊ РґР°РЅРЅС‹Рµ СѓРІРµРґРѕРјР»РµРЅРёСЏ, С‚Рѕ РїРѕСЃРµС‚РёС‚Рµ СЃС‚СЂР°РЅРёС†Сѓ Р’Р°С€РµРіРѕ РїСЂРѕС„РёР»СЏ <xsl:value-of select="HostSetting_DefaultUrl" />Account/UserProfile.aspx Рё РёР·РјРµРЅРёС‚Рµ РЅР°СЃС‚СЂРѕР№РєРё СѓРІРµРґРѕРјР»РµРЅРёР№.
   </xsl:template>
 </xsl:stylesheet>

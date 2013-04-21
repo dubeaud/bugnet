@@ -10,14 +10,14 @@
   <xsl:strip-space elements="*" />
   
   <xsl:template match="/root">
-    <xsl:text>В системе зарегистрирован новый пользователь:</xsl:text>
+    <xsl:text>Р’ СЃРёСЃС‚РµРјРµ Р±С‹Р» Р·Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°РЅ РЅРѕРІС‹Р№ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ:</xsl:text>
     <xsl:text>&#10;</xsl:text>
     <xsl:text>&#10;</xsl:text>
-    <xsl:text>Дата: </xsl:text><xsl:value-of select="helpers:FormatShortDateAnd12HTime(User/CreationDate)" />
+    <xsl:text>Р”Р°С‚Р°: </xsl:text><xsl:value-of select="helpers:FormatShortDateAnd12HTime(User/CreationDate)" />
     <xsl:text>&#10;</xsl:text>
-    <xsl:text>Имя: </xsl:text><xsl:value-of select="User/DisplayName" />
+    <xsl:text>РћС‚РѕР±СЂР°Р¶Р°РµРјРѕРµ РёРјСЏ: </xsl:text><xsl:value-of select="User/DisplayName" />
     <xsl:text>&#10;</xsl:text>
-    <xsl:text>Имя пользователя: </xsl:text><xsl:value-of select="User/UserName" />
+    <xsl:text>РРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ: </xsl:text><xsl:value-of select="User/UserName" />
     <xsl:text>&#10;</xsl:text>
     <xsl:text>Email: </xsl:text><xsl:value-of select="User/Email" />
   </xsl:template>

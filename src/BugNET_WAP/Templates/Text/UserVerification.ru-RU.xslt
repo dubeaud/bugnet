@@ -10,27 +10,25 @@
     <xsl:strip-space elements="*" />
 
     <xsl:template match="/root">
-        <xsl:text>Добро пожаловать в приложение </xsl:text><xsl:value-of select="HostSetting_ApplicationTitle" />
+        <xsl:text>Р”РѕР±СЂРѕ РїРѕР¶Р°Р»РѕРІР°С‚СЊ РІ РїСЂРёР»РѕР¶РµРЅРёРµ </xsl:text><xsl:value-of select="HostSetting_ApplicationTitle" />
         <xsl:text>!</xsl:text>
         <xsl:text>&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
-        <xsl:text>Здравствуйте, </xsl:text><xsl:value-of select="User/DisplayName" disable-output-escaping="yes" />
-        <xsl:text>.  Вы получили это письмо, так как недавно
-		создали учётную запись в приложении </xsl:text><xsl:value-of select="HostSetting_ApplicationTitle" />
-        <xsl:text>. Пройдите по следующей ссылке
-		для подтверждения Вашей учётной записи: </xsl:text>
+        <xsl:text>Р—РґСЂР°РІСЃС‚РІСѓР№С‚Рµ, </xsl:text><xsl:value-of select="User/DisplayName" disable-output-escaping="yes" />
+        <xsl:text>.  Р’С‹ РїРѕР»СѓС‡РёР»Рё СЌС‚Рѕ РїРёСЃСЊРјРѕ, С‚Р°Рє РєР°Рє РЅРµРґР°РІРЅРѕ СЃРѕР·РґР°Р»Рё СѓС‡С‘С‚РЅСѓСЋ Р·Р°РїРёСЃСЊ РІ РїСЂРёР»РѕР¶РµРЅРёРё </xsl:text><xsl:value-of select="HostSetting_ApplicationTitle" />
+        <xsl:text>. РџСЂРѕР№РґРёС‚Рµ РїРѕ СЃР»РµРґСѓСЋС‰РµР№ СЃСЃС‹Р»РєРµ РґР»СЏ РїРѕРґС‚РІРµСЂР¶РґРµРЅРёСЏ Р’Р°С€РµР№ СѓС‡С‘С‚РЅРѕР№ Р·Р°РїРёСЃРё: </xsl:text>
         <xsl:text>&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
         <xsl:value-of select="HostSetting_DefaultUrl" />Account/Verify.aspx?ID=<xsl:value-of select="User/Id" />
         <xsl:text>&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
-        <xsl:text>После подтверждения учётной записи Вы сможете войти в систему!</xsl:text>
+        <xsl:text>РџРѕСЃР»Рµ РїРѕРґС‚РІРµСЂР¶РґРµРЅРёСЏ СѓС‡С‘С‚РЅРѕР№ Р·Р°РїРёСЃРё Р’С‹ СЃРјРѕР¶РµС‚Рµ РІРѕР№С‚Рё РІ СЃРёСЃС‚РµРјСѓ!</xsl:text>
         <xsl:text>&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
-        <xsl:text>Если у Вас возникли проблемы с подтверждением учётной записи, ответьте на данное письмо для связи с администратором системы.</xsl:text>
+        <xsl:text>Р•СЃР»Рё Сѓ Р’Р°СЃ РІРѕР·РЅРёРєР»Рё РїСЂРѕР±Р»РµРјС‹ СЃ РїРѕРґС‚РІРµСЂР¶РґРµРЅРёРµРј СѓС‡С‘С‚РЅРѕР№ Р·Р°РїРёСЃРё, РѕС‚РІРµС‚СЊС‚Рµ РЅР° РґР°РЅРЅРѕРµ РїРёСЃСЊРјРѕ РґР»СЏ СЃРІСЏР·Рё СЃ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂРѕРј СЃРёСЃС‚РµРјС‹.</xsl:text>
         <xsl:text>&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
-        <xsl:text>Спасибо!</xsl:text>   
+        <xsl:text>РЎРїР°СЃРёР±Рѕ!</xsl:text>   
     </xsl:template>
 </xsl:stylesheet>
 
