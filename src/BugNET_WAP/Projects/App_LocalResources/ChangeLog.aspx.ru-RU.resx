@@ -142,7 +142,7 @@
     <value>Заметки к выпуску</value>
   </data>
   <data name="Issues" xml:space="preserve">
-    <value>{0} задания</value>
+    <value> задания</value>
   </data>
   <data name="SortLabel.Text" xml:space="preserve">
     <value>Сортировка:</value>
@@ -151,6 +151,9 @@
     <value>{0} задание</value>
   </data>
   <data name="RU_Issues2" xml:space="preserve">
+    <value>{0} задания</value>
+  </data>
+  <data name="RU_Issues3" xml:space="preserve">
     <value>{0} заданий</value>
   </data>
 </root>
