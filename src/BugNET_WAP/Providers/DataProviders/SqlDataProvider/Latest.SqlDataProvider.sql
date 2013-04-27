@@ -25,8 +25,7 @@ CREATE TABLE [dbo].[BugNet_DefaultValues](
  CONSTRAINT [PK_BugNet_DefaultValues] PRIMARY KEY CLUSTERED 
 (
 	[ProjectId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+)) 
 
 GO
 
@@ -84,8 +83,7 @@ CREATE TABLE [dbo].[BugNet_DefaultValuesVisibility](
  CONSTRAINT [PK_Bugnet_DefaultValuesVisibility] PRIMARY KEY CLUSTERED 
 (
 	[ProjectId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+)) 
 
 GO
 
@@ -361,4 +359,52 @@ DROP PROCEDURE [dbo].[BugNet_Project_GetChangeLog]
 GO
 
 DROP PROCEDURE [dbo].[BugNet_Project_GetRoadMap]
+GO
+
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueRevision_CreateNewIssueRevision]    Script Date: 4/27/2013 2:08:06 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[BugNet_IssueRevision_CreateNewIssueRevision]
+	@IssueId int,
+	@Revision int,
+	@Repository nvarchar(400),
+	@RevisionDate nvarchar(100),
+	@RevisionAuthor nvarchar(100),
+	@RevisionMessage ntext,
+	@Changeset nvarchar(100),
+	@Branch nvarchar(255)
+AS
+
+IF (NOT EXISTS(SELECT IssueRevisionId FROM BugNet_IssueRevisions WHERE IssueId = @IssueId AND Revision = @Revision 
+	AND RevisionDate = @RevisionDate AND Repository = @Repository AND RevisionAuthor = @RevisionAuthor))
+BEGIN
+	INSERT BugNet_IssueRevisions
+	(
+		Revision,
+		IssueId,
+		Repository,
+		RevisionAuthor,
+		RevisionDate,
+		RevisionMessage,
+		Changeset,
+		Branch,
+		DateCreated
+	) 
+	VALUES 
+	(
+		@Revision,
+		@IssueId,
+		@Repository,
+		@RevisionAuthor,
+		@RevisionDate,
+		@RevisionMessage,
+		@Changeset,
+		@Branch,
+		GetDate()
+	)
+
+	RETURN scope_identity()
+END
 GO
