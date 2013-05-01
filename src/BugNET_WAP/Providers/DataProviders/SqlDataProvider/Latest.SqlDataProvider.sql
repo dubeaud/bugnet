@@ -25,8 +25,7 @@ CREATE TABLE [dbo].[BugNet_DefaultValues](
  CONSTRAINT [PK_BugNet_DefaultValues] PRIMARY KEY CLUSTERED 
 (
 	[ProjectId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+)) 
 
 GO
 
@@ -84,8 +83,7 @@ CREATE TABLE [dbo].[BugNet_DefaultValuesVisibility](
  CONSTRAINT [PK_Bugnet_DefaultValuesVisibility] PRIMARY KEY CLUSTERED 
 (
 	[ProjectId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+)) 
 
 GO
 
@@ -361,4 +359,115 @@ DROP PROCEDURE [dbo].[BugNet_Project_GetChangeLog]
 GO
 
 DROP PROCEDURE [dbo].[BugNet_Project_GetRoadMap]
+GO
+
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueRevision_CreateNewIssueRevision]    Script Date: 4/27/2013 2:08:06 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[BugNet_IssueRevision_CreateNewIssueRevision]
+	@IssueId int,
+	@Revision int,
+	@Repository nvarchar(400),
+	@RevisionDate nvarchar(100),
+	@RevisionAuthor nvarchar(100),
+	@RevisionMessage ntext,
+	@Changeset nvarchar(100),
+	@Branch nvarchar(255)
+AS
+
+IF (NOT EXISTS(SELECT IssueRevisionId FROM BugNet_IssueRevisions WHERE IssueId = @IssueId AND Revision = @Revision 
+	AND RevisionDate = @RevisionDate AND Repository = @Repository AND RevisionAuthor = @RevisionAuthor))
+BEGIN
+	INSERT BugNet_IssueRevisions
+	(
+		Revision,
+		IssueId,
+		Repository,
+		RevisionAuthor,
+		RevisionDate,
+		RevisionMessage,
+		Changeset,
+		Branch,
+		DateCreated
+	) 
+	VALUES 
+	(
+		@Revision,
+		@IssueId,
+		@Repository,
+		@RevisionAuthor,
+		@RevisionDate,
+		@RevisionMessage,
+		@Changeset,
+		@Branch,
+		GetDate()
+	)
+
+	RETURN scope_identity()
+END
+GO
+
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueNotification_GetIssueNotificationsByIssueId]    Script Date: 4/27/2013 2:21:16 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROCEDURE [dbo].[BugNet_IssueNotification_GetIssueNotificationsByIssueId] 
+	@IssueId Int
+AS
+
+
+SET NOCOUNT ON
+DECLARE @DefaultCulture NVARCHAR(50)
+SET @DefaultCulture = (SELECT ISNULL(SettingValue, 'en-US') FROM BugNet_HostSettings WHERE SettingName = 'ApplicationDefaultLanguage')
+
+DECLARE @tmpTable TABLE (IssueNotificationId int, IssueId int,NotificationUserId uniqueidentifier, NotificationUsername nvarchar(50), NotificationDisplayName nvarchar(50), NotificationEmail nvarchar(50), NotificationCulture NVARCHAR(50))
+INSERT @tmpTable
+
+SELECT 
+	IssueNotificationId,
+	IssueId,
+	U.UserId NotificationUserId,
+	U.UserName NotificationUsername,
+	IsNull(DisplayName,'') NotificationDisplayName,
+	M.Email NotificationEmail,
+	ISNULL(UP.PreferredLocale, @DefaultCulture) AS NotificationCulture
+FROM
+	BugNet_IssueNotifications
+	INNER JOIN aspnet_Users U ON BugNet_IssueNotifications.UserId = U.UserId
+	INNER JOIN aspnet_Membership M ON BugNet_IssueNotifications.UserId = M.UserId
+	LEFT OUTER JOIN BugNet_UserProfiles UP ON U.UserName = UP.UserName
+WHERE
+	IssueId = @IssueId
+ORDER BY
+	DisplayName
+
+-- get all people on the project who want to be notified
+
+INSERT @tmpTable
+SELECT
+	ProjectNotificationId,
+	IssueId = @IssueId,
+	u.UserId NotificationUserId,
+	u.UserName NotificationUsername,
+	IsNull(DisplayName,'') NotificationDisplayName,
+	m.Email NotificationEmail,
+	ISNULL(UP.PreferredLocale, @DefaultCulture) AS NotificationCulture
+FROM
+	BugNet_ProjectNotifications p,
+	BugNet_Issues i,
+	aspnet_Users u,
+	aspnet_Membership m ,
+	BugNet_UserProfiles up
+WHERE
+	IssueId = @IssueId
+	AND p.ProjectId = i.ProjectId
+	AND u.UserId = p.UserId
+	AND u.UserId = m.UserId
+	AND u.UserName = up.UserName
+
+SELECT DISTINCT IssueId,NotificationUserId, NotificationUsername, NotificationDisplayName, NotificationEmail, NotificationCulture FROM @tmpTable ORDER BY NotificationDisplayName
 GO

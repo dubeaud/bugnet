@@ -63,8 +63,6 @@ namespace BugNET.BLL
 
                     if (entity.SendNewAssigneeNotification)
                     {
-                        
-
                         //add this user to notifications and send them a notification
                         var notification = new IssueNotification
                             {
@@ -205,6 +203,14 @@ namespace BugNET.BLL
             return issueChanges;
         }
 
+        /// <summary>
+        /// Gets the new issue history.
+        /// </summary>
+        /// <param name="history">The history.</param>
+        /// <param name="fieldChanged">The field changed.</param>
+        /// <param name="oldValue">The old value.</param>
+        /// <param name="newValue">The new value.</param>
+        /// <returns></returns>
         private static IssueHistory GetNewIssueHistory(IssueHistory history, string fieldChanged, string oldValue, string newValue)
         {
             return new IssueHistory

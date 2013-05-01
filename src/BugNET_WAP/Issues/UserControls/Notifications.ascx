@@ -10,13 +10,13 @@ runat="server" AutoGenerateColumns="false" ShowHeader="false">
     <table style="padding:15px">
         <tr>
             <td rowspan="3">
-                <asp:ListBox ID="lstProjectUsers" DataTextField="DisplayName" DataValueField="Username" runat="server" Rows="5" Width="130" SelectionMode="Single"></asp:ListBox>
+                <asp:ListBox ID="lstProjectUsers" DataTextField="DisplayName" DataValueField="Username" runat="server" Rows="5" Width="170" SelectionMode="Single"></asp:ListBox>
             </td>
             <td>
                 <asp:Button runat="server" ID="btnAddNot" Text="Add >>" meta:resourcekey="btnAddNot" style="border:1px outset;width:100px;" CausesValidation="false" OnClick="btnAddNot_Click" />
             </td>
             <td rowspan="3">
-                <asp:ListBox ID="lstNotificationUsers"  DataTextField="NotificationDisplayName" DataValueField="NotificationUsername" runat="server" Rows="5" Width="130" SelectionMode="Single"></asp:ListBox>
+                <asp:ListBox ID="lstNotificationUsers"  DataTextField="NotificationDisplayName" DataValueField="NotificationUsername" runat="server" Rows="5" Width="170" SelectionMode="Single"></asp:ListBox>
             </td>
         </tr>
         <tr>

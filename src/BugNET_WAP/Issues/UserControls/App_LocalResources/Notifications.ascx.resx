@@ -135,4 +135,7 @@
   <data name="pnlNotificationAdmin.GroupingText" xml:space="preserve">
     <value>Add Remove Notifications (Managers Only)</value>
   </data>
+  <data name="ProjectLevel" xml:space="preserve">
+    <value> (Project Level)</value>
+  </data>
 </root>

@@ -5,6 +5,7 @@ using BugNET.BLL;
 using BugNET.Common;
 using BugNET.Entities;
 using BugNET.UserInterfaceLayer;
+using System.Linq;
 
 namespace BugNET.Issues.UserControls
 {
@@ -71,11 +72,14 @@ namespace BugNET.Issues.UserControls
 
             lstProjectUsers.DataSource = UserManager.GetUsersByProjectId(ProjectId);
             lstProjectUsers.DataBind();
+
+            List<ProjectNotification> projectNotifications = (List<ProjectNotification>)ProjectNotificationManager.GetByProjectId(ProjectId);
             List<IssueNotification> CurrentUsers = IssueNotificationManager.GetByIssueId(IssueId);
+
             foreach (IssueNotification item in CurrentUsers)
             {
                 if (lstProjectUsers.Items.FindByValue(item.NotificationUsername) != null)
-                {
+                { 
                     ListItem DelIndex = null;
                     DelIndex = lstProjectUsers.Items.FindByValue(item.NotificationUsername);
                     lstProjectUsers.Items.Remove(DelIndex);
@@ -84,6 +88,16 @@ namespace BugNET.Issues.UserControls
            
             lstNotificationUsers.DataSource = CurrentUsers;
             lstNotificationUsers.DataBind();
+
+            // filter out project notifications and disable them
+            foreach (ListItem item in lstNotificationUsers.Items)
+            {
+                if (projectNotifications.Any(p => p.NotificationUsername == item.Value))
+                {
+                    item.Attributes.Add("disabled", "disabled");
+                    item.Text += GetLocalResourceObject("ProjectLevel").ToString();
+                }
+            }
         }
 
         /// <summary>
