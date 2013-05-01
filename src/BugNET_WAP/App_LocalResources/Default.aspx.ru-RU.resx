@@ -124,7 +124,7 @@
     <value>Недавно созданные</value>
   </data>
   <data name="Filters.Text" xml:space="preserve">
-    <value>Фильтры</value>
+    <value>Задания</value>
   </data>
   <data name="lblAll.Text" xml:space="preserve">
     <value>Все</value>
@@ -133,7 +133,7 @@
     <value>Администратор</value>
   </data>
   <data name="NextMilestoneDue" xml:space="preserve">
-    <value>Следующий этап к {0}</value>
+    <value>Дата завершения текущего этапа {0}</value>
   </data>
   <data name="NoDueDatesSet" xml:space="preserve">
     <value>&lt;font color='red'&gt;Даты окончания не заданы.&lt;/font&gt;</value>
@@ -154,7 +154,7 @@
     <value>Быстрые ссылки</value>
   </data>
   <data name="QuickLinksFilters.Text" xml:space="preserve">
-    <value>Быстрые ссылки / Фильтры</value>
+    <value>Быстрые ссылки / Задания</value>
   </data>
   <data name="RegisterAndLoginMessage" xml:space="preserve">
     <value>Вам необходимо войти в систему, чтобы просматривать проекты на этом сайте.</value>
