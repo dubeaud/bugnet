@@ -349,10 +349,10 @@ ORDER BY DisplayName ASC
 
 GO
 
-INSERT INTO [dbo].[BugNet_Languages] ([CultureCode], [CultureName], [FallbackCulture]) VALUES('ro-RO', 'Romanian (Romania)', 'ro-RO')
+INSERT INTO [dbo].[BugNet_Languages] ([CultureCode], [CultureName], [FallbackCulture]) VALUES('ro-RO', 'Romanian (Romania)', 'en-US')
 GO
 
-INSERT INTO [dbo].[BugNet_Languages] ([CultureCode], [CultureName], [FallbackCulture]) VALUES('fr-CA', 'French (Canadian)', 'fr-CA')
+INSERT INTO [dbo].[BugNet_Languages] ([CultureCode], [CultureName], [FallbackCulture]) VALUES('fr-CA', 'French (Canadian)', 'en-US')
 GO
 
 DROP PROCEDURE [dbo].[BugNet_Project_GetChangeLog]
