@@ -111,6 +111,9 @@ namespace BugNET.Projects
                     QueryClause q = new QueryClause("AND", "IssueDueDate", "=", e.Day.Date.ToShortDateString(), SqlDbType.DateTime);
                     queryClauses.Add(q);
 
+                    q = new QueryClause("AND", "Disabled", "=", "false", SqlDbType.Bit); 
+                    queryClauses.Add(q);
+
                     List<Issue> issues = IssueManager.PerformQuery(queryClauses, ProjectId);
                     foreach (Issue issue in issues)
                     {
