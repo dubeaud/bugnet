@@ -1430,9 +1430,10 @@ ul.permissions li
 {
 	float: right;
 }
-.IssueDescription
+.issueDescription
 {
-	margin: 0.5em;
+    clear:both;
+	margin:20px 15px 10px 0;
 }
 .issueDescription ul, .issueDescription ol, .commentContainer ul, .commentContainer ol, .commentContainerAlt ul, .commentContainerAlt ol
 {
