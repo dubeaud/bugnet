@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DirectedGraph GraphDirection="LeftToRight" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="BugNET.MailboxReader" Label="BugNET.MailboxReader" Category="Project" />
+    <Node Id="log4net 1.2.10" Label="log4net 1.2.10" Category="Package" />
+    <Node Id="BugNET.Common" Label="BugNET.Common" Category="Project" />
+    <Node Id="log4net 1.2.10" Label="log4net 1.2.10" Category="Package" />
+    <Node Id="BugNET.Tests" Label="BugNET.Tests" Category="Project" />
+    <Node Id="log4net 1.2.10" Label="log4net 1.2.10" Category="Package" />
+    <Node Id="NUnit 2.6.0.12054" Label="NUnit 2.6.0.12054" Category="Package" />
+    <Node Id="BugNET.DAL" Label="BugNET.DAL" Category="Project" />
+    <Node Id="log4net 1.2.10" Label="log4net 1.2.10" Category="Package" />
+    <Node Id="BugNET.BLL" Label="BugNET.BLL" Category="Project" />
+    <Node Id="log4net 1.2.10" Label="log4net 1.2.10" Category="Package" />
+    <Node Id="BugNET.Entities" Label="BugNET.Entities" Category="Project" />
+    <Node Id="AutoMapper 2.1.267" Label="AutoMapper 2.1.267" Category="Package" />
+    <Node Id="log4net 1.2.10" Label="log4net 1.2.10" Category="Package" />
+    <Node Id="BugNET.SubversionHooks" Label="BugNET.SubversionHooks" Category="Project" />
+    <Node Id="log4net 1.2.10" Label="log4net 1.2.10" Category="Package" />
+    <Node Id="BugNET_WAP" Label="BugNET_WAP" Category="Project" />
+    <Node Id="AjaxControlToolkit 4.1.51116" Label="AjaxControlToolkit 4.1.51116" Category="Package" />
+    <Node Id="Altairis.Web.Security 2.4.3" Label="Altairis.Web.Security 2.4.3" Category="Package" />
+    <Node Id="CKEditor 3.6.2" Label="CKEditor 3.6.2" Category="Package" />
+    <Node Id="jQuery 1.7.2" Label="jQuery 1.7.2" Category="Package" />
+    <Node Id="json2 1.0.2" Label="json2 1.0.2" Category="Package" />
+    <Node Id="log4net 1.2.10" Label="log4net 1.2.10" Category="Package" />
+    <Node Id="Library\Providers\Data Providers\Provider.SqlDataProvider" Label="Provider.SqlDataProvider" Category="Project" />
+    <Node Id="log4net 1.2.10" Label="log4net 1.2.10" Category="Package" />
+    <Node Id="Library\Providers\Membership Providers\Provider.MembershipProviders" Label="Provider.MembershipProviders" Category="Project" />
+    <Node Id="log4net 1.2.10" Label="log4net 1.2.10" Category="Package" />
+    <Node Id="Library\Providers\HtmlEditor Providers\Provider.CkHtmlEditorProvider" Label="Provider.CkHtmlEditorProvider" Category="Project" />
+    <Node Id="log4net 1.2.10" Label="log4net 1.2.10" Category="Package" />
+    <Node Id="Library\Providers\HtmlEditor Providers\Provider.TextboxHtmlProvider" Label="Provider.TextboxHtmlProvider" Category="Project" />
+    <Node Id="log4net 1.2.10" Label="log4net 1.2.10" Category="Package" />
+    <Node Id="Library\Providers\HtmlEditor Providers\Provider.HtmlEditorProvider" Label="Provider.HtmlEditorProvider" Category="Project" />
+    <Node Id="log4net 1.2.10" Label="log4net 1.2.10" Category="Package" />
+    <Node Id="Library\HttpModules\HttpModule.Localization" Label="HttpModule.Localization" Category="Project" />
+    <Node Id="log4net 1.2.10" Label="log4net 1.2.10" Category="Package" />
+    <Node Id="Library\HttpModules\HttpModule.MailBoxReader" Label="HttpModule.MailBoxReader" Category="Project" />
+    <Node Id="log4net 1.2.10" Label="log4net 1.2.10" Category="Package" />
+    <Node Id="Library\HttpModules\HttpModule.Authentication" Label="HttpModule.Authentication" Category="Project" />
+    <Node Id="log4net 1.2.10" Label="log4net 1.2.10" Category="Package" />
+  </Nodes>
+  <Links>
+    <Link Source="BugNET.MailboxReader" Target="log4net 1.2.10" Category="Installed Package" />
+    <Link Source="BugNET.Common" Target="log4net 1.2.10" Category="Installed Package" />
+    <Link Source="BugNET.Tests" Target="log4net 1.2.10" Category="Installed Package" />
+    <Link Source="BugNET.Tests" Target="NUnit 2.6.0.12054" Category="Installed Package" />
+    <Link Source="BugNET.DAL" Target="log4net 1.2.10" Category="Installed Package" />
+    <Link Source="BugNET.BLL" Target="log4net 1.2.10" Category="Installed Package" />
+    <Link Source="BugNET.Entities" Target="AutoMapper 2.1.267" Category="Installed Package" />
+    <Link Source="BugNET.Entities" Target="log4net 1.2.10" Category="Installed Package" />
+    <Link Source="BugNET.SubversionHooks" Target="log4net 1.2.10" Category="Installed Package" />
+    <Link Source="BugNET_WAP" Target="AjaxControlToolkit 4.1.51116" Category="Installed Package" />
+    <Link Source="BugNET_WAP" Target="Altairis.Web.Security 2.4.3" Category="Installed Package" />
+    <Link Source="BugNET_WAP" Target="CKEditor 3.6.2" Category="Installed Package" />
+    <Link Source="BugNET_WAP" Target="jQuery 1.7.2" Category="Installed Package" />
+    <Link Source="BugNET_WAP" Target="json2 1.0.2" Category="Installed Package" />
+    <Link Source="BugNET_WAP" Target="log4net 1.2.10" Category="Installed Package" />
+    <Link Source="Library\Providers\Data Providers\Provider.SqlDataProvider" Target="log4net 1.2.10" Category="Installed Package" />
+    <Link Source="Library\Providers\Membership Providers\Provider.MembershipProviders" Target="log4net 1.2.10" Category="Installed Package" />
+    <Link Source="Library\Providers\HtmlEditor Providers\Provider.CkHtmlEditorProvider" Target="log4net 1.2.10" Category="Installed Package" />
+    <Link Source="Library\Providers\HtmlEditor Providers\Provider.TextboxHtmlProvider" Target="log4net 1.2.10" Category="Installed Package" />
+    <Link Source="Library\Providers\HtmlEditor Providers\Provider.HtmlEditorProvider" Target="log4net 1.2.10" Category="Installed Package" />
+    <Link Source="Library\HttpModules\HttpModule.Localization" Target="log4net 1.2.10" Category="Installed Package" />
+    <Link Source="Library\HttpModules\HttpModule.MailBoxReader" Target="log4net 1.2.10" Category="Installed Package" />
+    <Link Source="Library\HttpModules\HttpModule.Authentication" Target="log4net 1.2.10" Category="Installed Package" />
+  </Links>
+  <Categories>
+    <Category Id="Project" />
+    <Category Id="Package" />
+  </Categories>
+  <Styles>
+    <Style TargetType="Node" GroupLabel="Project" ValueLabel="True">
+      <Condition Expression="HasCategory('Project')" />
+      <Setter Property="Background" Value="Blue" />
+    </Style>
+  </Styles>
+</DirectedGraph>

@@ -28,6 +28,7 @@
 
         //User - Role Stored Procs
         private const string SP_USER_GETUSERSBYPROJECTID = "BugNet_User_GetUsersByProjectId";
+        private const string SP_USER_GETUSERNAMEBYPASSWORDRESETTOKEN = "BugNet_User_GetUserNameByPasswordResetToken";
         private const string SP_PROJECT_GETMEMBERROLESBYPROJECTID = "BugNET_Project_GetMemberRolesByProjectId";
 
         private const string SP_PERMISSION_GETALLPERMISSIONS = "BugNet_Permission_GetAllPermissions";

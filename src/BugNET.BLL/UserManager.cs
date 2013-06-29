@@ -19,8 +19,6 @@ namespace BugNET.BLL
     {
         private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        #region Static Methods
-
         /// <summary>
         /// Creates a new user.
         /// </summary>
@@ -107,67 +105,7 @@ namespace BugNET.BLL
             // find open id user names [http://username] pattern
             foreach (CustomMembershipUser u in Membership.FindUsersByName(string.Concat("%//", userNameToMatch)))
                 userList[u.UserName] = u;
-
-            // wrhighfield
-            // removed 2011-11-26 due to the aggressive removing of the usernames, the patterns above will return some
-            // false matches when it dealing with openid and windows user names, however it does seem to work a bit better
-            // than the code below...
-
-            //var sb = new StringBuilder();
-            //foreach (var c in userNameToMatch)
-            //{
-            //    switch (c)
-            //    {
-            //        case '_':
-            //            sb.Append("?");
-            //            break;
-            //        case '%':
-            //            sb.Append(".*");
-            //            break;
-            //        case '[':
-            //        case '{':
-            //        case '\\':
-            //        case '|':
-            //        case '>':
-            //        case '^':
-            //        case '$':
-            //        case '(':
-            //        case ')':
-            //        case '<':
-            //        case '.':
-            //        case '*':
-            //        case '+':
-            //        case '?':
-            //            sb.Append('\\');
-            //            sb.Append(c);
-            //            break;
-            //        default:
-            //            sb.Append(c);
-            //            break;
-            //    }
-            //}
-
-            //var regex = new Regex(sb.ToString());
-            //var invalidUsernames = new List<string>();
-            //foreach (var u in userList.Values)
-            //{
-            //    var username = u.UserName;
-            //    var pos = username.IndexOf('\\');
-            //    if ((pos >= 0) && (username.Length > pos))
-            //    {
-            //        username = username.Substring(pos + 1);
-            //    }
-            //    if (!regex.IsMatch(username))
-            //    {
-            //        invalidUsernames.Add(username);
-            //    }
-            //}
-
-            //foreach (var invalidUsername in invalidUsernames)
-            //{
-            //    userList.Remove(invalidUsername);
-            //}
-
+            
             return new List<CustomMembershipUser>(userList.Values);
         }
 
@@ -309,6 +247,10 @@ namespace BugNET.BLL
             return !string.IsNullOrEmpty(displayName) ? displayName : userName;
         }
 
+        /// <summary>
+        /// Gets the size of the profile page.
+        /// </summary>
+        /// <returns></returns>
         public static int GetProfilePageSize()
         {
             return HttpContext.Current.User.Identity.IsAuthenticated ? 
@@ -335,61 +277,6 @@ namespace BugNET.BLL
         public static List<ITUser> GetUsersByProjectId(int projectId, bool excludeReadOnlyUsers = true)
         {
             return DataProviderManager.Provider.GetUsersByProjectId(projectId, excludeReadOnlyUsers);
-        }
-
-        /// <summary>
-        /// Sends the user password reminder.
-        /// </summary>
-        /// <param name="user"></param>
-        /// <param name="passwordAnswer"></param>
-        /// <returns></returns>
-        public static void SendUserPasswordReminderNotification(MembershipUser user, string passwordAnswer)
-        {
-            if (user == null) throw new ArgumentNullException("user");
-            if(user.ProviderUserKey == null) throw new ArgumentNullException("user");
-
-            // TODO - create this via dependency injection at some point.
-            IMailDeliveryService mailService = new SmtpMailDeliveryService();
-
-            var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
-            var emailFormatKey = (emailFormatType == EmailFormatType.Text) ? "" : "HTML";
-            const string subjectKey = "PasswordReminderSubject";
-            var bodyKey = string.Concat("PasswordReminder", emailFormatKey);
-            var profile = new WebProfile().GetProfile(user.UserName);
-
-            var nc = new CultureNotificationContent().LoadContent(profile.PreferredLocale, subjectKey, bodyKey);
-
-            var notificationUser = new NotificationUser
-                {
-                    Id = (Guid)user.ProviderUserKey,
-                    CreationDate = user.CreationDate,
-                    Email = user.Email,
-                    UserName = user.UserName,
-                    DisplayName = profile.DisplayName,
-                    FirstName = profile.FirstName,
-                    LastName = profile.LastName,
-                    Password = user.GetPassword(passwordAnswer),
-                    IsApproved = user.IsApproved
-                };
-
-            var data = new Dictionary<string, object> { { "User", notificationUser } };
-
-            var emailSubject = nc.CultureContents
-                .First(p => p.ContentKey == subjectKey)
-                .FormatContent();
-
-            var bodyContent = nc.CultureContents
-                .First(p => p.ContentKey == bodyKey)
-                .TransformContent(data);
-
-            var message = new MailMessage
-            {
-                Subject = emailSubject,
-                Body = bodyContent,
-                IsBodyHtml = true
-            };
-
-            mailService.Send(user.Email, message);
         }
 
         /// <summary>
@@ -499,23 +386,26 @@ namespace BugNET.BLL
         }
 
         /// <summary>
-        /// Sends the user new password notification.
+        /// Sends the forgot password email.
         /// </summary>
         /// <param name="user">The user.</param>
-        /// <param name="newPassword">The new password.</param>
-        public static void SendUserNewPasswordNotification(MembershipUser user, string newPassword)
+        /// <param name="token">The token.</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// user
+        /// or
+        /// user
+        /// </exception>
+        public static void SendForgotPasswordEmail(MembershipUser user, string token)
         {
             if (user == null) throw new ArgumentNullException("user");
             if (user.ProviderUserKey == null) throw new ArgumentNullException("user");
-            if (string.IsNullOrEmpty(newPassword)) throw new ArgumentNullException("newPassword");
 
-            // TODO - create this via dependency injection at some point.
             IMailDeliveryService mailService = new SmtpMailDeliveryService();
 
             var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
             var emailFormatKey = (emailFormatType == EmailFormatType.Text) ? "" : "HTML";
-            const string subjectKey = "PasswordResetSubject";
-            var bodyKey = string.Concat("PasswordReset", emailFormatKey);
+            const string subjectKey = "ForgotPasswordSubject";
+            var bodyKey = string.Concat("ForgotPassword", emailFormatKey);
             var profile = new WebProfile().GetProfile(user.UserName);
 
             var nc = new CultureNotificationContent().LoadContent(profile.PreferredLocale, subjectKey, bodyKey);
@@ -534,8 +424,7 @@ namespace BugNET.BLL
 
             var data = new Dictionary<string, object>
                 {
-                    {"User", notificationUser},
-                    {"RawXml_Password", string.Format("<Password>{0}</Password>", newPassword)}
+                    {"Token", token}
                 };
 
             var emailSubject = nc.CultureContents
@@ -583,6 +472,15 @@ namespace BugNET.BLL
             DataProviderManager.Provider.SetSelectedIssueColumnsByUserName(userName, projectId, columns);
         }
 
-        #endregion
+        /// <summary>
+        /// Gets the user  by password reset token.
+        /// </summary>
+        /// <param name="token">The token.</param>
+        /// <returns></returns>
+        public static MembershipUser GetUserByPasswordResetToken(string token)
+        {
+            var username = DataProviderManager.Provider.GetUserNameByPasswordResetToken(token);
+            return string.IsNullOrWhiteSpace(username) ? null : Membership.GetUser(username);
+        }
     }
 }

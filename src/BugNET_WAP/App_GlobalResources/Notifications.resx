@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Text\ForgotPassword.xslt</value>
+  </data>
+  <data name="ForgotPasswordHTML" xml:space="preserve">
+    <value>Html\ForgotPassword.xslt</value>
+  </data>
+  <data name="ForgotPasswordSubject" xml:space="preserve">
+    <value>Forgot Password</value>
+  </data>
   <data name="IssueAdded" xml:space="preserve">
     <value>Text\IssueAdded.xslt</value>
   </data>

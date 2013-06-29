@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
 using System.Configuration;
 
 namespace BugNET.BLL
@@ -93,6 +94,30 @@ namespace BugNET.BLL
             set
             {
                 SetPropertyValue("ReceiveEmailNotifications", value);
+            }
+        }
+
+        public virtual string PasswordVerificationToken
+        {
+            get
+            {
+                return ((string)(GetPropertyValue("PasswordVerificationToken")));
+            }
+            set
+            {
+                SetPropertyValue("PasswordVerificationToken", value);
+            }
+        }
+
+        public virtual System.Nullable<DateTime> PasswordVerificationTokenExpirationDate
+        {
+            get
+            {
+                return ((DateTime)(GetPropertyValue("PasswordVerificationTokenExpirationDate")));
+            }
+            set
+            {
+                SetPropertyValue("PasswordVerificationTokenExpirationDate", value);
             }
         }
         

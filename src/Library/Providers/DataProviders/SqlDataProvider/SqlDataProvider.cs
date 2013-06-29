@@ -887,6 +887,25 @@ namespace BugNET.Providers.DataProviders
                 return userList;
             }
         }
+
+        /// <summary>
+        /// Gets the user name by password reset token.
+        /// </summary>
+        /// <param name="token">The token.</param>
+        /// <returns></returns>
+        public override string GetUserNameByPasswordResetToken(string token)
+        {
+            using (var sqlCmd = new SqlCommand())
+            {
+                AddParamToSqlCmd(sqlCmd, "@Token", SqlDbType.NVarChar, 0, ParameterDirection.Input, token);
+                AddParamToSqlCmd(sqlCmd, "@UserName", SqlDbType.NVarChar, 255, ParameterDirection.Output, null);
+                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_USER_GETUSERNAMEBYPASSWORDRESETTOKEN);
+                ExecuteScalarCmd(sqlCmd);
+                var returnValue = (string)sqlCmd.Parameters["@UserName"].Value;
+
+                return returnValue;
+            }
+        }
         #endregion
 
         #region Project methods

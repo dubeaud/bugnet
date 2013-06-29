@@ -1,4 +1,6 @@
 using System;
+using System.Security.Cryptography;
+using System.Web;
 using System.Web.Security;
 using System.Web.UI.WebControls;
 using BugNET.BLL;
@@ -25,29 +27,60 @@ namespace BugNET.Account
         }
 
         /// <summary>
-        /// Handles the SendingMail event of the PasswordRecovery1 control.
+        /// Handles the Click event of the SubmitButton control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Web.UI.WebControls.MailMessageEventArgs"/> instance containing the event data.</param>
-        protected void PasswordRecovery1_SendingMail(object sender, MailMessageEventArgs e)
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected void SubmitButton_Click(object sender, EventArgs e)
         {
-            e.Cancel = true;
-
-            var user = Membership.GetUser(PasswordRecovery1.UserName);
-
-            if (user != null)
+            if(Page.IsValid)
             {
-                Log.InfoFormat(GetLocalResourceObject("PasswordReminderRequested").ToString(), user, DateTime.Now);
-                UserManager.SendUserPasswordReminderNotification(user, PasswordRecovery1.Answer);
-            }
-            else
-            {
-                // This exception can expose a specialized type of brute force attack against the username.
-                Log.Error(
-                    string.Format("Hack Attempt! Password Reminder Bypass by '{0}'", PasswordRecovery1.UserName), 
-                    new ArgumentException(String.Format("Non-Existent User '{0}' bypassed something in the password reminder\r\nAt {1} from IP Address {2}\r\nUser Agent {3}", PasswordRecovery1.UserName, DateTime.Now, Context.Request.UserHostAddress, Context.Request.UserAgent)));
-            }
+                var user = Membership.GetUser(UserName.Text.Trim());
+                if (user != null && user.IsApproved)
+                {
+                    var profile = new WebProfile().GetProfile(UserName.Text.Trim());
+                    string token = profile.PasswordVerificationToken;
 
+                    // Generate password reset token and store in the users profile
+                    if (string.IsNullOrWhiteSpace(token))
+                    {
+                        token = GenerateToken();
+                        profile.PasswordVerificationToken = token;
+                        profile.PasswordVerificationTokenExpirationDate = DateTime.Now.AddMinutes(1440);
+                        profile.Save();
+                    }
+
+                    // Email the user the password reset token
+                    UserManager.SendForgotPasswordEmail(user, token);
+                }
+
+                forgotPassword.Visible = false;
+                successMessage.Visible = true;
+            }
+        }
+
+        /// <summary>
+        /// Generates the token.
+        /// </summary>
+        /// <returns></returns>
+        private string GenerateToken()
+        {
+            using (var prng = new RNGCryptoServiceProvider())
+            {
+                return GenerateToken(prng);
+            }
+        }
+
+        /// <summary>
+        /// Generates the token.
+        /// </summary>
+        /// <param name="generator">The generator.</param>
+        /// <returns></returns>
+        internal static string GenerateToken(RandomNumberGenerator generator)
+        {
+            byte[] tokenBytes = new byte[16];
+            generator.GetBytes(tokenBytes);
+            return HttpServerUtility.UrlTokenEncode(tokenBytes);
         }
     }
 }

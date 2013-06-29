@@ -181,11 +181,11 @@ namespace BugNET.Install
                 if (!providerPath.StartsWith("ERROR"))
                 {
                     WriteMessage(string.Format("Installing Version: {0}<br/>", UpgradeManager.GetCurrentVersion()), 0, true);
-                    WriteMessage("Installing Membership Provider:<br/>", 0, true);
-                    ExecuteSqlInFile(string.Format("{0}InstallCommon.sql", providerPath));
-                    ExecuteSqlInFile(string.Format("{0}InstallMembership.sql", providerPath));
-                    ExecuteSqlInFile(string.Format("{0}InstallProfile.sql", providerPath));
-                    ExecuteSqlInFile(string.Format("{0}InstallRoles.sql", providerPath));
+                    //WriteMessage("Installing Membership Provider:<br/>", 0, true);
+                    //ExecuteSqlInFile(string.Format("{0}InstallCommon.sql", providerPath));
+                    //ExecuteSqlInFile(string.Format("{0}InstallMembership.sql", providerPath));
+                    //ExecuteSqlInFile(string.Format("{0}InstallProfile.sql", providerPath));
+                    //ExecuteSqlInFile(string.Format("{0}InstallRoles.sql", providerPath));
                     WriteMessage("Installing BugNET Database:<br/>", 0, true);
                     ExecuteSqlInFile(string.Format("{0}BugNET.Schema.SqlDataProvider.sql", providerPath));
                     WriteMessage("Installing BugNET Default Data:<br/>", 0, true);

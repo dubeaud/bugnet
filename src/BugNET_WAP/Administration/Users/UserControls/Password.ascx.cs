@@ -16,28 +16,35 @@ namespace BugNET.Administration.Users.UserControls
 
         public event ActionEventHandler Action;
 
+        /// <summary>
+        /// Raises the <see cref="E:Action" /> event.
+        /// </summary>
+        /// <param name="args">The <see cref="ActionEventArgs"/> instance containing the event data.</param>
         void OnAction(ActionEventArgs args)
         {
             if (Action != null)
                 Action(this, args);
         }
 
+        /// <summary>
+        /// Gets or sets the user id.
+        /// </summary>
+        /// <value>
+        /// The user id.
+        /// </value>
         public Guid UserId
         {
             get { return ViewState.Get("UserId", Guid.Empty); }
             set { ViewState.Set("UserId", value); }
         }
 
+        /// <summary>
+        /// Initializes this instance.
+        /// </summary>
         public void Initialize()
         {
             GetMembershipData(UserId);
             DataBind();
-
-            if (System.Web.Security.Membership.RequiresQuestionAndAnswer || !System.Web.Security.Membership.EnablePasswordRetrieval)
-                ChangePassword.Visible = false;
-
-            if (!System.Web.Security.Membership.EnablePasswordReset)
-                ResetPassword.Visible = false;
         }
 
         /// <summary>
@@ -87,41 +94,6 @@ namespace BugNET.Administration.Users.UserControls
                     Log.Error(LoggingManager.GetErrorMessageResource("PasswordChangeError"),ex);
                 }
                 ActionMessage.ShowErrorMessage(LoggingManager.GetErrorMessageResource("PasswordChangeError"));
-            }
-        }
-
-        /// <summary>
-        /// Handles the Click event of the cmdResetPassword control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
-        protected void cmdResetPassword_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                GetMembershipData(UserId);
-
-                var newPassword = MembershipData.ResetPassword();
-                ActionMessage.ShowSuccessMessage(GetLocalResourceObject("PasswordResetSuccess").ToString());
-
-                //Email the password to the user.
-                UserManager.SendUserNewPasswordNotification(MembershipData, newPassword);
-                GetMembershipData(UserId);
-                DataBind();
-
-                if(Log.IsInfoEnabled)
-                    Log.InfoFormat(GetLocalResourceObject("PasswordResetLogMessage").ToString(), MembershipData.UserName); 
-                
-            }
-            catch (Exception ex)
-            {
-                if (Log.IsErrorEnabled)
-                {
-                    if (HttpContext.Current.User != null && HttpContext.Current.User.Identity.IsAuthenticated)
-                        MDC.Set("user", HttpContext.Current.User.Identity.Name);
-                    Log.Error(Resources.Exceptions.PasswordResetError, ex); 
-                }
-                ActionMessage.ShowErrorMessage(ex.Message); 
             }
         }
 

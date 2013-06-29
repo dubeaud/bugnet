@@ -8,14 +8,9 @@
     <xsl:output omit-xml-declaration="yes" method="text" />
     <xsl:strip-space elements="*" />
     <xsl:template match="/root">
-        <xsl:value-of select="NotificationUser/DisplayName" />,
+        <xsl:text>This email confirms that you have changed the password for your </xsl:text><xsl:value-of select="HostSetting_ApplicationTitle" />&#160; account.
         <xsl:text>&#10;</xsl:text>
-        <xsl:text>Your password has been reset to &#160;&#160;</xsl:text><xsl:value-of select="Password" />&#160; Please login here. <xsl:value-of select="HostSetting_DefaultUrl" />Account/Login.aspx
-        <xsl:text>&#10;</xsl:text>
-        <xsl:text>Please note that this password is case-sensitive.</xsl:text>
-        <xsl:text>&#10;</xsl:text>
-        <xsl:text>&#10;</xsl:text>
-        <xsl:text>Once you are logged in, you can modify your password by clicking your username and selecting password.</xsl:text>
+        <xsl:text>If you did not change the password, please contact </xsl:text> <xsl:value-of select="HostSetting_ApplicationTitle" /> for assistance.
         <xsl:text>&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
         <xsl:text>Thank you,</xsl:text>
