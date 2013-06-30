@@ -113,7 +113,7 @@ namespace BugNET.BLL
         {
             get
             {
-                return ((DateTime)(GetPropertyValue("PasswordVerificationTokenExpirationDate")));
+                return ((DateTime?)(GetPropertyValue("PasswordVerificationTokenExpirationDate")));
             }
             set
             {

@@ -157,7 +157,7 @@ namespace BugNET.Install
                     ExecuteSqlInFile(string.Format("{0}BugNET.Schema.SqlDataProvider.sql", providerPath));
                     WriteMessage("Installing BugNET Default Data:<br/>", 0, true);
                     ExecuteSqlInFile(string.Format("{0}BugNET.Data.SqlDataProvider.sql", providerPath));
-                    WriteMessage("Creating Administrator Account", 0, true);
+                    WriteMessage("Creating Administrator Account<br/>", 0, true);
 
                     //create admin user
                     MembershipCreateStatus status;
@@ -167,7 +167,8 @@ namespace BugNET.Install
                     switch (status)
                     {
                         case MembershipCreateStatus.Success:
-                            WriteMessage("Created Administrator Account Successfully", 0, true);
+                            WriteMessage("Created Administrator Account", 0, true);
+                            WriteScriptSuccessError(true);
                             break;
                         case MembershipCreateStatus.InvalidUserName:
                         case MembershipCreateStatus.InvalidPassword:
@@ -180,14 +181,14 @@ namespace BugNET.Install
                         case MembershipCreateStatus.InvalidProviderUserKey:
                         case MembershipCreateStatus.DuplicateProviderUserKey:
                         case MembershipCreateStatus.ProviderError:
-                            var message = string.Format("Creating Administrator Account Failed, status returned: {0}", status);
+                            var message = string.Format("Creating Administrator Account Failed, status returned: {0} <br/>", status);
                             WriteMessage(message, 0, true);
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
 
-                    WriteMessage("Creating Administrator Account default profile", 0, true);
+                    WriteMessage("Creating Administrator Account default profile <br/>", 0, true);
 
                     if (status == MembershipCreateStatus.Success)
                     {

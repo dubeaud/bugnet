@@ -1,8 +1,3 @@
-SET NUMERIC_ROUNDABORT OFF
-GO
-SET XACT_ABORT, ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS, NOCOUNT ON
-GO
-
 /****** Object:  Table [dbo].[BugNet_Permissions]    Script Date: 08/26/2010 14:05:12 ******/
 INSERT [BugNet_Permissions] ([PermissionId], [PermissionKey], [PermissionName]) VALUES (1, N'CloseIssue', N'Close Issue')
 INSERT [BugNet_Permissions] ([PermissionId], [PermissionKey], [PermissionName]) VALUES (2, N'AddIssue', N'Add Issue')
