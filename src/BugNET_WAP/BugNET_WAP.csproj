@@ -47,12 +47,13 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\build\output\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DocumentationFile>..\build\output\BugNET.XML</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Test|AnyCPU' ">
@@ -1641,8 +1642,6 @@
     <Content Include="Images\user.gif" />
     <Content Include="Images\user_edit.gif" />
     <Content Include="Images\xml_small.gif" />
-    <Content Include="Install\403-3.gif" />
-    <Content Include="Install\403-3.htm" />
     <Content Include="App_Themes\Default\Default.skin" />
     <Content Include="log4net.config">
       <SubType>Designer</SubType>
@@ -1697,6 +1696,7 @@
     <Content Include="Scripts\ckeditor\ckeditor_php4.php" />
     <Content Include="Scripts\ckeditor\ckeditor.php" />
     <Content Include="Scripts\ckeditor\ckeditor.pack" />
+    <None Include="Properties\PublishProfiles\Local.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Administration\Host\App_LocalResources\LogViewer.aspx.resx" />
@@ -2547,6 +2547,10 @@
       <Project>{69F2F661-AA9A-4C9F-8217-6A22E8C66FEB}</Project>
       <Name>BugNET.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BugNET.DAL\BugNET.DAL.csproj">
+      <Project>{efd03a92-584b-4930-9fb1-58df64bf7fd4}</Project>
+      <Name>BugNET.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BugNET.Entities\BugNET.Entities.csproj">
       <Project>{5A0AE67B-1F8C-4A6D-A02B-B57BB219288F}</Project>
       <Name>BugNET.Entities</Name>
@@ -2555,9 +2559,33 @@
       <Project>{D10EDECB-ADB2-4E5F-93A6-00D09E86B906}</Project>
       <Name>BugNET.MailboxReader</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Library\HttpModules\Authentication\HttpModule.Authentication.csproj">
+      <Project>{72be8d7e-b026-45ee-8613-dfb1bb70fd02}</Project>
+      <Name>HttpModule.Authentication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\HttpModules\Localization\HttpModule.Localization.csproj">
+      <Project>{74376c46-4d55-4891-85d7-06a490fa9fd5}</Project>
+      <Name>HttpModule.Localization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\HttpModules\MailBoxReader\HttpModule.MailBoxReader.csproj">
+      <Project>{4386aa43-f3fc-476d-b7e0-03db537c88e0}</Project>
+      <Name>HttpModule.MailBoxReader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\Providers\DataProviders\SqlDataProvider\Provider.SqlDataProvider.csproj">
+      <Project>{df8c87fa-3398-4aee-99b0-d47f1831c158}</Project>
+      <Name>Provider.SqlDataProvider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\Providers\HtmlEditorProviders\CkHtmlEditorProvider\Provider.CkHtmlEditorProvider.csproj">
+      <Project>{2d1294fe-a204-4f2c-b90c-8a041f44e12a}</Project>
+      <Name>Provider.CkHtmlEditorProvider</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Library\Providers\HtmlEditorProviders\HtmlEditorProvider\Provider.HtmlEditorProvider.csproj">
       <Project>{C7D90E4C-AD95-4ADD-8242-2CD66F0BC89B}</Project>
       <Name>Provider.HtmlEditorProvider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\Providers\HtmlEditorProviders\TextboxHtmlProvider\Provider.TextboxHtmlProvider.csproj">
+      <Project>{ca7e11ab-39fd-490a-a3a1-094be9c5db45}</Project>
+      <Name>Provider.TextboxHtmlProvider</Name>
     </ProjectReference>
     <ProjectReference Include="..\Library\Providers\MembershipProviders\Provider.MembershipProviders.csproj">
       <Project>{6B8EBBE2-196F-4F79-BC2F-918FC0AF3D67}</Project>

@@ -28,11 +28,11 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\..\build\output\</OutputPath>
+    <OutputPath>bin\Release</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\..\..\build\output\BugNET.Providers.CkHtmlEditorProvider.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\BugNET.Providers.CkHtmlEditorProvider.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CKEditor.NET">
@@ -74,8 +74,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <PropertyGroup>
-    <PostBuildEvent Condition="'$(Configuration)' == 'Debug'">copy "$(ProjectDir)bin\$(ConfigurationName)\*.*" "$(SolutionDir)BugNET_WAP\bin\"</PostBuildEvent>
-  </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
 </Project>
