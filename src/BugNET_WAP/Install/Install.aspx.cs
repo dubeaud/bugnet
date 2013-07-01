@@ -236,55 +236,37 @@ namespace BugNET.Install
         /// </summary>
         private void UpgradeApplication()
         {
-            //string installationDate = WebConfigurationManager.AppSettings["InstallationDate"];
+            _startTime = DateTime.Now;
+            WriteHeader("upgrade");
+            WriteMessage("<h2>Upgrade Status Report</h2>");
+            WriteMessage(string.Format("<h2>Current Assembly Version: {0}</h2>", UpgradeManager.GetCurrentVersion()));
+            WriteMessage(string.Format("<h2>Current Database Version: {0}</h2>", UpgradeManager.GetInstalledVersion()));
+            WriteMessage(string.Format("Upgrading To Version: {0}<br/>", UpgradeManager.GetCurrentVersion()), 0, true);
+            if (UpgradeBugNET())
+            {
+                WriteMessage("<h2>Upgrade Complete</h2>");
+                WriteMessage("<h2><a href='../Default.aspx'>Click Here To Access Your BugNET Installation</a></h2>");
 
-            //if (string.IsNullOrEmpty(installationDate))
-            //{
-            //    WriteMessage("<h2>Performing security updates...</h2>");
-            //    try
-            //    {
-            //        UpgradeManager.UpdateMachineKey();
-            //        Response.Redirect(HttpContext.Current.Request.RawUrl, true);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        WriteErrorMessage(string.Format("Failed Upgrading MachineKey: {0}", ex.Message));
-            //    }
-            //}
-            //else
-            //{
-                _startTime = DateTime.Now;
-                WriteHeader("upgrade");
-                WriteMessage("<h2>Upgrade Status Report</h2>");
-                WriteMessage(string.Format("<h2>Current Assembly Version: {0}</h2>", UpgradeManager.GetCurrentVersion()));
-                WriteMessage(string.Format("<h2>Current Database Version: {0}</h2>", UpgradeManager.GetInstalledVersion()));
-                WriteMessage(string.Format("Upgrading To Version: {0}<br/>", UpgradeManager.GetCurrentVersion()), 0, true);
-                if (UpgradeBugNET())
+                var currentVersion = UpgradeManager.GetCurrentVersion();
+                UpgradeManager.UpdateDatabaseVersion(currentVersion);
+
+                // support for a version file to be loaded to display things like breaking changes or other info 
+                // about the upgrade that was done.
+                var installPath = Server.MapPath("~/Install");
+
+                var versionFile = Path.Combine(installPath, string.Format("{0}.htm", currentVersion));
+
+                if (File.Exists(versionFile))
                 {
-                    WriteMessage("<h2>Upgrade Complete</h2>");
-                    WriteMessage("<h2><a href='../Default.aspx'>Click Here To Access Your BugNET Installation</a></h2>");
-
-                    var currentVersion = UpgradeManager.GetCurrentVersion();
-                    UpgradeManager.UpdateDatabaseVersion(currentVersion);
-
-                    // support for a version file to be loaded to display things like breaking changes or other info 
-                    // about the upgrade that was done.
-                    var installPath = Server.MapPath("~/Install");
-
-                    var versionFile = Path.Combine(installPath, string.Format("{0}.htm", currentVersion));
-
-                    if (File.Exists(versionFile))
-                    {
-                        WriteMessage(File.ReadAllText(versionFile));
-                    }
+                    WriteMessage(File.ReadAllText(versionFile));
                 }
-                else
-                {
-                    WriteMessage("<h2>Upgrade Failed!</h2>");
-                }
+            }
+            else
+            {
+                WriteMessage("<h2>Upgrade Failed!</h2>");
+            }
 
-                WriteFooter();
-            //}
+            WriteFooter();
         }
 
         /// <summary>
