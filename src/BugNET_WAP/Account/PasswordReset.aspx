@@ -1,21 +1,17 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PasswordReset.aspx.cs" Inherits="BugNET.Account.PasswordReset" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PasswordReset.aspx.cs" MasterPageFile="~/Shared/SingleColumn.master" Inherits="BugNET.Account.PasswordReset" %>
 
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-    <div>
+<asp:Content ID="Content1" runat="server" ContentPlaceHolderID="Content">
         <asp:PlaceHolder runat="server" ID="message" Visible="false" ViewStateMode="Disabled">
             <p class="message-success"><%: Message %></p>
+            <br />
         </asp:PlaceHolder>
-        <asp:TextBox ID="Password" runat="server" />
-        <asp:TextBox ID="ConfirmPassword" runat="server" />
+        <p>Enter and confirm your new password</p>
+        <br />
+        Password: <asp:TextBox ID="Password" runat="server" />
+        <br />
+        <br />
+        Confirm Password:<asp:TextBox ID="ConfirmPassword" runat="server" />
+        <br />
+        <br />
         <asp:Button ID="Submit" OnClick="Submit_Click" Text="Submit" runat="server" />
-    </div>
-    </form>
-</body>
-</html>
+</asp:Content>

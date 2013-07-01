@@ -45,19 +45,29 @@ namespace BugNET.Account
             {
                 // get the user by the reset token
                 var token  = Request.QueryString["token"];
-                var user = UserManager.GetUserByPasswordResetToken(token);
-                if (user != null)
+                
+                if (!string.IsNullOrWhiteSpace(token))
                 {
-                    // update the users password to the new password provided
-                    user.ChangePassword(user.ResetPassword(), Password.Text.Trim());
+                    var user = UserManager.GetUserByPasswordResetToken(token);
 
-                    // update profile to clear the reset token and date
-                    var profile = new WebProfile().GetProfile(user.UserName);
-                    profile.PasswordVerificationToken = null;
-                    profile.PasswordVerificationTokenExpirationDate = null;
-                    profile.Save();
+                    if (user != null)
+                    {
+                        // update the users password to the new password provided
+                        user.ChangePassword(user.ResetPassword(), Password.Text.Trim());
 
-                    Response.Redirect("~/Account/PasswordResetSuccess.aspx");
+                        // update profile to clear the reset token and date
+                        var profile = new WebProfile().GetProfile(user.UserName);
+                        profile.PasswordVerificationToken = null;
+                        profile.PasswordVerificationTokenExpirationDate = null;
+                        profile.Save();
+
+                        Response.Redirect("~/Account/PasswordResetSuccess.aspx");
+                    }
+                    else
+                    {
+                        Message = "The password reset token is invalid.";
+                        message.Visible = !String.IsNullOrEmpty(Message);
+                    }
                 }
                 else
                 {
