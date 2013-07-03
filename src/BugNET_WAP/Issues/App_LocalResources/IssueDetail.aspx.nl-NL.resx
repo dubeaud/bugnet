@@ -163,10 +163,10 @@
 		<value>Nieuw punt</value>
 	</data>
 	<data name="PriorityLabel.Text" xml:space="preserve">
-		<value>Prioriteit</value>
+		<value>Prioriteit:</value>
 	</data>
 	<data name="PrivateLabel.Text" xml:space="preserve">
-		<value>Privé</value>
+		<value>Privé:</value>
 	</data>
 	<data name="SaveReturn.Text" xml:space="preserve">
 		<value>Opslaan en naar punten lijst</value>

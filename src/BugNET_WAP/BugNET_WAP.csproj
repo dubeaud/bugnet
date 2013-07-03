@@ -2563,6 +2563,17 @@
       <LastGenOutput>Web.sitemap.es-ES.designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectDefaultValues.ascx.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectDefaultValues.ascx.ru-RU.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectDefaultValues.ascx.es-ES.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectDefaultValues.ascx.fr-CA.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectDefaultValues.ascx.it-IT.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectDefaultValues.ascx.nl-NL.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectDefaultValues.ascx.ro-RO.resx" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

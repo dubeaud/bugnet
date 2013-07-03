@@ -87,7 +87,7 @@ namespace BugNET.Administration.Projects.UserControls
                 chkAffectedMilestoneVisibility.Checked = selectedValue.AffectedMilestoneVisibility;
                 chkNotifyAssignedTo.Checked = selectedValue.AssignedToNotify;
                 chkNotifyOwner.Checked = selectedValue.OwnedByNotify;
-            }                                             
+            }
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace BugNET.Administration.Projects.UserControls
             DropCategory.DataSource = categories.GetCategoryTreeByProjectId(ProjectId);
             DropCategory.DataBind();
 
-            //Get milestones          
+            //Get milestones
             DropMilestone.DataSource = MilestoneManager.GetByProjectId(ProjectId);
             DropMilestone.DataBind();
 
@@ -159,7 +159,7 @@ namespace BugNET.Administration.Projects.UserControls
         /// </summary>
         public void Initialize()
         {
-            DueDateLabel.Text = "Due Date:(" + DateTime.Today.ToShortDateString() + ")   +";
+            DueDateLabel.Text += String.Format(" ({0})   +", DateTime.Today.ToShortDateString());
             BindOptions();
         }
 

@@ -117,121 +117,46 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-	<data name="AffectedMilestoneLabel.Text" xml:space="preserve">
-    <value>Jalon affecté :</value>
-  </data>
-	<data name="AssignedToLabel.Text" xml:space="preserve">
-    <value>Attribué à :</value>
-  </data>
-	<data name="ByLabel.Text" xml:space="preserve">
-    <value>par</value>
-  </data>
-	<data name="CategoryLabel.Text" xml:space="preserve">
-    <value>Catégorie :</value>
-  </data>
-	<data name="Closed" xml:space="preserve">
-    <value>fermé</value>
-  </data>
-	<data name="DateCreatedLabel.Text" xml:space="preserve">
-    <value>Créé</value>
-  </data>
-	<data name="DeleteIssue" xml:space="preserve">
-    <value>Êtes-vous sûr de que vouloir supprimer cette anomalie?</value>
-  </data>
-	<data name="DetailsLabel.Text" xml:space="preserve">
-    <value>Détails</value>
-  </data>
-	<data name="DueDateLabel.Text" xml:space="preserve">
-    <value>Date due:</value>
-  </data>
-	<data name="EstimationLabel.Text" xml:space="preserve">
-    <value>Estimation:</value>
-  </data>
-	<data name="HoursLabel.Text" xml:space="preserve">
-    <value>(hrs)</value>
-  </data>
-	<data name="IssueLabel.Text" xml:space="preserve">
-    <value>Anomalie :</value>
-  </data>
-	<data name="IssueTitleRequiredErrorMessage" xml:space="preserve">
-    <value>Titre de l'anomalie nécessaire.</value>
-  </data>
-	<data name="IssueTitleWaterMark" xml:space="preserve">
-    <value>Entrez le titre de l'anomalie</value>
-  </data>
-	<data name="IssueTypeLabel.Text" xml:space="preserve">
-    <value>Type:</value>
-  </data>
-	<data name="LastUpdateLabel.Text" xml:space="preserve">
-    <value>Dernière mise à jour</value>
-  </data>
-	<data name="LoggedLabel.Text" xml:space="preserve">
-    <value>Enregistré :</value>
-  </data>
-	<data name="MilestoneLabel.Text" xml:space="preserve">
-    <value>Jalon :</value>
-  </data>
-	<data name="OwnedByLabel.Text" xml:space="preserve">
-    <value>Appartenant à :</value>
-  </data>
-	<data name="PageTitleNewIssue" xml:space="preserve">
-    <value>Nouvelle anomalie</value>
-  </data>
-	<data name="PriorityLabel.Text" xml:space="preserve">
-    <value>Priorité :</value>
-  </data>
-	<data name="PrivateLabel.Text" xml:space="preserve">
-    <value>Privé :</value>
-  </data>
-	<data name="ResolutionLabel.Text" xml:space="preserve">
-    <value>Resolution:</value>
-  </data>
-	<data name="SaveReturn.Text" xml:space="preserve">
-    <value>Enregistrer et retour</value>
-  </data>
 	<data name="StatusLabel.Text" xml:space="preserve">
-    <value>Statut:</value>
-  </data>
-	<data name="TimeLabel.Text" xml:space="preserve">
-    <value>Temps</value>
-  </data>
-	<data name="TitleLabel.Text" xml:space="preserve">
-    <value>Titre:</value>
-  </data>
-	<data name="Voted" xml:space="preserve">
-    <value>voté</value>
-  </data>
-	<data name="Votes" xml:space="preserve">
-    <value>votes</value>
-  </data>
+		<value>Stare:</value>
+	</data>
+	<data name="OwnedByLabel.Text" xml:space="preserve">
+		<value>Detinut de:</value>
+	</data>
+	<data name="PriorityLabel.Text" xml:space="preserve">
+		<value>Prioritate:</value>
+	</data>
+	<data name="AffectedMilestoneLabel.Text" xml:space="preserve">
+		<value>Repere atinse:</value>
+	</data>
+	<data name="AssignedToLabel.Text" xml:space="preserve">
+		<value>Atribuit catre:</value>
+	</data>
+	<data name="PrivateLabel.Text" xml:space="preserve">
+		<value>Privat:</value>
+	</data>
+	<data name="CategoryLabel.Text" xml:space="preserve">
+		<value>Categoria:</value>
+	</data>
+	<data name="DueDateLabel.Text" xml:space="preserve">
+		<value>Data scadenta:</value>
+	</data>
+	<data name="IssueTypeLabel.Text" xml:space="preserve">
+		<value>Tip:</value>
+	</data>
 	<data name="ProgressLabel.Text" xml:space="preserve">
-    <value>Pourcentage résolu:</value>
-  </data>
-	<data name="Attachment.Text" xml:space="preserve">
-    <value>Pièce jointe</value>
-  </data>
-	<data name="AttachmentDescriptionLabel.Text" xml:space="preserve">
-    <value>Description:</value>
-  </data>
-	<data name="AttachmentFileLabel.Text" xml:space="preserve">
-    <value>Fichier :</value>
-  </data>
-	<data name="AttachmentOptionalLocalize.Text" xml:space="preserve">
-    <value>Optionnel</value>
-  </data>
-	<data name="NotifyCheckBox.Text" xml:space="preserve">
-    <value>Notifier</value>
-  </data>
-	<data name="ProgressSlider.TooltipText" xml:space="preserve">
-    <value>{0}% résolu</value>
-  </data>
-	<data name="OnLabel.Text" xml:space="preserve">
-    <value>sur</value>
-  </data>
-	<data name="Vote" xml:space="preserve">
-    <value>vote</value>
-  </data>
-	<data name="VoteButton.Text" xml:space="preserve">
-    <value>vote</value>
-  </data>
+		<value>Procent realizare:</value>
+	</data>
+	<data name="MilestoneLabel.Text" xml:space="preserve">
+		<value>Reper:</value>
+	</data>
+	<data name="EstimationLabel.Text" xml:space="preserve">
+		<value>Estimare:</value>
+	</data>
+	<data name="HoursLabel.Text" xml:space="preserve">
+		<value>(ore)</value>
+	</data>
+	<data name="ResolutionLabel.Text" xml:space="preserve">
+		<value>Rezolutie:</value>
+	</data>
 </root>

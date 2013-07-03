@@ -183,7 +183,7 @@
   <data name="ExistingProjectNameLabel.Text" xml:space="preserve">
     <value>Project To Clone</value>
   </data>
-  <data name="Default" xml:space="preserve">
+  <data name="Defaults" xml:space="preserve">
     <value>Defaults</value>
   </data>
 </root>

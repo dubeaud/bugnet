@@ -183,4 +183,7 @@
   <data name="ExistingProjectNameLabel.Text" xml:space="preserve">
     <value>Клонируемый проект</value>
   </data>
+  <data name="Defaults" xml:space="preserve">
+    <value>Значения по умолчанию</value>
+  </data>
 </root>

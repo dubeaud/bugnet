@@ -160,7 +160,7 @@
 		<value>Introduzca el título del caso</value>
 	</data>
 	<data name="IssueTypeLabel.Text" xml:space="preserve">
-		<value>Tipo</value>
+		<value>Tipo:</value>
 	</data>
 	<data name="LastUpdateLabel.Text" xml:space="preserve">
 		<value>Última actualización</value>
