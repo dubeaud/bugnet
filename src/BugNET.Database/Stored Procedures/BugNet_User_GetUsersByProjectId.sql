@@ -10,11 +10,12 @@ JOIN BugNet_UserProfiles
 	ON U.UserName = BugNet_UserProfiles.UserName
 JOIN  Memberships M 
 	ON U.UserId = M.UserId
-JOIN BugNet_UserRoles UR
-	ON U.UserId = UR.UserId
-JOIN BugNet_Roles R
-	ON UR.RoleId = R.RoleId
+LEFT JOIN BugNet_UserRoles UR
+	ON U.UserId = UR.UserId 
+LEFT JOIN BugNet_Roles R
+	ON UR.RoleId = R.RoleId AND R.ProjectId = @ProjectId
 WHERE
 	BugNet_UserProjects.ProjectId = @ProjectId 
-	AND M.IsApproved = 1 AND (@ExcludeReadonlyUsers = 0 OR @ExcludeReadonlyUsers = 1 AND R.RoleName != 'Read Only')
+	AND M.IsApproved = 1
+	AND (@ExcludeReadonlyUsers = 0 OR @ExcludeReadonlyUsers = 1 AND R.RoleName != 'Read Only')
 ORDER BY DisplayName ASC

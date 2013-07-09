@@ -873,7 +873,7 @@ namespace BugNET.Providers.DataProviders
         /// <param name="projectId">The project id.</param>
         /// <param name="excludeReadOnlyUsers">if set to <c>true</c> [exclude read only users].</param>
         /// <returns></returns>
-        public override List<ITUser> GetUsersByProjectId(int projectId, bool excludeReadOnlyUsers = true)
+        public override List<ITUser> GetUsersByProjectId(int projectId, bool excludeReadOnlyUsers = false)
         {
             using (var sqlCmd = new SqlCommand())
             {
