@@ -123,55 +123,7 @@
 	<data name="TitleLabel.Text" xml:space="preserve">
     <value>Defaults</value>
   </data>
-	<data name="StatusLabel.Text" xml:space="preserve">
-		<value>Status:</value>
-	</data>
 	<data name="VisibilityCheckBox.Text" xml:space="preserve">
 		<value>Visible</value>
-	</data>
-	<data name="NotifyCheckBox.Text" xml:space="preserve">
-		<value>Notify</value>
-	</data>
-	<data name="OwnedByLabel.Text" xml:space="preserve">
-		<value>Owned By:</value>
-	</data>
-	<data name="PriorityLabel.Text" xml:space="preserve">
-		<value>Priority:</value>
-	</data>
-	<data name="AffectedMilestoneLabel.Text" xml:space="preserve">
-		<value>Affected Milestone:</value>
-	</data>
-	<data name="AssignedToLabel.Text" xml:space="preserve">
-		<value>Assigned To:</value>
-	</data>
-	<data name="PrivateLabel.Text" xml:space="preserve">
-		<value>Private:</value>
-	</data>
-	<data name="CategoryLabel.Text" xml:space="preserve">
-		<value>Category:</value>
-	</data>
-	<data name="DueDateLabel.Text" xml:space="preserve">
-		<value>Due Date:</value>
-	</data>
-	<data name="IssueTypeLabel.Text" xml:space="preserve">
-		<value>Type:</value>
-	</data>
-	<data name="ProgressLabel.Text" xml:space="preserve">
-		<value>Percent Complete:</value>
-	</data>
-	<data name="ProgressSlider.TooltipText" xml:space="preserve">
-		<value>{0}% Complete</value>
-	</data>
-	<data name="MilestoneLabel.Text" xml:space="preserve">
-		<value>Milestone:</value>
-	</data>
-	<data name="EstimationLabel.Text" xml:space="preserve">
-		<value>Estimation:</value>
-	</data>
-	<data name="HoursLabel.Text" xml:space="preserve">
-		<value>(hrs)</value>
-	</data>
-	<data name="ResolutionLabel.Text" xml:space="preserve">
-		<value>Resolution:</value>
 	</data>
 </root>

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="New Issue" Language="C#" MasterPageFile="~/Shared/IssueDetail.master" AutoEventWireup="true" CodeBehind="CreateIssue.aspx.cs" Inherits="BugNET.Issues.CreateIssue" Async="true" %>
+﻿<%@ Page Title="New Issue" Language="C#" MasterPageFile="~/Shared/IssueDetail.master" AutoEventWireup="true" CodeBehind="CreateIssue.aspx.cs" Inherits="BugNET.Issues.CreateIssue" Async="true" meta:resourcekey="Page" %>
 
 <%@ Register TagPrefix="it" TagName="DisplayCustomFields" Src="~/UserControls/DisplayCustomFields.ascx" %>
 <%@ Register TagPrefix="it" TagName="PickCategory" Src="~/UserControls/PickCategory.ascx" %>
@@ -25,21 +25,21 @@
                 </li>
                 <li id="IssueActionSaveAndReturn" runat="server">
                     <span style="padding-right: 5px; padding-left: 10px; border-right: 1px dotted #ccc">
-                        <asp:ImageButton ID="imgDone" OnClick="LnkDoneClick" runat="server" CssClass="icon" ImageUrl="~\images\disk.gif" alternatetext="<%$ Resources:SaveReturn.Text %>" />
-                        <asp:LinkButton ID="lnkDone" OnClick="LnkDoneClick" runat="server" meta:resourcekey="SaveReturn" Text="Save &amp; Return" />
-                    </span>                
+                        <asp:ImageButton ID="imgDone" OnClick="LnkDoneClick" runat="server" CssClass="icon" ImageUrl="~\images\disk.gif" alternatetext="<%$ Resources:SharedIssueProperties, SaveReturnText %>" />
+                        <asp:LinkButton ID="lnkDone" OnClick="LnkDoneClick" runat="server" Text="<%$ Resources:SharedIssueProperties, SaveReturnText %>" />
+                    </span>
                 </li>
                 <li id="IssueActionCancel" runat="server">
                     <span style="padding-right: 5px; padding-left: 10px;">
                         <asp:ImageButton ID="imgCancel" OnClick="CancelButtonClick" CausesValidation="false" runat="server" CssClass="icon" ImageUrl="~\images\lt.gif" alternatetext="<%$ Resources:SharedResources, Cancel %>" />
                         <asp:LinkButton ID="lnkCancel" OnClick="CancelButtonClick" CausesValidation="false" runat="server" Text="<%$ Resources:SharedResources, Cancel %>" />
-                    </span>                  
+                    </span>
                 </li>
             </ul>
         </div>
         <div class="float-left text-bold">
-            <asp:Label ID="IssueLabel" Font-Size="12px" runat="server" Text="Issue:" meta:resourcekey="IssueLabel" />
-            <asp:Label ID="lblIssueNumber" Font-Size="12px" runat="server"></asp:Label>
+            <asp:Label ID="IssueLabel" Font-Size="12px" runat="server" Text="<%$ Resources:SharedIssueProperties, IssueLabel %>" />
+            <asp:Label ID="lblIssueNumber" Font-Size="12px" runat="server"/>
         </div>
     </asp:Panel>
 </asp:Content>
@@ -53,22 +53,11 @@
                     <table width="100%">
                         <tbody>
                             <tr>
-                                <td valign="top" style="width: 5em;" id="VoteBox" runat="server">
-                                    <div class="votebox">
-                                        <div class="top">
-                                            <asp:Label ID="IssueVoteCount" runat="server" CssClass="count" Text="1" />
-                                            <asp:Label ID="Votes" runat="server" Text="<%$ Resources: Vote %>" CssClass="votes" />
-                                        </div>
-                                        <div class="bottom">
-                                            <asp:Label ID="VotedLabel" runat="Server" Text="<%$ Resources: Voted %>" />
-                                        </div>
-                                    </div>
-                                </td>
                                 <td style="vertical-align: top;"> 
                                     <asp:TextBox ID="TitleTextBox" Width="100%" runat="server" />
-                                    <asp:RequiredFieldValidator ControlToValidate="TitleTextBox" ErrorMessage="<%$ Resources:IssueTitleRequiredErrorMessage %>"
+                                    <asp:RequiredFieldValidator ControlToValidate="TitleTextBox" ErrorMessage="<%$ Resources:SharedIssueProperties, IssueTitleRequiredErrorMessage %>"
                                                 Text="<%$ Resources:SharedResources, Required %>" Display="Dynamic" CssClass="req" runat="server" ID="TitleRequired" />
-                                    <ajaxToolkit:TextBoxWatermarkExtender ID="TBWE2" runat="server" TargetControlID="TitleTextBox" WatermarkText="<%$ Resources:IssueTitleWaterMark %>"
+                                    <ajaxToolkit:TextBoxWatermarkExtender ID="TBWE2" runat="server" TargetControlID="TitleTextBox" WatermarkText="<%$ Resources:SharedIssueProperties, IssueTitleWatermark %>"
                                                 WatermarkCssClass="issueTitleWatermarked" />
                                 </td>
                             </tr>
@@ -79,63 +68,61 @@
         </table>
         <div class="issue-form" style="margin-left:4px;width:96%">
             <div class="grid_1">
-               <asp:Label ID="StatusLabel" runat="server" AssociatedControlID="DropStatus" meta:resourcekey="StatusLabel" />
+               <asp:Label ID="StatusLabel" runat="server" AssociatedControlID="DropStatus" Text="<%$Resources:SharedIssueProperties, StatusLabel %>"/>
             </div>
             <div class="grid_2">
                 <it:PickStatus ID="DropStatus" runat="Server" DisplayDefault="true" />
             </div>
             <div class="grid_3">
-                <asp:Label ID="OwnerLabel" runat="server" AssociatedControlID="DropOwned" meta:resourcekey="OwnedByLabel" Text="Owned By:" />
+                <asp:Label ID="OwnerLabel" runat="server" AssociatedControlID="DropOwned" Text="<%$Resources:SharedIssueProperties, OwnedByLabel %>" />
             </div>
             <div class="grid_4">
                <it:PickSingleUser ID="DropOwned" DisplayDefault="True" Required="false" runat="Server" />
-                <asp:CheckBox ID="chkNotifyOwner" runat="server" Text="Notify" Checked="True" meta:resourceKey="NotifyCheckBox"></asp:CheckBox>
+                <asp:CheckBox ID="chkNotifyOwner" runat="server"  Checked="True" Text="<%$ Resources:SharedIssueProperties, NotifyCheckbox %>" />
             </div>
             <div class="grid_1">
-                <asp:Label ID="PriorityLabel" runat="server" AssociatedControlID="DropPriority" meta:resourcekey="PriorityLabel" Text="Priority:" />
+                <asp:Label ID="PriorityLabel" runat="server" AssociatedControlID="DropPriority" Text="<%$Resources:SharedIssueProperties, PriorityLabel %>" />
             </div>
             <div class="grid_2">
                 <it:PickPriority ID="DropPriority" DisplayDefault="true" runat="Server" />
             </div>
             <div class="grid_3">
-                <asp:Label ID="Label4" AssociatedControlID="DropAffectedMilestone" meta:resourcekey="AffectedMilestoneLabel" runat="server" />
+                <asp:Label ID="Label4" AssociatedControlID="DropAffectedMilestone" runat="server" Text="<%$Resources:SharedIssueProperties, AffectedMilestoneLabel %>" />
             </div>
             <div class="grid_4">
                  <it:PickMilestone ID="DropAffectedMilestone" DisplayDefault="True" runat="Server" />
             </div>
             <div class="grid_1">
-                <asp:Label ID="AssignedToLabel" runat="server" AssociatedControlID="DropAssignedTo" meta:resourcekey="AssignedToLabel" Text="Assigned To:" />
+                <asp:Label ID="AssignedToLabel" runat="server" AssociatedControlID="DropAssignedTo" Text="<%$Resources:SharedIssueProperties, AssignedToLabel %>" />
             </div>
             <div class="grid_2">
                 <it:PickSingleUser ID="DropAssignedTo" DisplayUnassigned="False" DisplayDefault="True" Required="false" runat="Server" />
-                <asp:CheckBox ID="chkNotifyAssignedTo" runat="server" Text="Notify" Checked="True" meta:resourceKey="NotifyCheckBox"></asp:CheckBox>
+                <asp:CheckBox ID="chkNotifyAssignedTo" runat="server" Checked="True" Text="<%$ Resources:SharedIssueProperties, NotifyCheckbox %>" />
             </div>
              <div class="grid_3">
-                <asp:Label ID="PrivateLabel" AssociatedControlID="chkPrivate" runat="server" meta:resourcekey="PrivateLabel" Text="Private:" />
+                <asp:Label ID="PrivateLabel" AssociatedControlID="chkPrivate" runat="server" Text="<%$Resources:SharedIssueProperties, PrivateLabel %>" />
             </div>
             <div class="grid_4"><asp:CheckBox ID="chkPrivate" runat="server" CssClass="checkbox" /></div>
             <div class="grid_1">
-                <asp:Label ID="CategoryLabel" AssociatedControlID="DropCategory" meta:resourcekey="CategoryLabel" Text="Category:" runat="server" />
+                <asp:Label ID="CategoryLabel" AssociatedControlID="DropCategory" runat="server" Text="<%$Resources:SharedIssueProperties, CategoryLabel %>" />
             </div>
             <div class="grid_2">
                   <it:PickCategory ID="DropCategory" DisplayDefault="true" Required="false" runat="Server" />
             </div>
-
             <div class="grid_3">
-                <asp:Label runat="server" AssociatedControlID="DueDatePicker:DateTextBox" ID="DueDateLabel" meta:resourcekey="DueDateLabel"
-                            Text="Due Date:" />
+                <asp:Label runat="server" AssociatedControlID="DueDatePicker:DateTextBox" ID="DueDateLabel" Text="<%$Resources:SharedIssueProperties, DueDateLabel %>" />
             </div>
             <div class="grid_4">
                   <bn:PickDate ID="DueDatePicker" runat="server" />
             </div>
             <div class="grid_1">
-                <asp:Label ID="IssueTypeLabel" AssociatedControlID="DropIssueType:ddlType" runat="server" meta:resourcekey="IssueTypeLabel" />
+                <asp:Label ID="IssueTypeLabel" AssociatedControlID="DropIssueType:ddlType" runat="server" Text="<%$Resources:SharedIssueProperties, IssueTypeLabel %>" />
             </div>
             <div class="grid_2">
                  <it:PickType ID="DropIssueType" DisplayDefault="True" runat="Server" />
             </div>
             <div class="grid_3">
-                <asp:Label ID="Label3" runat="server" AssociatedControlID="DropOwned" meta:resourcekey="ProgressLabel" Text="Percent Complete:" />
+                <asp:Label ID="Label3" runat="server" AssociatedControlID="DropOwned" Text="<%$Resources:SharedIssueProperties, ProgressLabel %>" />
             </div>
             <div class="grid_4">
                 <span class="float-left" style="margin-left:160px;" id="PercentLabel" runat="server">
@@ -143,24 +130,24 @@
                 <asp:TextBox ID="ProgressSlider" runat="server" Text="0" />
             </div>
             <div class="grid_1">
-                <asp:Label ID="MilestoneLabel" AssociatedControlID="DropMilestone" meta:resourcekey="MilestoneLabel" runat="server" />
+                <asp:Label ID="MilestoneLabel" AssociatedControlID="DropMilestone" runat="server" Text="<%$Resources:SharedIssueProperties, MilestoneLabel %>" />
             </div>
             <div class="grid_2">
                  <it:PickMilestone ID="DropMilestone" DisplayDefault="True" runat="Server" />
             </div>
             <div class="grid_3">
-                <asp:Label ID="EstimationLabel" runat="server" Text="Estimation:" meta:resourcekey="EstimationLabel" AssociatedControlID="txtEstimation" />
+                <asp:Label ID="EstimationLabel" runat="server" AssociatedControlID="txtEstimation" Text="<%$Resources:SharedIssueProperties, EstimationLabel %>"  />
             </div>
             <div class="grid_4">
-                <asp:TextBox ID="txtEstimation" Style="text-align: right;" Width="80px" runat="server" /><small><asp:Label ID="HoursLabel" meta:resourcekey="HoursLabel" runat="server" Text="hrs"></asp:Label></small>
-                <asp:RangeValidator ID="RangeValidator2" runat="server" ErrorMessage="Estimation must be a sensible number." ControlToValidate="txtEstimation"
-                            MaximumValue="999" MinimumValue="0" SetFocusOnError="True" Display="Dynamic"></asp:RangeValidator>
+                <asp:TextBox ID="txtEstimation" Style="text-align: right;" Width="80px" runat="server" /><small><asp:Label ID="HoursLabel" runat="server" Text="<%$Resources:SharedIssueProperties, HoursLabel %>" /></small>
+                <asp:RangeValidator ID="RangeValidator2" runat="server" ErrorMessage="<%$Resources:SharedIssueProperties, EstimationValidatorMessage %>" ControlToValidate="txtEstimation"
+                            MaximumValue="999" MinimumValue="0" SetFocusOnError="True" Display="Dynamic" ForeColor="Red" />
             </div>
             <div class="grid_1">
-                <asp:Label ID="ResolutionLabel" runat="server" AssociatedControlID="DropResolution" meta:resourcekey="ResolutionLabel" Text="Resolution:" />
+                <asp:Label ID="ResolutionLabel" runat="server" AssociatedControlID="DropResolution" Text="<%$Resources:SharedIssueProperties, ResolutionLabel %>" />
             </div>
             <div class="grid_2">
-                <it:PickResolution ID="DropResolution" DisplayDefault="True" runat="Server" />
+                <it:PickResolution ID="DropResolution" DisplayDefault="True" runat="server" />
             </div> 
         </div>
         <it:DisplayCustomFields ID="ctlCustomFields" EnableValidation="true" runat="server" />
@@ -184,7 +171,7 @@
         </asp:Panel>
     </div>
     <ajaxToolkit:SliderExtender ID="SliderExtender2" runat="server" Steps="21" TargetControlID="ProgressSlider" BoundControlID="ProgressSlider_BoundControl"
-        Orientation="Horizontal" TooltipText="{0}% Complete" EnableHandleAnimation="true"  meta:resourcekey="ProgressSlider"/>
+        Orientation="Horizontal" TooltipText="<%$Resources:SharedIssueProperties, ProgressSliderTooltip %>" EnableHandleAnimation="true" />
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="IssueTabs" runat="server">

@@ -46,8 +46,6 @@ namespace BugNET.Issues
 
                 BindOptions();
 
-     
-                Page.Title = GetLocalResourceObject("PageTitleNewIssue").ToString();
                 lblIssueNumber.Text = GetGlobalResourceObject("SharedResources", "NotAvailableAbbr").ToString();
 
                 BindDefaultValues();

@@ -117,25 +117,10 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-	<data name="Back" xml:space="preserve">
-    <value>Indietro</value>
-  </data>
-	<data name="Finish" xml:space="preserve">
-    <value>Fine</value>
-  </data>
-	<data name="NewProjectTitle.Text" xml:space="preserve">
-    <value>Procedura guidata nuovo progetto</value>
-  </data>
-	<data name="Next" xml:space="preserve">
-    <value>Avanti</value>
-  </data>
-	<data name="Of" xml:space="preserve">
-    <value>di</value>
-  </data>
+	<data name="AttachmentLabel.Text" xml:space="preserve">
+		<value>Adjunto</value>
+	</data>
 	<data name="Page.Title" xml:space="preserve">
-    <value>Elenco progetto</value>
-  </data>
-	<data name="Step" xml:space="preserve">
-    <value>Passo</value>
-  </data>
+		<value>Nuevo caso</value>
+	</data>
 </root>

@@ -117,46 +117,64 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-	<data name="StatusLabel.Text" xml:space="preserve">
-		<value>Stare:</value>
+	<data name="AffectedMilestoneLabel" xml:space="preserve">
+    <value>Passo interessato:</value>
+  </data>
+	<data name="AssignedToLabel" xml:space="preserve">
+    <value>Assegnata a:</value>
+  </data>
+	<data name="CategoryLabel" xml:space="preserve">
+    <value>Categoria:</value>
+  </data>
+	<data name="PriorityLabel" xml:space="preserve">
+    <value>Priorità:</value>
+  </data>
+	<data name="OwnedByLabel" xml:space="preserve">
+    <value>Proprietario:</value>
+  </data>
+	<data name="StatusLabel" xml:space="preserve">
+    <value>Stato:</value>
+  </data>
+	<data name="PrivateLabel" xml:space="preserve">
+    <value>Privata:</value>
+  </data>
+	<data name="ProgressLabel" xml:space="preserve">
+    <value>Percentuale:</value>
+  </data>
+	<data name="DueDateLabel" xml:space="preserve">
+    <value>Prevista per:</value>
+  </data>
+	<data name="IssueTypeLabel" xml:space="preserve">
+    <value>Tipo:</value>
+  </data>
+	<data name="MilestoneLabel" xml:space="preserve">
+    <value>Passo:</value>
+  </data>
+	<data name="EstimationLabel" xml:space="preserve">
+		<value>Stima:</value>
 	</data>
-	<data name="OwnedByLabel.Text" xml:space="preserve">
-		<value>Detinut de:</value>
-	</data>
-	<data name="PriorityLabel.Text" xml:space="preserve">
-		<value>Prioritate:</value>
-	</data>
-	<data name="AffectedMilestoneLabel.Text" xml:space="preserve">
-		<value>Repere atinse:</value>
-	</data>
-	<data name="AssignedToLabel.Text" xml:space="preserve">
-		<value>Atribuit catre:</value>
-	</data>
-	<data name="PrivateLabel.Text" xml:space="preserve">
-		<value>Privat:</value>
-	</data>
-	<data name="CategoryLabel.Text" xml:space="preserve">
-		<value>Categoria:</value>
-	</data>
-	<data name="DueDateLabel.Text" xml:space="preserve">
-		<value>Data scadenta:</value>
-	</data>
-	<data name="IssueTypeLabel.Text" xml:space="preserve">
-		<value>Tip:</value>
-	</data>
-	<data name="ProgressLabel.Text" xml:space="preserve">
-		<value>Procent realizare:</value>
-	</data>
-	<data name="MilestoneLabel.Text" xml:space="preserve">
-		<value>Reper:</value>
-	</data>
-	<data name="EstimationLabel.Text" xml:space="preserve">
-		<value>Estimare:</value>
-	</data>
-	<data name="HoursLabel.Text" xml:space="preserve">
+	<data name="HoursLabel" xml:space="preserve">
 		<value>(ore)</value>
 	</data>
-	<data name="ResolutionLabel.Text" xml:space="preserve">
-		<value>Rezolutie:</value>
+	<data name="ResolutionLabel" xml:space="preserve">
+		<value>Soluzione:</value>
+	</data>
+	<data name="LoggedLabel" xml:space="preserve">
+		<value>Loggato:</value>
+	</data>
+	<data name="DaysLabel" xml:space="preserve">
+		<value>(giorni)</value>
+	</data>
+	<data name="SaveReturnText" xml:space="preserve">
+		<value>Salva e chiudi</value>
+	</data>
+	<data name="IssueLabel" xml:space="preserve">
+		<value>Segnalazione:</value>
+	</data>
+	<data name="IssueTitleWatermark" xml:space="preserve">
+		<value>Indica il titolo della segnalazione</value>
+	</data>
+	<data name="IssueTitleRequiredErrorMessage" xml:space="preserve">
+		<value>Il titolo della segnalazione è obbligatorio.</value>
 	</data>
 </root>

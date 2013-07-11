@@ -123,55 +123,7 @@
 	<data name="DescriptionLabel.Text" xml:space="preserve">
 		<value>Установите значения по умочанию для свойств новых заданий.</value>
 	</data>
-	<data name="StatusLabel.Text" xml:space="preserve">
-		<value>Статус:</value>
-	</data>
 	<data name="VisibilityCheckBox.Text" xml:space="preserve">
 		<value>Показывать</value>
-	</data>
-	<data name="NotifyCheckBox.Text" xml:space="preserve">
-		<value>Уведомлять</value>
-	</data>
-	<data name="OwnedByLabel.Text" xml:space="preserve">
-		<value>Владелец:</value>
-	</data>
-	<data name="PriorityLabel.Text" xml:space="preserve">
-		<value>Приоритет:</value>
-	</data>
-	<data name="AffectedMilestoneLabel.Text" xml:space="preserve">
-		<value>Затронутый этап:</value>
-	</data>
-	<data name="AssignedToLabel.Text" xml:space="preserve">
-		<value>Назначено:</value>
-	</data>
-	<data name="PrivateLabel.Text" xml:space="preserve">
-		<value>Закрытое задание:</value>
-	</data>
-	<data name="CategoryLabel.Text" xml:space="preserve">
-		<value>Категория:</value>
-	</data>
-	<data name="DueDateLabel.Text" xml:space="preserve">
-		<value>Дата окончания:</value>
-	</data>
-	<data name="IssueTypeLabel.Text" xml:space="preserve">
-		<value>Тип:</value>
-	</data>
-	<data name="ProgressLabel.Text" xml:space="preserve">
-		<value>Процент выполнения:</value>
-	</data>
-	<data name="MilestoneLabel.Text" xml:space="preserve">
-		<value>Этап:</value>
-	</data>
-	<data name="ProgressSlider.TooltipText" xml:space="preserve">
-		<value>Завершено {0}%</value>
-	</data>
-	<data name="EstimationLabel.Text" xml:space="preserve">
-		<value>Оценка:</value>
-	</data>
-	<data name="ResolutionLabel.Text" xml:space="preserve">
-		<value>Заключение:</value>
-	</data>
-	<data name="HoursLabel.Text" xml:space="preserve">
-		<value>(часов)</value>
 	</data>
 </root>

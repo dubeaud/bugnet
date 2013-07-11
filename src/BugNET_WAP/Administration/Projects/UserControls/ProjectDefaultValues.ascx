@@ -32,31 +32,31 @@
     <table width="100%" class="issue-detail">
         <tr>
             <td style="width: 15%;">
-                <asp:Label ID="StatusLabel" runat="server" AssociatedControlID="DropStatus" meta:ResourceKey="StatusLabel" />
+                <asp:Label ID="StatusLabel" runat="server" AssociatedControlID="DropStatus" Text="<%$Resources:SharedIssueProperties, StatusLabel %>" />
             </td>
             <td style="width: 35%;">
                 <it:PickStatus ID="DropStatus" runat="Server"  DisplayDefault="true" />
                 <asp:CheckBox ID="chkStatusVisibility" runat="server" Checked="True" meta:ResourceKey="VisibilityCheckBox" />
             </td>
             <td style="width: 15%;">
-                <asp:Label ID="OwnerLabel" runat="server" AssociatedControlID="DropOwned" meta:resourcekey="OwnedByLabel" />
+                <asp:Label ID="OwnerLabel" runat="server" AssociatedControlID="DropOwned" Text="<%$Resources:SharedIssueProperties, OwnedByLabel %>" />
             </td>
             <td style="width: 25%;">
                 <it:PickSingleUser ID="DropOwned" DisplayDefault="True" Required="False" runat="Server" />
                 <asp:CheckBox ID="chkOwnedByVisibility" runat="server" Checked="True" meta:ResourceKey="VisibilityCheckBox" />
-                <asp:CheckBox ID="chkNotifyOwner" runat="server" Checked="True" meta:ResourceKey="NotifyCheckBox" />
+                <asp:CheckBox ID="chkNotifyOwner" runat="server" Checked="True" Text="<%$ Resources:SharedIssueProperties, NotifyCheckbox %>" />
             </td>
         </tr>
         <tr>
             <td style="width: 15%;">
-                <asp:Label ID="PriorityLabel" runat="server" AssociatedControlID="DropPriority" meta:resourcekey="PriorityLabel" />
+                <asp:Label ID="PriorityLabel" runat="server" AssociatedControlID="DropPriority" Text="<%$Resources:SharedIssueProperties, PriorityLabel %>" />
             </td>
             <td style="width: 35%;">
                 <it:PickPriority ID="DropPriority" DisplayDefault="true" runat="Server" />
                 <asp:CheckBox ID="chkPriorityVisibility" runat="server" Checked="True" meta:ResourceKey="VisibilityCheckBox" />
             </td>
             <td>
-                <asp:Label ID="Label4" AssociatedControlID="DropAffectedMilestone" runat="server" meta:ResourceKey="AffectedMilestoneLabel" />
+                <asp:Label ID="Label4" AssociatedControlID="DropAffectedMilestone" runat="server" Text="<%$Resources:SharedIssueProperties, AffectedMilestoneLabel %>" />
             </td>
             <td>
                 <it:PickMilestone ID="DropAffectedMilestone" DisplayDefault="True" runat="Server" />
@@ -65,16 +65,16 @@
         </tr>
         <tr>
             <td style="width: 15%;">
-                <asp:Label ID="AssignedToLabel" runat="server" AssociatedControlID="DropAssignedTo" meta:resourcekey="AssignedToLabel" />
+                <asp:Label ID="AssignedToLabel" runat="server" AssociatedControlID="DropAssignedTo" Text="<%$Resources:SharedIssueProperties, AssignedToLabel %>" />
             </td>
             <td style="width: 35%;">
                 <it:PickSingleUser ID="DropAssignedTo" DisplayUnassigned="False" DisplayDefault="True"
                     Required="false" runat="Server" />
                 <asp:CheckBox ID="chkAssignedToVisibility" runat="server" Checked="True" meta:ResourceKey="VisibilityCheckBox" />
-                <asp:CheckBox ID="chkNotifyAssignedTo" runat="server" Checked="True" meta:ResourceKey="NotifyCheckBox" />
+                <asp:CheckBox ID="chkNotifyAssignedTo" runat="server" Checked="True" Text="<%$ Resources:SharedIssueProperties, NotifyCheckbox %>" />
             </td>
             <td style="width: 15%;">
-                <asp:Label ID="PrivateLabel" AssociatedControlID="chkPrivate" runat="server" meta:resourcekey="PrivateLabel" />
+                <asp:Label ID="PrivateLabel" AssociatedControlID="chkPrivate" runat="server" Text="<%$Resources:SharedIssueProperties, PrivateLabel %>" />
             </td>
             <td style="width: 35%;">
                 <asp:CheckBox ID="chkPrivate" runat="server" />
@@ -83,31 +83,31 @@
         </tr>
         <tr>
             <td style="width: 15%;">
-                <asp:Label ID="CategoryLabel" AssociatedControlID="DropCategory" meta:resourcekey="CategoryLabel" runat="server" />
+                <asp:Label ID="CategoryLabel" AssociatedControlID="DropCategory" runat="server" Text="<%$Resources:SharedIssueProperties, CategoryLabel %>" />
             </td>
             <td style="width: 35%;">
                 <it:PickCategory ID="DropCategory" DisplayDefault="true" Required="false" runat="Server" />
                 <asp:CheckBox ID="chkCategoryVisibility" runat="server" Checked="True" meta:ResourceKey="VisibilityCheckBox"/>
             </td>
             <td style="width: 15%;">
-                <asp:Label runat="server" AssociatedControlID="DueDate" ID="DueDateLabel" meta:resourcekey="DueDateLabel" />
+                <asp:Label runat="server" AssociatedControlID="DueDate" ID="DueDateLabel" Text="<%$Resources:SharedIssueProperties, DueDateLabel %>" />
             </td>
             <td style="width: 35%;">
-                <asp:TextBox ID="DueDate" Width="40" Style="text-align: right;" runat="server"></asp:TextBox>
-                <asp:Label runat="server" AssociatedControlID="DueDate" ID="days" Text="<%$ Resources:SharedResources, Days %>" />
+                <asp:TextBox ID="DueDate" Width="40" Style="text-align: right;" runat="server" />
+                <small><asp:Label runat="server" AssociatedControlID="DueDate" ID="days" Text="<%$Resources:SharedIssueProperties, DaysLabel %>" /></small>
                 <asp:CheckBox ID="chkDueDateVisibility" runat="server" Checked="True" meta:ResourceKey="VisibilityCheckBox" />
             </td>
         </tr>
         <tr>
             <td>
-                <asp:Label ID="IssueTypeLabel"  AssociatedControlID="DropIssueType" runat="server" meta:ResourceKey="IssueTypeLabel" />
+                <asp:Label ID="IssueTypeLabel"  AssociatedControlID="DropIssueType" runat="server" Text="<%$Resources:SharedIssueProperties, IssueTypeLabel %>" />
             </td>
             <td>
-                <it:PickType ID="DropIssueType" DisplayDefault="True"  runat="Server" />
+                <it:PickType ID="DropIssueType" DisplayDefault="True" runat="Server" />
                 <asp:CheckBox ID="chkTypeVisibility" runat="server" Checked="True" meta:ResourceKey="VisibilityCheckBox" />
             </td>
             <td style="width: 15%;">
-                <asp:Label ID="Label3" runat="server" AssociatedControlID="DropOwned" meta:resourcekey="ProgressLabel"  />
+                <asp:Label ID="Label3" runat="server" AssociatedControlID="ProgressSlider" Text="<%$Resources:SharedIssueProperties, ProgressLabel %>" />
             </td>
             <td style="width: 35%;">
                 <span style="float: left; margin-left: 160px;">
@@ -119,44 +119,44 @@
         </tr>
         <tr>
             <td>
-                <asp:Label ID="MilestoneLabel" AssociatedControlID="DropMilestone" runat="server" meta:ResourceKey="MilestoneLabel" />
+                <asp:Label ID="MilestoneLabel" AssociatedControlID="DropMilestone" runat="server" Text="<%$Resources:SharedIssueProperties, MilestoneLabel %>" />
             </td>
             <td>
                 <it:PickMilestone ID="DropMilestone" DisplayDefault="True" runat="Server" />
                 <asp:CheckBox ID="chkMilestoneVisibility" runat="server" Checked="True" meta:ResourceKey="VisibilityCheckBox" />
             </td>
             <td style="width: 15%;">
-                <asp:Label ID="EstimationLabel" runat="server" meta:resourcekey="EstimationLabel" AssociatedControlID="txtEstimation" />
+                <asp:Label ID="EstimationLabel" runat="server" AssociatedControlID="txtEstimation" Text="<%$Resources:SharedIssueProperties, EstimationLabel %>"/>
             </td>
             <td style="width: 35%;">
                 <asp:TextBox ID="txtEstimation" Style="text-align: right;" Width="80px" runat="server" />
-                &nbsp;<small><asp:Label ID="HoursLabel" meta:resourcekey="HoursLabel" runat="server" /></small>
+                &nbsp;<small><asp:Label ID="HoursLabel" runat="server" Text="<%$Resources:SharedIssueProperties, HoursLabel %>" /></small>
                     <asp:CheckBox ID="chkEstimationVisibility" runat="server" Checked="True" meta:ResourceKey="VisibilityCheckBox" />
-                <asp:RangeValidator ID="RangeValidator2" runat="server" ErrorMessage="Estimation must be a sensible number."
-                    ControlToValidate="txtEstimation" MaximumValue="999" MinimumValue="0" Display="Dynamic" SetFocusOnError="True"></asp:RangeValidator>
+                <asp:RangeValidator ID="RangeValidator2" runat="server" ErrorMessage="<%$Resources:SharedIssueProperties, EstimationValidatorMessage %>"
+                    ControlToValidate="txtEstimation" MaximumValue="999" MinimumValue="0" Display="Dynamic" SetFocusOnError="True" ForeColor="Red" />
             </td>
         </tr>
         <tr>
             <td>
-                <asp:Label ID="ResolutionLabel" runat="server" AssociatedControlID="DropResolution" meta:resourcekey="ResolutionLabel" />
+                <asp:Label ID="ResolutionLabel" runat="server" AssociatedControlID="DropResolution" Text="<%$Resources:SharedIssueProperties, ResolutionLabel %>" />
             </td>
             <td>
                 <it:PickResolution ID="DropResolution" DisplayDefault="True" runat="Server" />
                 <asp:CheckBox ID="chkResolutionVisibility" runat="server" Checked="True" meta:ResourceKey="VisibilityCheckBox" />
             </td>
             <td runat="Server" id="TimeLoggedLabel" visible="false">
-                <asp:Label ID="LoggedLabel" runat="server" meta:resourcekey="LoggedLabel" Text="Logged:" />
+                <asp:Label ID="LoggedLabel" runat="server" Text="<%$Resources:SharedIssueProperties, LoggedLabel %>" />
             </td>
             <td runat="Server" id="TimeLogged" visible="false">
                 <asp:Label ID="lblLoggedTime" runat="server" Style="text-align: right;" />&nbsp;
                 <small>
-                    <asp:Label ID="Label2" meta:resourcekey="HoursLabel" runat="server" Text="hrs" /></small>
+                    <asp:Label ID="Label2" runat="server" Text="<%$Resources:SharedIssueProperties, HoursLabel %>" /></small>
             </td>
         </tr>
     </table>
 
     <ajaxToolkit:SliderExtender ID="SliderExtender2" runat="server" Steps="21" TargetControlID="ProgressSlider"
-        BoundControlID="ProgressSlider_BoundControl" Orientation="Horizontal" TooltipText="{0}% Complete"
-        EnableHandleAnimation="true" meta:resourcekey="ProgressSlider" />
+        BoundControlID="ProgressSlider_BoundControl" Orientation="Horizontal" TooltipText="<%$Resources:SharedIssueProperties, ProgressSliderTooltip %>"
+        EnableHandleAnimation="true" />
 </div>
 

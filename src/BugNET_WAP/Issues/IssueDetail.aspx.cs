@@ -26,11 +26,12 @@ namespace BugNET.Issues
         /// <param name="e"></param>
         protected void Page_Load(object sender, EventArgs e)
         {
-
             if (!Page.IsPostBack)
             {
-                lnkDelete.Attributes.Add("onclick", string.Format("return confirm('{0}');", GetLocalResourceObject("DeleteIssue").ToString().Trim().JsEncode()));
-                imgDelete.Attributes.Add("onclick", string.Format("return confirm('{0}');", GetLocalResourceObject("DeleteIssue").ToString().Trim().JsEncode()));
+                var s = GetLocalResourceObject("DeleteIssueQuestion").ToString().Trim().JsEncode();
+                s = s.Substring(1, s.Length - 2); // remove JSON quotes
+                lnkDelete.Attributes.Add("onclick", string.Format("return confirm('{0}');", s));
+                imgDelete.Attributes.Add("onclick", string.Format("return confirm('{0}');", s));
 
                 IssueId = Request.QueryString.Get("id", 0);
 
@@ -481,7 +482,7 @@ namespace BugNET.Issues
                     DropAssignedTo.Enabled = false;
 
                 //delete issue
-				IssueActionDelete.Visible = UserManager.HasPermission(ProjectId, Common.Permission.DeleteIssue.ToString());
+                IssueActionDelete.Visible = UserManager.HasPermission(ProjectId, Common.Permission.DeleteIssue.ToString());
 
                 //security check: assign issue
                 if (!UserManager.HasPermission(ProjectId, Common.Permission.AssignIssue.ToString()))

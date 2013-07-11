@@ -117,25 +117,70 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-	<data name="Back" xml:space="preserve">
-    <value>Indietro</value>
+	<data name="AffectedMilestoneLabel" xml:space="preserve">
+    <value>Jalon affecté:</value>
   </data>
-	<data name="Finish" xml:space="preserve">
-    <value>Fine</value>
+	<data name="AssignedToLabel" xml:space="preserve">
+    <value>Attribué à:</value>
   </data>
-	<data name="NewProjectTitle.Text" xml:space="preserve">
-    <value>Procedura guidata nuovo progetto</value>
+	<data name="CategoryLabel" xml:space="preserve">
+    <value>Catégorie:</value>
   </data>
-	<data name="Next" xml:space="preserve">
-    <value>Avanti</value>
+	<data name="PriorityLabel" xml:space="preserve">
+    <value>Priorité:</value>
   </data>
-	<data name="Of" xml:space="preserve">
-    <value>di</value>
+	<data name="OwnedByLabel" xml:space="preserve">
+    <value>Appartenant à:</value>
   </data>
-	<data name="Page.Title" xml:space="preserve">
-    <value>Elenco progetto</value>
+	<data name="StatusLabel" xml:space="preserve">
+    <value>Statut:</value>
   </data>
-	<data name="Step" xml:space="preserve">
-    <value>Passo</value>
+	<data name="PrivateLabel" xml:space="preserve">
+    <value>Privé:</value>
   </data>
+	<data name="ProgressLabel" xml:space="preserve">
+    <value>Pourcentage résolu:</value>
+  </data>
+	<data name="DueDateLabel" xml:space="preserve">
+    <value>Date due:</value>
+  </data>
+	<data name="IssueTypeLabel" xml:space="preserve">
+    <value>Type:</value>
+  </data>
+	<data name="MilestoneLabel" xml:space="preserve">
+    <value>Jalon:</value>
+  </data>
+	<data name="EstimationLabel" xml:space="preserve">
+		<value>Estimation:</value>
+	</data>
+	<data name="HoursLabel" xml:space="preserve">
+		<value>(hrs)</value>
+	</data>
+	<data name="ResolutionLabel" xml:space="preserve">
+		<value>Resolution:</value>
+	</data>
+	<data name="LoggedLabel" xml:space="preserve">
+		<value>Enregistré:</value>
+	</data>
+	<data name="ProgressSliderTooltip" xml:space="preserve">
+		<value>{0}% résolu</value>
+	</data>
+	<data name="DaysLabel" xml:space="preserve">
+		<value>(jours)</value>
+	</data>
+	<data name="SaveReturnText" xml:space="preserve">
+		<value>Enregistrer et retour</value>
+	</data>
+	<data name="IssueLabel" xml:space="preserve">
+		<value>Anomalie:</value>
+	</data>
+	<data name="IssueTitleWatermark" xml:space="preserve">
+		<value>Entrez le titre de l'anomalie</value>
+	</data>
+	<data name="IssueTitleRequiredErrorMessage" xml:space="preserve">
+		<value>Titre de l'anomalie nécessaire.</value>
+	</data>
+	<data name="NotifyCheckbox" xml:space="preserve">
+		<value>Notifier</value>
+	</data>
 </root>

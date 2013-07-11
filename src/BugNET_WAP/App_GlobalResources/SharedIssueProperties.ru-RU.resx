@@ -117,25 +117,73 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-	<data name="Back" xml:space="preserve">
-    <value>Indietro</value>
+	<data name="AffectedMilestoneLabel" xml:space="preserve">
+    <value>Затронутый этап:</value>
   </data>
-	<data name="Finish" xml:space="preserve">
-    <value>Fine</value>
+	<data name="CategoryLabel" xml:space="preserve">
+    <value>Категория:</value>
   </data>
-	<data name="NewProjectTitle.Text" xml:space="preserve">
-    <value>Procedura guidata nuovo progetto</value>
+	<data name="AssignedToLabel" xml:space="preserve">
+    <value>Назначено:</value>
   </data>
-	<data name="Next" xml:space="preserve">
-    <value>Avanti</value>
+	<data name="PriorityLabel" xml:space="preserve">
+    <value>Приоритет:</value>
   </data>
-	<data name="Of" xml:space="preserve">
-    <value>di</value>
+	<data name="OwnedByLabel" xml:space="preserve">
+    <value>Владелец:</value>
   </data>
-	<data name="Page.Title" xml:space="preserve">
-    <value>Elenco progetto</value>
+	<data name="StatusLabel" xml:space="preserve">
+    <value>Статус:</value>
   </data>
-	<data name="Step" xml:space="preserve">
-    <value>Passo</value>
+	<data name="PrivateLabel" xml:space="preserve">
+    <value>Закрытое задание:</value>
   </data>
+	<data name="ProgressLabel" xml:space="preserve">
+    <value>Процент выполнения:</value>
+  </data>
+	<data name="DueDateLabel" xml:space="preserve">
+    <value>Дата окончания:</value>
+  </data>
+	<data name="IssueTypeLabel" xml:space="preserve">
+    <value>Тип:</value>
+  </data>
+	<data name="MilestoneLabel" xml:space="preserve">
+    <value>Этап:</value>
+  </data>
+	<data name="EstimationLabel" xml:space="preserve">
+		<value>Оценка:</value>
+	</data>
+	<data name="HoursLabel" xml:space="preserve">
+		<value>(часов)</value>
+	</data>
+	<data name="EstimationValidatorMessage" xml:space="preserve">
+		<value>Оценка должна быть представлена числом.</value>
+	</data>
+	<data name="ResolutionLabel" xml:space="preserve">
+		<value>Заключение:</value>
+	</data>
+	<data name="LoggedLabel" xml:space="preserve">
+		<value>Затрачено:</value>
+	</data>
+	<data name="ProgressSliderTooltip" xml:space="preserve">
+		<value>Завершено {0}%</value>
+	</data>
+	<data name="DaysLabel" xml:space="preserve">
+		<value>(дней)</value>
+	</data>
+	<data name="SaveReturnText" xml:space="preserve">
+		<value>Сохранить и вернуться</value>
+	</data>
+	<data name="IssueLabel" xml:space="preserve">
+		<value>Задание:</value>
+	</data>
+	<data name="IssueTitleWatermark" xml:space="preserve">
+		<value>Введите заголовок задания</value>
+	</data>
+	<data name="IssueTitleRequiredErrorMessage" xml:space="preserve">
+		<value>Требуется указать заголовок задания</value>
+	</data>
+	<data name="NotifyCheckbox" xml:space="preserve">
+		<value>Уведомлять</value>
+	</data>
 </root>
