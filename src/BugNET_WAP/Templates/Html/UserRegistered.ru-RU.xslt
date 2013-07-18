@@ -25,19 +25,19 @@
                     <b>Отображаемое имя:</b>
                 </td>
                 <td>
-                    <xsl:value-of select="User/DisplayName" disable-output-escaping="yes" />
+                    <xsl:value-of select="NotificationUser/DisplayName" disable-output-escaping="yes" />
                 </td>
             </tr>
             <tr>
                 <td><b>Имя пользователя:</b> </td>
                 <td>
-                    <xsl:value-of select="User/UserName" />
+                    <xsl:value-of select="NotificationUser/UserName" />
                 </td>
             </tr>
             <tr>
                 <td><b>Email:</b> </td>
                 <td>
-                    <xsl:value-of select="User/Email" />
+                    <xsl:value-of select="NotificationUser/Email" />
                 </td>
             </tr>
         </table>

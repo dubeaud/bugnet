@@ -15,10 +15,10 @@
     <xsl:text>&#10;</xsl:text>
     <xsl:text>Дата: </xsl:text><xsl:value-of select="helpers:FormatShortDateAnd12HTime(User/CreationDate)" />
     <xsl:text>&#10;</xsl:text>
-    <xsl:text>Отображаемое имя: </xsl:text><xsl:value-of select="User/DisplayName" />
+    <xsl:text>Отображаемое имя: </xsl:text><xsl:value-of select="NotificationUser/DisplayName" />
     <xsl:text>&#10;</xsl:text>
-    <xsl:text>Имя пользователя: </xsl:text><xsl:value-of select="User/UserName" />
+    <xsl:text>Имя пользователя: </xsl:text><xsl:value-of select="NotificationUser/UserName" />
     <xsl:text>&#10;</xsl:text>
-    <xsl:text>Email: </xsl:text><xsl:value-of select="User/Email" />
+    <xsl:text>Email: </xsl:text><xsl:value-of select="NotificationUser/Email" />
   </xsl:template>
 </xsl:stylesheet>

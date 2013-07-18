@@ -15,8 +15,8 @@
         создали учётную запись в приложении &quot;<xsl:value-of select="HostSetting_ApplicationTitle" />&quot;. Пройдите по следующей ссылке
         для подтверждения Вашей учётной записи: </p>
         <p>
-            <a href="{HostSetting_DefaultUrl}Account/Verify.aspx?ID={User/Id}" target="_blank">
-                <xsl:value-of select="HostSetting_DefaultUrl" />Account/Verify.aspx?ID=<xsl:value-of select="User/Id" />
+            <a href="{HostSetting_DefaultUrl}Account/Verify.aspx?ID={NotificationUser/Id}" target="_blank">
+                <xsl:value-of select="HostSetting_DefaultUrl" />Account/Verify.aspx?ID=<xsl:value-of select="NotificationUser/Id" />
             </a>
         </p>
         <p>После подтверждения учётной записи Вы сможете войти в систему!</p>
