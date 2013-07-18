@@ -17,7 +17,7 @@
                     <b>Дата:</b>
                 </td>
                 <td>
-                    <xsl:value-of select="helpers:FormatShortDateAnd12HTime(User/CreationDate)" />
+                    <xsl:value-of select="helpers:FormatShortDateAnd12HTime(NotificationUser/CreationDate)" />
                 </td>
             </tr>
             <tr>
