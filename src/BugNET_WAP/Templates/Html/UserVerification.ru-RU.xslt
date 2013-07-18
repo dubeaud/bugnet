@@ -11,7 +11,7 @@
 
     <xsl:template match="/root">
         <h1>Добро пожаловать в приложение &quot;<xsl:value-of select="HostSetting_ApplicationTitle" />&quot;!</h1>
-        <p>Здравствуйте, <xsl:value-of select="User/DisplayName" disable-output-escaping="yes" />.  Вы получили это письмо, так как недавно
+        <p>Здравствуйте, <xsl:value-of select="NotificationUser/DisplayName" disable-output-escaping="yes" />.  Вы получили это письмо, так как недавно
         создали учётную запись в приложении &quot;<xsl:value-of select="HostSetting_ApplicationTitle" />&quot;. Пройдите по следующей ссылке
         для подтверждения Вашей учётной записи: </p>
         <p>
