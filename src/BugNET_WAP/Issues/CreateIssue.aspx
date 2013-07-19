@@ -157,7 +157,7 @@
         <asp:Panel ID="pnlAddAttachment" CssClass="fieldgroup" Visible="false" runat="server">
             <p style="padding: 8px 0 8px 0;">
                 <strong>
-                    <asp:Label ID="lblAddAttachment" runat="server" meta:resourcekey="Attachment" Text="Attachment"></asp:Label></strong></p>
+                    <asp:Label ID="lblAddAttachment" runat="server" meta:resourcekey="AttachmentLabel" Text="Attachment" /></strong></p>
             <ol>
                 <li>
                     <asp:Label ID="Label6" runat="server" Text="File:" AssociatedControlID="AspUploadFile" meta:resourcekey="AttachmentFileLabel" />
