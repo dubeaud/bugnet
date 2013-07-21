@@ -29,7 +29,6 @@ namespace BugNET.Issues
             if (!Page.IsPostBack)
             {
                 var s = GetLocalResourceObject("DeleteIssueQuestion").ToString().Trim().JsEncode();
-                s = s.Substring(1, s.Length - 2); // remove JSON quotes
                 lnkDelete.Attributes.Add("onclick", string.Format("return confirm('{0}');", s));
                 imgDelete.Attributes.Add("onclick", string.Format("return confirm('{0}');", s));
 

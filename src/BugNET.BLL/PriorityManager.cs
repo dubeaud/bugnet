@@ -66,7 +66,7 @@ namespace BugNET.BLL
                 return DataProviderManager.Provider.DeletePriority(entity.Id);
 
             cannotDeleteMessage = ResourceStrings.GetGlobalResource(GlobalResources.Exceptions, "DeleteItemAssignedToIssueError");
-            cannotDeleteMessage = string.Format(cannotDeleteMessage, entity.Name, "priority");
+            cannotDeleteMessage = string.Format(cannotDeleteMessage, entity.Name, ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Priority", "priority").ToLower());
 
             return false;
         }

@@ -64,7 +64,7 @@ namespace BugNET.BLL
                 return DataProviderManager.Provider.DeleteResolution(entity.Id);
 
             cannotDeleteMessage = ResourceStrings.GetGlobalResource(GlobalResources.Exceptions, "DeleteItemAssignedToIssueError");
-            cannotDeleteMessage = string.Format(cannotDeleteMessage, entity.Name, "resolution");
+            cannotDeleteMessage = string.Format(cannotDeleteMessage, entity.Name, ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Resolution", "resolution").ToLower());
 
             return false;
         }
