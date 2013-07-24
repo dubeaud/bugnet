@@ -144,4 +144,10 @@
 	<data name="ConfirmCustomFieldViewCreation" xml:space="preserve">
 		<value>Представления дополнительных полей во всех проектах будут созданы заново. Действительно продолжить?</value>
 	</data>
+	<data name="CustomFieldViewCreationSuccess" xml:space="preserve">
+		<value>Представления для дополнительных полей успешно созданы.</value>
+	</data>
+	<data name="CustomFieldViewCreationError" xml:space="preserve">
+		<value>При создании представлений дополнительных полей произошла ошибка. Просмотрите журнал.</value>
+	</data>
 </root>
