@@ -183,10 +183,12 @@ namespace BugNET.Issues
                 if (selectedValue.IssueVisibility == 1) chkPrivate.Checked = true;
 
                 //Date 
-                DateTime date = DateTime.Today;
-                date = date.AddDays(selectedValue.DueDate);
-
-                DueDatePicker.SelectedValue = date;
+                if (selectedValue.DueDate.HasValue)
+                {
+                    DateTime date = DateTime.Today;
+                    date = date.AddDays(selectedValue.DueDate.Value);
+                    DueDatePicker.SelectedValue = date;
+                }
 
                 ProgressSlider.Text = selectedValue.Progress.ToString();
                 txtEstimation.Text = selectedValue.Estimation.ToString();

@@ -103,7 +103,7 @@ namespace BugNET.Entities
         /// <value>
         /// The due date.
         /// </value>
-        public int DueDate { get; set; }
+        public int? DueDate { get; set; }
 
         /// <summary>
         /// Gets or sets the estimation.

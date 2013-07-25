@@ -63,12 +63,13 @@ namespace BugNET.Administration.Projects.UserControls
                 if (selectedValue.IssueVisibility == 0) chkPrivate.Checked = false;
                 if (selectedValue.IssueVisibility == 1) chkPrivate.Checked = true;
 
-                DueDate.Text = selectedValue.DueDate.ToString();
-
+                if (selectedValue.DueDate.HasValue)
+                {
+                    DueDate.Text = selectedValue.DueDate.Value.ToString();
+                }
+               
                 ProgressSlider.Text = selectedValue.Progress.ToString();
-
                 txtEstimation.Text = selectedValue.Estimation.ToString();
-
 
                 //Visibility Section
 
@@ -159,7 +160,7 @@ namespace BugNET.Administration.Projects.UserControls
         /// </summary>
         public void Initialize()
         {
-            DueDateLabel.Text = "Due Date:(" + DateTime.Today.ToShortDateString() + ")   +";
+            DueDateLabel.Text = "Due Date: (" + DateTime.Today.ToShortDateString() + ")   +";
             BindOptions();
         }
 
@@ -182,12 +183,21 @@ namespace BugNET.Administration.Projects.UserControls
         private bool SaveDefaultValues()
         {
             int privateValue = chkPrivate.Checked ? 1 : 0;
-            int date=0;
-            if (DueDate.Text != "")
+            int? date = 0;
+            if (!string.IsNullOrWhiteSpace(DueDate.Text))
+            {
                 date = Int32.Parse(DueDate.Text);
+            }
+            else
+            {
+                date = null;
+            }
 
             Decimal estimation = 0;
-            if(txtEstimation.Text!="") estimation = Convert.ToDecimal(txtEstimation.Text);
+            if (!string.IsNullOrWhiteSpace(txtEstimation.Text))
+            {
+                estimation = Convert.ToDecimal(txtEstimation.Text);
+            }
 
             DefaultValue newDefaultValues = new DefaultValue()
             {

@@ -357,7 +357,7 @@ namespace BugNET.Providers.DataProviders
                 AddParamToSqlCmd(sqlCmd, "@IssueAssignedUsername", SqlDbType.NText, 255, ParameterDirection.Input, defaultVal.AssignedUserName);
                 AddParamToSqlCmd(sqlCmd, "@IssueVisibility", SqlDbType.Int, 0, ParameterDirection.Input, defaultVal.IssueVisibility);
                 AddParamToSqlCmd(sqlCmd, "@IssueCategoryId", SqlDbType.Int, 0, ParameterDirection.Input, defaultVal.CategoryId);
-                AddParamToSqlCmd(sqlCmd, "@IssueDueDate", SqlDbType.Int, 0, ParameterDirection.Input, defaultVal.DueDate);
+                AddParamToSqlCmd(sqlCmd, "@IssueDueDate", SqlDbType.Int, 0, ParameterDirection.Input, defaultVal.DueDate == null ? DBNull.Value : (object)defaultVal.DueDate);
                 AddParamToSqlCmd(sqlCmd, "@IssueProgress", SqlDbType.Int, 0, ParameterDirection.Input, defaultVal.Progress);
                 AddParamToSqlCmd(sqlCmd, "@IssueMilestoneId", SqlDbType.Int, 0, ParameterDirection.Input, defaultVal.MilestoneId);
                 AddParamToSqlCmd(sqlCmd, "@IssueEstimation", SqlDbType.Int, 0, ParameterDirection.Input, defaultVal.Estimation);
