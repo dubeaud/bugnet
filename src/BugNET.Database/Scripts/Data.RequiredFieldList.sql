@@ -1,4 +1,4 @@
-﻿-- Reference Data for RequiredFieldList 
+﻿-- Reference Data for BugNet_RequiredFieldList 
 MERGE INTO BugNet_RequiredFieldList AS Target 
 USING (VALUES 
 	(1, N'-- Select Field --', N'0'),

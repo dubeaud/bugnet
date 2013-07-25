@@ -1,4 +1,4 @@
-﻿-- Reference Data for Permissions 
+﻿-- Reference Data for BugNet_Permissions 
 MERGE INTO BugNet_Permissions AS Target 
 USING (VALUES 
   (1, N'CloseIssue', N'Close Issue'),

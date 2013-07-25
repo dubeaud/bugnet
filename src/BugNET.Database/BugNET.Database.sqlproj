@@ -302,5 +302,7 @@
     <None Include="Scripts\Data.RequiredFieldList.sql" />
     <None Include="Scripts\Data.Languages.sql" />
     <None Include="Scripts\Data.HostSettings.sql" />
+    <None Include="BugNET.Database.Local.publish.xml" />
+    <None Include="Scripts\Data.Roles.sql" />
   </ItemGroup>
 </Project>

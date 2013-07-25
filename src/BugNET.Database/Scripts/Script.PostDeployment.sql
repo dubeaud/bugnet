@@ -20,3 +20,5 @@ PRINT 'Adding look up lata'
 :r .\Data.Languages.sql
 
 :r .\Data.HostSettings.sql
+
+:r .\Data.Roles.sql
