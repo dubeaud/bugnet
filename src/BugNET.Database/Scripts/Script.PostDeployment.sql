@@ -10,4 +10,13 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
-PRINT 'Adding Look up Data'
+PRINT 'Adding look up lata'
+:r .\Data.Permissions.sql
+
+:r .\Data.ProjectCustomFieldTypes.sql
+
+:r .\Data.RequiredFieldList.sql
+
+:r .\Data.Languages.sql
+
+:r .\Data.HostSettings.sql

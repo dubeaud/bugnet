@@ -296,4 +296,11 @@
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\Data.Permissions.sql" />
+    <None Include="Scripts\Data.ProjectCustomFieldTypes.sql" />
+    <None Include="Scripts\Data.RequiredFieldList.sql" />
+    <None Include="Scripts\Data.Languages.sql" />
+    <None Include="Scripts\Data.HostSettings.sql" />
+  </ItemGroup>
 </Project>
