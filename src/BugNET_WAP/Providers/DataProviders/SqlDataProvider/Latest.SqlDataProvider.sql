@@ -198,7 +198,7 @@ FROM BugNet_UserProfiles
 WHERE PasswordVerificationToken = @Token
 GO
 
-<!-- Begin Upgrade BugNET Tables to Universal Providers -->
+-- Begin Upgrade BugNET Tables to Universal Providers
 
 GO
 PRINT N'Dropping Permission...';

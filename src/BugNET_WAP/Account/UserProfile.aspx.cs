@@ -221,11 +221,16 @@ namespace BugNET.Account
             WebProfile.Current.FirstName = FirstName.Text;
             WebProfile.Current.LastName = LastName.Text;
             WebProfile.Current.DisplayName = FullName.Text;
+            if (WebProfile.Current.PasswordVerificationTokenExpirationDate == DateTime.MinValue)
+            {
+                WebProfile.Current.PasswordVerificationTokenExpirationDate = null;
+            }
 
             try
             {
-                UserManager.UpdateUser(membershipUser);
                 WebProfile.Current.Save();
+                Membership.UpdateUser(membershipUser);
+               
                 Message1.ShowSuccessMessage(GetLocalResourceObject("ProfileSaved").ToString());
 
                 if (Log.IsInfoEnabled)

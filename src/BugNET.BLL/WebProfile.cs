@@ -10,6 +10,7 @@
 
 using System;
 using System.Configuration;
+using System.Data.SqlTypes;
 
 namespace BugNET.BLL
 {
@@ -109,7 +110,7 @@ namespace BugNET.BLL
             }
         }
 
-        public virtual System.Nullable<DateTime> PasswordVerificationTokenExpirationDate
+        public virtual DateTime? PasswordVerificationTokenExpirationDate
         {
             get
             {

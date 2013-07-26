@@ -1,3 +1,4 @@
+using System;
 using System.Web.Profile;
 using System.Web.Providers;
 using System.Web.Security;
@@ -240,11 +241,18 @@ namespace BugNET.Providers.MembershipProviders
         {  
             base.UpdateUser(user);
             CustomMembershipUser newUser = (CustomMembershipUser)user;
-            
+
             ProfileBase profile = ProfileBase.Create(user.UserName);
             profile.SetPropertyValue("DisplayName", newUser.DisplayName);
             profile.SetPropertyValue("LastName", newUser.LastName);
             profile.SetPropertyValue("FirstName", newUser.FirstName);
+            DateTime date = (DateTime)profile.GetPropertyValue("PasswordVerificationTokenExpirationDate");
+
+            if (date != null && date == DateTime.MinValue)
+            {
+                profile.SetPropertyValue("PasswordVerificationTokenExpirationDate", null);
+            }
+
             profile.Save();
 
         }

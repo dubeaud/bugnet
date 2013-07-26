@@ -38,8 +38,8 @@
         <asp:Label ID="Label13" runat="server" Text="<%$ Resources:ResetPasswordDesc %>"></asp:Label>
     </div>
     <div style="margin:2em 0 0 0; border-top:1px solid #ddd; padding-top:5px; clear:both;">
-        <asp:ImageButton runat="server" id="Image7" OnClick="cmdResetPassword_Click" CssClass="icon" ImageUrl="~/Images/key_go.gif" />
-        <asp:LinkButton ID="cmdResetPassword" OnClick="cmdResetPassword_Click" runat="server" Text="<%$ Resources:ResetPassword %>" />
+        <asp:ImageButton runat="server" id="Image7" OnClick="CmdChangePasswordClick" CssClass="icon" ImageUrl="~/Images/key_go.gif" />
+        <asp:LinkButton ID="cmdResetPassword" OnClick="CmdChangePasswordClick" runat="server" Text="<%$ Resources:ResetPassword %>" />
     </div>
 </asp:Panel>
 <div style="margin:2em 0 0 0; border-top:1px solid #ddd; padding-top:5px; clear:both;">
