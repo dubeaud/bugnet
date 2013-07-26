@@ -144,4 +144,7 @@
   <data name="ForSelectedLabel.Text" xml:space="preserve">
     <value>For Selected:</value>
   </data>
+  <data name="None" xml:space="preserve">
+    <value>none</value>
+  </data>
 </root>

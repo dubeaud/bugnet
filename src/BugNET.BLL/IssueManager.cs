@@ -258,7 +258,9 @@ namespace BugNET.BLL
         {
             if (issueId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("issueId"));
 
-            return (DataProviderManager.Provider.GetIssueById(issueId));
+            var issue = DataProviderManager.Provider.GetIssueById(issueId);
+            LocalizeUnassigned(issue);
+            return issue;
         }
 
         /// <summary>
@@ -270,7 +272,9 @@ namespace BugNET.BLL
         {
             if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
-            return (DataProviderManager.Provider.GetIssuesByProjectId(projectId));
+            var list = DataProviderManager.Provider.GetIssuesByProjectId(projectId);
+            LocalizeUnassigned(list);
+            return list;
         }
 
         /// <summary>
@@ -392,7 +396,9 @@ namespace BugNET.BLL
             if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
             if (string.IsNullOrEmpty(username)) throw (new ArgumentOutOfRangeException("username"));
 
-            return (DataProviderManager.Provider.GetIssuesByAssignedUserName(projectId, username));
+            var list = DataProviderManager.Provider.GetIssuesByAssignedUserName(projectId, username);
+            LocalizeUnassigned(list);
+            return list;
         }
 
         /// <summary>
@@ -406,7 +412,9 @@ namespace BugNET.BLL
             if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
             if (string.IsNullOrEmpty(username)) throw (new ArgumentOutOfRangeException("username"));
 
-            return (DataProviderManager.Provider.GetIssuesByCreatorUserName(projectId, username));
+            var list = DataProviderManager.Provider.GetIssuesByCreatorUserName(projectId, username);
+            LocalizeUnassigned(list);
+            return list;
         }
 
         /// <summary>
@@ -420,7 +428,9 @@ namespace BugNET.BLL
             if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
             if (string.IsNullOrEmpty(username)) throw (new ArgumentOutOfRangeException("username"));
 
-            return DataProviderManager.Provider.GetIssuesByOwnerUserName(projectId, username);
+            var list = DataProviderManager.Provider.GetIssuesByOwnerUserName(projectId, username);
+            LocalizeUnassigned(list);
+            return list;
         }
 
         /// <summary>
@@ -434,7 +444,9 @@ namespace BugNET.BLL
             if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
             if (string.IsNullOrEmpty(username)) throw (new ArgumentOutOfRangeException("username"));
 
-            return (DataProviderManager.Provider.GetIssuesByRelevancy(projectId, username));
+            var list = DataProviderManager.Provider.GetIssuesByRelevancy(projectId, username);
+            LocalizeUnassigned(list);
+            return list;
         }
 
         /// <summary>
@@ -447,7 +459,9 @@ namespace BugNET.BLL
         {
             if (string.IsNullOrEmpty(username)) throw (new ArgumentOutOfRangeException("username"));
 
-            return DataProviderManager.Provider.GetMonitoredIssuesByUserName(username, excludeClosedStatus);
+            var list = DataProviderManager.Provider.GetMonitoredIssuesByUserName(username, excludeClosedStatus);
+            LocalizeUnassigned(list);
+            return list;
         }
 
         /// <summary>
@@ -522,7 +536,9 @@ namespace BugNET.BLL
         {
             if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
-            return (DataProviderManager.Provider.GetOpenIssues(projectId));
+            var list = DataProviderManager.Provider.GetOpenIssues(projectId);
+            LocalizeUnassigned(list);
+            return list;
         }
 
         /// <summary>
@@ -535,7 +551,9 @@ namespace BugNET.BLL
         {
             if (queryClauses.Count == 0) throw new ArgumentOutOfRangeException("queryClauses");
 
-            return DataProviderManager.Provider.PerformQuery(queryClauses, null, projectId);
+            var list = DataProviderManager.Provider.PerformQuery(queryClauses, null, projectId);
+            LocalizeUnassigned(list);
+            return list;
         }
 
         /// <summary>
@@ -547,7 +565,9 @@ namespace BugNET.BLL
         /// <returns></returns>
         public static List<Issue> PerformQuery(List<QueryClause> queryClauses, ICollection<KeyValuePair<string, string>> sortColumns, int projectId = 0)
         {
-            return DataProviderManager.Provider.PerformQuery(queryClauses, sortColumns, projectId);
+            var list = DataProviderManager.Provider.PerformQuery(queryClauses, sortColumns, projectId);
+            LocalizeUnassigned(list);
+            return list;
         }
 
         /// <summary>
@@ -561,9 +581,47 @@ namespace BugNET.BLL
             if (queryId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("queryId"));
             if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
-            return DataProviderManager.Provider.PerformSavedQuery(projectId, queryId);
+            var list = DataProviderManager.Provider.PerformSavedQuery(projectId, queryId);
+            LocalizeUnassigned(list);
+            return list;
         }
 
+        private static bool NeedLocalize {
+        	get { return System.Threading.Thread.CurrentThread.CurrentUICulture.Name != "en-US";}
+        }
+        
+        private static void LocalizeUnassigned(List<Issue> issues)
+        {
+            if (NeedLocalize)
+            {
+                var s = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Unassigned", "Unassigned");
+                
+                foreach (var issue in issues) {
+                    LocalizeUnassigned(issue, s);
+                }
+            }
+        }
+        
+        private static void LocalizeUnassigned(Issue issue)
+        {
+            if (NeedLocalize)
+                LocalizeUnassigned(issue, ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Unassigned", "Unassigned"));
+        }
+        
+        private static void LocalizeUnassigned(Issue issue, string unassignedLiteral)
+        {
+            if (issue.AffectedMilestoneId == 0) issue.AffectedMilestoneName = unassignedLiteral;
+            if (issue.AssignedUserId == Guid.Empty) issue.AssignedDisplayName = issue.AssignedUserName = unassignedLiteral;
+            if (issue.CategoryId == 0) issue.CategoryName = unassignedLiteral;
+            if (issue.CreatorUserId == Guid.Empty) issue.CreatorDisplayName = issue.CreatorUserName = unassignedLiteral;
+            if (issue.IssueTypeId == 0) issue.IssueTypeName = unassignedLiteral;
+            if (issue.MilestoneId == 0) issue.MilestoneName = unassignedLiteral;
+            if (issue.OwnerUserId == Guid.Empty) issue.OwnerDisplayName = issue.OwnerUserName = unassignedLiteral;
+            if (issue.PriorityId == 0) issue.PriorityName = unassignedLiteral;
+            if (issue.ResolutionId == 0) issue.ResolutionName = unassignedLiteral;
+            if (issue.StatusId == 0) issue.StatusName = unassignedLiteral;
+        }
+        
         /// <summary>
         /// Validates the issue by fetching the issue from the database
         /// </summary>

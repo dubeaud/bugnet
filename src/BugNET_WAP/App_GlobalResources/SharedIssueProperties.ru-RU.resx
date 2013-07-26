@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-	<!-- 
+  <!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,131 +59,131 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-		<xsd:element name="root" msdata:IsDataSet="true">
-			<xsd:complexType>
-				<xsd:choice maxOccurs="unbounded">
-					<xsd:element name="metadata">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" />
-							</xsd:sequence>
-							<xsd:attribute name="name" use="required" type="xsd:string" />
-							<xsd:attribute name="type" type="xsd:string" />
-							<xsd:attribute name="mimetype" type="xsd:string" />
-							<xsd:attribute ref="xml:space" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="assembly">
-						<xsd:complexType>
-							<xsd:attribute name="alias" type="xsd:string" />
-							<xsd:attribute name="name" type="xsd:string" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="data">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-							<xsd:attribute ref="xml:space" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="resheader">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" />
-						</xsd:complexType>
-					</xsd:element>
-				</xsd:choice>
-			</xsd:complexType>
-		</xsd:element>
-	</xsd:schema>
-	<resheader name="resmimetype">
-		<value>text/microsoft-resx</value>
-	</resheader>
-	<resheader name="version">
-		<value>2.0</value>
-	</resheader>
-	<resheader name="reader">
-		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<resheader name="writer">
-		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<data name="AffectedMilestoneLabel" xml:space="preserve">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AffectedMilestoneLabel" xml:space="preserve">
     <value>Затронутый этап:</value>
   </data>
-	<data name="CategoryLabel" xml:space="preserve">
+  <data name="CategoryLabel" xml:space="preserve">
     <value>Категория:</value>
   </data>
-	<data name="AssignedToLabel" xml:space="preserve">
-    <value>Назначено:</value>
+  <data name="AssignedToLabel" xml:space="preserve">
+    <value>Исполнитель:</value>
   </data>
-	<data name="PriorityLabel" xml:space="preserve">
+  <data name="PriorityLabel" xml:space="preserve">
     <value>Приоритет:</value>
   </data>
-	<data name="OwnedByLabel" xml:space="preserve">
+  <data name="OwnedByLabel" xml:space="preserve">
     <value>Владелец:</value>
   </data>
-	<data name="StatusLabel" xml:space="preserve">
+  <data name="StatusLabel" xml:space="preserve">
     <value>Статус:</value>
   </data>
-	<data name="PrivateLabel" xml:space="preserve">
+  <data name="PrivateLabel" xml:space="preserve">
     <value>Закрытое задание:</value>
   </data>
-	<data name="ProgressLabel" xml:space="preserve">
+  <data name="ProgressLabel" xml:space="preserve">
     <value>Процент выполнения:</value>
   </data>
-	<data name="DueDateLabel" xml:space="preserve">
+  <data name="DueDateLabel" xml:space="preserve">
     <value>Дата окончания:</value>
   </data>
-	<data name="IssueTypeLabel" xml:space="preserve">
+  <data name="IssueTypeLabel" xml:space="preserve">
     <value>Тип:</value>
   </data>
-	<data name="MilestoneLabel" xml:space="preserve">
+  <data name="MilestoneLabel" xml:space="preserve">
     <value>Этап:</value>
   </data>
-	<data name="EstimationLabel" xml:space="preserve">
-		<value>Оценка:</value>
-	</data>
-	<data name="HoursLabel" xml:space="preserve">
-		<value>(часов)</value>
-	</data>
-	<data name="EstimationValidatorMessage" xml:space="preserve">
-		<value>Оценка должна быть представлена числом.</value>
-	</data>
-	<data name="ResolutionLabel" xml:space="preserve">
-		<value>Заключение:</value>
-	</data>
-	<data name="LoggedLabel" xml:space="preserve">
-		<value>Затрачено:</value>
-	</data>
-	<data name="ProgressSliderTooltip" xml:space="preserve">
-		<value>Завершено {0}%</value>
-	</data>
-	<data name="DaysLabel" xml:space="preserve">
-		<value>(дней)</value>
-	</data>
-	<data name="SaveReturnText" xml:space="preserve">
-		<value>Сохранить и вернуться</value>
-	</data>
-	<data name="IssueLabel" xml:space="preserve">
-		<value>Задание:</value>
-	</data>
-	<data name="IssueTitleWatermark" xml:space="preserve">
-		<value>Введите заголовок задания</value>
-	</data>
-	<data name="IssueTitleRequiredErrorMessage" xml:space="preserve">
-		<value>Требуется указать заголовок задания</value>
-	</data>
-	<data name="NotifyCheckbox" xml:space="preserve">
-		<value>Уведомлять</value>
-	</data>
+  <data name="EstimationLabel" xml:space="preserve">
+    <value>Оценка:</value>
+  </data>
+  <data name="HoursLabel" xml:space="preserve">
+    <value>(часов)</value>
+  </data>
+  <data name="EstimationValidatorMessage" xml:space="preserve">
+    <value>Оценка должна быть представлена числом.</value>
+  </data>
+  <data name="ResolutionLabel" xml:space="preserve">
+    <value>Заключение:</value>
+  </data>
+  <data name="LoggedLabel" xml:space="preserve">
+    <value>Затрачено:</value>
+  </data>
+  <data name="ProgressSliderTooltip" xml:space="preserve">
+    <value>Завершено {0}%</value>
+  </data>
+  <data name="DaysLabel" xml:space="preserve">
+    <value>(дней)</value>
+  </data>
+  <data name="SaveReturnText" xml:space="preserve">
+    <value>Сохранить и вернуться</value>
+  </data>
+  <data name="IssueLabel" xml:space="preserve">
+    <value>Задание:</value>
+  </data>
+  <data name="IssueTitleWatermark" xml:space="preserve">
+    <value>Введите заголовок задания</value>
+  </data>
+  <data name="IssueTitleRequiredErrorMessage" xml:space="preserve">
+    <value>Требуется указать заголовок задания</value>
+  </data>
+  <data name="NotifyCheckbox" xml:space="preserve">
+    <value>Уведомлять</value>
+  </data>
 </root>

@@ -13,7 +13,7 @@ using BugNET.UserInterfaceLayer;
 namespace BugNET.UserControls
 {
     /// <summary>
-    ///	Display Issues grid
+    ///    Display Issues grid
     /// </summary>
     public partial class DisplayIssues : UserControl
     {
@@ -567,10 +567,13 @@ namespace BugNET.UserControls
             OnRebindCommand(EventArgs.Empty);
         }
 
-        protected void gvIssues_DataBinding(object sender, EventArgs e)
+        protected string GetDueDate(object dataItem)
         {
-            var grid = sender as GridView;
+            var issue = (Issue)dataItem;
+            if (issue.DueDate == DateTime.MinValue)
+                return GetLocalResourceObject("None").ToString();
+            else
+                return issue.DueDate.ToShortDateString();
         }
-
     }
 }

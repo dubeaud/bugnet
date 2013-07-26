@@ -130,7 +130,7 @@
     <value>Конфигурация</value>
   </data>
   <data name="Assigned" xml:space="preserve">
-    <value>Назначено</value>
+    <value>Исполнитель</value>
   </data>
   <data name="AssignedTo" xml:space="preserve">
     <value>Назначено</value>
