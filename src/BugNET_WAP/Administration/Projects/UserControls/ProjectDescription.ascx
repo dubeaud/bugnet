@@ -45,7 +45,7 @@
                 <div style="margin:1em 0 0 14em;width:100px;text-align:center;">
                     <asp:Image runat="server" ID="ProjectImage" Height="62" Width="62"  />
                     <br />
-                    <asp:LinkButton ID="RemoveProjectImage" runat="server" Text="Remove" OnClick="RemoveProjectImage_Click"></asp:LinkButton>              
+                    <asp:LinkButton ID="RemoveProjectImage" runat="server" Text="<%$ Resources:SharedResources, Remove %>" OnClick="RemoveProjectImage_Click"></asp:LinkButton>
                 </div>    
             </li>
         </ol>

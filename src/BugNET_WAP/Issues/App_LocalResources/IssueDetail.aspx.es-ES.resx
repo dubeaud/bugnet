@@ -117,17 +117,8 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-	<data name="AffectedMilestoneLabel.Text" xml:space="preserve">
-		<value>Hito afectado:</value>
-	</data>
-	<data name="AssignedToLabel.Text" xml:space="preserve">
-		<value>Asignado a:</value>
-	</data>
 	<data name="ByLabel.Text" xml:space="preserve">
 		<value>por</value>
-	</data>
-	<data name="CategoryLabel.Text" xml:space="preserve">
-		<value>Categoría:</value>
 	</data>
 	<data name="Closed" xml:space="preserve">
 		<value>cerrado</value>
@@ -135,62 +126,14 @@
 	<data name="DateCreatedLabel.Text" xml:space="preserve">
 		<value>Creado</value>
 	</data>
-	<data name="DeleteIssue" xml:space="preserve">
+	<data name="DeleteIssueQuestion" xml:space="preserve">
 		<value>¿Está seguro que desea borrar este caso?</value>
 	</data>
 	<data name="DetailsLabel.Text" xml:space="preserve">
 		<value>Detalles</value>
 	</data>
-	<data name="DueDateLabel.Text" xml:space="preserve">
-		<value>Fecha lanzamiento:</value>
-	</data>
-	<data name="EstimationLabel.Text" xml:space="preserve">
-		<value>Estimación:</value>
-	</data>
-	<data name="HoursLabel.Text" xml:space="preserve">
-		<value>(horas)</value>
-	</data>
-	<data name="IssueLabel.Text" xml:space="preserve">
-		<value>Caso</value>
-	</data>
-	<data name="IssueTitleRequiredErrorMessage" xml:space="preserve">
-		<value>El título es obligatorio.</value>
-	</data>
-	<data name="IssueTitleWaterMark" xml:space="preserve">
-		<value>Introduzca el título del caso</value>
-	</data>
-	<data name="IssueTypeLabel.Text" xml:space="preserve">
-		<value>Tipo</value>
-	</data>
 	<data name="LastUpdateLabel.Text" xml:space="preserve">
 		<value>Última actualización</value>
-	</data>
-	<data name="LoggedLabel.Text" xml:space="preserve">
-		<value>Registrado:</value>
-	</data>
-	<data name="MilestoneLabel.Text" xml:space="preserve">
-		<value>Hito:</value>
-	</data>
-	<data name="OwnedByLabel.Text" xml:space="preserve">
-		<value>Propiedad de:</value>
-	</data>
-	<data name="PageTitleNewIssue" xml:space="preserve">
-		<value>Nuevo caso</value>
-	</data>
-	<data name="PriorityLabel.Text" xml:space="preserve">
-		<value>Prioridad:</value>
-	</data>
-	<data name="PrivateLabel.Text" xml:space="preserve">
-		<value>Privado:</value>
-	</data>
-	<data name="ResolutionLabel.Text" xml:space="preserve">
-		<value>Resolución:</value>
-	</data>
-	<data name="SaveReturn.Text" xml:space="preserve">
-		<value>Guardar y Volver</value>
-	</data>
-	<data name="StatusLabel.Text" xml:space="preserve">
-		<value>Estado:</value>
 	</data>
 	<data name="TimeLabel.Text" xml:space="preserve">
 		<value>Tiempo</value>
@@ -203,11 +146,5 @@
 	</data>
 	<data name="Votes" xml:space="preserve">
 		<value>votos</value>
-	</data>
-	<data name="ProgressLabel.Text" xml:space="preserve">
-		<value>% completo:</value>
-	</data>
-	<data name="Attachment.Text" xml:space="preserve">
-		<value>Adjunto</value>
 	</data>
 </root>

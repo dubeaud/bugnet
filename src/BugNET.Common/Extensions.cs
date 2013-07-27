@@ -47,10 +47,11 @@ namespace BugNET.Common
         /// </summary> 
         /// <param name="value"></param> 
         /// <returns></returns> 
-        public static string JsEncode(this string value)
+        public static string JsEncode(this string value, bool omitQuotes = true)
         {
             var sb = new StringBuilder();
-            sb.Append("\"");
+            if (!omitQuotes)
+                sb.Append("\"");
             foreach (var c in value)
             {
                 switch (c)
@@ -89,7 +90,8 @@ namespace BugNET.Common
                         break;
                 }
             }
-            sb.Append("\"");
+            if (!omitQuotes)
+                sb.Append("\"");
 
             var s = sb.ToString();
             return s;

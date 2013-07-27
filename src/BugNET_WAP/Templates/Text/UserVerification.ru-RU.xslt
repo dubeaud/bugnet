@@ -14,12 +14,12 @@
         <xsl:text>!</xsl:text>
         <xsl:text>&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
-        <xsl:text>Здравствуйте, </xsl:text><xsl:value-of select="User/DisplayName" disable-output-escaping="yes" />
+        <xsl:text>Здравствуйте, </xsl:text><xsl:value-of select="NotificationUser/DisplayName" disable-output-escaping="yes" />
         <xsl:text>.  Вы получили это письмо, так как недавно создали учётную запись в приложении </xsl:text><xsl:value-of select="HostSetting_ApplicationTitle" />
         <xsl:text>. Пройдите по следующей ссылке для подтверждения Вашей учётной записи: </xsl:text>
         <xsl:text>&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
-        <xsl:value-of select="HostSetting_DefaultUrl" />Account/Verify.aspx?ID=<xsl:value-of select="User/Id" />
+        <xsl:value-of select="HostSetting_DefaultUrl" />Account/Verify.aspx?ID=<xsl:value-of select="NotificationUser/Id" />
         <xsl:text>&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
         <xsl:text>После подтверждения учётной записи Вы сможете войти в систему!</xsl:text>

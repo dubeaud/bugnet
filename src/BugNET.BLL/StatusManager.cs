@@ -66,7 +66,7 @@ namespace BugNET.BLL
                 return DataProviderManager.Provider.DeleteStatus(entity.Id);
 
             cannotDeleteMessage = ResourceStrings.GetGlobalResource(GlobalResources.Exceptions, "DeleteItemAssignedToIssueError");
-            cannotDeleteMessage = string.Format(cannotDeleteMessage, entity.Name, "status");
+            cannotDeleteMessage = string.Format(cannotDeleteMessage, entity.Name, ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Status", "status").ToLower());
 
             return false;
         }

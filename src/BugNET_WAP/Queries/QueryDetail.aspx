@@ -1,5 +1,5 @@
 <%@ Page Language="c#" CodeBehind="QueryDetail.aspx.cs" AutoEventWireup="True" MasterPageFile="~/Shared/SingleColumn.master"
-    Title="Query Detail" Inherits="BugNET.Queries.QueryDetail" Async="true" %>
+    Title="Query Detail" Inherits="BugNET.Queries.QueryDetail" Async="true" meta:resourcekey="Page" %>
 
 <%@ Register TagPrefix="it" TagName="DisplayIssues" Src="~/UserControls/DisplayIssues.ascx" %>
 

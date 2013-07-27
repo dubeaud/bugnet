@@ -2,11 +2,11 @@
 <asp:Panel ID="pnlLoginControl" runat="server" OnLoad="pnlLoginControl_Load">
     <asp:Login 
         ID="subLoginControl" 
-        runat="server" 
+        runat="server" meta:resourceKey="LoginControl"
         DestinationPageUrl="~/Default.aspx" 
         PasswordRecoveryText="Forgot your password?"
         PasswordRecoveryUrl="~/Account/ForgotPassword.aspx" 
-        TitleText="Login" 
+        TitleText="Login"
         VisibleWhenLoggedIn="False" 
         OnLoad="LoginControl_Load">
         <TitleTextStyle CssClass="header" />

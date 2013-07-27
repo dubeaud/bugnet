@@ -18,25 +18,25 @@ namespace BugNET.Projects
     /// <summary>
     /// Summary description for ChangeLog.
     /// </summary>
-	public partial class ChangeLog : BasePage 
-	{
+    public partial class ChangeLog : BasePage 
+    {
         /// <summary>
         /// Handles the Load event of the Page control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
-		protected void Page_Load(object sender, EventArgs e)
-		{
-			if(!Page.IsPostBack)
-			{
-				ProjectId = Request.Get("pid", Globals.NEW_ID);
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if(!Page.IsPostBack)
+            {
+                ProjectId = Request.Get("pid", Globals.NEW_ID);
 
-				// If don't know project or issue then redirect to something missing page
-				if(ProjectId == 0)
-				{
-					ErrorRedirector.TransferToSomethingMissingPage(Page);
-					return;
-				}
+                // If don't know project or issue then redirect to something missing page
+                if(ProjectId == 0)
+                {
+                    ErrorRedirector.TransferToSomethingMissingPage(Page);
+                    return;
+                }
 
                 var p = ProjectManager.GetById(ProjectId);
 
@@ -59,19 +59,19 @@ namespace BugNET.Projects
                 Linkbutton9.ForeColor = ColorTranslator.FromHtml("#00489E");
                 Linkbutton9.Enabled = true;
 
-				ViewMode = 1;
+                ViewMode = 1;
                 SortMilestonesAscending = false;
                 SortHeader = "Id";
                 SortAscending = false;
                 SortField = "iv.[IssueId]";
 
                 BindChangeLog();
-			}
+            }
 
             // The ExpandIssuePaths method is called to handle
             // the SiteMapResolve event.
             SiteMap.SiteMapResolve += ExpandProjectPaths;		
-		}
+        }
 
         /// <summary>
         /// Handles the Click event of the SwitchViewMode control.
@@ -109,20 +109,20 @@ namespace BugNET.Projects
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void SortMilestone_Click(object sender, EventArgs e)
         {
-			var button = sender as LinkButton;
-        	var ascending = true;
+            var button = sender as LinkButton;
+            var ascending = true;
 
-			if(button != null)
-			{
-				ascending = Boolean.Parse(button.CommandArgument);
-			}
+            if(button != null)
+            {
+                ascending = Boolean.Parse(button.CommandArgument);
+            }
 
             if (ascending)
             {
                 Linkbutton9.ForeColor = Color.Black;
                 Linkbutton9.Enabled = false;
                 Linkbutton7.ForeColor = ColorTranslator.FromHtml("#00489E");
-                Linkbutton7.Enabled = true;              
+                Linkbutton7.Enabled = true;
             }
             else
             {
@@ -137,34 +137,34 @@ namespace BugNET.Projects
 
         }
 
-		/// <summary>
-		/// Gets or sets the sort field.
-		/// </summary>
-		/// <value>The sort field.</value>
-		string SortField
-		{
+        /// <summary>
+        /// Gets or sets the sort field.
+        /// </summary>
+        /// <value>The sort field.</value>
+        string SortField
+        {
             get { return ViewState.Get("SortField", string.Empty); }
             set
             {
-				if(value == SortField)
-				{
-					// same as current sort file, toggle sort direction
-					SortAscending = !SortAscending;
-				}
+                if(value == SortField)
+                {
+                    // same as current sort file, toggle sort direction
+                    SortAscending = !SortAscending;
+                }
 
-				ViewState.Set("SortField", value);
+                ViewState.Set("SortField", value);
             }
-		}
+        }
 
-		/// <summary>
-		/// Gets or sets a value indicating whether [sort ascending].
-		/// </summary>
-		/// <value><c>true</c> if [sort ascending]; otherwise, <c>false</c>.</value>
-		bool SortAscending
-		{
+        /// <summary>
+        /// Gets or sets a value indicating whether [sort ascending].
+        /// </summary>
+        /// <value><c>true</c> if [sort ascending]; otherwise, <c>false</c>.</value>
+        bool SortAscending
+        {
             get { return ViewState.Get("SortAscending", true); }
             set { ViewState.Set("SortAscending", value); }
-		}
+        }
 
 
         /// <summary>
@@ -217,8 +217,8 @@ namespace BugNET.Projects
             var milestones = MilestoneManager.GetByProjectId(ProjectId).Sort("SortOrder" + ascending).ToList();
 
             ChangeLogRepeater.DataSource = ViewMode == 1 ? 
-				milestones.Take(5) : 
-				milestones;
+                milestones.Take(5) : 
+                milestones;
 
             ChangeLogRepeater.DataBind();
         }
@@ -230,32 +230,32 @@ namespace BugNET.Projects
         /// <param name="e">The <see cref="System.Web.UI.WebControls.RepeaterItemEventArgs"/> instance containing the event data.</param>
         protected void rptChangeLog_ItemCreated(object sender, RepeaterItemEventArgs e)
         {
-        	switch (e.Item.ItemType)
-        	{
-        		case ListItemType.Header:
-        			foreach (Control c in e.Item.Controls)
-        			{
-        				if (c.GetType() != typeof (HtmlTableCell) || c.ID != string.Format("td{0}", SortHeader)) continue;
+            switch (e.Item.ItemType)
+            {
+                case ListItemType.Header:
+                    foreach (Control c in e.Item.Controls)
+                    {
+                        if (c.GetType() != typeof (HtmlTableCell) || c.ID != string.Format("td{0}", SortHeader)) continue;
 
-        				var img = new System.Web.UI.WebControls.Image
-        				{
-        				    ImageUrl = string.Format("~/images/{0}.png", (SortAscending ? "bullet_arrow_up" : "bullet_arrow_down")),
-        				    CssClass = "icon"
-        				};
+                        var img = new System.Web.UI.WebControls.Image
+                        {
+                            ImageUrl = string.Format("~/images/{0}.png", (SortAscending ? "bullet_arrow_up" : "bullet_arrow_down")),
+                            CssClass = "icon"
+                        };
 
-        				// setting the dynamically URL of the image
-        				c.Controls.Add(img);
-        			}
-        			break;
-        		case ListItemType.Item:
-        			((HtmlTableRow)e.Item.FindControl("Row")).Attributes.Add("onmouseout", "this.style.background=''");
-        			((HtmlTableRow)e.Item.FindControl("Row")).Attributes.Add("onmouseover", "this.style.background='#F7F7EC'");
-        			break;
-        		case ListItemType.AlternatingItem:
-        			((HtmlTableRow)e.Item.FindControl("AlternateRow")).Attributes.Add("onmouseover", "this.style.background='#F7F7EC'");
-        			((HtmlTableRow)e.Item.FindControl("AlternateRow")).Attributes.Add("onmouseout", "this.style.background='#fafafa'");
-        			break;
-        	}
+                        // setting the dynamically URL of the image
+                        c.Controls.Add(img);
+                    }
+                    break;
+                case ListItemType.Item:
+                    ((HtmlTableRow)e.Item.FindControl("Row")).Attributes.Add("onmouseout", "this.style.background=''");
+                    ((HtmlTableRow)e.Item.FindControl("Row")).Attributes.Add("onmouseover", "this.style.background='#F7F7EC'");
+                    break;
+                case ListItemType.AlternatingItem:
+                    ((HtmlTableRow)e.Item.FindControl("AlternateRow")).Attributes.Add("onmouseover", "this.style.background='#F7F7EC'");
+                    ((HtmlTableRow)e.Item.FindControl("AlternateRow")).Attributes.Add("onmouseout", "this.style.background='#fafafa'");
+                    break;
+            }
         }
 
         /// <summary>
@@ -304,56 +304,86 @@ namespace BugNET.Projects
         /// <param name="e">The <see cref="System.Web.UI.WebControls.RepeaterItemEventArgs"/> instance containing the event data.</param>
         protected void ChangeLogRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-        	if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem) return;
+            if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem) return;
 
-        	var m = (Milestone)e.Item.DataItem;
-        	((Label)e.Item.FindControl("MilestoneNotes")).Text = m.Notes;
-        	((HyperLink)e.Item.FindControl("ReleaseNotes")).NavigateUrl = string.Format(Page.ResolveUrl("~/Projects/ReleaseNotes.aspx") + "?pid={0}&m={1}", ProjectId, m.Id);
-        	if (m.ReleaseDate.HasValue)
-        	{
-        		var date = (DateTime)m.ReleaseDate;
-        		((Label)e.Item.FindControl("lblReleaseDate")).Text = string.Format(GetLocalResourceObject("ReleasedOn").ToString(), date.ToShortDateString());
-        	}
-        	else
-        	{
-        		((Label)e.Item.FindControl("lblReleaseDate")).Text = GetLocalResourceObject("NoReleaseDate").ToString(); 
-        	}
+            var m = (Milestone)e.Item.DataItem;
+            ((Label)e.Item.FindControl("MilestoneNotes")).Text = m.Notes;
+            ((HyperLink)e.Item.FindControl("ReleaseNotes")).NavigateUrl = string.Format(Page.ResolveUrl("~/Projects/ReleaseNotes.aspx") + "?pid={0}&m={1}", ProjectId, m.Id);
+            if (m.ReleaseDate.HasValue)
+            {
+                var date = (DateTime)m.ReleaseDate;
+                ((Label)e.Item.FindControl("lblReleaseDate")).Text = string.Format(GetLocalResourceObject("ReleasedOn").ToString(), date.ToShortDateString());
+            }
+            else
+            {
+                ((Label)e.Item.FindControl("lblReleaseDate")).Text = GetLocalResourceObject("NoReleaseDate").ToString(); 
+            }
 
-        	var list = e.Item.FindControl("IssuesList") as Repeater;
+            var list = e.Item.FindControl("IssuesList") as Repeater;
 
             if(list == null) return;
 
-        	var queryClauses = new List<QueryClause>
-        	{
-        	    new QueryClause("AND", "iv.[IssueMilestoneId]", "=", m.Id.ToString(), SqlDbType.Int),
-				new QueryClause("AND", "iv.[IsClosed]", "=", "1", SqlDbType.Int),
+            var queryClauses = new List<QueryClause>
+            {
+                new QueryClause("AND", "iv.[IssueMilestoneId]", "=", m.Id.ToString(), SqlDbType.Int),
+                new QueryClause("AND", "iv.[IsClosed]", "=", "1", SqlDbType.Int),
                 new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int)
-        	};
+            };
 
-        	var sortString = (SortAscending) ? "ASC" : "DESC";
-        	
-        	var sortList = new List<KeyValuePair<string, string>>
-        	{
-				new KeyValuePair<string, string>(SortField, sortString)
-        	};
+            var sortString = (SortAscending) ? "ASC" : "DESC";
+            
+            var sortList = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>(SortField, sortString)
+            };
 
-			var issueList = IssueManager.PerformQuery(queryClauses, sortList, ProjectId);
+            var issueList = IssueManager.PerformQuery(queryClauses, sortList, ProjectId);
 
             // private issue check
             issueList = IssueManager.StripPrivateIssuesForRequestor(issueList, Security.GetUserName()).ToList();
 
-        	if (issueList.Count > 0)
-        	{
-        		list.DataSource = issueList;
-        		list.DataBind();
-        	}
-        	else
-        		e.Item.Visible = false;
+            if (issueList.Count > 0)
+            {
+                list.DataSource = issueList;
+                list.DataBind();
+            }
+            else
+                e.Item.Visible = false;
 
-        	((HyperLink)e.Item.FindControl("IssuesCount")).NavigateUrl = string.Format(Page.ResolveUrl("~/Issues/IssueList.aspx") + "?pid={0}&m={1}&s=-1", ProjectId, m.Id);
-        	((HyperLink)e.Item.FindControl("IssuesCount")).Text = issueList.Count.ToString() + GetLocalResourceObject("Issues");
-        	((HyperLink)e.Item.FindControl("MilestoneLink")).NavigateUrl = string.Format(Page.ResolveUrl("~/Issues/IssueList.aspx") + "?pid={0}&m={1}&s=-1", ProjectId, m.Id);
-        	((HyperLink)e.Item.FindControl("MilestoneLink")).Text = m.Name;
+            ((HyperLink)e.Item.FindControl("IssuesCount")).NavigateUrl = string.Format(Page.ResolveUrl("~/Issues/IssueList.aspx") + "?pid={0}&m={1}&s=-1", ProjectId, m.Id);
+            // Set language-specific declination
+            ((HyperLink)e.Item.FindControl("IssuesCount")).Text = GetIssuesCountText(issueList.Count);
+            ((HyperLink)e.Item.FindControl("MilestoneLink")).NavigateUrl = string.Format(Page.ResolveUrl("~/Issues/IssueList.aspx") + "?pid={0}&m={1}&s=-1", ProjectId, m.Id);
+            ((HyperLink)e.Item.FindControl("MilestoneLink")).Text = m.Name;
         }
-	}
+
+        private string GetIssuesCountText(int issuesCount)
+        {
+            if (System.Threading.Thread.CurrentThread.CurrentUICulture.Name == "ru-RU")
+            {
+                return GetIssuesCountText_ru_RU(issuesCount);
+            }
+            return issuesCount.ToString() + GetLocalResourceObject("Issues").ToString();
+        }
+
+        private string GetIssuesCountText_ru_RU(int issuesCount)
+        {
+            int n100 = issuesCount % 100;
+            string resName;
+
+            if (n100 >= 11 && n100 <= 19)
+                resName = "RU_Issues3";
+            else
+            {
+                int n10 = issuesCount % 10;
+                if (n10 == 1)
+                    resName = "RU_Issues1";
+                else if (n10 == 2 || n10 == 3 || n10 == 4)
+                    resName = "RU_Issues2";
+                else
+                    resName = "RU_Issues3";
+            }
+            return String.Format(GetLocalResourceObject(resName).ToString(), issuesCount);
+        }
+    }
 }

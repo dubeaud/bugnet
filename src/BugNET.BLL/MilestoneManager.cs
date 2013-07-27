@@ -54,7 +54,7 @@ namespace BugNET.BLL
                 return DataProviderManager.Provider.DeleteMilestone(milestone.Id);
 
             cannotDeleteMessage = ResourceStrings.GetGlobalResource(GlobalResources.Exceptions, "DeleteItemAssignedToIssueError");
-            cannotDeleteMessage = string.Format(cannotDeleteMessage,  milestone.Name, "milestone");
+            cannotDeleteMessage = string.Format(cannotDeleteMessage, milestone.Name, ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Milestone", "milestone").ToLower());
 
             return false;
         }

@@ -139,42 +139,6 @@ namespace BugNET.Issues {
         protected global::System.Web.UI.WebControls.Label lblIssueNumber;
         
         /// <summary>
-        /// VoteBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell VoteBox;
-        
-        /// <summary>
-        /// IssueVoteCount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label IssueVoteCount;
-        
-        /// <summary>
-        /// Votes control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Votes;
-        
-        /// <summary>
-        /// VotedLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label VotedLabel;
-        
-        /// <summary>
         /// TitleTextBox control.
         /// </summary>
         /// <remarks>

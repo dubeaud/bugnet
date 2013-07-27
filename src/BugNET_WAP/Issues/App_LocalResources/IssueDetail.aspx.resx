@@ -1,6 +1,6 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
+	<!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,179 +59,101 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-    <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexType>
-        <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="assembly">
-            <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="data">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="resheader">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:choice>
-      </xsd:complexType>
-    </xsd:element>
-  </xsd:schema>
-  <resheader name="resmimetype">
-    <value>text/microsoft-resx</value>
-  </resheader>
-  <resheader name="version">
-    <value>2.0</value>
-  </resheader>
-  <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <data name="AffectedMilestoneLabel.Text" xml:space="preserve">
-    <value>Affected Milestone:</value>
-  </data>
-  <data name="AssignedToLabel.Text" xml:space="preserve">
-    <value>Assigned To:</value>
-  </data>
-  <data name="ByLabel.Text" xml:space="preserve">
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute name="name" use="required" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="assembly">
+						<xsd:complexType>
+							<xsd:attribute name="alias" type="xsd:string" />
+							<xsd:attribute name="name" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="ByLabel.Text" xml:space="preserve">
     <value>by</value>
   </data>
-  <data name="CategoryLabel.Text" xml:space="preserve">
-    <value>Category:</value>
-  </data>
-  <data name="Closed" xml:space="preserve">
+	<data name="Closed" xml:space="preserve">
     <value>closed</value>
   </data>
-  <data name="DateCreatedLabel.Text" xml:space="preserve">
+	<data name="DateCreatedLabel.Text" xml:space="preserve">
     <value>Created</value>
   </data>
-  <data name="DeleteIssue" xml:space="preserve">
+	<data name="DeleteIssueQuestion" xml:space="preserve">
     <value>Are you sure you want to delete this issue?</value>
   </data>
-  <data name="DetailsLabel.Text" xml:space="preserve">
+	<data name="DetailsLabel.Text" xml:space="preserve">
     <value>Details</value>
   </data>
-  <data name="DueDateLabel.Text" xml:space="preserve">
-    <value>Due Date:</value>
-  </data>
-  <data name="EstimationLabel.Text" xml:space="preserve">
-    <value>Estimation:</value>
-  </data>
-  <data name="HoursLabel.Text" xml:space="preserve">
-    <value>(hrs)</value>
-  </data>
-  <data name="IssueLabel.Text" xml:space="preserve">
-    <value>Issue:</value>
-  </data>
-  <data name="IssueTitleRequiredErrorMessage" xml:space="preserve">
-    <value>Issue title is required.</value>
-  </data>
-  <data name="IssueTitleWaterMark" xml:space="preserve">
-    <value>Enter an issue title</value>
-  </data>
-  <data name="IssueTypeLabel.Text" xml:space="preserve">
-    <value>Type:</value>
-  </data>
-  <data name="LastUpdateLabel.Text" xml:space="preserve">
+	<data name="LastUpdateLabel.Text" xml:space="preserve">
     <value>Last Updated</value>
   </data>
-  <data name="LoggedLabel.Text" xml:space="preserve">
-    <value>Logged:</value>
-  </data>
-  <data name="MilestoneLabel.Text" xml:space="preserve">
-    <value>Milestone:</value>
-  </data>
-  <data name="OwnedByLabel.Text" xml:space="preserve">
-    <value>Owned By:</value>
-  </data>
-  <data name="PageTitleNewIssue" xml:space="preserve">
-    <value>New Issue</value>
-  </data>
-  <data name="PriorityLabel.Text" xml:space="preserve">
-    <value>Priority:</value>
-  </data>
-  <data name="PrivateLabel.Text" xml:space="preserve">
-    <value>Private:</value>
-  </data>
-  <data name="ResolutionLabel.Text" xml:space="preserve">
-    <value>Resolution:</value>
-  </data>
-  <data name="SaveReturn.Text" xml:space="preserve">
-    <value>Save &amp;amp; Return</value>
-  </data>
-  <data name="StatusLabel.Text" xml:space="preserve">
-    <value>Status:</value>
-  </data>
-  <data name="TimeLabel.Text" xml:space="preserve">
+	<data name="TimeLabel.Text" xml:space="preserve">
     <value>Time</value>
   </data>
-  <data name="TitleLabel.Text" xml:space="preserve">
+	<data name="TitleLabel.Text" xml:space="preserve">
     <value>Title:</value>
   </data>
-  <data name="Voted" xml:space="preserve">
+	<data name="Voted" xml:space="preserve">
     <value>voted</value>
   </data>
-  <data name="Votes" xml:space="preserve">
+	<data name="Votes" xml:space="preserve">
     <value>votes</value>
   </data>
-  <data name="ProgressLabel.Text" xml:space="preserve">
-    <value>Percent Complete:</value>
-  </data>
-  <data name="Attachment.Text" xml:space="preserve">
-    <value>Attachment</value>
-  </data>
-  <data name="AttachmentDescriptionLabel.Text" xml:space="preserve">
-    <value>Description:</value>
-  </data>
-  <data name="AttachmentFileLabel.Text" xml:space="preserve">
-    <value>File:</value>
-  </data>
-  <data name="AttachmentOptionalLocalize.Text" xml:space="preserve">
-    <value>Optional</value>
-  </data>
-  <data name="NotifyCheckBox.Text" xml:space="preserve">
-    <value>Notify</value>
-  </data>
-  <data name="ProgressSlider.TooltipText" xml:space="preserve">
-    <value>{0}% Complete</value>
-  </data>
-  <data name="OnLabel.Text" xml:space="preserve">
+	<data name="OnLabel.Text" xml:space="preserve">
     <value>on</value>
   </data>
-  <data name="Vote" xml:space="preserve">
+	<data name="Vote" xml:space="preserve">
     <value>vote</value>
   </data>
-  <data name="VoteButton.Text" xml:space="preserve">
+	<data name="VoteButton.Text" xml:space="preserve">
     <value>vote</value>
   </data>
 </root>

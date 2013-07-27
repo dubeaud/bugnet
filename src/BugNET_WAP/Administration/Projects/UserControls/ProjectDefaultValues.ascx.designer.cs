@@ -13,6 +13,24 @@ namespace BugNET.Administration.Projects.UserControls {
     public partial class ProjectDefaultValues {
         
         /// <summary>
+        /// TitleLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal TitleLabel;
+        
+        /// <summary>
+        /// DescriptionLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label DescriptionLabel;
+        
+        /// <summary>
         /// StatusLabel control.
         /// </summary>
         /// <remarks>

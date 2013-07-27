@@ -51,14 +51,13 @@ namespace BugNET.Administration.Projects
 
         void CreateProjectViews()
         {
-
             if (UpgradeManager.CreateCustomFieldViews())
             {
-                PageMessage.ShowSuccessMessage("Project custom field views were created successfully");
+                PageMessage.ShowSuccessMessage(GetLocalResourceObject("CustomFieldViewCreationSuccess").ToString());
                 return;
             }
 
-            PageMessage.ShowSuccessMessage("Project custom field views failed to be created, please see application log for errors");
+            PageMessage.ShowErrorMessage(GetLocalResourceObject("CustomFieldViewCreationError").ToString());
         }
 
         /// <summary>
@@ -71,8 +70,9 @@ namespace BugNET.Administration.Projects
             if (!UserManager.IsSuperUser())
                 Response.Redirect("~/Default.aspx");
 
-            btnGenerateCustomFieldViews.OnClientClick = string.Format("return confirm('{0}');", GetLocalResourceObject("ConfirmCustomFieldViewCreation"));
-            lbGenerateCustomFieldViews.OnClientClick = string.Format("return confirm('{0}');", GetLocalResourceObject("ConfirmCustomFieldViewCreation"));
+            var s = string.Format("return confirm('{0}');", GetLocalResourceObject("ConfirmCustomFieldViewCreation"));
+            btnGenerateCustomFieldViews.OnClientClick = s;
+            lbGenerateCustomFieldViews.OnClientClick = s;
 
             if (IsPostBack) return;
 

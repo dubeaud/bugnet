@@ -117,17 +117,8 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-	<data name="AffectedMilestoneLabel.Text" xml:space="preserve">
-    <value>Repere atinse:</value>
-  </data>
-	<data name="AssignedToLabel.Text" xml:space="preserve">
-    <value>Atribuit catre:</value>
-  </data>
 	<data name="ByLabel.Text" xml:space="preserve">
     <value>de</value>
-  </data>
-	<data name="CategoryLabel.Text" xml:space="preserve">
-    <value>Categoria:</value>
   </data>
 	<data name="Closed" xml:space="preserve">
     <value>inchis</value>
@@ -135,62 +126,14 @@
 	<data name="DateCreatedLabel.Text" xml:space="preserve">
     <value>Creat</value>
   </data>
-	<data name="DeleteIssue" xml:space="preserve">
+	<data name="DeleteIssueQuestion" xml:space="preserve">
     <value>Sunteti sigur ca vreti sa stergeti aceasta problema?</value>
   </data>
 	<data name="DetailsLabel.Text" xml:space="preserve">
     <value>Detailii</value>
   </data>
-	<data name="DueDateLabel.Text" xml:space="preserve">
-    <value>Data scadenta:</value>
-  </data>
-	<data name="EstimationLabel.Text" xml:space="preserve">
-    <value>Estimare:</value>
-  </data>
-	<data name="HoursLabel.Text" xml:space="preserve">
-    <value>(ore)</value>
-  </data>
-	<data name="IssueLabel.Text" xml:space="preserve">
-    <value>Problema</value>
-  </data>
-	<data name="IssueTitleRequiredErrorMessage" xml:space="preserve">
-    <value>Titlul problemei este obligatoriu.</value>
-  </data>
-	<data name="IssueTitleWaterMark" xml:space="preserve">
-    <value>Introduceti un titlu pentru problema</value>
-  </data>
-	<data name="IssueTypeLabel.Text" xml:space="preserve">
-    <value>Tip:</value>
-  </data>
 	<data name="LastUpdateLabel.Text" xml:space="preserve">
     <value>Ultima actualizare:</value>
-  </data>
-	<data name="LoggedLabel.Text" xml:space="preserve">
-    <value>Logat:</value>
-  </data>
-	<data name="MilestoneLabel.Text" xml:space="preserve">
-    <value>Reper:</value>
-  </data>
-	<data name="OwnedByLabel.Text" xml:space="preserve">
-    <value>Detinut de:</value>
-  </data>
-	<data name="PageTitleNewIssue" xml:space="preserve">
-    <value>Problema Noua</value>
-  </data>
-	<data name="PriorityLabel.Text" xml:space="preserve">
-    <value>Prioritate:</value>
-  </data>
-	<data name="PrivateLabel.Text" xml:space="preserve">
-    <value>Privat:</value>
-  </data>
-	<data name="ResolutionLabel.Text" xml:space="preserve">
-    <value>Rezolutie:</value>
-  </data>
-	<data name="SaveReturn.Text" xml:space="preserve">
-    <value>Salvare &amp;amp; Revenire</value>
-  </data>
-	<data name="StatusLabel.Text" xml:space="preserve">
-    <value>Stare:</value>
   </data>
 	<data name="TimeLabel.Text" xml:space="preserve">
     <value>Timp</value>
@@ -203,11 +146,5 @@
   </data>
 	<data name="Votes" xml:space="preserve">
     <value>voturi</value>
-  </data>
-	<data name="ProgressLabel.Text" xml:space="preserve">
-    <value>Procent realizare:</value>
-  </data>
-	<data name="Attachment.Text" xml:space="preserve">
-    <value>Atasament</value>
   </data>
 </root>

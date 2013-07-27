@@ -144,4 +144,7 @@
 	<data name="CreateUserLink.Text" xml:space="preserve">
 		<value>щёлкнуть здесь для её получения</value>
 	</data>
+	<data name="LoginControl.FailureText" xml:space="preserve">
+		<value>Неудачная попытка входа. Попробуйте еще раз.</value>
+	</data>
 </root>

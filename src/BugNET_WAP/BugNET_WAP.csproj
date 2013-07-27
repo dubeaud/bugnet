@@ -2121,7 +2121,7 @@
     <Content Include="Issues\UserControls\App_LocalResources\IssueTabs.ascx.resx" />
     <Content Include="App_LocalResources\Feed.aspx.resx" />
     <Content Include="Errors\App_LocalResources\NotFound.aspx.resx" />
-    <Content Include="Errors\App_LocalResources\SomethingMissing.resx" />
+    <Content Include="Errors\App_LocalResources\SomethingMissing.aspx.resx" />
     <Content Include="UserControls\App_LocalResources\PickImage.ascx.resx" />
     <Content Include="UserControls\App_LocalResources\CategoryTreeView.ascx.resx" />
     <Content Include="Errors\App_LocalResources\AccessDenied.aspx.resx" />
@@ -2155,7 +2155,6 @@
     <Content Include="Errors\App_LocalResources\Error.aspx.es-ES.resx" />
     <Content Include="Errors\App_LocalResources\NotFound.aspx.es-ES.resx" />
     <Content Include="Errors\App_LocalResources\SessionExpired.aspx.es-ES.resx" />
-    <Content Include="Errors\App_LocalResources\SomethingMissing.es-ES.resx" />
     <Content Include="Issues\App_LocalResources\IssueDetail.aspx.es-ES.resx">
       <SubType>Designer</SubType>
     </Content>
@@ -2207,6 +2206,7 @@
     <Content Include="App_GlobalResources\SharedResources.nl-NL.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>SharedResources.nl-NL.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_LocalResources\Default.aspx.nl-NL.resx" />
     <Content Include="App_LocalResources\Feed.aspx.nl-NL.resx" />
@@ -2234,7 +2234,6 @@
     <Content Include="Errors\App_LocalResources\Error.aspx.nl-NL.resx" />
     <Content Include="Errors\App_LocalResources\NotFound.aspx.nl-NL.resx" />
     <Content Include="Errors\App_LocalResources\SessionExpired.aspx.nl-NL.resx" />
-    <Content Include="Errors\App_LocalResources\SomethingMissing.nl-NL.resx" />
     <Content Include="Issues\App_LocalResources\IssueDetail.aspx.nl-NL.resx" />
     <Content Include="Issues\App_LocalResources\IssueList.aspx.nl-NL.resx" />
     <Content Include="Issues\App_LocalResources\IssueSearch.aspx.nl-NL.resx" />
@@ -2352,10 +2351,11 @@
     <Content Include="Errors\App_LocalResources\NotFound.aspx.it-IT.resx" />
     <Content Include="Errors\App_LocalResources\SessionExpired.aspx.it-IT.resx" />
     <Content Include="Errors\App_LocalResources\SessionExpired.aspx.ru-RU.resx" />
-    <Content Include="Errors\App_LocalResources\SomethingMissing.it-IT.resx" />
-    <Content Include="Errors\App_LocalResources\SomethingMissing.ru-RU.resx" />
+    <Content Include="Errors\App_LocalResources\SomethingMissing.aspx.ru-RU.resx" />
     <Content Include="Issues\App_LocalResources\IssueDetail.aspx.it-IT.resx" />
     <Content Include="Issues\App_LocalResources\IssueDetail.aspx.ru-RU.resx" />
+    <Content Include="Issues\App_LocalResources\IssueList.aspx.it-IT.resx">
+      <SubType>Designer</SubType>
     <Content Include="Issues\App_LocalResources\IssueList.aspx.it-IT.resx" />
     <Content Include="Issues\App_LocalResources\IssueList.aspx.ru-RU.resx" />
     <Content Include="Issues\App_LocalResources\IssueSearch.aspx.it-IT.resx" />
@@ -2446,7 +2446,6 @@
     <Content Include="Errors\App_LocalResources\Error.aspx.ro-RO.resx" />
     <Content Include="Errors\App_LocalResources\NotFound.aspx.ro-RO.resx" />
     <Content Include="Errors\App_LocalResources\SessionExpired.aspx.ro-RO.resx" />
-    <Content Include="Errors\App_LocalResources\SomethingMissing.ro-RO.resx" />
     <Content Include="Issues\App_LocalResources\IssueDetail.aspx.ro-RO.resx" />
     <Content Include="Issues\App_LocalResources\IssueList.aspx.ro-RO.resx" />
     <Content Include="Issues\App_LocalResources\IssueSearch.aspx.ro-RO.resx" />
@@ -2504,7 +2503,6 @@
     <Content Include="Errors\App_LocalResources\Error.aspx.fr-CA.resx" />
     <Content Include="Errors\App_LocalResources\NotFound.aspx.fr-CA.resx" />
     <Content Include="Errors\App_LocalResources\SessionExpired.aspx.fr-CA.resx" />
-    <Content Include="Errors\App_LocalResources\SomethingMissing.fr-CA.resx" />
     <Content Include="Issues\App_LocalResources\IssueDetail.aspx.fr-CA.resx" />
     <Content Include="Issues\App_LocalResources\IssueList.aspx.fr-CA.resx" />
     <Content Include="Issues\App_LocalResources\IssueSearch.aspx.fr-CA.resx" />
@@ -2605,6 +2603,54 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Web.sitemap.es-ES.designer.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectDefaultValues.ascx.resx" />
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectDefaultValues.ascx.ru-RU.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\SharedIssueProperties.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SharedIssueProperties.Designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\SharedIssueProperties.es-ES.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SharedIssueProperties.es-ES.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\SharedIssueProperties.fr-CA.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SharedIssueProperties.fr-CA.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\SharedIssueProperties.it-IT.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SharedIssueProperties.it-IT.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\SharedIssueProperties.nl-NL.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SharedIssueProperties.nl-NL.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\SharedIssueProperties.ro-RO.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SharedIssueProperties.ro-RO.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\SharedIssueProperties.ru-RU.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SharedIssueProperties.ru-RU.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\App_LocalResources\CreateIssue.aspx.es-ES.resx" />
+    <Content Include="Issues\App_LocalResources\CreateIssue.aspx.fr-CA.resx" />
+    <Content Include="Issues\App_LocalResources\CreateIssue.aspx.it-IT.resx" />
+    <Content Include="Issues\App_LocalResources\CreateIssue.aspx.nl-NL.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\App_LocalResources\CreateIssue.aspx.ro-RO.resx" />
+    <Content Include="Issues\App_LocalResources\CreateIssue.aspx.ru-RU.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

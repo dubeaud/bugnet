@@ -421,7 +421,7 @@ namespace BugNET.UserInterfaceLayer.WebControls
         /// <param name="container">The container.</param>
         private void CreatePageSizeControl(DataPagerFieldItem container)
         {
-            container.Controls.Add(new LiteralControl(_ShowRows));
+            container.Controls.Add(new LiteralControl(String.Format("<span style=\"padding-right:5px\">{0}</span>", _ShowRows)));
 
             var pageSizeDropDownList = new ButtonDropDownList {CommandName = "UpdatePageSize"};
 

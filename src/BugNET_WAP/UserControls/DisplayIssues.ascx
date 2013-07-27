@@ -187,8 +187,7 @@
                     OnSorting="gvIssues_Sorting"
                     Width="100%" 
                     OnPageIndexChanging="gvIssues_PageIndexChanging"
-                    runat="server" 
-                    ondatabinding="gvIssues_DataBinding">
+                    runat="server">
                     <Columns>
                         <asp:TemplateField>
                             <HeaderTemplate>
@@ -307,7 +306,7 @@
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="<%$ Resources:SharedResources, DueDate%>" Visible="false" SortExpression="IssueDueDate">
                             <ItemTemplate>
-                                <%#(DateTime)Eval("DueDate") == DateTime.MinValue ? "none" : Eval("DueDate", "{0:d}") %>
+                                <%# GetDueDate(Container.DataItem) %>
                             </ItemTemplate>
                             <HeaderStyle HorizontalAlign="center" />
                             <ItemStyle HorizontalAlign="center" />
