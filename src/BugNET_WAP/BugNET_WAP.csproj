@@ -2354,8 +2354,6 @@
     <Content Include="Errors\App_LocalResources\SomethingMissing.aspx.ru-RU.resx" />
     <Content Include="Issues\App_LocalResources\IssueDetail.aspx.it-IT.resx" />
     <Content Include="Issues\App_LocalResources\IssueDetail.aspx.ru-RU.resx" />
-    <Content Include="Issues\App_LocalResources\IssueList.aspx.it-IT.resx">
-      <SubType>Designer</SubType>
     <Content Include="Issues\App_LocalResources\IssueList.aspx.it-IT.resx" />
     <Content Include="Issues\App_LocalResources\IssueList.aspx.ru-RU.resx" />
     <Content Include="Issues\App_LocalResources\IssueSearch.aspx.it-IT.resx" />
