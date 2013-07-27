@@ -295,7 +295,7 @@ SELECT
 FROM
   BugNet_ProjectCategories
 WHERE
-  ProjectId = @ProjectId
+  ProjectId = @ProjectId AND Disabled = 0
 ORDER BY CategoryId
 
 CREATE TABLE #NewCategories
@@ -313,7 +313,7 @@ SELECT
 FROM
   BugNet_ProjectCategories
 WHERE
-  ProjectId = @NewProjectId
+  ProjectId = @NewProjectId AND Disabled = 0
 ORDER BY CategoryId
 
 UPDATE BugNet_ProjectCategories SET
