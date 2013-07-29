@@ -73,10 +73,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\AjaxControlToolkit.4.1.60919\lib\40\AjaxControlToolkit.dll</HintPath>
     </Reference>
-    <Reference Include="Altairis.Web.Security, Version=2.4.4.0, Culture=neutral, PublicKeyToken=9a962e35c1398fb4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Altairis.Web.Security.2.4.4.0\lib\net40\Altairis.Web.Security.dll</HintPath>
-    </Reference>
     <Reference Include="Clearscreen.SharpHIP, Version=1.4.1921.36128, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Clearscreen.SharpHIP.dll</HintPath>
@@ -685,6 +681,7 @@
     <Compile Include="Issues\UserControls\Revisions.ascx.designer.cs">
       <DependentUpon>Revisions.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Old_App_Code\SimpleSqlProfileProvider.cs" />
     <Compile Include="Old_App_Code\UIL\DownloadAttachment.cs" />
     <Compile Include="Old_App_Code\UIL\ErrorRedirector.cs">
       <SubType>Code</SubType>

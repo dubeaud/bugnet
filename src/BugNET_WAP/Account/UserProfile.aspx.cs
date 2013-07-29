@@ -221,10 +221,6 @@ namespace BugNET.Account
             WebProfile.Current.FirstName = FirstName.Text;
             WebProfile.Current.LastName = LastName.Text;
             WebProfile.Current.DisplayName = FullName.Text;
-            if (WebProfile.Current.PasswordVerificationTokenExpirationDate == DateTime.MinValue)
-            {
-                WebProfile.Current.PasswordVerificationTokenExpirationDate = null;
-            }
 
             try
             {

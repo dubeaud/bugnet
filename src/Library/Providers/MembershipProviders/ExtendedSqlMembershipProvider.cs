@@ -246,15 +246,7 @@ namespace BugNET.Providers.MembershipProviders
             profile.SetPropertyValue("DisplayName", newUser.DisplayName);
             profile.SetPropertyValue("LastName", newUser.LastName);
             profile.SetPropertyValue("FirstName", newUser.FirstName);
-            DateTime date = (DateTime)profile.GetPropertyValue("PasswordVerificationTokenExpirationDate");
-
-            if (date != null && date == DateTime.MinValue)
-            {
-                profile.SetPropertyValue("PasswordVerificationTokenExpirationDate", null);
-            }
-
             profile.Save();
-
         }
 
         /// <summary>
