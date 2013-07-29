@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.Security;
-using System.Web.Profile;
 using BugNET.BLL;
 
 namespace BugNET.Account
@@ -19,7 +13,6 @@ namespace BugNET.Account
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
 
         /// <summary>
@@ -65,19 +58,16 @@ namespace BugNET.Account
                     }
                     else
                     {
-                        Message = "The password reset token is invalid.";
+                        Message = GetLocalResourceObject("InvalidTokenMessage").ToString();
                         message.Visible = !String.IsNullOrEmpty(Message);
                     }
                 }
                 else
                 {
-                    Message = "The password reset token is invalid.";
+                    Message = GetLocalResourceObject("InvalidTokenMessage").ToString();
                     message.Visible = !String.IsNullOrEmpty(Message);
                 }
-  
             }
         }
-
-
     }
 }

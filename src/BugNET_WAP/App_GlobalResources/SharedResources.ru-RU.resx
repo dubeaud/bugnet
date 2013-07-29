@@ -346,7 +346,7 @@
     <value>Статус</value>
   </data>
   <data name="Submit" xml:space="preserve">
-    <value>Подтвердить</value>
+    <value>Отправить</value>
   </data>
   <data name="TimeLogged" xml:space="preserve">
     <value>Учтённое время</value>

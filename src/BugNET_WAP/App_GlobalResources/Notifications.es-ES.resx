@@ -156,9 +156,6 @@
 	<data name="NewIssueCommentSubject" xml:space="preserve">
 		<value>El caso {0} tiene un nuevo comentario.</value>
 	</data>
-	<data name="PasswordReminder" xml:space="preserve">
-		<value>Ha solicitado un recordatorio de la contraseña en {0}. Su contraseña actual es: {1}</value>
-	</data>
 	<data name="PasswordReminderSubject" xml:space="preserve">
 		<value>Recordatorio de contraseña</value>
 	</data>

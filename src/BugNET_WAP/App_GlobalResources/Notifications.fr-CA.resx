@@ -1,6 +1,6 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
+	<!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,140 +59,134 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-    <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexType>
-        <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="assembly">
-            <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="data">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="resheader">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:choice>
-      </xsd:complexType>
-    </xsd:element>
-  </xsd:schema>
-  <resheader name="resmimetype">
-    <value>text/microsoft-resx</value>
-  </resheader>
-  <resheader name="version">
-    <value>2.0</value>
-  </resheader>
-  <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <data name="IssueAdded" xml:space="preserve">
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute name="name" use="required" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="assembly">
+						<xsd:complexType>
+							<xsd:attribute name="alias" type="xsd:string" />
+							<xsd:attribute name="name" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="IssueAdded" xml:space="preserve">
     <value>Text\IssueAdded.xslt</value>
   </data>
-  <data name="IssueAddedHTML" xml:space="preserve">
+	<data name="IssueAddedHTML" xml:space="preserve">
     <value>Html\IssueAdded.xslt</value>
   </data>
-  <data name="IssueAddedSubject" xml:space="preserve">
+	<data name="IssueAddedSubject" xml:space="preserve">
     <value>Anomalie {0} a été ajoutée à un projet que vous surveillez.</value>
   </data>
-  <data name="IssueUpdated" xml:space="preserve">
+	<data name="IssueUpdated" xml:space="preserve">
     <value>Text\IssueUpdated.xslt</value>
   </data>
-  <data name="IssueUpdatedHTML" xml:space="preserve">
+	<data name="IssueUpdatedHTML" xml:space="preserve">
     <value>Html\IssueUpdated.xslt</value>
   </data>
-  <data name="IssueUpdatedSubject" xml:space="preserve">
+	<data name="IssueUpdatedSubject" xml:space="preserve">
     <value>Anomalie {0} a été mis à jour par {1}</value>
   </data>
-  <data name="IssueUpdatedWithChanges" xml:space="preserve">
+	<data name="IssueUpdatedWithChanges" xml:space="preserve">
     <value>Text\IssueUpdatedWithChanges.xslt</value>
   </data>
-  <data name="IssueUpdatedWithChangesHTML" xml:space="preserve">
+	<data name="IssueUpdatedWithChangesHTML" xml:space="preserve">
     <value>Html\IssueUpdatedWithChanges.xslt</value>
   </data>
-  <data name="NewAssignee" xml:space="preserve">
+	<data name="NewAssignee" xml:space="preserve">
     <value>Text\NewAssignee.xslt</value>
   </data>
-  <data name="NewAssigneeHTML" xml:space="preserve">
+	<data name="NewAssigneeHTML" xml:space="preserve">
     <value>HTML\NewAssignee.xslt</value>
   </data>
-  <data name="NewAssigneeSubject" xml:space="preserve">
+	<data name="NewAssigneeSubject" xml:space="preserve">
     <value>Anomalie {0} assignée à vous</value>
   </data>
-  <data name="NewIssueComment" xml:space="preserve">
+	<data name="NewIssueComment" xml:space="preserve">
     <value>Text\NewIssueComment.xslt</value>
   </data>
-  <data name="NewIssueCommentHTML" xml:space="preserve">
+	<data name="NewIssueCommentHTML" xml:space="preserve">
     <value>Html\NewIssueComment.xslt</value>
   </data>
-  <data name="NewIssueCommentSubject" xml:space="preserve">
+	<data name="NewIssueCommentSubject" xml:space="preserve">
     <value>Anomalie {0} a un nouveau commentaire</value>
   </data>
-  <data name="PasswordReminder" xml:space="preserve">
-    <value>Text\PasswordReminder.xslt</value>
-  </data>
-  <data name="PasswordReminderHTML" xml:space="preserve">
-    <value>HTML\PasswordReminder.xslt</value>
-  </data>
-  <data name="PasswordReminderSubject" xml:space="preserve">
+	<data name="PasswordReminderSubject" xml:space="preserve">
     <value>Rappel de mot de passe</value>
   </data>
-  <data name="PasswordReset" xml:space="preserve">
+	<data name="PasswordReset" xml:space="preserve">
     <value>Text\PasswordReset.xslt</value>
   </data>
-  <data name="PasswordResetHTML" xml:space="preserve">
+	<data name="PasswordResetHTML" xml:space="preserve">
     <value>HTML\PasswordReset.xslt</value>
   </data>
-  <data name="PasswordResetSubject" xml:space="preserve">
+	<data name="PasswordResetSubject" xml:space="preserve">
     <value>Réinitialisation de mot de passe</value>
   </data>
-  <data name="UserRegistered" xml:space="preserve">
+	<data name="UserRegistered" xml:space="preserve">
     <value>Text\UserRegistered.xslt</value>
   </data>
-  <data name="UserRegisteredHTML" xml:space="preserve">
+	<data name="UserRegisteredHTML" xml:space="preserve">
     <value>Html\UserRegistered.xslt</value>
   </data>
-  <data name="UserRegisteredSubject" xml:space="preserve">
+	<data name="UserRegisteredSubject" xml:space="preserve">
     <value>Enregistrement nouvel utilisateur</value>
   </data>
-  <data name="UserVerification" xml:space="preserve">
+	<data name="UserVerification" xml:space="preserve">
     <value>Text\UserVerification.xslt</value>
   </data>
-  <data name="UserVerificationHTML" xml:space="preserve">
+	<data name="UserVerificationHTML" xml:space="preserve">
     <value>Html\UserVerification.xslt</value>
   </data>
-  <data name="UserVerificationSubject" xml:space="preserve">
+	<data name="UserVerificationSubject" xml:space="preserve">
     <value>Étapes pour activer votre nouveau compte...</value>
   </data>
 </root>

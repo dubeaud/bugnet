@@ -159,9 +159,6 @@
 	<data name="NewIssueCommentSubject" xml:space="preserve">
 		<value>Новый комментарий в задании {0}</value>
 	</data>
-	<data name="PasswordReminder" xml:space="preserve">
-		<value>Text\PasswordReminder.ru-RU.xslt</value>
-	</data>
 	<data name="PasswordReminderSubject" xml:space="preserve">
 		<value>Восстановление пароля</value>
 	</data>
@@ -190,9 +187,15 @@
 		<value>Html\UserVerification.ru-RU.xslt</value>
 	</data>
 	<data name="UserVerificationSubject" xml:space="preserve">
-		<value>Шаги по активации Вашей учётной записи...</value>
+		<value>Активация учётной записи</value>
 	</data>
-	<data name="PasswordReminderHTML" xml:space="preserve">
-		<value>HTML\PasswordReminder.ru-RU.xslt</value>
+	<data name="ForgotPasswordSubject" xml:space="preserve">
+		<value>Восстановление пароля</value>
+	</data>
+	<data name="ForgotPassword" xml:space="preserve">
+		<value>Text\ForgotPassword.ru-RU.xslt</value>
+	</data>
+	<data name="ForgotPasswordHTML" xml:space="preserve">
+		<value>Html\ForgotPassword.ru-RU.xslt</value>
 	</data>
 </root>

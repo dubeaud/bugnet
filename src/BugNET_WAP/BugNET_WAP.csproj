@@ -2647,6 +2647,14 @@
     <Content Include="Issues\App_LocalResources\CreateIssue.aspx.ro-RO.resx" />
     <Content Include="Issues\App_LocalResources\CreateIssue.aspx.ru-RU.resx" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\App_LocalResources\PasswordReset.aspx.resx" />
+    <Content Include="Account\App_LocalResources\PasswordReset.aspx.ru-RU.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\App_LocalResources\PasswordResetSuccess.aspx.resx" />
+    <Content Include="Account\App_LocalResources\PasswordResetSuccess.aspx.ru-RU.resx" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
