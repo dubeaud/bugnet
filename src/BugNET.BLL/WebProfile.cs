@@ -8,7 +8,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
 using System.Configuration;
+using System.Data.SqlTypes;
 
 namespace BugNET.BLL
 {
@@ -93,6 +95,30 @@ namespace BugNET.BLL
             set
             {
                 SetPropertyValue("ReceiveEmailNotifications", value);
+            }
+        }
+
+        public virtual string PasswordVerificationToken
+        {
+            get
+            {
+                return ((string)(GetPropertyValue("PasswordVerificationToken")));
+            }
+            set
+            {
+                SetPropertyValue("PasswordVerificationToken", value);
+            }
+        }
+
+        public virtual DateTime? PasswordVerificationTokenExpirationDate
+        {
+            get
+            {
+                return ((DateTime?)(GetPropertyValue("PasswordVerificationTokenExpirationDate")));
+            }
+            set
+            {
+                SetPropertyValue("PasswordVerificationTokenExpirationDate", value);
             }
         }
         

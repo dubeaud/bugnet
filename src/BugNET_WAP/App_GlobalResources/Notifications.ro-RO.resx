@@ -159,12 +159,6 @@
 	<data name="NewIssueCommentSubject" xml:space="preserve">
     <value>Problema {0} are un comentariu nou</value>
   </data>
-	<data name="PasswordReminder" xml:space="preserve">
-    <value>Text\PasswordReminder.ro-RO.xslt</value>
-  </data>
-	<data name="PasswordReminderHTML" xml:space="preserve">
-    <value>HTML\PasswordReminder.ro-RO.xslt</value>
-  </data>
 	<data name="PasswordReminderSubject" xml:space="preserve">
     <value>Reamintire Parola</value>
   </data>

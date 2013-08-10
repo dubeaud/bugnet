@@ -1,0 +1,308 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>BugNET.Database</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{7f2ebe35-394e-4fb5-b2cb-3fdd0bebf010}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.SqlAzureDatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>BugNET.Database</RootNamespace>
+    <AssemblyName>BugNET.Database</AssemblyName>
+    <ModelCollation>1033,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>True</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunSqlCodeAnalysis>True</RunSqlCodeAnalysis>
+  </PropertyGroup>
+  <!-- VS10 without SP1 will not have VisualStudioVersion set, so do that here -->
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <!-- Default to the v10.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="Tables\" />
+    <Folder Include="Views\" />
+    <Folder Include="Stored Procedures\" />
+    <Folder Include="Scripts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Tables\BugNet_Queries.sql" />
+    <Build Include="Tables\BugNet_UserProjects.sql" />
+    <Build Include="Tables\BugNet_Roles.sql" />
+    <Build Include="Tables\BugNet_RolePermissions.sql" />
+    <Build Include="Tables\BugNet_DefaultValues.sql" />
+    <Build Include="Tables\BugNet_UserRoles.sql" />
+    <Build Include="Tables\BugNet_DefaultValuesVisibility.sql" />
+    <Build Include="Tables\BugNet_QueryClauses.sql" />
+    <Build Include="Tables\BugNet_ProjectMailBoxes.sql" />
+    <Build Include="Tables\BugNet_Issues.sql" />
+    <Build Include="Tables\BugNet_ProjectCustomFieldSelections.sql" />
+    <Build Include="Tables\BugNet_IssueNotifications.sql" />
+    <Build Include="Tables\BugNet_IssueWorkReports.sql" />
+    <Build Include="Tables\BugNet_IssueAttachments.sql" />
+    <Build Include="Tables\BugNet_IssueHistory.sql" />
+    <Build Include="Tables\BugNet_UserProfiles.sql" />
+    <Build Include="Tables\BugNet_IssueComments.sql" />
+    <Build Include="Tables\BugNet_RequiredFieldList.sql" />
+    <Build Include="Tables\BugNet_IssueVotes.sql" />
+    <Build Include="Tables\BugNet_ApplicationLog.sql" />
+    <Build Include="Tables\BugNet_IssueRevisions.sql" />
+    <Build Include="Tables\BugNet_HostSettings.sql" />
+    <Build Include="Tables\BugNet_Languages.sql" />
+    <Build Include="Tables\BugNet_ProjectCustomFieldTypes.sql" />
+    <Build Include="Tables\BugNet_Permissions.sql" />
+    <Build Include="Tables\BugNet_ProjectCustomFieldValues.sql" />
+    <Build Include="Tables\BugNet_Projects.sql" />
+    <Build Include="Tables\BugNet_ProjectCustomFields.sql" />
+    <Build Include="Tables\BugNet_ProjectCategories.sql" />
+    <Build Include="Tables\BugNet_ProjectResolutions.sql" />
+    <Build Include="Tables\BugNet_ProjectPriorities.sql" />
+    <Build Include="Tables\BugNet_ProjectNotifications.sql" />
+    <Build Include="Tables\BugNet_ProjectIssueTypes.sql" />
+    <Build Include="Tables\BugNet_ProjectMilestones.sql" />
+    <Build Include="Tables\BugNet_RelatedIssues.sql" />
+    <Build Include="Tables\BugNet_ProjectStatus.sql" />
+    <Build Include="Views\BugNet_ProjectsView.sql" />
+    <Build Include="Views\BugNet_UserView.sql" />
+    <Build Include="Views\BugNet_IssuesView.sql" />
+    <Build Include="Views\BugNet_GetIssuesByProjectIdAndCustomFieldView.sql" />
+    <Build Include="Views\BugNet_DefaultValView.sql" />
+    <Build Include="Views\BugNet_IssueMilestoneCountView.sql" />
+    <Build Include="Views\BugNet_IssueCommentsView.sql" />
+    <Build Include="Views\BugNet_IssueStatusCountView.sql" />
+    <Build Include="Views\BugNet_IssuePriorityCountView.sql" />
+    <Build Include="Views\BugNet_IssueAssignedToCountView.sql" />
+    <Build Include="Views\BugNet_Issue_IssueTypeCountView.sql" />
+    <Build Include="Stored Procedures\BugNet_RelatedIssue_DeleteRelatedIssue.sql" />
+    <Build Include="Stored Procedures\BugNet_RelatedIssue_DeleteParentIssue.sql" />
+    <Build Include="Stored Procedures\BugNet_RelatedIssue_DeleteChildIssue.sql" />
+    <Build Include="Stored Procedures\BugNet_RelatedIssue_CreateNewRelatedIssue.sql" />
+    <Build Include="Stored Procedures\BugNet_RelatedIssue_CreateNewParentIssue.sql" />
+    <Build Include="Stored Procedures\BugNet_IssueNotification_GetIssueNotificationsByIssueId.sql" />
+    <Build Include="Stored Procedures\BugNet_RelatedIssue_CreateNewChildIssue.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectCustomFieldSelection_DeleteCustomFieldSelection.sql" />
+    <Build Include="Stored Procedures\BugNet_Query_SaveQueryClause.sql" />
+    <Build Include="Stored Procedures\BugNet_IssueAttachment_GetIssueAttachmentsByIssueId.sql" />
+    <Build Include="Stored Procedures\BugNet_Query_GetSavedQuery.sql" />
+    <Build Include="Stored Procedures\BugNet_IssueAttachment_GetIssueAttachmentById.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectCustomField_DeleteCustomField.sql" />
+    <Build Include="Stored Procedures\BugNet_IssueAttachment_DeleteIssueAttachment.sql" />
+    <Build Include="Stored Procedures\BugNet_Role_UpdateRole.sql" />
+    <Build Include="Stored Procedures\BugNet_IssueAttachment_CreateNewIssueAttachment.sql" />
+    <Build Include="Stored Procedures\BugNet_User_GetUsersByProjectId.sql" />
+    <Build Include="Stored Procedures\BugNet_Role_GetAllRoles.sql" />
+    <Build Include="Stored Procedures\BugNet_IssueRevision_GetIssueRevisionsByIssueId.sql" />
+    <Build Include="Stored Procedures\BugNet_Role_DeleteRole.sql" />
+    <Build Include="Stored Procedures\BugNet_IssueRevision_DeleteIssueRevisions.sql" />
+    <Build Include="Stored Procedures\BugNet_Role_CreateNewRole.sql" />
+    <Build Include="Stored Procedures\BugNet_IssueRevision_CreateNewIssueRevision.sql" />
+    <Build Include="Stored Procedures\BugNet_Role_RoleExists.sql" />
+    <Build Include="Stored Procedures\BugNet_IssueVote_HasUserVoted.sql" />
+    <Build Include="Stored Procedures\BugNet_IssueVote_CreateNewIssueVote.sql" />
+    <Build Include="Stored Procedures\BugNet_SetProjectSelectedColumnsWithUserIdAndProjectId.sql" />
+    <Build Include="Stored Procedures\BugNet_IssueComment_UpdateIssueComment.sql" />
+    <Build Include="Stored Procedures\BugNet_Role_GetRolesByProject.sql" />
+    <Build Include="Stored Procedures\BugNet_IssueComment_GetIssueCommentsByIssueId.sql" />
+    <Build Include="Stored Procedures\BugNet_Role_GetRoleById.sql" />
+    <Build Include="Stored Procedures\BugNet_DefaultValues_GetByProjectId.sql" />
+    <Build Include="Stored Procedures\BugNet_IssueComment_GetIssueCommentById.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectIssueTypes_UpdateIssueType.sql" />
+    <Build Include="Stored Procedures\BugNet_IssueComment_DeleteIssueComment.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="Stored Procedures\BugNet_ProjectIssueTypes_GetIssueTypesByProjectId.sql" />
+    <Build Include="Stored Procedures\BugNet_IssueComment_CreateNewIssueComment.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectIssueTypes_GetIssueTypeById.sql" />
+    <Build Include="Stored Procedures\BugNet_IssueWorkReport_GetIssueWorkReportsByIssueId.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectIssueTypes_DeleteIssueType.sql" />
+    <Build Include="Stored Procedures\BugNet_IssueWorkReport_DeleteIssueWorkReport.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectIssueTypes_CreateNewIssueType.sql" />
+    <Build Include="Stored Procedures\BugNet_IssueWorkReport_CreateNewIssueWorkReport.sql" />
+    <Build Include="Stored Procedures\BugNet_Query_GetQueryById.sql" />
+    <Build Include="Stored Procedures\BugNet_Query_GetQueriesByUserName.sql" />
+    <Build Include="Stored Procedures\BugNet_IssueNotification_DeleteIssueNotification.sql" />
+    <Build Include="Stored Procedures\BugNet_Query_SaveQuery.sql" />
+    <Build Include="Stored Procedures\BugNet_IssueNotification_CreateNewIssueNotification.sql" />
+    <Build Include="Stored Procedures\BugNet_IssueHistory_GetIssueHistoryByIssueId.sql" />
+    <Build Include="Stored Procedures\BugNet_IssueHistory_CreateNewIssueHistory.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectStatus_UpdateStatus.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectCustomFieldSelection_Update.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectStatus_GetStatusByProjectId.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectCustomField_SaveCustomFieldValue.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectStatus_GetStatusById.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectCustomField_GetCustomFieldsByIssueId.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectStatus_DeleteStatus.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectStatus_CreateNewStatus.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectCategories_GetRootCategoriesByProjectId.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectResolutions_UpdateResolution.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectCategories_GetChildCategoriesByCategoryId.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectResolutions_GetResolutionsByProjectId.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectCategories_GetCategoryById.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectResolutions_GetResolutionById.sql" />
+    <Build Include="Stored Procedures\BugNet_DefaultValues_Set.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectCategories_GetCategoriesByProjectId.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectResolutions_DeleteResolution.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectResolutions_CreateNewResolution.sql" />
+    <Build Include="Stored Procedures\BugNet_Project_GetRoadMapProgress.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectNotification_GetProjectNotificationsByUsername.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectNotification_GetProjectNotificationsByProjectId.sql" />
+    <Build Include="Stored Procedures\BugNet_IssueAttachment_ValidateDownload.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectNotification_DeleteProjectNotification.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectNotification_CreateNewProjectNotification.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectMilestones_UpdateMilestone.sql" />
+    <Build Include="Stored Procedures\BugNet_Issue_GetIssueCategoryCountByProject.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectMilestones_GetMilestonesByProjectId.sql" />
+    <Build Include="Stored Procedures\BugNet_Issue_GetIssueById.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectMilestones_GetMilestoneById.sql" />
+    <Build Include="Stored Procedures\BugNet_Issue_GetIssuesByRelevancy.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectMilestones_DeleteMilestone.sql" />
+    <Build Include="Stored Procedures\BugNet_Issue_GetIssuesByProjectId.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectMilestones_CreateNewMilestone.sql" />
+    <Build Include="Stored Procedures\BugNet_Issue_GetIssuesByOwnerUserName.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectPriorities_UpdatePriority.sql" />
+    <Build Include="Stored Procedures\BugNet_Issue_GetIssuesByCreatorUserName.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectPriorities_GetPriorityById.sql" />
+    <Build Include="Stored Procedures\BugNet_Issue_GetIssuesByAssignedUserName.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectPriorities_GetPrioritiesByProjectId.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectPriorities_DeletePriority.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectPriorities_CreateNewPriority.sql" />
+    <Build Include="Stored Procedures\BugNet_Issue_GetOpenIssues.sql" />
+    <Build Include="Stored Procedures\BugNet_GetProjectSelectedColumnsWithUserIdAndProjectId.sql" />
+    <Build Include="Stored Procedures\BugNet_Issue_GetMonitoredIssuesByUserName.sql" />
+    <Build Include="Stored Procedures\BugNet_Issue_GetIssueUserCountByProject.sql" />
+    <Build Include="Stored Procedures\BugNet_Issue_GetIssueTypeCountByProject.sql" />
+    <Build Include="Stored Procedures\BugNet_Project_RemoveUserFromProject.sql" />
+    <Build Include="Stored Procedures\BugNet_Issue_GetIssueStatusCountByProject.sql" />
+    <Build Include="Stored Procedures\BugNet_Project_IsUserProjectMember.sql" />
+    <Build Include="Stored Procedures\BugNet_Issue_GetIssuePriorityCountByProject.sql" />
+    <Build Include="Stored Procedures\BugNet_Project_AddUserToProject.sql" />
+    <Build Include="Stored Procedures\BugNet_Issue_GetIssueMilestoneCountByProject.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectCustomField_UpdateCustomField.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectCustomField_CreateNewCustomField.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectCategories_UpdateCategory.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectCustomField_GetCustomFieldById.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectCustomField_GetCustomFieldsByProjectId.sql" />
+    <Build Include="Stored Procedures\BugNet_Project_GetPublicProjects.sql" />
+    <Build Include="Stored Procedures\BugNet_Project_GetProjectsByMemberUsername.sql" />
+    <Build Include="Stored Procedures\BugNet_Project_GetProjectMembers.sql" />
+    <Build Include="Stored Procedures\BugNet_Project_GetProjectById.sql" />
+    <Build Include="Stored Procedures\BugNet_Project_GetProjectByCode.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectCategories_DeleteCategory.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectCategories_CreateNewCategory.sql" />
+    <Build Include="Stored Procedures\BugNet_Project_GetAllProjects.sql" />
+    <Build Include="Stored Procedures\BugNet_Project_DeleteProject.sql" />
+    <Build Include="Stored Procedures\BugNet_Project_GetMemberRolesByProjectId.sql" />
+    <Build Include="Stored Procedures\BugNet_Permission_GetRolePermission.sql" />
+    <Build Include="Stored Procedures\BugNet_Permission_GetPermissionsByRole.sql" />
+    <Build Include="Stored Procedures\BugNet_Project_CloneProject.sql" />
+    <Build Include="Stored Procedures\BugNet_Permission_DeleteRolePermission.sql" />
+    <Build Include="Stored Procedures\BugNet_Permission_AddRolePermission.sql" />
+    <Build Include="Stored Procedures\BugNet_Issue_Delete.sql" />
+    <Build Include="Stored Procedures\BugNet_Issue_CreateNewIssue.sql" />
+    <Build Include="Stored Procedures\BugNet_Issue_GetIssueUnscheduledMilestoneCountByProject.sql" />
+    <Build Include="Stored Procedures\BugNet_Issue_GetIssueUnassignedCountByProject.sql" />
+    <Build Include="Stored Procedures\BugNet_Issue_UpdateLastUpdated.sql" />
+    <Build Include="Stored Procedures\BugNet_Issue_UpdateIssue.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectPriorities_CanDeletePriority.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectMilestones_CanDeleteMilestone.sql" />
+    <Build Include="Stored Procedures\BugNet_Permission_GetAllPermissions.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="Stored Procedures\BugNet_ProjectMailbox_UpdateProjectMailbox.sql" />
+    <Build Include="Stored Procedures\BugNet_ApplicationLog_GetLog.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectMailbox_GetProjectByMailbox.sql" />
+    <Build Include="Stored Procedures\BugNet_ApplicationLog_ClearLog.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectMailbox_GetMailboxByProjectId.sql" />
+    <Build Include="Stored Procedures\BugNet_HostSetting_UpdateHostSetting.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectMailbox_GetMailboxById.sql" />
+    <Build Include="Stored Procedures\BugNet_HostSetting_GetHostSettings.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectMailbox_DeleteProjectMailbox.sql">
+      <AnsiNulls>Off</AnsiNulls>
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="Stored Procedures\BugNet_Languages_GetInstalledLanguages.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectMailbox_CreateProjectMailbox.sql" />
+    <Build Include="Stored Procedures\BugNet_RequiredField_GetRequiredFieldListForIssues.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectResolutions_CanDeleteResolution.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectStatus_CanDeleteStatus.sql" />
+    <Build Include="Stored Procedures\BugNet_Query_UpdateQuery.sql" />
+    <Build Include="Stored Procedures\BugNet_Project_CreateNewProject.sql" />
+    <Build Include="Stored Procedures\BugNet_Query_DeleteQuery.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectIssueTypes_CanDeleteIssueType.sql" />
+    <Build Include="Stored Procedures\BugNet_Project_UpdateProject.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectCustomFieldSelection_CreateNewCustomFieldSelection.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectCustomFieldSelection_GetCustomFieldSelectionsByCustomFieldId.sql" />
+    <Build Include="Stored Procedures\BugNet_ProjectCustomFieldSelection_GetCustomFieldSelectionById.sql" />
+    <Build Include="Stored Procedures\BugNet_Role_GetProjectRolesByUser.sql" />
+    <Build Include="Stored Procedures\BugNet_Role_RemoveUserFromRole.sql" />
+    <Build Include="Stored Procedures\BugNet_Role_IsUserInRole.sql" />
+    <Build Include="Stored Procedures\BugNet_Role_GetRolesByUser.sql" />
+    <Build Include="Stored Procedures\BugNet_Role_AddUserToRole.sql" />
+    <Build Include="Stored Procedures\BugNet_Role_RoleHasPermission.sql" />
+    <Build Include="Stored Procedures\BugNet_RelatedIssue_GetRelatedIssues.sql" />
+    <Build Include="Stored Procedures\BugNet_RelatedIssue_GetParentIssues.sql" />
+    <Build Include="Stored Procedures\BugNet_RelatedIssue_GetChildIssues.sql" />
+    <Build Include="Tables\Applications.sql" />
+    <Build Include="Tables\Memberships.sql" />
+    <Build Include="Tables\Profiles.sql" />
+    <Build Include="Tables\Roles.sql" />
+    <Build Include="Tables\Users.sql" />
+    <Build Include="Tables\UsersInRoles.sql" />
+    <Build Include="Stored Procedures\BugNet_User_GetUserIdByUserName.sql" />
+    <Build Include="Stored Procedures\BugNet_User_GetUserNameByPasswordResetToken.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\Data.Permissions.sql" />
+    <None Include="Scripts\Data.ProjectCustomFieldTypes.sql" />
+    <None Include="Scripts\Data.RequiredFieldList.sql" />
+    <None Include="Scripts\Data.Languages.sql" />
+    <None Include="Scripts\Data.HostSettings.sql" />
+    <None Include="BugNET.Database.Local.publish.xml" />
+    <None Include="Scripts\Data.Roles.sql" />
+  </ItemGroup>
+</Project>

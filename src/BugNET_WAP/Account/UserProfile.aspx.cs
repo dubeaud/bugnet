@@ -224,8 +224,9 @@ namespace BugNET.Account
 
             try
             {
-                UserManager.UpdateUser(membershipUser);
                 WebProfile.Current.Save();
+                Membership.UpdateUser(membershipUser);
+               
                 Message1.ShowSuccessMessage(GetLocalResourceObject("ProfileSaved").ToString());
 
                 if (Log.IsInfoEnabled)

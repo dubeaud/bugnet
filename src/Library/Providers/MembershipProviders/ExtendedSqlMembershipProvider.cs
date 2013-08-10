@@ -1,4 +1,6 @@
+using System;
 using System.Web.Profile;
+using System.Web.Providers;
 using System.Web.Security;
 
 namespace BugNET.Providers.MembershipProviders
@@ -6,7 +8,7 @@ namespace BugNET.Providers.MembershipProviders
     /// <summary>
     /// Extended membership provider
     /// </summary>
-    public class ExtendedSqlMembershipProvider  : SqlMembershipProvider
+    public class ExtendedSqlMembershipProvider : DefaultMembershipProvider
     {
         /// <summary>
         /// Adds a new user to the SQL Server membership database.
@@ -239,13 +241,12 @@ namespace BugNET.Providers.MembershipProviders
         {  
             base.UpdateUser(user);
             CustomMembershipUser newUser = (CustomMembershipUser)user;
-            
+
             ProfileBase profile = ProfileBase.Create(user.UserName);
             profile.SetPropertyValue("DisplayName", newUser.DisplayName);
             profile.SetPropertyValue("LastName", newUser.LastName);
             profile.SetPropertyValue("FirstName", newUser.FirstName);
             profile.Save();
-
         }
 
         /// <summary>

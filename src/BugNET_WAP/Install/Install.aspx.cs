@@ -119,53 +119,25 @@ namespace BugNET.Install
         /// <returns></returns>
         private void InstallApplication()
         {
-            var installationDate = WebConfigurationManager.AppSettings["InstallationDate"];
+            _startTime = DateTime.Now;
+            WriteHeader("install");
 
-            if (string.IsNullOrEmpty(installationDate))
+            WriteMessage(string.Format("<h2>Version: {0}</h2>", UpgradeManager.GetCurrentVersion()));
+            WriteMessage("&nbsp;");
+            WriteMessage("<h2>Installation Status Report</h2>");
+
+            if (!InstallBugNET())
             {
-
-                //update machine key.
-                var error = UpgradeManager.UpdateMachineKey();
-
-                if (error == "")
-                {
-                    Response.Redirect(HttpContext.Current.Request.RawUrl, true);
-                }
-                else
-                {
-                    var oStreamReader = new StreamReader(HttpContext.Current.Server.MapPath("~/Install/403-3.htm"));
-                    var strHtml = oStreamReader.ReadToEnd();
-                    oStreamReader.Close();
-                    strHtml = strHtml.Replace("[MESSAGE]", error);
-                    HttpContext.Current.Response.Write(strHtml);
-                    HttpContext.Current.Response.End();
-                }
+                WriteMessage("<h2>Installation Failed!</h2>");
             }
             else
             {
-                _startTime = DateTime.Now;
-                WriteHeader("install");
-
-
-                WriteMessage(string.Format("<h2>Version: {0}</h2>", UpgradeManager.GetCurrentVersion()));
-                WriteMessage("&nbsp;");
-                WriteMessage("<h2>Installation Status Report</h2>");
-
-                if (!InstallBugNET())
-                {
-                    WriteMessage("<h2>Installation Failed!</h2>");
-                }
-                else
-                {
-                    WriteMessage("<h2>Installation Complete</h2>");
-                    WriteMessage("<br/><br/><h2><a href='../Default.aspx'>Click Here To Access Your BugNET Installation</a></h2><br/><br/>");
-                }
-
-                Response.Flush();
-
+                WriteMessage("<h2>Installation Complete</h2>");
+                WriteMessage("<br/><br/><h2><a href='../Default.aspx'>Click Here To Access Your BugNET Installation</a></h2><br/><br/>");
             }
-            WriteFooter();
 
+            Response.Flush();
+            WriteFooter();
         }
 
         /// <summary>
@@ -181,16 +153,11 @@ namespace BugNET.Install
                 if (!providerPath.StartsWith("ERROR"))
                 {
                     WriteMessage(string.Format("Installing Version: {0}<br/>", UpgradeManager.GetCurrentVersion()), 0, true);
-                    WriteMessage("Installing Membership Provider:<br/>", 0, true);
-                    ExecuteSqlInFile(string.Format("{0}InstallCommon.sql", providerPath));
-                    ExecuteSqlInFile(string.Format("{0}InstallMembership.sql", providerPath));
-                    ExecuteSqlInFile(string.Format("{0}InstallProfile.sql", providerPath));
-                    ExecuteSqlInFile(string.Format("{0}InstallRoles.sql", providerPath));
                     WriteMessage("Installing BugNET Database:<br/>", 0, true);
                     ExecuteSqlInFile(string.Format("{0}BugNET.Schema.SqlDataProvider.sql", providerPath));
                     WriteMessage("Installing BugNET Default Data:<br/>", 0, true);
                     ExecuteSqlInFile(string.Format("{0}BugNET.Data.SqlDataProvider.sql", providerPath));
-                    WriteMessage("Creating Administrator Account", 0, true);
+                    WriteMessage("Creating Administrator Account<br/>", 0, true);
 
                     //create admin user
                     MembershipCreateStatus status;
@@ -200,7 +167,8 @@ namespace BugNET.Install
                     switch (status)
                     {
                         case MembershipCreateStatus.Success:
-                            WriteMessage("Created Administrator Account Successfully", 0, true);
+                            WriteMessage("Created Administrator Account", 0, true);
+                            WriteScriptSuccessError(true);
                             break;
                         case MembershipCreateStatus.InvalidUserName:
                         case MembershipCreateStatus.InvalidPassword:
@@ -213,14 +181,14 @@ namespace BugNET.Install
                         case MembershipCreateStatus.InvalidProviderUserKey:
                         case MembershipCreateStatus.DuplicateProviderUserKey:
                         case MembershipCreateStatus.ProviderError:
-                            var message = string.Format("Creating Administrator Account Failed, status returned: {0}", status);
+                            var message = string.Format("Creating Administrator Account Failed, status returned: {0} <br/>", status);
                             WriteMessage(message, 0, true);
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
 
-                    WriteMessage("Creating Administrator Account default profile", 0, true);
+                    WriteMessage("Creating Administrator Account default profile <br/>", 0, true);
 
                     if (status == MembershipCreateStatus.Success)
                     {
@@ -268,55 +236,37 @@ namespace BugNET.Install
         /// </summary>
         private void UpgradeApplication()
         {
-            string installationDate = WebConfigurationManager.AppSettings["InstallationDate"];
-
-            if (string.IsNullOrEmpty(installationDate))
+            _startTime = DateTime.Now;
+            WriteHeader("upgrade");
+            WriteMessage("<h2>Upgrade Status Report</h2>");
+            WriteMessage(string.Format("<h2>Current Assembly Version: {0}</h2>", UpgradeManager.GetCurrentVersion()));
+            WriteMessage(string.Format("<h2>Current Database Version: {0}</h2>", UpgradeManager.GetInstalledVersion()));
+            WriteMessage(string.Format("Upgrading To Version: {0}<br/>", UpgradeManager.GetCurrentVersion()), 0, true);
+            if (UpgradeBugNET())
             {
-                WriteMessage("<h2>Performing security updates...</h2>");
-                try
+                WriteMessage("<h2>Upgrade Complete</h2>");
+                WriteMessage("<h2><a href='../Default.aspx'>Click Here To Access Your BugNET Installation</a></h2>");
+
+                var currentVersion = UpgradeManager.GetCurrentVersion();
+                UpgradeManager.UpdateDatabaseVersion(currentVersion);
+
+                // support for a version file to be loaded to display things like breaking changes or other info 
+                // about the upgrade that was done.
+                var installPath = Server.MapPath("~/Install");
+
+                var versionFile = Path.Combine(installPath, string.Format("{0}.htm", currentVersion));
+
+                if (File.Exists(versionFile))
                 {
-                    UpgradeManager.UpdateMachineKey();
-                    Response.Redirect(HttpContext.Current.Request.RawUrl, true);
-                }
-                catch (Exception ex)
-                {
-                    WriteErrorMessage(string.Format("Failed Upgrading MachineKey: {0}", ex.Message));
+                    WriteMessage(File.ReadAllText(versionFile));
                 }
             }
             else
             {
-                _startTime = DateTime.Now;
-                WriteHeader("upgrade");
-                WriteMessage("<h2>Upgrade Status Report</h2>");
-                WriteMessage(string.Format("<h2>Current Assembly Version: {0}</h2>", UpgradeManager.GetCurrentVersion()));
-                WriteMessage(string.Format("<h2>Current Database Version: {0}</h2>", UpgradeManager.GetInstalledVersion()));
-                WriteMessage(string.Format("Upgrading To Version: {0}<br/>", UpgradeManager.GetCurrentVersion()), 0, true);
-                if (UpgradeBugNET())
-                {
-                    WriteMessage("<h2>Upgrade Complete</h2>");
-                    WriteMessage("<h2><a href='../Default.aspx'>Click Here To Access Your BugNET Installation</a></h2>");
-
-                    var currentVersion = UpgradeManager.GetCurrentVersion();
-                    UpgradeManager.UpdateDatabaseVersion(currentVersion);
-
-                    // support for a version file to be loaded to display things like breaking changes or other info 
-                    // about the upgrade that was done.
-                    var installPath = Server.MapPath("~/Install");
-
-                    var versionFile = Path.Combine(installPath, string.Format("{0}.htm", currentVersion));
-
-                    if (File.Exists(versionFile))
-                    {
-                        WriteMessage(File.ReadAllText(versionFile));
-                    }
-                }
-                else
-                {
-                    WriteMessage("<h2>Upgrade Failed!</h2>");
-                }
-
-                WriteFooter();
+                WriteMessage("<h2>Upgrade Failed!</h2>");
             }
+
+            WriteFooter();
         }
 
         /// <summary>
@@ -337,19 +287,6 @@ namespace BugNET.Install
                     //get list of script files
                     var arrScriptFiles = new ArrayList();
 
-                    //install the membership provider and migrate the users if the 
-                    //installed version is less than 0.7
-                    if (databaseVersion < 70)
-                    {
-                        WriteMessage("Installing Membership Provider:<br/>", 0, true);
-                        ExecuteSqlInFile(string.Format("{0}InstallCommon.sql", providerPath));
-                        ExecuteSqlInFile(string.Format("{0}InstallMembership.sql", providerPath));
-                        ExecuteSqlInFile(string.Format("{0}InstallProfile.sql", providerPath));
-                        ExecuteSqlInFile(string.Format("{0}InstallRoles.sql", providerPath));
-                        WriteMessage("Migrating Users", 0, true);
-                        UpgradeManager.MigrateUsers();
-                    }
-
                     // wire up the custom field creation here based on the version number supported
                     // from here we need to create the custom field views
                     // doing this will not hurt the code if the code does not support it
@@ -363,7 +300,6 @@ namespace BugNET.Install
                         else
                         {
                             WriteMessage("There was an issue creating the custom fields views for your project, please view the application log for more details<br/>", 0, true);
-                            //<a href='../Install/Install.aspx'>Click Here to retry the installation.</a>
                             WriteMessage("You can manually re-generate the custom field views by going to the <a href='../Administration/Projects/ProjectList.aspx'>Project List</a> page and using the generate feature along the top menu<br/>", 0, true);
                         }
                     }

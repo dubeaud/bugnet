@@ -47,12 +47,13 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\build\output\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DocumentationFile>..\build\output\BugNET.XML</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Test|AnyCPU' ">
@@ -72,9 +73,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\AjaxControlToolkit.4.1.60919\lib\40\AjaxControlToolkit.dll</HintPath>
     </Reference>
-    <Reference Include="Altairis.Web.Security">
-      <HintPath>..\packages\Altairis.Web.Security.2.4.3\lib\net40\Altairis.Web.Security.dll</HintPath>
-    </Reference>
     <Reference Include="Clearscreen.SharpHIP, Version=1.4.1921.36128, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Clearscreen.SharpHIP.dll</HintPath>
@@ -83,21 +81,26 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\DotNetOpenAuth.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.4.0.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\AjaxControlToolkit.4.1.60919\lib\40\SanitizerProviders\HtmlAgilityPack.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="SanitizerProviders, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\AjaxControlToolkit.4.1.60919\lib\40\SanitizerProviders\SanitizerProviders.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
@@ -107,6 +110,10 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Extensions.Design" />
+    <Reference Include="System.Web.Providers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Providers.Core.1.2\lib\net40\System.Web.Providers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -130,6 +137,20 @@
     </Compile>
     <Compile Include="Account\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\PasswordReset.aspx.cs">
+      <DependentUpon>PasswordReset.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\PasswordReset.aspx.designer.cs">
+      <DependentUpon>PasswordReset.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\PasswordResetSuccess.aspx.cs">
+      <DependentUpon>PasswordResetSuccess.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\PasswordResetSuccess.aspx.designer.cs">
+      <DependentUpon>PasswordResetSuccess.aspx</DependentUpon>
     </Compile>
     <Compile Include="Account\Register.aspx.cs">
       <DependentUpon>Register.aspx</DependentUpon>
@@ -455,6 +476,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Exceptions.ru-RU.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\Notifications.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Notifications.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\Notifications.fr-CA.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -654,6 +680,7 @@
     <Compile Include="Issues\UserControls\Revisions.ascx.designer.cs">
       <DependentUpon>Revisions.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Old_App_Code\SimpleSqlProfileProvider.cs" />
     <Compile Include="Old_App_Code\UIL\DownloadAttachment.cs" />
     <Compile Include="Old_App_Code\UIL\ErrorRedirector.cs">
       <SubType>Code</SubType>
@@ -961,6 +988,8 @@
   <ItemGroup>
     <Content Include="Account\ForgotPassword.aspx" />
     <Content Include="Account\Login.aspx" />
+    <Content Include="Account\PasswordReset.aspx" />
+    <Content Include="Account\PasswordResetSuccess.aspx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\UserProfile.aspx" />
     <Content Include="Account\Verify.aspx" />
@@ -1146,11 +1175,6 @@
     <Content Include="Providers\DataProviders\SqlDataProvider\1.3.242.0.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\BugNet.Data.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\BugNet.Schema.SqlDataProvider.sql" />
-    <Content Include="Providers\DataProviders\SqlDataProvider\InstallCommon.sql" />
-    <Content Include="Providers\DataProviders\SqlDataProvider\InstallMembership.sql" />
-    <Content Include="Providers\DataProviders\SqlDataProvider\InstallPersonalization.sql" />
-    <Content Include="Providers\DataProviders\SqlDataProvider\InstallProfile.SQL" />
-    <Content Include="Providers\DataProviders\SqlDataProvider\InstallRoles.sql" />
     <Content Include="App_Themes\Default\Forms.css" />
     <Content Include="Providers\DataProviders\SqlDataProvider\Latest.SqlDataProvider.sql" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
@@ -1510,6 +1534,7 @@
     <Content Include="Scripts\themes\default\d.png" />
     <Content Include="Scripts\themes\default\style.css" />
     <Content Include="Scripts\themes\default\throbber.gif" />
+    <Content Include="Templates\Html\ForgotPassword.xslt" />
     <Content Include="Templates\Html\IssueAdded.ro-RO.xslt" />
     <Content Include="Templates\Html\IssueAdded.ru-RU.xslt" />
     <Content Include="Templates\Html\IssueUpdated.ro-RO.xslt" />
@@ -1520,10 +1545,6 @@
     <Content Include="Templates\Html\NewAssignee.ru-RU.xslt" />
     <Content Include="Templates\Html\NewIssueComment.ro-RO.xslt" />
     <Content Include="Templates\Html\NewIssueComment.ru-RU.xslt" />
-    <Content Include="Templates\Html\PasswordReminder.nl-NL.xslt" />
-    <Content Include="Templates\Html\PasswordReminder.ro-RO.xslt" />
-    <Content Include="Templates\Html\PasswordReminder.ru-RU.xslt" />
-    <Content Include="Templates\Html\PasswordReminder.xslt" />
     <Content Include="Templates\Html\IssueAdded.nl-NL.xslt" />
     <Content Include="Templates\Html\IssueAdded.xslt" />
     <Content Include="Templates\Html\IssueUpdated.nl-NL.xslt" />
@@ -1547,6 +1568,7 @@
     <Content Include="Templates\Html\UserVerification.ru-RU.xslt" />
     <Content Include="Templates\Html\UserVerification.xslt" />
     <Content Include="Templates\NewMailboxIssue.xslt" />
+    <Content Include="Templates\Text\ForgotPassword.xslt" />
     <Content Include="Templates\Text\IssueAdded.nl-NL.xslt" />
     <Content Include="Templates\Text\IssueAdded.ro-RO.xslt" />
     <Content Include="Templates\Text\IssueAdded.ru-RU.xslt" />
@@ -1567,10 +1589,6 @@
     <Content Include="Templates\Text\NewIssueComment.ro-RO.xslt" />
     <Content Include="Templates\Text\NewIssueComment.ru-RU.xslt" />
     <Content Include="Templates\Text\NewIssueComment.xslt" />
-    <Content Include="Templates\Text\PasswordReminder.nl-NL.xslt" />
-    <Content Include="Templates\Text\PasswordReminder.ro-RO.xslt" />
-    <Content Include="Templates\Text\PasswordReminder.ru-RU.xslt" />
-    <Content Include="Templates\Text\PasswordReminder.xslt" />
     <Content Include="Templates\Text\PasswordReset.nl-NL.xslt" />
     <Content Include="Templates\Text\PasswordReset.ro-RO.xslt" />
     <Content Include="Templates\Text\PasswordReset.ru-RU.xslt" />
@@ -1628,8 +1646,6 @@
     <Content Include="Images\user.gif" />
     <Content Include="Images\user_edit.gif" />
     <Content Include="Images\xml_small.gif" />
-    <Content Include="Install\403-3.gif" />
-    <Content Include="Install\403-3.htm" />
     <Content Include="App_Themes\Default\Default.skin" />
     <Content Include="log4net.config">
       <SubType>Designer</SubType>
@@ -1647,9 +1663,6 @@
     <Content Include="Issues\UserControls\RelatedIssues.ascx" />
     <Content Include="Issues\UserControls\SubIssues.ascx" />
     <Content Include="Issues\UserControls\TimeTracking.ascx" />
-    <Content Include="release.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Shared\FourColumn.Master" />
     <Content Include="Shared\TwoColumn.Master" />
     <Content Include="UserControls\PickMilestone.ascx" />
@@ -1680,13 +1693,11 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Web.Test.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
     <Content Include="Scripts\ckeditor\ckeditor_php5.php" />
     <Content Include="Scripts\ckeditor\ckeditor_php4.php" />
     <Content Include="Scripts\ckeditor\ckeditor.php" />
     <Content Include="Scripts\ckeditor\ckeditor.pack" />
+    <None Include="Properties\PublishProfiles\Local.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Administration\Host\App_LocalResources\LogViewer.aspx.resx" />
@@ -2143,13 +2154,9 @@
     <Content Include="Issues\App_LocalResources\IssueDetail.aspx.es-ES.resx">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Issues\App_LocalResources\IssueList.aspx.es-ES.resx">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Issues\App_LocalResources\IssueList.aspx.es-ES.resx" />
     <Content Include="Issues\App_LocalResources\IssueSearch.aspx.es-ES.resx" />
-    <Content Include="Issues\App_LocalResources\MyIssues.aspx.es-ES.resx">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Issues\App_LocalResources\MyIssues.aspx.es-ES.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\Attachments.ascx.es-ES.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\Comments.ascx.es-ES.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\History.ascx.es-ES.resx" />
@@ -2224,9 +2231,7 @@
     <Content Include="Errors\App_LocalResources\NotFound.aspx.nl-NL.resx" />
     <Content Include="Errors\App_LocalResources\SessionExpired.aspx.nl-NL.resx" />
     <Content Include="Issues\App_LocalResources\IssueDetail.aspx.nl-NL.resx" />
-    <Content Include="Issues\App_LocalResources\IssueList.aspx.nl-NL.resx">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Issues\App_LocalResources\IssueList.aspx.nl-NL.resx" />
     <Content Include="Issues\App_LocalResources\IssueSearch.aspx.nl-NL.resx" />
     <Content Include="Issues\App_LocalResources\MyIssues.aspx.nl-NL.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\Attachments.ascx.nl-NL.resx" />
@@ -2343,23 +2348,13 @@
     <Content Include="Errors\App_LocalResources\SessionExpired.aspx.it-IT.resx" />
     <Content Include="Errors\App_LocalResources\SessionExpired.aspx.ru-RU.resx" />
     <Content Include="Errors\App_LocalResources\SomethingMissing.aspx.ru-RU.resx" />
-    <Content Include="Issues\App_LocalResources\IssueDetail.aspx.it-IT.resx">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Issues\App_LocalResources\IssueDetail.aspx.it-IT.resx" />
     <Content Include="Issues\App_LocalResources\IssueDetail.aspx.ru-RU.resx" />
-    <Content Include="Issues\App_LocalResources\IssueList.aspx.it-IT.resx">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Issues\App_LocalResources\IssueList.aspx.ru-RU.resx">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Issues\App_LocalResources\IssueSearch.aspx.it-IT.resx">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Issues\App_LocalResources\IssueList.aspx.it-IT.resx" />
+    <Content Include="Issues\App_LocalResources\IssueList.aspx.ru-RU.resx" />
+    <Content Include="Issues\App_LocalResources\IssueSearch.aspx.it-IT.resx" />
     <Content Include="Issues\App_LocalResources\IssueSearch.aspx.ru-RU.resx" />
-    <Content Include="Issues\App_LocalResources\MyIssues.aspx.it-IT.resx">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Issues\App_LocalResources\MyIssues.aspx.it-IT.resx" />
     <Content Include="Issues\App_LocalResources\MyIssues.aspx.ru-RU.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\Attachments.ascx.it-IT.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\Attachments.ascx.ru-RU.resx" />
@@ -2446,9 +2441,7 @@
     <Content Include="Errors\App_LocalResources\NotFound.aspx.ro-RO.resx" />
     <Content Include="Errors\App_LocalResources\SessionExpired.aspx.ro-RO.resx" />
     <Content Include="Issues\App_LocalResources\IssueDetail.aspx.ro-RO.resx" />
-    <Content Include="Issues\App_LocalResources\IssueList.aspx.ro-RO.resx">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Issues\App_LocalResources\IssueList.aspx.ro-RO.resx" />
     <Content Include="Issues\App_LocalResources\IssueSearch.aspx.ro-RO.resx" />
     <Content Include="Issues\App_LocalResources\MyIssues.aspx.ro-RO.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\Attachments.ascx.ro-RO.resx" />
@@ -2494,7 +2487,6 @@
     <Content Include="App_GlobalResources\SharedResources.fr-CA.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>SharedResources.fr-CA.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_GlobalResources\Web.sitemap.fr-CA.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
@@ -2506,13 +2498,9 @@
     <Content Include="Errors\App_LocalResources\NotFound.aspx.fr-CA.resx" />
     <Content Include="Errors\App_LocalResources\SessionExpired.aspx.fr-CA.resx" />
     <Content Include="Issues\App_LocalResources\IssueDetail.aspx.fr-CA.resx" />
-    <Content Include="Issues\App_LocalResources\IssueList.aspx.fr-CA.resx">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Issues\App_LocalResources\IssueList.aspx.fr-CA.resx" />
     <Content Include="Issues\App_LocalResources\IssueSearch.aspx.fr-CA.resx" />
-    <Content Include="Issues\App_LocalResources\MyIssues.aspx.fr-CA.resx">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Issues\App_LocalResources\MyIssues.aspx.fr-CA.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\Attachments.ascx.fr-CA.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\Comments.ascx.fr-CA.resx" />
     <Content Include="Issues\UserControls\App_LocalResources\History.ascx.fr-CA.resx" />
@@ -2556,6 +2544,10 @@
       <Project>{69F2F661-AA9A-4C9F-8217-6A22E8C66FEB}</Project>
       <Name>BugNET.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BugNET.DAL\BugNET.DAL.csproj">
+      <Project>{efd03a92-584b-4930-9fb1-58df64bf7fd4}</Project>
+      <Name>BugNET.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BugNET.Entities\BugNET.Entities.csproj">
       <Project>{5A0AE67B-1F8C-4A6D-A02B-B57BB219288F}</Project>
       <Name>BugNET.Entities</Name>
@@ -2564,9 +2556,33 @@
       <Project>{D10EDECB-ADB2-4E5F-93A6-00D09E86B906}</Project>
       <Name>BugNET.MailboxReader</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Library\HttpModules\Authentication\HttpModule.Authentication.csproj">
+      <Project>{72be8d7e-b026-45ee-8613-dfb1bb70fd02}</Project>
+      <Name>HttpModule.Authentication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\HttpModules\Localization\HttpModule.Localization.csproj">
+      <Project>{74376c46-4d55-4891-85d7-06a490fa9fd5}</Project>
+      <Name>HttpModule.Localization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\HttpModules\MailBoxReader\HttpModule.MailBoxReader.csproj">
+      <Project>{4386aa43-f3fc-476d-b7e0-03db537c88e0}</Project>
+      <Name>HttpModule.MailBoxReader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\Providers\DataProviders\SqlDataProvider\Provider.SqlDataProvider.csproj">
+      <Project>{df8c87fa-3398-4aee-99b0-d47f1831c158}</Project>
+      <Name>Provider.SqlDataProvider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\Providers\HtmlEditorProviders\CkHtmlEditorProvider\Provider.CkHtmlEditorProvider.csproj">
+      <Project>{2d1294fe-a204-4f2c-b90c-8a041f44e12a}</Project>
+      <Name>Provider.CkHtmlEditorProvider</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Library\Providers\HtmlEditorProviders\HtmlEditorProvider\Provider.HtmlEditorProvider.csproj">
       <Project>{C7D90E4C-AD95-4ADD-8242-2CD66F0BC89B}</Project>
       <Name>Provider.HtmlEditorProvider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\Providers\HtmlEditorProviders\TextboxHtmlProvider\Provider.TextboxHtmlProvider.csproj">
+      <Project>{ca7e11ab-39fd-490a-a3a1-094be9c5db45}</Project>
+      <Name>Provider.TextboxHtmlProvider</Name>
     </ProjectReference>
     <ProjectReference Include="..\Library\Providers\MembershipProviders\Provider.MembershipProviders.csproj">
       <Project>{6B8EBBE2-196F-4F79-BC2F-918FC0AF3D67}</Project>
@@ -2629,6 +2645,14 @@
   <ItemGroup>
     <Content Include="Issues\App_LocalResources\CreateIssue.aspx.ro-RO.resx" />
     <Content Include="Issues\App_LocalResources\CreateIssue.aspx.ru-RU.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\App_LocalResources\PasswordReset.aspx.resx" />
+    <Content Include="Account\App_LocalResources\PasswordReset.aspx.ru-RU.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\App_LocalResources\PasswordResetSuccess.aspx.resx" />
+    <Content Include="Account\App_LocalResources\PasswordResetSuccess.aspx.ru-RU.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

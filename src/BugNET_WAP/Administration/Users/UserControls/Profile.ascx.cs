@@ -62,7 +62,6 @@ namespace BugNET.Administration.Users.UserControls
                     profile.DisplayName = DisplayName.Text;
                     profile.FirstName = FirstName.Text;
                     profile.LastName = LastName.Text;
-                    profile.Save();
 
                     ActionMessage.ShowSuccessMessage(GetLocalResourceObject("UpdateProfile").ToString());
                     OnAction(new ActionEventArgs { Trigger = ActionTriggers.Save });

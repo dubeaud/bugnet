@@ -357,7 +357,7 @@ namespace BugNET.Providers.DataProviders
                 AddParamToSqlCmd(sqlCmd, "@IssueAssignedUsername", SqlDbType.NText, 255, ParameterDirection.Input, defaultVal.AssignedUserName);
                 AddParamToSqlCmd(sqlCmd, "@IssueVisibility", SqlDbType.Int, 0, ParameterDirection.Input, defaultVal.IssueVisibility);
                 AddParamToSqlCmd(sqlCmd, "@IssueCategoryId", SqlDbType.Int, 0, ParameterDirection.Input, defaultVal.CategoryId);
-                AddParamToSqlCmd(sqlCmd, "@IssueDueDate", SqlDbType.Int, 0, ParameterDirection.Input, defaultVal.DueDate);
+                AddParamToSqlCmd(sqlCmd, "@IssueDueDate", SqlDbType.Int, 0, ParameterDirection.Input, defaultVal.DueDate == null ? DBNull.Value : (object)defaultVal.DueDate);
                 AddParamToSqlCmd(sqlCmd, "@IssueProgress", SqlDbType.Int, 0, ParameterDirection.Input, defaultVal.Progress);
                 AddParamToSqlCmd(sqlCmd, "@IssueMilestoneId", SqlDbType.Int, 0, ParameterDirection.Input, defaultVal.MilestoneId);
                 AddParamToSqlCmd(sqlCmd, "@IssueEstimation", SqlDbType.Int, 0, ParameterDirection.Input, defaultVal.Estimation);
@@ -873,7 +873,7 @@ namespace BugNET.Providers.DataProviders
         /// <param name="projectId">The project id.</param>
         /// <param name="excludeReadOnlyUsers">if set to <c>true</c> [exclude read only users].</param>
         /// <returns></returns>
-        public override List<ITUser> GetUsersByProjectId(int projectId, bool excludeReadOnlyUsers = true)
+        public override List<ITUser> GetUsersByProjectId(int projectId, bool excludeReadOnlyUsers = false)
         {
             using (var sqlCmd = new SqlCommand())
             {
@@ -885,6 +885,25 @@ namespace BugNET.Providers.DataProviders
                 var userList = new List<ITUser>();
                 ExecuteReaderCmd(sqlCmd, GenerateUserListFromReader, ref userList);
                 return userList;
+            }
+        }
+
+        /// <summary>
+        /// Gets the user name by password reset token.
+        /// </summary>
+        /// <param name="token">The token.</param>
+        /// <returns></returns>
+        public override string GetUserNameByPasswordResetToken(string token)
+        {
+            using (var sqlCmd = new SqlCommand())
+            {
+                AddParamToSqlCmd(sqlCmd, "@Token", SqlDbType.NVarChar, 0, ParameterDirection.Input, token);
+                AddParamToSqlCmd(sqlCmd, "@UserName", SqlDbType.NVarChar, 255, ParameterDirection.Output, null);
+                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_USER_GETUSERNAMEBYPASSWORDRESETTOKEN);
+                ExecuteScalarCmd(sqlCmd);
+                var returnValue = (string)sqlCmd.Parameters["@UserName"].Value;
+
+                return returnValue;
             }
         }
         #endregion

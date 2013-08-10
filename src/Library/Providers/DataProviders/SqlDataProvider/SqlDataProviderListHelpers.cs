@@ -29,7 +29,7 @@ namespace BugNET.Providers.DataProviders
                     AffectedMilestoneId = returnData["IssueAffectedMilestoneId"] == DBNull.Value ? 1 : (int)returnData["IssueAffectedMilestoneId"],
                     IssueVisibility = returnData["IssueVisibility"] == DBNull.Value ? 0 : (int)returnData["IssueVisibility"],
                     CategoryId =  returnData["IssueCategoryId"] == DBNull.Value ? 0 : (int)returnData["IssueCategoryId"],
-                    DueDate = returnData["IssueDueDate"] == DBNull.Value ? 0 : (int)returnData["IssueDueDate"],
+                    DueDate = returnData["IssueDueDate"] == DBNull.Value ? null : (int?)returnData["IssueDueDate"],
                     Progress = returnData["IssueProgress"] == DBNull.Value ? 0 : (int)returnData["IssueProgress"],
                     MilestoneId = returnData["IssueMilestoneId"] == DBNull.Value ? 0 : (int)returnData["IssueMilestoneId"],
                     Estimation = returnData["IssueEstimation"] == DBNull.Value ? 0 : (decimal)returnData["IssueEstimation"],

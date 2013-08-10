@@ -1705,12 +1705,17 @@ ul.permissions li
 }
 
 .grid_1, .grid_3 {
-	width:15%;
+	width:14%;
 }
 
 .grid_2, .grid_4{
 	width:35%;
 }
 .issue-form select{
-     width:184px;
+    width:184px;
+
+}
+.issue-form input, .issue-form select{
+    margin-top:5px;
+    margin-bottom:5px;
 }
