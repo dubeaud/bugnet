@@ -81,7 +81,10 @@ namespace BugNET.Administration.Host.UserControls
                                    {EnableSsl = SMTPUseSSL.Checked};
 
                     if (SMTPEnableAuthentication.Checked)
+                    {
+                        smtp.UseDefaultCredentials = false;
                         smtp.Credentials = new NetworkCredential(SMTPUsername.Text, SMTPPassword.Text, SMTPDomain.Text);
+                    }
 
                     var message = new MailMessage(HostEmail.Text, HostEmail.Text,
                                                   string.Format(

@@ -53,9 +53,9 @@ namespace BugNET.BLL.Notifications
 
             if (smtpAuthentictation)
             {
+                client.UseDefaultCredentials = false;
                 client.Credentials = new NetworkCredential(smtpUsername, smtpPassword, smtpDomain);
             }
-
 
             //Set the method that is called back when the send operation ends.
             client.SendCompleted += SendCompletedCallback;
