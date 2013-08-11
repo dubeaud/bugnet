@@ -191,7 +191,14 @@ namespace Altairis.Web.Security {
                 foreach (SettingsProperty prop in collection) {
                     SettingsPropertyValue value = new SettingsPropertyValue(prop);
                     if (dt.Rows.Count == 0) {
-                        value.PropertyValue = System.Convert.ChangeType(value.Property.DefaultValue, value.Property.PropertyType);
+                        if(value.Property.PropertyType == typeof(System.DateTime))
+                        { 
+                            value.PropertyValue = null; 
+                        }
+                        else
+                        {
+                            value.PropertyValue = System.Convert.ChangeType(value.Property.DefaultValue, value.Property.PropertyType);
+                        }
 
                         value.IsDirty = false;
                         value.Deserialized = true;

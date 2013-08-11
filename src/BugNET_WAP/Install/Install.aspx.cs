@@ -200,6 +200,7 @@ namespace BugNET.Install
                         profile.FirstName = "Admin";
                         profile.LastName = "Admin";
                         profile.DisplayName = "Administrator";
+                        profile.PasswordVerificationTokenExpirationDate = null;
                         profile.Save();
 
                         WriteMessage("Created Administrator Account default profile", 0, true);
