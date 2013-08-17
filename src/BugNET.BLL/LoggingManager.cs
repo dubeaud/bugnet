@@ -66,6 +66,19 @@ namespace BugNET.BLL
             appender.To = HostSettingManager.Get(HostSettingNames.ErrorLoggingEmailAddress, string.Empty);
             appender.Subject = "BugNET Error";
             appender.SmtpHost = HostSettingManager.SmtpServer;
+            appender.Port = int.Parse(HostSettingManager.Get(HostSettingNames.SMTPPort));
+            appender.Authentication = SmtpAppender.SmtpAuthentication.None;
+            appender.Username = string.Empty;
+            appender.Password = string.Empty;
+            appender.EnableSsl = Boolean.Parse(HostSettingManager.Get(HostSettingNames.SMTPUseSSL));
+
+            if (Convert.ToBoolean(HostSettingManager.Get(HostSettingNames.SMTPAuthentication)))
+            {
+                appender.Authentication = SmtpAppender.SmtpAuthentication.Basic;
+                appender.Username = String.Format("{0}\\{1}", HostSettingManager.Get(HostSettingNames.SMTPDomain, string.Empty), HostSettingManager.Get(HostSettingNames.SMTPUsername, string.Empty));
+                appender.Password = HostSettingManager.Get(HostSettingNames.SMTPPassword, string.Empty);
+            }
+
             appender.Priority = System.Net.Mail.MailPriority.High;
             appender.Threshold = log4net.Core.Level.Error;
             appender.BufferSize = 0;
