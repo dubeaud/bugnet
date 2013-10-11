@@ -1174,6 +1174,7 @@
     <Content Include="Providers\DataProviders\SqlDataProvider\1.2.231.0.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\1.3.242.0.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\1.4.256.0.SqlDataProvider.sql" />
+    <Content Include="Providers\DataProviders\SqlDataProvider\1.5.258.0.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\BugNet.Data.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\BugNet.Schema.SqlDataProvider.sql" />
     <Content Include="App_Themes\Default\Forms.css" />
