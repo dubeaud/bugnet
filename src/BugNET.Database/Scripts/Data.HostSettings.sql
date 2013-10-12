@@ -44,7 +44,8 @@ USING (VALUES
 	(N'SMTPEMailFormat', N'2'),
 	(N'SMTPDomain', N''),
 	(N'ApplicationDefaultLanguage', N'en-US'),
-	(N'Pop3ProcessAttachments', N'False')
+	(N'Pop3ProcessAttachments', N'False'),
+	(N'EnableGravatar', N'False')
 ) 
 AS Source ([SettingName], [SettingValue]) 
 ON Target.SettingName = Source.SettingName

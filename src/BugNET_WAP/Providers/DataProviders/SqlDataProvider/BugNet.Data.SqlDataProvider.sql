@@ -78,7 +78,7 @@ INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('ApplicationDefaultLanguage','en-US')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('Pop3ProcessAttachments','False')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('Pop3Port', '110')
-
+INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('EnableGravatar', 'False')
 
 -- Custom Field Types 
 INSERT INTO [dbo].[BugNet_ProjectCustomFieldTypes] ([CustomFieldTypeName]) VALUES (N'Text')
