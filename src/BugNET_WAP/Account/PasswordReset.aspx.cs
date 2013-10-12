@@ -45,16 +45,25 @@ namespace BugNET.Account
 
                     if (user != null)
                     {
-                        // update the users password to the new password provided
-                        user.ChangePassword(user.ResetPassword(), Password.Text.Trim());
+                        try
+                        {
+                            // update the users password to the new password provided
+                            user.ChangePassword(user.ResetPassword(), Password.Text.Trim());
 
-                        // update profile to clear the reset token and date
-                        var profile = new WebProfile().GetProfile(user.UserName);
-                        profile.PasswordVerificationToken = null;
-                        profile.PasswordVerificationTokenExpirationDate = null;
-                        profile.Save();
+                            // update profile to clear the reset token and date
+                            var profile = new WebProfile().GetProfile(user.UserName);
+                            profile.PasswordVerificationToken = null;
+                            profile.PasswordVerificationTokenExpirationDate = null;
+                            profile.Save();
 
-                        Response.Redirect("~/Account/PasswordResetSuccess.aspx");
+                            Response.Redirect("~/Account/PasswordResetSuccess.aspx");
+
+                        }
+                        catch (System.Web.Security.MembershipPasswordException ex)
+                        {
+                            Message = ex.Message;
+                            message.Visible = !String.IsNullOrEmpty(Message);
+                        }
                     }
                     else
                     {
