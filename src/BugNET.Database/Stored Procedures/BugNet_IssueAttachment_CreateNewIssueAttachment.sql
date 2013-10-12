@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[BugNet_IssueAttachment_CreateNewIssueAttachment]
   @IssueId int,
-  @FileName nvarchar(100),
+  @FileName nvarchar(250),
   @FileSize Int,
   @ContentType nvarchar(50),
   @CreatorUserName nvarchar(255),
