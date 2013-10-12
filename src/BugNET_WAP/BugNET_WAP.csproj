@@ -1536,6 +1536,7 @@
     <Content Include="Scripts\themes\default\d.png" />
     <Content Include="Scripts\themes\default\style.css" />
     <Content Include="Scripts\themes\default\throbber.gif" />
+    <Content Include="Templates\Html\ForgotPassword.ru-RU.xslt" />
     <Content Include="Templates\Html\ForgotPassword.xslt" />
     <Content Include="Templates\Html\IssueAdded.ro-RO.xslt" />
     <Content Include="Templates\Html\IssueAdded.ru-RU.xslt" />
@@ -1570,6 +1571,7 @@
     <Content Include="Templates\Html\UserVerification.ru-RU.xslt" />
     <Content Include="Templates\Html\UserVerification.xslt" />
     <Content Include="Templates\NewMailboxIssue.xslt" />
+    <Content Include="Templates\Text\ForgotPassword.ru-RU.xslt" />
     <Content Include="Templates\Text\ForgotPassword.xslt" />
     <Content Include="Templates\Text\IssueAdded.nl-NL.xslt" />
     <Content Include="Templates\Text\IssueAdded.ro-RO.xslt" />
