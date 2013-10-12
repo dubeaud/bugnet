@@ -9,7 +9,7 @@
     <xsl:strip-space elements="*" />
     <xsl:template match="/root">
         <xsl:text>Someone has requested a password reset for your </xsl:text><xsl:value-of select="HostSetting_ApplicationTitle" />&#160; account. To reset your password, simply click on the following link:
-        <xsl:value-of select="HostSetting_DefaultUrl" />Account/PasswordReset.aspx?token=<xsl:value-of select="Token" />
+        <xsl:value-of select="HostSetting_DefaultUrl" />Account/PasswordReset.aspx?token=<xsl:value-of select="string" />
         <xsl:text>&#10;</xsl:text>
         <xsl:text>If you did not request this password reset, then no action is required and you can ignore this email. </xsl:text>
         <xsl:text>&#10;</xsl:text>
