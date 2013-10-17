@@ -36,5 +36,7 @@ namespace BugNET.HttpModules
             get { return _Email; }
             set { _Email = value; }
         }
+
+		public string DisplayName { get; set; }
     }
 }
