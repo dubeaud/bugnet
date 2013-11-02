@@ -456,6 +456,11 @@
     <Compile Include="Administration\Users\UserList.aspx.designer.cs">
       <DependentUpon>UserList.aspx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\Exceptions.de-DE.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Exceptions.de-DE.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\Exceptions.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -475,6 +480,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Exceptions.ru-RU.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Notifications.de-DE.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Notifications.de-DE.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\Notifications.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -496,6 +506,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Notifications.ru-RU.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\SharedResources.de-DE.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SharedResources.de-DE.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\SharedResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -515,6 +530,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SharedResources.ru-RU.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Web.sitemap.de-DE.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Web.sitemap.de-DE.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\Web.sitemap.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -996,6 +1016,7 @@
     <Content Include="Administration\Admin.aspx" />
     <Content Include="Administration\Host\LogViewer.aspx" />
     <Content Include="Administration\Host\Settings.aspx" />
+    <Content Include="Administration\Host\UserControls\App_LocalResources\MailSettings.ascx.nl-NL.resx" />
     <Content Include="Administration\Host\UserControls\LanguageSettings.ascx" />
     <Content Include="Administration\Projects\AddProject.aspx" />
     <Content Include="Administration\Projects\EditProject.aspx" />
@@ -1797,7 +1818,6 @@
     <Content Include="Administration\Host\UserControls\App_LocalResources\LoggingSettings.ascx.es-ES.resx" />
     <Content Include="Administration\Host\UserControls\App_LocalResources\LoggingSettings.ascx.nl-NL.resx" />
     <Content Include="Administration\Host\UserControls\App_LocalResources\MailSettings.ascx.es-ES.resx" />
-    <Content Include="Administration\Host\UserControls\App_LocalResources\MailSettings.ascx.nl-NL.resx" />
     <Content Include="Administration\Host\UserControls\App_LocalResources\NotificationSettings.ascx.es-ES.resx" />
     <Content Include="Administration\Host\UserControls\App_LocalResources\NotificationSettings.ascx.nl-NL.resx" />
     <Content Include="Administration\Host\UserControls\App_LocalResources\POP3Settings.ascx.es-ES.resx" />
@@ -2657,6 +2677,309 @@
   <ItemGroup>
     <Content Include="Account\App_LocalResources\PasswordResetSuccess.aspx.resx" />
     <Content Include="Account\App_LocalResources\PasswordResetSuccess.aspx.ru-RU.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\App_LocalResources\Login.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\App_LocalResources\Register.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\App_LocalResources\UserProfile.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\App_LocalResources\Verify.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\Exceptions.de-DE.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Exceptions.de-DE.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\Notifications.de-DE.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Notifications.de-DE.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\SharedResources.de-DE.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SharedResources.de-DE.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\Web.sitemap.de-DE.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Web.sitemap.de-DE.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_LocalResources\Default.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_LocalResources\Feed.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Errors\App_LocalResources\Error.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Errors\App_LocalResources\NotFound.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Errors\App_LocalResources\SessionExpired.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\App_LocalResources\CreateIssue.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\App_LocalResources\IssueDetail.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\App_LocalResources\IssueList.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\App_LocalResources\IssueSearch.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\App_LocalResources\MyIssues.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\UserControls\App_LocalResources\Attachments.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\UserControls\App_LocalResources\Comments.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\UserControls\App_LocalResources\History.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\UserControls\App_LocalResources\IssueTabs.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\UserControls\App_LocalResources\Notifications.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\UserControls\App_LocalResources\ParentIssues.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\UserControls\App_LocalResources\RelatedIssues.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\UserControls\App_LocalResources\Revisions.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\UserControls\App_LocalResources\SubIssues.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\UserControls\App_LocalResources\TimeTracking.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Projects\App_LocalResources\ChangeLog.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Projects\App_LocalResources\ProjectCalendar.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Projects\App_LocalResources\ProjectSummary.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Projects\App_LocalResources\ReleaseNotes.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Projects\App_LocalResources\Roadmap.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Queries\App_LocalResources\QueryDetail.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Queries\App_LocalResources\QueryList.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\Banner.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\CategoryTreeView.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\DisplayIssues.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\Footer.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\LoginControl.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\PickCategory.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\PickDate.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\PickImage.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\PickMilestone.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\PickPriority.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\PickProject.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\PickQuery.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\PickResolution.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\PickSingleUser.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\PickStatus.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\PickType.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\App_LocalResources\ForgotPassword.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\App_LocalResources\Admin.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Host\App_LocalResources\LogViewer.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Host\App_LocalResources\Settings.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Host\UserControls\App_LocalResources\AttachmentSettings.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Host\UserControls\App_LocalResources\AuthenticationSettings.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Host\UserControls\App_LocalResources\BasicSettings.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Host\UserControls\App_LocalResources\LanguageSettings.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Host\UserControls\App_LocalResources\LoggingSettings.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Host\UserControls\App_LocalResources\MailSettings.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Host\UserControls\App_LocalResources\NotificationSettings.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Host\UserControls\App_LocalResources\POP3Settings.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Host\UserControls\App_LocalResources\SubversionSettings.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\App_LocalResources\AddProject.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\App_LocalResources\CloneProject.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\App_LocalResources\EditProject.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\App_LocalResources\ProjectList.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\NewProjectIntro.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\NewProjectSummary.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectCategories.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectCustomFields.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectDescription.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectIssueTypes.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectMailbox.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectMembers.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectMilestones.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectNotifications.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectPriorities.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectResolutions.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectRoles.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectStatus.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectSubversion.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Users\App_LocalResources\AddUser.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Users\App_LocalResources\AddUser.aspx.fr-CA.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Users\App_LocalResources\EditUser.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Users\App_LocalResources\EditUser.aspx.fr-CA.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Users\App_LocalResources\ManageUser.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Users\App_LocalResources\ManageUser.aspx.fr-CA.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Users\App_LocalResources\UserList.aspx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Users\App_LocalResources\UserList.aspx.fr-CA.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Users\UserControls\App_LocalResources\DeleteUser.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Users\UserControls\App_LocalResources\Membership.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Users\UserControls\App_LocalResources\Password.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Users\UserControls\App_LocalResources\Profile.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Users\UserControls\App_LocalResources\Roles.ascx.de-DE.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Errors\App_LocalResources\AccessDenied.aspx.de-DE.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
