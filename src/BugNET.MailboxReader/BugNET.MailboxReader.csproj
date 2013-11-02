@@ -36,9 +36,8 @@
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net40\HtmlAgilityPack.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.2\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -63,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BugNET.BLL\BugNET.BLL.csproj">
-      <Project>{001B5C78-CC5E-4DB6-A03A-EAAE1D558D2C}</Project>
+      <Project>{001b5c78-cc5e-4db6-a03a-eaae1d558d2c}</Project>
       <Name>BugNET.BLL</Name>
     </ProjectReference>
     <ProjectReference Include="..\BugNET.Common\BugNET.Common.csproj">
