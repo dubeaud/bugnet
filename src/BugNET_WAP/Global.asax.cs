@@ -3,6 +3,12 @@ using System.Web;
 using BugNET.BLL;
 using BugNET.Common;
 using log4net;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Optimization;
+using System.Web.Routing;
+using System.Web.Security;
+using System.Web.SessionState;
 
 namespace BugNET
 {
@@ -20,7 +26,9 @@ namespace BugNET
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
         protected void Application_Start(object sender, EventArgs e)
         {
-           
+            // Code that runs on application startup
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
         /// <summary>

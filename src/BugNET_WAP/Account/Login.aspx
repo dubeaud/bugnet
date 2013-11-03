@@ -1,57 +1,61 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Shared/SingleColumn.master" Title="Login" CodeBehind="Login.aspx.cs"
-    Inherits="BugNET.Account.Login" Async="true" %>
+﻿<%@ Page Title="Log in" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="BugNET.Account.Login" Async="true" %>
 
-<%@ Register Src="~/UserControls/LoginControl.ascx" TagName="LoginControl" TagPrefix="uc1" %>
-<asp:Content ID="Content1" runat="server" ContentPlaceHolderID="Content">
-    <h1><asp:Localize runat="server" ID="Localize5" Text="Login" meta:resourcekey="LoginLabel" /></h1>
-    <asp:Panel ID="LoginPanel" runat="server">
-        <asp:Label ID="loginFailedLabel" meta:resourcekey="LoginFailed" runat="server" EnableViewState="False" Text="Login failed: " Visible="False" Font-Bold="True" ForeColor="Red" />
-        <asp:Label ID="loginCanceledLabel" runat="server" meta:resourcekey="LoginCancelled" EnableViewState="False" Text="Login cancelled" Visible="False" Font-Bold="True" ForeColor="Red" />
-    </asp:Panel>
-    <p>
-        <asp:Label ID="lblLoggedIn" runat="server" meta:resourcekey="AlreadyLoggedIn" Visible="false"><br />You are already logged in.</asp:Label>
-    </p>
-    <p>&nbsp;</p>
-    <div id="login-widget">
-        <div id="login-widget-content">
-            <asp:ValidationSummary ID="ValidationSummary1" DisplayMode="BulletList" ValidationGroup="ctl00$Login1" HeaderText="<%$ Resources:SharedResources, ValidationSummaryHeaderText %>" CssClass="validationSummary" runat="server" />
-            <asp:Menu 
-                ID="LoginTabsMenu" 
-                OnMenuItemClick="LoginTabsMenu_Click" 
-                runat="server" 
-                IncludeStyleBlock="false" 
-                ViewStateMode="Enabled"
-                RenderingMode="List">
-                <StaticMenuStyle CssClass="issueTabs" />
-                <StaticMenuItemStyle CssClass="issueTab" />
-                <StaticSelectedStyle CssClass="issueTabSelected" />
-                <Items> 
-                    <asp:MenuItem Text="<%$ Resources:ShowNormal.Text %>" ToolTip="<%$ Resources:ShowNormal.Text %>" Value="0" Selected="True" ></asp:MenuItem> 
-                    <asp:MenuItem Text="<%$ Resources:ShowOpenID.Text %>" ToolTip="<%$ Resources:ShowOpenID.Text %>" Value="1"></asp:MenuItem> 
-                </Items> 
-            </asp:Menu>
-            <asp:MultiView  
-                ID="MultiView1" 
-                runat="server" 
-                ActiveViewIndex="0"> 
-                <asp:View ID="tab1" runat="server">
-                    <div class="login-tab">
-                        <div style="font-weight: bold;">
-                            <asp:Localize runat="server" ID="Localize2" Text="You can login with your member account" meta:resourcekey="LoginMemberAccount" />
+<%@ Register Src="~/Account/OpenAuthProviders.ascx" TagPrefix="uc" TagName="OpenAuthProviders" %>
+
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+    <h2><%: Title %>.</h2>
+
+    <div class="row">
+        <div class="col-md-8">
+            <section id="loginForm">
+                <div class="form-horizontal">
+                    <h4>Use a local account to log in.</h4>
+                    <hr />
+                      <asp:PlaceHolder runat="server" ID="ErrorMessage" Visible="false">
+                        <p class="text-danger">
+                            <asp:Literal runat="server" ID="FailureText" />
+                        </p>
+                    </asp:PlaceHolder>
+                    <div class="form-group">
+                        <asp:Label runat="server" AssociatedControlID="UserName" CssClass="col-md-2 control-label">User name</asp:Label>
+                        <div class="col-md-10">
+                            <asp:TextBox runat="server" ID="UserName" CssClass="form-control" />
+                            <asp:RequiredFieldValidator runat="server" ControlToValidate="UserName"
+                                CssClass="text-danger" ErrorMessage="The user name field is required." />
                         </div>
-                        <uc1:LoginControl ID="LoginControl1" runat="server" />
                     </div>
-                </asp:View> 
-                <asp:View ID="tab2" runat="server"> 
-                    <div class="login-tab">
-                        <div style="padding: 0 0 20px 0; font-weight: bold;">
-                            <asp:Localize runat="server" ID="Localize1" Text="You can login using your OpenID" meta:resourcekey="LoginOpenIDAccount" />
+                    <div class="form-group">
+                        <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-2 control-label">Password</asp:Label>
+                        <div class="col-md-10">
+                            <asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="form-control" />
+                            <asp:RequiredFieldValidator runat="server" ControlToValidate="Password" CssClass="text-danger" ErrorMessage="The password field is required." />
                         </div>
-                        <openAuth:OpenIdLogin ID="OpenIdLogin1" runat="server" EnableRequestProfile="true" RequestNickname="Require" OnLoggedIn="OpenIdLogin1_LoggedIn"
-                            RequestEmail="Require" RequestFullName="Require" OnLoggingIn="OpenIdLogin1_LoggingIn" meta:resourcekey="OpenIdLogin" />
                     </div>
-                </asp:View> 
-            </asp:MultiView> 
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <div class="checkbox">
+                                <asp:CheckBox runat="server" ID="RememberMe" />
+                                <asp:Label runat="server" AssociatedControlID="RememberMe">Remember me?</asp:Label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <asp:Button runat="server" OnClick="LogIn" Text="Log in" CssClass="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+                <p>
+                    <asp:HyperLink runat="server" ID="RegisterHyperLink" ViewStateMode="Disabled">Register</asp:HyperLink>
+                    if you don't have a local account.
+                </p>
+            </section>
+        </div>
+
+        <div class="col-md-4">
+            <section id="socialLoginForm">
+                <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" />
+            </section>
         </div>
     </div>
 </asp:Content>
