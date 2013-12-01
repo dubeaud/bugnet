@@ -1,7 +1,7 @@
 <%@ Page Language="c#" Inherits="BugNET._Default" Title="Home" MasterPageFile="~/Shared/TwoColumn.master"
     CodeBehind="Default.aspx.cs" meta:resourcekey="Page" %>
-
 <%@ Import Namespace="BugNET.Entities" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="Content" runat="server">
     <asp:Repeater ID="rptProject" runat="Server">
         <ItemTemplate>

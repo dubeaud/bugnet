@@ -3,6 +3,7 @@ using System.Web;
 using BugNET.BLL;
 using BugNET.Common;
 using log4net;
+using System.Web.Routing;
 
 namespace BugNET
 {
@@ -20,7 +21,9 @@ namespace BugNET
         /// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
         protected void Application_Start(object sender, EventArgs e)
         {
-           
+            // Code that runs on application startup
+            AuthConfig.RegisterOpenAuth();
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
 
         /// <summary>
