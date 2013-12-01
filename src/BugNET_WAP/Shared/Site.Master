@@ -1,0 +1,44 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="BugNET.Shared.Site" %>
+
+<%@ Register Src="~/UserControls/Banner.ascx" TagName="Banner" TagPrefix="bn" %>
+<%@ Register Src="~/UserControls/Footer.ascx" TagName="Footer" TagPrefix="bn" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <link id="Link1" runat="server" rel="shortcut icon" type="image/ico" href="~/favicon.ico" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <div id="container">
+        <form id="form1" runat="server" enctype="multipart/form-data">
+        <ajaxToolkit:ToolkitScriptManager ID="ScriptManager1" runat="server" EnableScriptGlobalization="true"
+            EnableScriptLocalization="true" EnablePartialRendering="true" EnablePageMethods="true">
+            <Services>
+                <asp:ServiceReference Path="~/Webservices/BugNetServices.asmx" />
+            </Services>
+            <Scripts>
+                <asp:ScriptReference Path="~/Scripts/json2.min.js" />
+                <asp:ScriptReference Path="~/Scripts/jquery-1.8.2.min.js" />
+                <asp:ScriptReference Path="~/Scripts/jquery.blockUI.js"  />
+                <asp:ScriptReference Path="~/Scripts/superfish.js" />
+                <asp:ScriptReference Path="~/Scripts/supersubs.js" />
+            </Scripts>
+        </ajaxToolkit:ToolkitScriptManager>
+        <div>
+            <bn:Banner ID="Banner1" runat="server" />
+            <div id="pagetitle">
+                <asp:ContentPlaceHolder ID="PageTitle" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+            <div id="footer">
+                <bn:Footer ID="Footer1" runat="server" />
+            </div>
+        </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,13 +1,8 @@
-<%@ Page Language="c#" Inherits="BugNET._Default" Title="Home" MasterPageFile="~/Site.master"
+<%@ Page Language="c#" Inherits="BugNET._Default" Title="Home" MasterPageFile="~/Shared/TwoColumn.master"
     CodeBehind="Default.aspx.cs" meta:resourcekey="Page" %>
+
 <%@ Import Namespace="BugNET.Entities" %>
-
-<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="jumbotron hero-spacer">
-        <h1><asp:Label ID="lblApplicationTitle" runat="server">BugNET Issue Tracker</asp:Label></h1>
-        <p class="lead"><asp:Label ID="WelcomeMessage" runat="Server"></asp:Label></p>
-    </div>
-
+<asp:Content ID="Content1" ContentPlaceHolderID="Content" runat="server">
     <asp:Repeater ID="rptProject" runat="Server">
         <ItemTemplate>
             <ajaxToolkit:HoverMenuExtender ID="hme2" runat="Server" TargetControlID="FiltersLink" PopupControlID="PopupMenu" PopupPosition="Bottom" OffsetX="0" OffsetY="5" PopDelay="100" />
@@ -88,5 +83,16 @@
     </asp:Repeater>
     <div class="info" id="UserMessage" runat="server" Visible="False">
         <asp:Label ID="lblMessage"  runat="server"></asp:Label>
-    </div> 
+    </div>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="Left" runat="server">
+    <div class="welcomemessage">
+        <h2 class="title">
+            <asp:Label ID="lblApplicationTitle" runat="server">BugNET Issue Tracker</asp:Label></h2>
+        <div class="content">
+            <p>
+                <asp:Label ID="WelcomeMessage" runat="Server"></asp:Label>
+            </p>
+        </div>
+    </div>
 </asp:Content>
