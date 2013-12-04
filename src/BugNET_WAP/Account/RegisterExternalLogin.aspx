@@ -31,7 +31,8 @@
                     <asp:TextBox runat="server" ID="email" CssClass="form-control" />
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="email"
                         Display="Dynamic" CssClass="text-danger" ErrorMessage="Email is required" />
-                    <asp:Label runat="server" ID="emailMessage" CssClass="field-validation-error" />
+                    <asp:ModelErrorMessage runat="server" ModelStateKey="UserName" CssClass="text-error" />
+              <%--      <asp:Label runat="server" ID="emailMessage" CssClass="field-validation-error" />--%>
                 </div>
             </div>
             <div class="form-group">

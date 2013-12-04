@@ -4,6 +4,7 @@ using BugNET.BLL;
 using BugNET.Common;
 using log4net;
 using System.Web.Routing;
+using System.Web.Optimization;
 
 namespace BugNET
 {
@@ -24,6 +25,7 @@ namespace BugNET
             // Code that runs on application startup
             AuthConfig.RegisterOpenAuth();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
         /// <summary>

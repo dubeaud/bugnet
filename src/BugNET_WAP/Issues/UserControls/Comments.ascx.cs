@@ -10,6 +10,9 @@ using BugNET.Common;
 using BugNET.Entities;
 using BugNET.UserInterfaceLayer;
 using System.Web.Security;
+using System.Security.Cryptography;
+using System.Diagnostics;
+using System.Text;
 
 namespace BugNET.Issues.UserControls
 {
@@ -170,15 +173,24 @@ namespace BugNET.Issues.UserControls
         /// <summary>
         /// Gets the gravatar image URL.
         /// </summary>
-        /// <param name="emailId">The email id.</param>
+        /// <param name="email">The email id.</param>
         /// <param name="imgSize">Size of the img.</param>
         /// <returns></returns>
-        private static string GetGravatarImageUrl(string emailId, int imgSize)
+        private static string GetGravatarImageUrl(string email, int imgSize)
         {
             // Convert emailID to lower-case
-            emailId = emailId.ToLower();
+            email = email.Trim().ToLower();
 
-            var hash = FormsAuthentication.HashPasswordForStoringInConfigFile(emailId, "MD5").ToLower();
+            var emailBytes = Encoding.ASCII.GetBytes(email);
+            var hashBytes = new MD5CryptoServiceProvider().ComputeHash(emailBytes);
+
+            Debug.Assert(hashBytes.Length == 16);
+
+            var hash = new StringBuilder();
+            foreach (var b in hashBytes)
+            {
+                hash.Append(b.ToString("x2"));
+            }
 
             // build Gravatar Image URL
             var imageUrl = string.Format("http://www.gravatar.com/avatar/{0}?s={1}&d=identicon&r=g", hash, imgSize);
