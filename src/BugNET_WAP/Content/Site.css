@@ -25,17 +25,6 @@ input[type="password"] {
     margin-right:5px;
 }
 
-.required-color {
-    color: #b94a48;
-}
-
-.required:before {
-    content: '* ';
-    color: #b94a48;
-    font-weight: bold;
-    font-size: large;
-}
-
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
     .jumbotron {

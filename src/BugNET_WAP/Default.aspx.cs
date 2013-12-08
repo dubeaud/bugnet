@@ -32,6 +32,14 @@ namespace BugNET
                 
             }
 
+            if(ProjectManager.GetAllProjects().Count == 0)
+            {
+                // the user is logged in and there are no projects, show the "blank slate" help message for new installs
+                BlankSlate.Visible = true;
+                return;
+            }
+            
+
 			if (!Context.User.Identity.IsAuthenticated)			
 			{	
 				//get all public available projects here
