@@ -19,10 +19,46 @@ input[type="password"] {
 
 .navbar-brand
 {
-    padding: 7px 10px 10px 0;
+    padding: 7px 10px 10px 5px;
 }
 .navbar-brand img{
     margin-right:5px;
+}
+
+/* Summary Page Styles */
+table.summary
+{
+	border-collapse: collapse;
+	border-spacing: 3px;
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+td.count-column
+{
+	width: 15px;
+	text-align: right;
+	padding: 3px;
+	white-space: nowrap;
+}
+td.item-column
+{
+	padding: 3px;
+	text-align: left;
+	width: 90%;
+}
+td.image-column
+{
+	padding: 3px;
+	width: 15px;
+}
+
+.tree td div
+{
+	height: 20px !important;
+}
+.node {
+    margin-left:10px;
 }
 
 /* Responsive: Portrait tablets and up */
