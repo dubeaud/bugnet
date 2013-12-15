@@ -109,20 +109,15 @@ namespace BugNET
                 if (HttpContext.Current.Request.Url.LocalPath.ToLower().EndsWith("install.aspx"))
                     return;
 
-                try
+                
+                switch (UpgradeManager.GetUpgradeStatus())
                 {
-                    switch (UpgradeManager.GetUpgradeStatus())
-                    {
-                        case BugNET.Common.UpgradeStatus.Install:
-                        case BugNET.Common.UpgradeStatus.Upgrade:
-                            HttpContext.Current.Response.Redirect("~/Install/Install.aspx", false);
-                            break;
-                    }
+                    case BugNET.Common.UpgradeStatus.Install:
+                    case BugNET.Common.UpgradeStatus.Upgrade:
+                        HttpContext.Current.Response.Redirect("~/Install/Install.aspx", true);
+                        return;
                 }
-                catch
-                {
-                  // could be just an error connecting to the database.
-                }
+      
 
                 //load the host settings into the application cache
                 HostSettingManager.GetHostSettings();
