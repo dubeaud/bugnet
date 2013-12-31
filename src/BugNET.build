@@ -2,9 +2,6 @@
 <project name="BugNET" default="ci" xmlns="http://nant.sf.net/schemas/nant.xsd">	
 	<!-- Setup properties -->
 	<property name="nant.settings.currentframework" value="net-4.0" />
-	<property name="configuration" value="release" />
-	<property name="project.name" value="BugNET" />
-	<property name="project.version" value="1.5" />
 	<property name="publishdirectory" value="C:\Projects\BugNET\publish" />
 	<property name="build.dir" value="C:\Projects\bugnet\src\build" />
 	<property name="outputdirectory" value="C:\Projects\bugnet\src\build\output"/>
@@ -34,10 +31,10 @@
 				<attribute type="ComVisibleAttribute" value="false" />
                 <attribute type="AssemblyConfigurationAttribute" value="${nant.settings.currentframework}.${platform::get-name()}" />
                 <attribute type="AssemblyCompanyAttribute" value="http://www.bugnetproject.com" />
-				<attribute type="AssemblyCopyrightAttribute" value="Copyright (C) 2006-2013 BugNET Project" />
+				<attribute type="AssemblyCopyrightAttribute" value="Copyright (C) 2006-2014 BugNET Project" />
                 <attribute type="AssemblyProductAttribute" value="BugNET Open Source Issue Tracker" />
-                <attribute type="AssemblyVersionAttribute" value="${CCNetLabel}" /> <!-- Major.Minor.Build.Revision-->
-                <attribute type="AssemblyInformationalVersionAttribute" value="${CCNetLabel}" /> <!-- Major.Minor.Build.Revision-->
+                <attribute type="AssemblyVersionAttribute" value="${build_number}" /> <!-- Major.Minor.Build.Revision-->
+                <attribute type="AssemblyInformationalVersionAttribute" value="${build_number}" /> <!-- Major.Minor.Build.Revision-->
             </attributes>
         </asminfo>
     </target>
@@ -191,21 +188,21 @@
 			<mkdir dir="${publishdirectory}" />
 			
 			<!-- zip it! -->
-			<zip zipfile="${publishdirectory}\${project.name}-${CCNetLabel}-Install.zip">
+			<zip zipfile="${publishdirectory}\BugNET-${build_number}-Install.zip">
 				<fileset basedir="${build.dir}\dist">
 					<include name="**\*" />
 				</fileset>
 			</zip>
 			
 			<!-- zip the source -->
-			<zip zipfile="${publishdirectory}\${project.name}-${CCNetLabel}-Source.zip">
+			<zip zipfile="${publishdirectory}\BugNET-${build_number}-Source.zip">
 				<fileset basedir="${build.dir}\source">
 					<include name="**\*" />
 				</fileset>
 			</zip>
 			
 			<!--
-			<zip zipfile="${publishdirectory}\${project.name}-${CCNetLabel}-Source.zip">
+			<zip zipfile="${publishdirectory}\BugNET-${build_number}-Source.zip">
 				<fileset basedir="C:\Projects\BugNET">
 					<include name="**\*" />
 					<exclude name="**\obj\**" />
@@ -220,7 +217,7 @@
 				</fileset>
 			</zip>-->
 			
-			<copy todir="${CCNetArtifactDirectory}\${CCNetLabel}\">
+			<!--<copy todir="${CCNetArtifactDirectory}\${CCNetLabel}\">
 				<fileset basedir="${publishdirectory}">
 					<include name="*.*"/>
 				</fileset>
@@ -234,7 +231,7 @@
 				<fileset basedir="${publishdirectory}">
 					<include name="*.*"/>
 				</fileset>
-			</copy>	
+			</copy>	-->
 		</if>
     </target>
 </project>
