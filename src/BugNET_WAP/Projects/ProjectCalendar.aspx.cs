@@ -82,21 +82,21 @@ namespace BugNET.Projects
         protected void prjCalendar_DayRender(object sender, System.Web.UI.WebControls.DayRenderEventArgs e)
         {
 
-            string onmouseoverStyle = "this.style.backgroundColor='#D4EDFF'";
-            string onmouseoutStyle = "this.style.backgroundColor='@BackColor'";
-            string rowBackColor = string.Empty;
+            //string onmouseoverStyle = "this.style.backgroundColor='#D4EDFF'";
+            //string onmouseoutStyle = "this.style.backgroundColor='@BackColor'";
+            //string rowBackColor = string.Empty;
 
-            e.Cell.Attributes.Add("onmouseover", onmouseoverStyle);
+            //e.Cell.Attributes.Add("onmouseover", onmouseoverStyle);
 
-            if (!e.Day.IsWeekend)
-            {
-                if (!e.Day.IsSelected)
-                    e.Cell.Attributes.Add("onmouseout", onmouseoutStyle.Replace("@BackColor", rowBackColor));
-                else
-                    e.Cell.Attributes.Add("onmouseout", onmouseoutStyle.Replace("@BackColor", "#FFFFC1"));
-            }
-            else
-                e.Cell.Attributes.Add("onmouseout", onmouseoutStyle.Replace("@BackColor", "#F0F0F0"));
+            //if (!e.Day.IsWeekend)
+            //{
+            //    if (!e.Day.IsSelected)
+            //        e.Cell.Attributes.Add("onmouseout", onmouseoutStyle.Replace("@BackColor", rowBackColor));
+            //    else
+            //        e.Cell.Attributes.Add("onmouseout", onmouseoutStyle.Replace("@BackColor", "#FFFFC1"));
+            //}
+            //else
+            //    e.Cell.Attributes.Add("onmouseout", onmouseoutStyle.Replace("@BackColor", "#F0F0F0"));
 
             if (e.Day.IsToday)
             {

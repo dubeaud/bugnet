@@ -61,6 +61,89 @@ td.image-column
     margin-left:10px;
 }
 
+.milestone-group-header
+{
+	text-align: left;
+	padding:5px;
+	cursor: pointer;
+    padding-left:40px;
+	margin: 10px 0 0 10px;
+	background: url(../../images/package.gif) no-repeat 10px 7px;
+    min-height:50px;
+}
+
+.milestone-list li:hover
+{
+	background-color: #eee;
+}
+
+.milestone-list li.active
+{
+	background-color: #f7f7f9;
+	border-top: 1px solid #e1e1e8;
+}
+
+.milestone-release-date
+{
+	min-width: 15%;
+	float: left;
+	padding-right: 5px;
+	font-style: italic;
+	font-weight: normal;
+}
+
+.milestone-content{
+    background:white;
+}
+
+/* Project Calendar Styles */
+.calendar-day{
+    height: 120px;
+    text-align:left;
+    vertical-align:top;
+}
+.calendar-day-header{
+  /*background-color:#F2F3E5;*/
+ 
+}
+.calIssuePastDue a
+{
+	font-family: Arial, Verdana;
+	font-size: 0.8em;
+	color: #fff;
+}
+.calIssuePastDue
+{
+	margin: 3px;
+	background-color: #FF7777;
+	border-radius: 0.25em 0.25em;
+	-moz-border-radius: 0.25em 0.25em;
+	color: #fff;
+	padding: 3px;
+}
+.calIssue
+{
+	border-radius: 0.25em 0.25em;
+	-moz-border-radius: 0.25em 0.25em;
+	background-color: #8888BB;
+	margin: 3px;
+	color: #fff;
+	padding: 3px;
+}
+.calIssue a
+{
+	font-family: Arial, Verdana;
+	font-size: 0.85em; /*   color:#555557;*/
+	color: #fff;
+}
+.calIssuePrivate
+{
+	background-image: url(../../images/lock.gif);
+	background-repeat: no-repeat;
+	background-position: 3px 3px;
+	padding: 3px 0 0 23px;
+}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
     .jumbotron {
