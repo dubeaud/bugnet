@@ -1,30 +1,31 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ProjectIssueTypes.ascx.cs" Inherits="BugNET.Administration.Projects.UserControls.ProjectIssueTypes" %>
 <%@ Register TagPrefix="IT" TagName="PickImage" Src="~/UserControls/PickImage.ascx" %>
 <div>
-    <h2><asp:Literal ID="IssueTypesTitle" runat="Server" meta:resourcekey="IssueTypesTitle" /></h2>
+    <h2>
+        <asp:Literal ID="IssueTypesTitle" runat="Server" meta:resourcekey="IssueTypesTitle" /></h2>
     <asp:CustomValidator Text="You must add at least one issue type" meta:resourcekey="IssueTypeValidator" Display="Dynamic" runat="server" ID="CustomValidator1" OnServerValidate="ValidateIssueType" />
     <p>
         <asp:Label ID="DescriptionLabel" runat="server" meta:resourcekey="DescriptionLabel" />
     </p>
-    <br/>
+    <br />
     <asp:UpdatePanel ID="UpdatePanel2" runat="server">
         <ContentTemplate>
-            <BN:Message ID="ActionMessage" runat="server" Visible="False"  />
-            <asp:DataGrid 
-                ID="grdIssueTypes" 
-                SkinID="DataGrid" 
-                Width="100%" 
-                runat="Server" 
-                OnUpdateCommand="grdIssueTypes_Update" 
+            <bn:Message ID="ActionMessage" runat="server" Visible="False" />
+            <asp:DataGrid
+                ID="grdIssueTypes"
+                CssClass="table table-striped"
+                GridLines="None"
+                runat="Server"
+                UseAccessibleHeader="true"
+                AutoGenerateColumns="false"
+                OnUpdateCommand="grdIssueTypes_Update"
                 OnEditCommand="grdIssueTypes_Edit"
-                OnCancelCommand="grdIssueTypes_Cancel" 
+                OnCancelCommand="grdIssueTypes_Cancel"
                 OnItemCommand="grdIssueTypes_ItemCommand"
                 OnItemDataBound="grdIssueTypes_ItemDataBound"
                 OnDeleteCommand="grdIssueTypes_Delete">
                 <Columns>
                     <asp:TemplateColumn>
-                        <HeaderStyle HorizontalAlign="Right" Width="45" />
-                        <ItemStyle HorizontalAlign="Right" Width="45" Wrap="false" />
                         <ItemTemplate>
                             <asp:ImageButton ID="cmdEdit" ToolTip="<%$ Resources:SharedResources, Edit %>" AlternateText="<%$ Resources:SharedResources, Edit %>"
                                 CssClass="icon" ImageUrl="~/images/pencil.gif" BorderWidth="0px" CommandName="Edit" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
@@ -40,8 +41,6 @@
                         </EditItemTemplate>
                     </asp:TemplateColumn>
                     <asp:TemplateColumn HeaderText="Issue Type">
-                        <HeaderStyle HorizontalAlign="Left" />
-                        <ItemStyle HorizontalAlign="Left" />
                         <ItemTemplate>
                             <asp:Label ID="lblIssueTypeName" runat="Server" />
                         </ItemTemplate>
@@ -52,8 +51,6 @@
                         </EditItemTemplate>
                     </asp:TemplateColumn>
                     <asp:TemplateColumn HeaderText="Image">
-                        <HeaderStyle HorizontalAlign="Center" />
-                        <ItemStyle HorizontalAlign="Center" Wrap="false" />
                         <ItemTemplate>
                             <asp:Image ID="imgIssueType" runat="Server" />
                         </ItemTemplate>
@@ -62,15 +59,12 @@
                         </EditItemTemplate>
                     </asp:TemplateColumn>
                     <asp:TemplateColumn HeaderText="Order">
-                        <HeaderStyle HorizontalAlign="Center" Width="125" />
-                        <ItemStyle HorizontalAlign="Center" Width="125" />
                         <ItemTemplate>
                             <asp:ImageButton ID="MoveUp" ImageUrl="~/Images/up.gif" CommandName="up" runat="server" />
                             <asp:ImageButton ID="MoveDown" ImageUrl="~/Images/down.gif" CommandName="down" runat="server" />
                         </ItemTemplate>
                     </asp:TemplateColumn>
                     <asp:TemplateColumn>
-                        <ItemStyle Wrap="false" HorizontalAlign="Center" Width="16" />
                         <ItemTemplate>
                             <asp:ImageButton ID="cmdDelete" ToolTip="<%$ Resources:SharedResources, Delete %>" AlternateText="<%$ Resources:SharedResources, Delete %>"
                                 CssClass="icon" ImageUrl="~/images/cross.gif" BorderWidth="0px" CommandName="Delete" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
@@ -80,25 +74,33 @@
                     </asp:TemplateColumn>
                 </Columns>
             </asp:DataGrid>
-            <div class="fieldgroup">
+            <div class="form-horizontal">
                 <h3>
                     <asp:Literal ID="AddNewIssueTypeLabel" runat="Server" meta:resourcekey="AddNewIssueTypeLabel" Text="Add New Issue Type" /></h3>
-                <ol>
-                    <li>
-                        <asp:Label ID="IssueTypeNameLabel" AssociatedControlID="txtName" runat="Server" Text="<%$ Resources:SharedResources, Name %>" />
-                        <asp:TextBox ID="txtName" MaxLength="50" runat="Server" />
-                    </li>
-                    <li>
-                        <label for="<%= lstImages.ClientID %>">
-                            <asp:Literal ID="Literal1" runat="server" Text="<%$ Resources:SharedResources, Image%>" /></label>
+                <div class="form-group">
+
+                    <asp:Label ID="IssueTypeNameLabel" CssClass="col-md-2 control-label"
+                        AssociatedControlID="txtName" runat="Server" Text="<%$ Resources:SharedResources, Name %>" />
+                    <div class="col-md-6">
+                        <asp:TextBox ID="txtName" CssClass="form-control" MaxLength="50" runat="Server" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="<%= lstImages.ClientID %>" class="col-md-2 control-label">
+                        <asp:Literal ID="Literal1" runat="server" Text="<%$ Resources:SharedResources, Image%>" /></label>
+                    <div class="col-md-10">
                         <IT:PickImage ID="lstImages" ImageDirectory="/IssueType" runat="Server" />
-                    </li>
-                </ol>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <asp:Button Text="Add IssueType" CssClass="btn btn-primary" meta:resourcekey="AddIssueTypeButton" CausesValidation="false" runat="server" ID="Button1"
+                            OnClick="AddIssueType" />
+                    </div>
+                </div>
             </div>
-            <div class="submit">
-                <asp:Button Text="Add IssueType" meta:resourcekey="AddIssueTypeButton" CausesValidation="false" runat="server" ID="Button1"
-                    OnClick="AddIssueType" />
-            </div>
+
         </ContentTemplate>
     </asp:UpdatePanel>
 </div>

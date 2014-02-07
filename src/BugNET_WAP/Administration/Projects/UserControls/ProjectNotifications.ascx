@@ -5,23 +5,18 @@
      <br /><br /> 
 </p>
  <BN:Message ID="Message" runat="server" /> 
-  <table>
-    <tr>
-        <td style="font-weight:bold"><asp:label ID="Label1" runat="server" Text="<%$ Resources:AllUsers %>" /> </td>
-        <td>&nbsp;</td>
-        <td style="font-weight:bold"><asp:label ID="Label2" runat="server" Text="<%$ Resources:SelectedUsers %>" /> </td>
-    </tr>
-    <tr>
-        <td style="height: 108px">
-	        <asp:ListBox id="lstAllUsers" SelectionMode="Multiple" Runat="Server" Width="150" Height="110px" />
-        </td>
-        <td style="height: 108px">
-	        <asp:Button Text="->"  CssClass="button" style="FONT:9pt Courier" Runat="server" id="Button1" onclick="AddUser" />
-	        <br />
-	        <asp:Button Text="<-"  CssClass="button" style="FONT:9pt Courier;clear:both;" Runat="server" id="Button2" onclick="RemoveUser" />
-        </td>
-        <td style="height: 108px">
-	        <asp:ListBox id="lstSelectedUsers" SelectionMode="Multiple"  Runat="Server" Width="150" Height="110px" />
-        </td>
-    </tr>
-</table>
+<div class="row">
+    <div class="col-md-5">
+        <asp:label ID="Label1" runat="server" Font-Bold="true" Text="<%$ Resources:AllUsers %>" />
+        <asp:ListBox id="lstAllUsers" SelectionMode="Multiple" Runat="Server" CssClass="form-control" Height="150px" />
+    </div>
+    <div class="col-md-2 text-center" style="padding-top:50px;">
+        <asp:Button Text="->"  CssClass="btn btn-default" Runat="server" id="Button1" onclick="AddUser" />
+	    <br /><br />
+	    <asp:Button Text="<-"  CssClass="btn btn-default" Runat="server" id="Button2" onclick="RemoveUser" />       
+    </div>
+    <div class="col-md-5">
+        <asp:label ID="Label2" runat="server" Text="<%$ Resources:SelectedUsers %>" /> 
+        <asp:ListBox id="lstSelectedUsers" SelectionMode="Multiple"  Runat="Server" CssClass="form-control" Height="150px" />
+    </div>
+</div>

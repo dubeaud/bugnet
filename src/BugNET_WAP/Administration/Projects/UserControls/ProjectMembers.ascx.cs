@@ -42,8 +42,8 @@ namespace BugNET.Administration.Projects.UserControls
 		private void InitializeComponent()
 		{
 			this.ddlProjectMembers.SelectedIndexChanged +=new EventHandler(ddlProjectMembers_SelectedIndexChanged);
-			this.Button4.Click+=new EventHandler(Button4_Click);
-			this.Button3.Click +=new EventHandler(Button3_Click);
+			this.Button5.ServerClick+=new EventHandler(Button4_Click);
+			this.Button3.ServerClick +=new EventHandler(Button3_Click);
 		}
 		#endregion
 

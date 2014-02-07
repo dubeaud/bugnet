@@ -45,9 +45,6 @@ namespace BugNET.Issues
                 }
 
                 BindOptions();
-
-                lblIssueNumber.Text = GetGlobalResourceObject("SharedResources", "NotAvailableAbbr").ToString();
-
                 BindDefaultValues();
 
                 //check users role permission for adding an attachment
@@ -200,7 +197,7 @@ namespace BugNET.Issues
                 chkPrivate.Visible = PrivateLabel.Visible = selectedValue.PrivateVisibility;
                 DropCategory.Visible = CategoryLabel.Visible = selectedValue.CategoryVisibility;
                 DueDatePicker.Visible = DueDateLabel.Visible = selectedValue.DueDateVisibility;
-                Label3.Visible = ProgressSlider.Visible = ProgressSlider_BoundControl.Visible = PercentLabel.Visible = selectedValue.PercentCompleteVisibility;
+                Label3.Visible = ProgressSlider.Visible = selectedValue.PercentCompleteVisibility;
                 DropMilestone.Visible = MilestoneLabel.Visible = selectedValue.MilestoneVisibility;
                 HoursLabel.Visible = txtEstimation.Visible = EstimationLabel.Visible = selectedValue.EstimationVisibility;
                 DropResolution.Visible = ResolutionLabel.Visible = selectedValue.ResolutionVisibility;

@@ -216,7 +216,7 @@ namespace BugNET.Administration.Projects.UserControls
                 txtRoleName.Text = r.Name;
                 txtDescription.Text = r.Description;
                 chkAutoAssign.Checked = r.AutoAssign;
-                RoleNameTitle.Text = string.Concat(GetLocalResourceObject("RoleNameTitle.Text"), " ", r.Name);
+                // RoleNameTitle.Text = string.Concat(GetLocalResourceObject("RoleNameTitle.Text"), " ", r.Name);
                 ReBind();
             }
 		}
@@ -233,7 +233,7 @@ namespace BugNET.Administration.Projects.UserControls
             Roles.Visible= !Roles.Visible;          
             txtRoleName.Visible = true;
             txtRoleName.Text = string.Empty;
-            RoleNameTitle.Text = (string)GetLocalResourceObject("AddNewRole.Text");       
+            //RoleNameTitle.Text = (string)GetLocalResourceObject("AddNewRole.Text");       
             cmdDelete.Visible = false;
             cancel.Visible = false;
             BindRoleDetails(-1);

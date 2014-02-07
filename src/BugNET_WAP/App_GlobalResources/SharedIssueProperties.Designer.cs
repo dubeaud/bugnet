@@ -61,7 +61,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Affected Milestone:.
+        ///   Looks up a localized string similar to Affected Milestone.
         /// </summary>
         internal static string AffectedMilestoneLabel {
             get {
@@ -70,7 +70,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Assigned To:.
+        ///   Looks up a localized string similar to Assigned To.
         /// </summary>
         internal static string AssignedToLabel {
             get {
@@ -79,7 +79,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Category:.
+        ///   Looks up a localized string similar to Category.
         /// </summary>
         internal static string CategoryLabel {
             get {
@@ -97,7 +97,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Due Date:.
+        ///   Looks up a localized string similar to Due Date.
         /// </summary>
         internal static string DueDateLabel {
             get {
@@ -106,7 +106,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Estimation:.
+        ///   Looks up a localized string similar to Estimation.
         /// </summary>
         internal static string EstimationLabel {
             get {
@@ -133,7 +133,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Issue:.
+        ///   Looks up a localized string similar to Issue.
         /// </summary>
         internal static string IssueLabel {
             get {
@@ -160,7 +160,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Type:.
+        ///   Looks up a localized string similar to Type.
         /// </summary>
         internal static string IssueTypeLabel {
             get {
@@ -169,7 +169,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Logged:.
+        ///   Looks up a localized string similar to Logged.
         /// </summary>
         internal static string LoggedLabel {
             get {
@@ -178,7 +178,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Milestone:.
+        ///   Looks up a localized string similar to Milestone.
         /// </summary>
         internal static string MilestoneLabel {
             get {
@@ -196,7 +196,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Owned By:.
+        ///   Looks up a localized string similar to Owned By.
         /// </summary>
         internal static string OwnedByLabel {
             get {
@@ -205,7 +205,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Priority:.
+        ///   Looks up a localized string similar to Priority.
         /// </summary>
         internal static string PriorityLabel {
             get {
@@ -223,7 +223,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Percent Complete:.
+        ///   Looks up a localized string similar to Percent Complete.
         /// </summary>
         internal static string ProgressLabel {
             get {
@@ -241,7 +241,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Resolution:.
+        ///   Looks up a localized string similar to Resolution.
         /// </summary>
         internal static string ResolutionLabel {
             get {
@@ -259,7 +259,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Status:.
+        ///   Looks up a localized string similar to Status.
         /// </summary>
         internal static string StatusLabel {
             get {

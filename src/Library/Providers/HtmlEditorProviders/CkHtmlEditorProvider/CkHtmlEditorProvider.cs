@@ -117,6 +117,7 @@ namespace BugNET.Providers.HtmlEditorProviders
             
             //CkEditor.CkEditorJS = _providerPath + "ckeditor.js";
             _textbox.BasePath = _providerPath;
+            _textbox.CssClass = "form-control";
 
             //textbox.SkinPath = "skins/silver/";
             //textbox.ToolbarSet = "Default";

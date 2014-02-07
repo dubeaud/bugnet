@@ -1,7 +1,8 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ProjectResolutions.ascx.cs" Inherits="BugNET.Administration.Projects.UserControls.ProjectResolutions" %>
 <%@ Register TagPrefix="IT" TagName="PickImage" Src="~/UserControls/PickImage.ascx" %>
 <div>
-    <h2><asp:Literal ID="ResolutionsTitle" runat="Server" meta:resourcekey="ResolutionsTitle" /></h2>
+    <h2>
+        <asp:Literal ID="ResolutionsTitle" runat="Server" meta:resourcekey="ResolutionsTitle" /></h2>
     <asp:CustomValidator Text="You must add at least one resolution" Display="dynamic" runat="server" ID="ResolutionValidation"
         OnServerValidate="ResolutionValidation_Validate" />
     <p>
@@ -10,22 +11,22 @@
     <br />
     <asp:UpdatePanel ID="updatepanel1" runat="server">
         <ContentTemplate>
-            <BN:Message ID="ActionMessage" runat="server" Visible="False"  />
-            <asp:DataGrid 
-                ID="grdResolutions" 
-                SkinID="DataGrid" 
-                OnUpdateCommand="grdResolutions_Update" 
+            <bn:Message ID="ActionMessage" runat="server" Visible="False" />
+            <asp:DataGrid
+                ID="grdResolutions"
+                GridLines="None"
+                OnUpdateCommand="grdResolutions_Update"
                 OnEditCommand="grdResolutions_Edit"
-                OnCancelCommand="grdResolutions_Cancel" 
-                OnItemCommand="grdResolutions_ItemCommand" 
+                OnCancelCommand="grdResolutions_Cancel"
+                OnItemCommand="grdResolutions_ItemCommand"
                 OnDeleteCommand="grdResolutions_Delete"
-                OnItemDataBound="grdResolutions_ItemDataBound" 
-                Width="100%" 
+                OnItemDataBound="grdResolutions_ItemDataBound"
+                AutoGenerateColumns="false"
+                UseAccessibleHeader="true"
+                CssClass="table table-striped"
                 runat="Server">
                 <Columns>
                     <asp:TemplateColumn>
-                        <HeaderStyle HorizontalAlign="Right" Width="45" />
-                        <ItemStyle HorizontalAlign="Right" Width="45" Wrap="false" />
                         <ItemTemplate>
                             <asp:ImageButton ID="cmdEdit" ToolTip="<%$ Resources:SharedResources, Edit %>" AlternateText="<%$ Resources:SharedResources, Edit %>"
                                 CssClass="icon" ImageUrl="~/images/pencil.gif" BorderWidth="0px" CommandName="Edit" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
@@ -41,8 +42,6 @@
                         </EditItemTemplate>
                     </asp:TemplateColumn>
                     <asp:TemplateColumn HeaderText="Resolution">
-                        <HeaderStyle HorizontalAlign="Left" />
-                        <ItemStyle HorizontalAlign="Left" />
                         <ItemTemplate>
                             <asp:Label ID="lblResolutionName" runat="Server" />
                         </ItemTemplate>
@@ -53,8 +52,6 @@
                         </EditItemTemplate>
                     </asp:TemplateColumn>
                     <asp:TemplateColumn HeaderText="Image">
-                        <HeaderStyle HorizontalAlign="Center" />
-                        <ItemStyle HorizontalAlign="Center" Wrap="false" />
                         <ItemTemplate>
                             <asp:Image ID="imgResolution" runat="Server" />
                         </ItemTemplate>
@@ -63,15 +60,12 @@
                         </EditItemTemplate>
                     </asp:TemplateColumn>
                     <asp:TemplateColumn HeaderText="Order">
-                        <HeaderStyle HorizontalAlign="Center" Width="125" />
-                        <ItemStyle HorizontalAlign="Center" Width="125" />
                         <ItemTemplate>
                             <asp:ImageButton ID="MoveUp" ImageUrl="~/Images/up.gif" CommandName="up" CommandArgument="" runat="server" />
                             <asp:ImageButton ID="MoveDown" ImageUrl="~/Images/down.gif" CommandName="down" CommandArgument="" runat="server" />
                         </ItemTemplate>
                     </asp:TemplateColumn>
                     <asp:TemplateColumn>
-                        <ItemStyle Wrap="false" HorizontalAlign="Center" Width="16" />
                         <ItemTemplate>
                             <asp:ImageButton ID="cmdDelete" ToolTip="<%$ Resources:SharedResources, Delete %>" AlternateText="<%$ Resources:SharedResources, Delete %>"
                                 CssClass="icon" ImageUrl="~/images/cross.gif" BorderWidth="0px" CommandName="Delete" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
@@ -81,24 +75,28 @@
                     </asp:TemplateColumn>
                 </Columns>
             </asp:DataGrid>
-            <div class="fieldgroup">
+            <div class="form-horizontal">
                 <h3>
                     <asp:Literal ID="AddNewResolutionLabel" runat="Server" meta:resourcekey="AddNewResolutionLabel" Text="Add New Resolution" /></h3>
-                <ol>
-                    <li>
-                        <asp:Label ID="ResolutionNameLabel" AssociatedControlID="txtName" runat="Server" Text="<%$ Resources:SharedResources, Name %>" />
-                        <asp:TextBox ID="txtName" Width="150" MaxLength="50" runat="Server" />
-                    </li>
-                    <li>
-                        <label for="<%= lstImages.ClientID %>">
-                            <asp:Literal ID="Literal1" runat="server" Text="<%$ Resources:SharedResources, Image%>" /></label>
+                <div class="form-group">
+                    <asp:Label ID="ResolutionNameLabel" CssClass="control-label col-md-2" AssociatedControlID="txtName" runat="Server" Text="<%$ Resources:SharedResources, Name %>" />
+                    <div class="col-md-10">
+                        <asp:TextBox ID="txtName" CssClass="form-control" MaxLength="50" runat="Server" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="<%= lstImages.ClientID %>" class="control-label col-md-2">
+                        <asp:Literal ID="Literal1" runat="server" Text="<%$ Resources:SharedResources, Image%>" /></label>
+                    <div class="col-m-10">
                         <IT:PickImage ID="lstImages" ImageDirectory="/Resolution" runat="Server" />
-                    </li>
-                </ol>
-            </div>
-            <div class="submit">
-                <asp:Button Text="Add Resolution" OnClick="AddResolution" meta:resourcekey="AddResolutionButton" CausesValidation="false"
-                    runat="server" ID="btnAdd" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <asp:Button Text="Add Resolution" CssClass="btn btn-primary" OnClick="AddResolution" meta:resourcekey="AddResolutionButton" CausesValidation="false"
+                            runat="server" ID="btnAdd" />
+                    </div>
+                </div>
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>

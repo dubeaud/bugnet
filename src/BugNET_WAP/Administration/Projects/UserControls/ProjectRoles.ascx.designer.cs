@@ -58,13 +58,13 @@ namespace BugNET.Administration.Projects.UserControls {
         protected global::System.Web.UI.WebControls.Label DescriptionLabel;
         
         /// <summary>
-        /// add control.
+        /// gvRoles control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton add;
+        protected global::System.Web.UI.WebControls.GridView gvRoles;
         
         /// <summary>
         /// cmdAddRole control.
@@ -74,15 +74,6 @@ namespace BugNET.Administration.Projects.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton cmdAddRole;
-        
-        /// <summary>
-        /// gvRoles control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvRoles;
         
         /// <summary>
         /// SecurityRoles control.
@@ -101,15 +92,6 @@ namespace BugNET.Administration.Projects.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel AddRole;
-        
-        /// <summary>
-        /// RoleNameTitle control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label RoleNameTitle;
         
         /// <summary>
         /// Label6 control.

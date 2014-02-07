@@ -40,15 +40,6 @@ namespace BugNET.Administration.Projects {
         protected global::System.Web.UI.WebControls.Repeater AdminMenu;
         
         /// <summary>
-        /// Message1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::BugNET.UserControls.Message Message1;
-        
-        /// <summary>
         /// plhContent control.
         /// </summary>
         /// <remarks>
@@ -58,13 +49,13 @@ namespace BugNET.Administration.Projects {
         protected global::System.Web.UI.WebControls.PlaceHolder plhContent;
         
         /// <summary>
-        /// Image2 control.
+        /// Message1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton Image2;
+        protected global::BugNET.UserControls.Message Message1;
         
         /// <summary>
         /// SaveButton control.
@@ -76,15 +67,6 @@ namespace BugNET.Administration.Projects {
         protected global::System.Web.UI.WebControls.LinkButton SaveButton;
         
         /// <summary>
-        /// Image1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton Image1;
-        
-        /// <summary>
         /// DeleteButton control.
         /// </summary>
         /// <remarks>
@@ -92,15 +74,6 @@ namespace BugNET.Administration.Projects {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton DeleteButton;
-        
-        /// <summary>
-        /// DisableImage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton DisableImage;
         
         /// <summary>
         /// DisableButton control.
@@ -112,15 +85,6 @@ namespace BugNET.Administration.Projects {
         protected global::System.Web.UI.WebControls.LinkButton DisableButton;
         
         /// <summary>
-        /// ImageButton1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton ImageButton1;
-        
-        /// <summary>
         /// RestoreButton control.
         /// </summary>
         /// <remarks>
@@ -128,15 +92,6 @@ namespace BugNET.Administration.Projects {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton RestoreButton;
-        
-        /// <summary>
-        /// imgCloneProject control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlImage imgCloneProject;
         
         /// <summary>
         /// linkCloneProject control.
@@ -157,40 +112,13 @@ namespace BugNET.Administration.Projects {
         protected global::System.Web.UI.WebControls.Literal Literal1;
         
         /// <summary>
-        /// lbCloneProject control.
+        /// Literal4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbCloneProject;
-        
-        /// <summary>
-        /// pnlCloneProjectForm control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlCloneProjectForm;
-        
-        /// <summary>
-        /// pnlHeader control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlHeader;
-        
-        /// <summary>
-        /// Literal2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Literal2;
+        protected global::System.Web.UI.WebControls.Literal Literal4;
         
         /// <summary>
         /// Literal3 control.
@@ -247,15 +175,6 @@ namespace BugNET.Administration.Projects {
         protected global::System.Web.UI.WebControls.TextBox txtNewProjectName;
         
         /// <summary>
-        /// OkButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button OkButton;
-        
-        /// <summary>
         /// CancelButton control.
         /// </summary>
         /// <remarks>
@@ -265,12 +184,12 @@ namespace BugNET.Administration.Projects {
         protected global::System.Web.UI.WebControls.Button CancelButton;
         
         /// <summary>
-        /// mpeCloneProject control.
+        /// OkButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.ModalPopupExtender mpeCloneProject;
+        protected global::System.Web.UI.WebControls.Button OkButton;
     }
 }
