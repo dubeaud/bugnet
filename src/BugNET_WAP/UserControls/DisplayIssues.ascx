@@ -146,7 +146,7 @@
     </div>
 
     <asp:Panel ID="SelectColumnsPanel" Visible="False" runat="Server">
-        <div id="ChangeColumns">
+        <div id="ChangeColumns" style="display:none;">
             <h4><asp:Literal ID="Literal3" runat="server" meta:resourcekey="SelectColumnsLiteral"></asp:Literal></h4>
             <div>
                 <asp:CheckBoxList ID="lstIssueColumns" Width="100%" CssClass="checkbox-list" RepeatColumns="7" CellPadding="0" CellSpacing="0" runat="server" RepeatDirection="Horizontal">

@@ -124,12 +124,6 @@ namespace BugNET.Issues.UserControls
                 var user = Membership.GetUser(currentComment.CreatorUserName);
                 if (user != null) avatar.Attributes.Add("src", GetGravatarImageUrl(user.Email, 35));
             }
-            else
-            {
-                avatar.Attributes.Add("src", Page.ResolveUrl("~/images/noprofile.png"));
-                avatar.Style.Add("height", "35px");
-                avatar.Style.Add("width", "35px");
-            }
 
             var hlPermaLink = (HyperLink)e.Item.FindControl("hlPermalink");
             hlPermaLink.NavigateUrl = String.Format("{0}#{1}", HttpContext.Current.Request.Url, currentComment.Id);

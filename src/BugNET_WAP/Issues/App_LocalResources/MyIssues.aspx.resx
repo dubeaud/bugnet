@@ -133,10 +133,10 @@
     <value>Select All</value>
   </data>
   <data name="ProjectListFilterLabel.Text" xml:space="preserve">
-    <value>Project:</value>
+    <value>Project</value>
   </data>
   <data name="Statistics_Title.Text" xml:space="preserve">
-    <value>Statistics &lt;span style="font-size:11px;"&gt;(Total Issues)&lt;/span&gt;</value>
+    <value>Statistics &lt;small&gt;(Total Issues)&lt;/small&gt;</value>
   </data>
   <data name="ViewIssuesDropDownFilter_Assigned.Text" xml:space="preserve">
     <value>Assigned to you</value>
@@ -160,6 +160,6 @@
     <value>-- Select a View --</value>
   </data>
   <data name="ViewIssuesFilterLabel.Text" xml:space="preserve">
-    <value>View Issues:</value>
+    <value>View Issues</value>
   </data>
 </root>

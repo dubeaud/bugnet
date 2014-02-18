@@ -99,10 +99,6 @@
                                 </a>
                             </div>
                             <div class="col-md-8 col-sm-8">
-
-                                
-                                
-
                                 <p>
                                     <%#Server.HtmlDecode(((Project)Container.DataItem).Description)%>
                                 </p>
@@ -110,26 +106,12 @@
                         </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <%--<div>
-                                        <span class="badge">Posted 2012-08-02 20:47:04</span><div class="pull-right">
-                                            <span class="label label-default">alice</span> <span class="label label-primary">story</span> <span class="label label-success">blog</span> <span class="label label-info">personal</span> <span class="label label-warning">Warning</span>
-                                            <span class="label label-danger">Danger</span>
-                                        </div>
-                                    </div>--%>
                                     <p>
                                         <span class="glyphicon glyphicon-user"></span> <asp:Localize runat="server" ID="Localize2" Text="Managed By" meta:resourcekey="ManagedBy" />
-                                    <%#((Project)Container.DataItem).ManagerDisplayName%>
-                                        | 
-                                    <ul class="list-inline">
-                                        <li>
-                                            <asp:Label CssClass="label label-default" ID="OpenIssues" runat="Server" /></li>
-                                        <li>
-                                            <asp:Label ID="NextMilestoneDue" CssClass="label label-success" runat="Server" /></li>
-                                        <li>
-                                            <asp:Label ID="MilestoneComplete" CssClass="progressBar" runat="Server" /></li>
-                                    
-                                    </ul>
-                                        </p>
+                                            <%#((Project)Container.DataItem).ManagerDisplayName%>
+                                        | <asp:Label ID="OpenIssues" runat="Server" /> | <asp:Label ID="NextMilestoneDue" runat="Server" />
+                                        | <asp:Label ID="MilestoneComplete" CssClass="progressBar" runat="Server" />     
+                                    </p>
                                 </div>
 
                             </div>

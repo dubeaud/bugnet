@@ -160,5 +160,10 @@ namespace BugNET.Issues.UserControls
                     return tabName;
             }
         }
+
+        protected void Unnamed_ServerClick(object sender, EventArgs e)
+        {
+            ((System.Web.UI.HtmlControls.HtmlAnchor)sender).Attributes.Add("class", "active");
+        }
     }
 }

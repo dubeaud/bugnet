@@ -58,15 +58,6 @@ namespace BugNET.Issues.UserControls {
         protected global::System.Web.UI.WebControls.Button btnAddNot;
         
         /// <summary>
-        /// lstNotificationUsers control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lstNotificationUsers;
-        
-        /// <summary>
         /// btnDelNot control.
         /// </summary>
         /// <remarks>
@@ -74,6 +65,15 @@ namespace BugNET.Issues.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnDelNot;
+        
+        /// <summary>
+        /// lstNotificationUsers control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox lstNotificationUsers;
         
         /// <summary>
         /// pnlNotifications control.

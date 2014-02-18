@@ -26,7 +26,6 @@ namespace BugNET.Issues
             {
                 pnlResultsMessage.Visible = true;
                 pnlSearchResults.Visible = false;
-                litResultsMessage.Text = GetLocalResourceObject("SearchInstructions").ToString();
             }
 
             // The ExpandIssuePaths method is called to handle

@@ -214,7 +214,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Private:.
+        ///   Looks up a localized string similar to Private.
         /// </summary>
         internal static string PrivateLabel {
             get {

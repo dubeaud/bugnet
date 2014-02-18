@@ -1,6 +1,7 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="History.ascx.cs" Inherits="BugNET.Issues.UserControls.History" %>
 <asp:label id="lblHistory" Font-Italic="true" runat="server"></asp:label>
-<asp:Datagrid  runat="server" ID="HistoryDataGrid" EnableViewState="true" SkinID="DataGrid" Width="100%"> 
+<asp:Datagrid  runat="server" ID="HistoryDataGrid" EnableViewState="true" GridLines="None" 
+    CssClass="table table-striped" AutoGenerateColumns="false" UseAccessibleHeader="true"> 
     <Columns>
         <asp:BoundColumn HeaderText="Date Modified" DataField="DateChanged" DataFormatString="{0:g}"/>
         <asp:BoundColumn HeaderText="User" DataField="CreatorDisplayName" />

@@ -3,31 +3,22 @@
 <asp:Datagrid 
     runat="server" 
     Id="IssueRevisionsDataGrid" 
+     AutoGenerateColumns="false"
     EnableViewState="true"  
-    SkinID="DataGrid"
+     UseAccessibleHeader="true"
+     CssClass="table table-striped"
     AllowPaging="false"  
-    AllowSorting="false"
-    Width="100%">
+    AllowSorting="false">
     <Columns>
         <asp:BoundColumn HeaderText="<%$ Resources:IssueRevisionsDataGrid.RevisionHeader.Text %>" DataField="Revision">
-            <HeaderStyle HorizontalAlign="Left" />
-            <ItemStyle HorizontalAlign="Left" Wrap="False" />
         </asp:BoundColumn>
         <asp:BoundColumn HeaderText="<%$ Resources:IssueRevisionsDataGrid.AuthorHeader.Text %>" DataField="Author">
-            <HeaderStyle HorizontalAlign="Left" />
-            <ItemStyle HorizontalAlign="Left" Wrap="False" />
         </asp:BoundColumn>
         <asp:BoundColumn HeaderText="<%$ Resources:IssueRevisionsDataGrid.RevisionDateHeader.Text %>" DataField="RevisionDate">
-            <HeaderStyle HorizontalAlign="Left" />
-            <ItemStyle HorizontalAlign="Left" Wrap="False" />
         </asp:BoundColumn>
         <asp:BoundColumn HeaderText="<%$ Resources:IssueRevisionsDataGrid.RepositoryHeader.Text %>" DataField="Repository">
-            <HeaderStyle HorizontalAlign="Left" />
-            <ItemStyle HorizontalAlign="Left" Wrap="False" />
         </asp:BoundColumn>
         <asp:BoundColumn HeaderText="<%$ Resources:IssueRevisionsDataGrid.MessageHeader.Text %>" DataField="Message">
-            <HeaderStyle HorizontalAlign="Left" />
-            <ItemStyle HorizontalAlign="Left" Wrap="False" />
         </asp:BoundColumn>
     </Columns>
 </asp:Datagrid>

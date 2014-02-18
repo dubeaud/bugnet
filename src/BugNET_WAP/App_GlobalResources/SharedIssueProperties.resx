@@ -136,7 +136,7 @@
     <value>Status</value>
   </data>
   <data name="PrivateLabel" xml:space="preserve">
-    <value>Private:</value>
+    <value>Private</value>
   </data>
   <data name="ProgressLabel" xml:space="preserve">
     <value>Percent Complete</value>
