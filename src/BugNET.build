@@ -2,9 +2,9 @@
 <project name="BugNET" default="ci" xmlns="http://nant.sf.net/schemas/nant.xsd">	
 	<!-- Setup properties -->
 	<property name="nant.settings.currentframework" value="net-4.0" />
-	<property name="publishdirectory" value="C:\Projects\BugNET\publish" />
-	<property name="build.dir" value="C:\Projects\bugnet\src\build" />
-	<property name="outputdirectory" value="C:\Projects\bugnet\src\build\output"/>
+	<property name="publishdirectory" value="${teamcity.build.checkoutDir}\publish" />
+	<property name="build.dir" value="${teamcity.build.checkoutDir}\build" />
+	<property name="outputdirectory" value="${build.dir}\output"/>
 	
 	<!-- Options -->
 	<property name="publish.enabled" value="true" />
@@ -33,8 +33,8 @@
                 <attribute type="AssemblyCompanyAttribute" value="http://www.bugnetproject.com" />
 				<attribute type="AssemblyCopyrightAttribute" value="Copyright (C) 2006-2014 BugNET Project" />
                 <attribute type="AssemblyProductAttribute" value="BugNET Open Source Issue Tracker" />
-                <attribute type="AssemblyVersionAttribute" value="${build_number}" /> <!-- Major.Minor.Build.Revision-->
-                <attribute type="AssemblyInformationalVersionAttribute" value="${build_number}" /> <!-- Major.Minor.Build.Revision-->
+                <attribute type="AssemblyVersionAttribute" value="${build.number}" /> <!-- Major.Minor.Build.Revision-->
+                <attribute type="AssemblyInformationalVersionAttribute" value="${build.number}" /> <!-- Major.Minor.Build.Revision-->
             </attributes>
         </asminfo>
     </target>
@@ -90,32 +90,10 @@
 				<exclude name="Web.Test.config" />
 			</fileset>
 		</copy>	
-		<copy todir="${build.dir}\dist\BugNET\bin">
-			<fileset basedir="${outputdirectory}">
-				<include name="**\*.dll"/>
-				<include name="**\*.xml" />
-			    <exclude name="**\nunit*"/>
-				<exclude name="**\BugNET.SubversionHooks\*"/>
-				<exclude name="**\BugNET.MercurialChangeGroupHook\*"/>
-				<exclude name="**\Rhino*"/>
-				<exclude name="**\BugNet.UnitTests.*"/>
-			</fileset>
-		</copy>	
-		<copy todir="${build.dir}\dist\BugNET\bin">
-			<fileset basedir="..\lib">
-				<!--Copy any lib files-->
-
-			</fileset>
-		</copy>	
-		<copy todir="${build.dir}\dist\">
-			<fileset basedir="../doc">
-				<include name="**\*.html"/>
-				<include name="**\*.txt" />
-			</fileset>
-		</copy>	
 		
+		<!-- copy source -->
 		<copy todir="${build.dir}\source\">
-			<fileset basedir="C:\Projects\BugNET">
+			<fileset basedir=".">
 				<include name="**\*" />
 				<exclude name="**\obj\**" />
 				<exclude name="**\bin\**" />
@@ -128,53 +106,37 @@
 				<exclude name="**\*.user"/>
 				<exclude name="**\tools"/>
 			</fileset>
-		</copy>	
+		</copy>
 		
 		<property name="filename" value=".\BugNET_WAP\Providers\DataProviders\SqlDataProvider\Latest.SqlDataProvider.sql" />	
 		<if test="${file::exists(filename) and file::get-length(filename) > 0}">
 			<echo message="Copying latest sql script" />
 			<copy file="${filename}"
-				tofile="${build.dir}\dist\BugNET\Providers\DataProviders\SqlDataProvider\${CCNetLabel}.0.SqlDataProvider.sql" />
+				tofile="${build.dir}\dist\BugNET\Providers\DataProviders\SqlDataProvider\${build.number}.0.SqlDataProvider.sql" />
 			<copy file="${filename}"
-				tofile="${build.dir}\source\src\BugNET_WAP\Providers\DataProviders\SqlDataProvider\${CCNetLabel}.0.SqlDataProvider.sql" />
+				tofile="${build.dir}\source\src\BugNET_WAP\Providers\DataProviders\SqlDataProvider\${build.number}.0.SqlDataProvider.sql" />
 		</if>	
 		
 		<property name="filename" value=".\BugNET_WAP\Install\LatestReleaseNotes.htm" />	
 		<if test="${file::exists(filename) and file::get-length(filename) > 0}">
 			<echo message="Copying latest release notes" />
 			<copy file="${filename}"
-				tofile="${build.dir}\dist\BugNET\Install\${CCNetLabel}.0.htm" />
+				tofile="${build.dir}\dist\BugNET\Install\${build.number}.0.htm" />
 		</if>	
-
-		<!--<copy file=".\BugNET_WAP\release.config" 
-			tofile="${build.dir}\dist\BugNET\web.config" overwrite="true" />-->
 			
 		<!-- copy svn hooks utility-->
 		<copy todir="${build.dir}\dist\BugNET.SubversionHooks">
-			<fileset basedir="${outputdirectory}\BugNET.SubversionHooks">
-				<include name="**\*.dll"/>
-				<include name="**\*.bat"/>
-				<include name="**\*.exe"/>
-				<include name="**\*.config"/>
-				<include name="**\*.xml" />
-			    <exclude name="**\nunit*"/>
-				<exclude name="**\Rhino*"/>
-				<exclude name="**\BugNet.UnitTests.*"/>
+			<fileset basedir=".\BugNET.SubversionHooks\bin\Release">
+				<include name="**\*"/>
+			    <exclude name="**\*.pdb"/>
 			</fileset>
 		</copy>	
 		
 		<!-- copy hg hooks utility-->
 		<copy todir="${build.dir}\dist\BugNET.MercurialChangeGroupHook">
-			<fileset basedir="${outputdirectory}\BugNET.MercurialChangeGroupHook">
-				<include name="**\*.dll"/>
-				<include name="**\*.bat"/>
-				<include name="**\*.exe"/>
-				<include name="**\*.txt"/>
-				<include name="**\*.config"/>
-				<include name="**\*.xml" />
-			    <exclude name="**\nunit*"/>
-				<exclude name="**\Rhino*"/>
-				<exclude name="**\BugNet.UnitTests.*"/>
+			<fileset basedir=".\BugNET.MercurialChangeGroupHook\bin\Release">
+				<include name="**\*"/>
+			    <exclude name="**\*.pdb"/>
 			</fileset>
 		</copy>	
 	</target>
@@ -188,51 +150,18 @@
 			<mkdir dir="${publishdirectory}" />
 			
 			<!-- zip it! -->
-			<zip zipfile="${publishdirectory}\BugNET-${build_number}-Install.zip">
+			<zip zipfile="${publishdirectory}\BugNET-${build.number}-Install.zip">
 				<fileset basedir="${build.dir}\dist">
 					<include name="**\*" />
 				</fileset>
 			</zip>
 			
 			<!-- zip the source -->
-			<zip zipfile="${publishdirectory}\BugNET-${build_number}-Source.zip">
+			<zip zipfile="${publishdirectory}\BugNET-${build.number}-Source.zip">
 				<fileset basedir="${build.dir}\source">
 					<include name="**\*" />
 				</fileset>
 			</zip>
-			
-			<!--
-			<zip zipfile="${publishdirectory}\BugNET-${build_number}-Source.zip">
-				<fileset basedir="C:\Projects\BugNET">
-					<include name="**\*" />
-					<exclude name="**\obj\**" />
-					<exclude name="**\bin\**" />
-					<exclude name="**\packages\**" />
-					<exclude name="**\Help\**"/>
-					<exclude name="**\build\**"/>
-					<exclude name="**\publish\**"/>
-					<exclude name="**\*.suo"/>
-					<exclude name="**\*.user"/>
-					<exclude name="**\tools"/>
-				</fileset>
-			</zip>-->
-			
-			<!--<copy todir="${CCNetArtifactDirectory}\${CCNetLabel}\">
-				<fileset basedir="${publishdirectory}">
-					<include name="*.*"/>
-				</fileset>
-			</copy>
-			<delete>
-				<fileset>
-					<include name="${CCNetArtifactDirectory}\Latest\*.*" />
-				</fileset>
-			</delete>
-			<copy todir="${CCNetArtifactDirectory}\Latest\">
-				<fileset basedir="${publishdirectory}">
-					<include name="*.*"/>
-				</fileset>
-			</copy>	-->
 		</if>
     </target>
 </project>
-
