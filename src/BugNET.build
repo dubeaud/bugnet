@@ -162,6 +162,16 @@
 					<include name="**\*" />
 				</fileset>
 			</zip>
+			
+			<!-- zip the web deploy package -->
+			<zip zipfile="${publishdirectory}\BugNET-${build.number}-WebDeploy.zip">
+				<fileset basedir="${build.dir}\dist\BugNET" prefix="BugNET">
+					<include name="**\*" />
+				</fileset>
+				<fileset basedir=".\WebDeploy">
+					<include name="**\*" />
+				</fileset>
+			</zip>
 		</if>
     </target>
 </project>

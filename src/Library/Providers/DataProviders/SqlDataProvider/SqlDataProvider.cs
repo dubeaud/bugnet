@@ -1168,7 +1168,7 @@ namespace BugNET.Providers.DataProviders
                     AddParamToSqlCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
                     AddParamToSqlCmd(sqlCmd, "@ProjectName", SqlDbType.NText, 256, ParameterDirection.Input, projectName);
                     AddParamToSqlCmd(sqlCmd, "@ProjectId", SqlDbType.Int, 0, ParameterDirection.Input, projectId);
-                    AddParamToSqlCmd(sqlCmd, "@CloningUsername", SqlDbType.VarChar, 0, ParameterDirection.Input, creatorUserName);
+                    AddParamToSqlCmd(sqlCmd, "@CloningUserName", SqlDbType.VarChar, 0, ParameterDirection.Input, creatorUserName);
                     SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_PROJECT_CLONEPROJECT);
                     ExecuteScalarCmd(sqlCmd);
                     return (int)sqlCmd.Parameters["@ReturnValue"].Value;   
