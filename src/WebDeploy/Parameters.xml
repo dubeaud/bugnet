@@ -1,0 +1,86 @@
+<parameters>
+  <parameter name="AppPath" defaultValue="Default Web Site/bugnet" tags="iisapp">
+    <parameterEntry type="ProviderPath" scope="iisapp" match="BugNET" />
+  </parameter>
+  <parameter name="BugNET Application URL" description="The URL of the application on the target box such as http://www.myserver.com/myapp ." defaultValue="" tags="AppURL,Hidden">
+    <parameterEntry type="TextFile" scope="dbFullSql " match="localhost:?[0-9]+/?" />
+  </parameter>
+  <parameter name="SetAclParameter1" defaultValue="{AppPath}" tags="Hidden">
+    <parameterEntry type="ProviderPath" scope="setAcl" match="BugNET" />
+  </parameter>
+  
+  <parameter
+		 name = "dbServer"
+		 defaultValue = ".\SQLEXPRESS"
+		 tags = "SQL, dbServer" />
+	<parameter
+		 name = "dbAdminUsername"
+		 defaultValue = "sa"
+		 tags = "SQL, dbAdminUsername" />
+	<parameter   
+		name = "dbAdminPassword"   
+		tags = "Password, SQL, dbAdminPassword" />
+	<parameter   
+		name = "dbName"   
+		defaultValue = "BugNET"   
+		tags = "SQL, dbName" >
+		
+	</parameter>
+	<parameter   
+		name = "Database Username"   
+		defaultValue = "BugNETUser"   
+		tags = "SQL, dbUsername" >
+		<parameterEntry   
+		
+			type = "TextFile"   
+			scope = "createlogin.sql"   
+			match = "PlaceholderForDbUsername"  />
+			<parameterEntry   
+		
+			type = "TextFile"   
+			scope = "createuser.sql"   
+			match = "PlaceholderForDbUsername"  />
+	</parameter>
+	<parameter
+		name = "Database Password"
+		description="Enter Password for the Database Username. Please ensure that Passwords contain at least (1) upper
+case letter, at least (1) lower case letter, at least (1) number or special character, and be least (8) characters in length" tags="New, Password, SQL, DbUserPassword">
+
+<parameterValidation type = "RegularExpression" validationString = "(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" />
+		<parameterEntry
+			type = "TextFile"
+			scope = "createlogin.sql"
+			match = "PlaceholderForDbUserPassword"  />
+	</parameter>
+	
+	<parameter
+		name = "MasterConString"
+		defaultValue = "Data Source={dbServer};Initial Catalog=MASTER;User ID={dbAdminUsername};Password={dbAdminPassword}"
+		tags = "NoStore, SQL, Hidden, SQLConnectionString" >
+		<parameterEntry 
+			type = "ProviderPath" 
+			scope = "dbfullsql"
+			match = "createlogin.sql"  />
+	</parameter>
+	
+	<parameter
+		name = "AdminConString"
+		defaultValue = "Data Source={dbServer};Initial Catalog={dbName};User ID={dbAdminUsername};Password={dbAdminPassword}"
+		tags = "SQL, Hidden, SQLConnectionString" >
+		<parameterEntry 
+			type = "ProviderPath" 
+			scope = "dbfullsql"
+			match = "createuser.sql"  />
+	</parameter>
+
+	<!-- used to replace the web.config-->
+	<parameter
+		name = "AppConString"
+		defaultValue = "Data Source={dbServer};Initial Catalog={dbName};User ID={Database Username};Password={Database Password};"
+		tags = "SQL, Hidden, SQLConnectionString" >
+		<parameterEntry
+			type="XmlFile"
+			scope="\\web\.config$"
+			match="/configuration/connectionStrings/add[@name='BugNET']/@connectionString" />
+	</parameter>
+</parameters>
