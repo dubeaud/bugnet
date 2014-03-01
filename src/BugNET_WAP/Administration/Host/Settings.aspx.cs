@@ -67,8 +67,8 @@ namespace BugNET.Administration.Host
             var listItem = e.Item.FindControl("ListItem") as HtmlGenericControl;
             var lb = e.Item.FindControl("MenuButton") as LinkButton;
 
-            if (listItem != null)
-                listItem.Attributes.Add("style", string.Format("background: #C4EFA1 url(../../images/{0}) no-repeat 5px 4px;", dataItem.Value));
+            //if (listItem != null)
+            //    listItem.Attributes.Add("style", string.Format("background: #C4EFA1 url(../../images/{0}) no-repeat 5px 4px;", dataItem.Value));
 
             if (lb != null) 
                 lb.Text = dataItem.Key;
@@ -127,9 +127,9 @@ namespace BugNET.Administration.Host
             for (int i = 0; i < _menuItems.Count; i++)
             {
                 if (i == TabId)
-                   ((HtmlGenericControl)AdminMenu.Items[i].FindControl("ListItem")).Attributes.Add("class", "on");
+                   ((HtmlGenericControl)AdminMenu.Items[i].FindControl("ListItem")).Attributes.Add("class", "active");
                 else
-                   ((HtmlGenericControl)AdminMenu.Items[i].FindControl("ListItem")).Attributes.Add("class", "off");
+                   ((HtmlGenericControl)AdminMenu.Items[i].FindControl("ListItem")).Attributes.Add("class", "");
             }
          
 

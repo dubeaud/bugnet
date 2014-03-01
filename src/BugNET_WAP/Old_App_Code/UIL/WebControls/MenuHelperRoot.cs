@@ -2,7 +2,7 @@
 {
     public class MenuHelperRoot
     {
-        public string ULDecoration = "class=\"sf-menu sf-js-enabled sf-shadow\"";
+        public string ULDecoration = "class=\"nav navbar-nav\"";
         public string LICurrentDecoration = "class=\"current\"";
         public string LIAdminDecoration = "class=\"admin\"";
         public System.Collections.Generic.List<SuckerMenuItem> Items = new System.Collections.Generic.List<SuckerMenuItem>();

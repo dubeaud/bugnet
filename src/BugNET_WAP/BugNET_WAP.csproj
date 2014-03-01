@@ -1017,13 +1017,6 @@
     <Compile Include="UserControls\HtmlEditor.ascx.designer.cs">
       <DependentUpon>HtmlEditor.ascx</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\LoginControl.ascx.cs">
-      <DependentUpon>LoginControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\LoginControl.ascx.designer.cs">
-      <DependentUpon>LoginControl.ascx</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\PickDate.ascx.cs">
       <DependentUpon>PickDate.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1948,7 +1941,6 @@
     <Content Include="UserControls\CategoryTreeView.ascx" />
     <Content Include="UserControls\DisplayIssues.ascx" />
     <Content Include="UserControls\DisplayCustomFields.ascx" />
-    <Content Include="UserControls\LoginControl.ascx" />
     <Content Include="UserControls\PickCategory.ascx" />
     <Content Include="UserControls\PickDate.ascx" />
     <Content Include="UserControls\PickPriority.ascx" />

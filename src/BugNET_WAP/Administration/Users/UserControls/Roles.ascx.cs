@@ -124,11 +124,6 @@ namespace BugNET.Administration.Users.UserControls
 
             var userName = MembershipData.UserName;
 
-            //if (chkSuperUsers.Visible && !ITUser.IsInRole(userName,0,Globals.SuperUserRole))
-            //    Role.AddUserToRole(userName, 1);
-            //else if (chkSuperUsers.Visible && !ITUser.IsInRole(userName, 0, Globals.SuperUserRole))
-            //    Role.RemoveUser(userName, 1);
-
             foreach (ListItem roleListItem in RoleList.Items)
             {
                 var roleName = roleListItem.Text;                           

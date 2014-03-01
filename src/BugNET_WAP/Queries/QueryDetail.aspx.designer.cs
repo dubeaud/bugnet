@@ -22,13 +22,13 @@ namespace BugNET.Queries {
         protected global::BugNET.UserControls.Message Message1;
         
         /// <summary>
-        /// lblProject control.
+        /// Literal2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblProject;
+        protected global::System.Web.UI.WebControls.Literal Literal2;
         
         /// <summary>
         /// lblProjectName control.
@@ -38,6 +38,15 @@ namespace BugNET.Queries {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblProjectName;
+        
+        /// <summary>
+        /// litProjectCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litProjectCode;
         
         /// <summary>
         /// plhClauses control.

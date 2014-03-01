@@ -25,7 +25,7 @@
     <bn:Message ID="PageMessage" runat="server" />
 	<asp:DataGrid 
         id="dgProjects" 
-        CssClass="table table-hover table-bordered"
+        CssClass="table table-hover table-striped" GridLines="None"
         AutoGenerateColumns="false"
         UseAccessibleHeader="true" 
         AllowSorting="true" 

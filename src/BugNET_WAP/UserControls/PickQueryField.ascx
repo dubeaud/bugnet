@@ -2,7 +2,7 @@
 <%@ Register TagPrefix="bn" TagName="PickDate" Src="~/UserControls/PickDate.ascx" %>
 <tr>
 	<td>
-		<asp:DropDownList id="dropBooleanOperator" runat="Server">
+		<asp:DropDownList id="dropBooleanOperator" CssClass="form-control" runat="Server">
 			<asp:ListItem Text="AND" />
             <asp:ListItem Text="AND (" />
 			<asp:ListItem Text="OR" />
@@ -13,7 +13,7 @@
 		</asp:DropDownList>
 	</td>
 	<td>
-		<asp:DropDownList id="dropField" AutoPostBack="True" Runat="Server" onselectedindexchanged="dropFieldSelectedIndexChanged">
+		<asp:DropDownList id="dropField" AutoPostBack="True" Runat="Server" CssClass="form-control" onselectedindexchanged="dropFieldSelectedIndexChanged">
 			<asp:ListItem Text="-- Select Field --" value="0" />
 			<asp:ListItem Text="Issue Id" value="IssueId" />
 			<asp:ListItem Text="Title" value="IssueTitle" />
@@ -36,7 +36,7 @@
 		</asp:DropDownList>
 	</td>
 	<td>
-		<asp:DropDownList id="dropComparisonOperator" Runat="Server">
+		<asp:DropDownList id="dropComparisonOperator" CssClass="form-control" Runat="Server">
 			<asp:ListItem Text="EQUALS" Value="=" />
             <asp:ListItem Text="NOT EQUALS" Value="<>" />
 			<asp:ListItem Text="LIKE" Value="LIKE" />
@@ -47,8 +47,8 @@
 		</asp:DropDownList>
 	</td>
 	<td>
-		<asp:DropDownList id="dropValue" Runat="Server" />
-		<asp:TextBox id="txtValue" Visible="false" Runat="Server" />
+		<asp:DropDownList id="dropValue" CssClass="form-control" Runat="Server" />
+		<asp:TextBox id="txtValue" CssClass="form-control" Visible="false" Runat="Server" />
 	    <bn:PickDate ID="DateValue" runat="server" Visible="false" />
 	</td>
 </tr>

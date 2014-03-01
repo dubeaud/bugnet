@@ -20,9 +20,10 @@ namespace BugNET.UserInterfaceLayer.WebControls
 
             if (projectId > Globals.NEW_ID)
             {
-                var oItemProject = new SuckerMenuItem(string.Format("~/Projects/ProjectSummary.aspx?pid={0}", projectId), string.Concat(Resources.SharedResources.Project, " »"), this);
+                var oItemProject = new SuckerMenuItem("#", Resources.SharedResources.Project, this, "dropdown");
 
                 Items.Insert(1, oItemProject);
+                oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/ProjectSummary.aspx?pid={0}", projectId), "Project Summary", this));
                 oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/Roadmap.aspx?pid={0}", projectId),Resources.SharedResources.Roadmap,this));
                 oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/ChangeLog.aspx?pid={0}", projectId), Resources.SharedResources.ChangeLog, this));
 
@@ -52,7 +53,7 @@ namespace BugNET.UserInterfaceLayer.WebControls
 
             if (!UserManager.IsSuperUser()) return;
 
-            var oItemAdmin = new SuckerMenuItem("~/Administration/Admin.aspx", string.Concat(Resources.SharedResources.Admin, " »"), this, "admin");
+            var oItemAdmin = new SuckerMenuItem("~/Administration/Admin.aspx", Resources.SharedResources.Admin, this, "admin");
             Items.Add(oItemAdmin);
             oItemAdmin.Items.Add(new SuckerMenuItem("~/Administration/Projects/ProjectList.aspx", Resources.SharedResources.Projects,this));
             oItemAdmin.Items.Add(new SuckerMenuItem("~/Administration/Users/UserList.aspx", Resources.SharedResources.UserAccounts, this));

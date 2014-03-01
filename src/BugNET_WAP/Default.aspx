@@ -32,8 +32,13 @@
                 <asp:Repeater ID="rptProject" runat="Server">
                     <ItemTemplate>
                         <div class="row">
-                            <div class="col-md-10">
-                                <h3>
+                            <div class="col-md-1">
+                                  <a href="Projects/ProjectSummary.aspx?pid=<%# ((Project)Container.DataItem).Id %>">
+                                    <asp:Image CssClass="img-rounded thumbnail" runat="server" AlternateText="<%# ((Project)Container.DataItem).Name %>" ID="ProjectImage" />
+                                </a>
+                            </div>
+                            <div class="col-md-11">
+                                <h3 style="margin-top:10px;">
                                     <a href="Projects/ProjectSummary.aspx?pid=<%# ((Project)Container.DataItem).Id %>">
                                         <%#((Project)Container.DataItem).Name%>
                                         <span>(<%#((Project)Container.DataItem).Code%>)</span>
@@ -90,26 +95,21 @@
                                     </li>
                                 </ul>
                                 </h3>
+                                <asp:Localize runat="server" ID="Localize2" Text="Managed By" meta:resourcekey="ManagedBy" />
+                                            <%#((Project)Container.DataItem).ManagerDisplayName%>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-2 text-center">
-                                <a href="Projects/ProjectSummary.aspx?pid=<%# ((Project)Container.DataItem).Id %>">
-                                    <asp:Image CssClass="img-rounded thumbnail" runat="server" AlternateText="<%# ((Project)Container.DataItem).Name %>" ID="ProjectImage" />
-                                </a>
-                            </div>
-                            <div class="col-md-8 col-sm-8">
+                            <div class="col-md-offset-1 col-md-11 col-sm-11">
                                 <p>
                                     <%#Server.HtmlDecode(((Project)Container.DataItem).Description)%>
                                 </p>
                             </div>
                         </div>
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-offset-1 col-md-11">
                                     <p>
-                                        <span class="glyphicon glyphicon-user"></span> <asp:Localize runat="server" ID="Localize2" Text="Managed By" meta:resourcekey="ManagedBy" />
-                                            <%#((Project)Container.DataItem).ManagerDisplayName%>
-                                        | <asp:Label ID="OpenIssues" runat="Server" /> | <asp:Label ID="NextMilestoneDue" runat="Server" />
+                                        <asp:Label ID="OpenIssues" runat="Server" /> | <asp:Label ID="NextMilestoneDue" runat="Server" />
                                         | <asp:Label ID="MilestoneComplete" CssClass="progressBar" runat="Server" />     
                                     </p>
                                 </div>

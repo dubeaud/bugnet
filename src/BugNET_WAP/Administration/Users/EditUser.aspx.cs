@@ -79,12 +79,12 @@ namespace BugNET.Administration.Users
                 var htmlControl = AdminMenu.Items[adminMenuItem.Id].FindControl("ListItem") as HtmlGenericControl;
 
                 if (htmlControl != null) 
-                    htmlControl.Attributes.Add("class", "off");
+                    htmlControl.Attributes.Add("class", "");
 
                 if (selectedMenuItem != adminMenuItem.Id) continue;
 
                 if (htmlControl != null)
-                    htmlControl.Attributes.Add("class", "on");
+                    htmlControl.Attributes.Add("class", "active");
 
                 control.Visible = true;
                 control.UserId = UserId;
@@ -154,11 +154,6 @@ namespace BugNET.Administration.Users
 
             var listItem = e.Item.FindControl("ListItem") as HtmlGenericControl;
             var menuButton = e.Item.FindControl("MenuButton") as LinkButton;
-
-            if (menuItem == null) return;
-
-            if (listItem != null)
-                listItem.Attributes.Add("style", string.Format("background: #C4EFA1 url(../../images/{0}) no-repeat 5px 4px;", menuItem.ImageUrl));
 
             if (menuButton != null)
             {

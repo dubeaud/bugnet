@@ -58,15 +58,6 @@ namespace BugNET.Administration.Users.UserControls {
         protected global::BugNET.UserControls.Message ActionMessage;
         
         /// <summary>
-        /// imgUnauthorizeAccount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton imgUnauthorizeAccount;
-        
-        /// <summary>
         /// cmdUnauthorizeAccount control.
         /// </summary>
         /// <remarks>
@@ -76,15 +67,6 @@ namespace BugNET.Administration.Users.UserControls {
         protected global::System.Web.UI.WebControls.LinkButton cmdUnauthorizeAccount;
         
         /// <summary>
-        /// imgDeleteUser control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton imgDeleteUser;
-        
-        /// <summary>
         /// cmdDeleteUser control.
         /// </summary>
         /// <remarks>
@@ -92,15 +74,6 @@ namespace BugNET.Administration.Users.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton cmdDeleteUser;
-        
-        /// <summary>
-        /// ImageButton3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton ImageButton3;
         
         /// <summary>
         /// ReturnLink control.
