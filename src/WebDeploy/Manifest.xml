@@ -1,0 +1,6 @@
+<MSDeploy.iisApp>
+	<iisapp path="BugNET"  />
+	<setAcl path="BugNET/Uploads" setAclAccess="Write" />
+	<dbfullsql path="createlogin.sql" transacted="false" />
+	<dbfullsql path="createuser.sql" transacted="false" />
+</MSDeploy.iisApp>
