@@ -1,4 +1,7 @@
-﻿using BugNET.UserInterfaceLayer.WebControls;
+﻿using BugNET.BLL;
+using BugNET.Common;
+using BugNET.UserInterfaceLayer;
+using BugNET.UserInterfaceLayer.WebControls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,6 +73,16 @@ namespace BugNET
         {
             var oHelper = new SuckerFishMenuHelper(ProjectId);
             litMenu.Text = oHelper.GetHtml();
+
+            if (HostSettingManager.Get(HostSettingNames.EnableGravatar, true))
+            {
+                var user = Membership.GetUser(Security.GetUserName());
+                if (user != null)
+                {
+                    Image img =  (System.Web.UI.WebControls.Image)LoginView1.FindControl("Avatar");
+                    img.ImageUrl = PresentationUtils.GetGravatarImageUrl(user.Email, 32);
+                }
+            }
         }
 
         /// <summary>

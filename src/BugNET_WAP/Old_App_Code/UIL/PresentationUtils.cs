@@ -2,6 +2,9 @@
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using BugNET.Common;
+using System.Diagnostics;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace BugNET.UserInterfaceLayer
 {
@@ -102,6 +105,34 @@ namespace BugNET.UserInterfaceLayer
                     items.Add(int.Parse(item.Value));
             }
             return items;
+        }
+
+        /// <summary>
+        /// Gets the gravatar image URL.
+        /// </summary>
+        /// <param name="email">The email id.</param>
+        /// <param name="imgSize">Size of the img.</param>
+        /// <returns></returns>
+        public static string GetGravatarImageUrl(string email, int imgSize)
+        {
+            // Convert emailID to lower-case
+            email = email.Trim().ToLower();
+
+            var emailBytes = Encoding.ASCII.GetBytes(email);
+            var hashBytes = new MD5CryptoServiceProvider().ComputeHash(emailBytes);
+
+            Debug.Assert(hashBytes.Length == 16);
+
+            var hash = new StringBuilder();
+            foreach (var b in hashBytes)
+            {
+                hash.Append(b.ToString("x2"));
+            }
+
+            // build Gravatar Image URL
+            var imageUrl = string.Format("https://www.gravatar.com/avatar/{0}?s={1}&d=identicon&r=g", hash, imgSize);
+
+            return imageUrl;
         }
     }
 }

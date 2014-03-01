@@ -53,7 +53,7 @@ namespace BugNET.UserInterfaceLayer.WebControls
 
             if (!UserManager.IsSuperUser()) return;
 
-            var oItemAdmin = new SuckerMenuItem("~/Administration/Admin.aspx", Resources.SharedResources.Admin, this, "admin");
+            var oItemAdmin = new SuckerMenuItem("#", Resources.SharedResources.Admin, this, "navbar-admin");
             Items.Add(oItemAdmin);
             oItemAdmin.Items.Add(new SuckerMenuItem("~/Administration/Projects/ProjectList.aspx", Resources.SharedResources.Projects,this));
             oItemAdmin.Items.Add(new SuckerMenuItem("~/Administration/Users/UserList.aspx", Resources.SharedResources.UserAccounts, this));

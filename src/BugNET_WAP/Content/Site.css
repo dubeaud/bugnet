@@ -178,16 +178,24 @@ ul.permissions
 	list-style: none;
 	float: left;
 }
-ul.permissions li
-{
-	display: inline;
-	float: left;
-	width: 200px;
-}
-
-    ul.permissions > li > input[type="checkbox"] {
-         margin: 6px 10px 7px 0px;
+    ul.permissions li
+    {
+	    display: inline;
+	    float: left;
+	    width: 200px;
     }
+
+        ul.permissions > li > input[type="checkbox"] {
+             margin: 6px 10px 7px 0px;
+        }
+
+/*.navbar-admin{
+    background-color:#5bc0de;
+    
+}
+    .navbar-admin > a {
+        color:white;
+    }*/
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {

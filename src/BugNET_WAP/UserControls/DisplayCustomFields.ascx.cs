@@ -157,7 +157,8 @@ namespace BugNET.UserControls
                             ID = FIELD_VALUE_NAME,
                             DataSource = CustomFieldSelectionManager.GetByCustomFieldId(currentField.Id),
                             DataTextField = "Name",
-                            DataValueField = "Value"
+                            DataValueField = "Value",
+                            CssClass = "form-control"
                         };
 
                     ddl.DataBind();
@@ -212,8 +213,10 @@ namespace BugNET.UserControls
                     break;
                 case CustomFieldType.Text:
 
-                    var fieldValue = new TextBox {ID = FIELD_VALUE_NAME, Text = currentField.Value};
+                    var fieldValue = new TextBox {ID = FIELD_VALUE_NAME, Text = currentField.Value,
+                        CssClass= "form-control"};
                     fieldValue.Attributes.Add("bn-data-type", "text");
+
 
                     ph.Controls.Add(fieldValue);
 
@@ -256,7 +259,8 @@ namespace BugNET.UserControls
                             ID = FIELD_VALUE_NAME,
                             DataSource = UserManager.GetUsersByProjectId(currentField.ProjectId),
                             DataTextField = "DisplayName",
-                            DataValueField = "UserName"
+                            DataValueField = "UserName",
+                            CssClass = "form-control"
                         };
 
                     ddl.DataBind();
@@ -329,7 +333,8 @@ namespace BugNET.UserControls
                         ID = FIELD_VALUE_NAME,
                         DataSource = CustomFieldSelectionManager.GetByCustomFieldId(currentField.Id),
                         DataTextField = "Name",
-                        DataValueField = "Value"
+                        DataValueField = "Value",
+                        CssClass= "form-control"
                     };
 
                     ddl.DataBind();
@@ -384,7 +389,8 @@ namespace BugNET.UserControls
                     break;
                 case CustomFieldType.Text:
 
-                    var fieldValue = new TextBox { ID = FIELD_VALUE_NAME, Text = currentField.Value };
+                    var fieldValue = new TextBox { ID = FIELD_VALUE_NAME, Text = currentField.Value,
+                        CssClass= "form-control" };
                     fieldValue.Attributes.Add("bn-data-type", "text");
 
                     ph.Controls.Add(fieldValue);
@@ -430,7 +436,8 @@ namespace BugNET.UserControls
                         ID = FIELD_VALUE_NAME,
                         DataSource = UserManager.GetUsersByProjectId(currentField.ProjectId),
                         DataTextField = "DisplayName",
-                        DataValueField = "UserName"
+                        DataValueField = "UserName",
+                        CssClass = "form-control"
                     };
 
                     ddl.DataBind();

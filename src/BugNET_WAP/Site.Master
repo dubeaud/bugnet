@@ -54,7 +54,7 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <asp:Literal ID="litMenu" Visible="true" runat="server"></asp:Literal>
-                    <asp:LoginView runat="server" ViewStateMode="Disabled">
+                    <asp:LoginView runat="server" ID="LoginView1" ViewStateMode="Disabled">
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">
                                 <li><a runat="server" href="~/Account/Register">Register</a></li>
@@ -66,7 +66,7 @@
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding: 10px 15px 4px">
                                         <div style="display: inline-block;">
-                                            <img data-src="holder.js/40x40" alt="32x32" style="width:32px;height:32px;" src="">
+                                            <asp:Image ID="Avatar" Height="32px" Width="32px" ImageUrl="~/images/noprofile.png" runat="server" />
                                         </div>
                                         <asp:LoginName ID="LoginName" runat="server" CssClass="username" />
                                         <b class="caret"></b>

@@ -122,7 +122,7 @@ namespace BugNET.Issues.UserControls
             if (HostSettingManager.Get(HostSettingNames.EnableGravatar, true))
             {
                 var user = Membership.GetUser(currentComment.CreatorUserName);
-                if (user != null) avatar.Attributes.Add("src", GetGravatarImageUrl(user.Email, 35));
+                if (user != null) avatar.Attributes.Add("src", GetGravatarImageUrl(user.Email, 64));
             }
 
             var hlPermaLink = (HyperLink)e.Item.FindControl("hlPermalink");
