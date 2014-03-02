@@ -5,9 +5,10 @@
     <hr />
     <asp:ListView runat="server" ID="providersList" ViewStateMode="Disabled">
         <ItemTemplate>
-            <button type="submit" class="btn btn-default" name="provider" value="<%# HttpUtility.HtmlAttributeEncode(Item<ProviderDetails>().ProviderName) %>"
-                title="Log in using your <%# HttpUtility.HtmlAttributeEncode(Item<ProviderDetails>().ProviderDisplayName) %> account.">
-                <%# HttpUtility.HtmlEncode(Item<ProviderDetails>().ProviderDisplayName) %>
+            <button type="submit" class="btn btn-default btn-signup" name="provider" value="<%# HttpUtility.HtmlAttributeEncode(Item<ProviderDetails>().ProviderName) %>"
+                id="<%# HttpUtility.HtmlAttributeEncode(Item<ProviderDetails>().ProviderName) %>-button" title="Log in using your <%# HttpUtility.HtmlAttributeEncode(Item<ProviderDetails>().ProviderDisplayName) %> account.">
+                <i></i>
+                <span>Sign in with <%# HttpUtility.HtmlEncode(Item<ProviderDetails>().ProviderDisplayName) %></span>
             </button>
         </ItemTemplate>
     </asp:ListView>

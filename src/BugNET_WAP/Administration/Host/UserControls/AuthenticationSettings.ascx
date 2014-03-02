@@ -65,6 +65,65 @@
                     </asp:RadioButtonList>
                 </div>
             </div>
+            <h3>OAuth / OpenID Login</h3>
+
+            <h4>Facebook</h4>
+            <div class="form-group">
+                <asp:Label ID="label13" CssClass="col-md-2 control-label" runat="server" AssociatedControlID="FacebookAuthentication" Text="<%$ Resources:Enable %>" />
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        <asp:CheckBox ID="FacebookAuthentication" runat="server"></asp:CheckBox>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <asp:Label ID="label3" CssClass="col-md-2 control-label" runat="server" AssociatedControlID="FacebookAppId"
+                    Text="<%$ Resources:FacebookAppId %>" />
+                 <div class="col-md-10">
+                    <asp:TextBox ID="FacebookAppId" CssClass="form-control" runat="Server" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <asp:Label ID="label6" CssClass="col-md-2 control-label" runat="server" AssociatedControlID="FacebookAppSecret"
+                    Text="<%$ Resources:FacebookAppSecret %>" />
+                 <div class="col-md-10">
+                    <asp:TextBox ID="FacebookAppSecret" CssClass="form-control" TextMode="Password" runat="Server" />
+                </div>
+            </div>
+            <h4>Twitter</h4>
+            <div class="form-group">
+                <asp:Label ID="label9" CssClass="col-md-2 control-label" runat="server" AssociatedControlID="TwitterAuthentication" Text="<%$ Resources:Enable %>" />
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        <asp:CheckBox ID="TwitterAuthentication" runat="server"></asp:CheckBox>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <asp:Label ID="label10" CssClass="col-md-2 control-label" runat="server" AssociatedControlID="TwitterConsumerKey"
+                    Text="<%$ Resources:TwitterConsumerKey %>" />
+                 <div class="col-md-10">
+                    <asp:TextBox ID="TwitterConsumerKey" CssClass="form-control" runat="Server" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <asp:Label ID="label11" CssClass="col-md-2 control-label" runat="server" AssociatedControlID="TwitterConsumerSecret"
+                    Text="<%$ Resources:TwitterConsumerSecret %>" />
+                 <div class="col-md-10">
+                    <asp:TextBox ID="TwitterConsumerSecret" CssClass="form-control" TextMode="Password" runat="Server" />
+                </div>
+            </div>
+            <h4>Google</h4>
+            <div class="form-group">
+                <asp:Label ID="label12" CssClass="col-md-2 control-label" runat="server" AssociatedControlID="GoogleAuthentication" Text="<%$ Resources:Enable %>" />
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        <asp:CheckBox ID="GoogleAuthentication" runat="server"></asp:CheckBox>
+                    </div>
+                </div>
+            </div>
         </div>
     </ContentTemplate>
 </asp:UpdatePanel>

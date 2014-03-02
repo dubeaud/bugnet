@@ -197,6 +197,73 @@ ul.permissions
         color:white;
     }*/
 
+.btn-signup{
+    border-radius:0;
+    font-weight: bold;
+    text-align:left;
+    margin: 0 0 10px;
+    padding-left:0px;
+    width: 250px;
+    border:0;
+    box-shadow: none;
+    text-shadow: none;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: left;
+}
+    .btn-signup i {
+        height: 24px;
+        width: 45px;
+        display: inline-block;
+        vertical-align: text-top;
+        margin-right: 10px;
+        border-right: 1px solid rgba(0,0,0,0.1);
+        padding-right: 35px;
+        box-shadow: 1px 0 0 rgba(255,255,255,0.2);
+    }
+    .btn-signup span{
+        padding-top:5px;
+        display:inline-block;
+        vertical-align:middle;
+    }
+
+
+#twitter-button i{
+    background: url('../images/icon_twitter.png') center center no-repeat;
+}
+#facebook-button i{
+    background: url('../images/icon_facebook.png') center center no-repeat;
+}
+#google-button i{
+    background: url('../images/google_btn_red.png') center center no-repeat;
+}
+#steam-button i{
+    background: url('images/icon_steam.png') center center no-repeat;
+    background-size:21px;
+}
+#twitter-button
+{
+    background: #0ba8d6;
+    color: #fff;
+}
+#steam-button
+{
+    background: #78A83B;
+    color: #fff;
+    
+}
+#facebook-button
+{
+    background: #415d9c;
+    color: #fff; 
+}
+#google-button
+{
+    /*background: #5682c2;*/
+    background:#d14836;
+    color: #fff;  
+}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
     .jumbotron {

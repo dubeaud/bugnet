@@ -34,25 +34,18 @@
 
 
     <bn:Message ID="Message1" runat="server" Visible="False" />
-    <div class="form-group">
-     <div class="col-md-offset-3 col-md-7">
-       
-        <asp:LinkButton ID="SaveButton" runat="server" CssClass="btn btn-primary" OnClick="SaveButton_Click" Text="<%$ Resources:SharedResources, Save %>" />
-
-            
-        <asp:LinkButton ID="DeleteButton" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="DeleteButton_Click" Text="<%$ Resources:DeleteProject %>" />
-
-         
-        <asp:LinkButton ID="DisableButton" runat="server" CssClass="btn btn-default" CausesValidation="False" OnClick="DisableButton_Click" Text="<%$ Resources:DisableProject %>" />
-
-        
-        <asp:LinkButton ID="RestoreButton" runat="server" CssClass="btn btn-default" CausesValidation="False" OnClick="RestoreButton_Click" Text="<%$ Resources:RestoreProject %>" />
-
-         
-        <a href="#" id="linkCloneProject" data-selector="CloneProject" data-toggle="modal" data-target="#cloneProjectModal" class="btn btn-default" runat="server">
-        <asp:Literal ID="Literal1" runat="Server" Text="<%$ Resources:SharedResources, CloneProject %>" /></a>
-    </div>
+    <div class="row">
+        <div class="col-md-offset-3 col-md-6">
+            <asp:LinkButton ID="SaveButton" runat="server" CssClass="btn btn-primary" OnClick="SaveButton_Click" Text="<%$ Resources:SharedResources, Save %>" />
+            <asp:LinkButton ID="RestoreButton" runat="server" CssClass="btn btn-default" CausesValidation="False" OnClick="RestoreButton_Click" Text="<%$ Resources:RestoreProject %>" />
+            <a href="#" id="linkCloneProject" data-selector="CloneProject" data-toggle="modal" data-target="#cloneProjectModal" class="btn btn-default" runat="server">
+                <asp:Literal ID="Literal1" runat="Server" Text="<%$ Resources:SharedResources, CloneProject %>" /></a>
         </div>
+        <div class="col-md-3 text-right">
+            <asp:LinkButton ID="DeleteButton" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="DeleteButton_Click" Text="<%$ Resources:DeleteProject %>" />
+            <asp:LinkButton ID="DisableButton" runat="server" CssClass="btn btn-default btn-warning" CausesValidation="False" OnClick="DisableButton_Click" Text="<%$ Resources:DisableProject %>" />
+        </div>
+    </div>
     <div class="modal fade" id="cloneProjectModal" tabindex="-1" role="dialog" aria-labelledby="cloneProjectModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
