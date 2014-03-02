@@ -1321,6 +1321,9 @@
     <Content Include="Images\execute_sql.png" />
     <Content Include="Images\fade.png" />
     <Content Include="Images\feed.gif" />
+    <Content Include="Images\google_btn_red.png" />
+    <Content Include="Images\icon_facebook.png" />
+    <Content Include="Images\icon_twitter.png" />
     <Content Include="Images\information.gif" />
     <Content Include="Images\internet-mail.png" />
     <Content Include="Images\IssueType\future-projects.png" />
