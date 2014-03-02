@@ -85,8 +85,7 @@ namespace BugNET.Issues
 
                 if (!_currentProject.AllowIssueVoting)
                 { 
-                    // TODO: Fix this
-                   // VoteBox.Visible = false;
+                    VoteBox.Visible = false;
                 }
           
                 //set the referrer url

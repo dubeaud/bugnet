@@ -76,6 +76,15 @@ namespace BugNET.Issues {
         protected global::System.Web.UI.WebControls.LinkButton lnkDelete;
         
         /// <summary>
+        /// VoteBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl VoteBox;
+        
+        /// <summary>
         /// IssueVoteCount control.
         /// </summary>
         /// <remarks>

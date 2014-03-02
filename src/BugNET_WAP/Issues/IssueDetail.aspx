@@ -31,7 +31,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-1">
+                <div class="col-md-1" id="VoteBox" runat="server">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <div class="text-center" style="padding: 0px;">
