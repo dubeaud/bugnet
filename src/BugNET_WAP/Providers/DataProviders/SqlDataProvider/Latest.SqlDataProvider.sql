@@ -8,4 +8,6 @@ INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('MicrosoftAuthentication', 'False')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('MicrosoftClientId', '')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('MicrosoftClientSecret', '')
+
+DELETE FROM [dbo].[BugNet_HostSettings] WHERE SettingName = 'OpenIdAuthentication'
 GO

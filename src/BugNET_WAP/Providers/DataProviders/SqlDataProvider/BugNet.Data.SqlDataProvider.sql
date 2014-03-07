@@ -71,7 +71,6 @@ INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'UserAccountSource', N'None')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'Version', N'')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'WelcomeMessage', N'Welcome to your new BugNET installation! Log in as <br/><br/> Username: admin <br/>Password: password')
-INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES (N'OpenIdAuthentication', N'False')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('SMTPEmailTemplateRoot', '~/templates')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('SMTPEMailFormat','2')
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('SMTPDomain','')
