@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-	<!-- 
+  <!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,155 +59,155 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-		<xsd:element name="root" msdata:IsDataSet="true">
-			<xsd:complexType>
-				<xsd:choice maxOccurs="unbounded">
-					<xsd:element name="metadata">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" />
-							</xsd:sequence>
-							<xsd:attribute name="name" use="required" type="xsd:string" />
-							<xsd:attribute name="type" type="xsd:string" />
-							<xsd:attribute name="mimetype" type="xsd:string" />
-							<xsd:attribute ref="xml:space" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="assembly">
-						<xsd:complexType>
-							<xsd:attribute name="alias" type="xsd:string" />
-							<xsd:attribute name="name" type="xsd:string" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="data">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-							<xsd:attribute ref="xml:space" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="resheader">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" />
-						</xsd:complexType>
-					</xsd:element>
-				</xsd:choice>
-			</xsd:complexType>
-		</xsd:element>
-	</xsd:schema>
-	<resheader name="resmimetype">
-		<value>text/microsoft-resx</value>
-	</resheader>
-	<resheader name="version">
-		<value>2.0</value>
-	</resheader>
-	<resheader name="reader">
-		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<resheader name="writer">
-		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<data name="AllIssuesDescription" xml:space="preserve">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AllIssuesDescription" xml:space="preserve">
     <value>O distributie a tuturor problemelor pentru {0}</value>
   </data>
-	<data name="AllIssuesTitle" xml:space="preserve">
+  <data name="AllIssuesTitle" xml:space="preserve">
     <value>Toate problemele pentru {0}</value>
   </data>
-	<data name="AssignedIssuesDescription" xml:space="preserve">
+  <data name="AssignedIssuesDescription" xml:space="preserve">
     <value>O distributie a tuturor problemelor atribuite pentru {0}</value>
   </data>
-	<data name="AssignedIssuesTitle" xml:space="preserve">
+  <data name="AssignedIssuesTitle" xml:space="preserve">
     <value>{0} - Probleme</value>
   </data>
-	<data name="AssigneeDescription" xml:space="preserve">
+  <data name="AssigneeDescription" xml:space="preserve">
     <value>O distributie a tuturor problemelor pentru {0} grupate dupa atribuire</value>
   </data>
-	<data name="AssigneeTitle" xml:space="preserve">
+  <data name="AssigneeTitle" xml:space="preserve">
     <value>{0} - Probleme deschise dupa atribuire</value>
   </data>
-	<data name="CreatedIssuesDescription" xml:space="preserve">
+  <data name="CreatedIssuesDescription" xml:space="preserve">
     <value>O distributie a problemelor create pentru {0}</value>
   </data>
-	<data name="CreatedIssuesTitle" xml:space="preserve">
+  <data name="CreatedIssuesTitle" xml:space="preserve">
     <value>{0} - Probleme</value>
   </data>
-	<data name="FilteredIssuesDescription" xml:space="preserve">
+  <data name="FilteredIssuesDescription" xml:space="preserve">
     <value>O distributie a problemelor filtrate pentru {0}</value>
   </data>
-	<data name="FilteredIssuesTitle" xml:space="preserve">
+  <data name="FilteredIssuesTitle" xml:space="preserve">
     <value>{0} - Probleme</value>
   </data>
-	<data name="IssuesByCategoryDescription" xml:space="preserve">
+  <data name="IssuesByCategoryDescription" xml:space="preserve">
     <value>O distributie a problemelor pentru {0} grupate dupa categorie</value>
   </data>
-	<data name="IssuesByCategoryTitle" xml:space="preserve">
+  <data name="IssuesByCategoryTitle" xml:space="preserve">
     <value>{0} Probleme dupa categorie</value>
   </data>
-	<data name="IssuesByIssueTypeDescription" xml:space="preserve">
+  <data name="IssuesByIssueTypeDescription" xml:space="preserve">
     <value>O distributie a problemelor pentru {0} grupate dupa tip</value>
   </data>
-	<data name="IssuesByIssueTypeTitle" xml:space="preserve">
+  <data name="IssuesByIssueTypeTitle" xml:space="preserve">
     <value>{0}  Probleme dupa tip</value>
   </data>
-	<data name="IssuesByMilestoneDescription" xml:space="preserve">
+  <data name="IssuesByMilestoneDescription" xml:space="preserve">
     <value>O distributie a problemelor pentru {0} grupate dupa reper</value>
   </data>
-	<data name="IssuesByMilestoneTitle" xml:space="preserve">
+  <data name="IssuesByMilestoneTitle" xml:space="preserve">
     <value>{0} Probleme dupa reper</value>
   </data>
-	<data name="IssuesByPriorityDescription" xml:space="preserve">
+  <data name="IssuesByPriorityDescription" xml:space="preserve">
     <value>O distributie a problemelor pentru {0} grupate dupa prioritate</value>
   </data>
-	<data name="IssuesByPriorityTitle" xml:space="preserve">
+  <data name="IssuesByPriorityTitle" xml:space="preserve">
     <value>{0} Probleme dupa prioritate</value>
   </data>
-	<data name="IssuesByStatusDescription" xml:space="preserve">
+  <data name="IssuesByStatusDescription" xml:space="preserve">
     <value>O distributie a problemelor pentru {0} grupate dupa stare</value>
   </data>
-	<data name="IssuesByStatusTitle" xml:space="preserve">
+  <data name="IssuesByStatusTitle" xml:space="preserve">
     <value>{0} Probleme dupa stare</value>
   </data>
-	<data name="OpenIssues" xml:space="preserve">
-    <value> Probleme deschise</value>
+  <data name="OpenIssues" xml:space="preserve">
+    <value>Probleme deschise: {0}</value>
   </data>
-	<data name="OwnedIssuesDescription" xml:space="preserve">
+  <data name="OwnedIssuesDescription" xml:space="preserve">
     <value>O distributie a problemelor detinute pentru {0}</value>
   </data>
-	<data name="OwnedIssuesTitle" xml:space="preserve">
+  <data name="OwnedIssuesTitle" xml:space="preserve">
     <value>{0} - Probleme</value>
   </data>
-	<data name="RelevantIssuesDescription" xml:space="preserve">
+  <data name="RelevantIssuesDescription" xml:space="preserve">
     <value>O distributie a problemelor relevnate  pentru {0}</value>
   </data>
-	<data name="RelevantIssuesTitle" xml:space="preserve">
+  <data name="RelevantIssuesTitle" xml:space="preserve">
     <value>{0} - Probleme</value>
   </data>
-	<data name="SavedQueryDescription" xml:space="preserve">
+  <data name="SavedQueryDescription" xml:space="preserve">
     <value>O distributie a interogarilor salvate pentru {0}</value>
   </data>
-	<data name="SavedQueryTitle" xml:space="preserve">
+  <data name="SavedQueryTitle" xml:space="preserve">
     <value>{0} - Probleme</value>
   </data>
-	<data name="OpenIssuesTitle" xml:space="preserve">
+  <data name="OpenIssuesTitle" xml:space="preserve">
     <value>{0} probleme deschise</value>
   </data>
-	<data name="OpenIssuesDescription" xml:space="preserve">
+  <data name="OpenIssuesDescription" xml:space="preserve">
     <value>O distributie a problemelor deschise pentru {0}</value>
   </data>
-	<data name="MonitoredIssuesDescription" xml:space="preserve">
+  <data name="MonitoredIssuesDescription" xml:space="preserve">
     <value>O distributie a problemelor monitorizate pentru {0}</value>
   </data>
-	<data name="MonitoredIssuesTitle" xml:space="preserve">
+  <data name="MonitoredIssuesTitle" xml:space="preserve">
     <value>{0} - Probleme</value>
   </data>
 </root>

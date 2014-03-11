@@ -178,7 +178,7 @@
     <value>{0} issues by status</value>
   </data>
   <data name="OpenIssues" xml:space="preserve">
-    <value> Open Issues</value>
+    <value>Open Issues: {0}</value>
   </data>
   <data name="OwnedIssuesDescription" xml:space="preserve">
     <value>A syndication of owned issues for {0}</value>

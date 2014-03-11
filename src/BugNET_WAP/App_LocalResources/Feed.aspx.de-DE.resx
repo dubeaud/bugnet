@@ -178,7 +178,7 @@
     <value>{0} Aufgaben nach Status</value>
   </data>
   <data name="OpenIssues" xml:space="preserve">
-    <value> Offene Aufgaben</value>
+    <value>Offene Aufgaben: {0}</value>
   </data>
   <data name="OwnedIssuesDescription" xml:space="preserve">
     <value>Eine Übersicht aller besessenen Aufgaben für {0}</value>

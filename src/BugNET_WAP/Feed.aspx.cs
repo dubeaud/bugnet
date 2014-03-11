@@ -268,7 +268,7 @@ namespace BugNET
         /// </summary>
         /// <param name="issueCountList">The issue count list.</param>
         /// <returns></returns>
-        private IEnumerable<SyndicationItem> CreateSyndicationItemsFromIssueCountList(IEnumerable<IssueCount> issueCountList)
+        private IEnumerable<SyndicationItem> CreateSyndicationItemsFromIssueCountList(IEnumerable<IssueCount> issueCountList, string key)
         {
             var feedItems = new List<SyndicationItem>();
 
@@ -282,11 +282,12 @@ namespace BugNET
                 item.Links.Add(
                     SyndicationLink.CreateAlternateLink(
                         new Uri(
-                            GetFullyQualifiedUrl(string.Format("~/Issues/IssueList.aspx?pid={0}&s=0&m={1}", _projectId,
+                            GetFullyQualifiedUrl(string.Format("~/Issues/IssueList.aspx?pid={0}&{1}={2}", _projectId, key,
                                                                issueCount.Id)))));
                 item.Summary =
-                    SyndicationContent.CreatePlaintextContent(string.Concat(issueCount.Count.ToString(), " Open Issues"));
-                //item.Categories.Add(new SyndicationCategory(IssueManager.CategoryName));
+                    SyndicationContent.CreatePlaintextContent(
+                        string.Format(GetLocalResourceObject("OpenIssues").ToString(), issueCount.Count));
+
                 item.PublishDate = DateTime.Now;
                 // Add the item to the feed
                 feedItems.Add(item);
@@ -314,8 +315,8 @@ namespace BugNET
         /// </summary>
         private void MilestoneFeed(ref SyndicationFeed feed)
         {
-            var lsVersion = IssueManager.GetMilestoneCountByProjectId(_projectId);
-            var feedItems = CreateSyndicationItemsFromIssueCountList(lsVersion);
+            var al = IssueManager.GetMilestoneCountByProjectId(_projectId);
+            var feedItems = CreateSyndicationItemsFromIssueCountList(al, "m");
             var p = ProjectManager.GetById(_projectId);
             feed.Title =
                 SyndicationContent.CreatePlaintextContent(
@@ -364,12 +365,11 @@ namespace BugNET
                 item.Links.Add(
                     SyndicationLink.CreateAlternateLink(
                         new Uri(
-                            GetFullyQualifiedUrl(string.Format("~/Issues/IssueList.aspx?pid={0}&s=0&c={1}", _projectId,
+                            GetFullyQualifiedUrl(string.Format("~/Issues/IssueList.aspx?pid={0}&c={1}", _projectId,
                                                                c.Id)))));
                 item.Summary =
                     SyndicationContent.CreatePlaintextContent(
-                        string.Concat(IssueManager.GetCountByProjectAndCategoryId(_projectId, c.Id).ToString(),
-                                      GetLocalResourceObject("OpenIssues").ToString()));
+                        string.Format(GetLocalResourceObject("OpenIssues").ToString(), IssueManager.GetCountByProjectAndCategoryId(_projectId, c.Id)));
                 item.PublishDate = DateTime.Now;
                 // Add the item to the feed
                 feedItems.Add(item);
@@ -391,7 +391,7 @@ namespace BugNET
             var al = IssueManager.GetStatusCountByProjectId(_projectId);
             var p = ProjectManager.GetById(_projectId);
 
-            var feedItems = CreateSyndicationItemsFromIssueCountList(al);
+            var feedItems = CreateSyndicationItemsFromIssueCountList(al, "s");
             feed.Title =
                 SyndicationContent.CreatePlaintextContent(
                     string.Format(GetLocalResourceObject("IssuesByStatusTitle").ToString(), p.Name));
@@ -410,7 +410,7 @@ namespace BugNET
             var al = IssueManager.GetPriorityCountByProjectId(_projectId);
             var p = ProjectManager.GetById(_projectId);
 
-            var feedItems = CreateSyndicationItemsFromIssueCountList(al);
+            var feedItems = CreateSyndicationItemsFromIssueCountList(al, "p");
             feed.Title =
                 SyndicationContent.CreatePlaintextContent(
                     string.Format(GetLocalResourceObject("IssuesByPriorityTitle").ToString(), p.Name));
@@ -429,7 +429,7 @@ namespace BugNET
             var al = IssueManager.GetTypeCountByProjectId(_projectId);
             var p = ProjectManager.GetById(_projectId);
 
-            var feedItems = CreateSyndicationItemsFromIssueCountList(al);
+            var feedItems = CreateSyndicationItemsFromIssueCountList(al, "t");
             feed.Title =
                 SyndicationContent.CreatePlaintextContent(
                     string.Format(GetLocalResourceObject("IssuesByIssueTypeTitle").ToString(), p.Name));
@@ -679,7 +679,7 @@ namespace BugNET
         private void AssigneeFeed(ref SyndicationFeed feed)
         {
             var al = IssueManager.GetUserCountByProjectId(_projectId);
-            var feedItems = CreateSyndicationItemsFromIssueCountList(al);
+            var feedItems = CreateSyndicationItemsFromIssueCountList(al, "u");
             var p = ProjectManager.GetById(_projectId);
 
             feed.Title =
