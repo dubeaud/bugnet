@@ -184,6 +184,15 @@ namespace BugNET.Administration.Host.UserControls {
         protected global::System.Web.UI.WebControls.RadioButtonList OpenIdAuthentication;
         
         /// <summary>
+        /// literal1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal literal1;
+        
+        /// <summary>
         /// label13 control.
         /// </summary>
         /// <remarks>
@@ -308,5 +317,59 @@ namespace BugNET.Administration.Host.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox GoogleAuthentication;
+        
+        /// <summary>
+        /// label14 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label label14;
+        
+        /// <summary>
+        /// MicrosoftAuthentication control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox MicrosoftAuthentication;
+        
+        /// <summary>
+        /// label15 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label label15;
+        
+        /// <summary>
+        /// MicrosoftClientId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox MicrosoftClientId;
+        
+        /// <summary>
+        /// label16 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label label16;
+        
+        /// <summary>
+        /// MicrosoftClientSecret control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox MicrosoftClientSecret;
     }
 }

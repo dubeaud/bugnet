@@ -7,7 +7,7 @@
         <asp:Label ID="label1" CssClass="col-md-4 control-label" runat="server" AssociatedControlID="AdminNotificationUser"
             Text="<%$ Resources:AdminNotificationUser %>" />
         <div class="col-md-8">
-            <asp:DropDownList ID="AdminNotificationUser" runat="server" />
+            <asp:DropDownList ID="AdminNotificationUser" CssClass="form-control" runat="server" />
         </div>
     </div>
 </div>

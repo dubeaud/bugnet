@@ -252,12 +252,5 @@
         </asp:UpdatePanel>
 
         <it:IssueTabs ID="ctlIssueTabs" runat="server"></it:IssueTabs>
-
-        <div class="col-md-12" style="margin-top: 1em;">
-            <div class="form-group">
-                <div class="">
-                </div>
-            </div>
-        </div>
     </div>
 </asp:Content>

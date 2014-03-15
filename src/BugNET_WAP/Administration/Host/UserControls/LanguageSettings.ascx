@@ -14,7 +14,7 @@
     <div class="form-group">
         <asp:Label ID="label28" CssClass="col-md-4 control-label" runat="server" AssociatedControlID="ApplicationDefaultLanguage" Text="<%$ Resources:ApplicationDefault %>" />
         <div class="col-md-8">
-            <asp:DropDownList ID="ApplicationDefaultLanguage" DataTextField="Text" DataValueField="Value" runat="server" />
+            <asp:DropDownList ID="ApplicationDefaultLanguage" DataTextField="Text" DataValueField="Value" CssClass="form-control" runat="server" />
         </div>
     </div>
         <h3><asp:Localize runat="server" ID="InstalledLanguages" Text="<%$ Resources:InstalledLanguages %>" /></h3>

@@ -66,7 +66,7 @@
                 </div>
             </div>
             <h3><asp:Literal ID="literal1" runat="server" Text="<%$ Resources:OAuthOpenID %>"/></h3>
-
+            <hr>
             <h4>Facebook</h4>
             <div class="form-group">
                 <asp:Label ID="label13" CssClass="col-md-4 control-label" runat="server" AssociatedControlID="FacebookAuthentication" Text="<%$ Resources:SharedResources, Enable %>" />
@@ -83,7 +83,6 @@
                     <asp:TextBox ID="FacebookAppId" CssClass="form-control" runat="Server" />
                 </div>
             </div>
-
             <div class="form-group">
                 <asp:Label ID="label6" CssClass="col-md-4 control-label" runat="server" AssociatedControlID="FacebookAppSecret"
                     Text="<%$ Resources:FacebookAppSecret %>" />
@@ -122,6 +121,29 @@
                     <div class="checkbox">
                         <asp:CheckBox ID="GoogleAuthentication" runat="server"></asp:CheckBox>
                     </div>
+                </div>
+            </div>
+            <h4>Microsoft Account</h4>
+            <div class="form-group">
+                <asp:Label ID="label14" CssClass="col-md-4 control-label" runat="server" AssociatedControlID="MicrosoftAuthentication" Text="<%$ Resources:SharedResources, Enable %>" />
+                <div class="col-md-8">
+                    <div class="checkbox">
+                        <asp:CheckBox ID="MicrosoftAuthentication" runat="server"></asp:CheckBox>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <asp:Label ID="label15" CssClass="col-md-4 control-label" runat="server" AssociatedControlID="MicrosoftClientId"
+                    Text="<%$ Resources:MicrosoftClientId %>" />
+                 <div class="col-md-8">
+                    <asp:TextBox ID="MicrosoftClientId" CssClass="form-control" runat="Server" />
+                </div>
+            </div>
+            <div class="form-group">
+                <asp:Label ID="label16" CssClass="col-md-4 control-label" runat="server" AssociatedControlID="MicrosoftClientSecret"
+                    Text="<%$ Resources:MicrosoftClientSecret %>" />
+                 <div class="col-md-8">
+                    <asp:TextBox ID="MicrosoftClientSecret" CssClass="form-control" TextMode="Password" runat="Server" />
                 </div>
             </div>
         </div>

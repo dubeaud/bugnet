@@ -48,12 +48,11 @@
                                         <li class="dropdown">
                                             <button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
                                                 <span class="glyphicon glyphicon-list"></span>
-                                                <%--<asp:Localize runat="server" ID="Filters" Text="Quick Links / Filters" meta:resourcekey="QuickLinksFilters" />--%>
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-right">
                                                 <li>
-                                                    <div class="row" style="width: 350px; padding: 10px;">
+                                                    <div class="row" style="width:300px;padding:10px;">
                                                         <ul class="list-unstyled col-md-6">
                                                             <li role="presentation" class="dropdown-header">
                                                                <asp:Localize runat="server" ID="QuickLinksLocalize" Text="Quick Links" meta:resourcekey="QuickLinks" />

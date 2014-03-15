@@ -135,6 +135,12 @@
 	<data name="FacebookAppSecret" xml:space="preserve">
     <value>App Secret</value>
   </data>
+  <data name="MicrosoftClientId" xml:space="preserve">
+    <value>Client Id</value>
+  </data>
+  <data name="MicrosoftClientSecret" xml:space="preserve">
+    <value>Client Secret</value>
+  </data>
 	<data name="OpenIdAuthentication" xml:space="preserve">
     <value>Open Id Authentication</value>
   </data>

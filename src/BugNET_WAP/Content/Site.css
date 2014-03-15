@@ -237,10 +237,10 @@ ul.permissions
 #google-button i{
     background: url('../images/google_btn_red.png') center center no-repeat;
 }
-#steam-button i{
-    background: url('images/icon_steam.png') center center no-repeat;
-    background-size:21px;
+#microsoft-button i{
+    background: url('../images/icon_microsoft.png') center center no-repeat;
 }
+
 #twitter-button
 {
     background: #0ba8d6;
@@ -253,9 +253,13 @@ ul.permissions
 }
 #google-button
 {
-    /*background: #5682c2;*/
     background:#d14836;
     color: #fff;  
+}
+#microsoft-button
+{
+    background-color: #2672ec;
+    color:#fff;
 }
 
 /* Responsive: Portrait tablets and up */
