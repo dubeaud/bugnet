@@ -7,7 +7,6 @@ namespace BugNET.UserInterfaceLayer.WebControls
 {
     public class SuckerFishMenuHelper : MenuHelperRoot
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="SuckerFishMenuHelper"/> class.
         /// </summary>
@@ -23,8 +22,8 @@ namespace BugNET.UserInterfaceLayer.WebControls
                 var oItemProject = new SuckerMenuItem("#", Resources.SharedResources.Project, this, "dropdown");
 
                 Items.Insert(1, oItemProject);
-                oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/ProjectSummary.aspx?pid={0}", projectId), "Project Summary", this));
-                oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/Roadmap.aspx?pid={0}", projectId),Resources.SharedResources.Roadmap,this));
+                oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/ProjectSummary.aspx?pid={0}", projectId), Resources.SharedResources.ProjectSummary, this));
+                oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/Roadmap.aspx?pid={0}", projectId), Resources.SharedResources.Roadmap,this));
                 oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/ChangeLog.aspx?pid={0}", projectId), Resources.SharedResources.ChangeLog, this));
 
                 Items.Add(new SuckerMenuItem(string.Format("~/Issues/IssueList.aspx?pid={0}", projectId), Resources.SharedResources.Issues, this));

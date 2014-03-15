@@ -4,16 +4,16 @@
 <bn:Message ID="Message1" runat="server" Visible="false" />
 <div class="form-horizontal">
     <div class="form-group">
-        <asp:Label CssClass="col-md-2 control-label" ID="lblApplicationDefault" runat="server" Text="<%$ Resources:ApplicationDefault %>" />
-        <div class="col-md-10">
+        <asp:Label CssClass="col-md-4 control-label" ID="lblApplicationDefault" runat="server" Text="<%$ Resources:ApplicationDefault %>" />
+        <div class="col-md-8">
             <p class="form-control-static">
                 <asp:Label ID="lblDefaultLanguage" runat="server" Text="" />
             </p>
         </div>
     </div>
     <div class="form-group">
-        <asp:Label ID="label28" CssClass="col-md-2 control-label" runat="server" AssociatedControlID="ApplicationDefaultLanguage" Text="<%$ Resources:ApplicationDefault %>" />
-        <div class="col-md-10">
+        <asp:Label ID="label28" CssClass="col-md-4 control-label" runat="server" AssociatedControlID="ApplicationDefaultLanguage" Text="<%$ Resources:ApplicationDefault %>" />
+        <div class="col-md-8">
             <asp:DropDownList ID="ApplicationDefaultLanguage" DataTextField="Text" DataValueField="Value" runat="server" />
         </div>
     </div>

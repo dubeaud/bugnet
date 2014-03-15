@@ -141,7 +141,4 @@
 	<data name="BackToUserList" xml:space="preserve">
     <value>Indietro</value>
   </data>
-	<data name="ControlDescription" xml:space="preserve">
-		<value>.</value>
-	</data>
 </root>

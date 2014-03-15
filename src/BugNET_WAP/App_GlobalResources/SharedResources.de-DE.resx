@@ -1,6 +1,6 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
+	<!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,422 +59,425 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-    <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexType>
-        <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="assembly">
-            <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="data">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="resheader">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:choice>
-      </xsd:complexType>
-    </xsd:element>
-  </xsd:schema>
-  <resheader name="resmimetype">
-    <value>text/microsoft-resx</value>
-  </resheader>
-  <resheader name="version">
-    <value>2.0</value>
-  </resheader>
-  <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <data name="Add" xml:space="preserve">
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute name="name" use="required" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="assembly">
+						<xsd:complexType>
+							<xsd:attribute name="alias" type="xsd:string" />
+							<xsd:attribute name="name" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="Add" xml:space="preserve">
     <value>Hinzufügen</value>
   </data>
-  <data name="Admin" xml:space="preserve">
+	<data name="Admin" xml:space="preserve">
     <value>Admin</value>
   </data>
-  <data name="AffectedMilestone" xml:space="preserve">
+	<data name="AffectedMilestone" xml:space="preserve">
     <value>Betroffener Meilenstein</value>
   </data>
-  <data name="ApplicationConfiguration" xml:space="preserve">
+	<data name="ApplicationConfiguration" xml:space="preserve">
     <value>Anwendungskonfiguration</value>
   </data>
-  <data name="Assigned" xml:space="preserve">
+	<data name="Assigned" xml:space="preserve">
     <value>Zugeordnet</value>
   </data>
-  <data name="AssignedTo" xml:space="preserve">
+	<data name="AssignedTo" xml:space="preserve">
     <value>Zugeordnet zu</value>
   </data>
-  <data name="AssignedToUser" xml:space="preserve">
+	<data name="AssignedToUser" xml:space="preserve">
     <value>Mir zugeordnet</value>
   </data>
-  <data name="Authorized" xml:space="preserve">
+	<data name="Authorized" xml:space="preserve">
     <value>Authorisiert</value>
   </data>
-  <data name="Calendar" xml:space="preserve">
+	<data name="Calendar" xml:space="preserve">
     <value>Kalender</value>
   </data>
-  <data name="Cancel" xml:space="preserve">
+	<data name="Cancel" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
-  <data name="Category" xml:space="preserve">
+	<data name="Category" xml:space="preserve">
     <value>Kategorie</value>
   </data>
-  <data name="ChangeLog" xml:space="preserve">
+	<data name="ChangeLog" xml:space="preserve">
     <value>Änderungsprotokoll</value>
   </data>
-  <data name="ChangePassword" xml:space="preserve">
+	<data name="ChangePassword" xml:space="preserve">
     <value>Kennwort ändert</value>
   </data>
-  <data name="CloneProject" xml:space="preserve">
+	<data name="CloneProject" xml:space="preserve">
     <value>Projekt klonen</value>
   </data>
-  <data name="CompletedMilestone" xml:space="preserve">
+	<data name="CompletedMilestone" xml:space="preserve">
     <value>Abgeschlossener Meilenstein</value>
   </data>
-  <data name="ConfirmPassword" xml:space="preserve">
+	<data name="ConfirmPassword" xml:space="preserve">
     <value>Kennwort bestätigen</value>
   </data>
-  <data name="ConfirmPasswordErrorMessage" xml:space="preserve">
+	<data name="ConfirmPasswordErrorMessage" xml:space="preserve">
     <value>Das kennwort und die Kennwortbestätigung müssen identisch sein.</value>
   </data>
-  <data name="Created" xml:space="preserve">
+	<data name="Created" xml:space="preserve">
     <value>Erstellt</value>
   </data>
-  <data name="Creator" xml:space="preserve">
+	<data name="Creator" xml:space="preserve">
     <value>Ersteller</value>
   </data>
-  <data name="Date" xml:space="preserve">
+	<data name="Date" xml:space="preserve">
     <value>Datum</value>
   </data>
-  <data name="Days" xml:space="preserve">
+	<data name="Days" xml:space="preserve">
     <value>Tage</value>
   </data>
-  <data name="Delete" xml:space="preserve">
+	<data name="Delete" xml:space="preserve">
     <value>Löschen</value>
   </data>
-  <data name="Description" xml:space="preserve">
+	<data name="Description" xml:space="preserve">
     <value>Beschreibung</value>
   </data>
-  <data name="Disable" xml:space="preserve">
+	<data name="Disable" xml:space="preserve">
     <value>Deaktivieren</value>
   </data>
-  <data name="DisplayName" xml:space="preserve">
+	<data name="DisplayName" xml:space="preserve">
     <value>Anzeigenam</value>
   </data>
-  <data name="Due" xml:space="preserve">
+	<data name="Due" xml:space="preserve">
     <value>Fällig</value>
   </data>
-  <data name="DueDate" xml:space="preserve">
+	<data name="DueDate" xml:space="preserve">
     <value>Fällig am</value>
   </data>
-  <data name="DueIn" xml:space="preserve">
+	<data name="DueIn" xml:space="preserve">
     <value>Fällig in</value>
   </data>
-  <data name="Edit" xml:space="preserve">
+	<data name="Edit" xml:space="preserve">
     <value>Bearbeiten</value>
   </data>
-  <data name="EditProject" xml:space="preserve">
+	<data name="EditProject" xml:space="preserve">
     <value>Projekt bearbeiten</value>
   </data>
-  <data name="Email" xml:space="preserve">
+	<data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
-  <data name="Enable" xml:space="preserve">
+	<data name="Enable" xml:space="preserve">
     <value>Aktivieren</value>
   </data>
-  <data name="Estimation" xml:space="preserve">
+	<data name="Estimation" xml:space="preserve">
     <value>Aufwandsschätzung</value>
   </data>
-  <data name="EstimationHours" xml:space="preserve">
+	<data name="EstimationHours" xml:space="preserve">
     <value>Aufwandsschätzung (Std.)</value>
   </data>
-  <data name="Finished" xml:space="preserve">
+	<data name="Finished" xml:space="preserve">
     <value>Erledigt</value>
   </data>
-  <data name="FirstName" xml:space="preserve">
+	<data name="FirstName" xml:space="preserve">
     <value>Vorname</value>
   </data>
-  <data name="Home" xml:space="preserve">
+	<data name="Home" xml:space="preserve">
     <value>Start</value>
   </data>
-  <data name="Id" xml:space="preserve">
+	<data name="Id" xml:space="preserve">
     <value>ID</value>
   </data>
-  <data name="Image" xml:space="preserve">
+	<data name="Image" xml:space="preserve">
     <value>Bild</value>
   </data>
-  <data name="IssueId" xml:space="preserve">
+	<data name="IssueId" xml:space="preserve">
     <value>Aufgaben-ID</value>
   </data>
-  <data name="Issues" xml:space="preserve">
+	<data name="Issues" xml:space="preserve">
     <value>Aufgaben</value>
   </data>
-  <data name="IssueType" xml:space="preserve">
+	<data name="IssueType" xml:space="preserve">
     <value>Aufgabentyp</value>
   </data>
-  <data name="LastName" xml:space="preserve">
+	<data name="LastName" xml:space="preserve">
     <value>Nachname</value>
   </data>
-  <data name="LastUpdate" xml:space="preserve">
+	<data name="LastUpdate" xml:space="preserve">
     <value>Zuletzt geändert</value>
   </data>
-  <data name="LastUpdateUser" xml:space="preserve">
+	<data name="LastUpdateUser" xml:space="preserve">
     <value>Zuletzt geändert von</value>
   </data>
-  <data name="Late" xml:space="preserve">
+	<data name="Late" xml:space="preserve">
     <value>Spät</value>
   </data>
-  <data name="LogViewer" xml:space="preserve">
+	<data name="LogViewer" xml:space="preserve">
     <value>Protokollansicht</value>
   </data>
-  <data name="Milestone" xml:space="preserve">
+	<data name="Milestone" xml:space="preserve">
     <value>Meilenstein</value>
   </data>
-  <data name="Months" xml:space="preserve">
+	<data name="Months" xml:space="preserve">
     <value>Monate</value>
   </data>
-  <data name="MyIssues" xml:space="preserve">
+	<data name="MyIssues" xml:space="preserve">
     <value>Meine Aufgaben</value>
   </data>
-  <data name="Name" xml:space="preserve">
+	<data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
-  <data name="NewIssue" xml:space="preserve">
+	<data name="NewIssue" xml:space="preserve">
     <value>Neue Aufgabe</value>
   </data>
-  <data name="No" xml:space="preserve">
+	<data name="No" xml:space="preserve">
     <value>Nein</value>
   </data>
-  <data name="NoIssueResults" xml:space="preserve">
+	<data name="NoIssueResults" xml:space="preserve">
     <value>Es gibt keine Ergebnisse.</value>
   </data>
-  <data name="Notes" xml:space="preserve">
+	<data name="Notes" xml:space="preserve">
     <value>Anmerkungen</value>
   </data>
-  <data name="Order" xml:space="preserve">
+	<data name="Order" xml:space="preserve">
     <value>Sortierung</value>
   </data>
-  <data name="Owner" xml:space="preserve">
+	<data name="Owner" xml:space="preserve">
     <value>Besitzer</value>
   </data>
-  <data name="Password" xml:space="preserve">
+	<data name="Password" xml:space="preserve">
     <value>Kennwort</value>
   </data>
-  <data name="Priority" xml:space="preserve">
+	<data name="Priority" xml:space="preserve">
     <value>Priorität</value>
   </data>
-  <data name="Progress" xml:space="preserve">
+	<data name="Progress" xml:space="preserve">
     <value>Fortschritt</value>
   </data>
-  <data name="Project" xml:space="preserve">
+	<data name="Project" xml:space="preserve">
     <value>Projekt</value>
   </data>
-  <data name="Projects" xml:space="preserve">
+	<data name="Projects" xml:space="preserve">
     <value>Projekte</value>
   </data>
-  <data name="Queries" xml:space="preserve">
+	<data name="Queries" xml:space="preserve">
     <value>Abfragen</value>
   </data>
-  <data name="ReleaseDate" xml:space="preserve">
+	<data name="ReleaseDate" xml:space="preserve">
     <value>Freigabedatum</value>
   </data>
-  <data name="Repository" xml:space="preserve">
+	<data name="Repository" xml:space="preserve">
     <value>Datenspeicher</value>
   </data>
-  <data name="Required" xml:space="preserve">
+	<data name="Required" xml:space="preserve">
     <value>Erforderlich</value>
   </data>
-  <data name="Resolution" xml:space="preserve">
+	<data name="Resolution" xml:space="preserve">
     <value>Lösung</value>
   </data>
-  <data name="Return" xml:space="preserve">
+	<data name="Return" xml:space="preserve">
     <value>Zurück</value>
   </data>
-  <data name="Roadmap" xml:space="preserve">
+	<data name="Roadmap" xml:space="preserve">
     <value>Roadmap</value>
   </data>
-  <data name="Save" xml:space="preserve">
+	<data name="Save" xml:space="preserve">
     <value>Speichern</value>
   </data>
-  <data name="Search" xml:space="preserve">
+	<data name="Search" xml:space="preserve">
     <value>Suche</value>
   </data>
-  <data name="SecurityAnswer" xml:space="preserve">
+	<data name="SecurityAnswer" xml:space="preserve">
     <value>Sicherheitsantwort</value>
   </data>
-  <data name="SecurityAnswerRequiredErrorMessage" xml:space="preserve">
+	<data name="SecurityAnswerRequiredErrorMessage" xml:space="preserve">
     <value>Eine Sicherheitsantwort ist erforderlich.</value>
   </data>
-  <data name="SecurityQuestion" xml:space="preserve">
+	<data name="SecurityQuestion" xml:space="preserve">
     <value>Sicherheitsfrage</value>
   </data>
-  <data name="SecurityQuestionRequiredErrorMessage" xml:space="preserve">
+	<data name="SecurityQuestionRequiredErrorMessage" xml:space="preserve">
     <value>Eine Sicherheitsfrage ist erforderlich.</value>
   </data>
-  <data name="Status" xml:space="preserve">
+	<data name="Status" xml:space="preserve">
     <value>Status</value>
   </data>
-  <data name="Submit" xml:space="preserve">
+	<data name="Submit" xml:space="preserve">
     <value>Absenden</value>
   </data>
-  <data name="TimeLogged" xml:space="preserve">
+	<data name="TimeLogged" xml:space="preserve">
     <value>Protokollierte Zeit</value>
   </data>
-  <data name="TimeLoggedHours" xml:space="preserve">
+	<data name="TimeLoggedHours" xml:space="preserve">
     <value>Protokollierte Zeit (Std.)</value>
   </data>
-  <data name="Title" xml:space="preserve">
+	<data name="Title" xml:space="preserve">
     <value>Titel</value>
   </data>
-  <data name="Today" xml:space="preserve">
+	<data name="Today" xml:space="preserve">
     <value>Heute</value>
   </data>
-  <data name="Tomorrow" xml:space="preserve">
+	<data name="Tomorrow" xml:space="preserve">
     <value>Morgen</value>
   </data>
-  <data name="Type" xml:space="preserve">
+	<data name="Type" xml:space="preserve">
     <value>Typ</value>
   </data>
-  <data name="Update" xml:space="preserve">
+	<data name="Update" xml:space="preserve">
     <value>Aktualisieren</value>
   </data>
-  <data name="UserAccounts" xml:space="preserve">
+	<data name="UserAccounts" xml:space="preserve">
     <value>Benutzerkonten</value>
   </data>
-  <data name="Username" xml:space="preserve">
+	<data name="Username" xml:space="preserve">
     <value>Benutzername</value>
   </data>
-  <data name="UsernameRequiredErrorMessage" xml:space="preserve">
+	<data name="UsernameRequiredErrorMessage" xml:space="preserve">
     <value>Ein Benutzername ist erforderlich.</value>
   </data>
-  <data name="Votes" xml:space="preserve">
+	<data name="Votes" xml:space="preserve">
     <value>Stimmen</value>
   </data>
-  <data name="Weeks" xml:space="preserve">
+	<data name="Weeks" xml:space="preserve">
     <value>Wochen</value>
   </data>
-  <data name="Years" xml:space="preserve">
+	<data name="Years" xml:space="preserve">
     <value>Jahre</value>
   </data>
-  <data name="Yes" xml:space="preserve">
+	<data name="Yes" xml:space="preserve">
     <value>Ja</value>
   </data>
-  <data name="Yesterday" xml:space="preserve">
+	<data name="Yesterday" xml:space="preserve">
     <value>Gestern</value>
   </data>
-  <data name="Added" xml:space="preserve">
+	<data name="Added" xml:space="preserve">
     <value>Hinzugefügt</value>
   </data>
-  <data name="Deleted" xml:space="preserve">
+	<data name="Deleted" xml:space="preserve">
     <value>Gelöscht</value>
   </data>
-  <data name="RelatedIssue" xml:space="preserve">
+	<data name="RelatedIssue" xml:space="preserve">
     <value>Verwandte Aufgabe</value>
   </data>
-  <data name="Attachment" xml:space="preserve">
+	<data name="Attachment" xml:space="preserve">
     <value>Anhang</value>
   </data>
-  <data name="ChildIssue" xml:space="preserve">
+	<data name="ChildIssue" xml:space="preserve">
     <value>Unter-Aufgabe</value>
   </data>
-  <data name="ParentIssue" xml:space="preserve">
+	<data name="ParentIssue" xml:space="preserve">
     <value>Mutter-Aufgabe</value>
   </data>
-  <data name="ProjectLabel" xml:space="preserve">
+	<data name="ProjectLabel" xml:space="preserve">
     <value>Projekt:</value>
   </data>
-  <data name="ValidationSummaryHeaderText" xml:space="preserve">
+	<data name="ValidationSummaryHeaderText" xml:space="preserve">
     <value>Bitte die folgenden Korrekturen durchführen:</value>
   </data>
-  <data name="Size" xml:space="preserve">
+	<data name="Size" xml:space="preserve">
     <value>Größe</value>
   </data>
-  <data name="False" xml:space="preserve">
+	<data name="False" xml:space="preserve">
     <value>Falsch</value>
   </data>
-  <data name="True" xml:space="preserve">
+	<data name="True" xml:space="preserve">
     <value>Wahr</value>
   </data>
-  <data name="Empty" xml:space="preserve">
+	<data name="Empty" xml:space="preserve">
     <value>Leer</value>
   </data>
-  <data name="TotalHours" xml:space="preserve">
+	<data name="TotalHours" xml:space="preserve">
     <value>Gesamtstunden</value>
   </data>
-  <data name="Remove" xml:space="preserve">
+	<data name="Remove" xml:space="preserve">
     <value>Entfernen</value>
   </data>
-  <data name="NotAvailable" xml:space="preserve">
+	<data name="NotAvailable" xml:space="preserve">
     <value>Nicht verfügbar</value>
   </data>
-  <data name="NotAvailableAbbr" xml:space="preserve">
+	<data name="NotAvailableAbbr" xml:space="preserve">
     <value>N/A</value>
   </data>
-  <data name="GoTo" xml:space="preserve">
+	<data name="GoTo" xml:space="preserve">
     <value>Gehe zu:</value>
   </data>
-  <data name="RowXofY" xml:space="preserve">
+	<data name="RowXofY" xml:space="preserve">
     <value>{0} - {1} von {2}</value>
   </data>
-  <data name="ShowRows" xml:space="preserve">
+	<data name="ShowRows" xml:space="preserve">
     <value>Zeige Zeilen: </value>
   </data>
-  <data name="Unassigned" xml:space="preserve">
+	<data name="Unassigned" xml:space="preserve">
     <value>Nicht zugeordnet</value>
   </data>
-  <data name="CloneProjectInstructions" xml:space="preserve">
+	<data name="CloneProjectInstructions" xml:space="preserve">
     <value>Wenn Sie ein Projekt klonen, dann erstellen sie eine komplette Kopie des Projekts. Beispielsweise werden alle Kategorien, Meilenstein und benutzerdefinierten Attribute mitkopiert. Lediglich die Aufgaben des Projekts werden nicht mitkopiert.</value>
   </data>
-  <data name="Ok" xml:space="preserve">
+	<data name="Ok" xml:space="preserve">
     <value>OK</value>
   </data>
-  <data name="Comment" xml:space="preserve">
+	<data name="Comment" xml:space="preserve">
     <value>Kommentar</value>
   </data>
-  <data name="Visibility" xml:space="preserve">
+	<data name="Visibility" xml:space="preserve">
     <value>Sichtbarkeit</value>
   </data>
-  <data name="DropDown_SelectOne" xml:space="preserve">
+	<data name="DropDown_SelectOne" xml:space="preserve">
     <value>-- Auswählen --</value>
   </data>
-  <data name="DropDown_ResetFields" xml:space="preserve">
+	<data name="DropDown_ResetFields" xml:space="preserve">
     <value>-- Attrbute zurücksetzen --</value>
   </data>
-  <data name="DropDown_SelectCustomField" xml:space="preserve">
+	<data name="DropDown_SelectCustomField" xml:space="preserve">
     <value>-- Benutzerdefiniertes Attribut wählen --</value>
   </data>
-  <data name="PasswordRequired" xml:space="preserve">
+	<data name="PasswordRequired" xml:space="preserve">
     <value>Ein Kennwort ist erforderlich.</value>
   </data>
+	<data name="ProjectSummary" xml:space="preserve">
+		<value>Zusammenfassung</value>
+	</data>
 </root>

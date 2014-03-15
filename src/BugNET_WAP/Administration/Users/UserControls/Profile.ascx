@@ -8,19 +8,19 @@
 <bn:Message ID="ActionMessage" runat="server" Visible="False" />
 <div class="form-horizontal">
     <div class="form-group">
-        <asp:Label ID="Label1" CssClass="col-md-2 control-label" AssociatedControlID="FirstName" runat="server" Text="<%$ Resources:SharedResources, FirstName %>" />
-        <div class="col-md-10">
+        <asp:Label ID="Label1" CssClass="col-md-4 control-label" AssociatedControlID="FirstName" runat="server" Text="<%$ Resources:SharedResources, FirstName %>" />
+        <div class="col-md-8">
             <asp:TextBox ID="FirstName" CssClass="form-control" runat="server" /></div>
     </div>
     <div class="form-group">
-        <asp:Label ID="Label3" CssClass="col-md-2 control-label" AssociatedControlID="LastName" runat="server" Text="<%$ Resources:SharedResources, LastName %>" />
-        <div class="col-md-10">
+        <asp:Label ID="Label3" CssClass="col-md-4 control-label" AssociatedControlID="LastName" runat="server" Text="<%$ Resources:SharedResources, LastName %>" />
+        <div class="col-md-8">
             <asp:TextBox ID="LastName" CssClass="form-control" runat="server" />
         </div>
     </div>
     <div class="form-group">
-        <asp:Label ID="Label5" CssClass="col-md-2 control-label" AssociatedControlID="DisplayName" runat="server" Text="<%$ Resources:SharedResources, DisplayName %>" />
-        <div class="col-md-10">
+        <asp:Label ID="Label5" CssClass="col-md-4 control-label" AssociatedControlID="DisplayName" runat="server" Text="<%$ Resources:SharedResources, DisplayName %>" />
+        <div class="col-md-8">
             <asp:TextBox ID="DisplayName" CssClass="form-control" runat="server" /></div>
     </div>
 </div>

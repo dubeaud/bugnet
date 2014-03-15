@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
+	<!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,422 +59,425 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-    <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexType>
-        <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="assembly">
-            <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="data">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="resheader">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:choice>
-      </xsd:complexType>
-    </xsd:element>
-  </xsd:schema>
-  <resheader name="resmimetype">
-    <value>text/microsoft-resx</value>
-  </resheader>
-  <resheader name="version">
-    <value>2.0</value>
-  </resheader>
-  <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <data name="Add" xml:space="preserve">
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute name="name" use="required" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="assembly">
+						<xsd:complexType>
+							<xsd:attribute name="alias" type="xsd:string" />
+							<xsd:attribute name="name" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="Add" xml:space="preserve">
     <value>Добавить</value>
   </data>
-  <data name="Admin" xml:space="preserve">
+	<data name="Admin" xml:space="preserve">
     <value>Администрирование</value>
   </data>
-  <data name="AffectedMilestone" xml:space="preserve">
+	<data name="AffectedMilestone" xml:space="preserve">
     <value>Затронутый этап</value>
   </data>
-  <data name="ApplicationConfiguration" xml:space="preserve">
+	<data name="ApplicationConfiguration" xml:space="preserve">
     <value>Конфигурация</value>
   </data>
-  <data name="Assigned" xml:space="preserve">
+	<data name="Assigned" xml:space="preserve">
     <value>Исполнитель</value>
   </data>
-  <data name="AssignedTo" xml:space="preserve">
+	<data name="AssignedTo" xml:space="preserve">
     <value>Назначено</value>
   </data>
-  <data name="AssignedToUser" xml:space="preserve">
+	<data name="AssignedToUser" xml:space="preserve">
     <value>Назначено мне</value>
   </data>
-  <data name="Authorized" xml:space="preserve">
+	<data name="Authorized" xml:space="preserve">
     <value>Авторизован</value>
   </data>
-  <data name="Calendar" xml:space="preserve">
+	<data name="Calendar" xml:space="preserve">
     <value>Календарь</value>
   </data>
-  <data name="Cancel" xml:space="preserve">
+	<data name="Cancel" xml:space="preserve">
     <value>Отмена</value>
   </data>
-  <data name="Category" xml:space="preserve">
+	<data name="Category" xml:space="preserve">
     <value>Категория</value>
   </data>
-  <data name="ChangeLog" xml:space="preserve">
+	<data name="ChangeLog" xml:space="preserve">
     <value>Журнал изменений</value>
   </data>
-  <data name="ChangePassword" xml:space="preserve">
+	<data name="ChangePassword" xml:space="preserve">
     <value>Изменить пароль</value>
   </data>
-  <data name="CloneProject" xml:space="preserve">
+	<data name="CloneProject" xml:space="preserve">
     <value>Клонировать проект</value>
   </data>
-  <data name="CompletedMilestone" xml:space="preserve">
+	<data name="CompletedMilestone" xml:space="preserve">
     <value>Завершенный этап</value>
   </data>
-  <data name="ConfirmPassword" xml:space="preserve">
+	<data name="ConfirmPassword" xml:space="preserve">
     <value>Подтверждение пароля</value>
   </data>
-  <data name="ConfirmPasswordErrorMessage" xml:space="preserve">
+	<data name="ConfirmPasswordErrorMessage" xml:space="preserve">
     <value>Пароль и его подтверждение должны совпадать.</value>
   </data>
-  <data name="Created" xml:space="preserve">
+	<data name="Created" xml:space="preserve">
     <value>Создано</value>
   </data>
-  <data name="Creator" xml:space="preserve">
+	<data name="Creator" xml:space="preserve">
     <value>Создатель</value>
   </data>
-  <data name="Date" xml:space="preserve">
+	<data name="Date" xml:space="preserve">
     <value>Дата</value>
   </data>
-  <data name="Days" xml:space="preserve">
+	<data name="Days" xml:space="preserve">
     <value>дни</value>
   </data>
-  <data name="Delete" xml:space="preserve">
+	<data name="Delete" xml:space="preserve">
     <value>Удалить</value>
   </data>
-  <data name="Description" xml:space="preserve">
+	<data name="Description" xml:space="preserve">
     <value>Описание</value>
   </data>
-  <data name="Disable" xml:space="preserve">
+	<data name="Disable" xml:space="preserve">
     <value>Отключить</value>
   </data>
-  <data name="DisplayName" xml:space="preserve">
+	<data name="DisplayName" xml:space="preserve">
     <value>Отображаемое имя</value>
   </data>
-  <data name="Due" xml:space="preserve">
+	<data name="Due" xml:space="preserve">
     <value>до</value>
   </data>
-  <data name="DueDate" xml:space="preserve">
+	<data name="DueDate" xml:space="preserve">
     <value>Дата окончания</value>
   </data>
-  <data name="DueIn" xml:space="preserve">
+	<data name="DueIn" xml:space="preserve">
     <value>завершается</value>
   </data>
-  <data name="Edit" xml:space="preserve">
+	<data name="Edit" xml:space="preserve">
     <value>Редактирование</value>
   </data>
-  <data name="EditProject" xml:space="preserve">
+	<data name="EditProject" xml:space="preserve">
     <value>Редактировать проект</value>
   </data>
-  <data name="Email" xml:space="preserve">
+	<data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
-  <data name="Enable" xml:space="preserve">
+	<data name="Enable" xml:space="preserve">
     <value>Включить</value>
   </data>
-  <data name="Estimation" xml:space="preserve">
+	<data name="Estimation" xml:space="preserve">
     <value>Оценка</value>
   </data>
-  <data name="EstimationHours" xml:space="preserve">
+	<data name="EstimationHours" xml:space="preserve">
     <value>Оценка (часы)</value>
   </data>
-  <data name="Finished" xml:space="preserve">
+	<data name="Finished" xml:space="preserve">
     <value>завершено</value>
   </data>
-  <data name="FirstName" xml:space="preserve">
+	<data name="FirstName" xml:space="preserve">
     <value>Имя</value>
   </data>
-  <data name="Home" xml:space="preserve">
+	<data name="Home" xml:space="preserve">
     <value>Главная</value>
   </data>
-  <data name="Id" xml:space="preserve">
+	<data name="Id" xml:space="preserve">
     <value>Id</value>
   </data>
-  <data name="Image" xml:space="preserve">
+	<data name="Image" xml:space="preserve">
     <value>Картинка</value>
   </data>
-  <data name="IssueId" xml:space="preserve">
+	<data name="IssueId" xml:space="preserve">
     <value>Id задания</value>
   </data>
-  <data name="Issues" xml:space="preserve">
+	<data name="Issues" xml:space="preserve">
     <value>Задания</value>
   </data>
-  <data name="IssueType" xml:space="preserve">
+	<data name="IssueType" xml:space="preserve">
     <value>Тип задания</value>
   </data>
-  <data name="LastName" xml:space="preserve">
+	<data name="LastName" xml:space="preserve">
     <value>Фамилия</value>
   </data>
-  <data name="LastUpdate" xml:space="preserve">
+	<data name="LastUpdate" xml:space="preserve">
     <value>Последнее обновление</value>
   </data>
-  <data name="LastUpdateUser" xml:space="preserve">
+	<data name="LastUpdateUser" xml:space="preserve">
     <value>Последний изменивший</value>
   </data>
-  <data name="Late" xml:space="preserve">
+	<data name="Late" xml:space="preserve">
     <value>опоздание</value>
   </data>
-  <data name="LogViewer" xml:space="preserve">
+	<data name="LogViewer" xml:space="preserve">
     <value>Просмотр журнала</value>
   </data>
-  <data name="Milestone" xml:space="preserve">
+	<data name="Milestone" xml:space="preserve">
     <value>Этап</value>
   </data>
-  <data name="Months" xml:space="preserve">
+	<data name="Months" xml:space="preserve">
     <value>месяцы</value>
   </data>
-  <data name="MyIssues" xml:space="preserve">
+	<data name="MyIssues" xml:space="preserve">
     <value>Мои задания</value>
   </data>
-  <data name="Name" xml:space="preserve">
+	<data name="Name" xml:space="preserve">
     <value>Наименование</value>
   </data>
-  <data name="NewIssue" xml:space="preserve">
+	<data name="NewIssue" xml:space="preserve">
     <value>Новое задание</value>
   </data>
-  <data name="No" xml:space="preserve">
+	<data name="No" xml:space="preserve">
     <value>Нет</value>
   </data>
-  <data name="NoIssueResults" xml:space="preserve">
+	<data name="NoIssueResults" xml:space="preserve">
     <value>Нет результатов</value>
   </data>
-  <data name="Notes" xml:space="preserve">
+	<data name="Notes" xml:space="preserve">
     <value>Заметки</value>
   </data>
-  <data name="Order" xml:space="preserve">
+	<data name="Order" xml:space="preserve">
     <value>Порядок</value>
   </data>
-  <data name="Owner" xml:space="preserve">
+	<data name="Owner" xml:space="preserve">
     <value>Владелец</value>
   </data>
-  <data name="Password" xml:space="preserve">
+	<data name="Password" xml:space="preserve">
     <value>Пароль</value>
   </data>
-  <data name="Priority" xml:space="preserve">
+	<data name="Priority" xml:space="preserve">
     <value>Приоритет</value>
   </data>
-  <data name="Progress" xml:space="preserve">
+	<data name="Progress" xml:space="preserve">
     <value>Прогресс</value>
   </data>
-  <data name="Project" xml:space="preserve">
+	<data name="Project" xml:space="preserve">
     <value>Проект</value>
   </data>
-  <data name="Projects" xml:space="preserve">
+	<data name="Projects" xml:space="preserve">
     <value>Проекты</value>
   </data>
-  <data name="Queries" xml:space="preserve">
+	<data name="Queries" xml:space="preserve">
     <value>Запросы</value>
   </data>
-  <data name="ReleaseDate" xml:space="preserve">
+	<data name="ReleaseDate" xml:space="preserve">
     <value>Дата выпуска</value>
   </data>
-  <data name="Repository" xml:space="preserve">
+	<data name="Repository" xml:space="preserve">
     <value>Репозиторий</value>
   </data>
-  <data name="Required" xml:space="preserve">
+	<data name="Required" xml:space="preserve">
     <value>Обязательно</value>
   </data>
-  <data name="Resolution" xml:space="preserve">
+	<data name="Resolution" xml:space="preserve">
     <value>Заключение</value>
   </data>
-  <data name="Return" xml:space="preserve">
+	<data name="Return" xml:space="preserve">
     <value>Вернуться</value>
   </data>
-  <data name="Roadmap" xml:space="preserve">
+	<data name="Roadmap" xml:space="preserve">
     <value>Дорожная карта</value>
   </data>
-  <data name="Save" xml:space="preserve">
+	<data name="Save" xml:space="preserve">
     <value>Сохранить</value>
   </data>
-  <data name="Search" xml:space="preserve">
+	<data name="Search" xml:space="preserve">
     <value>Поиск</value>
   </data>
-  <data name="SecurityAnswer" xml:space="preserve">
+	<data name="SecurityAnswer" xml:space="preserve">
     <value>Ответ на контрольный вопрос</value>
   </data>
-  <data name="SecurityAnswerRequiredErrorMessage" xml:space="preserve">
+	<data name="SecurityAnswerRequiredErrorMessage" xml:space="preserve">
     <value>Требуется указать ответ на контрольный вопрос.</value>
   </data>
-  <data name="SecurityQuestion" xml:space="preserve">
+	<data name="SecurityQuestion" xml:space="preserve">
     <value>Контрольный вопрос</value>
   </data>
-  <data name="SecurityQuestionRequiredErrorMessage" xml:space="preserve">
+	<data name="SecurityQuestionRequiredErrorMessage" xml:space="preserve">
     <value>Требуется указать контрольный вопрос.</value>
   </data>
-  <data name="Status" xml:space="preserve">
+	<data name="Status" xml:space="preserve">
     <value>Статус</value>
   </data>
-  <data name="Submit" xml:space="preserve">
+	<data name="Submit" xml:space="preserve">
     <value>Отправить</value>
   </data>
-  <data name="TimeLogged" xml:space="preserve">
+	<data name="TimeLogged" xml:space="preserve">
     <value>Учтённое время</value>
   </data>
-  <data name="TimeLoggedHours" xml:space="preserve">
+	<data name="TimeLoggedHours" xml:space="preserve">
     <value>Учтённое время (часы)</value>
   </data>
-  <data name="Title" xml:space="preserve">
+	<data name="Title" xml:space="preserve">
     <value>Заголовок</value>
   </data>
-  <data name="Today" xml:space="preserve">
+	<data name="Today" xml:space="preserve">
     <value>сегодня</value>
   </data>
-  <data name="Tomorrow" xml:space="preserve">
+	<data name="Tomorrow" xml:space="preserve">
     <value>завтра</value>
   </data>
-  <data name="Type" xml:space="preserve">
+	<data name="Type" xml:space="preserve">
     <value>Тип</value>
   </data>
-  <data name="Update" xml:space="preserve">
+	<data name="Update" xml:space="preserve">
     <value>Обновить</value>
   </data>
-  <data name="UserAccounts" xml:space="preserve">
+	<data name="UserAccounts" xml:space="preserve">
     <value>Учётные записи</value>
   </data>
-  <data name="Username" xml:space="preserve">
+	<data name="Username" xml:space="preserve">
     <value>Имя пользователя</value>
   </data>
-  <data name="UsernameRequiredErrorMessage" xml:space="preserve">
+	<data name="UsernameRequiredErrorMessage" xml:space="preserve">
     <value>Требуется указать имя пользователя.</value>
   </data>
-  <data name="Votes" xml:space="preserve">
+	<data name="Votes" xml:space="preserve">
     <value>Голоса</value>
   </data>
-  <data name="Weeks" xml:space="preserve">
+	<data name="Weeks" xml:space="preserve">
     <value>недель</value>
   </data>
-  <data name="Years" xml:space="preserve">
+	<data name="Years" xml:space="preserve">
     <value>лет</value>
   </data>
-  <data name="Yes" xml:space="preserve">
+	<data name="Yes" xml:space="preserve">
     <value>Да</value>
   </data>
-  <data name="Yesterday" xml:space="preserve">
+	<data name="Yesterday" xml:space="preserve">
     <value>Вчера</value>
   </data>
-  <data name="Added" xml:space="preserve">
+	<data name="Added" xml:space="preserve">
     <value>Добавлено</value>
   </data>
-  <data name="Deleted" xml:space="preserve">
+	<data name="Deleted" xml:space="preserve">
     <value>Удалено</value>
   </data>
-  <data name="RelatedIssue" xml:space="preserve">
+	<data name="RelatedIssue" xml:space="preserve">
     <value>Связанные задания</value>
   </data>
-  <data name="Attachment" xml:space="preserve">
+	<data name="Attachment" xml:space="preserve">
     <value>Вложение</value>
   </data>
-  <data name="ChildIssue" xml:space="preserve">
+	<data name="ChildIssue" xml:space="preserve">
     <value>Дочернее задание</value>
   </data>
-  <data name="ParentIssue" xml:space="preserve">
+	<data name="ParentIssue" xml:space="preserve">
     <value>Родительское задание</value>
   </data>
-  <data name="ProjectLabel" xml:space="preserve">
+	<data name="ProjectLabel" xml:space="preserve">
     <value>Проект:</value>
   </data>
-  <data name="ValidationSummaryHeaderText" xml:space="preserve">
+	<data name="ValidationSummaryHeaderText" xml:space="preserve">
     <value>Скорректируйте следующее:</value>
   </data>
-  <data name="Size" xml:space="preserve">
+	<data name="Size" xml:space="preserve">
     <value>Размер</value>
   </data>
-  <data name="False" xml:space="preserve">
+	<data name="False" xml:space="preserve">
     <value>Ложь</value>
   </data>
-  <data name="True" xml:space="preserve">
+	<data name="True" xml:space="preserve">
     <value>Истина</value>
   </data>
-  <data name="Empty" xml:space="preserve">
+	<data name="Empty" xml:space="preserve">
     <value>Пусто</value>
   </data>
-  <data name="TotalHours" xml:space="preserve">
+	<data name="TotalHours" xml:space="preserve">
     <value>Всего часов</value>
   </data>
-  <data name="Remove" xml:space="preserve">
+	<data name="Remove" xml:space="preserve">
     <value>Удалить</value>
   </data>
-  <data name="NotAvailable" xml:space="preserve">
+	<data name="NotAvailable" xml:space="preserve">
     <value>Не доступно</value>
   </data>
-  <data name="NotAvailableAbbr" xml:space="preserve">
+	<data name="NotAvailableAbbr" xml:space="preserve">
     <value>Н/Д</value>
   </data>
-  <data name="GoTo" xml:space="preserve">
+	<data name="GoTo" xml:space="preserve">
     <value>Перейти к:</value>
   </data>
-  <data name="RowXofY" xml:space="preserve">
+	<data name="RowXofY" xml:space="preserve">
     <value>{0} - {1} из {2}</value>
   </data>
-  <data name="ShowRows" xml:space="preserve">
+	<data name="ShowRows" xml:space="preserve">
     <value>Показывать:</value>
   </data>
-  <data name="Unassigned" xml:space="preserve">
+	<data name="Unassigned" xml:space="preserve">
     <value>Не назначено</value>
   </data>
-  <data name="Ok" xml:space="preserve">
+	<data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
-  <data name="Comment" xml:space="preserve">
+	<data name="Comment" xml:space="preserve">
     <value>Комментарий</value>
   </data>
-  <data name="CloneProjectInstructions" xml:space="preserve">
+	<data name="CloneProjectInstructions" xml:space="preserve">
     <value>При клонировании проекта Вы создаёте его копию, включая все категории, этапы и дополнительные поля. Задания в клонированный проект не переносятся.</value>
   </data>
-  <data name="Visibility" xml:space="preserve">
+	<data name="Visibility" xml:space="preserve">
     <value>Видимость</value>
   </data>
-  <data name="DropDown_SelectOne" xml:space="preserve">
+	<data name="DropDown_SelectOne" xml:space="preserve">
     <value>-- Выбрать одно --</value>
   </data>
-  <data name="DropDown_ResetFields" xml:space="preserve">
+	<data name="DropDown_ResetFields" xml:space="preserve">
     <value>-- Сбросить поля --</value>
   </data>
-  <data name="DropDown_SelectCustomField" xml:space="preserve">
+	<data name="DropDown_SelectCustomField" xml:space="preserve">
     <value>-- Дополнительное поле --</value>
   </data>
-  <data name="PasswordRequired" xml:space="preserve">
+	<data name="PasswordRequired" xml:space="preserve">
     <value>Требуется указать пароль.</value>
   </data>
+	<data name="ProjectSummary" xml:space="preserve">
+		<value>Сводка</value>
+	</data>
 </root>

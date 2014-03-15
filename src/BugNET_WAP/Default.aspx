@@ -51,11 +51,13 @@
                                                 <%--<asp:Localize runat="server" ID="Filters" Text="Quick Links / Filters" meta:resourcekey="QuickLinksFilters" />--%>
                                                 <span class="caret"></span>
                                             </button>
-                                            <ul class="dropdown-menu">
+                                            <ul class="dropdown-menu dropdown-menu-right">
                                                 <li>
                                                     <div class="row" style="width: 350px; padding: 10px;">
                                                         <ul class="list-unstyled col-md-6">
-                                                            <li role="presentation" class="dropdown-header">Quick Links</li>
+                                                            <li role="presentation" class="dropdown-header">
+                                                               <asp:Localize runat="server" ID="QuickLinksLocalize" Text="Quick Links" meta:resourcekey="QuickLinks" />
+                                                            </li>
                                                             <li>
                                                                 <a href="Projects/ProjectSummary.aspx?pid=<%# ((Project)Container.DataItem).Id %>">
                                                                     <asp:Localize runat="server" ID="Localize33" Text="Project Summary" meta:resourcekey="ProjectSummary" /></a></li>
@@ -80,7 +82,9 @@
                                                                     <asp:Localize runat="server" ID="Localize9" Text="<%$ Resources:SharedResources, EditProject %>" /></a></li>
                                                         </ul>
                                                         <ul class="list-unstyled col-md-6">
-                                                            <li role="presentation" class="dropdown-header">Filters</li>
+                                                            <li role="presentation" class="dropdown-header">
+                                                              <asp:Localize runat="server" ID="FiltersLocalize" Text="Filters" meta:resourceKey="Filters" />
+                                                            </li>
                                                             <li><a href='Issues/IssueList.aspx?pid=<%# ((Project)Container.DataItem).Id %>'>
                                                                 <asp:Label ID="Label1" runat="server" Text="All" meta:resourcekey="lblAll" /></a></li>
                                                             <li><a href="Issues/IssueList.aspx?pid=<%# ((Project)Container.DataItem).Id %>&amp;cr=1">

@@ -474,4 +474,7 @@
 	<data name="DropDown_SelectCustomField" xml:space="preserve">
     <value>-- Selectati campul personalizat --</value>
   </data>
+	<data name="ProjectSummary" xml:space="preserve">
+		<value>Rezumat</value>
+	</data>
 </root>

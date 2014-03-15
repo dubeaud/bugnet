@@ -121,7 +121,7 @@
 		<value>Сообщать по EMail</value>
 	</data>
 	<data name="FromAddress" xml:space="preserve">
-		<value>Отправлять с адреса</value>
+		<value>Адрес отправителя</value>
 	</data>
 	<data name="LoggingSettings" xml:space="preserve">
 		<value>Журналирование</value>

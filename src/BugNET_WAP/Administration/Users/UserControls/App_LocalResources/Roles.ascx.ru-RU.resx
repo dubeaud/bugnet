@@ -132,4 +132,7 @@
 	<data name="BackToUserList" xml:space="preserve">
 		<value>К списку пользователей</value>
 	</data>
+	<data name="Roles" xml:space="preserve">
+		<value>Роли в проекте</value>
+	</data>
 </root>

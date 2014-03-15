@@ -153,21 +153,12 @@
                     <asp:CheckBox ID="chkViewProjectCalendar" Text="View calendar" meta:resourcekey="ViewCalendar" runat="server"></asp:CheckBox></li>
             </ul>
         </fieldset>
-        <%--  <fieldset>
-        <legend>Repository</legend>
-         <ul class="permissions">
-            <li><asp:checkbox id="Checkbox26" Text="Browse repository" runat="server"></asp:checkbox></li>
-            <li><asp:checkbox id="Checkbox27" Text="Manage repository" runat="server"></asp:checkbox></li>
-         </ul>
-     </fieldset>--%>
     </div>
     <br />
     <br />
     <div class="row">
-        <asp:ImageButton runat="server" ID="ImageButton1" OnClick="cmdAddUpdateRole_Click" CssClass="icon" ImageUrl="~/Images/disk.gif" />
         <asp:LinkButton ID="cmdAddUpdateRole" CssClass="btn btn-primary" OnClick="cmdAddUpdateRole_Click" runat="server" CausesValidation="True" meta:resourcekey="AddRoleButton"
             Text="Add Role" />
-        <asp:ImageButton runat="server" ID="Image1" OnClick="cmdCancel_Click" CssClass="icon" ImageUrl="~/Images/lt.gif" />
         <asp:LinkButton ID="cmdCancel" CssClass="btn btn-default" OnClick="cmdCancel_Click" runat="server" CausesValidation="False" Text="<%$ Resources:SharedResources, Cancel %>" />
         <asp:ImageButton runat="server" OnClick="cmdDelete_Click" ID="cancel" CssClass="icon" ImageUrl="~/Images/shield_delete.gif" />
         <asp:LinkButton ID="cmdDelete" CssClass="btn btn-danger" OnClick="cmdDelete_Click" runat="server" CausesValidation="False" meta:resourcekey="DeleteRoleButton"

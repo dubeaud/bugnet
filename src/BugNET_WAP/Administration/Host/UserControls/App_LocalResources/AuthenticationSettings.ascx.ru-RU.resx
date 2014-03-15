@@ -153,4 +153,7 @@
 	<data name="UserRegistration_Verified.Text" xml:space="preserve">
 		<value>с проверкой</value>
 	</data>
+	<data name="OAuthOpenID" xml:space="preserve">
+		<value>Вход через OAuth / OpenID</value>
+	</data>
 </root>

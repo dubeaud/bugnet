@@ -462,4 +462,7 @@
 	<data name="Comment" xml:space="preserve">
     <value>Commento</value>
   </data>
+	<data name="ProjectSummary" xml:space="preserve">
+		<value>Riepilogo</value>
+	</data>
 </root>

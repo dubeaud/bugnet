@@ -2,7 +2,6 @@
 <div>
     <h2>
         <asp:Literal ID="ControlTitle" runat="server" Text="<%$ Resources:ControlTitle %>" /></h2>
-    <asp:Literal ID="ControlDescription" runat="server" Text="<%$ Resources:ControlDescription %>" />
 </div>
 <div>
     <p>

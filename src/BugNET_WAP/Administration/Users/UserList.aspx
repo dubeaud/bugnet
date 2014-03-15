@@ -103,10 +103,10 @@
         <asp:DataPager ID="pager" runat="server" PageSize="10" PagedControlID="gvUsers">
             <Fields>
                 <BNWC:BugNetPagerField
-                    NextPageImageUrl="~/App_Themes/Default/Images/resultset_next.gif"
-                    PreviousPageImageUrl="~/App_Themes/Default/Images/resultset_previous.gif"
-                    LastPageImageUrl="~/App_Themes/Default/Images/resultset_last.gif"
-                    FirstPageImageUrl="~/App_Themes/Default/Images/resultset_first.gif" />
+                    NextPageImageUrl="~/Images/resultset_next.gif"
+                    PreviousPageImageUrl="~/Images/resultset_previous.gif"
+                    LastPageImageUrl="~/Images/resultset_last.gif"
+                    FirstPageImageUrl="~/Images/resultset_first.gif" />
             </Fields>
         </asp:DataPager>
     </div>
