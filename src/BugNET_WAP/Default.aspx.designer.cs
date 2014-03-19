@@ -65,5 +65,11 @@ namespace BugNET {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater rptProject;
+        
+        protected global::System.Web.UI.WebControls.Localize Step1_Localize;
+        
+        protected global::System.Web.UI.WebControls.Localize Step2_Localize;
+        
+        protected global::System.Web.UI.WebControls.Localize Step3_Localize;
     }
 }

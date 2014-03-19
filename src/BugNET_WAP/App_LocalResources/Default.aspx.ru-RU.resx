@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
+	<!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,119 +59,140 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-    <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexType>
-        <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="assembly">
-            <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="data">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="resheader">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:choice>
-      </xsd:complexType>
-    </xsd:element>
-  </xsd:schema>
-  <resheader name="resmimetype">
-    <value>text/microsoft-resx</value>
-  </resheader>
-  <resheader name="version">
-    <value>2.0</value>
-  </resheader>
-  <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <data name="AnonymousAccessDisabled" xml:space="preserve">
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute name="name" use="required" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="assembly">
+						<xsd:complexType>
+							<xsd:attribute name="alias" type="xsd:string" />
+							<xsd:attribute name="name" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="AnonymousAccessDisabled" xml:space="preserve">
     <value>Администратор отключил анонимный доступ. Зарегистрируйтесь или войдите в систему, чтобы просматривать проекты.</value>
   </data>
-  <data name="CreatedRecently.Text" xml:space="preserve">
+	<data name="CreatedRecently.Text" xml:space="preserve">
     <value>Недавно созданные</value>
   </data>
-  <data name="Filters.Text" xml:space="preserve">
+	<data name="Filters.Text" xml:space="preserve">
     <value>Задания</value>
   </data>
-  <data name="lblAll.Text" xml:space="preserve">
+	<data name="lblAll.Text" xml:space="preserve">
     <value>Все</value>
   </data>
-  <data name="ManagedBy.Text" xml:space="preserve">
+	<data name="ManagedBy.Text" xml:space="preserve">
     <value>Администратор</value>
   </data>
-  <data name="NextMilestoneDue" xml:space="preserve">
+	<data name="NextMilestoneDue" xml:space="preserve">
     <value>Дата завершения текущего этапа {0}</value>
   </data>
-  <data name="NoDueDatesSet" xml:space="preserve">
+	<data name="NoDueDatesSet" xml:space="preserve">
     <value>&lt;font color='red'&gt;Даты окончания не заданы.&lt;/font&gt;</value>
   </data>
-  <data name="None" xml:space="preserve">
+	<data name="None" xml:space="preserve">
     <value>отсутствует</value>
   </data>
-  <data name="NoProjectsToViewMessage" xml:space="preserve">
+	<data name="NoProjectsToViewMessage" xml:space="preserve">
     <value>Нет проектов для просмотра.</value>
   </data>
-  <data name="OpenIssuesCount" xml:space="preserve">
+	<data name="OpenIssuesCount" xml:space="preserve">
     <value>открытых заданий: {0}</value>
   </data>
-  <data name="Page.Title" xml:space="preserve">
+	<data name="Page.Title" xml:space="preserve">
     <value>Главная</value>
   </data>
-  <data name="QuickLinks.Text" xml:space="preserve">
+	<data name="QuickLinks.Text" xml:space="preserve">
     <value>Быстрые ссылки</value>
   </data>
-  <data name="QuickLinksFilters.Text" xml:space="preserve">
-    <value>Быстрые ссылки / Задания</value>
-  </data>
-  <data name="RegisterAndLoginMessage" xml:space="preserve">
+	<data name="RegisterAndLoginMessage" xml:space="preserve">
     <value>Вам необходимо войти в систему, чтобы просматривать проекты на этом сайте.</value>
   </data>
-  <data name="UpdatedRecently.Text" xml:space="preserve">
+	<data name="UpdatedRecently.Text" xml:space="preserve">
     <value>Недавно обновлённые</value>
   </data>
-  <data name="NoStatusSet" xml:space="preserve">
+	<data name="NoStatusSet" xml:space="preserve">
     <value>&lt;font color='red'&gt;Внимание:&lt;/font&gt; Для проекта не заданы статусы.</value>
   </data>
-  <data name="NoClosedStatus" xml:space="preserve">
+	<data name="NoClosedStatus" xml:space="preserve">
     <value>&lt;font color='red'&gt;Внимание:&lt;/font&gt; Для проекта не заданы завершающие статусы.</value>
   </data>
-  <data name="AssignedToUser.Text" xml:space="preserve">
+	<data name="AssignedToUser.Text" xml:space="preserve">
     <value>Назначенные мне</value>
   </data>
-  <data name="ProjectSummary.Text" xml:space="preserve">
-    <value>Сводка по проекту</value>
-  </data>
+	<data name="WelcomeMessageHeader.Text" xml:space="preserve">
+		<value>Добро пожаловать в BugNET!</value>
+	</data>
+	<data name="NoProjects.Text" xml:space="preserve">
+		<value>Пока что в системе нет ни одного проекта. Начните работу в BugNET прямо сейчас:</value>
+	</data>
+	<data name="Step1_MessageFormat" xml:space="preserve">
+		<value>Создайте {0}</value>
+	</data>
+	<data name="Step1_LinkText" xml:space="preserve">
+		<value>новый проект</value>
+	</data>
+	<data name="Step2_LinkText" xml:space="preserve">
+		<value>способ аутентификации</value>
+	</data>
+	<data name="Step2_MessageFormat" xml:space="preserve">
+		<value>Определите {0}</value>
+	</data>
+	<data name="Step3_MessageFormat" xml:space="preserve">
+		<value>Укажите {0}</value>
+	</data>
+	<data name="Step3_LinkText" xml:space="preserve">
+		<value>параметры доставки Email</value>
+	</data>
+	<data name="LearnMore.Text" xml:space="preserve">
+		<value>Узнать больше</value>
+	</data>
 </root>

@@ -16,14 +16,14 @@
             <div class="col-sm-9">
                 <!-- projects -->
                 <div class="jumbotron" id="BlankSlate" runat="server" visible="false">
-                    <h1>Welcome to BugNET!</h1>
-                    <p>There are no projects configured for BugNET. We suggest the following to get started:</p>
+                    <h1><asp:Localize ID="WelcomeLocalize" Text="Welcome to BugNET!" meta:resourceKey="WelcomeMessageHeader" runat="server" /></h1>
+                    <p><asp:Localize ID="StartWorkLocalize" Text="[Resource Required]" meta:resourceKey="NoProjects" runat="server"/></p>
                     <ol>
-                        <li>Create a <a href="~/Administration/Projects/AddProject.aspx" runat="server">new project</a></li>
-                        <li>Configure your <a href="~/Administration/Host/Settings.aspx" runat="server">authentication settings</a></li>
-                        <li>Configure your <a href="~/Administration/Host/Settings.aspx" runat="server">email settings</a></li>
+                        <li><asp:Localize runat="server" ID="Step1_Localize" /></li>
+                        <li><asp:Localize runat="server" ID="Step2_Localize" /></li>
+                        <li><asp:Localize runat="server" ID="Step3_Localize" /></li>
                     </ol>
-                    <p><a class="btn btn-primary btn-lg" href="https://bugnet.codeplex.com/documentation" role="button">Learn more</a></p>
+                    <p><a class="btn btn-primary btn-lg" href="http://bugnet.codeplex.com/documentation" role="button"><asp:Localize runat="server" ID="LearnMoreLocalize" meta:resourcekey="LearnMore"/></a></p>
                 </div>
                 <br>
                 <div class="alert alert-info" id="UserMessage" runat="server" visible="False">
@@ -52,14 +52,14 @@
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-right">
                                                 <li>
-                                                    <div class="row" style="width:300px;padding:10px;">
+                                                    <div class="row" style="width:350px;padding:10px;">
                                                         <ul class="list-unstyled col-md-6">
                                                             <li role="presentation" class="dropdown-header">
                                                                <asp:Localize runat="server" ID="QuickLinksLocalize" Text="Quick Links" meta:resourcekey="QuickLinks" />
                                                             </li>
                                                             <li>
                                                                 <a href="Projects/ProjectSummary.aspx?pid=<%# ((Project)Container.DataItem).Id %>">
-                                                                    <asp:Localize runat="server" ID="Localize33" Text="Project Summary" meta:resourcekey="ProjectSummary" /></a></li>
+                                                                    <asp:Localize runat="server" ID="Localize33" Text="<%$ Resources:SharedResources, ProjectSummary %>" /></a></li>
                                                             <li>
                                                                 <a href="Queries/QueryList.aspx?pid=<%# ((Project)Container.DataItem).Id %>">
                                                                     <asp:Localize runat="server" ID="Localize4" Text="<%$ Resources:SharedResources, Queries %>" /></a>
