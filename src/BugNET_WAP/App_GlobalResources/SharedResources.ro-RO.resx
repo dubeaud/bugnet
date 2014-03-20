@@ -477,4 +477,13 @@
 	<data name="ProjectSummary" xml:space="preserve">
 		<value>Rezumat</value>
 	</data>
+	<data name="Register" xml:space="preserve">
+		<value>Inregistrare</value>
+	</data>
+	<data name="Login" xml:space="preserve">
+		<value>Autentificare</value>
+	</data>
+	<data name="Logout" xml:space="preserve">
+		<value>Delogare</value>
+	</data>
 </root>

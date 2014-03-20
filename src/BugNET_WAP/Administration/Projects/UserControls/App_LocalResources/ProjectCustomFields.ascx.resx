@@ -1,6 +1,6 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
+	<!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,125 +59,125 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-    <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexType>
-        <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="assembly">
-            <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="data">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="resheader">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:choice>
-      </xsd:complexType>
-    </xsd:element>
-  </xsd:schema>
-  <resheader name="resmimetype">
-    <value>text/microsoft-resx</value>
-  </resheader>
-  <resheader name="version">
-    <value>2.0</value>
-  </resheader>
-  <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <data name="AddNew" xml:space="preserve">
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute name="name" use="required" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="assembly">
+						<xsd:complexType>
+							<xsd:attribute name="alias" type="xsd:string" />
+							<xsd:attribute name="name" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="AddNew" xml:space="preserve">
     <value>Add New Custom Field</value>
   </data>
-  <data name="ConfirmCustomFieldSelectionDelete" xml:space="preserve">
+	<data name="ConfirmCustomFieldSelectionDelete" xml:space="preserve">
     <value>Are you sure you want to delete the "{0}" selection?  This action will remove this value from any issues that have this value assigned to it.</value>
   </data>
-  <data name="ConfirmDelete" xml:space="preserve">
+	<data name="ConfirmDelete" xml:space="preserve">
     <value>Are you sure you want to delete the "{0}" field?  This delete cannot be undone. </value>
   </data>
-  <data name="CustomFieldsTitle.Text" xml:space="preserve">
+	<data name="CustomFieldsTitle.Text" xml:space="preserve">
     <value>Custom Fields (optional)</value>
   </data>
-  <data name="DataType" xml:space="preserve">
+	<data name="DataType" xml:space="preserve">
     <value>Data Type</value>
   </data>
-  <data name="DateType.Text" xml:space="preserve">
+	<data name="DateType.Text" xml:space="preserve">
     <value>Date</value>
   </data>
-  <data name="DescriptionLabel.Text" xml:space="preserve">
+	<data name="DescriptionLabel.Text" xml:space="preserve">
     <value>You can add one or more custom fields to a project. You can assign a data type to each custom field. In addtion, each custom field can be marked as either required or optional.</value>
   </data>
-  <data name="DropDownListType.Text" xml:space="preserve">
+	<data name="DropDownListType.Text" xml:space="preserve">
     <value>Drop Down List</value>
   </data>
-  <data name="Field" xml:space="preserve">
+	<data name="Field" xml:space="preserve">
     <value>Field</value>
   </data>
-  <data name="FieldName" xml:space="preserve">
+	<data name="FieldName" xml:space="preserve">
     <value>Field Name</value>
   </data>
-  <data name="FieldType" xml:space="preserve">
+	<data name="FieldType" xml:space="preserve">
     <value>Field Type</value>
   </data>
-  <data name="NewCustomFieldTitle.Text" xml:space="preserve">
+	<data name="NewCustomFieldTitle.Text" xml:space="preserve">
     <value>New Custom Field</value>
   </data>
-  <data name="Required" xml:space="preserve">
+	<data name="Required" xml:space="preserve">
     <value>Required</value>
   </data>
-  <data name="RichTextType.Text" xml:space="preserve">
+	<data name="RichTextType.Text" xml:space="preserve">
     <value>Rich Text</value>
   </data>
-  <data name="SelectionValuesLabel.Text" xml:space="preserve">
+	<data name="SelectionValuesLabel.Text" xml:space="preserve">
     <value>Selection Values</value>
   </data>
-  <data name="TextType.Text" xml:space="preserve">
+	<data name="TextType.Text" xml:space="preserve">
     <value>Text</value>
   </data>
-  <data name="UserList.Type" xml:space="preserve">
+	<data name="UserList.Type" xml:space="preserve">
     <value>User List</value>
   </data>
-  <data name="Value" xml:space="preserve">
+	<data name="Value" xml:space="preserve">
     <value>Value</value>
   </data>
-  <data name="YesNoType.Text" xml:space="preserve">
+	<data name="YesNoType.Text" xml:space="preserve">
     <value>Yes / No</value>
   </data>
-  <data name="UserListType.Text" xml:space="preserve">
+	<data name="UserListType.Text" xml:space="preserve">
     <value>User List</value>
   </data>
-  <data name="Name" xml:space="preserve">
+	<data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
 </root>

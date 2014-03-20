@@ -163,7 +163,7 @@
 		<value>Значение</value>
 	</data>
 	<data name="YesNoType.Text" xml:space="preserve">
-		<value>Да / Нет</value>
+		<value>Логический</value>
 	</data>
 	<data name="Name" xml:space="preserve">
 		<value>Имя</value>

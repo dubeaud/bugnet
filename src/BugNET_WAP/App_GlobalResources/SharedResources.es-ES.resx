@@ -456,4 +456,13 @@
 	<data name="ProjectSummary" xml:space="preserve">
 		<value>Resumen</value>
 	</data>
+	<data name="Register" xml:space="preserve">
+		<value>Registro</value>
+	</data>
+	<data name="Login" xml:space="preserve">
+		<value>Entrar</value>
+	</data>
+	<data name="Logout" xml:space="preserve">
+		<value>Salir</value>
+	</data>
 </root>

@@ -480,4 +480,19 @@
 	<data name="ProjectSummary" xml:space="preserve">
 		<value>Сводка</value>
 	</data>
+	<data name="Register" xml:space="preserve">
+		<value>Регистрация</value>
+	</data>
+	<data name="Login" xml:space="preserve">
+		<value>Вход</value>
+	</data>
+	<data name="Logout" xml:space="preserve">
+		<value>Выход</value>
+	</data>
+	<data name="ViewProfile" xml:space="preserve">
+		<value>Ваш профиль</value>
+	</data>
+	<data name="ManageAccount" xml:space="preserve">
+		<value>Ваша учётная запись</value>
+	</data>
 </root>

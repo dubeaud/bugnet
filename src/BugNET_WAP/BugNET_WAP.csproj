@@ -2298,7 +2298,6 @@
       <LastGenOutput>SharedResources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="UserControls\App_LocalResources\Banner.ascx.resx" />
     <Content Include="App_LocalResources\Default.aspx.resx">
       <SubType>Designer</SubType>
     </Content>
@@ -2434,7 +2433,6 @@
     <Content Include="Projects\App_LocalResources\Roadmap.aspx.es-ES.resx" />
     <Content Include="Queries\App_LocalResources\QueryDetail.aspx.es-ES.resx" />
     <Content Include="Queries\App_LocalResources\QueryList.aspx.es-ES.resx" />
-    <Content Include="UserControls\App_LocalResources\Banner.ascx.es-ES.resx" />
     <Content Include="UserControls\App_LocalResources\CategoryTreeView.ascx.es-ES.resx" />
     <Content Include="UserControls\App_LocalResources\DisplayIssues.ascx.es-ES.resx">
       <SubType>Designer</SubType>
@@ -2511,7 +2509,6 @@
     <Content Include="Projects\App_LocalResources\Roadmap.aspx.nl-NL.resx" />
     <Content Include="Queries\App_LocalResources\QueryDetail.aspx.nl-NL.resx" />
     <Content Include="Queries\App_LocalResources\QueryList.aspx.nl-NL.resx" />
-    <Content Include="UserControls\App_LocalResources\Banner.ascx.nl-NL.resx" />
     <Content Include="UserControls\App_LocalResources\CategoryTreeView.ascx.nl-NL.resx" />
     <Content Include="UserControls\App_LocalResources\DisplayIssues.ascx.nl-NL.resx" />
     <Content Include="UserControls\App_LocalResources\LoginControl.ascx.nl-NL.resx" />
@@ -2560,7 +2557,6 @@
     <Content Include="Projects\App_LocalResources\Roadmap.aspx.it-IT.resx" />
     <Content Include="Queries\App_LocalResources\QueryDetail.aspx.it-IT.resx" />
     <Content Include="Queries\App_LocalResources\QueryList.aspx.it-IT.resx" />
-    <Content Include="UserControls\App_LocalResources\Banner.ascx.it-IT.resx" />
     <Content Include="UserControls\App_LocalResources\CategoryTreeView.ascx.it-IT.resx" />
     <Content Include="UserControls\App_LocalResources\DisplayIssues.ascx.it-IT.resx" />
     <Content Include="UserControls\App_LocalResources\Footer.ascx.it-IT.resx" />
@@ -2643,7 +2639,6 @@
     <Content Include="Projects\App_LocalResources\Roadmap.aspx.ru-RU.resx" />
     <Content Include="Queries\App_LocalResources\QueryDetail.aspx.ru-RU.resx" />
     <Content Include="Queries\App_LocalResources\QueryList.aspx.ru-RU.resx" />
-    <Content Include="UserControls\App_LocalResources\Banner.ascx.ru-RU.resx" />
     <Content Include="UserControls\App_LocalResources\CategoryTreeView.ascx.ru-RU.resx" />
     <Content Include="UserControls\App_LocalResources\DisplayIssues.ascx.ru-RU.resx" />
     <Content Include="UserControls\App_LocalResources\Footer.ascx.ru-RU.resx" />
@@ -2721,7 +2716,6 @@
     <Content Include="Projects\App_LocalResources\Roadmap.aspx.ro-RO.resx" />
     <Content Include="Queries\App_LocalResources\QueryDetail.aspx.ro-RO.resx" />
     <Content Include="Queries\App_LocalResources\QueryList.aspx.ro-RO.resx" />
-    <Content Include="UserControls\App_LocalResources\Banner.ascx.ro-RO.resx" />
     <Content Include="UserControls\App_LocalResources\CategoryTreeView.ascx.ro-RO.resx" />
     <Content Include="UserControls\App_LocalResources\DisplayIssues.ascx.ro-RO.resx" />
     <Content Include="UserControls\App_LocalResources\Footer.ascx.ro-RO.resx" />
@@ -2778,7 +2772,6 @@
     <Content Include="Projects\App_LocalResources\Roadmap.aspx.fr-CA.resx" />
     <Content Include="Queries\App_LocalResources\QueryDetail.aspx.fr-CA.resx" />
     <Content Include="Queries\App_LocalResources\QueryList.aspx.fr-CA.resx" />
-    <Content Include="UserControls\App_LocalResources\Banner.ascx.fr-CA.resx" />
     <Content Include="UserControls\App_LocalResources\CategoryTreeView.ascx.fr-CA.resx" />
     <Content Include="UserControls\App_LocalResources\DisplayIssues.ascx.fr-CA.resx" />
     <Content Include="UserControls\App_LocalResources\Footer.ascx.fr-CA.resx" />
@@ -3030,9 +3023,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Queries\App_LocalResources\QueryList.aspx.de-DE.resx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="UserControls\App_LocalResources\Banner.ascx.de-DE.resx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="UserControls\App_LocalResources\CategoryTreeView.ascx.de-DE.resx" />

@@ -35,13 +35,13 @@
 
     <bn:Message ID="Message1" runat="server" Visible="False" />
     <div class="row">
-        <div class="col-md-offset-3 col-md-6">
+        <div class="col-md-offset-3 col-md-5">
             <asp:LinkButton ID="SaveButton" runat="server" CssClass="btn btn-primary" OnClick="SaveButton_Click" Text="<%$ Resources:SharedResources, Save %>" />
             <asp:LinkButton ID="RestoreButton" runat="server" CssClass="btn btn-default" CausesValidation="False" OnClick="RestoreButton_Click" Text="<%$ Resources:RestoreProject %>" />
             <a href="#" id="linkCloneProject" data-selector="CloneProject" data-toggle="modal" data-target="#cloneProjectModal" class="btn btn-default" runat="server">
                 <asp:Literal ID="Literal1" runat="Server" Text="<%$ Resources:SharedResources, CloneProject %>" /></a>
         </div>
-        <div class="col-md-3 text-right">
+        <div class="col-md-4 text-right">
             <asp:LinkButton ID="DeleteButton" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="DeleteButton_Click" Text="<%$ Resources:DeleteProject %>" />
             <asp:LinkButton ID="DisableButton" runat="server" CssClass="btn btn-default btn-warning" CausesValidation="False" OnClick="DisableButton_Click" Text="<%$ Resources:DisableProject %>" />
         </div>

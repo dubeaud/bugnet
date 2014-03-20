@@ -480,4 +480,19 @@
 	<data name="ProjectSummary" xml:space="preserve">
 		<value>Summary</value>
 	</data>
+	<data name="Register" xml:space="preserve">
+		<value>Register</value>
+	</data>
+	<data name="Login" xml:space="preserve">
+		<value>Login</value>
+	</data>
+	<data name="Logout" xml:space="preserve">
+		<value>Logout</value>
+	</data>
+	<data name="ViewProfile" xml:space="preserve">
+		<value>View profile</value>
+	</data>
+	<data name="ManageAccount" xml:space="preserve">
+		<value>Manage your account</value>
+	</data>
 </root>

@@ -15,12 +15,12 @@
                 <asp:ListBox ID="lstAllUsers" CssClass="form-control" SelectionMode="Multiple" Height="150px" runat="Server" />
             </div>
             <div class="col-md-2 text-center" style="padding-top: 50px;">
-                  <button ID="Button4" type="button" class="btn btn-default" onserverclick="AddUser" runat="server">
+                <button ID="Button4" type="button" class="btn btn-default" onserverclick="AddUser" runat="server">
                   <span class="glyphicon glyphicon-chevron-right"></span>
                 </button>
                 <br />
                 <br />
-                 <button ID="Button1" type="button" class="btn btn-default" onserverclick="RemoveUser" runat="server">
+                <button ID="Button1" type="button" class="btn btn-default" onserverclick="RemoveUser" runat="server">
                   <span class="glyphicon glyphicon-chevron-left"></span>
                 </button>
             </div>
@@ -45,8 +45,8 @@
     <ContentTemplate>
         <div class="row" style="margin-bottom: 15px;">
             <div class="form-group">
-                <asp:Label ID="Label4" runat="server" AssociatedControlID="ddlProjectMembers" Text="<%$ Resources:SharedResources, Username %>" CssClass="control-label col-md-2" />
-                <div class="col-md-10">
+                <asp:Label ID="Label4" runat="server" AssociatedControlID="ddlProjectMembers" Text="<%$ Resources:SharedResources, Username %>" CssClass="control-label col-md-4" />
+                <div class="col-md-8">
                     <asp:DropDownList CssClass="form-control" AutoPostBack="True" ID="ddlProjectMembers" DataTextField="DisplayName" DataValueField="UserName" runat="Server" />
                 </div>
             </div>

@@ -79,15 +79,15 @@
                 <h3>
                     <asp:Literal ID="AddNewResolutionLabel" runat="Server" meta:resourcekey="AddNewResolutionLabel" Text="Add New Resolution" /></h3>
                 <div class="form-group">
-                    <asp:Label ID="ResolutionNameLabel" CssClass="control-label col-md-2" AssociatedControlID="txtName" runat="Server" Text="<%$ Resources:SharedResources, Name %>" />
-                    <div class="col-md-10">
+                    <asp:Label ID="ResolutionNameLabel" CssClass="control-label col-md-4" AssociatedControlID="txtName" runat="Server" Text="<%$ Resources:SharedResources, Name %>" />
+                    <div class="col-md-8">
                         <asp:TextBox ID="txtName" CssClass="form-control" MaxLength="50" runat="Server" />
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="<%= lstImages.ClientID %>" class="control-label col-md-2">
+                    <label for="<%= lstImages.ClientID %>" class="control-label col-md-4">
                         <asp:Literal ID="Literal1" runat="server" Text="<%$ Resources:SharedResources, Image%>" /></label>
-                    <div class="col-m-10">
+                    <div class="col-md-8">
                         <IT:PickImage ID="lstImages" ImageDirectory="/Resolution" runat="Server" />
                     </div>
                 </div>

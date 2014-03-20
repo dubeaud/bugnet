@@ -74,12 +74,12 @@
                         <EditItemTemplate>
                             <asp:DropDownList ID="dropCustomFieldType" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="DropFieldType_SelectedIndexChanged"
                                 runat="Server">
-                                <asp:ListItem Text="Text" Selected="True" Value="1" />
-                                <asp:ListItem Text="Drop Down List" Value="2" />
-                                <asp:ListItem Text="Date" Value="3" />
-                                <asp:ListItem Text="Rich Text" Value="4" />
-                                <asp:ListItem Text="Yes / No" Value="5" />
-                                <asp:ListItem Text="User List" Value="6" />
+                                <asp:ListItem Text="Text" Selected="True" Value="1" meta:resourcekey="TextType" />
+                                <asp:ListItem Text="Drop Down List" Value="2" meta:resourcekey="DropDownListType" />
+                                <asp:ListItem Text="Date" Value="3" meta:resourcekey="DateType" />
+                                <asp:ListItem Text="Rich Text" Value="4" meta:resourcekey="RichTextType"/>
+                                <asp:ListItem Text="Yes / No" Value="5" meta:resourcekey="YesNoType"/>
+                                <asp:ListItem Text="User List" Value="6" meta:resourcekey="UserListType"/>
                             </asp:DropDownList>
                         </EditItemTemplate>
                     </asp:TemplateColumn>
@@ -129,7 +129,6 @@
                                                     <div style="font-size: 12px; font-weight: bold; padding: 5px 0 5px 0;">
                                                         <h4>
                                                             <asp:Label ID="SelectionValuesLabel" runat="server" meta:resourcekey="SelectionValuesLabel" /></h4>
-
                                                     </div>
                                                     <asp:DataGrid ID="grdSelectionValues" runat="server"
                                                         CssClass="table table-striped" UseAccessibleHeader="true"
@@ -226,14 +225,14 @@
                 <h3>
                     <asp:Literal ID="DetailsTitle" runat="Server" meta:resourcekey="NewCustomFieldTitle" /></h3>
                 <div class="form-group">
-                    <asp:Label ID="label1" CssClass="control-label col-md-2" runat="server" AssociatedControlID="txtName" Text="<%$ Resources:FieldName %>" />
-                    <div class="col-md-10">
+                    <asp:Label ID="label1" CssClass="control-label col-md-4" runat="server" AssociatedControlID="txtName" Text="<%$ Resources:FieldName %>" />
+                    <div class="col-md-8">
                         <asp:TextBox ID="txtName" CssClass="form-control" MaxLength="255" runat="Server" />
                     </div>
                 </div>
                 <div class="form-group">
-                    <asp:Label ID="label2" CssClass="col-md-2 control-label" runat="server" AssociatedControlID="rblCustomFieldType" Text="<%$ Resources:FieldType %>" />
-                    <div class="col-md-10">
+                    <asp:Label ID="label2" CssClass="col-md-4 control-label" runat="server" AssociatedControlID="rblCustomFieldType" Text="<%$ Resources:FieldType %>" />
+                    <div class="col-md-8">
                         <asp:RadioButtonList AutoPostBack="True" CssClass="radio" OnSelectedIndexChanged="rblCustomFieldType_SelectedIndexChanged" ID="rblCustomFieldType"
                             runat="server">
                             <asp:ListItem Text="Text" Selected="True" Value="1" meta:resourcekey="TextType" />
@@ -247,14 +246,14 @@
                 </div>
 
                 <div class="form-group">
-                    <asp:Label ID="label3" CssClass="control-label col-md-2" runat="server" AssociatedControlID="dropDataType" Text="<%$ Resources:DataType %>" />
-                    <div class="col-md-10">
+                    <asp:Label ID="label3" CssClass="control-label col-md-4" runat="server" AssociatedControlID="dropDataType" Text="<%$ Resources:DataType %>" />
+                    <div class="col-md-8">
                         <asp:DropDownList ID="dropDataType" CssClass="form-control" runat="Server" />
                     </div>
                 </div>
                 <div class="form-group">
-                    <asp:Label ID="label4" CssClass="control-label col-md-2" runat="server" AssociatedControlID="chkRequired" Text="<%$ Resources:Required %>" />
-                    <div class="col-md-10">
+                    <asp:Label ID="label4" CssClass="control-label col-md-4" runat="server" AssociatedControlID="chkRequired" Text="<%$ Resources:Required %>" />
+                    <div class="col-md-8">
                         <div class="checkbox">
                             <asp:CheckBox ID="chkRequired" runat="Server" />
                         </div>
@@ -263,7 +262,6 @@
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <asp:Button Text="<%$ Resources:AddNew %>" CssClass="btn btn-primary" CausesValidation="false" runat="server" ID="Button1" OnClick="lnkAddCustomField_Click" />
-
                     </div>
                 </div>
             </div>

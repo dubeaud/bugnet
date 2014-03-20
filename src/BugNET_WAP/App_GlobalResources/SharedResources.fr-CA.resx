@@ -480,4 +480,13 @@
 	<data name="ProjectSummary" xml:space="preserve">
 		<value>Résumé</value>
 	</data>
+	<data name="Register" xml:space="preserve">
+		<value>Enregistrer</value>
+	</data>
+	<data name="Login" xml:space="preserve">
+		<value>Connexion</value>
+	</data>
+	<data name="Logout" xml:space="preserve">
+		<value>Déconnexion</value>
+	</data>
 </root>

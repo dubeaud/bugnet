@@ -453,4 +453,13 @@
 	<data name="DropDown_SelectCustomField" xml:space="preserve">
     <value>-- Select Custom Field --</value>
   </data>
+	<data name="Register" xml:space="preserve">
+		<value>Aanmelden</value>
+	</data>
+	<data name="Login" xml:space="preserve">
+		<value>Login</value>
+	</data>
+	<data name="Logout" xml:space="preserve">
+		<value>Logout</value>
+	</data>
 </root>
