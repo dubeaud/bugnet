@@ -1,7 +1,7 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Shared/SingleColumn.master" AutoEventWireup="true"
+﻿<%@ Page Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
     CodeBehind="AddUser.aspx.cs" Inherits="BugNET.Administration.Users.AddUser" meta:resourceKey="Page" Async="true" %>
 
-<asp:Content ID="Content3" ContentPlaceHolderID="Content" runat="server">
+<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
     <h1 class="page-title">
         <asp:Localize ID="Localize1" runat="server" Text="<%$ Resources:AddUser %>"></asp:Localize>
     </h1>
