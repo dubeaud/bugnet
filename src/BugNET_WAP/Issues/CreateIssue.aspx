@@ -153,9 +153,8 @@
                     </div>
                 </div>
             </div>
-        
+        </div>
         <it:DisplayCustomFields ID="ctlCustomFields" EnableValidation="true" runat="server" />
-            </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">

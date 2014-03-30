@@ -17,6 +17,8 @@
             <p class="form-control-static">
                 <asp:Label ID="ViewIssuesLabel" runat="server" Font-Bold="true" Text="View Issues:" meta:resourcekey="ViewIssuesLabel"></asp:Label>
             </p>
+        </div>
+        <div class="form-group">
             <asp:DropDownList ID="dropView" CssClass="form-control" AutoPostBack="True" runat="Server" OnSelectedIndexChanged="ViewSelectedIndexChanged">
                 <asp:ListItem Text="-- Select a View --" Value="" meta:resourcekey="ListItem6" />
                 <asp:ListItem Text="Relevant to You" Value="Relevant" meta:resourcekey="ListItem1" />

@@ -69,6 +69,9 @@ namespace BugNET.Projects
         /// </summary>
         private void BindCalendar()
         {
+            Project p = ProjectManager.GetById(ProjectId);
+            ltProject.Text = p.Name;
+            litProjectCode.Text = p.Code;
             prjCalendar.SelectedDate = DateTime.Today;
             prjCalendar.VisibleDate = DateTime.Today;
 
