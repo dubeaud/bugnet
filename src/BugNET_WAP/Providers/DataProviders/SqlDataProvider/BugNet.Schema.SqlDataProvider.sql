@@ -2893,7 +2893,7 @@ IF (@OldSelectionValue != @CustomFieldSelectionValue)
 BEGIN
 	UPDATE BugNet_ProjectCustomFieldValues
 	SET CustomFieldValue = @CustomFieldSelectionValue
-	WHERE CustomFieldId = @CustomFieldId
+	WHERE CustomFieldId = @CustomFieldId AND CustomFieldValue = @OldSelectionValue
 END
 
 GO
