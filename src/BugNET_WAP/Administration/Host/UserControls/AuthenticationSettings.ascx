@@ -55,16 +55,6 @@
                     </asp:RadioButtonList>
                 </div>
             </div>
-            <div class="form-group">
-                <asp:Label ID="label1" CssClass="col-md-4 control-label" runat="server" AssociatedControlID="OpenIdAuthentication"
-                    Text="<%$ Resources:OpenIdAuthentication %>" />
-                <div class="col-md-8">
-                    <asp:RadioButtonList ID="OpenIdAuthentication" CssClass="radio" RepeatLayout="Flow" runat="server" RepeatDirection="Horizontal">
-                        <asp:ListItem Text="<%$ Resources:SharedResources, Enable %>" Value="True" />
-                        <asp:ListItem Text="<%$ Resources:SharedResources, Disable %>" Value="False" Selected="True" />
-                    </asp:RadioButtonList>
-                </div>
-            </div>
             <h3><asp:Literal ID="literal1" runat="server" Text="<%$ Resources:OAuthOpenID %>"/></h3>
             <hr>
             <h4>Facebook</h4>
