@@ -1,8 +1,11 @@
 <%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.master" CodeBehind="CloneProject.aspx.cs" Title="<%$ Resources:CloneProject %>" Inherits="BugNET.Administration.Projects.CloneProject" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <h1 class="page-title">
-        <asp:Literal ID="CloneProjectTitle" runat="Server" Text="<%$ Resources:CloneProject %>" /></h1>
+     <div class="page-header">
+        <h1 class="page-title">
+            <asp:Literal ID="CloneProjectTitle" runat="Server" Text="<%$ Resources:CloneProject %>" />
+        </h1>
+    </div>
     <p>
         <asp:Label ID="Label9" runat="server" meta:resourcekey="DescriptionLabel"></asp:Label>
     </p>

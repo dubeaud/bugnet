@@ -1,9 +1,12 @@
 <%@ Page Language="c#" Inherits="BugNET.Administration.Projects.AddProject" ValidateRequest="false" meta:resourcekey="Page" MasterPageFile="~/Site.master" Title="Add Project" CodeBehind="AddProject.aspx.cs" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <h1>
-        <asp:Literal ID="NewProjectTitle" runat="Server" meta:resourcekey="NewProjectTitle" />
-        (<asp:Literal ID="lblStepNumber" runat="Server" />)</h1>
+     <div class="page-header">
+        <h1 class="page-title">
+           <asp:Literal ID="NewProjectTitle" runat="Server" meta:resourcekey="NewProjectTitle" />
+        (<asp:Literal ID="lblStepNumber" runat="Server" />)
+        </h1>
+    </div>
     <div>
         <asp:PlaceHolder ID="plhWizardStep" runat="Server" />
         <br />
