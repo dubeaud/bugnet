@@ -160,7 +160,7 @@ namespace BugNET.Administration.Projects.UserControls
         /// </summary>
         public void Initialize()
         {
-            DueDateLabel.Text = "Due Date: (" + DateTime.Today.ToShortDateString() + ")   +";
+            DueDateLabel.Text = String.Format(" ({0})   +", DateTime.Today.ToShortDateString());
             BindOptions();
         }
 

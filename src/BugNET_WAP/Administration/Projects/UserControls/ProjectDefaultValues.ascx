@@ -18,218 +18,167 @@
     <asp:Label ID="DescriptionLabel" runat="server" meta:resourcekey="DescriptionLabel" />
 </p>
 
-
-<%-- Wait fix for BGN-2226 --%>
-<%--    <script type="text/javascript">
-        $(document).ready(function () {
-            $('.dateField').datepick({ showOn: 'button',
-                buttonImageOnly: true, buttonImage: '<%=ResolveUrl("~/Images/calendar.gif")%>'
-            });
-        });
-    </script>--%>
 <div class="form-horizontal">
-    <div class="row">
+    <div class="form-group">
+        <asp:Label ID="StatusLabel" runat="server" CssClass="control-label col-md-3" AssociatedControlID="DropStatus" Text="<%$Resources:SharedIssueProperties, StatusLabel %>" />
         <div class="col-md-5">
-            <div class="form-group">
-                <asp:Label ID="StatusLabel" runat="server" CssClass="control-label col-md-4" AssociatedControlID="DropStatus" Text="<%$Resources:SharedIssueProperties, StatusLabel %>" />
-                <div class="col-md-8">
-                    <it:PickStatus ID="DropStatus" runat="Server" DisplayDefault="true" />
-                </div>
-            </div>
+            <it:PickStatus ID="DropStatus" runat="Server" DisplayDefault="true" />
         </div>
-        <div class="col-md-1">
+        <div class="col-md-4">
             <div class="checkbox">
                 <asp:CheckBox ID="chkStatusVisibility" runat="server" Checked="True" meta:ResourceKey="VisibilityCheckBox" />
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <asp:Label ID="OwnerLabel" runat="server" CssClass="control-label col-md-5" AssociatedControlID="DropOwned" Text="<%$Resources:SharedIssueProperties, OwnedByLabel %>" />
-                <div class="col-md-7">
-                    <it:PickSingleUser ID="DropOwned" DisplayDefault="True" Required="False" runat="Server" />
-                </div>
-            </div>
+    </div>
+    <div class="form-group">
+        <asp:Label ID="OwnerLabel" runat="server" CssClass="control-label col-md-3" AssociatedControlID="DropOwned" Text="<%$Resources:SharedIssueProperties, OwnedByLabel %>" />
+        <div class="col-md-5">
+            <it:PickSingleUser ID="DropOwned" DisplayDefault="True" Required="False" runat="Server" />
         </div>
-        <div class="col-md-1">
-            <div class="checkbox">
-                <asp:CheckBox ID="chkNotifyOwner" runat="server" Checked="True" Text="<%$ Resources:SharedIssueProperties, NotifyCheckbox %>" />
-            </div>
-        </div>
-        <div class="col-md-1">
+        <div class="col-md-2">
             <div class="checkbox">
                 <asp:CheckBox ID="chkOwnedByVisibility" runat="server" Checked="True" meta:ResourceKey="VisibilityCheckBox" />
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-5">
-            <div class="form-group">
-                <asp:Label ID="PriorityLabel" CssClass="control-label col-md-4" runat="server" AssociatedControlID="DropPriority" Text="<%$Resources:SharedIssueProperties, PriorityLabel %>" />
-                <div class="col-md-8">
-                    <it:PickPriority ID="DropPriority" DisplayDefault="true" runat="Server" />
-                </div>
+        <div class="col-md-2">
+            <div class="checkbox">
+                <asp:CheckBox ID="chkNotifyOwner" runat="server" Checked="True" Text="<%$ Resources:SharedIssueProperties, NotifyCheckbox %>" />
             </div>
         </div>
-        <div class="col-md-1">
+    </div>
+    <div class="form-group">
+        <asp:Label ID="PriorityLabel" CssClass="control-label col-md-3" runat="server" AssociatedControlID="DropPriority" Text="<%$Resources:SharedIssueProperties, PriorityLabel %>" />
+        <div class="col-md-5">
+           <it:PickPriority ID="DropPriority" DisplayDefault="true" runat="Server" />
+        </div>
+        <div class="col-md-4">
             <div class="checkbox">
                 <asp:CheckBox ID="chkPriorityVisibility" runat="server" Checked="True" meta:ResourceKey="VisibilityCheckBox" />
             </div>
         </div>
+    </div>
+    <div class="form-group">
+        <asp:Label ID="Label4" CssClass="control-label col-md-3" AssociatedControlID="DropAffectedMilestone" runat="server" Text="<%$Resources:SharedIssueProperties, AffectedMilestoneLabel %>" />
         <div class="col-md-5">
-            <div class="form-group">
-                <asp:Label ID="Label4" CssClass="control-label col-md-4" AssociatedControlID="DropAffectedMilestone" runat="server" Text="<%$Resources:SharedIssueProperties, AffectedMilestoneLabel %>" />
-                <div class="col-md-8">
-                    <it:PickMilestone ID="DropAffectedMilestone" DisplayDefault="True" runat="Server" />
-                </div>
-            </div>
-
+           <it:PickMilestone ID="DropAffectedMilestone" DisplayDefault="True" runat="Server" />
         </div>
-        <div class="col-md-1">
+        <div class="col-md-4">
             <div class="checkbox">
                 <asp:CheckBox ID="chkAffectedMilestoneVisibility" runat="server" Checked="True" meta:ResourceKey="VisibilityCheckBox" />
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="form-group">
-                <asp:Label ID="AssignedToLabel" CssClass="control-label col-md-5" runat="server" AssociatedControlID="DropAssignedTo" Text="<%$Resources:SharedIssueProperties, AssignedToLabel %>" />
-                <div class="col-md-7">
-                    <it:PickSingleUser ID="DropAssignedTo" DisplayUnassigned="False" DisplayDefault="True"
-                        Required="false" runat="Server" />
-                </div>
-            </div>
+    <div class="form-group">
+        <asp:Label ID="AssignedToLabel" CssClass="control-label col-md-3" runat="server" AssociatedControlID="DropAssignedTo" Text="<%$Resources:SharedIssueProperties, AssignedToLabel %>" />
+        <div class="col-md-5">
+            <it:PickSingleUser ID="DropAssignedTo" DisplayUnassigned="False" DisplayDefault="True" Required="false" runat="Server" />
         </div>
-        <div class="col-md-1">
-            <div class="checkbox">
-                <asp:CheckBox ID="chkNotifyAssignedTo" runat="server" Checked="True" Text="<%$ Resources:SharedIssueProperties, NotifyCheckbox %>" />
-            </div>
-        </div>
-        <div class="col-md-1">
+        <div class="col-md-2">
             <div class="checkbox">
                 <asp:CheckBox ID="chkAssignedToVisibility" runat="server" Checked="True" meta:ResourceKey="VisibilityCheckBox" />
             </div>
         </div>
-        <div class="col-md-5">
-            <div class="form-group">
-                <asp:Label ID="PrivateLabel" CssClass="control-label col-md-4" AssociatedControlID="chkPrivate" runat="server" Text="<%$Resources:SharedIssueProperties, PrivateLabel %>" />
-                <div class="col-md-8">
-                    <div class="checkbox">
-                        <asp:CheckBox ID="chkPrivate" runat="server" />
-                    </div>
-
-                </div>
+        <div class="col-md-2">
+            <div class="checkbox">
+                <asp:CheckBox ID="chkNotifyAssignedTo" runat="server" Checked="True" Text="<%$ Resources:SharedIssueProperties, NotifyCheckbox %>" />
             </div>
         </div>
-        <div class="col-md-1">
+    </div>
+    <div class="form-group">
+        <asp:Label ID="PrivateLabel" CssClass="control-label col-md-3" AssociatedControlID="chkPrivate" runat="server" Text="<%$Resources:SharedIssueProperties, PrivateLabel %>" />
+        <div class="col-md-5">
+            <div class="checkbox">
+                <asp:CheckBox ID="chkPrivate" runat="server" />
+            </div>
+        </div>
+        <div class="col-md-4">
             <div class="checkbox">
                 <asp:CheckBox ID="chkPrivateVisibility" runat="server" Checked="True" meta:ResourceKey="VisibilityCheckBox" />
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="form-group">
+        <asp:Label ID="CategoryLabel" CssClass="control-label col-md-3" AssociatedControlID="DropCategory" runat="server" Text="<%$Resources:SharedIssueProperties, CategoryLabel %>" />
         <div class="col-md-5">
-            <div class="form-group">
-                <asp:Label ID="CategoryLabel" CssClass="control-label col-md-4" AssociatedControlID="DropCategory" runat="server" Text="<%$Resources:SharedIssueProperties, CategoryLabel %>" />
-                <div class="col-md-8">
-                    <it:PickCategory ID="DropCategory" DisplayDefault="true" Required="false" runat="Server" />
-                </div>
-            </div>
+            <it:PickCategory ID="DropCategory" DisplayDefault="true" Required="false" runat="Server" />
         </div>
-        <div class="col-md-1">
+        <div class="col-md-4">
             <div class="checkbox">
                 <asp:CheckBox ID="chkCategoryVisibility" runat="server" Checked="True" meta:ResourceKey="VisibilityCheckBox" />
             </div>
         </div>
+    </div>
+    <div class="form-group">
+        <asp:Label runat="server" CssClass="control-label col-md-3" AssociatedControlID="DueDate" ID="DueDateLabel" Text="<%$Resources:SharedIssueProperties, DueDateLabel %>" />
         <div class="col-md-5">
-            <div class="form-group">
-                <asp:Label runat="server" CssClass="control-label col-md-4" AssociatedControlID="DueDate" ID="DueDateLabel" Text="<%$Resources:SharedIssueProperties, DueDateLabel %>" />
-                <div class="col-md-8">
-                    <asp:TextBox ID="DueDate" Width="40" CssClass="form-control text-right" runat="server" />
-                    <small>
-                        <asp:Label runat="server" AssociatedControlID="DueDate" ID="days" Text="<%$Resources:SharedIssueProperties, DaysLabel %>" /></small>
-                </div>
-            </div>
+            <asp:TextBox ID="DueDate" Width="40" CssClass="form-control text-right" runat="server" />
+            <small>
+               <asp:Label runat="server" ID="days" Text="<%$Resources:SharedIssueProperties, DaysLabel %>" />
+            </small>
         </div>
-        <div class="col-md-1">
+        <div class="col-md-4">
             <div class="checkbox">
-                <asp:CheckBox ID="chkDueDateVisibility" runat="server" Checked="True" meta:ResourceKey="VisibilityCheckBox" />
+               <asp:CheckBox ID="chkDueDateVisibility" runat="server" Checked="True" meta:ResourceKey="VisibilityCheckBox" />
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="form-group">
+        <asp:Label ID="IssueTypeLabel" CssClass="control-label col-md-3" AssociatedControlID="DropIssueType" runat="server" Text="<%$Resources:SharedIssueProperties, IssueTypeLabel %>" />
         <div class="col-md-5">
-            <div class="form-group">
-                <asp:Label ID="IssueTypeLabel" CssClass="control-label col-md-4" AssociatedControlID="DropIssueType" runat="server" Text="<%$Resources:SharedIssueProperties, IssueTypeLabel %>" />
-                <div class="col-md-8">
-                    <it:PickType ID="DropIssueType" DisplayDefault="True" runat="Server" />
-                </div>
-            </div>
+            <it:PickType ID="DropIssueType" DisplayDefault="True" runat="Server" />
         </div>
-        <div class="col-md-1">
+        <div class="col-md-4">
             <div class="checkbox">
                 <asp:CheckBox ID="chkTypeVisibility" runat="server" Checked="True" meta:ResourceKey="VisibilityCheckBox" />
             </div>
         </div>
+    </div>
+    <div class="form-group">
+        <asp:Label ID="Label3" CssClass="control-label col-md-3" runat="server" AssociatedControlID="ProgressSlider" Text="<%$Resources:SharedIssueProperties, ProgressLabel %>" />
         <div class="col-md-5">
-            <div class="form-group">
-                <asp:Label ID="Label3" CssClass="control-label col-md-4" runat="server" AssociatedControlID="ProgressSlider" Text="<%$Resources:SharedIssueProperties, ProgressLabel %>" />
-                <div class="col-md-8">
-                    <asp:TextBox ID="ProgressSlider" runat="server" CssClass="form-control" Text="0" />
-                </div>
-            </div>
+            <asp:TextBox ID="ProgressSlider" runat="server" CssClass="form-control" Text="0" />
         </div>
-        <div class="col-md-1">
+        <div class="col-md-4">
             <div class="checkbox">
                 <asp:CheckBox ID="chkPercentCompleteVisibility" runat="server" Checked="True" meta:ResourceKey="VisibilityCheckBox" />
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="form-group">
+        <asp:Label ID="MilestoneLabel" CssClass="control-label col-md-3" AssociatedControlID="DropMilestone" runat="server" Text="<%$Resources:SharedIssueProperties, MilestoneLabel %>" />
         <div class="col-md-5">
-            <div class="form-group">
-                <asp:Label ID="MilestoneLabel" CssClass="control-label col-md-4" AssociatedControlID="DropMilestone" runat="server" Text="<%$Resources:SharedIssueProperties, MilestoneLabel %>" />
-                <div class="col-md-8">
-                    <it:PickMilestone ID="DropMilestone" DisplayDefault="True" runat="Server" />
-                </div>
-            </div>
+            <it:PickMilestone ID="DropMilestone" DisplayDefault="True" runat="Server" />
         </div>
-        <div class="col-md-1">
+        <div class="col-md-4">
             <div class="checkbox">
                 <asp:CheckBox ID="chkMilestoneVisibility" runat="server" Checked="True" meta:ResourceKey="VisibilityCheckBox" />
             </div>
         </div>
+    </div>
+    <div class="form-group">
+        <asp:Label ID="EstimationLabel" CssClass="control-label col-md-3" runat="server" AssociatedControlID="txtEstimation" Text="<%$Resources:SharedIssueProperties, EstimationLabel %>" />
         <div class="col-md-5">
-            <div class="form-group">
-                <asp:Label ID="EstimationLabel" CssClass="control-label col-md-4" runat="server" AssociatedControlID="txtEstimation" Text="<%$Resources:SharedIssueProperties, EstimationLabel %>" />
-                <div class="col-md-8">
-                    <asp:TextBox ID="txtEstimation" CssClass="form-control text-right" Width="80px" runat="server" />
-                    &nbsp;<small><asp:Label ID="HoursLabel" runat="server" Text="<%$Resources:SharedIssueProperties, HoursLabel %>" /></small>
-                    <asp:RangeValidator ID="RangeValidator2" runat="server" ErrorMessage="<%$Resources:SharedIssueProperties, EstimationValidatorMessage %>"
-                        ControlToValidate="txtEstimation" MaximumValue="999" MinimumValue="0" Display="Dynamic" SetFocusOnError="True" ForeColor="Red" />
-
-                </div>
-            </div>
+            <asp:TextBox ID="txtEstimation" CssClass="form-control text-right" Width="80px" runat="server" />
+            &nbsp;<small><asp:Label ID="HoursLabel" runat="server" Text="<%$Resources:SharedIssueProperties, HoursLabel %>" /></small>
+            <asp:RangeValidator ID="RangeValidator2" runat="server" ErrorMessage="<%$Resources:SharedIssueProperties, EstimationValidatorMessage %>"
+               ControlToValidate="txtEstimation" MaximumValue="999" MinimumValue="0" Display="Dynamic" SetFocusOnError="True" ForeColor="Red" />
         </div>
-        <div class="col-md-1">
+        <div class="col-md-4">
             <div class="checkbox">
                 <asp:CheckBox ID="chkEstimationVisibility" runat="server" Checked="True" meta:ResourceKey="VisibilityCheckBox" />
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="form-group">
+        <asp:Label ID="ResolutionLabel" CssClass="control-label col-md-3" runat="server" AssociatedControlID="DropResolution" Text="<%$Resources:SharedIssueProperties, ResolutionLabel %>" />
         <div class="col-md-5">
-            <asp:Label ID="ResolutionLabel" CssClass="control-label col-md-4" runat="server" AssociatedControlID="DropResolution" Text="<%$Resources:SharedIssueProperties, ResolutionLabel %>" />
-            <div class="col-md-8">
-                <it:PickResolution ID="DropResolution" DisplayDefault="True" runat="Server" />
-            </div>
+            <it:PickResolution ID="DropResolution" DisplayDefault="True" runat="Server" />
         </div>
-        <div class="col-md-1">
+        <div class="col-md-4">
             <div class="checkbox">
                 <asp:CheckBox ID="chkResolutionVisibility" runat="server" Checked="True" meta:ResourceKey="VisibilityCheckBox" />
             </div>
         </div>
-
     </div>
 </div>
 

@@ -129,9 +129,6 @@
 	<data name="DomainPath" xml:space="preserve">
 		<value>Domein / Pad</value>
 	</data>
-	<data name="OpenIdAuthentication" xml:space="preserve">
-		<value>Open Id authenticatie</value>
-	</data>
 	<data name="PasswordsMustMatch" xml:space="preserve">
 		<value>Wachtwoorden moeten overeenkomen</value>
 	</data>

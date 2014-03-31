@@ -135,14 +135,11 @@
 	<data name="FacebookAppSecret" xml:space="preserve">
     <value>App Secret</value>
   </data>
-  <data name="MicrosoftClientId" xml:space="preserve">
+	<data name="MicrosoftClientId" xml:space="preserve">
     <value>Client Id</value>
   </data>
-  <data name="MicrosoftClientSecret" xml:space="preserve">
+	<data name="MicrosoftClientSecret" xml:space="preserve">
     <value>Client Secret</value>
-  </data>
-	<data name="OpenIdAuthentication" xml:space="preserve">
-    <value>Open Id Authentication</value>
   </data>
 	<data name="PasswordsMustMatch" xml:space="preserve">
     <value>Passwords must match</value>

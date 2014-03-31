@@ -129,9 +129,6 @@
 	<data name="DomainPath" xml:space="preserve">
     <value>Dominio / percorso</value>
   </data>
-	<data name="OpenIdAuthentication" xml:space="preserve">
-    <value>Autenticazione OpenID</value>
-  </data>
 	<data name="PasswordsMustMatch" xml:space="preserve">
     <value>Le password devono coinsidere</value>
   </data>
