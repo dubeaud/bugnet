@@ -26,8 +26,15 @@ namespace BugNET.Issues
             {
                 pnlResultsMessage.Visible = true;
                 pnlSearchResults.Visible = false;
+
+                if(Request.QueryString["q"] != null)
+                {
+                    txtSearch.Text = Request.QueryString["q"].ToString();
+                    BindIssues();
+                }
             }
 
+            
             // The ExpandIssuePaths method is called to handle
             // the SiteMapResolve event.
             SiteMap.SiteMapResolve += ExpandIssuePaths;

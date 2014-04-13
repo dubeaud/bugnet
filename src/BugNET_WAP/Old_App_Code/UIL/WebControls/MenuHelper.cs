@@ -15,7 +15,7 @@ namespace BugNET.UserInterfaceLayer.WebControls
         {
             //Setup menu... 
             Items.Add(new SuckerMenuItem("~/Default.aspx", Resources.SharedResources.Home, this));
-            Items.Add(new SuckerMenuItem("~/Issues/IssueSearch.aspx", Resources.SharedResources.Search, this));
+            //Items.Add(new SuckerMenuItem("~/Issues/IssueSearch.aspx", Resources.SharedResources.Search, this));
 
             if (projectId > Globals.NEW_ID)
             {
@@ -48,7 +48,7 @@ namespace BugNET.UserInterfaceLayer.WebControls
             Items.Add(new SuckerMenuItem("~/Issues/MyIssues.aspx", Resources.SharedResources.MyIssues, this));
 
             if (projectId > Globals.NEW_ID && (UserManager.IsInRole(projectId, Globals.ProjectAdminRole) || UserManager.IsSuperUser()))
-                Items.Add(new SuckerMenuItem(string.Format("~/Administration/Projects/EditProject.aspx?pid={0}", projectId), Resources.SharedResources.EditProject, this,"admin"));
+                Items.Add(new SuckerMenuItem(string.Format("~/Administration/Projects/EditProject.aspx?pid={0}", projectId), Resources.SharedResources.EditProject, this, "admin"));
 
             if (!UserManager.IsSuperUser()) return;
 

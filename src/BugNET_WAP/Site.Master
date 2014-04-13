@@ -15,7 +15,6 @@
     </asp:PlaceHolder>
     <webopt:BundleReference runat="server" Path="~/Content/css" />
     <asp:ContentPlaceHolder runat="server" ID="HeadContent" />
-
 </head>
 <body>
     <form runat="server">
@@ -38,6 +37,7 @@
                 <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
                 <asp:ScriptReference Name="WebFormsBundle" />
                 <%--Site Scripts--%>
+                <asp:ScriptReference Path="~/Scripts/app.js" />
             </Scripts>
         </ajaxToolkit:ToolkitScriptManager>
         <div class="navbar navbar-inverse navbar-fixed-top">
@@ -57,8 +57,21 @@
                     <asp:LoginView runat="server" ID="LoginView1" ViewStateMode="Disabled">
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/Account/Register"><asp:Localize runat="server" Text="<%$ Resources:SharedResources, Register %>" /></a></li>
-                                <li><a runat="server" href="~/Account/Login"><asp:Localize runat="server" Text="<%$ Resources:SharedResources, Login %>" /></a></li>
+                                <li><a runat="server" href="~/Account/Register">
+                                    <asp:Localize runat="server" Text="<%$ Resources:SharedResources, Register %>" /></a></li>
+                                <li><a runat="server" href="~/Account/Login">
+                                    <asp:Localize runat="server" Text="<%$ Resources:SharedResources, Login %>" /></a></li>
+                                <li>
+                                    <span class="search search-btn glyphicon glyphicon-search"></span>
+                                    <div class="search-open">
+                                        <div class="input-group animated fadeInDown">
+                                            <input type="text" class="search-box form-control" placeholder="Search">
+                                            <span class="input-group-btn">
+                                                <button class="btn search-go" type="button">Go</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </li>
                             </ul>
                         </AnonymousTemplate>
                         <LoggedInTemplate>
@@ -72,17 +85,30 @@
                                         <b class="caret"></b>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a runat="server" href="~/Account/UserProfile"><asp:Localize runat="server" Text="<%$ Resources:SharedResources, ViewProfile %>" /></a></li>
-                                        <li><a runat="server" class="username" href="~/Account/Manage"><asp:Localize runat="server" Text="<%$ Resources:SharedResources, ManageAccount %>" /></a></li>
+                                        <li><a runat="server" href="~/Account/UserProfile">
+                                            <asp:Localize runat="server" Text="<%$ Resources:SharedResources, ViewProfile %>" /></a></li>
+                                        <li><a runat="server" class="username" href="~/Account/Manage">
+                                            <asp:Localize runat="server" Text="<%$ Resources:SharedResources, ManageAccount %>" /></a></li>
                                         <li>
                                             <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="<%$ Resources:SharedResources, Logout %>" LogoutPageUrl="~/" />
                                         </li>
                                     </ul>
                                 </li>
-
+                                <li>
+                                    <span class="search search-btn glyphicon glyphicon-search"></span>
+                                    <div class="search-open">
+                                        <div class="input-group animated fadeInDown">
+                                            <input type="text" class="search-box form-control" placeholder="Search">
+                                            <span class="input-group-btn">
+                                                <button class="btn search-go" type="button">Go</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </li>
                             </ul>
                         </LoggedInTemplate>
                     </asp:LoginView>
+
                 </div>
             </div>
         </div>
