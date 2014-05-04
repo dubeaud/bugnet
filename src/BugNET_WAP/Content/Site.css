@@ -1,6 +1,6 @@
 ﻿/* Move down content because we have a fixed navbar that is 50px tall */
 body {
-    padding-top: 60px;
+    padding-top: 100px;
     padding-bottom: 20px;
 }
 
@@ -31,10 +31,61 @@ input[type="password"] {
 }
 .navbar-brand
 {
-    padding: 7px 10px 10px 5px;
+    padding: 5px 10px 10px 5px;
 }
 .navbar-brand img{
     margin-right:5px;
+}
+
+.navbar-inverse {
+    border-radius: 0;
+    /*background: rgba(0, 0, 0, .8);*/
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    /*min-height: 100px;*/
+    /*padding-top: 25px;*/
+}
+
+/*Top Bar (login, search etc.)
+------------------------------------*/
+.topbar {
+	z-index: 12;
+	padding: 8px 0;
+	position: relative;
+    margin-left:0;
+    margin-right:0;
+}
+
+.topbar ul.loginbar {
+	margin: 0;
+    margin-right:10px;
+}
+
+.topbar ul.loginbar > li {
+	display: inline;
+	list-style: none;
+	position: relative;
+	padding-bottom: 15px;
+}
+
+.topbar ul.loginbar > li > a, 
+.topbar ul.loginbar > li > a:hover {
+	color: #7c8082;
+	font-size: 11px;
+	text-transform: uppercase;
+}
+
+.topbar ul.loginbar li i.fa { 
+	color: #bbb;
+}
+
+.topbar ul.loginbar li.topbar-devider { 
+	top: -1px;
+	padding: 0;
+	font-size: 8px;
+	position: relative;
+	margin: 0 9px 0 5px;
+	font-family: Tahoma;
+	border-right: solid 1px #bbb;
 }
 
 /* Summary Page Styles */
@@ -319,9 +370,8 @@ ul.permissions
 	font-size: 15px;
 	text-align: center;
 	background: #f7f7f7;
-	padding: 18px 0 15px;
+	padding: 20px 0 15px;
 	display: inline-block;
-	border-bottom: solid 2px #aaa;
 }
 
 .navbar .nav > li > .search:hover {

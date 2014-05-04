@@ -83,6 +83,40 @@ namespace BugNET
                     img.ImageUrl = PresentationUtils.GetGravatarImageUrl(user.Email, 32);
                 }
             }
+
+            ProjectsList.DataTextField = "Name";
+            ProjectsList.DataValueField = "Id";
+
+            if (!Page.IsPostBack)
+            {
+                if (Page.User.Identity.IsAuthenticated)
+                {
+                    ProjectsList.DataSource = ProjectManager.GetByMemberUserName(Security.GetUserName(), true);
+                    ProjectsList.DataBind();
+                    //ProjectsList.Items.Insert(0, new ListItem(GetLocalResourceObject("SelectProject").ToString()));
+                }
+                else if (!Page.User.Identity.IsAuthenticated && Boolean.Parse(HostSettingManager.Get(HostSettingNames.AnonymousAccess)))
+                {
+                    ProjectsList.DataSource = ProjectManager.GetPublicProjects();
+                    ProjectsList.DataBind();
+//ProjectsList.Items.Insert(0, new ListItem(GetLocalResourceObject("SelectProject").ToString()));
+                }
+                else
+                {
+                    ProjectsList.Visible = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Handles the SelectedIndexChanged event of the ddlProject control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void ProjectList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ProjectsList.SelectedIndex != 0)
+                Response.Redirect(string.Format("~/Projects/ProjectSummary.aspx?pid={0}", ProjectsList.SelectedValue));
         }
 
         /// <summary>
