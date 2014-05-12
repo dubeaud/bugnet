@@ -93,13 +93,13 @@ namespace BugNET
                 {
                     ProjectsList.DataSource = ProjectManager.GetByMemberUserName(Security.GetUserName(), true);
                     ProjectsList.DataBind();
-                    //ProjectsList.Items.Insert(0, new ListItem(GetLocalResourceObject("SelectProject").ToString()));
+                    ProjectsList.Items.Insert(0, new ListItem("Select project"));
                 }
                 else if (!Page.User.Identity.IsAuthenticated && Boolean.Parse(HostSettingManager.Get(HostSettingNames.AnonymousAccess)))
                 {
                     ProjectsList.DataSource = ProjectManager.GetPublicProjects();
                     ProjectsList.DataBind();
-//ProjectsList.Items.Insert(0, new ListItem(GetLocalResourceObject("SelectProject").ToString()));
+                    ProjectsList.Items.Insert(0, new ListItem("Select project"));
                 }
                 else
                 {

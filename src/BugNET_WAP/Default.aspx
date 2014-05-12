@@ -9,9 +9,9 @@
             <div class="col-sm-3">
                 <h3>
                     <asp:Label ID="lblApplicationTitle" runat="server">BugNET Issue Tracker</asp:Label></h3>
-                <p>
+                <div class="well">
                     <asp:Label ID="WelcomeMessage" runat="Server"></asp:Label>
-                </p>
+                </div>
             </div>
             <div class="col-sm-9">
                 <!-- projects -->

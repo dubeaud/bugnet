@@ -40,101 +40,86 @@
                 <asp:ScriptReference Path="~/Scripts/app.js" />
             </Scripts>
         </ajaxToolkit:ToolkitScriptManager>
-        <div class="navbar navbar-inverse navbar-fixed-top">
+
+        <div class="navbar navbar-inverse">
             <div class="container">
-                <div class="topbar">
-                    <div class="container">
-                        <asp:LoginView runat="server" ID="LoginView1" ViewStateMode="Disabled">
-                            <AnonymousTemplate>
-                                <ul class="loginbar pull-right">
-                                    <li><a runat="server" href="~/Account/Register">
-                                        <asp:Localize runat="server" Text="<%$ Resources:SharedResources, Register %>" /></a></li>
-                                    <li><a runat="server" href="~/Account/Login">
-                                        <asp:Localize runat="server" Text="<%$ Resources:SharedResources, Login %>" /></a></li>
-                                    <%--<li>
-                                    <span class="search search-btn glyphicon glyphicon-search"></span>
-                                    <div class="search-open">
-                                        <div class="input-group animated fadeInDown">
-                                            <input type="text" class="search-box form-control" placeholder="Search">
-                                            <span class="input-group-btn">
-                                                <button class="btn search-go" type="button">Go</button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </li>--%>
-                                </ul>
-                            </AnonymousTemplate>
-                            <LoggedInTemplate>
-                                <ul class="loginbar pull-right">
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding: 10px 15px 4px">
-                                            <div style="display: inline-block;">
-                                                <asp:Image ID="Avatar" Height="32px" Width="32px" ImageUrl="~/images/noprofile.png" runat="server" />
-                                            </div>
-                                            <asp:LoginName ID="LoginName" runat="server" CssClass="username" />
-                                            <b class="caret"></b>
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li><a runat="server" href="~/Account/UserProfile">
-                                                <asp:Localize runat="server" Text="<%$ Resources:SharedResources, ViewProfile %>" /></a></li>
-                                            <li><a runat="server" class="username" href="~/Account/Manage">
-                                                <asp:Localize runat="server" Text="<%$ Resources:SharedResources, ManageAccount %>" /></a></li>
-                                            <li>
-                                                <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="<%$ Resources:SharedResources, Logout %>" LogoutPageUrl="~/" />
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <%-- <li>
-                                    <span class="search search-btn glyphicon glyphicon-search"></span>
-                                    <div class="search-open">
-                                        <div class="input-group animated fadeInDown">
-                                            <input type="text" class="search-box form-control" placeholder="Search">
-                                            <span class="input-group-btn">
-                                                <button class="btn search-go" type="button">Go</button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </li>--%>
-                                </ul>
-                            </LoggedInTemplate>
-                        </asp:LoginView>
-                    </div>
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand navbar-brand-img" runat="server" href="~/">
+                        <img runat="server" src="~/images/logo.png" height="40" width="40" />
+                        BugNET</a>
                 </div>
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" runat="server" href="~/">
-                    <img runat="server" src="~/images/logo.png" height="40" width="40" />
-                    BugNET</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <asp:Literal ID="litMenu" Visible="true" runat="server"></asp:Literal>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <span class="search search-btn glyphicon glyphicon-search"></span>
-                        <div class="search-open">
-                            <div class="input-group animated fadeInDown">
-                                <input type="text" class="search-box form-control" placeholder="Search">
-                                <span class="input-group-btn">
-                                    <button class="btn search-go" type="button">Go</button>
-                                </span>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-                <div class="navbar-form navbar-right" style="margin-right:5px;" role="search">
+                <div class="navbar-collapse collapse">
+                <asp:LoginView runat="server" ID="LoginView1" ViewStateMode="Disabled">
+                    <AnonymousTemplate>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a runat="server" href="~/Account/Register">
+                                <asp:Localize runat="server" Text="<%$ Resources:SharedResources, Register %>" /></a></li>
+                            <li><a runat="server" href="~/Account/Login">
+                                <asp:Localize runat="server" Text="<%$ Resources:SharedResources, Login %>" /></a></li>
+                        </ul>
+                    </AnonymousTemplate>
+                    <LoggedInTemplate>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding: 10px 15px 4px">
+                                    <div style="display: inline-block;">
+                                        <asp:Image ID="Avatar" Height="32px" Width="32px" ImageUrl="~/images/noprofile.png" runat="server" />
+                                    </div>
+                                    <asp:LoginName ID="LoginName" runat="server" CssClass="username" />
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a runat="server" href="~/Account/UserProfile">
+                                        <asp:Localize runat="server" Text="<%$ Resources:SharedResources, ViewProfile %>" /></a></li>
+                                    <li><a runat="server" class="username" href="~/Account/Manage">
+                                        <asp:Localize runat="server" Text="<%$ Resources:SharedResources, ManageAccount %>" /></a></li>
+                                    <li>
+                                        <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="<%$ Resources:SharedResources, Logout %>" LogoutPageUrl="~/" />
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </LoggedInTemplate>
+                </asp:LoginView>
+                
+                <div class="navbar-form navbar-right">
                     <div class="form-group">
                         <asp:DropDownList ID="ProjectsList" runat="server" OnSelectedIndexChanged="ProjectList_SelectedIndexChanged" AutoPostBack="true" CssClass="form-control">
                         </asp:DropDownList>
                     </div>
                 </div>
-
+                    </div>
             </div>
         </div>
+        <div class="mainnav">
+            <div class="container">
+                <a class="mainnav-toggle navbar-toggle text-center" data-toggle="collapse" data-target=".mainnav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <div class="mainnav-collapse navbar-collapse collapse">
+                    <asp:Literal ID="litMenu" Visible="true" runat="server"></asp:Literal>
+
+                    <div class="pull-right" style="width:25%;margin-top: 20px;">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!--/.navbar-collapse -->
+            </div>
         </div>
+ 
         <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
