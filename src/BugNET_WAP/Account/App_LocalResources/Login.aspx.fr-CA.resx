@@ -1,6 +1,6 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
+	<!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,140 +59,104 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-    <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexType>
-        <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="assembly">
-            <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="data">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="resheader">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:choice>
-      </xsd:complexType>
-    </xsd:element>
-  </xsd:schema>
-  <resheader name="resmimetype">
-    <value>text/microsoft-resx</value>
-  </resheader>
-  <resheader name="version">
-    <value>2.0</value>
-  </resheader>
-  <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <data name="AlreadyLoggedIn.Text" xml:space="preserve">
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute name="name" use="required" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="assembly">
+						<xsd:complexType>
+							<xsd:attribute name="alias" type="xsd:string" />
+							<xsd:attribute name="name" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="AlreadyLoggedIn.Text" xml:space="preserve">
     <value>Vous êtes déjà connecté.</value>
   </data>
-  <data name="CreateAccountFailed" xml:space="preserve">
+	<data name="CreateAccountFailed" xml:space="preserve">
     <value>: Échec création du compte :</value>
   </data>
-  <data name="CreateUserLink.Text" xml:space="preserve">
+	<data name="CreateUserLink.Text" xml:space="preserve">
     <value>Cliquez ici pour en obtenir un</value>
   </data>
-  <data name="LoginCancelled.Text" xml:space="preserve">
+	<data name="LoginCancelled.Text" xml:space="preserve">
     <value>Connexion annulée</value>
   </data>
-  <data name="LoginFailed.Text" xml:space="preserve">
+	<data name="LoginFailed.Text" xml:space="preserve">
     <value>La connexion a échoué</value>
   </data>
-  <data name="LoginLabel.Text" xml:space="preserve">
+	<data name="LoginLabel.Text" xml:space="preserve">
     <value>Connexion</value>
   </data>
-  <data name="LoginMemberAccount.Text" xml:space="preserve">
+	<data name="LoginMemberAccount.Text" xml:space="preserve">
     <value>Vous pouvez vous connecter avec votre compte de membre</value>
   </data>
-  <data name="LoginOpenIDAccount.Text" xml:space="preserve">
+	<data name="LoginOpenIDAccount.Text" xml:space="preserve">
     <value>Vous pouvez vous connecter en utilisant votre OpenID</value>
   </data>
-  <data name="NoAccount.Text" xml:space="preserve">
+	<data name="NoAccount.Text" xml:space="preserve">
     <value>Si vous n&amp;#39;avez pas de compte encore vous pouvez</value>
   </data>
-  <data name="OpenIDPasswordQuestion" xml:space="preserve">
-    <value>Il s'agit d'un compte OpenID. Quel surnom avez vous incrit?</value>
-  </data>
-  <data name="OR.Text" xml:space="preserve">
-    <value>OR</value>
-  </data>
-  <data name="Page.Title" xml:space="preserve">
+	<data name="Page.Title" xml:space="preserve">
     <value>Connexion</value>
   </data>
-  <data name="RegistrationDisabled" xml:space="preserve">
+	<data name="RegistrationDisabled" xml:space="preserve">
     <value>: Enregistrement désactivé par l'administrateur.</value>
   </data>
-  <data name="ShowNormal.Text" xml:space="preserve">
-    <value>Connexion standard</value>
-  </data>
-  <data name="ShowOpenID.Text" xml:space="preserve">
-    <value>Connexion OpenID</value>
-  </data>
-  <data name="NotAuthorized.Text" xml:space="preserve">
+	<data name="NotAuthorized.Text" xml:space="preserve">
     <value>Compte non autorisé ou barré.</value>
   </data>
-  <data name="OpenIdLogin.ButtonText" xml:space="preserve">
-    <value>Connexion »</value>
-  </data>
-  <data name="OpenIdLogin.ButtonTooltip" xml:space="preserve">
-    <value>Connexion compte</value>
-  </data>
-  <data name="OpenIdLogin.CanceledText" xml:space="preserve">
-    <value>Connexion annulée.</value>
-  </data>
-  <data name="OpenIdLogin.ExamplePrefix" xml:space="preserve">
-    <value>Exemple :</value>
-  </data>
-  <data name="OpenIdLogin.FailedMessageText" xml:space="preserve">
-    <value>Connexion échoué {0}</value>
-  </data>
-  <data name="OpenIdLogin.LabelText" xml:space="preserve">
-    <value>OpenID connexion :</value>
-  </data>
-  <data name="OpenIdLogin.RegisterText" xml:space="preserve">
-    <value>Enregistrer</value>
-  </data>
-  <data name="OpenIdLogin.RegisterToolTip" xml:space="preserve">
-    <value>Inscrivez-vous gratuitement pour un OpenID avec MyOpenID.</value>
-  </data>
-  <data name="OpenIdLogin.RequiredText" xml:space="preserve">
-    <value>Fournir un OpenID en premier lieu.</value>
-  </data>
-  <data name="OpenIdLogin.UriFormatText" xml:space="preserve">
-    <value>URL OpenID non valide.</value>
-  </data>
+	<data name="RememberMe.Text" xml:space="preserve">
+		<value>Se souvenir de moi la prochaine fois.</value>
+	</data>
+	<data name="LoginButton.Text" xml:space="preserve">
+		<value>Connexion</value>
+	</data>
 </root>

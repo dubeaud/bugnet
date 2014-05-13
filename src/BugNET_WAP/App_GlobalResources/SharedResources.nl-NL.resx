@@ -414,20 +414,8 @@
 	<data name="Repository" xml:space="preserve">
     <value>Repository</value>
   </data>
-	<data name="ConfirmPasswordErrorMessage" xml:space="preserve">
+	<data name="ConfirmPasswordMismatchErrorMessage" xml:space="preserve">
     <value>Het wachtwoord en de bevestiging dienen overeen te komen</value>
-  </data>
-	<data name="SecurityAnswer" xml:space="preserve">
-    <value>Antwoord op beveiligings vraag</value>
-  </data>
-	<data name="SecurityAnswerRequiredErrorMessage" xml:space="preserve">
-    <value>Antwoord op beveiligings vraag is verplicht.</value>
-  </data>
-	<data name="SecurityQuestion" xml:space="preserve">
-    <value>Beveiligings vraag</value>
-  </data>
-	<data name="SecurityQuestionRequiredErrorMessage" xml:space="preserve">
-    <value>Beveiligings vraag is verplicht.</value>
   </data>
 	<data name="Created" xml:space="preserve">
     <value>Aangemaakt op</value>
@@ -461,5 +449,17 @@
 	</data>
 	<data name="Logout" xml:space="preserve">
 		<value>Logout</value>
+	</data>
+	<data name="PasswordRequiredErrorMessage" xml:space="preserve">
+		<value>Wachtwoord is verplicht.</value>
+	</data>
+	<data name="ConfirmPasswordRequiredErrorMessage" xml:space="preserve">
+		<value>Wachtwoord bevestiging is verplicht.</value>
+	</data>
+	<data name="EmailRequiredErrorMessage" xml:space="preserve">
+		<value>Email adres is verplicht.</value>
+	</data>
+	<data name="EmailFormatErrorMessage" xml:space="preserve">
+		<value>Email formaat is ongeldig.</value>
 	</data>
 </root>

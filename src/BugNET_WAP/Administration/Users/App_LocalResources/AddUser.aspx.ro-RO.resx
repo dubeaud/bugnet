@@ -129,26 +129,11 @@
 	<data name="BackToUserList" xml:space="preserve">
     <value>Inapoi la lista utilizatori</value>
   </data>
-	<data name="ConfirmPassword" xml:space="preserve">
-    <value>Confirmare Parola</value>
-  </data>
-	<data name="ConfirmPasswordError" xml:space="preserve">
-    <value>Parola introduse nu este corecta. Va rugam introduceti o parola corecta. Parola trebuie sa aiba o lungime de cel putin 7 caractere si sa contina macar 0 caractere non alfa-numerice.</value>
-  </data>
-	<data name="ConfirmPasswordRequiredErrorMessage" xml:space="preserve">
-    <value>Parola de confirmare este oblgiatorie.</value>
-  </data>
 	<data name="DescriptionLabel.Text" xml:space="preserve">
     <value>Va rugam introduceti detaliile noului utilizator.</value>
   </data>
 	<data name="DisplayNameRequiredErrorMessage" xml:space="preserve">
     <value>Numele afisat este oblgiatoriu.</value>
-  </data>
-	<data name="EmailFormatErrorMessage" xml:space="preserve">
-    <value>Formatul de email este invalid.</value>
-  </data>
-	<data name="EmailRequiredErrorMessage" xml:space="preserve">
-    <value>Email-ul este obligatoriu.</value>
   </data>
 	<data name="FirstNameRequiredErrorMessage" xml:space="preserve">
     <value>Prenumele este obligatoriu.</value>
@@ -162,23 +147,8 @@
 	<data name="PasswordDescription" xml:space="preserve">
     <value>Optional introduceti o parola pentru acest utilizator sau permiteti sistemului sa genereze una aleatoare.</value>
   </data>
-	<data name="PasswordRequiredErrorMessage" xml:space="preserve">
-    <value>Parola este oblgiatorie.</value>
-  </data>
-	<data name="QuestionAnswerRequiredErrorMessage" xml:space="preserve">
-    <value>Raspunsul la intrebare este oblgiatoriu.</value>
-  </data>
-	<data name="QuestionRequiredErrorMessage" xml:space="preserve">
-    <value>Intrebarea este obligatorie.</value>
-  </data>
 	<data name="RandomPassword" xml:space="preserve">
     <value>Parola aleatoare.</value>
-  </data>
-	<data name="SecretAnswer" xml:space="preserve">
-    <value>Raspuns Secret.</value>
-  </data>
-	<data name="SecurityQuestion" xml:space="preserve">
-    <value>Intrebare de securitate.</value>
   </data>
 	<data name="UserCreated" xml:space="preserve">
     <value>Utilizatorul a fost creat cu succes.</value>

@@ -117,26 +117,11 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-	<data name="ConfirmPasswordRequiredErrorMessage" xml:space="preserve">
-    <value>Occorre confermare la password.</value>
-  </data>
-	<data name="EmailRequiredErrorMessage" xml:space="preserve">
-    <value>L'email è necessaria.</value>
-  </data>
 	<data name="InstructionsLabel.Text" xml:space="preserve">
     <value>Inserisci i tuoi dati e conferma la password per registrare un account.</value>
   </data>
-	<data name="InvalidEmailErrorMessage" xml:space="preserve">
-    <value>Il formato email non è valido.</value>
-  </data>
 	<data name="Page.Title" xml:space="preserve">
     <value>Registrazione</value>
-  </data>
-	<data name="PasswordRequiredErrorMessage" xml:space="preserve">
-    <value>La password è necessaria.</value>
-  </data>
-	<data name="UsernameRequiredErrorMessage" xml:space="preserve">
-    <value>Il nome utente è necessario.</value>
   </data>
 	<data name="VerificationInstructions.Text" xml:space="preserve">
     <value>Ti sarà inviata una email con le istruzioni per abilitare il tuo account e loggarti.</value>
@@ -147,7 +132,4 @@
 	<data name="TitleLabel.Text" xml:space="preserve">
     <value>Crea un nuovo account</value>
   </data>
-	<data name="ConfirmPasswordMismatchErrorMessage" xml:space="preserve">
-		<value>Password e conferma password devono coincidere.</value>
-	</data>
 </root>

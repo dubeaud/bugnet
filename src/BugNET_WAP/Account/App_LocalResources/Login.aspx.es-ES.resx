@@ -144,25 +144,19 @@
 	<data name="NoAccount.Text" xml:space="preserve">
     <value>Si todavía no tiene una cuenta </value>
   </data>
-	<data name="OpenIDPasswordQuestion" xml:space="preserve">
-    <value>Esta es una cuenta OpenID. ¿Que usuario utilizó para registrarse?</value>
-  </data>
-	<data name="OR.Text" xml:space="preserve">
-    <value>O</value>
-  </data>
 	<data name="Page.Title" xml:space="preserve">
     <value>Identificación</value>
   </data>
 	<data name="RegistrationDisabled" xml:space="preserve">
     <value>: El administrador ha desactivado el registro de usuarios.</value>
   </data>
-	<data name="ShowNormal.Text" xml:space="preserve">
-    <value>Identificación estándar </value>
-  </data>
-	<data name="ShowOpenID.Text" xml:space="preserve">
-    <value>Identificación OpenID</value>
-  </data>
 	<data name="NotAuthorized.Text" xml:space="preserve">
     <value>La cuenta no está autorizada o está bloqueada.</value>
   </data>
+	<data name="RememberMe.Text" xml:space="preserve">
+		<value>Recordarme la próxima vez.</value>
+	</data>
+	<data name="LoginButton.Text" xml:space="preserve">
+		<value>Entrar</value>
+	</data>
 </root>

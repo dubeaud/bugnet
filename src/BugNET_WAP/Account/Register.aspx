@@ -23,7 +23,7 @@
                             <div class="col-md-5">
                                 <asp:TextBox runat="server" ID="UserName" CssClass="form-control" />
                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="UserName"
-                                    CssClass="text-danger" ErrorMessage="<%$ Resources: UsernameRequiredErrorMessage%>" />
+                                    CssClass="text-danger" ErrorMessage="<%$ Resources:SharedResources, UsernameRequiredErrorMessage%>" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -31,7 +31,10 @@
                             <div class="col-md-5">
                                 <asp:TextBox runat="server" ID="Email" CssClass="form-control" />
                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="Email"
-                                    CssClass="text-danger" ErrorMessage="<%$ Resources: EmailRequiredErrorMessage%>" />
+                                    CssClass="text-danger" ErrorMessage="<%$ Resources:SharedResources, EmailRequiredErrorMessage %>" />
+                                <asp:RegularExpressionValidator ID="regexEmailValid" runat="server"
+                                     ValidationExpression="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+                                     ControlToValidate="Email" ErrorMessage="<%$ Resources:SharedResources, EmailFormatErrorMessage %>" />
                             </div>
                         </div>
                          <div class="form-group">
@@ -39,7 +42,7 @@
                             <div class="col-md-5">
                                 <asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="form-control" />
                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="Password"
-                                    CssClass="text-danger" ErrorMessage="<%$ Resources: PasswordRequiredErrorMessage%>" />
+                                    CssClass="text-danger" ErrorMessage="<%$ Resources:SharedResources, PasswordRequiredErrorMessage%>" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -47,9 +50,9 @@
                             <div class="col-md-5">
                                 <asp:TextBox runat="server" ID="ConfirmPassword" TextMode="Password" CssClass="form-control" />
                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="ConfirmPassword"
-                                    CssClass="text-danger" Display="Dynamic" ErrorMessage="<%$ Resources: ConfirmPasswordRequiredErrorMessage%>" />
+                                    CssClass="text-danger" Display="Dynamic" ErrorMessage="<%$ Resources:SharedResources, ConfirmPasswordRequiredErrorMessage%>" />
                                 <asp:CompareValidator runat="server" ControlToCompare="Password" ControlToValidate="ConfirmPassword"
-                                    CssClass="text-danger" Display="Dynamic" ErrorMessage="<%$ Resources: ConfirmPasswordMismatchErrorMessage%>" />
+                                    CssClass="text-danger" Display="Dynamic" ErrorMessage="<%$ Resources:SharedResources, ConfirmPasswordMismatchErrorMessage%>" />
                             </div>
                         </div>
                         <div class="form-group">

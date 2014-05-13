@@ -165,7 +165,7 @@
 	<data name="ConfirmPassword" xml:space="preserve">
     <value>Kennwort bestätigen</value>
   </data>
-	<data name="ConfirmPasswordErrorMessage" xml:space="preserve">
+	<data name="ConfirmPasswordMismatchErrorMessage" xml:space="preserve">
     <value>Das kennwort und die Kennwortbestätigung müssen identisch sein.</value>
   </data>
 	<data name="Created" xml:space="preserve">
@@ -330,18 +330,6 @@
 	<data name="Search" xml:space="preserve">
     <value>Suche</value>
   </data>
-	<data name="SecurityAnswer" xml:space="preserve">
-    <value>Sicherheitsantwort</value>
-  </data>
-	<data name="SecurityAnswerRequiredErrorMessage" xml:space="preserve">
-    <value>Eine Sicherheitsantwort ist erforderlich.</value>
-  </data>
-	<data name="SecurityQuestion" xml:space="preserve">
-    <value>Sicherheitsfrage</value>
-  </data>
-	<data name="SecurityQuestionRequiredErrorMessage" xml:space="preserve">
-    <value>Eine Sicherheitsfrage ist erforderlich.</value>
-  </data>
 	<data name="Status" xml:space="preserve">
     <value>Status</value>
   </data>
@@ -474,7 +462,7 @@
 	<data name="DropDown_SelectCustomField" xml:space="preserve">
     <value>-- Benutzerdefiniertes Attribut wählen --</value>
   </data>
-	<data name="PasswordRequired" xml:space="preserve">
+	<data name="PasswordRequiredErrorMessage" xml:space="preserve">
     <value>Ein Kennwort ist erforderlich.</value>
   </data>
 	<data name="ProjectSummary" xml:space="preserve">
@@ -488,5 +476,14 @@
 	</data>
 	<data name="Logout" xml:space="preserve">
 		<value>Abmelden</value>
+	</data>
+	<data name="ConfirmPasswordRequiredErrorMessage" xml:space="preserve">
+		<value>Kennwortbestätigung ist erforderlich.</value>
+	</data>
+	<data name="EmailRequiredErrorMessage" xml:space="preserve">
+		<value>Email ist erforderlich.</value>
+	</data>
+	<data name="EmailFormatErrorMessage" xml:space="preserve">
+		<value>Emailformat ist erforderlich.</value>
 	</data>
 </root>

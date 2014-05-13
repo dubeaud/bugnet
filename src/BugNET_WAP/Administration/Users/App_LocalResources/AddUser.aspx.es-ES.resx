@@ -129,26 +129,11 @@
 	<data name="BackToUserList" xml:space="preserve">
 		<value>Volver a la lista de usuarios</value>
 	</data>
-	<data name="ConfirmPassword" xml:space="preserve">
-		<value>Confirmar contraseña</value>
-	</data>
-	<data name="ConfirmPasswordError" xml:space="preserve">
-		<value>La contraseña no es válida. Introduzca una contraseña válida:  longitud mínima de 7 carácteres con al menos 0 carácteres no alfanuméricos.</value>
-	</data>
-	<data name="ConfirmPasswordRequiredErrorMessage" xml:space="preserve">
-		<value>La confirmación de la contraseña es obligatoria.</value>
-	</data>
 	<data name="DescriptionLabel.Text" xml:space="preserve">
 		<value>Introduzca los detalles del nuevo usuario.</value>
 	</data>
 	<data name="DisplayNameRequiredErrorMessage" xml:space="preserve">
 		<value>El nombre completo es obligatorio.</value>
-	</data>
-	<data name="EmailFormatErrorMessage" xml:space="preserve">
-		<value>El formato del email no es correcto.</value>
-	</data>
-	<data name="EmailRequiredErrorMessage" xml:space="preserve">
-		<value>El email es obligatorio.</value>
 	</data>
 	<data name="FirstNameRequiredErrorMessage" xml:space="preserve">
 		<value>El nombre es obligatorio.</value>
@@ -162,23 +147,8 @@
 	<data name="PasswordDescription" xml:space="preserve">
 		<value>Puede asignar una contraseña al usuario o permitir que el sistema genere una automáticamente.</value>
 	</data>
-	<data name="PasswordRequiredErrorMessage" xml:space="preserve">
-		<value>La contraseña es obligatoria.</value>
-	</data>
-	<data name="QuestionAnswerRequiredErrorMessage" xml:space="preserve">
-		<value>La respuesta a la pregunta de seguridad es obligatoria.</value>
-	</data>
-	<data name="QuestionRequiredErrorMessage" xml:space="preserve">
-		<value>La pregunta de seguridad es obligatoria.</value>
-	</data>
 	<data name="RandomPassword" xml:space="preserve">
 		<value>Contraseña aleatoria</value>
-	</data>
-	<data name="SecretAnswer" xml:space="preserve">
-		<value>Respuesta</value>
-	</data>
-	<data name="SecurityQuestion" xml:space="preserve">
-		<value>Pregunta de seguridad</value>
 	</data>
 	<data name="UserCreated" xml:space="preserve">
 		<value>El usuario se ha creado.</value>

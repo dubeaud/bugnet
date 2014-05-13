@@ -117,26 +117,11 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-	<data name="ConfirmPasswordRequiredErrorMessage" xml:space="preserve">
-    <value>La confirmación de la contraseña es obligatoria.</value>
-  </data>
-	<data name="EmailRequiredErrorMessage" xml:space="preserve">
-    <value>El Email es obligatorio.</value>
-  </data>
 	<data name="InstructionsLabel.Text" xml:space="preserve">
     <value>Introduzca sus detalles y confirme su contraseña para registrar una nueva cuenta.</value>
   </data>
-	<data name="InvalidEmailErrorMessage" xml:space="preserve">
-    <value>El Email no es válido.</value>
-  </data>
 	<data name="Page.Title" xml:space="preserve">
     <value>Registro</value>
-  </data>
-	<data name="PasswordRequiredErrorMessage" xml:space="preserve">
-    <value>La contraseña es obligatoria.</value>
-  </data>
-	<data name="UsernameRequiredErrorMessage" xml:space="preserve">
-    <value>El nombre de usuario es obligatorio.</value>
   </data>
 	<data name="VerificationInstructions.Text" xml:space="preserve">
     <value>Se ha enviado un email a la dirección que ha proporcionado con instrucciones adicionales para activar su cuenta de usuario y poder identificarse.</value>
@@ -147,7 +132,4 @@
 	<data name="TitleLabel.Text" xml:space="preserve">
     <value>Regístrese para obtener su cuenta de usuario</value>
   </data>
-	<data name="ConfirmPasswordMismatchErrorMessage" xml:space="preserve">
-		<value>Las contraseñas tienen que coincidir.</value>
-	</data>
 </root>

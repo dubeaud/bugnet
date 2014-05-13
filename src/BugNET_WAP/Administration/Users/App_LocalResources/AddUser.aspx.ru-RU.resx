@@ -129,26 +129,11 @@
 	<data name="BackToUserList" xml:space="preserve">
 		<value>К списку пользователей</value>
 	</data>
-	<data name="ConfirmPassword" xml:space="preserve">
-		<value>Подтверждение пароля</value>
-	</data>
-	<data name="ConfirmPasswordError" xml:space="preserve">
-		<value>Указанный пароль некорректен. Введите правильный пароль, который должен состоять по крайней мере из 7 символов.</value>
-	</data>
-	<data name="ConfirmPasswordRequiredErrorMessage" xml:space="preserve">
-		<value>Требуется указать подтверждение пароля.</value>
-	</data>
 	<data name="DescriptionLabel.Text" xml:space="preserve">
 		<value>Укажите сведения для нового пользователя.</value>
 	</data>
 	<data name="DisplayNameRequiredErrorMessage" xml:space="preserve">
 		<value>Требуется указать имя для отображения.</value>
-	</data>
-	<data name="EmailFormatErrorMessage" xml:space="preserve">
-		<value>Некорректный формат email.</value>
-	</data>
-	<data name="EmailRequiredErrorMessage" xml:space="preserve">
-		<value>Требуется указать email.</value>
 	</data>
 	<data name="FirstNameRequiredErrorMessage" xml:space="preserve">
 		<value>Требуется указать имя.</value>
@@ -162,23 +147,8 @@
 	<data name="PasswordDescription" xml:space="preserve">
 		<value>При желании введите пароль для данного пользователя или позвольте системе создать случайный пароль.</value>
 	</data>
-	<data name="PasswordRequiredErrorMessage" xml:space="preserve">
-		<value>Требуется указать пароль.</value>
-	</data>
-	<data name="QuestionAnswerRequiredErrorMessage" xml:space="preserve">
-		<value>Требуется указать ответ на секретный вопрос.</value>
-	</data>
-	<data name="QuestionRequiredErrorMessage" xml:space="preserve">
-		<value>Требуется указать секретный вопрос.</value>
-	</data>
 	<data name="RandomPassword" xml:space="preserve">
 		<value>Случайный пароль</value>
-	</data>
-	<data name="SecretAnswer" xml:space="preserve">
-		<value>Ответ на секретный вопрос</value>
-	</data>
-	<data name="SecurityQuestion" xml:space="preserve">
-		<value>Секретный вопрос</value>
 	</data>
 	<data name="UserCreated" xml:space="preserve">
 		<value>Пользователь успешно создан.</value>

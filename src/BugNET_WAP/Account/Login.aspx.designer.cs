@@ -13,13 +13,13 @@ namespace BugNET.Account {
     public partial class Login {
         
         /// <summary>
-        /// RegisterHyperLink control.
+        /// Register_Localize control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink RegisterHyperLink;
+        protected global::System.Web.UI.WebControls.Localize Register_Localize;
         
         /// <summary>
         /// OpenAuthLogin control.
