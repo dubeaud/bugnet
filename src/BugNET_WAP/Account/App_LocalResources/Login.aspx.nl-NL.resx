@@ -123,14 +123,8 @@
 	<data name="LoginFailed.Text" xml:space="preserve">
 		<value>Inloggen mislukt</value>
 	</data>
-	<data name="OR.Text" xml:space="preserve">
-		<value>Of</value>
-	</data>
 	<data name="Page.Title" xml:space="preserve">
 		<value>Inloggen</value>
-	</data>
-	<data name="ShowOpenID.Text" xml:space="preserve">
-		<value>OpenID login</value>
 	</data>
 	<data name="AlreadyLoggedIn.Text" xml:space="preserve">
 		<value>U bent al ingelogged</value>
@@ -143,9 +137,6 @@
 	</data>
 	<data name="LoginOpenIDAccount.Text" xml:space="preserve">
 		<value>U kunt inloggen met uw OpenID account</value>
-	</data>
-	<data name="ShowNormal.Text" xml:space="preserve">
-		<value>Standaard login</value>
 	</data>
 	<data name="NotAuthorized.Text" xml:space="preserve">
 		<value>Gebruikers account is niet gemachtigd of is geblokkeerd</value>
@@ -162,7 +153,10 @@
 	<data name="RegistrationDisabled" xml:space="preserve">
 		<value>: Aanmelden is uitgeschakeld door de administrator</value>
 	</data>
-	<data name="OpenIDPasswordQuestion" xml:space="preserve">
-		<value>Dit is een OpenID account. Welke nickname heeft u opgegeven?</value>
+	<data name="RememberMe.Text" xml:space="preserve">
+		<value>Onthoud mij.</value>
+	</data>
+	<data name="LoginButton.Text" xml:space="preserve">
+		<value>Inloggen</value>
 	</data>
 </root>

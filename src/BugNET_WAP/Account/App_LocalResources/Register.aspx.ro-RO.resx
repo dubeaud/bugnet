@@ -117,52 +117,19 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-	<data name="ConfirmPasswordRequiredErrorMessage" xml:space="preserve">
-    <value>Confirmarea parolei este obligatorie.</value>
-  </data>
-	<data name="EmailRequiredErrorMessage" xml:space="preserve">
-    <value>Adresa de email este obligatorie.</value>
-  </data>
-	<data name="FirstNameRequiredErrorMessage" xml:space="preserve">
-    <value>Prenumele este obligatoriu.</value>
-  </data>
-	<data name="FullNameRequiredErrorMessage" xml:space="preserve">
-    <value>Numele complet este obligatoriu.</value>
-  </data>
 	<data name="InstructionsLabel.Text" xml:space="preserve">
     <value>Va rugam introduceti detaliile si confirmati parola pentru a creea un cont nou.</value>
-  </data>
-	<data name="InvalidEmailErrorMessage" xml:space="preserve">
-    <value>Formatul de email este invalid.</value>
-  </data>
-	<data name="LastNameRequiredErrorMessage" xml:space="preserve">
-    <value>Numele este obligatoriu.</value>
   </data>
 	<data name="Page.Title" xml:space="preserve">
     <value>Inregistrare</value>
   </data>
-	<data name="PasswordRequiredErrorMessage" xml:space="preserve">
-    <value>Parola este obligatorie.</value>
-  </data>
-	<data name="SecurityAnswerRequiredErrorMessage" xml:space="preserve">
-    <value>Raspunsul la intrebarea de siguranta este oblgiatoriu.</value>
-  </data>
-	<data name="SecurityQuestionRequiredErrorMessage" xml:space="preserve">
-    <value>Intrebarea de siguranta este obligatorie.</value>
-  </data>
-	<data name="UsernameRequiredErrorMessage" xml:space="preserve">
-    <value>Numele de utilizator este obligatoriu.</value>
-  </data>
-	<data name="VerificationInsructions.Text" xml:space="preserve">
+	<data name="VerificationInstructions.Text" xml:space="preserve">
     <value>Un email ce contine instructiunile de activare si autentificare ale contului au fost trimise la adresa de email specificata.</value>
   </data>
-	<data name="VerificationInsructionsTitle.Text" xml:space="preserve">
+	<data name="VerificationInstructionsTitle.Text" xml:space="preserve">
     <value>Va multumim pentru ca v-ati intregistrat.</value>
   </data>
 	<data name="TitleLabel.Text" xml:space="preserve">
     <value>Inscrieti-va pentru un cont nou de utlilizator.</value>
-  </data>
-	<data name="PreferredLanguageLabel.Text" xml:space="preserve">
-    <value>Limba preferata:</value>
   </data>
 </root>

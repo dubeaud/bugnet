@@ -126,17 +126,8 @@
 	<data name="BackToUserList" xml:space="preserve">
 		<value>Terug naar gebruikerslijst</value>
 	</data>
-	<data name="ConfirmPassword" xml:space="preserve">
-		<value>Wachtwoord bevestigen</value>
-	</data>
 	<data name="DisplayNameRequiredErrorMessage" xml:space="preserve">
 		<value>Weergave naam is verplicht.</value>
-	</data>
-	<data name="EmailFormatErrorMessage" xml:space="preserve">
-		<value>Email formaat is ongeldig.</value>
-	</data>
-	<data name="EmailRequiredErrorMessage" xml:space="preserve">
-		<value>Email is verplicht.</value>
 	</data>
 	<data name="FirstNameRequiredErrorMessage" xml:space="preserve">
 		<value>Voornaam is verplicht</value>
@@ -146,9 +137,6 @@
 	</data>
 	<data name="Page.Title" xml:space="preserve">
 		<value>Gebruiker toevoegen</value>
-	</data>
-	<data name="PasswordRequiredErrorMessage" xml:space="preserve">
-		<value>Wachtwoord is verplicht.</value>
 	</data>
 	<data name="RandomPassword" xml:space="preserve">
 		<value>Willekeurig wachtwoord</value>
@@ -162,29 +150,11 @@
 	<data name="UserCreated" xml:space="preserve">
 		<value>Gebruiker is successvol aangemaakt.</value>
 	</data>
-	<data name="ConfirmPasswordError" xml:space="preserve">
-		<value>Het opgegeven wachtwoord is niet geldig. Voer aub een geldig wachtwoord in. Wachtwoorden moeten minimaal 7 tekens lang zijn en tenminste 0 niet alfanumerieke tekens bevatten.</value>
-	</data>
-	<data name="ConfirmPasswordRequiredErrorMessage" xml:space="preserve">
-		<value>Wachtwoord bevestiging is verplicht.</value>
-	</data>
 	<data name="PasswordDescription" xml:space="preserve">
 		<value>Als optie kunt u een wachtwoord voor deze gebruiker invoeren, of laat het systeem een willekeurig wachtwoord genereren.</value>
 	</data>
 	<data name="DescriptionLabel.Text" xml:space="preserve">
 		<value>Voer hier de details in voor deze nieuwe gebruiker.</value>
-	</data>
-	<data name="QuestionAnswerRequiredErrorMessage" xml:space="preserve">
-		<value>Geheim wachtwoord is verplicht</value>
-	</data>
-	<data name="QuestionRequiredErrorMessage" xml:space="preserve">
-		<value>Beveiligings vraag is verplicht.</value>
-	</data>
-	<data name="SecretAnswer" xml:space="preserve">
-		<value>Geheim antwoord</value>
-	</data>
-	<data name="SecurityQuestion" xml:space="preserve">
-		<value>Beveiligings vraag</value>
 	</data>
 	<data name="UserCreatedError" xml:space="preserve">
 		<value>Aanmaken van de nieuwe gebruiker is mislukt.</value>

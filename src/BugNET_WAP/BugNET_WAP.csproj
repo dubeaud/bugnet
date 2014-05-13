@@ -2187,9 +2187,6 @@
     <Content Include="App_LocalResources\Default.aspx.resx">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="UserControls\App_LocalResources\LoginControl.ascx.resx">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Projects\App_LocalResources\ProjectSummary.aspx.resx" />
     <Content Include="Projects\App_LocalResources\ReleaseNotes.aspx.resx" />
     <Content Include="Issues\App_LocalResources\MyIssues.aspx.resx" />
@@ -2323,7 +2320,6 @@
     <Content Include="UserControls\App_LocalResources\DisplayIssues.ascx.es-ES.resx">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="UserControls\App_LocalResources\LoginControl.ascx.es-ES.resx" />
     <Content Include="UserControls\App_LocalResources\PickCategory.ascx.es-ES.resx" />
     <Content Include="UserControls\App_LocalResources\PickImage.ascx.es-ES.resx" />
     <Content Include="UserControls\App_LocalResources\PickMilestone.ascx.es-ES.resx" />
@@ -2397,7 +2393,6 @@
     <Content Include="Queries\App_LocalResources\QueryList.aspx.nl-NL.resx" />
     <Content Include="UserControls\App_LocalResources\CategoryTreeView.ascx.nl-NL.resx" />
     <Content Include="UserControls\App_LocalResources\DisplayIssues.ascx.nl-NL.resx" />
-    <Content Include="UserControls\App_LocalResources\LoginControl.ascx.nl-NL.resx" />
     <Content Include="UserControls\App_LocalResources\PickCategory.ascx.nl-NL.resx" />
     <Content Include="UserControls\App_LocalResources\PickImage.ascx.nl-NL.resx" />
     <Content Include="UserControls\App_LocalResources\PickMilestone.ascx.nl-NL.resx" />
@@ -2446,7 +2441,6 @@
     <Content Include="UserControls\App_LocalResources\CategoryTreeView.ascx.it-IT.resx" />
     <Content Include="UserControls\App_LocalResources\DisplayIssues.ascx.it-IT.resx" />
     <Content Include="UserControls\App_LocalResources\Footer.ascx.it-IT.resx" />
-    <Content Include="UserControls\App_LocalResources\LoginControl.ascx.it-IT.resx" />
     <Content Include="UserControls\App_LocalResources\PickCategory.ascx.it-IT.resx" />
     <Content Include="UserControls\App_LocalResources\PickImage.ascx.it-IT.resx" />
     <Content Include="UserControls\App_LocalResources\PickMilestone.ascx.it-IT.resx" />
@@ -2528,7 +2522,6 @@
     <Content Include="UserControls\App_LocalResources\CategoryTreeView.ascx.ru-RU.resx" />
     <Content Include="UserControls\App_LocalResources\DisplayIssues.ascx.ru-RU.resx" />
     <Content Include="UserControls\App_LocalResources\Footer.ascx.ru-RU.resx" />
-    <Content Include="UserControls\App_LocalResources\LoginControl.ascx.ru-RU.resx" />
     <Content Include="UserControls\App_LocalResources\PickCategory.ascx.ru-RU.resx" />
     <Content Include="UserControls\App_LocalResources\PickImage.ascx.ru-RU.resx" />
     <Content Include="UserControls\App_LocalResources\PickMilestone.ascx.ru-RU.resx" />
@@ -2605,7 +2598,6 @@
     <Content Include="UserControls\App_LocalResources\CategoryTreeView.ascx.ro-RO.resx" />
     <Content Include="UserControls\App_LocalResources\DisplayIssues.ascx.ro-RO.resx" />
     <Content Include="UserControls\App_LocalResources\Footer.ascx.ro-RO.resx" />
-    <Content Include="UserControls\App_LocalResources\LoginControl.ascx.ro-RO.resx" />
     <Content Include="UserControls\App_LocalResources\PickCategory.ascx.ro-RO.resx" />
     <Content Include="UserControls\App_LocalResources\PickImage.ascx.ro-RO.resx" />
     <Content Include="UserControls\App_LocalResources\PickMilestone.ascx.ro-RO.resx" />
@@ -2661,7 +2653,6 @@
     <Content Include="UserControls\App_LocalResources\CategoryTreeView.ascx.fr-CA.resx" />
     <Content Include="UserControls\App_LocalResources\DisplayIssues.ascx.fr-CA.resx" />
     <Content Include="UserControls\App_LocalResources\Footer.ascx.fr-CA.resx" />
-    <Content Include="UserControls\App_LocalResources\LoginControl.ascx.fr-CA.resx" />
     <Content Include="UserControls\App_LocalResources\PickCategory.ascx.fr-CA.resx" />
     <Content Include="UserControls\App_LocalResources\PickDate.ascx.fr-CA.resx" />
     <Content Include="UserControls\App_LocalResources\PickImage.ascx.fr-CA.resx" />
@@ -2919,9 +2910,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="UserControls\App_LocalResources\Footer.ascx.de-DE.resx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="UserControls\App_LocalResources\LoginControl.ascx.de-DE.resx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="UserControls\App_LocalResources\PickCategory.ascx.de-DE.resx" />

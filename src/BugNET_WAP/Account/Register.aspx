@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Register" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Register.aspx.cs" Inherits="BugNET.Account.Register" %>
+﻿<%@ Page Title="Register" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Register.aspx.cs" Inherits="BugNET.Account.Register" meta:ResourceKey="Page" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <h2><%: Title %>.</h2>
@@ -15,46 +15,49 @@
             <asp:CreateUserWizardStep runat="server" ID="RegisterUserWizardStep">
                 <ContentTemplate>
                     <div class="form-horizontal">
-                        <h4>Create a new account.</h4>
+                        <h4><asp:Localize runat="server" meta:resourceKey="TitleLabel" Text="[Resource Required]"/></h4>
                         <hr />
                         <asp:ValidationSummary runat="server" CssClass="text-danger" />
                         <div class="form-group">
-                            <asp:Label runat="server" AssociatedControlID="UserName" CssClass="col-md-2 control-label">User name</asp:Label>
+                            <asp:Label runat="server" AssociatedControlID="UserName" CssClass="col-md-4 control-label" Text="<%$ Resources:SharedResources, UserName%>">User name</asp:Label>
                             <div class="col-md-5">
                                 <asp:TextBox runat="server" ID="UserName" CssClass="form-control" />
                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="UserName"
-                                    CssClass="text-danger" ErrorMessage="The user name field is required." />
+                                    CssClass="text-danger" ErrorMessage="<%$ Resources:SharedResources, UsernameRequiredErrorMessage%>" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <asp:Label runat="server" AssociatedControlID="Email" CssClass="col-md-2 control-label">Email</asp:Label>
+                            <asp:Label runat="server" AssociatedControlID="Email" CssClass="col-md-4 control-label" Text="<%$ Resources:SharedResources, EMail%>">Email</asp:Label>
                             <div class="col-md-5">
                                 <asp:TextBox runat="server" ID="Email" CssClass="form-control" />
                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="Email"
-                                    CssClass="text-danger" ErrorMessage="The email address field is required." />
+                                    CssClass="text-danger" ErrorMessage="<%$ Resources:SharedResources, EmailRequiredErrorMessage %>" />
+                                <asp:RegularExpressionValidator ID="regexEmailValid" runat="server"
+                                     ValidationExpression="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+                                     ControlToValidate="Email" ErrorMessage="<%$ Resources:SharedResources, EmailFormatErrorMessage %>" />
                             </div>
                         </div>
                          <div class="form-group">
-                            <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-2 control-label">Password</asp:Label>
+                            <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-4 control-label" Text="<%$ Resources:SharedResources, Password%>">Password</asp:Label>
                             <div class="col-md-5">
                                 <asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="form-control" />
                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="Password"
-                                    CssClass="text-danger" ErrorMessage="The password field is required." />
+                                    CssClass="text-danger" ErrorMessage="<%$ Resources:SharedResources, PasswordRequiredErrorMessage%>" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <asp:Label runat="server" AssociatedControlID="ConfirmPassword" CssClass="col-md-2 control-label">Confirm password</asp:Label>
+                            <asp:Label runat="server" AssociatedControlID="ConfirmPassword" CssClass="col-md-4 control-label" Text="<%$ Resources:SharedResources, ConfirmPassword%>">Confirm password</asp:Label>
                             <div class="col-md-5">
                                 <asp:TextBox runat="server" ID="ConfirmPassword" TextMode="Password" CssClass="form-control" />
                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="ConfirmPassword"
-                                    CssClass="text-danger" Display="Dynamic" ErrorMessage="The confirm password field is required." />
+                                    CssClass="text-danger" Display="Dynamic" ErrorMessage="<%$ Resources:SharedResources, ConfirmPasswordRequiredErrorMessage%>" />
                                 <asp:CompareValidator runat="server" ControlToCompare="Password" ControlToValidate="ConfirmPassword"
-                                    CssClass="text-danger" Display="Dynamic" ErrorMessage="The password and confirmation password do not match." />
+                                    CssClass="text-danger" Display="Dynamic" ErrorMessage="<%$ Resources:SharedResources, ConfirmPasswordMismatchErrorMessage%>" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-offset-2 col-md-5">
-                                <asp:Button runat="server" CommandName="MoveNext" Text="Register"  CssClass="btn btn-primary" />
+                            <div class="col-md-offset-4 col-md-5">
+                                <asp:Button runat="server" CommandName="MoveNext" Text="Register"  CssClass="btn btn-primary" meta:resourcekey="RegisterButton" />
                             </div>
                         </div>
                     </div>
@@ -64,8 +67,8 @@
             <asp:CompleteWizardStep ID="CompleteWizardStep1" runat="server">
                 <ContentTemplate>
                     <asp:Panel ID="VerificationPanel" runat="server" Visible="false">
-                        <p><strong><asp:Localize runat="server" ID="Localize1" Text="Thanks for registering with us" meta:resourcekey="VerificationInsructionsTitle" /></strong></p>
-                        <p><asp:Localize runat="server" ID="Localize5" Text="Now wait for an email to be sent to the email address you specified with instructions to enable your account and login." meta:resourcekey="VerificationInsructions" />     </p>
+                        <p><strong><asp:Localize runat="server" ID="Localize1" Text="Thanks for registering with us" meta:resourcekey="VerificationInstructionsTitle" /></strong></p>
+                        <p><asp:Localize runat="server" ID="Localize5" Text="Now wait for an email to be sent to the email address you specified with instructions to enable your account and login." meta:resourcekey="VerificationInstructions" />     </p>
                     </asp:Panel>
                 </ContentTemplate>
             </asp:CompleteWizardStep>

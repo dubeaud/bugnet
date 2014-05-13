@@ -165,7 +165,7 @@
 	<data name="ConfirmPassword" xml:space="preserve">
     <value>Confirmar contraseña</value>
   </data>
-	<data name="ConfirmPasswordErrorMessage" xml:space="preserve">
+	<data name="ConfirmPasswordMismatchErrorMessage" xml:space="preserve">
     <value>Las contraseñas tienen que coincidir.</value>
   </data>
 	<data name="Created" xml:space="preserve">
@@ -342,18 +342,6 @@
 	<data name="Search" xml:space="preserve">
     <value>Buscar</value>
   </data>
-	<data name="SecurityAnswer" xml:space="preserve">
-    <value>Respuesta de seguridad</value>
-  </data>
-	<data name="SecurityAnswerRequiredErrorMessage" xml:space="preserve">
-    <value>La respuesta de seguridad es obligatoria.</value>
-  </data>
-	<data name="SecurityQuestion" xml:space="preserve">
-    <value>Pregunta de seguridad</value>
-  </data>
-	<data name="SecurityQuestionRequiredErrorMessage" xml:space="preserve">
-    <value>La pregunta de seguridad es obligatoria.</value>
-  </data>
 	<data name="Status" xml:space="preserve">
     <value>Estado</value>
   </data>
@@ -464,5 +452,17 @@
 	</data>
 	<data name="Logout" xml:space="preserve">
 		<value>Salir</value>
+	</data>
+	<data name="PasswordRequiredErrorMessage" xml:space="preserve">
+		<value>La contraseña es obligatoria.</value>
+	</data>
+	<data name="ConfirmPasswordRequiredErrorMessage" xml:space="preserve">
+		<value>La confirmación de la contraseña es obligatoria.</value>
+	</data>
+	<data name="EmailRequiredErrorMessage" xml:space="preserve">
+		<value>El Email es obligatorio.</value>
+	</data>
+	<data name="EmailFormatErrorMessage" xml:space="preserve">
+		<value>El formato del email no es correcto.</value>
 	</data>
 </root>

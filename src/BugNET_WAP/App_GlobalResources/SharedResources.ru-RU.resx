@@ -165,7 +165,7 @@
 	<data name="ConfirmPassword" xml:space="preserve">
     <value>Подтверждение пароля</value>
   </data>
-	<data name="ConfirmPasswordErrorMessage" xml:space="preserve">
+	<data name="ConfirmPasswordMismatchErrorMessage" xml:space="preserve">
     <value>Пароль и его подтверждение должны совпадать.</value>
   </data>
 	<data name="Created" xml:space="preserve">
@@ -330,18 +330,6 @@
 	<data name="Search" xml:space="preserve">
     <value>Поиск</value>
   </data>
-	<data name="SecurityAnswer" xml:space="preserve">
-    <value>Ответ на контрольный вопрос</value>
-  </data>
-	<data name="SecurityAnswerRequiredErrorMessage" xml:space="preserve">
-    <value>Требуется указать ответ на контрольный вопрос.</value>
-  </data>
-	<data name="SecurityQuestion" xml:space="preserve">
-    <value>Контрольный вопрос</value>
-  </data>
-	<data name="SecurityQuestionRequiredErrorMessage" xml:space="preserve">
-    <value>Требуется указать контрольный вопрос.</value>
-  </data>
 	<data name="Status" xml:space="preserve">
     <value>Статус</value>
   </data>
@@ -474,7 +462,7 @@
 	<data name="DropDown_SelectCustomField" xml:space="preserve">
     <value>-- Дополнительное поле --</value>
   </data>
-	<data name="PasswordRequired" xml:space="preserve">
+	<data name="PasswordRequiredErrorMessage" xml:space="preserve">
     <value>Требуется указать пароль.</value>
   </data>
 	<data name="ProjectSummary" xml:space="preserve">
@@ -494,5 +482,14 @@
 	</data>
 	<data name="ManageAccount" xml:space="preserve">
 		<value>Ваша учётная запись</value>
+	</data>
+	<data name="ConfirmPasswordRequiredErrorMessage" xml:space="preserve">
+		<value>Требуется указать подтверждение пароля.</value>
+	</data>
+	<data name="EmailRequiredErrorMessage" xml:space="preserve">
+		<value>Требуется указать адрес электронной почты.</value>
+	</data>
+	<data name="EmailFormatErrorMessage" xml:space="preserve">
+		<value>Формат адреса электронной почты неверен.</value>
 	</data>
 </root>
