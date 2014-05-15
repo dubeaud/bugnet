@@ -105,6 +105,11 @@ namespace BugNET
                 {
                     ProjectsList.Visible = false;
                 }
+
+                var item = ProjectsList.Items.FindByValue(ProjectId.ToString());
+
+                if (item != null)
+                    ProjectsList.SelectedValue = item.Value;
             }
         }
 
@@ -143,6 +148,11 @@ namespace BugNET
                     return -1;
                 }
             }
+        }
+
+        protected void SerachButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect(string.Format("~/Issues/IssueSearch.aspx?q={0}", SearchBox.Text));
         }
     }
 }

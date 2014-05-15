@@ -10,7 +10,15 @@
 <%@ Register TagPrefix="it" TagName="PickResolution" Src="~/UserControls/PickResolution.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="Server">
-    
+     <div class="page-header">
+        <h1 class="page-title">
+            <asp:Literal ID="Literal1" runat="server" Text="New Issue" />
+            <small> 
+                <asp:Literal ID="ltProject" runat="server" />
+                <span>(<asp:Literal ID="litProjectCode" runat="Server"></asp:Literal>)</span>
+            </small>
+        </h1>
+    </div>
     <div class="form-horizontal" style="padding-top:2em;">
         <asp:ValidationSummary ID="ValidationSummary1" DisplayMode="BulletList"
         HeaderText="<%$ Resources:SharedResources, ValidationSummaryHeaderText %>"

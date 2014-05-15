@@ -40,6 +40,24 @@ namespace BugNET {
         protected global::System.Web.UI.WebControls.DropDownList ProjectsList;
         
         /// <summary>
+        /// SearchBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox SearchBox;
+        
+        /// <summary>
+        /// SerachButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton SerachButton;
+        
+        /// <summary>
         /// litMenu control.
         /// </summary>
         /// <remarks>
