@@ -492,4 +492,7 @@
 	<data name="EmailFormatErrorMessage" xml:space="preserve">
 		<value>Формат адреса электронной почты неверен.</value>
 	</data>
+	<data name="SelectProject" xml:space="preserve">
+		<value>Выберите проект</value>
+	</data>
 </root>

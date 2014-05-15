@@ -486,4 +486,7 @@
 	<data name="EmailFormatErrorMessage" xml:space="preserve">
 		<value>Formatul de email este invalid.</value>
 	</data>
+	<data name="SelectProject" xml:space="preserve">
+		<value>Selectare proiect</value>
+	</data>
 </root>

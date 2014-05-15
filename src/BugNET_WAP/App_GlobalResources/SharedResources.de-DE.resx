@@ -486,4 +486,7 @@
 	<data name="EmailFormatErrorMessage" xml:space="preserve">
 		<value>Emailformat ist erforderlich.</value>
 	</data>
+	<data name="SelectProject" xml:space="preserve">
+		<value>Projekt auswählen</value>
+	</data>
 </root>

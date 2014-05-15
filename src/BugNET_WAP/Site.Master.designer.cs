@@ -49,13 +49,13 @@ namespace BugNET {
         protected global::System.Web.UI.WebControls.TextBox SearchBox;
         
         /// <summary>
-        /// SerachButton control.
+        /// SearchButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton SerachButton;
+        protected global::System.Web.UI.HtmlControls.HtmlButton SearchButton;
         
         /// <summary>
         /// litMenu control.

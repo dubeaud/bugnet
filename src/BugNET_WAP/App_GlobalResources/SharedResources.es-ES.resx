@@ -465,4 +465,7 @@
 	<data name="EmailFormatErrorMessage" xml:space="preserve">
 		<value>El formato del email no es correcto.</value>
 	</data>
+	<data name="SelectProject" xml:space="preserve">
+		<value>Seleccionar proyecto</value>
+	</data>
 </root>

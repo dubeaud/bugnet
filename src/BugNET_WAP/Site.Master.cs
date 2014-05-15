@@ -89,17 +89,18 @@ namespace BugNET
 
             if (!Page.IsPostBack)
             {
+            	string localizedSelectProject = GetGlobalResourceObject("SharedResources", "SelectProject").ToString();
                 if (Page.User.Identity.IsAuthenticated)
                 {
                     ProjectsList.DataSource = ProjectManager.GetByMemberUserName(Security.GetUserName(), true);
                     ProjectsList.DataBind();
-                    ProjectsList.Items.Insert(0, new ListItem("Select project"));
+                    ProjectsList.Items.Insert(0, new ListItem(localizedSelectProject));
                 }
                 else if (!Page.User.Identity.IsAuthenticated && Boolean.Parse(HostSettingManager.Get(HostSettingNames.AnonymousAccess)))
                 {
                     ProjectsList.DataSource = ProjectManager.GetPublicProjects();
                     ProjectsList.DataBind();
-                    ProjectsList.Items.Insert(0, new ListItem("Select project"));
+                    ProjectsList.Items.Insert(0, new ListItem(localizedSelectProject));
                 }
                 else
                 {
@@ -150,7 +151,7 @@ namespace BugNET
             }
         }
 
-        protected void SerachButton_Click(object sender, EventArgs e)
+        protected void SearchButton_Click(object sender, EventArgs e)
         {
             Response.Redirect(string.Format("~/Issues/IssueSearch.aspx?q={0}", SearchBox.Text));
         }

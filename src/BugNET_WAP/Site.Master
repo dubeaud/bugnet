@@ -103,8 +103,8 @@
                 </a>
                 <div class="mainnav-collapse navbar-collapse collapse">   
                     <div class="pull-right mainnav-form">
-                        <asp:textbox CssClass="form-control mainnav-search-query" placeholder="Search" id="SearchBox" runat="server" />
-                        <button id="SerachButton" class="btn btn-sm mainnav-form-btn" runat="server" onserverclick="SerachButton_Click"><i class="fa fa-search"></i></button>
+                        <asp:textbox CssClass="form-control mainnav-search-query" placeholder="<%$ Resources:SharedResources, Search %>" id="SearchBox" runat="server" />
+                        <button id="SearchButton" class="btn btn-sm mainnav-form-btn" runat="server" onserverclick="SearchButton_Click"><i class="fa fa-search"></i></button>
                     </div>
                     <asp:Literal ID="litMenu" Visible="true" runat="server"></asp:Literal>
                 </div>

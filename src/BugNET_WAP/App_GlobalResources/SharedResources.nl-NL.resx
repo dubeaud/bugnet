@@ -462,4 +462,7 @@
 	<data name="EmailFormatErrorMessage" xml:space="preserve">
 		<value>Email formaat is ongeldig.</value>
 	</data>
+	<data name="SelectProject" xml:space="preserve">
+		<value>Selecteer project</value>
+	</data>
 </root>
