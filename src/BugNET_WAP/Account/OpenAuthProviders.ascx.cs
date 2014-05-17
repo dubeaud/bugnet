@@ -44,10 +44,20 @@ namespace BugNET.Account
         {
             return Page.GetDataItem() as T ?? default(T);
         }
-
+        
+        protected string GetLocalizedTitleAttribute()
+        {
+            var item = this.Item<ProviderDetails>();
+            return String.Format(GetLocalResourceObject("ButtonTitle").ToString(), item.ProviderDisplayName);
+        }
+        
+        protected string GetLocalizedText()
+        {
+            var item = this.Item<ProviderDetails>();
+            return String.Format(GetLocalResourceObject("ButtonText").ToString(), item.ProviderDisplayName);
+        }
 
         public string ReturnUrl { get; set; }
-
 
     }
 }

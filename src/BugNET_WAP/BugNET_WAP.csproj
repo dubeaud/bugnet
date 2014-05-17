@@ -3087,6 +3087,10 @@
   <ItemGroup>
     <Content Include="Errors\App_LocalResources\AccessDenied.aspx.de-DE.resx" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\App_LocalResources\OpenAuthProviders.ascx.resx" />
+    <Content Include="Account\App_LocalResources\OpenAuthProviders.ascx.ru-RU.resx" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
