@@ -1,29 +1,28 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Profile.ascx.cs" Inherits="BugNET.Administration.Users.UserControls.Profile" %>
-<div>
-	<h2><asp:Literal ID="ControlTitle" runat="server" Text="<%$ Resources:ManageProfile %>" /></h2>
-    <asp:Literal ID="ControlDescription" runat="server" Text="<%$ Resources:ManageProfileDescription %>" />
+
+<h2>
+    <asp:Literal ID="ControlTitle" runat="server" Text="<%$ Resources:ManageProfile %>" /></h2>
+<p>
+    <asp:Literal ID="ControlDescription" runat="server" Text="<%$ Resources:ManageProfileDescription %>" /></p>
+
+<bn:Message ID="ActionMessage" runat="server" Visible="False" />
+<div class="form-horizontal">
+    <div class="form-group">
+        <asp:Label ID="Label1" CssClass="col-md-4 control-label" AssociatedControlID="FirstName" runat="server" Text="<%$ Resources:SharedResources, FirstName %>" />
+        <div class="col-md-8">
+            <asp:TextBox ID="FirstName" CssClass="form-control" runat="server" /></div>
+    </div>
+    <div class="form-group">
+        <asp:Label ID="Label3" CssClass="col-md-4 control-label" AssociatedControlID="LastName" runat="server" Text="<%$ Resources:SharedResources, LastName %>" />
+        <div class="col-md-8">
+            <asp:TextBox ID="LastName" CssClass="form-control" runat="server" />
+        </div>
+    </div>
+    <div class="form-group">
+        <asp:Label ID="Label5" CssClass="col-md-4 control-label" AssociatedControlID="DisplayName" runat="server" Text="<%$ Resources:SharedResources, DisplayName %>" />
+        <div class="col-md-8">
+            <asp:TextBox ID="DisplayName" CssClass="form-control" runat="server" /></div>
+    </div>
 </div>
-<BN:Message ID="ActionMessage" runat="server" Visible="False"  />
-<div class="fieldgroup" style="border:none"> 
-    <ol>
-        <li>
-            <asp:Label ID="Label1" AssociatedControlID="FirstName" runat="server" Text="<%$ Resources:SharedResources, FirstName %>" />
-            <asp:TextBox ID="FirstName" runat="server" />
-        </li>
-        <li>
-            <asp:Label ID="Label3" AssociatedControlID="LastName" runat="server" Text="<%$ Resources:SharedResources, LastName %>" />
-            <asp:TextBox ID="LastName" runat="server" />
-        </li>
-        <li>
-            <asp:Label ID="Label5" AssociatedControlID="DisplayName" runat="server" Text="<%$ Resources:SharedResources, DisplayName %>" />
-            <asp:TextBox ID="DisplayName" runat="server" />
-        </li>
-    </ol>
-</div>
-<div style="margin:2em 0 0 0; border-top:1px solid #ddd; padding-top:5px; clear:both;">
-    <asp:ImageButton OnClick="CmdUpdateClick" runat="server" id="save" CssClass="icon" ImageUrl="~/Images/disk.gif" />
-    <asp:LinkButton ID="cmdUpdate" OnClick="CmdUpdateClick" runat="server" Text="<%$ Resources:SharedResources, Save %>" />
-    &nbsp;
-    <asp:ImageButton runat="server" ImageUrl="~/Images/lt.gif" CssClass="icon" CausesValidation="false" AlternateText="<%$ Resources:BackToUserList %>" ID="ImageButton3" OnClick="CmdCancelClick" />
-    <asp:HyperLink ID="ReturnLink" runat="server" NavigateUrl="~/Administration/Users/UserList.aspx" Text="<%$ Resources:BackToUserList %>"></asp:HyperLink>
-</div>
+<asp:LinkButton ID="cmdUpdate" CssClass="btn btn-primary" OnClick="CmdUpdateClick" runat="server" Text="<%$ Resources:SharedResources, Save %>" />
+<asp:HyperLink ID="ReturnLink" CssClass="btn btn-default" runat="server" NavigateUrl="~/Administration/Users/UserList.aspx" Text="<%$ Resources:BackToUserList %>"></asp:HyperLink>

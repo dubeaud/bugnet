@@ -6,6 +6,7 @@ using BugNET.Common;
 using BugNET.Entities;
 using BugNET.UserControls;
 using BugNET.UserInterfaceLayer;
+using Microsoft.AspNet.FriendlyUrls;
 
 namespace BugNET.Projects
 {

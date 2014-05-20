@@ -31,9 +31,9 @@ namespace BugNET.Account
             litUserProfile.Text = Page.Title;
 
             foreach (ListItem li in BulletedList4.Items)
-                li.Attributes.Add("class", "off");
+                li.Attributes.Add("class", "");
 
-            BulletedList4.Items[0].Attributes.Add("class", "on");
+            BulletedList4.Items[0].Attributes.Add("class", "active");
 
             var resources = ResourceManager.GetInstalledLanguageResources();
             var resourceItems = (from code in resources let cultureInfo = new CultureInfo(code, false) select new ListItem(cultureInfo.DisplayName, code)).ToList();
@@ -111,80 +111,21 @@ namespace BugNET.Account
             lstAllProjects.SelectedIndex = -1;
         }
 
-
-        /// <summary>
-        /// Handles the Click event of the SavePasswordSettings control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void SavePasswordSettings_Click(object sender, EventArgs e)
-        {
-
-            var membershipUser = Membership.GetUser();
-            var currentPassword = CurrentPassword.Text;
-            var newPassword = NewPassword.Text;
-            var securityQuestion = SecurityQuestion.Text;
-            var securityAnswer = SecurityAnswer.Text;
-
-            if (membershipUser == null) return;
-
-            //Set the password
-            try
-            {
-                var passwordChanged = membershipUser.ChangePassword(currentPassword, newPassword);
-                var securityQuestionChanged = false;
-
-                if (passwordChanged)
-                {
-                    Message2.ShowSuccessMessage(GetLocalResourceObject("PasswordChanged").ToString());
-
-                    if (Log.IsInfoEnabled)
-                    {
-                        if (HttpContext.Current.User != null && HttpContext.Current.User.Identity.IsAuthenticated)
-                            MDC.Set("user", HttpContext.Current.User.Identity.Name);
-                        Log.Info("Password changed");
-                    }
-
-                    securityQuestionChanged = membershipUser.ChangePasswordQuestionAndAnswer(newPassword, securityQuestion, securityAnswer);
-
-                }
-                else
-                {
-                    if (Log.IsErrorEnabled)
-                    {
-                        if (HttpContext.Current.User != null && HttpContext.Current.User.Identity.IsAuthenticated)
-                            MDC.Set("user", HttpContext.Current.User.Identity.Name);
-                        Log.Error("Password update failure");
-                    }
-
-                    Message2.ShowErrorMessage(GetLocalResourceObject("PasswordChangeError").ToString());
-                }
-                if (securityQuestionChanged)
-                {
-                    Message2.ShowSuccessMessage(GetLocalResourceObject("SecurityQuestionChanged").ToString()); // "Security question was changed successfully"
-                }
-            }
-            catch (Exception ex)
-            {
-                Message2.ShowErrorMessage(ex.Message);
-            }
-        }
-
         protected void BulletedList4_Click1(object sender, BulletedListEventArgs e)
         {
 
             //Label1.Text = "The Index of Item you clicked: " + e.Index + "<br> The value of Item you clicked: " + BulletedList4.Items[e.Index].Text;
             foreach (ListItem li in BulletedList4.Items)
-                li.Attributes.Add("class", "off");
+                li.Attributes.Add("class", "");
 
-            BulletedList4.Items[e.Index].Attributes.Add("class", "on");
+            BulletedList4.Items[e.Index].Attributes.Add("class", "active");
 
             ProfileView.ActiveViewIndex = e.Index;
             var userName = Security.GetUserName();
 
             switch (ProfileView.ActiveViewIndex)
             {
-                case 3:
+                case 2:
                     lstAllProjects.Items.Clear();
                     lstSelectedProjects.Items.Clear();
                     lstAllProjects.DataSource = ProjectManager.GetByMemberUserName(userName);

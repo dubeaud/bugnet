@@ -247,14 +247,6 @@ namespace BugNET.Projects
                         c.Controls.Add(img);
                     }
                     break;
-                case ListItemType.Item:
-                    ((HtmlTableRow)e.Item.FindControl("Row")).Attributes.Add("onmouseout", "this.style.background=''");
-                    ((HtmlTableRow)e.Item.FindControl("Row")).Attributes.Add("onmouseover", "this.style.background='#F7F7EC'");
-                    break;
-                case ListItemType.AlternatingItem:
-                    ((HtmlTableRow)e.Item.FindControl("AlternateRow")).Attributes.Add("onmouseover", "this.style.background='#F7F7EC'");
-                    ((HtmlTableRow)e.Item.FindControl("AlternateRow")).Attributes.Add("onmouseout", "this.style.background='#fafafa'");
-                    break;
             }
         }
 

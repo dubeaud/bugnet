@@ -218,22 +218,6 @@ namespace BugNET.UserControls
             return catText;
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         /// <summary>
         /// Populates the nodes.
         /// </summary>
@@ -253,11 +237,11 @@ namespace BugNET.UserControls
                 // break the category list in the project summary page. 
                 // (or anywhere else this control is used)
                 //
-                // This code performs the required truncation. An elipsis is also added.
-                // This code does take bool ShowIssueCount in accout by adding 5 to the maxSize
+                // This code performs the required truncation. An ellipsis is also added.
+                // This code does take bool ShowIssueCount in account by adding 5 to the maxSize
                 //
                 // Example: The test category "this is a new test category ra ra ra" at a level 4 depth 
-                // exibits this problem. 
+                // exhibits this problem. 
 
                 TreeNode tn = new TreeNode();
                 nodes.Add(tn);

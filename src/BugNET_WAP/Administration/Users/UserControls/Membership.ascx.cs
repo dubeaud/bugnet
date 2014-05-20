@@ -60,10 +60,7 @@ namespace BugNET.Administration.Users.UserControls
             LastName.Text = user.LastName;
             DisplayName.Text = user.DisplayName;
             cmdAuthorize.Visible = !user.IsApproved;
-            ibAuthorize.Visible = !user.IsApproved;
             cmdUnAuthorize.Visible = user.IsApproved;
-            ibUnAuthorize.Visible = user.IsApproved;
-            ibUnLock.Visible = user.IsLockedOut;
             cmdUnLock.Visible = user.IsLockedOut;
         }
 
@@ -174,9 +171,7 @@ namespace BugNET.Administration.Users.UserControls
             UserManager.UpdateUser(MembershipData);
 
             cmdAuthorize.Visible = !isAuthorized;
-            ibAuthorize.Visible = !isAuthorized;
             cmdUnAuthorize.Visible = isAuthorized;
-            ibUnAuthorize.Visible = isAuthorized;
         }
 
         protected void CmdCancelClick(object sender, ImageClickEventArgs e)

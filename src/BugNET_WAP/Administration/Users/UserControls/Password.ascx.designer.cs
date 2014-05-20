@@ -112,15 +112,6 @@ namespace BugNET.Administration.Users.UserControls {
         protected global::System.Web.UI.WebControls.CompareValidator cvPasswords;
         
         /// <summary>
-        /// ImageButton1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton ImageButton1;
-        
-        /// <summary>
         /// cmdChangePassword control.
         /// </summary>
         /// <remarks>
@@ -157,15 +148,6 @@ namespace BugNET.Administration.Users.UserControls {
         protected global::System.Web.UI.WebControls.Label Label13;
         
         /// <summary>
-        /// Image7 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton Image7;
-        
-        /// <summary>
         /// cmdResetPassword control.
         /// </summary>
         /// <remarks>
@@ -173,15 +155,6 @@ namespace BugNET.Administration.Users.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton cmdResetPassword;
-        
-        /// <summary>
-        /// ImageButton3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton ImageButton3;
         
         /// <summary>
         /// ReturnLink control.

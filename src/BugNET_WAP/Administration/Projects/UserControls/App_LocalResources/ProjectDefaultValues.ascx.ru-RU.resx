@@ -121,7 +121,7 @@
 		<value>Значения по умолчанию</value>
 	</data>
 	<data name="DescriptionLabel.Text" xml:space="preserve">
-		<value>Установите значения по умочанию для свойств новых заданий.</value>
+		<value>Установите значения по умолчанию для свойств новых заданий.</value>
 	</data>
 	<data name="VisibilityCheckBox.Text" xml:space="preserve">
 		<value>Показывать</value>

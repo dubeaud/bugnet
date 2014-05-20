@@ -165,7 +165,7 @@
 	<data name="ConfirmPassword" xml:space="preserve">
     <value>Conferma password</value>
   </data>
-	<data name="ConfirmPasswordErrorMessage" xml:space="preserve">
+	<data name="ConfirmPasswordMismatchErrorMessage" xml:space="preserve">
     <value>Password e conferma password devono coincidere.</value>
   </data>
 	<data name="Created" xml:space="preserve">
@@ -330,18 +330,6 @@
 	<data name="Search" xml:space="preserve">
     <value>Cerca</value>
   </data>
-	<data name="SecurityAnswer" xml:space="preserve">
-    <value>Risposta di sicurezza</value>
-  </data>
-	<data name="SecurityAnswerRequiredErrorMessage" xml:space="preserve">
-    <value>La risposta di sicurezza è obbligatoria.</value>
-  </data>
-	<data name="SecurityQuestion" xml:space="preserve">
-    <value>Domanda di sicurezza</value>
-  </data>
-	<data name="SecurityQuestionRequiredErrorMessage" xml:space="preserve">
-    <value>La domanda di sicurezza e obbligatoria.</value>
-  </data>
 	<data name="Status" xml:space="preserve">
     <value>Stato</value>
   </data>
@@ -462,4 +450,31 @@
 	<data name="Comment" xml:space="preserve">
     <value>Commento</value>
   </data>
+	<data name="ProjectSummary" xml:space="preserve">
+		<value>Riepilogo</value>
+	</data>
+	<data name="Register" xml:space="preserve">
+		<value>Registra</value>
+	</data>
+	<data name="Login" xml:space="preserve">
+		<value>Login</value>
+	</data>
+	<data name="Logout" xml:space="preserve">
+		<value>Logout</value>
+	</data>
+	<data name="PasswordRequiredErrorMessage" xml:space="preserve">
+		<value>La password è necessaria.</value>
+	</data>
+	<data name="ConfirmPasswordRequiredErrorMessage" xml:space="preserve">
+		<value>Occorre confermare la password.</value>
+	</data>
+	<data name="EmailRequiredErrorMessage" xml:space="preserve">
+		<value>L'email è necessaria.</value>
+	</data>
+	<data name="EmailFormatErrorMessage" xml:space="preserve">
+		<value>Il formato email non è valido.</value>
+	</data>
+	<data name="SelectProject" xml:space="preserve">
+		<value>Seleziona progetto</value>
+	</data>
 </root>

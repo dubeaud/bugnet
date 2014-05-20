@@ -30,8 +30,18 @@ namespace BugNET.Administration.Host.UserControls
             HostSettingManager.UpdateHostSetting(HostSettingNames.ADPath, ADPath.Text);
             HostSettingManager.UpdateHostSetting(HostSettingNames.UserRegistration, UserRegistration.SelectedValue);
             HostSettingManager.UpdateHostSetting(HostSettingNames.AnonymousAccess, AnonymousAccess.SelectedValue);
-            HostSettingManager.UpdateHostSetting(HostSettingNames.OpenIdAuthentication, OpenIdAuthentication.SelectedValue);
             HostSettingManager.UpdateHostSetting(HostSettingNames.ADPassword, ADPassword.Text);
+            HostSettingManager.UpdateHostSetting(HostSettingNames.TwitterAuthentication, TwitterAuthentication.Checked.ToString());
+            HostSettingManager.UpdateHostSetting(HostSettingNames.TwitterConsumerKey, TwitterConsumerKey.Text);
+            HostSettingManager.UpdateHostSetting(HostSettingNames.TwitterConsumerSecret, TwitterConsumerSecret.Text);
+            HostSettingManager.UpdateHostSetting(HostSettingNames.FacebookAuthentication, FacebookAuthentication.Checked.ToString());
+            HostSettingManager.UpdateHostSetting(HostSettingNames.FacebookAppId, FacebookAppId.Text);
+            HostSettingManager.UpdateHostSetting(HostSettingNames.FacebookAppSecret, FacebookAppSecret.Text);
+            HostSettingManager.UpdateHostSetting(HostSettingNames.GoogleAuthentication, GoogleAuthentication.Checked.ToString());
+            HostSettingManager.UpdateHostSetting(HostSettingNames.MicrosoftClientId, MicrosoftClientId.Text);
+            HostSettingManager.UpdateHostSetting(HostSettingNames.MicrosoftClientSecret, MicrosoftClientSecret.Text);
+            HostSettingManager.UpdateHostSetting(HostSettingNames.MicrosoftAuthentication, MicrosoftAuthentication.Checked.ToString());
+
             return true;
         }
 
@@ -45,10 +55,18 @@ namespace BugNET.Administration.Host.UserControls
             ADPath.Text = HostSettingManager.Get(HostSettingNames.ADPath);
             UserRegistration.SelectedValue = HostSettingManager.Get(HostSettingNames.UserRegistration,(int)Common.UserRegistration.Public).ToString();
             AnonymousAccess.SelectedValue = HostSettingManager.Get(HostSettingNames.AnonymousAccess, true).ToString();
-            OpenIdAuthentication.SelectedValue = HostSettingManager.Get(HostSettingNames.OpenIdAuthentication);
             ADPassword.Attributes.Add("value", HostSettingManager.Get(HostSettingNames.ADPassword));
+            TwitterAuthentication.Checked = HostSettingManager.Get(HostSettingNames.TwitterAuthentication, false);
+            TwitterConsumerKey.Text = HostSettingManager.Get(HostSettingNames.TwitterConsumerKey);
+            TwitterConsumerSecret.Attributes.Add("value", HostSettingManager.Get(HostSettingNames.TwitterConsumerSecret));
+            FacebookAuthentication.Checked = HostSettingManager.Get(HostSettingNames.FacebookAuthentication, false);
+            FacebookAppId.Text = HostSettingManager.Get(HostSettingNames.FacebookAppId);
+            FacebookAppSecret.Attributes.Add("value", HostSettingManager.Get(HostSettingNames.FacebookAppSecret));
+            GoogleAuthentication.Checked = HostSettingManager.Get(HostSettingNames.GoogleAuthentication, false);
+            MicrosoftAuthentication.Checked = HostSettingManager.Get(HostSettingNames.MicrosoftAuthentication, false);
+            MicrosoftClientId.Text = HostSettingManager.Get(HostSettingNames.MicrosoftClientId);
+            MicrosoftClientSecret.Attributes.Add("value", HostSettingManager.Get(HostSettingNames.MicrosoftClientSecret));
             ShowHideUserAccountSourceCredentials();
-           
         }
 
         #endregion

@@ -7,13 +7,12 @@
     <p class="desc">
         <asp:Label ID="DescriptionLabel" runat="server" meta:resourcekey="DescriptionLabel" />
     </p>
-    <div style="margin-top: 1em">
-        <asp:ImageButton runat="server" OnClick="AddRole_Click" ImageUrl="~/Images/shield_add.gif" CssClass="icon" meta:resourcekey="AddNewRole"
-            AlternateText="Add Role" ID="add" />
-        <asp:LinkButton ID="cmdAddRole" OnClick="AddRole_Click" runat="server" meta:resourcekey="AddNewRole" Text="Add New Role" />
-    </div>
     <br />
-    <asp:GridView HorizontalAlign="Left" OnRowCommand="gvRoles_RowCommand" SkinID="GridView" ID="gvRoles" runat="server" AutoGenerateColumns="False"
+    <asp:GridView HorizontalAlign="Left" OnRowCommand="gvRoles_RowCommand"
+         UseAccessibleHeader="true"
+         GridLines="None"
+         CssClass="table table-striped"
+        ID="gvRoles" runat="server" AutoGenerateColumns="False"
         DataSourceID="SecurityRoles">
         <Columns>
             <asp:TemplateField>
@@ -28,39 +27,47 @@
             <asp:CheckBoxField HeaderStyle-HorizontalAlign="Left" DataField="AutoAssign" HeaderText="Auto Assignment" meta:resourcekey="AutoAssignmentColumnHeader" />
         </Columns>
     </asp:GridView>
+     <div style="margin-top: 1em">
+        <asp:LinkButton ID="cmdAddRole" OnClick="AddRole_Click" CssClass="btn btn-primary" runat="server" meta:resourcekey="AddNewRole" Text="Add New Role" />
+    </div>
     <asp:ObjectDataSource ID="SecurityRoles" runat="server" SelectMethod="GetByProjectId" TypeName="BugNET.BLL.RoleManager">
         <SelectParameters>
             <asp:ControlParameter ControlID="txtProjectID" Name="projectId" PropertyName="Value" Type="Int32" />
         </SelectParameters>
     </asp:ObjectDataSource>
 </asp:Panel>
-<asp:Panel ID="AddRole" CssClass="myform" Visible="False" runat="server">
-    <!--<h3> <asp:Label ID="RoleNameTitle" meta:resourcekey="RoleNameTitle" runat="server"> </asp:Label></h3>-->
+<asp:Panel ID="AddRole" CssClass="form-horizontal" Visible="False" runat="server">
     <p>
         <asp:Label ID="Label6" runat="server" meta:resourcekey="NewRoleDescriptionLabel" />
     </p>
     <asp:Label ID="Label1" ForeColor="Red" runat="server"></asp:Label>
     <div class="fieldgroup" style="border: none;">
-        <ol>
-            <li>
-                <asp:Label ID="Label2" CssClass="col1" AssociatedControlID="txtRoleName" meta:resourcekey="RoleName" runat="server" Text="Role Name:"></asp:Label>
-                <asp:TextBox ID="txtRoleName" runat="server" Width="300px"></asp:TextBox>
+        <div class="form-group">
+             <asp:Label ID="Label2" CssClass="control-label col-md-2" AssociatedControlID="txtRoleName" meta:resourcekey="RoleName" runat="server" Text="Role Name:"></asp:Label>
+            <div class="col-md-10">
+                <asp:TextBox ID="txtRoleName" runat="server" CssClass="form-control"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="rfvRoleName" runat="server" ControlToValidate="txtRoleName" ErrorMessage="(required)" SetFocusOnError="True"></asp:RequiredFieldValidator>
-            </li>
-            <li>
-                <asp:Label ID="Label4" AssociatedControlID="txtDescription" Text="<%$ Resources:SharedResources, Description %>" runat="server"></asp:Label>
-                <asp:TextBox ID="txtDescription" TextMode="multiLine" Height="100px" Width="300px" runat="server"></asp:TextBox>
-            </li>
-            <li>
-                <asp:Label ID="Label5" AssociatedControlID="chkAutoAssign" Text="Auto Assignment" meta:resourcekey="AutoAssignment" runat="server"></asp:Label>
-                <asp:CheckBox ID="chkAutoAssign" runat="server" />
-            </li>
-        </ol>
+            </div>
+        </div>
+           <div class="form-group">
+               <asp:Label ID="Label4" CssClass="control-label col-md-2" AssociatedControlID="txtDescription" Text="<%$ Resources:SharedResources, Description %>" runat="server"></asp:Label>
+               <div class="col-md-10">
+                   <asp:TextBox ID="txtDescription" TextMode="multiLine" Rows="4" CssClass="form-control" runat="server"></asp:TextBox>
+               </div>
+           </div>
+               <div class="form-group">
+                   <asp:Label ID="Label5" CssClass="control-label col-md-2" AssociatedControlID="chkAutoAssign" Text="Auto Assignment" meta:resourcekey="AutoAssignment" runat="server"></asp:Label>
+                   <div class="col-md-10">
+                       <div class="checkbox">
+                           <asp:CheckBox ID="chkAutoAssign" runat="server" />
+                       </div>
+                   </div>
+               </div>
     </div>
     <br />
     <br />
-    <h5>
-        <asp:Label ID="Label3" meta:resourcekey="PermissionsTitle" runat="server" /></h5>
+    <h3>
+        <asp:Label ID="Label3" meta:resourcekey="PermissionsTitle" runat="server" /></h3>
     <div>
         <fieldset>
             <legend><asp:Literal ID="Literal2" runat="Server" Text="Issue Tracking" meta:resourcekey="IssueTracking"></asp:Literal></legend>
@@ -146,24 +153,15 @@
                     <asp:CheckBox ID="chkViewProjectCalendar" Text="View calendar" meta:resourcekey="ViewCalendar" runat="server"></asp:CheckBox></li>
             </ul>
         </fieldset>
-        <%--  <fieldset>
-        <legend>Repository</legend>
-         <ul class="permissions">
-            <li><asp:checkbox id="Checkbox26" Text="Browse repository" runat="server"></asp:checkbox></li>
-            <li><asp:checkbox id="Checkbox27" Text="Manage repository" runat="server"></asp:checkbox></li>
-         </ul>
-     </fieldset>--%>
     </div>
     <br />
     <br />
-    <div align="center">
-        <asp:ImageButton runat="server" ID="ImageButton1" OnClick="cmdAddUpdateRole_Click" CssClass="icon" ImageUrl="~/Images/disk.gif" />
-        <asp:LinkButton ID="cmdAddUpdateRole" OnClick="cmdAddUpdateRole_Click" runat="server" CausesValidation="True" meta:resourcekey="AddRoleButton"
+    <div class="row">
+        <asp:LinkButton ID="cmdAddUpdateRole" CssClass="btn btn-primary" OnClick="cmdAddUpdateRole_Click" runat="server" CausesValidation="True" meta:resourcekey="AddRoleButton"
             Text="Add Role" />
-        <asp:ImageButton runat="server" ID="Image1" OnClick="cmdCancel_Click" CssClass="icon" ImageUrl="~/Images/lt.gif" />
-        <asp:LinkButton ID="cmdCancel" OnClick="cmdCancel_Click" runat="server" CausesValidation="False" Text="<%$ Resources:SharedResources, Cancel %>" />
+        <asp:LinkButton ID="cmdCancel" CssClass="btn btn-default" OnClick="cmdCancel_Click" runat="server" CausesValidation="False" Text="<%$ Resources:SharedResources, Cancel %>" />
         <asp:ImageButton runat="server" OnClick="cmdDelete_Click" ID="cancel" CssClass="icon" ImageUrl="~/Images/shield_delete.gif" />
-        <asp:LinkButton ID="cmdDelete" OnClick="cmdDelete_Click" runat="server" CausesValidation="False" meta:resourcekey="DeleteRoleButton"
+        <asp:LinkButton ID="cmdDelete" CssClass="btn btn-danger" OnClick="cmdDelete_Click" runat="server" CausesValidation="False" meta:resourcekey="DeleteRoleButton"
             Text="Delete Role" />
     </div>
 </asp:Panel>

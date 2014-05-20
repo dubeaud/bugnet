@@ -45,9 +45,6 @@ namespace BugNET.Issues
                 }
 
                 BindOptions();
-
-                lblIssueNumber.Text = GetGlobalResourceObject("SharedResources", "NotAvailableAbbr").ToString();
-
                 BindDefaultValues();
 
                 //check users role permission for adding an attachment
@@ -180,7 +177,7 @@ namespace BugNET.Issues
                 if (selectedValue.IssueVisibility == 0) chkPrivate.Checked = false;
                 if (selectedValue.IssueVisibility == 1) chkPrivate.Checked = true;
 
-                //Date 
+                // Date 
                 if (selectedValue.DueDate.HasValue)
                 {
                     DateTime date = DateTime.Today;
@@ -191,20 +188,19 @@ namespace BugNET.Issues
                 ProgressSlider.Text = selectedValue.Progress.ToString();
                 txtEstimation.Text = selectedValue.Estimation.ToString();
 
-                //Visibility Section
-                DropIssueType.Visible = IssueTypeLabel.Visible = selectedValue.TypeVisibility;
-                DropStatus.Visible = StatusLabel.Visible = selectedValue.StatusVisibility;
-                chkNotifyOwner.Visible = DropOwned.Visible = OwnerLabel.Visible = selectedValue.OwnedByVisibility;
-                DropPriority.Visible = PriorityLabel.Visible = selectedValue.PriorityVisibility;
-                chkNotifyAssignedTo.Visible = DropAssignedTo.Visible = AssignedToLabel.Visible = selectedValue.AssignedToVisibility;
-                chkPrivate.Visible = PrivateLabel.Visible = selectedValue.PrivateVisibility;
-                DropCategory.Visible = CategoryLabel.Visible = selectedValue.CategoryVisibility;
-                DueDatePicker.Visible = DueDateLabel.Visible = selectedValue.DueDateVisibility;
-                Label3.Visible = ProgressSlider.Visible = ProgressSlider_BoundControl.Visible = PercentLabel.Visible = selectedValue.PercentCompleteVisibility;
-                DropMilestone.Visible = MilestoneLabel.Visible = selectedValue.MilestoneVisibility;
-                HoursLabel.Visible = txtEstimation.Visible = EstimationLabel.Visible = selectedValue.EstimationVisibility;
-                DropResolution.Visible = ResolutionLabel.Visible = selectedValue.ResolutionVisibility;
-                DropAffectedMilestone.Visible = Label4.Visible = selectedValue.AffectedMilestoneVisibility;
+                // Visibility Section
+                IssueTypeField.Visible = selectedValue.TypeVisibility;
+                StatusField.Visible = selectedValue.StatusVisibility;
+                PriorityField.Visible = selectedValue.PriorityVisibility;
+                PrivateField.Visible = selectedValue.PrivateVisibility;
+                CategoryField.Visible = selectedValue.CategoryVisibility;
+                DueDateField.Visible = selectedValue.DueDateVisibility;
+                ProgressField.Visible = selectedValue.PercentCompleteVisibility;
+                MilestoneField.Visible = selectedValue.MilestoneVisibility;
+                EstimationField.Visible = selectedValue.EstimationVisibility;
+                ResolutionField.Visible = selectedValue.ResolutionVisibility;
+                AffectedMilestoneField.Visible = selectedValue.AffectedMilestoneVisibility;
+                AssignedToField.Visible = selectedValue.AssignedToVisibility;
                 chkNotifyAssignedTo.Checked = selectedValue.AssignedToNotify;
                 chkNotifyOwner.Checked = selectedValue.OwnedByNotify;
             }

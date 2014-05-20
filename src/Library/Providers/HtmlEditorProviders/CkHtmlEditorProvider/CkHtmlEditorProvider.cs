@@ -93,7 +93,6 @@ namespace BugNET.Providers.HtmlEditorProviders
           
 
             //Perform feature-specific provider initialization here
-            //A great deal more error checking and handling should exist here
 
             _providerPath = "" + config["providerPath"];
             _providerPath = System.Web.VirtualPathUtility.ToAbsolute(_providerPath.Trim().Replace("\\", "/"));
@@ -115,11 +114,8 @@ namespace BugNET.Providers.HtmlEditorProviders
             if (config["EditorSkin"] != null)
                 _textbox.Skin = _textbox.Skin + "editor/skins/" + config["EditorSkin"] + "/";
             
-            //CkEditor.CkEditorJS = _providerPath + "ckeditor.js";
             _textbox.BasePath = _providerPath;
-
-            //textbox.SkinPath = "skins/silver/";
-            //textbox.ToolbarSet = "Default";
+            _textbox.CssClass = "form-control";
         }
     }
 }

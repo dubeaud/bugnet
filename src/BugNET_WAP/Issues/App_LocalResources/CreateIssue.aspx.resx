@@ -124,10 +124,10 @@
     <value>Attachment</value>
   </data>
   <data name="AttachmentDescriptionLabel.Text" xml:space="preserve">
-    <value>Description:</value>
+    <value>Description</value>
   </data>
   <data name="AttachmentFileLabel.Text" xml:space="preserve">
-    <value>File:</value>
+    <value>File</value>
   </data>
   <data name="AttachmentOptionalLocalize.Text" xml:space="preserve">
     <value>Optional</value>

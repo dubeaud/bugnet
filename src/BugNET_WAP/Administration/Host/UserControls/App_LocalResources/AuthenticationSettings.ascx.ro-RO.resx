@@ -129,9 +129,6 @@
 	<data name="DomainPath" xml:space="preserve">
     <value>Domeniu / Cale</value>
   </data>
-	<data name="OpenIdAuthentication" xml:space="preserve">
-    <value>Autentificare Open Id</value>
-  </data>
 	<data name="PasswordsMustMatch" xml:space="preserve">
     <value>Parolele trebuie sa se potriveasca</value>
   </data>

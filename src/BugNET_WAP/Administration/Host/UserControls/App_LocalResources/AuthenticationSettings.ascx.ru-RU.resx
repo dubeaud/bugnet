@@ -129,9 +129,6 @@
 	<data name="DomainPath" xml:space="preserve">
 		<value>Домен / Путь</value>
 	</data>
-	<data name="OpenIdAuthentication" xml:space="preserve">
-		<value>Аутентификация OpenID</value>
-	</data>
 	<data name="PasswordsMustMatch" xml:space="preserve">
 		<value>Пароли должны совпадать</value>
 	</data>
@@ -152,5 +149,8 @@
 	</data>
 	<data name="UserRegistration_Verified.Text" xml:space="preserve">
 		<value>с проверкой</value>
+	</data>
+	<data name="OAuthOpenID" xml:space="preserve">
+		<value>Вход через OAuth / OpenID</value>
 	</data>
 </root>

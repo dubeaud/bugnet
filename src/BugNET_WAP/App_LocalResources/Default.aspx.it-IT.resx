@@ -153,9 +153,6 @@
 	<data name="QuickLinks.Text" xml:space="preserve">
     <value>Collegamenti</value>
   </data>
-	<data name="QuickLinksFilters.Text" xml:space="preserve">
-    <value>Collegamenti / filtri</value>
-  </data>
 	<data name="RegisterAndLoginMessage" xml:space="preserve">
     <value>Ti devi autenticare per consultare i progetti.</value>
   </data>

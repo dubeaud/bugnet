@@ -85,15 +85,6 @@ namespace BugNET.Administration.Users.UserControls {
         protected global::System.Web.UI.WebControls.CheckBoxList RoleList;
         
         /// <summary>
-        /// save control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton save;
-        
-        /// <summary>
         /// cmdUpdateRoles control.
         /// </summary>
         /// <remarks>
@@ -101,15 +92,6 @@ namespace BugNET.Administration.Users.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton cmdUpdateRoles;
-        
-        /// <summary>
-        /// ImageButton3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton ImageButton3;
         
         /// <summary>
         /// ReturnLink control.

@@ -1,116 +1,77 @@
-<%@ Page language="c#" Inherits="BugNET.Account.Register" MasterPageFile="~/Shared/SingleColumn.master" Title="Register" Codebehind="Register.aspx.cs" meta:resourcekey="Page" Async="true" %>
-<%@ Register TagPrefix="cc2" Namespace="Clearscreen.SharpHIP" Assembly="Clearscreen.SharpHIP" %>
+﻿<%@ Page Title="Register" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Register.aspx.cs" Inherits="BugNET.Account.Register" meta:ResourceKey="Page" %>
 
-<asp:Content runat="server" ID="Content1" ContentPlaceHolderID="Content">
-    
-    <h1><asp:Label ID="TitleLabel" meta:resourcekey="TitleLabel" style="color: #666" runat="server" Text="Sign up for your new account"></asp:Label></h1>
-    <p style="margin-top:10px;">
-        <asp:Label ID="InstructionsLabel" runat="server" meta:resourcekey="InstructionsLabel" Text="Please enter your details and confirm your password to register an account."/>
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+    <h2><%: Title %>.</h2>
+    <p class="text-danger">
+        <asp:Literal runat="server" ID="ErrorMessage" />
     </p>
-    <asp:ValidationSummary ID="ValidationSummary1" runat="server"  ValidationGroup="CreateUserWizard1" HeaderText="<%$ Resources:SharedResources, ValidationSummaryHeaderText %>" DisplayMode="BulletList"  CssClass="validationSummary"/>
-    <asp:CreateUserWizard meta:resourcekey="Wizard"
-        ID="CreateUserWizard1" 
-        OnCreatingUser="CreatingUser" 
-        Width="500px"
-        runat="server" 
-        ContinueDestinationPageUrl="~/Default.aspx"
-        OnCreatedUser="CreateUserWizard1_CreatedUser">
+
+    <asp:CreateUserWizard runat="server" ID="RegisterUser" ViewStateMode="Disabled" OnCreatedUser="RegisterUser_CreatedUser">
+        <LayoutTemplate>
+            <asp:PlaceHolder runat="server" ID="wizardStepPlaceholder" />
+            <asp:PlaceHolder runat="server" ID="navigationPlaceholder" />
+        </LayoutTemplate>
         <WizardSteps>
-            <asp:CreateUserWizardStep ID="CreateUserWizardStep0"  runat="server">
+            <asp:CreateUserWizardStep runat="server" ID="RegisterUserWizardStep">
                 <ContentTemplate>
-                 <asp:Literal ID="ErrorMessage" runat="server" EnableViewState="False" />
-                    <div class="fieldgroup">
-                        <ol>
-                            <li>
-                              <asp:Label ID="UserNameLabel" runat="server"  
-                                Text="<%$ Resources:SharedResources, Username %>" AssociatedControlID="UserName">Username:</asp:Label>
-                                 <asp:TextBox ID="UserName" runat="server"></asp:TextBox>
-                                <asp:RequiredFieldValidator ID="UserNameRequired" runat="server" ControlToValidate="UserName"
-                                    ErrorMessage="<%$ Resources:UsernameRequiredErrorMessage %>" ToolTip="<%$ Resources:UsernameRequiredErrorMessage %>" ValidationGroup="CreateUserWizard1">*</asp:RequiredFieldValidator>
-                            </li>
-                            <li>
-                                <asp:Label ID="FirstNameLabel" runat="server" Text="<%$ Resources:SharedResources, FirstName %>" AssociatedControlID="FirstName">First Name:</asp:Label>
-                                 <asp:TextBox ID="FirstName" runat="server"></asp:TextBox>
-                                <asp:RequiredFieldValidator ID="FirstNameRequired" runat="server" ControlToValidate="FirstName"
-                                    ErrorMessage="<%$ Resources:FirstNameRequiredErrorMessage %>" ToolTip="<%$ Resources:FirstNameRequiredErrorMessage %>" ValidationGroup="CreateUserWizard1">*</asp:RequiredFieldValidator>
-                            </li>
-                            <li>
-                                <asp:Label ID="LastNameLabel" runat="server" Text="<%$ Resources:SharedResources, LastName %>" AssociatedControlID="FirstName">Last Name:</asp:Label>
-                                 <asp:TextBox ID="LastName" runat="server"></asp:TextBox>
-                                <asp:RequiredFieldValidator ID="LastNameRequired" runat="server" ControlToValidate="LastName"
-                                    ErrorMessage="<%$ Resources:LastNameRequiredErrorMessage %>" ToolTip="<%$ Resources:LastNameRequiredErrorMessage %>" ValidationGroup="CreateUserWizard1">*</asp:RequiredFieldValidator>
-                            </li>
-                            <li>
-                                <asp:Label ID="FullNameLabel" runat="server" AssociatedControlID="FullName" Text="<%$ Resources:SharedResources, DisplayName %>"/>
-                                 <asp:TextBox ID="FullName" runat="server"></asp:TextBox>
-                                <asp:RequiredFieldValidator ID="FullNameRequired" runat="server" ControlToValidate="FullName"
-                                    ErrorMessage="<%$ Resources:FullNameRequiredErrorMessage %>" ToolTip="<%$ Resources:FullNameRequiredErrorMessage %>" ValidationGroup="CreateUserWizard1">*</asp:RequiredFieldValidator>
-                            </li>
-                            <li>
-                                <asp:Label ID="PreferredLanguageLabel" runat="server" AssociatedControlID="FullName" meta:resourcekey="PreferredLanguageLabel">Preferred Language:</asp:Label>
-                                 <asp:DropDownList ID="PreferredLanguage" runat="server" Width="250" />
-                            </li>
-                            <li>
-                                <asp:Label ID="PasswordLabel" runat="server" Text="<%$ Resources:SharedResources, Password %>" AssociatedControlID="Password">Password:</asp:Label>
-                                <asp:TextBox ID="Password" runat="server" TextMode="Password"></asp:TextBox>
-                                <asp:RequiredFieldValidator ID="PasswordRequired" runat="server" ControlToValidate="Password"
-                                    ErrorMessage="<%$ Resources:PasswordRequiredErrorMessage %>" ToolTip="<%$ Resources:PasswordRequiredErrorMessage %>" ValidationGroup="CreateUserWizard1">*</asp:RequiredFieldValidator>
-                            </li>
-                            <li>
-                                <asp:Label ID="ConfirmPasswordLabel" runat="server" Text="<%$ Resources:SharedResources, ConfirmPassword %>" AssociatedControlID="ConfirmPassword">Confirm Password:</asp:Label>
-                                 <asp:TextBox ID="ConfirmPassword" runat="server" TextMode="Password"></asp:TextBox>
-                                <asp:RequiredFieldValidator ID="ConfirmPasswordRequired" runat="server" ControlToValidate="ConfirmPassword"
-                                    ErrorMessage="<%$ Resources:ConfirmPasswordRequiredErrorMessage %>" ToolTip="<%$ Resources:ConfirmPasswordRequiredErrorMessage %>"
-                                    ValidationGroup="CreateUserWizard1">*</asp:RequiredFieldValidator>
-                            </li>
-                            <li>
-                                <asp:Label ID="EmailLabel" runat="server" Text="<%$ Resources:SharedResources, Email %>" AssociatedControlID="Email"/>
-                                <asp:TextBox ID="Email" runat="server"></asp:TextBox>
-                                <asp:RequiredFieldValidator ID="EmailRequired" runat="server"  Display="Dynamic" ControlToValidate="Email"
-                                    ErrorMessage="<%$ Resources:EmailRequiredErrorMessage %>" ToolTip="<%$ Resources:EmailRequiredErrorMessage %>" ValidationGroup="CreateUserWizard1">*</asp:RequiredFieldValidator>
-                                 <asp:RegularExpressionValidator ID="regexEmailValid" runat="server" 
-                                    ValidationExpression="\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"  ValidationGroup="CreateUserWizard1"
-                                    ControlToValidate="Email" ErrorMessage="<%$ Resources:InvalidEmailErrorMessage %>" Text="<%$ Resources:InvalidEmailErrorMessage %>" />
-                            </li>
-                            <li>
-                                <asp:Label ID="QuestionLabel" runat="server" AssociatedControlID="Question" Text="<%$ Resources:SharedResources, SecurityQuestion %>" />
-                                <asp:TextBox ID="Question" runat="server"></asp:TextBox>
-                                <asp:RequiredFieldValidator ID="QuestionRequired" runat="server" ControlToValidate="Question"
-                                    ErrorMessage="<%$ Resources:SecurityQuestionRequiredErrorMessage %>" ToolTip="<%$ Resources:SecurityQuestionRequiredErrorMessage %>"
-                                    ValidationGroup="CreateUserWizard1">*</asp:RequiredFieldValidator>
-                            </li>
-                            <li>
-                                <asp:Label ID="AnswerLabel" runat="server" AssociatedControlID="Answer" Text="<%$ Resources:SharedResources, SecurityAnswer %>" />
-                                  <asp:TextBox ID="Answer" runat="server"></asp:TextBox>
-                                <asp:RequiredFieldValidator ID="AnswerRequired" runat="server" ControlToValidate="Answer"
-                                    ErrorMessage="<%$ Resources: SecurityAnswerRequiredErrorMessage %>" ToolTip="<%$ Resources: SecurityAnswerRequiredErrorMessage %>"
-                                    ValidationGroup="CreateUserWizard1">*</asp:RequiredFieldValidator>
-                                <asp:CompareValidator ID="PasswordCompare" runat="server" ToolTip="<%$ Resources:SharedResources, ConfirmPasswordErrorMessage %>" ErrorMessage="<%$ Resources:SharedResources, ConfirmPasswordErrorMessage %>" ControlToCompare="Password"
-                                    ControlToValidate="ConfirmPassword"
-                                    ValidationGroup="CreateUserWizard1">*</asp:CompareValidator>
-                            </li>
-                            <li>
-                               <cc2:hipcontrol id="CapchaTest" runat="server" meta:resourcekey="Capcha"
-                                   TrustAuthenticatedUsers="False" AutoRedirect="False"  ImageWidth="160" ImageHeight="40" TextPatternColor="Blue" 
-                                    JavascriptURLDetection="False" ValidationMode="ViewState" Width="300px" />
-                            </li>
-                        </ol>
+                    <div class="form-horizontal">
+                        <h4><asp:Localize runat="server" meta:resourceKey="TitleLabel" Text="[Resource Required]"/></h4>
+                        <hr />
+                        <asp:ValidationSummary runat="server" CssClass="text-danger" />
+                        <div class="form-group">
+                            <asp:Label runat="server" AssociatedControlID="UserName" CssClass="col-md-4 control-label" Text="<%$ Resources:SharedResources, UserName%>">User name</asp:Label>
+                            <div class="col-md-5">
+                                <asp:TextBox runat="server" ID="UserName" CssClass="form-control" />
+                                <asp:RequiredFieldValidator runat="server" ControlToValidate="UserName"
+                                    CssClass="text-danger" ErrorMessage="<%$ Resources:SharedResources, UsernameRequiredErrorMessage%>" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <asp:Label runat="server" AssociatedControlID="Email" CssClass="col-md-4 control-label" Text="<%$ Resources:SharedResources, EMail%>">Email</asp:Label>
+                            <div class="col-md-5">
+                                <asp:TextBox runat="server" ID="Email" CssClass="form-control" />
+                                <asp:RequiredFieldValidator runat="server" ControlToValidate="Email"
+                                    CssClass="text-danger" ErrorMessage="<%$ Resources:SharedResources, EmailRequiredErrorMessage %>" />
+                                <asp:RegularExpressionValidator ID="regexEmailValid" runat="server"
+                                     ValidationExpression="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+                                     ControlToValidate="Email" ErrorMessage="<%$ Resources:SharedResources, EmailFormatErrorMessage %>" />
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-4 control-label" Text="<%$ Resources:SharedResources, Password%>">Password</asp:Label>
+                            <div class="col-md-5">
+                                <asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="form-control" />
+                                <asp:RequiredFieldValidator runat="server" ControlToValidate="Password"
+                                    CssClass="text-danger" ErrorMessage="<%$ Resources:SharedResources, PasswordRequiredErrorMessage%>" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <asp:Label runat="server" AssociatedControlID="ConfirmPassword" CssClass="col-md-4 control-label" Text="<%$ Resources:SharedResources, ConfirmPassword%>">Confirm password</asp:Label>
+                            <div class="col-md-5">
+                                <asp:TextBox runat="server" ID="ConfirmPassword" TextMode="Password" CssClass="form-control" />
+                                <asp:RequiredFieldValidator runat="server" ControlToValidate="ConfirmPassword"
+                                    CssClass="text-danger" Display="Dynamic" ErrorMessage="<%$ Resources:SharedResources, ConfirmPasswordRequiredErrorMessage%>" />
+                                <asp:CompareValidator runat="server" ControlToCompare="Password" ControlToValidate="ConfirmPassword"
+                                    CssClass="text-danger" Display="Dynamic" ErrorMessage="<%$ Resources:SharedResources, ConfirmPasswordMismatchErrorMessage%>" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-4 col-md-5">
+                                <asp:Button runat="server" CommandName="MoveNext" Text="Register"  CssClass="btn btn-primary" meta:resourcekey="RegisterButton" />
+                            </div>
+                        </div>
                     </div>
                 </ContentTemplate>
+                <CustomNavigationTemplate />
             </asp:CreateUserWizardStep>
-           <asp:CompleteWizardStep ID="CompleteWizardStep1" runat="server">
+            <asp:CompleteWizardStep ID="CompleteWizardStep1" runat="server">
                 <ContentTemplate>
                     <asp:Panel ID="VerificationPanel" runat="server" Visible="false">
-                        <p><strong><asp:Localize runat="server" ID="Localize1" Text="Thanks for registering with us" meta:resourcekey="VerificationInsructionsTitle" /></strong></p>
-                        <p><asp:Localize runat="server" ID="Localize5" Text="Now wait for an email to be sent to the email address you specified with instructions to enable your account and login." meta:resourcekey="VerificationInsructions" />     </p>
+                        <p><strong><asp:Localize runat="server" ID="Localize1" Text="Thanks for registering with us" meta:resourcekey="VerificationInstructionsTitle" /></strong></p>
+                        <p><asp:Localize runat="server" ID="Localize5" Text="Now wait for an email to be sent to the email address you specified with instructions to enable your account and login." meta:resourcekey="VerificationInstructions" />     </p>
                     </asp:Panel>
                 </ContentTemplate>
             </asp:CompleteWizardStep>
         </WizardSteps>
-        <TitleTextStyle Font-Bold="True" HorizontalAlign="Left" Height="50px" Font-Size="18px" />
-        <InstructionTextStyle Height="35px" />
     </asp:CreateUserWizard>
 </asp:Content>
-
-
-

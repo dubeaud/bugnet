@@ -10,13 +10,11 @@
     <asp:UpdatePanel ID="UpdatePanel2" runat="server">
         <ContentTemplate>
             <bn:Message ID="ActionMessage" runat="server" Visible="False" />
-            <asp:DataGrid ID="grdMailboxes" runat="server" SkinID="DataGrid" Width="100%" OnUpdateCommand="dtgMailboxes_Update" OnEditCommand="dtgMailboxes_Edit"
-                OnCancelCommand="dtgMailboxes_Cancel" OnDeleteCommand="dtgMailboxes_Delete" OnItemDataBound="dtgMailboxes_ItemDataBound"
-                CellPadding="3" GridLines="None" BorderWidth="0" AutoGenerateColumns="False">
+            <asp:DataGrid ID="grdMailboxes" runat="server" CssClass="table table-striped" UseAccessibleHeader="true" OnUpdateCommand="dtgMailboxes_Update" OnEditCommand="dtgMailboxes_Edit"
+               OnCancelCommand="dtgMailboxes_Cancel" OnDeleteCommand="dtgMailboxes_Delete" OnItemDataBound="dtgMailboxes_ItemDataBound"
+               GridLines="None" AutoGenerateColumns="False">
                 <Columns>
                     <asp:TemplateColumn>
-                        <HeaderStyle HorizontalAlign="Right" Width="45" />
-                        <ItemStyle HorizontalAlign="Right" Width="45" Wrap="false" />
                         <ItemTemplate>
                             <asp:ImageButton ID="cmdEdit" ToolTip="<%$ Resources:SharedResources, Edit %>" AlternateText="<%$ Resources:SharedResources, Edit %>"
                                 CssClass="icon" ImageUrl="~/images/pencil.gif" BorderWidth="0px" CommandName="Edit" CausesValidation="false" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
@@ -32,8 +30,6 @@
                         </EditItemTemplate>
                     </asp:TemplateColumn>
                     <asp:TemplateColumn HeaderText="Email Address">
-                        <HeaderStyle HorizontalAlign="Left" />
-                        <ItemStyle HorizontalAlign="Left" />
                         <ItemTemplate>
                             <asp:Label ID="EmailAddressLabel" runat="Server" />
                         </ItemTemplate>
@@ -44,8 +40,6 @@
                         </EditItemTemplate>
                     </asp:TemplateColumn>
                     <asp:TemplateColumn HeaderText="Assign To">
-                        <HeaderStyle HorizontalAlign="Left" />
-                        <ItemStyle HorizontalAlign="Left" />
                         <ItemTemplate>
                             <asp:Label ID="AssignToLabel" runat="Server" />
                         </ItemTemplate>
@@ -54,8 +48,6 @@
                         </EditItemTemplate>
                     </asp:TemplateColumn>
                     <asp:TemplateColumn HeaderText="Issue Type">
-                        <HeaderStyle HorizontalAlign="Left" />
-                        <ItemStyle HorizontalAlign="Left" />
                         <ItemTemplate>
                             <asp:Label ID="IssueTypeName" runat="Server" />
                         </ItemTemplate>
@@ -64,7 +56,6 @@
                         </EditItemTemplate>
                     </asp:TemplateColumn>
                     <asp:TemplateColumn>
-                        <ItemStyle Wrap="false" HorizontalAlign="Center" Width="16" />
                         <ItemTemplate>
                             <asp:ImageButton ID="cmdDelete" ToolTip="<%$ Resources:SharedResources, Delete %>" AlternateText="<%$ Resources:SharedResources, Delete %>"
                                 CssClass="icon" ImageUrl="~/images/cross.gif" BorderWidth="0px" CommandName="Delete" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
@@ -74,29 +65,35 @@
                     </asp:TemplateColumn>
                 </Columns>
             </asp:DataGrid>
-            <div class="fieldgroup">
+            <div class="form-horizontal">
                 <h3>
                     <asp:Literal ID="NewMailboxText" runat="server" Text="New Mailbox" meta:resourcekey="NewMailboxText" /></h3>
-                <ol>
-                    <li>
-                        <asp:Label ID="EmailAddressLabel" runat="server" AssociatedControlID="txtMailbox" Text="Email Address:" meta:resourcekey="EmailAddressLabel" />
-                        <asp:TextBox ID="txtMailbox" runat="server" EnableViewState="false"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="reqVal" Display="dynamic" ControlToValidate="txtMailBox" CssClass="req"  Text=" (required)" runat="Server" />
+                <div class="form-group">
+                        <asp:Label ID="EmailAddressLabel" CssClass="control-label col-md-4" runat="server" AssociatedControlID="txtMailbox" Text="Email Address:" meta:resourcekey="EmailAddressLabel" />
+                    <div class="col-md-8">
+                    <asp:TextBox ID="txtMailbox" runat="server" CssClass="form-control" EnableViewState="false"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="reqVal" Display="dynamic" ControlToValidate="txtMailBox" CssClass="text-danger"  Text=" (required)" runat="Server" />
                         <asp:RegularExpressionValidator ID="regexEmailValid" runat="server" ValidationExpression="\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"
-                            ControlToValidate="txtMailbox" ErrorMessage="Invalid Email Format"  CssClass="req"  Text="Invalid Email Format" />
-                    </li>
-                    <li>
-                        <asp:Label ID="IssueAssignedUserLabel" runat="server" AssociatedControlID="IssueAssignedUser" Text="Assign To:" meta:resourcekey="IssueAssignedUserLabel" />
+                            ControlToValidate="txtMailbox" ErrorMessage="Invalid Email Format" Display="Dynamic" CssClass="text-danger"  Text="Invalid Email Format" />
+                    </div>
+                </div>
+                    <div class="form-group">
+                        <asp:Label ID="IssueAssignedUserLabel" runat="server" CssClass="control-label col-md-4" AssociatedControlID="IssueAssignedUser" Text="Assign To:" meta:resourcekey="IssueAssignedUserLabel" />
+                        <div class="col-md-8">
                         <it:PickSingleUser ID="IssueAssignedUser" runat="Server" Required="true" DisplayDefault="true"></it:PickSingleUser>
-                    </li>
-                    <li>
-                        <asp:Label ID="IssueTypeLabel" runat="server" AssociatedControlID="IssueAssignedType" Text="Issue Type:" meta:resourcekey="IssueTypeLabel" />
-                        <it:PickType ID="IssueAssignedType" runat="Server" Required="true" DisplayDefault="true"></it:PickType>
-                    </li>
-                </ol>
-            </div>
-            <div class="submit">
-                <asp:Button Text="Add Mailbox" CausesValidation="true" runat="server" ID="btnAddMailbox" OnClick="btnAdd_Click" meta:resourcekey="btnAddMailbox" />
+                            </div>
+                    </div>
+                    <div class="form-group">
+                        <asp:Label ID="IssueTypeLabel" runat="server" CssClass="control-label col-md-4"  AssociatedControlID="IssueAssignedType" Text="Issue Type:" meta:resourcekey="IssueTypeLabel" />
+                        <div class="col-md-8">
+                            <it:PickType ID="IssueAssignedType" runat="Server" Required="true" DisplayDefault="true"></it:PickType>
+                        </div>
+                    </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                         <asp:Button Text="Add Mailbox" CausesValidation="true" CssClass="btn btn-primary" runat="server" ID="btnAddMailbox" OnClick="btnAdd_Click" meta:resourcekey="btnAddMailbox" />
+                        </div>
+                    </div>
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>

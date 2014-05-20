@@ -230,10 +230,10 @@ namespace BugNET.Administration.Projects.UserControls
                 lblDataType.Text = currentCustomField.DataType.ToString();
 
                 var lblFieldType = (Label)e.Item.FindControl("lblFieldType");
-                lblFieldType.Text = currentCustomField.FieldType.ToString();
+                lblFieldType.Text = LocalizeFieldType(currentCustomField.FieldType);
 
                 var lblRequired = (Label)e.Item.FindControl("lblRequired");
-                lblRequired.Text = currentCustomField.Required.ToString();
+                lblRequired.Text = currentCustomField.Required ? Resources.SharedResources.Yes : Resources.SharedResources.No;
 
                 var btnDelete = (ImageButton)e.Item.FindControl("btnDeleteCustomField");
                 var message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), currentCustomField.Name.Trim());
@@ -280,7 +280,6 @@ namespace BugNET.Administration.Projects.UserControls
                 dataType.DataSource = Enum.GetNames(typeof(ValidationDataType));
                 dataType.DataBind();
             }
-
         }
 
         /// <summary>
@@ -588,6 +587,26 @@ namespace BugNET.Administration.Projects.UserControls
                 lblError.Text = LoggingManager.GetErrorMessageResource("DeleteCustomFieldError");
             else
                 BindCustomFields();
+        }
+        
+        private string LocalizeFieldType(CustomFieldType fieldType)
+        {
+            switch (fieldType)
+            {
+                case CustomFieldType.Text:
+                    return GetLocalResourceObject("TextType.Text").ToString();
+                case CustomFieldType.DropDownList:
+                    return GetLocalResourceObject("DropDownListType.Text").ToString();
+                case CustomFieldType.Date:
+                    return GetLocalResourceObject("DateType.Text").ToString();
+                case CustomFieldType.RichText:
+                    return GetLocalResourceObject("RichTextType.Text").ToString();
+                case CustomFieldType.YesNo:
+                    return GetLocalResourceObject("YesNoType.Text").ToString();
+                case CustomFieldType.UserList:
+                    return GetLocalResourceObject("UserListType.Text").ToString();
+            }
+            return "Unknown";
         }
     }
 }

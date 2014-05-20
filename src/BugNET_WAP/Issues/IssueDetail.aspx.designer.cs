@@ -31,31 +31,13 @@ namespace BugNET.Issues {
         protected global::BugNET.UserControls.Message Message1;
         
         /// <summary>
-        /// pnlBugNavigation control.
+        /// lblIssueNumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlBugNavigation;
-        
-        /// <summary>
-        /// IssueActionSave control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IssueActionSave;
-        
-        /// <summary>
-        /// imgSave control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton imgSave;
+        protected global::System.Web.UI.WebControls.Label lblIssueNumber;
         
         /// <summary>
         /// lnkSave control.
@@ -67,24 +49,6 @@ namespace BugNET.Issues {
         protected global::System.Web.UI.WebControls.LinkButton lnkSave;
         
         /// <summary>
-        /// IssueActionSaveAndReturn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IssueActionSaveAndReturn;
-        
-        /// <summary>
-        /// imgDone control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton imgDone;
-        
-        /// <summary>
         /// lnkDone control.
         /// </summary>
         /// <remarks>
@@ -92,51 +56,6 @@ namespace BugNET.Issues {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton lnkDone;
-        
-        /// <summary>
-        /// IssueActionDelete control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IssueActionDelete;
-        
-        /// <summary>
-        /// imgDelete control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton imgDelete;
-        
-        /// <summary>
-        /// lnkDelete control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkDelete;
-        
-        /// <summary>
-        /// IssueActionCancel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl IssueActionCancel;
-        
-        /// <summary>
-        /// imgCancel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton imgCancel;
         
         /// <summary>
         /// lnkCancel control.
@@ -148,22 +67,13 @@ namespace BugNET.Issues {
         protected global::System.Web.UI.WebControls.LinkButton lnkCancel;
         
         /// <summary>
-        /// IssueLabel control.
+        /// lnkDelete control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label IssueLabel;
-        
-        /// <summary>
-        /// lblIssueNumber control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblIssueNumber;
+        protected global::System.Web.UI.WebControls.LinkButton lnkDelete;
         
         /// <summary>
         /// VoteBox control.
@@ -172,7 +82,7 @@ namespace BugNET.Issues {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell VoteBox;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl VoteBox;
         
         /// <summary>
         /// IssueVoteCount control.
@@ -182,15 +92,6 @@ namespace BugNET.Issues {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label IssueVoteCount;
-        
-        /// <summary>
-        /// Votes control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Votes;
         
         /// <summary>
         /// VoteButton control.
@@ -254,15 +155,6 @@ namespace BugNET.Issues {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator TitleRequired;
-        
-        /// <summary>
-        /// TBWE2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::AjaxControlToolkit.TextBoxWatermarkExtender TBWE2;
         
         /// <summary>
         /// DisplayTitleLabel control.
@@ -535,15 +427,6 @@ namespace BugNET.Issues {
         protected global::System.Web.UI.WebControls.Label Label3;
         
         /// <summary>
-        /// ProgressSlider_BoundControl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ProgressSlider_BoundControl;
-        
-        /// <summary>
         /// ProgressSlider control.
         /// </summary>
         /// <remarks>
@@ -625,15 +508,6 @@ namespace BugNET.Issues {
         protected global::BugNET.UserControls.PickResolution DropResolution;
         
         /// <summary>
-        /// TimeLoggedLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell TimeLoggedLabel;
-        
-        /// <summary>
         /// LoggedLabel control.
         /// </summary>
         /// <remarks>
@@ -641,15 +515,6 @@ namespace BugNET.Issues {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LoggedLabel;
-        
-        /// <summary>
-        /// TimeLogged control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell TimeLogged;
         
         /// <summary>
         /// lblLoggedTime control.
@@ -722,15 +587,6 @@ namespace BugNET.Issues {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Description;
-        
-        /// <summary>
-        /// SliderExtender2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::AjaxControlToolkit.SliderExtender SliderExtender2;
         
         /// <summary>
         /// ctlIssueTabs control.

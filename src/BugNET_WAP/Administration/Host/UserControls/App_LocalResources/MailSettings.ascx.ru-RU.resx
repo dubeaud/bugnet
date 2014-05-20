@@ -127,16 +127,16 @@
 		<value>&lt;br/&gt; Сообщение успешно отправлено по EMail</value>
 	</data>
 	<data name="EmailFormat" xml:space="preserve">
-		<value>Формат EMail</value>
+		<value>Формат писем</value>
 	</data>
 	<data name="EmailTemplateRoot" xml:space="preserve">
-		<value>Каталог шаблонов EMail</value>
+		<value>Каталог шаблонов</value>
 	</data>
 	<data name="EnableAuthentication" xml:space="preserve">
 		<value>Аутентификация</value>
 	</data>
 	<data name="HostEmail" xml:space="preserve">
-		<value>EMail хоста</value>
+		<value>Адрес отправителя</value>
 	</data>
 	<data name="lblSMTPDomain.Text" xml:space="preserve">
 		<value>Домен</value>

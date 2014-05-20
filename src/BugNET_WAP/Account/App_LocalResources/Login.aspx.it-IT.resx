@@ -144,25 +144,19 @@
 	<data name="NoAccount.Text" xml:space="preserve">
     <value>Se non hai ancora un account puoi</value>
   </data>
-	<data name="OpenIDPasswordQuestion" xml:space="preserve">
-    <value>Questo è un account OpenID. Che nickname hai fornito?</value>
-  </data>
-	<data name="OR.Text" xml:space="preserve">
-    <value>OR</value>
-  </data>
 	<data name="Page.Title" xml:space="preserve">
     <value>Login</value>
   </data>
 	<data name="RegistrationDisabled" xml:space="preserve">
     <value>: La registrazione utente è stata disabilitata dall'amministratore.</value>
   </data>
-	<data name="ShowNormal.Text" xml:space="preserve">
-    <value>Login predefinito</value>
-  </data>
-	<data name="ShowOpenID.Text" xml:space="preserve">
-    <value>Login con OpenID</value>
-  </data>
 	<data name="NotAuthorized.Text" xml:space="preserve">
     <value>Account bannato o sospeso.</value>
   </data>
+	<data name="RememberMe.Text" xml:space="preserve">
+		<value>Ricordami la prossima volta.</value>
+	</data>
+	<data name="LoginButton.Text" xml:space="preserve">
+		<value>Login</value>
+	</data>
 </root>

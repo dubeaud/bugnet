@@ -238,15 +238,6 @@ namespace BugNET.Administration.Users.UserControls {
         protected global::System.Web.UI.WebControls.CheckBox Online;
         
         /// <summary>
-        /// save control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton save;
-        
-        /// <summary>
         /// cmdUpdate control.
         /// </summary>
         /// <remarks>
@@ -254,15 +245,6 @@ namespace BugNET.Administration.Users.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton cmdUpdate;
-        
-        /// <summary>
-        /// ibAuthorize control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton ibAuthorize;
         
         /// <summary>
         /// cmdAuthorize control.
@@ -274,15 +256,6 @@ namespace BugNET.Administration.Users.UserControls {
         protected global::System.Web.UI.WebControls.LinkButton cmdAuthorize;
         
         /// <summary>
-        /// ibUnAuthorize control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton ibUnAuthorize;
-        
-        /// <summary>
         /// cmdUnAuthorize control.
         /// </summary>
         /// <remarks>
@@ -292,15 +265,6 @@ namespace BugNET.Administration.Users.UserControls {
         protected global::System.Web.UI.WebControls.LinkButton cmdUnAuthorize;
         
         /// <summary>
-        /// ibUnLock control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton ibUnLock;
-        
-        /// <summary>
         /// cmdUnLock control.
         /// </summary>
         /// <remarks>
@@ -308,15 +272,6 @@ namespace BugNET.Administration.Users.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton cmdUnLock;
-        
-        /// <summary>
-        /// ImageButton3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton ImageButton3;
         
         /// <summary>
         /// ReturnLink control.

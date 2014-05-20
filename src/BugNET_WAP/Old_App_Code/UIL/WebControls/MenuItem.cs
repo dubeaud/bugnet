@@ -58,15 +58,15 @@ namespace BugNET.UserInterfaceLayer.WebControls
         /// <returns></returns>
         public string GetHtml() 
         {
-            Text = Text.Replace("»", "<span class=\"sf-sub-indicator\"> »</span>");
+            //Text = Text.Replace("»", "<span class=\"sf-sub-indicator\"> »</span>");
             var oBuilder = new System.Text.StringBuilder(); 
-//oBuilder.Append("<li " + (RecursiveIsCurrent ? " " + m_Root.LICurrentDecoration : "") + ">");
+            //oBuilder.Append("<li " + (RecursiveIsCurrent ? " " + m_Root.LICurrentDecoration : "") + ">");
 
             oBuilder.Append("<li " + (CssClass != string.Empty ? "class=\"" + CssClass + "\"" : "") + ">");
             if (Items.Count > 0) 
             { 
-                oBuilder.Append("<a href=\"" + Link + "\" class=\"sf-with-ul\">" + Text + "</a>"); 
-                oBuilder.Append("<ul>"); 
+                oBuilder.Append("<a href=\"" + Link + "\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">" + Text + "<b class=\"caret\"></b></a>");
+                oBuilder.Append("<ul class=\"dropdown-menu\">"); 
                 foreach (var oItem in Items) 
                     oBuilder.Append(oItem.GetHtml()); 
                 oBuilder.Append("</ul>"); 

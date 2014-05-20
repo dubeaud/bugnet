@@ -3,6 +3,7 @@ using BugNET.BLL;
 using BugNET.Common;
 using BugNET.UserInterfaceLayer;
 using log4net;
+using BugNET.Entities;
 
 namespace BugNET.Queries
 {
@@ -134,7 +135,12 @@ namespace BugNET.Queries
                 ErrorRedirector.TransferToSomethingMissingPage(Page);
 
             ConfirmDeleteText.Value = GetLocalResourceObject("ConfirmDelete").ToString().JsEncode();
-
+            Project p = ProjectManager.GetById(ProjectId);
+            if(p != null)
+            {
+                ltProject.Text = p.Name;
+                litProjectCode.Text = p.Code;
+            }
             btnDeleteQuery.OnClientClick = "return confirmDelete();";
             lbDeleteQuery.OnClientClick = "return confirmDelete();";
 

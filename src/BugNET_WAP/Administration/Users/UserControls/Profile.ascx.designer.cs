@@ -94,15 +94,6 @@ namespace BugNET.Administration.Users.UserControls {
         protected global::System.Web.UI.WebControls.TextBox DisplayName;
         
         /// <summary>
-        /// save control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton save;
-        
-        /// <summary>
         /// cmdUpdate control.
         /// </summary>
         /// <remarks>
@@ -110,15 +101,6 @@ namespace BugNET.Administration.Users.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton cmdUpdate;
-        
-        /// <summary>
-        /// ImageButton3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton ImageButton3;
         
         /// <summary>
         /// ReturnLink control.

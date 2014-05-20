@@ -69,6 +69,9 @@ namespace BugNET.Projects
         /// </summary>
         private void BindCalendar()
         {
+            Project p = ProjectManager.GetById(ProjectId);
+            ltProject.Text = p.Name;
+            litProjectCode.Text = p.Code;
             prjCalendar.SelectedDate = DateTime.Today;
             prjCalendar.VisibleDate = DateTime.Today;
 
@@ -81,23 +84,6 @@ namespace BugNET.Projects
         /// <param name="e">The <see cref="System.Web.UI.WebControls.DayRenderEventArgs"/> instance containing the event data.</param>
         protected void prjCalendar_DayRender(object sender, System.Web.UI.WebControls.DayRenderEventArgs e)
         {
-
-            string onmouseoverStyle = "this.style.backgroundColor='#D4EDFF'";
-            string onmouseoutStyle = "this.style.backgroundColor='@BackColor'";
-            string rowBackColor = string.Empty;
-
-            e.Cell.Attributes.Add("onmouseover", onmouseoverStyle);
-
-            if (!e.Day.IsWeekend)
-            {
-                if (!e.Day.IsSelected)
-                    e.Cell.Attributes.Add("onmouseout", onmouseoutStyle.Replace("@BackColor", rowBackColor));
-                else
-                    e.Cell.Attributes.Add("onmouseout", onmouseoutStyle.Replace("@BackColor", "#FFFFC1"));
-            }
-            else
-                e.Cell.Attributes.Add("onmouseout", onmouseoutStyle.Replace("@BackColor", "#F0F0F0"));
-
             if (e.Day.IsToday)
             {
                 //TODO: If issues are due today in 7 days or less then create as red, else use blue?

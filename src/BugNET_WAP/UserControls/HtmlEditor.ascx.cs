@@ -34,7 +34,7 @@ namespace BugNET.UserControls
              {
                  p = HtmlEditorManager.Provider;
                  p.ControlId = this.ID;
-
+            
                  if (_height != Unit.Empty)
                      p.Height = _height;
                  if (_width != Unit.Empty)

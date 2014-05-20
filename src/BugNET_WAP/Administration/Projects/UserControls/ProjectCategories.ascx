@@ -65,21 +65,21 @@
                         }, OnError);   
                     }
                         
-            }).bind("select_node.jstree", function (e, data) {
+                }).bind("select_node.jstree", function (e, data) {
                     
-                $('#HiddenField1').val(data.rslt.obj.attr('id'));
-                //alert(data.rslt.obj.attr('id')); 
-                //alert($('#HiddenField1').val());
+                    $('#HiddenField1').val(data.rslt.obj.attr('id'));
+                    //alert(data.rslt.obj.attr('id')); 
+                    //alert($('#HiddenField1').val());
                     
-            }).jstree({
-                "plugins": ["themes", "json_data", "dnd", "crrm", "ui"],
-                "json_data": {
-                    "ajax": {
-                        "type": "POST",
-                        "data": JSON.stringify(projectId),
-                        "contentType": "application/json; charset=utf-8",
-                        "dataType": "json",
-                        "url": '<%=ResolveUrl("~/WebServices/BugNetServices.asmx/GetCategories")%>',
+                }).jstree({
+                    "plugins": ["themes", "json_data", "dnd", "crrm", "ui"],
+                    "json_data": {
+                        "ajax": {
+                            "type": "POST",
+                            "data": JSON.stringify(projectId),
+                            "contentType": "application/json; charset=utf-8",
+                            "dataType": "json",
+                            "url": '<%=ResolveUrl("~/WebServices/BugNetServices.asmx/GetCategories")%>',
                         "success": function (retval) {
                             if (retval.hasOwnProperty('d')) {
                                 return (eval(retval.d));
@@ -106,12 +106,11 @@
                     return alert('<asp:Literal runat="server" Text="<%$ Resources:DeleteCategoriesMessage%>" />');
                 }
 
-                $find('showDeleteCategory').show(); // $find is the ajaxcontrol toolkit version of jquery find;
-                                                    // it works better with the toolkit
+                $('#deleteCategoryModal').modal().show();
                 return false;
             });
         });
-     });
+    });
 
     // This is the callback function that
     // processes the Web Service return value.
@@ -150,9 +149,11 @@
     <bn:Message ID="Message1" runat="server" />
     <br />
     <img id="imgAddCategory" data-selector="AddCategory" alt="Add Category" src="~/images/plugin_add.gif" class="icon cursor-hand" runat="server" />
-    <a href="#" id="linkAddCategory" data-selector="AddCategory"><asp:Literal ID="Literal2" runat="Server" meta:resourcekey="AddCategory" /></a>
+    <a href="#" id="linkAddCategory" data-selector="AddCategory">
+        <asp:Literal ID="Literal2" runat="Server" meta:resourcekey="AddCategory" /></a>
     <img id="imgDeleteCategory" data-selector="DeleteCategory" alt="Delete Category" src="~/images/plugin_delete.gif" class="icon cursor-hand" runat="server" />
-    <a href="#" id="linkDeleteCategory" data-selector="DeleteCategory"><asp:Literal ID="Literal1" runat="Server" meta:resourcekey="DeleteCategory" /></a>
+    <a href="#" id="linkDeleteCategory" data-selector="DeleteCategory">
+        <asp:Literal ID="Literal1" runat="Server" meta:resourcekey="DeleteCategory" /></a>
     <br />
     <br />
     <div id="divJsTree">
@@ -160,41 +161,47 @@
     <asp:HiddenField ID="HiddenField1" ClientIDMode="Static" runat="server" />
     <asp:LinkButton ID="lbDeleteCategory" runat="server" Text="nil" Style="display: none" />
 </div>
-<asp:Panel ID="pnlDeleteCategory" runat="server" CssClass="ModalPopup">
-    <asp:Panel ID="pnlHeader" runat="server" CssClass="ModalHeader"><asp:Literal runat="server" meta:resourcekey="DeleteCategory"/></asp:Panel>
-    <asp:Literal ID="SelectOption" runat="Server" meta:resourcekey="SelectOption" />
-    <br />
-    <br />
-    <table cellspacing="10" style="margin-left: 10px; text-align: left;">
-        <tr>
-            <td>
-                <asp:RadioButton ID="RadioButton1" GroupName="DeleteCategory" runat="server" Checked="true" Height="30px" Text="&nbsp;&nbsp;Delete this category and all assigned issues." meta:resourcekey="DeleteCategoryRadioButton" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <asp:RadioButton ID="RadioButton2" GroupName="DeleteCategory" runat="server" Height="30px" Text="&nbsp;&nbsp;Assign all issues to an existing category." meta:resourcekey="DeleteCategoryRadioButton1"/>
-                <div style="margin: 0 0 0 35px;">
-                    <it:PickCategory ID="DropCategory" DisplayDefault="true" Required="false" runat="Server" />
+<!-- Modal -->
+<div class="modal fade" id="deleteCategoryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">
+                    <asp:Literal runat="server" meta:resourcekey="DeleteCategory" /></h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <asp:Literal ID="SelectOption" runat="Server" meta:resourcekey="SelectOption" /></p>
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <asp:RadioButton ID="RadioButton1" GroupName="DeleteCategory" CssClass="radio" runat="server" Checked="true" Height="30px" Text="&nbsp;&nbsp;Delete this category and all assigned issues." meta:resourcekey="DeleteCategoryRadioButton" />
+                    </div>
+                    <div class="form-group">
+                        <asp:RadioButton ID="RadioButton2" GroupName="DeleteCategory" CssClass="radio" runat="server" Height="30px" Text="&nbsp;&nbsp;Assign all issues to an existing category." meta:resourcekey="DeleteCategoryRadioButton1" />
+                        <div class="col-sm-offset-1">
+                            <it:PickCategory ID="DropCategory" DisplayDefault="true" Required="false" runat="Server" />
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <asp:RadioButton ID="RadioButton3" GroupName="DeleteCategory" CssClass="radio" runat="server" Height="30px" Text="&nbsp;&nbsp;Assign all issues to a new category." meta:resourcekey="DeleteCategoryRadioButton2" />
+                        <div class="col-sm-offset-1">
+                            <asp:TextBox ID="NewCategoryTextBox" CssClass="form-control" runat="server" placeholder="Enter a new category"></asp:TextBox>
+                        </div>
+                    </div>
                 </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <asp:RadioButton ID="RadioButton3" GroupName="DeleteCategory" runat="server" Height="30px" Text="&nbsp;&nbsp;Assign all issues to a new category." meta:resourcekey="DeleteCategoryRadioButton2" />
-                <div style="margin: 0 0 0 35px;">
-                    <asp:TextBox ID="NewCategoryTextBox" runat="server" Text=""></asp:TextBox>
-                </div>
-            </td>
-        </tr>
-    </table>
-    <p style="text-align: center;">
-        <asp:Button ID="OkButton" runat="server" OnClick="OkButton_Click" OnClientClick="onOk();" Text="Ok" meta:resourcekey="OkButton" />
-        <asp:Button ID="CancelButton" runat="server" Text="Cancel" meta:resourcekey="CancelButton" />
-    </p>
-</asp:Panel>
-<ajaxToolkit:ModalPopupExtender ID="mpeDeleteCategory" runat="server" TargetControlID="lbDeleteCategory" PopupControlID="pnlDeleteCategory"
-    BackgroundCssClass="modalBackground" CancelControlID="CancelButton" DropShadow="false" BehaviorID="showDeleteCategory" />
-<ajaxToolkit:ConfirmButtonExtender ID="cbe" runat="server" TargetControlID="lbDeleteCategory" DisplayModalPopupID="mpeDeleteCategory" />
+            </div>
+            <div class="modal-footer">
+                <asp:Button ID="CancelButton" runat="server" Text="Cancel" CssClass="btn btn-default" data-dismiss="modal" meta:resourcekey="CancelButton" />
+                <asp:Button ID="OkButton" runat="server" OnClick="OkButton_Click" OnClientClick="onOk();" CssClass="btn btn-primary" Text="Save changes" meta:resourcekey="OkButton" />
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
 <ajaxToolkit:TextBoxWatermarkExtender ID="TBWE2" runat="server" TargetControlID="NewCategoryTextBox" WatermarkText="Enter a new category"
     meta:resourcekey="NewCategoryWatermark" WatermarkCssClass="watermarked" />

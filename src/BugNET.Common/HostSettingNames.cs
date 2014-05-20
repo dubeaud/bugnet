@@ -48,6 +48,16 @@
         UserRegistration,
         Version,
         WelcomeMessage,
-        Pop3Port
+        Pop3Port,
+        GoogleAuthentication,
+        FacebookAuthentication,
+        FacebookAppId,
+        FacebookAppSecret,
+        TwitterAuthentication,
+        TwitterConsumerKey,
+        TwitterConsumerSecret,
+        MicrosoftAuthentication,
+        MicrosoftClientId,
+        MicrosoftClientSecret
     }
 }

@@ -76,15 +76,6 @@ namespace BugNET.Administration.Projects.UserControls {
         protected global::BugNET.UserControls.PickSingleUser DropOwned;
         
         /// <summary>
-        /// chkOwnedByVisibility control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkOwnedByVisibility;
-        
-        /// <summary>
         /// chkNotifyOwner control.
         /// </summary>
         /// <remarks>
@@ -92,6 +83,15 @@ namespace BugNET.Administration.Projects.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkNotifyOwner;
+        
+        /// <summary>
+        /// chkOwnedByVisibility control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkOwnedByVisibility;
         
         /// <summary>
         /// PriorityLabel control.
@@ -166,15 +166,6 @@ namespace BugNET.Administration.Projects.UserControls {
         protected global::BugNET.UserControls.PickSingleUser DropAssignedTo;
         
         /// <summary>
-        /// chkAssignedToVisibility control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkAssignedToVisibility;
-        
-        /// <summary>
         /// chkNotifyAssignedTo control.
         /// </summary>
         /// <remarks>
@@ -182,6 +173,15 @@ namespace BugNET.Administration.Projects.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkNotifyAssignedTo;
+        
+        /// <summary>
+        /// chkAssignedToVisibility control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkAssignedToVisibility;
         
         /// <summary>
         /// PrivateLabel control.
@@ -310,13 +310,13 @@ namespace BugNET.Administration.Projects.UserControls {
         protected global::System.Web.UI.WebControls.Label Label3;
         
         /// <summary>
-        /// ProgressSlider_BoundControl control.
+        /// ProgressSlider control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ProgressSlider_BoundControl;
+        protected global::System.Web.UI.WebControls.TextBox ProgressSlider;
         
         /// <summary>
         /// chkPercentCompleteVisibility control.
@@ -326,15 +326,6 @@ namespace BugNET.Administration.Projects.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkPercentCompleteVisibility;
-        
-        /// <summary>
-        /// ProgressSlider control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ProgressSlider;
         
         /// <summary>
         /// MilestoneLabel control.
@@ -391,15 +382,6 @@ namespace BugNET.Administration.Projects.UserControls {
         protected global::System.Web.UI.WebControls.Label HoursLabel;
         
         /// <summary>
-        /// chkEstimationVisibility control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkEstimationVisibility;
-        
-        /// <summary>
         /// RangeValidator2 control.
         /// </summary>
         /// <remarks>
@@ -407,6 +389,15 @@ namespace BugNET.Administration.Projects.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RangeValidator RangeValidator2;
+        
+        /// <summary>
+        /// chkEstimationVisibility control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkEstimationVisibility;
         
         /// <summary>
         /// ResolutionLabel control.
@@ -434,59 +425,5 @@ namespace BugNET.Administration.Projects.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkResolutionVisibility;
-        
-        /// <summary>
-        /// TimeLoggedLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell TimeLoggedLabel;
-        
-        /// <summary>
-        /// LoggedLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LoggedLabel;
-        
-        /// <summary>
-        /// TimeLogged control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell TimeLogged;
-        
-        /// <summary>
-        /// lblLoggedTime control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblLoggedTime;
-        
-        /// <summary>
-        /// Label2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
-        
-        /// <summary>
-        /// SliderExtender2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::AjaxControlToolkit.SliderExtender SliderExtender2;
     }
 }

@@ -153,9 +153,6 @@
 	<data name="QuickLinks.Text" xml:space="preserve">
     <value>Link-uri Rapide</value>
   </data>
-	<data name="QuickLinksFilters.Text" xml:space="preserve">
-    <value>Link-uri Rapide/ Filtre</value>
-  </data>
 	<data name="RegisterAndLoginMessage" xml:space="preserve">
     <value>Trebuie sa va autentificati pentru a vedea proiectele de pe acest site.</value>
   </data>

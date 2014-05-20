@@ -1,5 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{DDC6CC4C-AABD-4AF2-A512-F48C9F964E05}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HttpModules", "HttpModules", "{C9347B43-6712-404A-995F-808D3348405F}"
@@ -16,12 +18,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Membership Providers", "Membership Providers", "{D962DE1F-09F0-4B62-A9EA-649F216E5980}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data Providers", "Data Providers", "{B2D1A025-9A81-4F08-A0BA-ACE9086CEA7F}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{3D301EA6-FAE3-4DEB-A9CD-8D5B15CFE700}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugNET_WAP", "BugNET_WAP\BugNET_WAP.csproj", "{4D25C25A-789A-462B-A026-269753C082BC}"
 EndProject

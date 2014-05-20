@@ -144,25 +144,19 @@
 	<data name="NoAccount.Text" xml:space="preserve">
     <value>Daca nu aveti un cont deshis puteti</value>
   </data>
-	<data name="OpenIDPasswordQuestion" xml:space="preserve">
-    <value>Acesta este un cont OpenID. Ce nume de cont ati furnizat?</value>
-  </data>
-	<data name="OR.Text" xml:space="preserve">
-    <value>SAU</value>
-  </data>
 	<data name="Page.Title" xml:space="preserve">
     <value>Autentificare</value>
   </data>
 	<data name="RegistrationDisabled" xml:space="preserve">
     <value>:Inregistrarea utilizatorilor nu este permisa de catre administrator.</value>
   </data>
-	<data name="ShowNormal.Text" xml:space="preserve">
-    <value>Autentificare Standard</value>
-  </data>
-	<data name="ShowOpenID.Text" xml:space="preserve">
-    <value>Autentificare OpenID</value>
-  </data>
 	<data name="NotAuthorized.Text" xml:space="preserve">
     <value>Contul nu este autorizat sau este blocat.</value>
   </data>
+	<data name="RememberMe.Text" xml:space="preserve">
+		<value>Tine-ma minte data viitoare.</value>
+	</data>
+	<data name="LoginButton.Text" xml:space="preserve">
+		<value>Autentificare</value>
+	</data>
 </root>

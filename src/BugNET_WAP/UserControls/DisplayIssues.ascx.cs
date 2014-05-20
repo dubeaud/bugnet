@@ -508,19 +508,6 @@ namespace BugNET.UserControls
         protected void gvIssues_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType != DataControlRowType.DataRow) return;
-
-            e.Row.Attributes.Add("onmouseover", "this.style.background='#F7F7EC'");
-
-            switch (e.Row.RowState)
-            {
-                case DataControlRowState.Normal:
-                    e.Row.Attributes.Add("onmouseout", "this.style.background=''");
-                    break;
-                case DataControlRowState.Alternate:
-                    e.Row.Attributes.Add("onmouseout", "this.style.background='#fafafa'");
-                    break;
-            }
-
             var issue = e.Row.DataItem as Issue;
 
             if (issue == null) return;

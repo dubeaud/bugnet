@@ -21,12 +21,6 @@ namespace BugNET.Administration.Users
             chkRandomPassword.Checked = false;
             RandomPasswordCheckChanged(null, null);
 
-            SecretQuestion.Text = string.Empty;
-            SecretAnswer.Text = string.Empty;
-
-            SecretQuestionRow.Visible = Membership.RequiresQuestionAndAnswer;
-            SecretAnswerRow.Visible = Membership.RequiresQuestionAndAnswer;
-
             if (Membership.RequiresQuestionAndAnswer) return;
 
             ActiveUser.Checked = true;
@@ -87,20 +81,9 @@ namespace BugNET.Administration.Users
             var emailText = Email.Text;
             var isActive = ActiveUser.Checked;
             
-            var question = "";
-            var answer = "";
-
-            if (Membership.RequiresQuestionAndAnswer)
-            {
-                question = SecretQuestion.Text;
-                answer = SecretAnswer.Text;
-            }
-
             try
             {
-                var mu = Membership.RequiresQuestionAndAnswer ?                                                          
-                    Membership.CreateUser(userIdText, password, emailText, question, answer, isActive, out createStatus) :
-                    Membership.CreateUser(userIdText, password, emailText);
+                var mu = Membership.CreateUser(userIdText, password, emailText);
 
                 if (createStatus == MembershipCreateStatus.Success && mu != null)
                 {

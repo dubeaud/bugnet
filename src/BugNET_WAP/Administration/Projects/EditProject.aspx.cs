@@ -38,20 +38,15 @@ namespace BugNET.Administration.Projects
                 lblExistingProjectName.Text = litProjectName.Text;
 
                 var message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), litProjectName.Text);
-                Image1.OnClientClick = String.Format("return confirm('{0}');", message);
-
-                message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), litProjectName.Text);
                 DeleteButton.OnClientClick = String.Format("return confirm('{0}');", message);
 
                 if (!UserManager.HasPermission(ProjectId, Permission.AdminDeleteProject.ToString()))
                 {
                     DeleteButton.Visible = false;
-                    Image1.Visible = false;
                 }
 
                 if (!UserManager.HasPermission(ProjectId, Permission.AdminCloneProject.ToString()))
                 {
-                    imgCloneProject.Visible = false;
                     linkCloneProject.Visible = false;
                 }
 
@@ -90,16 +85,12 @@ namespace BugNET.Administration.Projects
             if (disabled)
             {
                 DisableButton.Visible = false;
-                DisableImage.Visible = false;
                 RestoreButton.Visible = true;
-                ImageButton1.Visible = true;
             }
             else
             {
                 DisableButton.Visible = true;
-                DisableImage.Visible = true;
                 RestoreButton.Visible = false;
-                ImageButton1.Visible = false;
             }
         }
 
@@ -127,8 +118,7 @@ namespace BugNET.Administration.Projects
             var dataItem = (KeyValuePair<string, string>)e.Item.DataItem;
             var listItem = e.Item.FindControl("ListItem") as HtmlGenericControl;
             var lb = e.Item.FindControl("MenuButton") as LinkButton;
-            if (listItem != null)
-                listItem.Attributes.Add("style", string.Format("background: #C4EFA1 url(../../images/{0}) no-repeat 5px 4px;", dataItem.Value));
+            lb.Controls.Add(new LiteralControl("<i class='glyphicon glyphicon-list'></i>"));
             if (lb != null) lb.Text = dataItem.Key;
         }
 
@@ -200,9 +190,9 @@ namespace BugNET.Administration.Projects
             for (var i = 0; i < _menuItems.Count; i++)
             {
                 if (i == TabId)
-                    ((HtmlGenericControl)AdminMenu.Items[i].FindControl("ListItem")).Attributes.Add("class", "on");
+                    ((HtmlGenericControl)AdminMenu.Items[i].FindControl("ListItem")).Attributes.Add("class", "active");
                 else
-                    ((HtmlGenericControl)AdminMenu.Items[i].FindControl("ListItem")).Attributes.Add("class", "off");
+                    ((HtmlGenericControl)AdminMenu.Items[i].FindControl("ListItem")).Attributes.Add("class", string.Empty);
             }
 
             _contentControl = Page.LoadControl("~/Administration/Projects/UserControls/" + controlName);
@@ -210,7 +200,6 @@ namespace BugNET.Administration.Projects
             plhContent.Controls.Clear();
             plhContent.Controls.Add( _contentControl );
             _contentControl.ID = "ctlContent";
-            Image2.Visible = ((IEditProjectControl)_contentControl).ShowSaveButton;
             SaveButton.Visible = ((IEditProjectControl)_contentControl).ShowSaveButton;
             ((IEditProjectControl)_contentControl).Initialize();
             plhContent.Visible = true;

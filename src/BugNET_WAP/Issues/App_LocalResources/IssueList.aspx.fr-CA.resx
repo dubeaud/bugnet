@@ -143,6 +143,6 @@
     <value>Liste des anomalies</value>
   </data>
   <data name="ViewIssuesLabel.Text" xml:space="preserve">
-    <value>Voir Anomalies:</value>
+    <value>Voir Anomalies</value>
   </data>
 </root>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
+	<!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,116 +59,80 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-    <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexType>
-        <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="assembly">
-            <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="data">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="resheader">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:choice>
-      </xsd:complexType>
-    </xsd:element>
-  </xsd:schema>
-  <resheader name="resmimetype">
-    <value>text/microsoft-resx</value>
-  </resheader>
-  <resheader name="version">
-    <value>2.0</value>
-  </resheader>
-  <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <data name="ConfirmPasswordRequiredErrorMessage" xml:space="preserve">
-    <value>Требуется указать подтверждение пароля.</value>
-  </data>
-  <data name="EmailRequiredErrorMessage" xml:space="preserve">
-    <value>Требуется указать адрес электронной почты.</value>
-  </data>
-  <data name="FirstNameRequiredErrorMessage" xml:space="preserve">
-    <value>Требуется указать имя.</value>
-  </data>
-  <data name="FullNameRequiredErrorMessage" xml:space="preserve">
-    <value>Требуется указать полное имя.</value>
-  </data>
-  <data name="InstructionsLabel.Text" xml:space="preserve">
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute name="name" use="required" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="assembly">
+						<xsd:complexType>
+							<xsd:attribute name="alias" type="xsd:string" />
+							<xsd:attribute name="name" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="InstructionsLabel.Text" xml:space="preserve">
     <value>Введите сведения и подтвердите Ваш пароль для регистрации учётной записи.</value>
   </data>
-  <data name="InvalidEmailErrorMessage" xml:space="preserve">
-    <value>Формат адреса электронной почты неверен.</value>
-  </data>
-  <data name="LastNameRequiredErrorMessage" xml:space="preserve">
-    <value>Требуется указать фамилию.</value>
-  </data>
-  <data name="Page.Title" xml:space="preserve">
+	<data name="Page.Title" xml:space="preserve">
     <value>Регистрация</value>
   </data>
-  <data name="PasswordRequiredErrorMessage" xml:space="preserve">
-    <value>Требуется указать пароль.</value>
-  </data>
-  <data name="SecurityAnswerRequiredErrorMessage" xml:space="preserve">
-    <value>Требуется указать ответ на секретный вопрос.</value>
-  </data>
-  <data name="SecurityQuestionRequiredErrorMessage" xml:space="preserve">
-    <value>Требуется указать секретный вопрос.</value>
-  </data>
-  <data name="UsernameRequiredErrorMessage" xml:space="preserve">
-    <value>Требуется указать имя пользователя.</value>
-  </data>
-  <data name="VerificationInsructions.Text" xml:space="preserve">
+	<data name="VerificationInstructions.Text" xml:space="preserve">
     <value>На указанный Вами адрес электронной почты отправлены инструкции по активации Вашей учётной записи.</value>
   </data>
-  <data name="VerificationInsructionsTitle.Text" xml:space="preserve">
+	<data name="VerificationInstructionsTitle.Text" xml:space="preserve">
     <value>Спасибо за регистрацию</value>
   </data>
-  <data name="TitleLabel.Text" xml:space="preserve">
+	<data name="TitleLabel.Text" xml:space="preserve">
     <value>Зарегистрировать новую учётную запись</value>
   </data>
-  <data name="PreferredLanguageLabel.Text" xml:space="preserve">
-    <value>Предпочитаемый язык</value>
-  </data>
-  <data name="Capcha.ControlMessage" xml:space="preserve">
-    <value>Введите код с картинки</value>
-  </data>
-  <data name="Wizard.CreateUserButtonText" xml:space="preserve">
-    <value>Создать пользователя</value>
+	<data name="RegisterButton.Text" xml:space="preserve">
+    <value>Готово</value>
   </data>
 </root>

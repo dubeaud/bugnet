@@ -1,75 +1,79 @@
-<%@ Control Language="c#" Inherits="BugNET.Administration.Projects.UserControls.ProjectMembers" Codebehind="ProjectMembers.ascx.cs" %>
-	<div>
-		<h2><asp:literal ID="ProjectMembersTitle" runat="Server" meta:resourcekey="ProjectMembersTitle" /></h2>
-		<p><asp:label ID="DescriptionLabel" runat="server" meta:resourcekey="DescriptionLabel" /></p>
-        <br />
-		<asp:UpdatePanel ID="UpdatePanel1" RenderMode="inline" runat="Server">
-	        <ContentTemplate> 		
-			    <table>
-				    <tr>
-				        <td style="font-weight:bold"><asp:label ID="Label1" runat="server" meta:resourcekey="AllUsersLabel" /></td>
-				        <td>&nbsp;</td>
-				        <td style="font-weight:bold"><asp:label ID="Label2" runat="server" meta:resourcekey="SelectedUsersLabel" /></td>
-			        </tr>
-			        <tr>
-				        <td style="height: 108px">
-					        <asp:ListBox id="lstAllUsers" SelectionMode="Multiple" Runat="Server" Width="150" Height="110px" />
-				        </td>
-				        <td style="height: 108px">
-					        <asp:Button Text="->"  CssClass="button" style="FONT:9pt Courier" Runat="server" id="Button1" onclick="AddUser" />
-					        <br />
-					        <asp:Button Text="<-"  CssClass="button" style="FONT:9pt Courier;clear:both;" Runat="server" id="Button2" onclick="RemoveUser" />
-				        </td>
-				        <td style="height: 108px">
-					        <asp:ListBox id="lstSelectedUsers" SelectionMode="Multiple"  Runat="Server" Width="150" Height="110px" />
-				        </td>
-			        </tr>
-		        </table>
-		    </ContentTemplate>
-		</asp:UpdatePanel>
-		<div>
-            <br />
-			<h3><asp:literal ID="Literal1" runat="Server" meta:resourcekey="AssignUserTitle" /></h3>
-		</div>
-		<p>	
-		    <asp:label ID="Label3" runat="server" meta:resourcekey="AssignUsersDescription" /> 
-		</p>
-		<div>
-		    <asp:UpdatePanel ID="UpdatePanel2" RenderMode="inline" runat="Server">
-	            <ContentTemplate> 	
-		            <table>
-		    	        <tr>
-				            <td style="width: 147px;height:40px;">
-					           <asp:label ID="Label4" runat="server" Text="<%$ Resources:SharedResources, Username %>" />
-				            </td>
-				            <td colspan="2">                   
-				                <asp:dropdownlist AutoPostBack="True" id="ddlProjectMembers" DataTextField="DisplayName" DataValueField="UserName" Runat="Server" Width="177px"  />
-				                <ajaxToolkit:ListSearchExtender ID="ListSearchExtender2" PromptPosition="bottom" runat="server"
-                                    TargetControlID="ddlProjectMembers" PromptCssClass="ListSearchExtenderPrompt" />
-				            </td>
-			            </tr>
-			            <tr>
-				            <td style="font-weight:bold; width: 147px;"><asp:label ID="Label5" runat="server" meta:resourcekey="AllRolesLabel" /></td>
-				            <td>&nbsp;</td>
-				            <td style="font-weight:bold"><asp:label ID="Label6" runat="server" meta:resourcekey="AssignedRolesLabel" /></td>
-			            </tr>
-			            <tr>
-				            <td style="width: 147px; height: 113px">
-					            <asp:ListBox id="lstAllRoles" Runat="Server" Width="150" Height="110px" />
-				            </td>
-				            <td style="height: 113px">
-					            <asp:Button Text="->"  CssClass="button" style="FONT:9pt Courier;" Runat="server" id="Button3" />
-					            <br />
-					            <asp:Button Text="<-"  CssClass="button" style="FONT:9pt Courier;clear:both;" Runat="server" id="Button4" />
-				            </td>
-				            <td style="height: 113px">
-					            <asp:ListBox id="lstSelectedRoles" Runat="Server" Width="150" Height="110px" />
-				            </td>
-			            </tr>
-		            </table>
-		        </ContentTemplate>
-		    </asp:UpdatePanel>
-	    </div>
-    </div>
+<%@ Control Language="c#" Inherits="BugNET.Administration.Projects.UserControls.ProjectMembers" CodeBehind="ProjectMembers.ascx.cs" %>
+
+<h2>
+    <asp:Literal ID="ProjectMembersTitle" runat="Server" meta:resourcekey="ProjectMembersTitle" /></h2>
+<p>
+    <asp:Label ID="DescriptionLabel" runat="server" meta:resourcekey="DescriptionLabel" />
+</p>
+<br />
+<asp:UpdatePanel ID="UpdatePanel1" RenderMode="inline" runat="Server">
+    <ContentTemplate>
+        <div class="row">
+            <div class="col-md-5">
+                <asp:Label ID="Label1" CssClass="control-label" Font-Bold="true" runat="server" meta:resourcekey="AllUsersLabel" />
+
+                <asp:ListBox ID="lstAllUsers" CssClass="form-control" SelectionMode="Multiple" Height="150px" runat="Server" />
+            </div>
+            <div class="col-md-2 text-center" style="padding-top: 50px;">
+                <button ID="Button4" type="button" class="btn btn-default" onserverclick="AddUser" runat="server">
+                  <span class="glyphicon glyphicon-chevron-right"></span>
+                </button>
+                <br />
+                <br />
+                <button ID="Button1" type="button" class="btn btn-default" onserverclick="RemoveUser" runat="server">
+                  <span class="glyphicon glyphicon-chevron-left"></span>
+                </button>
+            </div>
+            <div class="col-md-5">
+                <asp:Label ID="Label2" runat="server" CssClass="control-label" Font-Bold="true" meta:resourcekey="SelectedUsersLabel" />
+                <asp:ListBox ID="lstSelectedUsers" CssClass="form-control" SelectionMode="Multiple" runat="Server" Height="150px" />
+            </div>
+        </div>
+    </ContentTemplate>
+</asp:UpdatePanel>
+<div>
+    <br />
+    <h3>
+        <asp:Literal ID="Literal1" runat="Server" meta:resourcekey="AssignUserTitle" /></h3>
+</div>
+<p>
+    <asp:Label ID="Label3" runat="server" meta:resourcekey="AssignUsersDescription" />
+</p>
+<br />
+
+<asp:UpdatePanel ID="UpdatePanel2" RenderMode="inline" runat="Server">
+    <ContentTemplate>
+        <div class="row" style="margin-bottom: 15px;">
+            <div class="form-group">
+                <asp:Label ID="Label4" runat="server" AssociatedControlID="ddlProjectMembers" Text="<%$ Resources:SharedResources, Username %>" CssClass="control-label col-md-4" />
+                <div class="col-md-8">
+                    <asp:DropDownList CssClass="form-control" AutoPostBack="True" ID="ddlProjectMembers" DataTextField="DisplayName" DataValueField="UserName" runat="Server" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <asp:Label ID="Label5" AssociatedControlID="lstAllRoles" runat="server" Font-Bold="true" CssClass="control-label" meta:resourcekey="AllRolesLabel" />
+                    <asp:ListBox ID="lstAllRoles" runat="Server" CssClass="form-control" Height="150px" />
+                </div>
+            </div>
+            <div class="col-md-2 text-center" style="padding-top: 50px;">
+                <button ID="Button3" type="button" class="btn btn-default" runat="server">
+                  <span class="glyphicon glyphicon-chevron-right"></span>
+                </button>
+                <br />
+                <br />
+                 <button ID="Button5" type="button" class="btn btn-default" runat="server">
+                  <span class="glyphicon glyphicon-chevron-left"></span>
+                </button>
+            </div>
+            <div class="col-md-5">
+                <asp:Label ID="Label6" runat="server" meta:resourcekey="AssignedRolesLabel" Font-Bold="true" CssClass="control-label" />
+                <asp:ListBox ID="lstSelectedRoles" runat="Server" CssClass="form-control" Height="150px" />
+            </div>
+        </div>
+    </ContentTemplate>
+</asp:UpdatePanel>
 
 

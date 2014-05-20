@@ -153,9 +153,6 @@
 	<data name="QuickLinks.Text" xml:space="preserve">
 		<value>Enlaces rápidos</value>
 	</data>
-	<data name="QuickLinksFilters.Text" xml:space="preserve">
-		<value>Enlaces rápidos / Filtros</value>
-	</data>
 	<data name="RegisterAndLoginMessage" xml:space="preserve">
 		<value>Tiene que identificarse para poder ver los proyectos de este sitio.</value>
 	</data>

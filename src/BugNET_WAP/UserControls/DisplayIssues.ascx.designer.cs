@@ -22,33 +22,6 @@ namespace BugNET.UserControls {
         protected global::System.Web.UI.WebControls.Panel OptionsContainerPanel;
         
         /// <summary>
-        /// LeftButtonContainerPanel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel LeftButtonContainerPanel;
-        
-        /// <summary>
-        /// ForSelectedLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ForSelectedLabel;
-        
-        /// <summary>
-        /// EditPropertiesLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label EditPropertiesLabel;
-        
-        /// <summary>
         /// Label12 control.
         /// </summary>
         /// <remarks>
@@ -74,6 +47,33 @@ namespace BugNET.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink lnkRSS;
+        
+        /// <summary>
+        /// LeftButtonContainerPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel LeftButtonContainerPanel;
+        
+        /// <summary>
+        /// ForSelectedLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ForSelectedLabel;
+        
+        /// <summary>
+        /// EditPropertiesLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label EditPropertiesLabel;
         
         /// <summary>
         /// Label10 control.

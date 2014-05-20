@@ -30,7 +30,6 @@ namespace BugNET.Issues
             {
                 var s = GetLocalResourceObject("DeleteIssueQuestion").ToString().Trim().JsEncode();
                 lnkDelete.Attributes.Add("onclick", string.Format("return confirm('{0}');", s));
-                imgDelete.Attributes.Add("onclick", string.Format("return confirm('{0}');", s));
 
                 IssueId = Request.QueryString.Get("id", 0);
 
@@ -81,8 +80,6 @@ namespace BugNET.Issues
                 Page.Title = string.Concat(_currentIssue.FullId, ": ", Server.HtmlDecode(_currentIssue.Title));
                 lblIssueNumber.Text = string.Format("{0}-{1}", _currentProject.Code, IssueId);
                 ctlIssueTabs.Visible = true;
-                TimeLogged.Visible = true;
-                TimeLoggedLabel.Visible = true;
 
                 SetFieldSecurity();
 
@@ -185,8 +182,6 @@ namespace BugNET.Issues
             // The text box is expecting raw html
             TitleTextBox.Text = Server.HtmlDecode(currentIssue.Title);
             DisplayTitleLabel.Text = currentIssue.Title;
-
-            IssueLabel.Text = currentIssue.IssueTypeId.Equals(0) ? GetGlobalResourceObject("SharedResources", "Unassigned").ToString() :  currentIssue.IssueTypeName;
             lblDateCreated.Text = currentIssue.DateCreated.ToString("g");
             lblLastModified.Text = currentIssue.LastUpdate.ToString("g");
             lblIssueNumber.Text = currentIssue.FullId;
@@ -200,11 +195,6 @@ namespace BugNET.Issues
             chkPrivate.Checked = currentIssue.Visibility != 0;
             ProgressSlider.Text = currentIssue.Progress.ToString();
             IssueVoteCount.Text = currentIssue.Votes.ToString();
-
-            if (currentIssue.Votes == 1)
-                Votes.Text = GetLocalResourceObject("Vote").ToString();
-            else
-                Votes.Text = GetLocalResourceObject("Votes").ToString();
 
             if (User.Identity.IsAuthenticated && IssueVoteManager.HasUserVoted(currentIssue.Id, Security.GetUserName()))
             {
@@ -388,11 +378,6 @@ namespace BugNET.Issues
 
             var count = Convert.ToInt32(IssueVoteCount.Text) + 1;
 
-            if (count == 1)
-                Votes.Text = GetLocalResourceObject("Vote").ToString();
-            else
-                Votes.Text = GetLocalResourceObject("Votes").ToString();
-
             IssueVoteCount.Text = count.ToString();
             VoteButton.Visible = false;
             VotedLabel.Visible = true;
@@ -481,7 +466,7 @@ namespace BugNET.Issues
                     DropAssignedTo.Enabled = false;
 
                 //delete issue
-                IssueActionDelete.Visible = UserManager.HasPermission(ProjectId, Common.Permission.DeleteIssue.ToString());
+                lnkDelete.Visible = UserManager.HasPermission(ProjectId, Common.Permission.DeleteIssue.ToString());
 
                 //security check: assign issue
                 if (!UserManager.HasPermission(ProjectId, Common.Permission.AssignIssue.ToString()))
@@ -512,11 +497,10 @@ namespace BugNET.Issues
         /// </summary>
         private void LockFields()
         {
-            IssueActionCancel.Visible = true;
-
-            IssueActionSave.Visible = false;
-            IssueActionSaveAndReturn.Visible = false;
-            IssueActionDelete.Visible = false;
+            lnkCancel.Visible = true;
+            lnkSave.Visible = false;
+            lnkDone.Visible = false;
+            lnkDelete.Visible = false;
 
             Description.Visible = true;
             DisplayTitleLabel.Visible = true;
@@ -533,7 +517,6 @@ namespace BugNET.Issues
             chkPrivate.Enabled = false;
             ctlCustomFields.IsLocked = true;
             txtEstimation.Enabled = false;
-            SliderExtender2.Enabled = false;
             ProgressSlider.Visible = false;
         }
         #endregion

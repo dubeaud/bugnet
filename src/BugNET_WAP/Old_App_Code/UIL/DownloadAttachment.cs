@@ -65,7 +65,7 @@ namespace BugNET.UserInterfaceLayer
                 }
                 else
                 {
-                    context.Response.WriteFile("~/Images/project.png");
+                    context.Response.WriteFile("~/Images/noimage.gif");
                 }
 
             }

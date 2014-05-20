@@ -1,0 +1,125 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="BugNET.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title><%: Page.Title %> - BugNET</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
+    <asp:ContentPlaceHolder runat="server" ID="HeadContent" />
+</head>
+<body>
+    <form runat="server">
+        <ajaxToolkit:ToolkitScriptManager runat="server">
+            <Scripts>
+                <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                <%--Framework Scripts--%>
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="jquery.ui.combined" />
+                <asp:ScriptReference Name="bootstrap" />
+                <asp:ScriptReference Name="respond" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+                <%--Site Scripts--%>
+            </Scripts>
+        </ajaxToolkit:ToolkitScriptManager>
+
+        <div class="navbar navbar-inverse">
+            <div class="container">
+                <div class="navbar-header">
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <i class="fa fa-cog"></i>
+                    </button> 
+                    <a class="navbar-brand navbar-brand-img" runat="server" href="~/">
+                        <img runat="server" src="~/images/logo.png" height="40" width="40" />
+                        BugNET</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <asp:LoginView runat="server" ID="LoginView1" ViewStateMode="Disabled">
+                        <AnonymousTemplate>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a runat="server" href="~/Account/Register">
+                                    <asp:Localize runat="server" Text="<%$ Resources:SharedResources, Register %>" /></a></li>
+                                <li><a runat="server" href="~/Account/Login">
+                                    <asp:Localize runat="server" Text="<%$ Resources:SharedResources, Login %>" /></a></li>
+                            </ul>
+                        </AnonymousTemplate>
+                        <LoggedInTemplate>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li class="dropdown navbar-profile">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <div style="display: inline-block;">
+                                            <asp:Image ID="Avatar" Height="32px" Width="32px" CssClass="navbar-profile-avatar" ImageUrl="~/images/noprofile.png" runat="server" />
+                                        </div>
+                                        <asp:LoginName ID="LoginName" runat="server" CssClass="username" />
+                                        <b class="caret"></b>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a runat="server" href="~/Account/UserProfile">
+                                            <asp:Localize runat="server" Text="<%$ Resources:SharedResources, ViewProfile %>" /></a></li>
+                                        <li><a runat="server" class="username" href="~/Account/Manage">
+                                            <asp:Localize runat="server" Text="<%$ Resources:SharedResources, ManageAccount %>" /></a></li>
+                                        <li class="divider"></li>
+                                        <li>
+                                            <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="<%$ Resources:SharedResources, Logout %>" LogoutPageUrl="~/" />
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </LoggedInTemplate>
+                    </asp:LoginView>
+
+                    <div class="navbar-form navbar-right">
+                        <div class="form-group">
+                            <asp:DropDownList ID="ProjectsList" runat="server" OnSelectedIndexChanged="ProjectList_SelectedIndexChanged" AutoPostBack="true" CssClass="form-control">
+                            </asp:DropDownList>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mainnav">
+            <div class="container">
+                <a class="mainnav-toggle collapsed" data-toggle="collapse" data-target=".mainnav-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="fa fa-bars"></i>
+                </a>
+                <div class="mainnav-collapse navbar-collapse collapse">   
+                    <div class="pull-right mainnav-form">
+                        <asp:textbox CssClass="form-control mainnav-search-query" placeholder="<%$ Resources:SharedResources, Search %>" id="SearchBox" runat="server" />
+                        <button id="SearchButton" class="btn btn-sm mainnav-form-btn" runat="server" onserverclick="SearchButton_Click"><i class="fa fa-search"></i></button>
+                    </div>
+                    <asp:Literal ID="litMenu" Visible="true" runat="server"></asp:Literal>
+                </div>
+                <!--/.navbar-collapse -->
+            </div>
+        </div>
+
+        <div class="container body-content">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+            <hr />
+            <footer>
+                <p>&copy; <%: DateTime.Now.Year %> - BugNET</p>
+            </footer>
+        </div>
+    </form>
+</body>
+</html>
