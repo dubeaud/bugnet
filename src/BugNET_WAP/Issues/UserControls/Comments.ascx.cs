@@ -91,8 +91,8 @@ namespace BugNET.Issues.UserControls
 
             var currentComment = (IssueComment)e.Item.DataItem;
 
-            if (currentComment.CreatorUserId == _issueOwnerUserId)
-                ((HtmlControl)e.Item.FindControl("CommentArea")).Attributes["class"] = "commentContainerOwner";
+            //if (currentComment.CreatorUserId == _issueOwnerUserId)
+            //    ((HtmlControl)e.Item.FindControl("CommentArea")).Attributes["class"] = "commentContainerOwner";
 
             // The edit panel is default not shown.
             var pnlEditComment = e.Item.FindControl("pnlEditComment") as Panel;

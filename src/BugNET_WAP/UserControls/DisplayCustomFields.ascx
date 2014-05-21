@@ -19,10 +19,10 @@
 
 <asp:Repeater ID="rptCustomFields" OnItemDataBound="rptCustomFields_ItemDataBound" runat="server">
     <HeaderTemplate>
-        <div class="row">
+
     </HeaderTemplate>
     <ItemTemplate>
-        <%# (Container.ItemIndex != 0 && Container.ItemIndex % 2 == 0) ? @"</div><div class'row'>" : string.Empty %> 
+
         <div class="col-md-6">
             <div class="form-group">
                 <asp:Label id="lblFieldName" Runat="Server" CssClass="control-label col-sm-4" />
@@ -34,6 +34,6 @@
         </div>
     </ItemTemplate>
     <FooterTemplate>
-        </div>
+
     </FooterTemplate>
 </asp:Repeater>
