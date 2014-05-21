@@ -56,18 +56,24 @@ namespace BugNET.UserInterfaceLayer.WebControls
 
             if (!HttpContext.Current.User.Identity.IsAuthenticated) return;
 
+            var oItemAdmin = new SuckerMenuItem("#", Resources.SharedResources.Admin, this, "navbar-admin");
+
             if (projectId > Globals.NEW_ID && (UserManager.IsInRole(projectId, Globals.ProjectAdminRole) || UserManager.IsSuperUser()))
-            {
-                var oItemAdmin = new SuckerMenuItem("#", Resources.SharedResources.Admin, this, "navbar-admin");
-                Items.Add(oItemAdmin);
+            {            
                 oItemAdmin.Items.Add(new SuckerMenuItem(string.Format("~/Administration/Projects/EditProject.aspx?pid={0}", projectId), Resources.SharedResources.EditProject, this, "admin"));
-
-                if (!UserManager.IsSuperUser()) return;
-
+            }
+            
+            if (UserManager.IsSuperUser())
+            {
                 oItemAdmin.Items.Add(new SuckerMenuItem("~/Administration/Projects/ProjectList.aspx", Resources.SharedResources.Projects, this));
                 oItemAdmin.Items.Add(new SuckerMenuItem("~/Administration/Users/UserList.aspx", Resources.SharedResources.UserAccounts, this));
                 oItemAdmin.Items.Add(new SuckerMenuItem("~/Administration/Host/Settings.aspx", Resources.SharedResources.ApplicationConfiguration, this));
                 oItemAdmin.Items.Add(new SuckerMenuItem("~/Administration/Host/LogViewer.aspx", Resources.SharedResources.LogViewer, this));
+            }
+
+            if(oItemAdmin.Items.Count > 0)
+            {
+                Items.Add(oItemAdmin);
             }
 
 
