@@ -203,6 +203,8 @@ namespace BugNET.Issues
                 AssignedToField.Visible = selectedValue.AssignedToVisibility;
                 chkNotifyAssignedTo.Checked = selectedValue.AssignedToNotify;
                 chkNotifyOwner.Checked = selectedValue.OwnedByNotify;
+
+                
             }
 
         }

@@ -7,6 +7,7 @@ using BugNET.BLL;
 using BugNET.Common;
 using BugNET.Entities;
 using BugNET.UserInterfaceLayer;
+using System.Linq;
 
 namespace BugNET.Issues
 {
@@ -213,6 +214,24 @@ namespace BugNET.Issues
                 VoteButton.Visible = false;
                 VotedLabel.Visible = false;
             }
+            List<DefaultValue> defValues = IssueManager.GetDefaultIssueTypeByProjectId(ProjectId);
+            DefaultValue selectedValue = defValues.FirstOrDefault();
+
+            // Visibility Section
+            IssueTypeField.Visible = selectedValue.TypeVisibility;
+            StatusField.Visible = selectedValue.StatusVisibility;
+            PriorityField.Visible = selectedValue.PriorityVisibility;
+            PrivateField.Visible = selectedValue.PrivateVisibility;
+            CategoryField.Visible = selectedValue.CategoryVisibility;
+            DueDateField.Visible = selectedValue.DueDateVisibility;
+            ProgressField.Visible = selectedValue.PercentCompleteVisibility;
+            MilestoneField.Visible = selectedValue.MilestoneVisibility;
+            EstimationField.Visible = selectedValue.EstimationVisibility;
+            ResolutionField.Visible = selectedValue.ResolutionVisibility;
+            AffectedMilestoneField.Visible = selectedValue.AffectedMilestoneVisibility;
+            AssignedToField.Visible = selectedValue.AssignedToVisibility;
+            //chkNotifyAssignedTo.Checked = selectedValue.AssignedToNotify;
+            //chkNotifyOwner.Checked = selectedValue.OwnedByNotify;
         }
 
         /// <summary>
