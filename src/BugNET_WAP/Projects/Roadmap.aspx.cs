@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using Microsoft.AspNet.FriendlyUrls;
 using BugNET.BLL;
 using BugNET.Common;
 using BugNET.Entities;
@@ -29,7 +30,8 @@ namespace BugNET.Projects
         {
             if (!Page.IsPostBack)
             {
-                ProjectId = Request.Get("pid", Globals.NEW_ID);
+                IList<string> segments = Request.GetFriendlyUrlSegments();
+                ProjectId = Int32.Parse(segments[0]);
 
                 // If don't know project or issue then redirect to something missing page
                 if (ProjectId == 0)

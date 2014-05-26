@@ -14,13 +14,13 @@ namespace BugNET.UserInterfaceLayer.WebControls
         public SuckerFishMenuHelper(int projectId)
         {
             //Setup menu... 
-            Items.Add(new SuckerMenuItem("~/Default.aspx", Resources.SharedResources.Home, this));
+            Items.Add(new SuckerMenuItem("~/Default", Resources.SharedResources.Home, this));
     
             var oItemIssues = new SuckerMenuItem("#", Resources.SharedResources.Issues, this, "dropdown");
 
             if (HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                oItemIssues.Items.Add(new SuckerMenuItem("~/Issues/MyIssues.aspx", Resources.SharedResources.MyIssues, this));
+                oItemIssues.Items.Add(new SuckerMenuItem("~/Issues/MyIssues", Resources.SharedResources.MyIssues, this));
             }
 
             if (projectId > Globals.NEW_ID)
@@ -29,8 +29,8 @@ namespace BugNET.UserInterfaceLayer.WebControls
 
                 Items.Insert(1, oItemProject);
                 oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/ProjectSummary/{0}", projectId), Resources.SharedResources.ProjectSummary, this));
-                oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/Roadmap.aspx?pid={0}", projectId), Resources.SharedResources.Roadmap,this));
-                oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/ChangeLog.aspx?pid={0}", projectId), Resources.SharedResources.ChangeLog, this));
+                oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/Roadmap/{0}", projectId), Resources.SharedResources.Roadmap,this));
+                oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/ChangeLog/{0}", projectId), Resources.SharedResources.ChangeLog, this));
 
                 if (!string.IsNullOrEmpty(ProjectManager.GetById(projectId).SvnRepositoryUrl))
                     oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/SvnBrowse/SubversionBrowser.aspx?pid={0}", projectId), Resources.SharedResources.Repository, this)); 
@@ -42,7 +42,7 @@ namespace BugNET.UserInterfaceLayer.WebControls
                 {
                     //check add issue permission
                     if (UserManager.HasPermission(projectId, Common.Permission.AddIssue.ToString()))
-                        oItemIssues.Items.Insert(0, new SuckerMenuItem(string.Format("~/Issues/CreateIssue.aspx?pid={0}", projectId), Resources.SharedResources.NewIssue, this));
+                        oItemIssues.Items.Insert(0, new SuckerMenuItem(string.Format("~/Issues/CreateIssue/{0}", projectId), Resources.SharedResources.NewIssue, this));
 
                     if (UserManager.HasPermission(projectId, Common.Permission.ViewProjectCalendar.ToString()))
                         oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/ProjectCalendar.aspx?pid={0}", projectId), Resources.SharedResources.Calendar, this));
@@ -60,15 +60,15 @@ namespace BugNET.UserInterfaceLayer.WebControls
 
             if (projectId > Globals.NEW_ID && (UserManager.IsInRole(projectId, Globals.ProjectAdminRole) || UserManager.IsSuperUser()))
             {            
-                oItemAdmin.Items.Add(new SuckerMenuItem(string.Format("~/Administration/Projects/EditProject.aspx?pid={0}", projectId), Resources.SharedResources.EditProject, this, "admin"));
+                oItemAdmin.Items.Add(new SuckerMenuItem(string.Format("~/Administration/Projects/EditProject/{0}", projectId), Resources.SharedResources.EditProject, this, "admin"));
             }
             
             if (UserManager.IsSuperUser())
             {
-                oItemAdmin.Items.Add(new SuckerMenuItem("~/Administration/Projects/ProjectList.aspx", Resources.SharedResources.Projects, this));
-                oItemAdmin.Items.Add(new SuckerMenuItem("~/Administration/Users/UserList.aspx", Resources.SharedResources.UserAccounts, this));
-                oItemAdmin.Items.Add(new SuckerMenuItem("~/Administration/Host/Settings.aspx", Resources.SharedResources.ApplicationConfiguration, this));
-                oItemAdmin.Items.Add(new SuckerMenuItem("~/Administration/Host/LogViewer.aspx", Resources.SharedResources.LogViewer, this));
+                oItemAdmin.Items.Add(new SuckerMenuItem("~/Administration/Projects/ProjectList", Resources.SharedResources.Projects, this));
+                oItemAdmin.Items.Add(new SuckerMenuItem("~/Administration/Users/UserList", Resources.SharedResources.UserAccounts, this));
+                oItemAdmin.Items.Add(new SuckerMenuItem("~/Administration/Host/Settings", Resources.SharedResources.ApplicationConfiguration, this));
+                oItemAdmin.Items.Add(new SuckerMenuItem("~/Administration/Host/LogViewer", Resources.SharedResources.LogViewer, this));
             }
 
             if(oItemAdmin.Items.Count > 0)

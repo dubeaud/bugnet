@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
+using Microsoft.AspNet.FriendlyUrls;
 using System.Web.UI.WebControls;
 using BugNET.BLL;
 using BugNET.Entities;
@@ -29,7 +30,8 @@ namespace BugNET.Projects
         {
             if(!Page.IsPostBack)
             {
-                ProjectId = Request.Get("pid", Globals.NEW_ID);
+                IList<string> segments = Request.GetFriendlyUrlSegments();
+                ProjectId = Int32.Parse(segments[0]);
 
                 // If don't know project or issue then redirect to something missing page
                 if(ProjectId == 0)
@@ -70,7 +72,7 @@ namespace BugNET.Projects
 
             // The ExpandIssuePaths method is called to handle
             // the SiteMapResolve event.
-            SiteMap.SiteMapResolve += ExpandProjectPaths;		
+            // SiteMap.SiteMapResolve += ExpandProjectPaths;		
         }
 
         /// <summary>
@@ -286,7 +288,7 @@ namespace BugNET.Projects
         protected void Page_Unload(object sender, EventArgs e)
         {
             //remove the event handler
-            SiteMap.SiteMapResolve -= ExpandProjectPaths;
+            //SiteMap.SiteMapResolve -= ExpandProjectPaths;
         }
 
         /// <summary>
