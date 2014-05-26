@@ -7,6 +7,7 @@ using BugNET.Entities;
 using BugNET.UserControls;
 using BugNET.UserInterfaceLayer;
 using Microsoft.AspNet.FriendlyUrls;
+using System.Collections.Generic;
 
 namespace BugNET.Projects
 {
@@ -25,7 +26,10 @@ namespace BugNET.Projects
 			// Put user code to initialize the page here
 	        if (Page.IsPostBack) return;
 
-            ProjectId = Request.Get("pid", -1);
+            IList<string> segments = Request.GetFriendlyUrlSegments();
+
+            ProjectId = Int32.Parse(segments[0]);
+            // ProjectId = Request.Get("pid", -1);
 
             // BGN-1379
             if (ProjectId.Equals(-1))
@@ -33,13 +37,13 @@ namespace BugNET.Projects
  
 	        BindProjectSummary();
 
-            SiteMap.SiteMapResolve += ExpandPaths;
+            // SiteMap.SiteMapResolve += ExpandPaths;
 		}
 
         protected void Page_Unload(object sender, EventArgs e)
         {
             //remove the event handler
-            SiteMap.SiteMapResolve -= ExpandPaths;
+            // SiteMap.SiteMapResolve -= ExpandPaths;
         }
 
         private SiteMapNode ExpandPaths(Object sender, SiteMapResolveEventArgs e)

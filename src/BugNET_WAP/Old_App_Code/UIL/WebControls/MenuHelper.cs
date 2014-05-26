@@ -28,7 +28,7 @@ namespace BugNET.UserInterfaceLayer.WebControls
                 var oItemProject = new SuckerMenuItem("#", Resources.SharedResources.Project, this, "dropdown");
 
                 Items.Insert(1, oItemProject);
-                oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/ProjectSummary.aspx?pid={0}", projectId), Resources.SharedResources.ProjectSummary, this));
+                oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/ProjectSummary/{0}", projectId), Resources.SharedResources.ProjectSummary, this));
                 oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/Roadmap.aspx?pid={0}", projectId), Resources.SharedResources.Roadmap,this));
                 oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/ChangeLog.aspx?pid={0}", projectId), Resources.SharedResources.ChangeLog, this));
 

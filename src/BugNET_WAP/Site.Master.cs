@@ -122,7 +122,7 @@ namespace BugNET
         protected void ProjectList_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (ProjectsList.SelectedIndex != 0)
-                Response.Redirect(string.Format("~/Projects/ProjectSummary.aspx?pid={0}", ProjectsList.SelectedValue));
+                Response.Redirect(string.Format("~/Projects/ProjectSummary/{0}", ProjectsList.SelectedValue));
         }
 
         /// <summary>

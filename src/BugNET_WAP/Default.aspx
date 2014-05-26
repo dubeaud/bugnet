@@ -33,13 +33,13 @@
                     <ItemTemplate>
                         <div class="row">
                             <div class="col-md-2 col-sm-3 text-center">
-                                <a href="Projects/ProjectSummary.aspx?pid=<%# ((Project)Container.DataItem).Id %>">
+                                <a href="Projects/ProjectSummary/<%# ((Project)Container.DataItem).Id %>">
                                     <asp:Image runat="server" AlternateText="<%# ((Project)Container.DataItem).Name %>" ID="ProjectImage" />
                                 </a>
                             </div>
                             <div class="col-md-10 col-sm-9">
                                 <h3 style="margin-top: 5px; margin-bottom: 3px;">
-                                    <a href="Projects/ProjectSummary.aspx?pid=<%# ((Project)Container.DataItem).Id %>">
+                                    <a href="Projects/ProjectSummary/<%# ((Project)Container.DataItem).Id %>">
                                         <%#((Project)Container.DataItem).Name%>
                                         <span>(<%#((Project)Container.DataItem).Code%>)</span>
                                     </a>
@@ -58,7 +58,7 @@
                                                                <asp:Localize runat="server" ID="QuickLinksLocalize" Text="Quick Links" meta:resourcekey="QuickLinks" />
                                                             </li>
                                                             <li>
-                                                                <a href="Projects/ProjectSummary.aspx?pid=<%# ((Project)Container.DataItem).Id %>">
+                                                                <a href="Projects/ProjectSummary/<%# ((Project)Container.DataItem).Id %>">
                                                                     <asp:Localize runat="server" ID="Localize33" Text="<%$ Resources:SharedResources, ProjectSummary %>" /></a></li>
                                                             <li>
                                                                 <a href="Queries/QueryList.aspx?pid=<%# ((Project)Container.DataItem).Id %>">
