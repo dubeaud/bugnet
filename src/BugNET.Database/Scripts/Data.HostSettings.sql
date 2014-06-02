@@ -47,7 +47,7 @@ USING (VALUES
 	(N'Pop3ProcessAttachments', N'False'),
 	(N'EnableGravatar', N'False'),
 	(N'GoogleAuthentication', N'False'),
-	(N'FacebookAuthentication', N'False')
+	(N'FacebookAuthentication', N'False'),
 	(N'FacebookAppId', N''),
 	(N'FacebookAppSecret', N''),
 	(N'TwitterAuthentication', N'False'),
@@ -55,7 +55,7 @@ USING (VALUES
 	(N'TwitterConsumerSecret', N''),
 	(N'MicrosoftAuthentication', N'False'),
 	(N'MicrosoftClientId', N''),
-	(N'MicrosoftClientSecret', N''),
+	(N'MicrosoftClientSecret', N'')
 ) 
 AS Source ([SettingName], [SettingValue]) 
 ON Target.SettingName = Source.SettingName
