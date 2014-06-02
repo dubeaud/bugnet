@@ -65,7 +65,7 @@
                                                                     <asp:Localize runat="server" ID="Localize4" Text="<%$ Resources:SharedResources, Queries %>" /></a>
                                                             </li>
                                                             <li>
-                                                                <a href="Projects/ChangeLog.aspx?pid=<%# ((Project)Container.DataItem).Id %>">
+                                                                <a href="Projects/ChangeLog/<%# ((Project)Container.DataItem).Id %>">
                                                                     <asp:Localize runat="server" ID="Localize5" Text="<%$ Resources:SharedResources, ChangeLog %>" /></a></li>
                                                             <li>
                                                                 <a href="Projects/Roadmap.aspx?pid=<%# ((Project)Container.DataItem).Id %>">

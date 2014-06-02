@@ -74,7 +74,7 @@ namespace BugNET.Administration.Users
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!UserManager.IsSuperUser())
-                Response.Redirect("~/Errors/AccessDenied.aspx");
+                Response.Redirect("~/Errors/AccessDenied");
 
             if (IsPostBack) return;
 
@@ -92,13 +92,13 @@ namespace BugNET.Administration.Users
             switch (e.CommandName)
             {
                 case "Edit":
-                    Response.Redirect(string.Format("~/Administration/Users/EditUser.aspx?user={0}", e.CommandArgument));
+                    Response.Redirect(string.Format("~/Administration/Users/EditUser/{0}", e.CommandArgument));
                     break;
                 case "ManageRoles":
-                    Response.Redirect(string.Format("~/Administration/Users/EditUser.aspx?user={0}&tabid=2", e.CommandArgument));
+                    Response.Redirect(string.Format("~/Administration/Users/EditUser/{0}/1", e.CommandArgument));
                     break;
                 case "Delete":
-                    Response.Redirect(string.Format("~/Administration/Users/EditUser.aspx?user={0}&tabid=4", e.CommandArgument));
+                    Response.Redirect(string.Format("~/Administration/Users/EditUser/{0}/4", e.CommandArgument));
                     break;
             }
 

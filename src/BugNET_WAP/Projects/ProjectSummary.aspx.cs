@@ -29,7 +29,6 @@ namespace BugNET.Projects
             IList<string> segments = Request.GetFriendlyUrlSegments();
 
             ProjectId = Int32.Parse(segments[0]);
-            // ProjectId = Request.Get("pid", -1);
 
             // BGN-1379
             if (ProjectId.Equals(-1))

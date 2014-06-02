@@ -13,10 +13,6 @@
      <div class="page-header">
         <h1 class="page-title">
             <asp:Literal ID="Literal1" runat="server" Text="New Issue" />
-            <small> 
-                <asp:Literal ID="ltProject" runat="server" />
-                <span>(<asp:Literal ID="litProjectCode" runat="Server"></asp:Literal>)</span>
-            </small>
         </h1>
     </div>
     <div class="form-horizontal" style="padding-top:2em;">

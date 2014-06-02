@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using Microsoft.AspNet.FriendlyUrls;
 using BugNET.BLL;
 using BugNET.Common;
 using BugNET.UserInterfaceLayer;
@@ -29,7 +30,16 @@ namespace BugNET.Administration.Users
         /// <value>The tab id.</value>
         int QueryTabId
         {
-            get { return Request.QueryString.Get("tabid", 0); }
+            get 
+            {
+                IList<string> segments = Request.GetFriendlyUrlSegments();
+                var queryTabId = 0;
+                if (segments.Count > 1)
+                {
+                    int.TryParse(segments[1], out queryTabId);
+                }
+                return queryTabId;
+            }
         }
 
         /// <summary>
@@ -40,7 +50,9 @@ namespace BugNET.Administration.Users
         {
             get
             {
-                var userId = Request.QueryString.Get("user", "");
+                IList<string> segments = Request.GetFriendlyUrlSegments();
+                var userId = segments[0];
+                // var userId = Request.QueryString.Get("user", "");
 
                 if (!userId.Equals(""))
                 {

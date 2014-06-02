@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Microsoft.AspNet.FriendlyUrls;
 using BugNET.BLL;
 using BugNET.Common;
 using BugNET.Entities;
@@ -24,7 +25,8 @@ namespace BugNET.Issues
         {
             if (!Page.IsPostBack)
             {
-                ProjectId = Request.QueryString.Get("pid", 0);
+                IList<string> segments = Request.GetFriendlyUrlSegments();
+                ProjectId = Int32.Parse(segments[0]);
 
                 // If don't know project or issue then redirect to something missing page
                 if (ProjectId == 0)
