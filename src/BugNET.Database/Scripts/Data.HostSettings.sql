@@ -45,7 +45,17 @@ USING (VALUES
 	(N'SMTPDomain', N''),
 	(N'ApplicationDefaultLanguage', N'en-US'),
 	(N'Pop3ProcessAttachments', N'False'),
-	(N'EnableGravatar', N'False')
+	(N'EnableGravatar', N'False'),
+	(N'GoogleAuthentication', N'False'),
+	(N'FacebookAuthentication', N'False')
+	(N'FacebookAppId', N''),
+	(N'FacebookAppSecret', N''),
+	(N'TwitterAuthentication', N'False'),
+	(N'TwitterConsumerKey', N''),
+	(N'TwitterConsumerSecret', N''),
+	(N'MicrosoftAuthentication', N'False'),
+	(N'MicrosoftClientId', N''),
+	(N'MicrosoftClientSecret', N''),
 ) 
 AS Source ([SettingName], [SettingValue]) 
 ON Target.SettingName = Source.SettingName
