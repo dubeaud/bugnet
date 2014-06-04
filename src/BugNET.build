@@ -73,21 +73,9 @@
 	<target name="publish.bugnet" description="Produces a distrubutable that can be deployed to a specific environment">
 		<!-- copy install-->
 		<copy includeemptydirs="false" todir="${build.dir}\dist\BugNET">
-			<fileset basedir=".\BugNET_WAP">
+			<fileset basedir=".\BugNET_WAP\obj\Release\Package\PackageTmp">
 				<include name="**\*"/>
-				<exclude name="release.config" />
-				<exclude name="**\Latest.SqlDataProvider.sql" />
-				<exclude name="**\LatestReleaseNotes.htm" />
-				<exclude name="**\obj\**" />
-				<exclude name="**\*.csproj" />
-				<exclude name="**\*.pdb" />
-				<exclude name="**\*.cs" />
-				<exclude name="**\BugNet.mdf" />
-				<exclude name="**\BugNet_log.ldf" />
-				<exclude name="packages.config" />
-				<exclude name="Web.Debug.config" />
-				<exclude name="Web.Release.config" />
-				<exclude name="Web.Test.config" />
+				<exclude name="**\App_Data\**" />
 			</fileset>
 		</copy>	
 		
