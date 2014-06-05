@@ -23,7 +23,6 @@ namespace BugNET
         protected void Application_Start(object sender, EventArgs e)
         {
             // Code that runs on application startup
-            AuthConfig.RegisterOpenAuth();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
@@ -128,6 +127,8 @@ namespace BugNET
                 HostSettingManager.GetHostSettings();
 
                 LoggingManager.ConfigureLogging();
+
+                AuthConfig.RegisterOpenAuth();
 
                 Log.Info("Application Start");
 
