@@ -82,17 +82,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6" id="PrivateField" runat="server">
-                <div class="form-group">
-                    <asp:Label ID="PrivateLabel" AssociatedControlID="chkPrivate" runat="server" CssClass="col-sm-4 control-label" Text="<%$Resources:SharedIssueProperties, PrivateLabel %>" />
-                    <div class="col-sm-7">
-                        <div class="checkbox">
-                            <asp:CheckBox ID="chkPrivate" runat="server" />
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </div> 
             <div class="col-md-6" id="CategoryField" runat="server">
                 <div class="form-group">
                     <asp:Label ID="CategoryLabel" AssociatedControlID="DropCategory" CssClass="col-sm-4 control-label" runat="server" Text="<%$Resources:SharedIssueProperties, CategoryLabel %>" />
@@ -154,6 +144,16 @@
                     <asp:Label ID="ResolutionLabel" CssClass="col-sm-4 control-label" runat="server" AssociatedControlID="DropResolution" Text="<%$Resources:SharedIssueProperties, ResolutionLabel %>" />
                     <div class="col-sm-7">
                         <it:PickResolution ID="DropResolution" DisplayDefault="True" runat="server" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" id="PrivateField" runat="server">
+                <div class="form-group">
+                    <asp:Label ID="PrivateLabel" AssociatedControlID="chkPrivate" runat="server" CssClass="col-sm-4 control-label" Text="<%$Resources:SharedIssueProperties, PrivateLabel %>" />
+                    <div class="col-sm-7">
+                        <div class="checkbox">
+                            <asp:CheckBox ID="chkPrivate" runat="server" />
+                        </div>
                     </div>
                 </div>
             </div>

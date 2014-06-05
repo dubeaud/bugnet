@@ -135,17 +135,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6" id="PrivateField" runat="server">
-                <div class="form-group">
-                    <asp:Label ID="PrivateLabel" CssClass="col-sm-4 control-label" AssociatedControlID="chkPrivate" runat="server" Text="<%$Resources:SharedIssueProperties, PrivateLabel %>" />
-                    <div class="col-sm-7">
-                        <div class="checkbox">
-                            <asp:CheckBox ID="chkPrivate" runat="server" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            
             <div class="col-md-6" id="CategoryField" runat="server">
                 <div class="form-group">
                     <asp:Label ID="CategoryLabel" CssClass="col-sm-4 control-label" AssociatedControlID="DropCategory" runat="server" Text="<%$Resources:SharedIssueProperties, CategoryLabel %>" />
@@ -219,6 +209,16 @@
                         <asp:Label ID="lblLoggedTime" runat="server" CssClass="text-right form-control-static" />
                         <asp:Label ID="Label1" runat="server" Text="<%$Resources:SharedIssueProperties, HoursLabel %>" />
 
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" id="PrivateField" runat="server">
+                <div class="form-group">
+                    <asp:Label ID="PrivateLabel" CssClass="col-sm-4 control-label" AssociatedControlID="chkPrivate" runat="server" Text="<%$Resources:SharedIssueProperties, PrivateLabel %>" />
+                    <div class="col-sm-7">
+                        <div class="checkbox">
+                            <asp:CheckBox ID="chkPrivate" runat="server" />
+                        </div>
                     </div>
                 </div>
             </div>
