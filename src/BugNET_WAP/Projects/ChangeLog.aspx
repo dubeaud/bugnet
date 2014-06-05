@@ -14,12 +14,12 @@
                 var li = $(this).parent();
                 if (li.hasClass('active')) {
                     li.removeClass('active');
-                    li.children('.milestone-content').slideUp();
+                    li.children('.milestone-content').hide();
                     $.cookie(li.attr('id'), null);
                 }
                 else {
                     li.addClass('active');
-                    li.children('.milestone-content').slideDown();
+                    li.children('.milestone-content').show();
                     $.cookie(li.attr('id'), 'expanded');
                 }
 
