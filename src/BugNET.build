@@ -75,6 +75,7 @@
 		<copy includeemptydirs="false" todir="${build.dir}\dist\BugNET">
 			<fileset basedir=".\BugNET_WAP\obj\Release\Package\PackageTmp">
 				<include name="**\*"/>
+				<exclude name="**\Latest.SqlDataProvider.sql" />
 				<exclude name="**\App_Data\**" />
 			</fileset>
 		</copy>	
@@ -100,16 +101,16 @@
 		<if test="${file::exists(filename) and file::get-length(filename) > 0}">
 			<echo message="Copying latest sql script" />
 			<copy file="${filename}"
-				tofile="${build.dir}\dist\BugNET\Providers\DataProviders\SqlDataProvider\${build.number}.0.SqlDataProvider.sql" />
+				tofile="${build.dir}\dist\BugNET\Providers\DataProviders\SqlDataProvider\${build.number}.SqlDataProvider.sql" />
 			<copy file="${filename}"
-				tofile="${build.dir}\source\src\BugNET_WAP\Providers\DataProviders\SqlDataProvider\${build.number}.0.SqlDataProvider.sql" />
+				tofile="${build.dir}\source\src\BugNET_WAP\Providers\DataProviders\SqlDataProvider\${build.number}.SqlDataProvider.sql" />
 		</if>	
 		
 		<property name="filename" value=".\BugNET_WAP\Install\LatestReleaseNotes.htm" />	
 		<if test="${file::exists(filename) and file::get-length(filename) > 0}">
 			<echo message="Copying latest release notes" />
 			<copy file="${filename}"
-				tofile="${build.dir}\dist\BugNET\Install\${build.number}.0.htm" />
+				tofile="${build.dir}\dist\BugNET\Install\${build.number}.htm" />
 		</if>	
 			
 		<!-- copy svn hooks utility-->
