@@ -48,8 +48,12 @@
                   </LayoutTemplate>
                 </asp:Login>
                 <p>
+                    <asp:HyperLink ID="PasswordRecoveryLink" runat="server" meta:resourcekey="PasswordRecoveryLink" NavigateUrl="~/Account/ForgotPassword">Forgot your password?</asp:HyperLink>
+                </p>
+                <p>
                      <asp:Localize runat="server" ID="Register_Localize" />
                 </p>
+                
             </section>
         </div>
 

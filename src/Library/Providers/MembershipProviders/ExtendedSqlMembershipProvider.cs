@@ -70,13 +70,14 @@ namespace BugNET.Providers.MembershipProviders
         public override MembershipUser GetUser(string username, bool userIsOnline)
         {
             MembershipUser oldUser = base.GetUser(username, userIsOnline);
+            
+            if (oldUser == null)
+                return null;
+
             ProfileBase profile = ProfileBase.Create(username);
             string firstName = (string)profile.GetPropertyValue("FirstName");
             string lastName = (string)profile.GetPropertyValue("LastName");
             string displayName = (string)profile.GetPropertyValue("DisplayName");
-
-            if (oldUser == null)
-                return null;
 
             CustomMembershipUser newUser = new CustomMembershipUser(oldUser.ProviderName,
                                                                     oldUser.UserName,
