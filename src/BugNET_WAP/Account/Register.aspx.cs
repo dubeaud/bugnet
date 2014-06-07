@@ -20,7 +20,7 @@ namespace BugNET.Account
             switch (Convert.ToInt32(HostSettingManager.Get(HostSettingNames.UserRegistration)))
             {
                 case (int)UserRegistration.None:
-                    Response.Redirect("~/AccessDenied.aspx", true);
+                    Response.Redirect("~/Errors/AccessDenied", true);
                     break;
                 case (int)UserRegistration.Verified:
                     RegisterUser.DisableCreatedUser = true;

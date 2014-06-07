@@ -21,7 +21,7 @@ namespace BugNET.UserInterfaceLayer
         /// </summary>
         public static void TransferToNotFoundPage(Page webPage)
         {
-            webPage.Response.Redirect("~/Errors/NotFound.aspx", true);
+            webPage.Response.Redirect("~/Errors/NotFound", true);
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace BugNET.UserInterfaceLayer
         /// </summary>
         public static void TransferToSomethingMissingPage(Page webPage)
         {
-            webPage.Response.Redirect("~/Errors/SomethingMissing.aspx", true);
+            webPage.Response.Redirect("~/Errors/SomethingMissing", true);
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace BugNET.UserInterfaceLayer
         /// </summary>
         public static void TransferToSessionExpiredPage(Page webPage)
         {
-            webPage.Response.Redirect("~/Errors/SessionExpired.aspx", true);
+            webPage.Response.Redirect("~/Errors/SessionExpired", true);
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace BugNET.UserInterfaceLayer
         /// </summary>
         public static void TransferToErrorPage(Page webPage)
         {
-            webPage.Response.Redirect("~/Errors/Error.aspx", true);
+            webPage.Response.Redirect("~/Errors/Error", true);
         }
     }
 }

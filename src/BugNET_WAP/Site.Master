@@ -59,7 +59,7 @@
                     <asp:LoginView runat="server" ID="LoginView1" ViewStateMode="Disabled">
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/Account/Register">
+                                <li id="RegisterLink" runat="server"><a runat="server"  href="~/Account/Register">
                                     <asp:Localize runat="server" Text="<%$ Resources:SharedResources, Register %>" /></a></li>
                                 <li><a runat="server" href="~/Account/Login">
                                     <asp:Localize runat="server" Text="<%$ Resources:SharedResources, Login %>" /></a></li>

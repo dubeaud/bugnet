@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-8">
             <section id="loginForm">
-                <asp:Login runat="server" ViewStateMode="Disabled" RenderOuterTable="false">
+                <asp:Login runat="server" ViewStateMode="Disabled" RenderOuterTable="false" DestinationPageUrl="~/Default">
                     <LayoutTemplate>
                         <div class="form-horizontal">
                             <h4><asp:Localize runat="server" meta:resourceKey="UseLocalAccount" Text="[Resource Required]"/></h4>
