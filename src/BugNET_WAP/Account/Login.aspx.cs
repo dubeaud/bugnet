@@ -13,6 +13,7 @@ namespace BugNET.Account
         {
             Register_Localize.Text = GetLocalizedText(ResolveUrl("~/Account/Register.aspx"));
             OpenAuthLogin.ReturnUrl = Request.QueryString["ReturnUrl"];
+            this.Form.DefaultButton = this.LoginView.FindControl("LoginButton").UniqueID;
         }
 
         private string GetLocalizedText(string linkUrl)
