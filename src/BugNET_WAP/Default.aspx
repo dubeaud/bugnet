@@ -34,7 +34,7 @@
                         <div class="row">
                             <div class="col-md-2 col-sm-3 text-center">
                                 <a href="Projects/ProjectSummary/<%# ((Project)Container.DataItem).Id %>">
-                                    <asp:Image runat="server" AlternateText="<%# ((Project)Container.DataItem).Name %>" ID="ProjectImage" />
+                                    <asp:Image runat="server" AlternateText="<%# ((Project)Container.DataItem).Name %>" ID="ProjectImage" Height="90"  Width="90"/>
                                 </a>
                             </div>
                             <div class="col-md-10 col-sm-9">
