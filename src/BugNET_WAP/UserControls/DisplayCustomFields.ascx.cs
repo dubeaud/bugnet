@@ -60,13 +60,14 @@ namespace BugNET.UserControls
             {
                 var colFields = new List<CustomField>();
 
-                for (var i = 0; i < lstCustomFields.Items.Count; i++)
+                for (var i = 0; i < rptCustomFields.Items.Count; i++)
                 {
-                    var item = lstCustomFields.Items[i];
+                    var item = rptCustomFields.Items[i];
 
                     if (item.ItemType != ListItemType.Item && item.ItemType != ListItemType.AlternatingItem) continue;
 
-                    var fieldId = (int) lstCustomFields.DataKeys[i];
+                    var id = (HiddenField)item.FindControl("Id");
+                    var fieldId = Int32.Parse(id.Value);
 
                     var c = item.FindControl("FieldValue");
 
@@ -131,8 +132,8 @@ namespace BugNET.UserControls
         public override void DataBind()
         {
             rptCustomFields.DataBind();
-            lstCustomFields.DataKeyField = "Id";
-            lstCustomFields.DataBind();
+            //lstCustomFields.DataKeyField = "Id";
+            //lstCustomFields.DataBind();
         }
 
         /// <summary>
@@ -140,181 +141,181 @@ namespace BugNET.UserControls
         /// </summary>
         /// <param name="s">The s.</param>
         /// <param name="e">The <see cref="T:System.Web.UI.WebControls.DataListItemEventArgs"/> instance containing the event data.</param>
-        protected void CustomFieldsItemDataBound(object s, DataListItemEventArgs e)
-        {
-            if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem) return;
+        //protected void CustomFieldsItemDataBound(object s, DataListItemEventArgs e)
+        //{
+        //    if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem) return;
 
-            var currentField = (CustomField) e.Item.DataItem;
+        //    var currentField = (CustomField) e.Item.DataItem;
 
-            var ph = (PlaceHolder) e.Item.FindControl("PlaceHolder");
+        //    var ph = (PlaceHolder) e.Item.FindControl("PlaceHolder");
 
-            switch (currentField.FieldType)
-            {
-                case CustomFieldType.DropDownList:
+        //    switch (currentField.FieldType)
+        //    {
+        //        case CustomFieldType.DropDownList:
 
-                    var ddl = new DropDownList
-                        {
-                            ID = FIELD_VALUE_NAME,
-                            DataSource = CustomFieldSelectionManager.GetByCustomFieldId(currentField.Id),
-                            DataTextField = "Name",
-                            DataValueField = "Value",
-                            CssClass = "form-control"
-                        };
+        //            var ddl = new DropDownList
+        //                {
+        //                    ID = FIELD_VALUE_NAME,
+        //                    DataSource = CustomFieldSelectionManager.GetByCustomFieldId(currentField.Id),
+        //                    DataTextField = "Name",
+        //                    DataValueField = "Value",
+        //                    CssClass = "form-control"
+        //                };
 
-                    ddl.DataBind();
-                    ddl.Items.Insert(0, new ListItem("-- Select One --", string.Empty));
-                    ddl.SelectedValue = currentField.Value;
+        //            ddl.DataBind();
+        //            ddl.Items.Insert(0, new ListItem("-- Select One --", string.Empty));
+        //            ddl.SelectedValue = currentField.Value;
 
-                    ph.Controls.Add(ddl);
+        //            ph.Controls.Add(ddl);
 
-                    if (IsLocked)
-                    {
-                        ddl.Enabled = false;
-                    }
+        //            if (IsLocked)
+        //            {
+        //                ddl.Enabled = false;
+        //            }
 
-                    break;
-                case CustomFieldType.Date:
+        //            break;
+        //        case CustomFieldType.Date:
 
-                    var fieldValue1 = new TextBox();
-                    fieldValue1.Attributes.Add("bn-data-type", "date");
-                    var cal = new CalendarExtender();
+        //            var fieldValue1 = new TextBox();
+        //            fieldValue1.Attributes.Add("bn-data-type", "date");
+        //            var cal = new CalendarExtender();
 
-                    var img = new Image {ID = "calImage", CssClass = "icon", ImageUrl = "~/images/calendar.gif"};
+        //            var img = new Image {ID = "calImage", CssClass = "icon", ImageUrl = "~/images/calendar.gif"};
 
-                    cal.PopupButtonID = "calImage";
-                    cal.TargetControlID = FIELD_VALUE_NAME;
-                    cal.ID = "Calendar1";
+        //            cal.PopupButtonID = "calImage";
+        //            cal.TargetControlID = FIELD_VALUE_NAME;
+        //            cal.ID = "Calendar1";
 
-                    fieldValue1.ID = "FieldValue";
-                    fieldValue1.Width = 80;
+        //            fieldValue1.ID = "FieldValue";
+        //            fieldValue1.Width = 80;
 
-                    ph.Controls.Add(fieldValue1);
-                    ph.Controls.Add(img);
-                    ph.Controls.Add(new LiteralControl("&nbsp"));
+        //            ph.Controls.Add(fieldValue1);
+        //            ph.Controls.Add(img);
+        //            ph.Controls.Add(new LiteralControl("&nbsp"));
 
-                    DateTime dt;
-                    var dateTimeValue = currentField.Value;
+        //            DateTime dt;
+        //            var dateTimeValue = currentField.Value;
 
-                    if (DateTime.TryParse(dateTimeValue, out dt))
-                    {
-                        dateTimeValue = dt.ToShortDateString();
-                    }
+        //            if (DateTime.TryParse(dateTimeValue, out dt))
+        //            {
+        //                dateTimeValue = dt.ToShortDateString();
+        //            }
 
-                    fieldValue1.Text = dateTimeValue;
+        //            fieldValue1.Text = dateTimeValue;
 
-                    ph.Controls.Add(cal);
+        //            ph.Controls.Add(cal);
 
-                    if (IsLocked)
-                    {
-                        cal.Enabled = false;
-                        fieldValue1.Enabled = false;
-                        img.Visible = false;
-                    }
-                    break;
-                case CustomFieldType.Text:
+        //            if (IsLocked)
+        //            {
+        //                cal.Enabled = false;
+        //                fieldValue1.Enabled = false;
+        //                img.Visible = false;
+        //            }
+        //            break;
+        //        case CustomFieldType.Text:
 
-                    var fieldValue = new TextBox {ID = FIELD_VALUE_NAME, Text = currentField.Value,
-                        CssClass= "form-control"};
-                    fieldValue.Attributes.Add("bn-data-type", "text");
+        //            var fieldValue = new TextBox {ID = FIELD_VALUE_NAME, Text = currentField.Value,
+        //                CssClass= "form-control"};
+        //            fieldValue.Attributes.Add("bn-data-type", "text");
 
 
-                    ph.Controls.Add(fieldValue);
+        //            ph.Controls.Add(fieldValue);
 
-                    if (IsLocked)
-                    {
-                        fieldValue.Enabled = false;
-                    }
-                    break;
-                case CustomFieldType.YesNo:
+        //            if (IsLocked)
+        //            {
+        //                fieldValue.Enabled = false;
+        //            }
+        //            break;
+        //        case CustomFieldType.YesNo:
 
-                    var chk = new CheckBox {ID = FIELD_VALUE_NAME};
+        //            var chk = new CheckBox {ID = FIELD_VALUE_NAME};
 
-                    if (!String.IsNullOrEmpty(currentField.Value))
-                    {
-                        chk.Checked = Boolean.Parse(currentField.Value);
-                    }
+        //            if (!String.IsNullOrEmpty(currentField.Value))
+        //            {
+        //                chk.Checked = Boolean.Parse(currentField.Value);
+        //            }
 
-                    ph.Controls.Add(chk);
+        //            ph.Controls.Add(chk);
 
-                    if (IsLocked)
-                    {
-                        chk.Enabled = false;
-                    }
+        //            if (IsLocked)
+        //            {
+        //                chk.Enabled = false;
+        //            }
 
-                    break;
-                case CustomFieldType.RichText:
+        //            break;
+        //        case CustomFieldType.RichText:
 
-                    var editor = new HtmlEditor {ID = FIELD_VALUE_NAME};
-                    editor.Attributes.Add("bn-data-type", "html");
+        //            var editor = new HtmlEditor {ID = FIELD_VALUE_NAME};
+        //            editor.Attributes.Add("bn-data-type", "html");
 
-                    ph.Controls.Add(editor);
+        //            ph.Controls.Add(editor);
 
-                    editor.Text = currentField.Value;
+        //            editor.Text = currentField.Value;
 
-                    break;
-                case CustomFieldType.UserList:
+        //            break;
+        //        case CustomFieldType.UserList:
 
-                    ddl = new DropDownList
-                        {
-                            ID = FIELD_VALUE_NAME,
-                            DataSource = UserManager.GetUsersByProjectId(currentField.ProjectId),
-                            DataTextField = "DisplayName",
-                            DataValueField = "UserName",
-                            CssClass = "form-control"
-                        };
+        //            ddl = new DropDownList
+        //                {
+        //                    ID = FIELD_VALUE_NAME,
+        //                    DataSource = UserManager.GetUsersByProjectId(currentField.ProjectId),
+        //                    DataTextField = "DisplayName",
+        //                    DataValueField = "UserName",
+        //                    CssClass = "form-control"
+        //                };
 
-                    ddl.DataBind();
+        //            ddl.DataBind();
 
-                    ddl.Items.Insert(0, new ListItem(GetGlobalResourceObject("SharedResources", "DropDown_SelectOne").ToString(), string.Empty));
-                    ddl.SelectedValue = currentField.Value;
+        //            ddl.Items.Insert(0, new ListItem(GetGlobalResourceObject("SharedResources", "DropDown_SelectOne").ToString(), string.Empty));
+        //            ddl.SelectedValue = currentField.Value;
 
-                    ph.Controls.Add(ddl);
+        //            ph.Controls.Add(ddl);
 
-                    if (IsLocked)
-                    {
-                        ddl.Enabled = false;
-                    }
+        //            if (IsLocked)
+        //            {
+        //                ddl.Enabled = false;
+        //            }
 
-                    break;
-            }
+        //            break;
+        //    }
 
-            var lblFieldName = (Label) e.Item.FindControl("lblFieldName");
-            lblFieldName.AssociatedControlID = FIELD_VALUE_NAME;
-            lblFieldName.Text = string.Format("{0}:", currentField.Name);
+        //    var lblFieldName = (Label) e.Item.FindControl("lblFieldName");
+        //    lblFieldName.AssociatedControlID = FIELD_VALUE_NAME;
+        //    lblFieldName.Text = string.Format("{0}:", currentField.Name);
 
-            if (EnableValidation)
-            {
-                //if required dynamically add a required field validator
-                if (currentField.Required && currentField.FieldType != CustomFieldType.YesNo)
-                {
-                    var valReq = new RequiredFieldValidator
-                        {
-                            ControlToValidate = FIELD_VALUE_NAME,
-                            Text = string.Format(" ({0})", GetGlobalResourceObject("SharedResources", "Required")).ToLower(),
-                            Display = ValidatorDisplay.Dynamic
-                        };
+        //    if (EnableValidation)
+        //    {
+        //        //if required dynamically add a required field validator
+        //        if (currentField.Required && currentField.FieldType != CustomFieldType.YesNo)
+        //        {
+        //            var valReq = new RequiredFieldValidator
+        //                {
+        //                    ControlToValidate = FIELD_VALUE_NAME,
+        //                    Text = string.Format(" ({0})", GetGlobalResourceObject("SharedResources", "Required")).ToLower(),
+        //                    Display = ValidatorDisplay.Dynamic
+        //                };
 
-                    if (currentField.FieldType == CustomFieldType.DropDownList)
-                        valReq.InitialValue = string.Empty;
+        //            if (currentField.FieldType == CustomFieldType.DropDownList)
+        //                valReq.InitialValue = string.Empty;
 
-                    ph.Controls.Add(valReq);
-                }
+        //            ph.Controls.Add(valReq);
+        //        }
 
-                //create data type check validator
-                if (currentField.FieldType != CustomFieldType.YesNo)
-                {
-                    var valCompare = new CompareValidator
-                        {
-                            Type = currentField.DataType,
-                            Text = String.Format("({0})", currentField.DataType),
-                            Operator = ValidationCompareOperator.DataTypeCheck,
-                            Display = ValidatorDisplay.Dynamic,
-                            ControlToValidate = FIELD_VALUE_NAME
-                        };
-                    ph.Controls.Add(valCompare);
-                }
-            }
-        }
+        //        //create data type check validator
+        //        if (currentField.FieldType != CustomFieldType.YesNo)
+        //        {
+        //            var valCompare = new CompareValidator
+        //                {
+        //                    Type = currentField.DataType,
+        //                    Text = String.Format("({0})", currentField.DataType),
+        //                    Operator = ValidationCompareOperator.DataTypeCheck,
+        //                    Display = ValidatorDisplay.Dynamic,
+        //                    ControlToValidate = FIELD_VALUE_NAME
+        //                };
+        //            ph.Controls.Add(valCompare);
+        //        }
+        //    }
+        //}
 
         protected void rptCustomFields_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
@@ -323,6 +324,9 @@ namespace BugNET.UserControls
             var currentField = (CustomField)e.Item.DataItem;
 
             var ph = (PlaceHolder)e.Item.FindControl("PlaceHolder");
+            var id = (HiddenField)e.Item.FindControl("Id");
+
+            id.Value = currentField.Id.ToString();
 
             switch (currentField.FieldType)
             {
