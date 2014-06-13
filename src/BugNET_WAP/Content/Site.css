@@ -3,6 +3,13 @@
     margin-bottom: 0;
 }
 
+.fluid-container{
+    padding-left:25px;
+    padding-right:25px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
 /* Set widths on the form inputs since otherwise they're 100% wide */
 /*input[type="text"],
 input[type="password"] {
@@ -32,7 +39,7 @@ input[type="password"] {
 }
 
 .navbar-inverse .navbar-brand-img {
-    padding: 0 15px;
+    padding: 0;
     padding-bottom: 0;
     margin: 0;
     height: 60px;

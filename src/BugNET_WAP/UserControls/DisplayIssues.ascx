@@ -178,7 +178,7 @@
     </asp:Panel>
 </asp:Panel>
 
-<asp:Panel ID="ScrollPanel" runat="server" ScrollBars="Horizontal">
+<asp:Panel ID="ScrollPanel" runat="server" ScrollBars="Horizontal" Width="100%">
     <BNWC:GridView
         ID="gvIssues"
         ClientIDMode="Predictable"

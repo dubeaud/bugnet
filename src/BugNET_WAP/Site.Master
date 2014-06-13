@@ -45,7 +45,7 @@
         </ajaxToolkit:ToolkitScriptManager>
 
         <div class="navbar navbar-inverse">
-            <div class="container">
+            <div class="fluid-container">
                 <div class="navbar-header">
                     <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="sr-only">Toggle navigation</span>
@@ -100,7 +100,7 @@
             </div>
         </div>
         <div class="mainnav">
-            <div class="container">
+            <div class="fluid-container">
                 <a class="mainnav-toggle collapsed" data-toggle="collapse" data-target=".mainnav-collapse">
                     <span class="sr-only">Toggle navigation</span>
                     <i class="fa fa-bars"></i>
@@ -116,7 +116,7 @@
             </div>
         </div>
 
-        <div class="container body-content">
+        <div class="fluid-container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
             <hr />

@@ -18,10 +18,10 @@
     <div class="form-horizontal" style="padding-top: 2em;">
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <asp:Label ID="lblIssueNumber" Font-Bold="true" runat="server"></asp:Label>
                 </div>
-                <div class="col-md-4 col-md-offset-2">
+                <div class="pull-right">
                     <asp:LinkButton ID="lnkSave" CssClass="btn btn-primary" OnClick="LnkSaveClick" runat="server" Text="<%$ Resources:SharedResources, Save %>" />
                     <asp:LinkButton ID="lnkDone" CssClass="btn btn-primary" OnClick="LnkDoneClick" runat="server" Text="<%$ Resources:SharedIssueProperties, SaveReturnText %>" />
                     <asp:LinkButton ID="lnkCancel" CssClass="btn btn-default" OnClick="CancelButtonClick" CausesValidation="false" runat="server" Text="<%$ Resources:SharedResources, Cancel %>" />
