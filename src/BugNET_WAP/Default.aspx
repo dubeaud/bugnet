@@ -18,10 +18,10 @@
                 <div class="jumbotron" id="BlankSlate" runat="server" visible="false">
                     <h1><asp:Localize ID="WelcomeLocalize" Text="Welcome to BugNET!" meta:resourceKey="WelcomeMessageHeader" runat="server" /></h1>
                     <p><asp:Localize ID="StartWorkLocalize" Text="[Resource Required]" meta:resourceKey="NoProjects" runat="server"/></p>
-                    <ol>
-                        <li><asp:Localize runat="server" ID="Step1_Localize" /></li>
-                        <li><asp:Localize runat="server" ID="Step2_Localize" /></li>
-                        <li><asp:Localize runat="server" ID="Step3_Localize" /></li>
+                    <ol class="unstyled">
+                        <li>&#9312; <asp:Localize runat="server" ID="Step1_Localize" /></li>
+                        <li>&#9313; <asp:Localize runat="server" ID="Step2_Localize" /></li>
+                        <li>&#9314; <asp:Localize runat="server" ID="Step3_Localize" /></li>
                     </ol>
                     <p><a class="btn btn-primary btn-lg" href="http://bugnet.codeplex.com/documentation" role="button"><asp:Localize runat="server" ID="LearnMoreLocalize" meta:resourcekey="LearnMore"/></a></p>
                 </div>
