@@ -496,7 +496,7 @@ td.image-column {
     cursor: pointer;
     padding-left: 40px;
     margin: 10px 0 0 10px;
-    background: url(../../images/package.gif) no-repeat 10px 7px;
+    background: url(../images/package.gif) no-repeat 10px 7px;
     min-height: 50px;
 }
 
