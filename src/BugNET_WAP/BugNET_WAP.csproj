@@ -988,13 +988,6 @@
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
-    <Compile Include="Site.Mobile.Master.cs">
-      <DependentUpon>Site.Mobile.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Site.Mobile.Master.designer.cs">
-      <DependentUpon>Site.Mobile.Master</DependentUpon>
-    </Compile>
     <Compile Include="SvnBrowse\SubversionBrowser.aspx.cs">
       <DependentUpon>SubversionBrowser.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1168,13 +1161,6 @@
     </Compile>
     <Compile Include="UserControls\TextImage.ascx.designer.cs">
       <DependentUpon>TextImage.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="ViewSwitcher.ascx.cs">
-      <DependentUpon>ViewSwitcher.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ViewSwitcher.ascx.designer.cs">
-      <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
     <Compile Include="WebServices\BugNetServices.asmx.cs">
       <DependentUpon>BugNetServices.asmx</DependentUpon>
@@ -1795,10 +1781,8 @@
     <Content Include="UserControls\PickResolution.ascx" />
     <Content Include="UserControls\PickSingleUser.ascx" />
     <Content Include="UserControls\PickType.ascx" />
-    <Content Include="ViewSwitcher.ascx" />
     <Content Include="WebServices\BugNetServices.asmx" />
     <Content Include="Site.Master" />
-    <Content Include="Site.Mobile.Master" />
     <Content Include="Scripts\jquery-2.1.0.min.map" />
   </ItemGroup>
   <ItemGroup>
