@@ -563,7 +563,7 @@ td.image-column {
     }
 
 .calIssuePrivate {
-    background-image: url(../../images/lock.gif);
+    background-image: url(../images/lock.gif);
     background-repeat: no-repeat;
     background-position: 3px 3px;
     padding: 3px 0 0 23px;
