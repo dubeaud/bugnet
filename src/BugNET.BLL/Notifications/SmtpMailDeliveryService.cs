@@ -65,7 +65,7 @@ namespace BugNET.BLL.Notifications
 #if(DEBUG)
                 client.Send(message);
 #else
-                client.SendMailAsync(message, null);
+                client.SendMailAsync(message);
 #endif
             }
             catch (Exception)
