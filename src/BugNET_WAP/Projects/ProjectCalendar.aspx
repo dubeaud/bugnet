@@ -12,7 +12,7 @@
         </h1>
     </div>
     <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-3">
             <div class="form-inline">
                 <div class="form-group">
                     <asp:Label ID="ViewLabel" CssClass="control-label" AssociatedControlID="dropView" runat="server" Text="View" meta:resourcekey="ViewLabel"></asp:Label>
@@ -26,23 +26,26 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-5 text-right">
+        <div class="col-md-6">
             <div class="form-inline">
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-4 text-right">
                     <asp:Label ID="Label2" runat="server" CssClass="control-label" AssociatedControlID="JumpToDate" Text="Go To Date:" meta:resourcekey="GotoDate"></asp:Label>
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <bn:PickDate ID="JumpToDate" runat="server" />
                 </div>
-                <div class="form-group">
+                <div class="form-group col-md-2">
                     <asp:Button ID="JumpButton" OnClick="JumpButton_Click" runat="server" meta:resourcekey="JumpButton" CssClass="btn btn-primary" Text="Go" />
                 </div>
+            </div>
+        </div>
+        <div class="col-md-3 text-right">
+            <div class="form-inline">
                 <div class="form-group">
                     <asp:Label ID="Label1" runat="server" Text="View:" AssociatedControlID="dropCalendarView" meta:resourcekey="CalendarViewLabel"></asp:Label>
                 </div>
                 <div class="form-group">
-                    <asp:DropDownList ID="dropCalendarView" AutoPostBack="True" CssClass="form-control"
-                        runat="Server" OnSelectedIndexChanged="CalendarViewSelectedIndexChanged">
+                    <asp:DropDownList ID="dropCalendarView" AutoPostBack="True" CssClass="form-control" runat="Server" OnSelectedIndexChanged="CalendarViewSelectedIndexChanged">
                         <asp:ListItem Text="Month" Value="Month" meta:resourcekey="ListItem1" />
                         <asp:ListItem Text="Week" Value="Week" meta:resourcekey="ListItem2" />
                     </asp:DropDownList>
