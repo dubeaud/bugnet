@@ -111,7 +111,7 @@ namespace BugNET.Issues.UserControls
             var uploadFile = AspUploadFile.PostedFile;
 
             // if there was a file uploaded
-            if (uploadFile.ContentLength > 0)
+            if (uploadFile != null && uploadFile.ContentLength > 0)
             {
                 var inValidReason = string.Empty;
                 var fileName = Path.GetFileName(uploadFile.FileName);

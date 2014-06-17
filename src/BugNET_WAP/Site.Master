@@ -15,7 +15,7 @@
     <asp:ContentPlaceHolder runat="server" ID="HeadContent" />
 </head>
 <body>
-    <form runat="server">
+    <form runat="server" enctype="multipart/form-data">
         <ajaxToolkit:ToolkitScriptManager runat="server" EnableScriptGlobalization="true"
             EnableScriptLocalization="true" EnablePartialRendering="true" EnablePageMethods="true">
 			<Services>

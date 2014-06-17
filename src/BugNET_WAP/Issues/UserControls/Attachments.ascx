@@ -2,7 +2,7 @@
 <bn:Message ID="AttachmentsMessage" runat="server" />
 <asp:Label ID="lblAttachments" Visible="False" Font-Italic="True" runat="server"></asp:Label>
 <asp:DataGrid ID="AttachmentsDataGrid" Width="100%" runat="server" GridLines="None"
-    UseAccessibleHeader="true" CssClass="table table-striped"
+    UseAccessibleHeader="true" CssClass="table table-striped" AutoGenerateColumns="false"
     OnItemDataBound="AttachmentsDataGridItemDataBound"
     OnItemCommand="AttachmentsDataGridItemCommand">
     <Columns>
