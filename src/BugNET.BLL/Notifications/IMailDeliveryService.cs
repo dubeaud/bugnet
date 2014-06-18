@@ -7,9 +7,10 @@
 namespace BugNET.BLL.Notifications
 {
     using System.Net.Mail;
+    using System.Threading.Tasks;
 
     public interface IMailDeliveryService
     {
-        void Send(string recipientEmail, MailMessage message);
+        Task Send(string recipientEmail, MailMessage message);
     }
 }

@@ -26,11 +26,11 @@ namespace BugNET.BLL.Notifications
         /// <param name="recipientEmail">The recipient email.</param>
         /// <param name="message">The message.</param>
         /// <returns></returns>
-        public void Send(string recipientEmail, MailMessage message)
+        public async Task Send(string recipientEmail, MailMessage message)
         {
             message.To.Clear();
             message.To.Add(recipientEmail);
-            message.From =  new MailAddress(HostSettingManager.HostEmailAddress);
+            message.From = new MailAddress(HostSettingManager.HostEmailAddress);
 
             var smtpServer = HostSettingManager.SmtpServer;
             var smtpPort = int.Parse(HostSettingManager.Get(HostSettingNames.SMTPPort));
@@ -49,7 +49,7 @@ namespace BugNET.BLL.Notifications
                 smtpDomain = HostSettingManager.Get(HostSettingNames.SMTPDomain, string.Empty);
             }
 
-            var client = new SmtpClient {Host = smtpServer, Port = smtpPort, EnableSsl = smtpUseSSL};
+            var client = new SmtpClient { Host = smtpServer, Port = smtpPort, EnableSsl = smtpUseSSL };
 
             if (smtpAuthentictation)
             {
@@ -57,53 +57,30 @@ namespace BugNET.BLL.Notifications
                 client.Credentials = new NetworkCredential(smtpUsername, smtpPassword, smtpDomain);
             }
 
-            //Set the method that is called back when the send operation ends.
-            client.SendCompleted += SendCompletedCallback;
+            client.SendCompleted += (s, e) =>
+            {
+                if (e.Error != null)
+                {
+                    // log the error message
+                    Log.Error(e.Error);
+                }
 
-            try
-            {
-#if(DEBUG)
-                client.Send(message);
-#else
-                client.SendMailAsync(message);
-#endif
-            }
-            catch (Exception)
-            {
-#if(DEBUG)
-#else
-                client.SendAsyncCancel();
-#endif
-                client.SendCompleted -= SendCompletedCallback;
                 client.Dispose();
-                throw;
-            }
-        }
+                message.Dispose();
+            };
 
-        /// <summary>
-        /// Sends the completed callback.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.ComponentModel.AsyncCompletedEventArgs"/> instance containing the event data.</param>
-        private static void SendCompletedCallback(object sender, AsyncCompletedEventArgs e)
-        {
-            var smtpClient = sender as SmtpClient;
-
-            if (e.Cancelled)
+            await Task.Run(() =>
             {
-                return;
-            }
+                try
+                {
+                    client.SendAsync(message, null);
+                }
+                catch(Exception e)
+                {
+                    Log.Error(e);
+                }
+            });
 
-            if (e.Error != null)
-            {
-                // log the error message
-                Log.Error(e.Error);
-            }
-
-            if (smtpClient == null) return;
-
-            smtpClient.SendCompleted -= SendCompletedCallback;
-            smtpClient.Dispose();
         }
     }
 }
