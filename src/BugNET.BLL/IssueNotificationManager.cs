@@ -98,7 +98,9 @@ namespace BugNET.BLL
                     if (notification.NotificationUsername.ToLower() == Security.GetUserName().ToLower()) continue;
 
                     var user = UserManager.GetUser(notification.NotificationUsername);
-                       
+                    
+                    // skip to the next user if this user is not approved
+                    if(!user.IsApproved) continue; 
                     // skip to next user if this user doesn't have notifications enabled.
                     if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications) continue;
 
@@ -171,6 +173,8 @@ namespace BugNET.BLL
 
                     var user = UserManager.GetUser(notification.NotificationUsername);
 
+                    // skip to the next user if this user is not approved
+                    if (!user.IsApproved) continue; 
                     // skip to next user if this user doesn't have notifications enabled.
                     if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications) continue;
 
@@ -265,6 +269,8 @@ namespace BugNET.BLL
 
                     var user = UserManager.GetUser(notification.NotificationUsername);
 
+                    // skip to the next user if this user is not approved
+                    if (!user.IsApproved) continue; 
                     // skip to next user if this user doesn't have notifications enabled.
                     if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications) continue;
 
@@ -324,6 +330,8 @@ namespace BugNET.BLL
 
                 var user = UserManager.GetUser(notification.NotificationUsername);
 
+                // skip to the next user if this user is not approved
+                if (!user.IsApproved) return; 
                 // skip to next user if this user doesn't have notifications enabled.
                 if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications)
                     return;
@@ -407,6 +415,8 @@ namespace BugNET.BLL
 
                     var user = UserManager.GetUser(notification.NotificationUsername);
 
+                    // skip to the next user if this user is not approved
+                    if (!user.IsApproved) continue; 
                     // skip to next user if this user doesn't have notifications enabled.
                     if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications) continue;
 
