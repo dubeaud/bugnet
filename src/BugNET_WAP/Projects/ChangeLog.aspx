@@ -107,13 +107,10 @@
                         <ItemTemplate>
                             <tr>
                                 <td>
-                                    <a href='../Issues/IssueDetail.aspx?id=<%#DataBinder.Eval(Container.DataItem, "Id") %>'>
-                                        <%#DataBinder.Eval(Container.DataItem, "FullId") %></a>
+                                    <asp:HyperLink runat="server" NavigateUrl='<%# String.Format("~/Issues/IssueDetail.aspx?id={0}", DataBinder.Eval(Container.DataItem, "Id").ToString()) %>'><%#DataBinder.Eval(Container.DataItem, "FullId") %></asp:HyperLink>
                                 </td>
                                 <td>
-                                    <a href='../Issues/IssueDetail.aspx?id=<%#DataBinder.Eval(Container.DataItem, "Id") %>'>
-                                        <asp:Label ID="lblSummary" Text='<%# DataBinder.Eval(Container.DataItem, "Title" )%>'
-                                            runat="Server"></asp:Label></a>
+                                    <asp:HyperLink runat="server" NavigateUrl='<%# String.Format("~/Issues/IssueDetail.aspx?id={0}", DataBinder.Eval(Container.DataItem, "Id").ToString()) %>'><%#DataBinder.Eval(Container.DataItem, "Title") %></asp:HyperLink>
                                 </td>
                                 <td>
                                     <asp:Label ID="lblComponent" Text='<%# DataBinder.Eval(Container.DataItem, "CategoryName" )%>'
