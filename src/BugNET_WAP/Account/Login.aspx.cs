@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BugNET.BLL;
+using BugNET.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,6 +16,12 @@ namespace BugNET.Account
             Register_Localize.Text = GetLocalizedText(ResolveUrl("~/Account/Register.aspx"));
             OpenAuthLogin.ReturnUrl = Request.QueryString["ReturnUrl"];
             this.Form.DefaultButton = this.LoginView.FindControl("LoginButton").UniqueID;
+
+            if (Convert.ToInt32(HostSettingManager.Get(HostSettingNames.UserRegistration)) == (int)UserRegistration.None)
+            {
+                Register_Localize.Visible = false;
+            }
+
         }
 
         private string GetLocalizedText(string linkUrl)
