@@ -11,7 +11,7 @@
                         <div class="form-horizontal">
                             <h4><asp:Localize runat="server" meta:resourceKey="UseLocalAccount" Text="[Resource Required]"/></h4>
                             <hr />
-                              <asp:PlaceHolder runat="server" ID="ErrorMessage" Visible="false">
+                            <asp:PlaceHolder runat="server" ID="ErrorMessage">
                                 <p class="text-danger">
                                     <asp:Literal runat="server" ID="FailureText" />
                                 </p>
