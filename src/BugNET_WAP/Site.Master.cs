@@ -57,7 +57,6 @@ namespace BugNET
                 // Set Anti-XSRF token
                 ViewState[AntiXsrfTokenKey] = Page.ViewStateUserKey;
                 ViewState[AntiXsrfUserNameKey] = Context.User.Identity.Name ?? String.Empty;
-                Version.Text = String.Format("{0}", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
             }
             else
             {

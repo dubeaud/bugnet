@@ -1,4 +1,5 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="BugNET.SiteMaster" %>
+<%@ Register Src="~/UserControls/Footer.ascx" TagName="Footer" TagPrefix="bn" %>
 
 <!DOCTYPE html>
 
@@ -118,7 +119,7 @@
             </asp:ContentPlaceHolder>
             <hr />
             <footer>
-                <p>&copy; <asp:label ID="lclPoweredBy" runat="server" Text="Powered by " meta:resourcekey="lclPoweredBy" /> <a href="http://www.bugnetproject.com">BugNET</a>&nbsp;<asp:Label ID="Version" runat="server" /></p>
+                <bn:Footer ID="Footer1" runat="server" />
             </footer>
         </div>
     </form>
