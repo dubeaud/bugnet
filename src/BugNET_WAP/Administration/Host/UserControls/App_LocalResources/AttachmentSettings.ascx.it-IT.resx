@@ -128,8 +128,8 @@
   </data>
 	<data name="lclBytes.Text" xml:space="preserve">
         <value>(bytes)</value>
-    </data>
+  </data>
 	<data name="lclSeperation.Text" xml:space="preserve">
         <value>(separate da punto e virgola)</value>
-    </data>
+  </data>
 </root>

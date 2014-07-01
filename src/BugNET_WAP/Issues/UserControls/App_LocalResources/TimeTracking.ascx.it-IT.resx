@@ -124,7 +124,7 @@
     <value>Nuovo</value>
   </data>
 	<data name="Comments.Text" xml:space="preserve">
-    <value>Commentoi:</value>
+    <value>Commento:</value>
   </data>
 	<data name="compDateDataTypeValidator.ErrorMessage" xml:space="preserve">
     <value>Devi indicare una data valida.</value>
@@ -161,5 +161,8 @@
   </data>
 	<data name="CommentOptional.Text" xml:space="preserve">
     <value>(facoltativo - sarà aggiunto come commento della segnalazione)</value>
+  </data>
+  <data name="hrsLiteral.Text" xml:space="preserve">
+    <value>ore</value>
   </data>
 </root>

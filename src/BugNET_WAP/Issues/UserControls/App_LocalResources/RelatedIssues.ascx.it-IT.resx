@@ -132,4 +132,7 @@
 	<data name="RemoveRelatedIssue" xml:space="preserve">
     <value>Confermi la eliminazione della segnalazione collegata?</value>
   </data>
+  <data name="btnAdd.Text" xml:space="preserve">
+    <value>Nuova segnalazione collegata</value>
+  </data>
 </root>

@@ -156,12 +156,18 @@
 	<data name="HoursLabel" xml:space="preserve">
 		<value>(ore)</value>
 	</data>
+  <data name="EstimationValidatorMessage" xml:space="preserve">
+    <value>La stima richiede valore numerico.</value>
+  </data>
 	<data name="ResolutionLabel" xml:space="preserve">
 		<value>Soluzione:</value>
 	</data>
 	<data name="LoggedLabel" xml:space="preserve">
 		<value>Loggato:</value>
 	</data>
+  <data name="ProgressSliderTooltip" xml:space="preserve">
+    <value>{0}% completo</value>
+  </data>
 	<data name="DaysLabel" xml:space="preserve">
 		<value>(giorni)</value>
 	</data>
@@ -177,4 +183,7 @@
 	<data name="IssueTitleRequiredErrorMessage" xml:space="preserve">
 		<value>Il titolo della segnalazione è obbligatorio.</value>
 	</data>
+  <data name="NotifyCheckbox" xml:space="preserve">
+    <value>Notifica</value>
+  </data>
 </root>

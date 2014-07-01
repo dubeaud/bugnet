@@ -153,13 +153,22 @@
   <data name="NotAuthorized.Text" xml:space="preserve">
     <value>Account bannato o sospeso.</value>
   </data>
+  <data name="UseLocalAccount.Text" xml:space="preserve">
+    <value>Usa il tuo account per accedere.</value>
+  </data>
   <data name="RememberMe.Text" xml:space="preserve">
     <value>Ricordami la prossima volta.</value>
   </data>
   <data name="LoginButton.Text" xml:space="preserve">
     <value>Login</value>
   </data>
+  <data name="Register_MessageFormat" xml:space="preserve">
+    <value>{0} se non disponi di un account di accesso.</value>
+  </data>
   <data name="Register_LinkText" xml:space="preserve">
     <value>Registra</value>
+  </data>
+  <data name="PasswordRecoveryLink.Text" xml:space="preserve">
+    <value>Hai dimenticato la password?</value>
   </data>
 </root>

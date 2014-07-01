@@ -132,4 +132,7 @@
 	<data name="NoParentIssues" xml:space="preserve">
     <value>Non ci sono segnalazioni madri.</value>
   </data>
+  <data name="TitleLiteral.Text" xml:space="preserve">
+    <value>Nuova segnalazione madre</value>
+  </data>
 </root>

@@ -144,4 +144,10 @@
 	<data name="ConfirmCustomFieldViewCreation" xml:space="preserve">
     <value>Saranno rigenerate le viste delle proprietà personalizzate di tutti i progetti, vuoi procedere?</value>
   </data>
+	<data name="CustomFieldViewCreationSuccess" xml:space="preserve">
+		<value>Proprietà personalizzate create con successo.</value>
+	</data>
+	<data name="CustomFieldViewCreationError" xml:space="preserve">
+		<value>Impossibile creare le proprietà personalizzate, esamina il file di log per controllare eventuali errori.</value>
+	</data>
 </root>

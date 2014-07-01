@@ -2266,7 +2266,9 @@
     <Content Include="Administration\Users\App_LocalResources\AddUser.aspx.resx" />
     <Content Include="Administration\Users\App_LocalResources\ManageUser.aspx.resx" />
     <Content Include="Administration\Users\UserControls\App_LocalResources\Membership.ascx.resx" />
-    <Content Include="Administration\Users\UserControls\App_LocalResources\Password.ascx.resx" />
+    <Content Include="Administration\Users\UserControls\App_LocalResources\Password.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Administration\Users\UserControls\App_LocalResources\Profile.ascx.resx" />
     <Content Include="Administration\Users\UserControls\App_LocalResources\Roles.ascx.resx" />
     <Content Include="Administration\Users\App_LocalResources\UserList.aspx.resx" />
@@ -3096,6 +3098,24 @@
   <ItemGroup>
     <Content Include="Account\App_LocalResources\OpenAuthProviders.ascx.resx" />
     <Content Include="Account\App_LocalResources\OpenAuthProviders.ascx.ru-RU.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\App_LocalResources\OpenAuthProviders.ascx.it-IT.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\App_LocalResources\PasswordReset.aspx.it-IT.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\App_LocalResources\PasswordResetSuccess.aspx.it-IT.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectDefaultValues.ascx.it-IT.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Errors\App_LocalResources\SomethingMissing.aspx.it-IT.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\PickDate.ascx.it-IT.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

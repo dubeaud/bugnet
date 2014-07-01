@@ -117,6 +117,9 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
+	<data name="All" xml:space="preserve">
+    <value>Tutti</value>
+  </data>
 	<data name="Authorized" xml:space="preserve">
     <value>Attivo</value>
   </data>
@@ -131,5 +134,8 @@
   </data>
 	<data name="NoUsersFound" xml:space="preserve">
     <value>Nessun utente corrisponde ai criteri di ricerca.</value>
+  </data>
+	<data name="Unauthorized" xml:space="preserve">
+    <value>Non attivi</value>
   </data>
 </root>

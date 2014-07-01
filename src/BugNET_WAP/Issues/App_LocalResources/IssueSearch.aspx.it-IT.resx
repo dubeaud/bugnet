@@ -156,4 +156,16 @@
 	<data name="SearchNoResults" xml:space="preserve">
     <value>La ricerca non ha prodotto nessun risultato.</value>
   </data>
+  <data name="SearchButton.Text" xml:space="preserve">
+    <value>Cerca</value>
+  </data>
+  <data name="IssuesAndCommentsFound" xml:space="preserve">
+    <value>Trovate {0} segnalazioni.&lt;br /&gt;trovati {1} commenti corrispondenti.</value>
+  </data>
+  <data name="IssuesFound" xml:space="preserve">
+    <value>Trovate {0} segnalazioni.</value>
+  </data>
+  <data name="MatchingCommentsFound" xml:space="preserve">
+    <value>Trovati {0} commenti corrispondenti per {1}</value>
+  </data>
 </root>

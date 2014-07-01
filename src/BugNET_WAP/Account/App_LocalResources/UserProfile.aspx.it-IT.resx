@@ -177,4 +177,16 @@
 	<data name="AllowNotifications.Text" xml:space="preserve">
     <value>Ricevi le notifiche email:</value>
   </data>
+  <data name="CurrentPassword.Text" xml:space="preserve">
+    <value>Inserisci la vecchia password:</value>
+  </data>
+  <data name="PasswordStrength.PrefixText" xml:space="preserve">
+    <value>Sicurezza:&amp;nbsp;</value>
+  </data>
+  <data name="PasswordStrength.TextStrengthDescriptions" xml:space="preserve">
+    <value>Molto bassa;Bassa;Media;Alta;Molto alta</value>
+  </data>
+  <data name="SecurityQuestionChanged" xml:space="preserve">
+    <value>Domanda di sicurezza cambiata con successo.</value>
+  </data>
 </root>

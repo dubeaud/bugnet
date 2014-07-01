@@ -205,6 +205,8 @@ namespace BugNET.Administration.Projects
             plhContent.Controls.Add( _contentControl );
             _contentControl.ID = "ctlContent";
             SaveButton.Visible = ((IEditProjectControl)_contentControl).ShowSaveButton;
+            DeleteButton.Visible = controlName == "ProjectDescription.ascx";
+            linkCloneProject.Visible = controlName == "ProjectDescription.ascx"; 
             ((IEditProjectControl)_contentControl).Initialize();
             plhContent.Visible = true;
         }

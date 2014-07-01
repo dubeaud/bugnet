@@ -1,4 +1,11 @@
-﻿.navbar {
+﻿body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;;
+  font-size: 13px;
+}
+
+.navbar {
     border-radius: 0;
     margin-bottom: 0;
 }

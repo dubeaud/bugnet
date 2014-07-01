@@ -147,4 +147,13 @@
 	<data name="SSL" xml:space="preserve">
     <value>SSL</value>
   </data>
+  <data name="MailboxReaderModuleMissing" xml:space="preserve">
+    <value>Per abilitare la posta POP3 occorre attivare la sezione MailBoxReaderModule del file web.config; leggi le &lt;a href="http://bugnet.codeplex.com/wikipage?title=Configure%20Receiving%20Email%20with%20POP3&amp;referringTitle=Documentation" target="_blank"&gt;note di installazione&lt;/a&gt;.</value>
+  </data>
+  <data name="POP3ProcessAttachments" xml:space="preserve">
+    <value>Elabora allegati</value>
+  </data>
+  <data name="POP3InlineAttachedPictures" xml:space="preserve">
+    <value>Elabora allegati inline</value>
+  </data>
 </root>

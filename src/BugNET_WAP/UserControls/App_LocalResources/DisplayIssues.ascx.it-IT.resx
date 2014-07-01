@@ -135,4 +135,16 @@
 	<data name="SetPropertiesLabel.Text" xml:space="preserve">
     <value>Imposta le proprietà per le segnalazioni selezionate:</value>
   </data>
+  <data name="litResetDueDate.Text" xml:space="preserve">
+    <value>Azzera data prevista</value>
+  </data>
+  <data name="ExportExcelButton.Text" xml:space="preserve">
+    <value>Esporta</value>
+  </data>
+  <data name="ForSelectedLabel.Text" xml:space="preserve">
+    <value>Su selezione:</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>nessuno</value>
+  </data>
 </root>

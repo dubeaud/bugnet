@@ -144,6 +144,9 @@
 	<data name="ConfirmDelete">
 		<value xml:space="preserve">Confermi l'eliminazione di questa interrogazione?  Questa operazione non può essere annullata.</value>
 	</data>
+  <data name="lblQuery.Text" xml:space="preserve">
+    <value>Interrogazione:</value>
+  </data>
 	<data name="btnAddClause.Text" xml:space="preserve">
 		<value>Nuovo criterio</value>
 	</data>

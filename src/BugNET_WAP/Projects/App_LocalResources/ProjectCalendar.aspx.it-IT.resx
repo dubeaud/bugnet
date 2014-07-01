@@ -156,4 +156,7 @@
 	<data name="ViewLabel.Text" xml:space="preserve">
     <value>Vista:</value>
   </data>
+  <data name="Calendar.ToolTip" xml:space="preserve">
+    <value>Calendario</value>
+  </data>
 </root>

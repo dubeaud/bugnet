@@ -145,7 +145,7 @@
     <value>Impossibile salvare l'interrogazione.</value>
   </data>
 	<data name="SelectOneQueryClause" xml:space="preserve">
-    <value>Seleziona almeno un crietrio</value>
+    <value>Seleziona almeno un criterio</value>
   </data>
 	<data name="btnCancelQuery.Text">
 		<value xml:space="preserve">Torna all'elenco delle interrogazioni</value>
@@ -168,4 +168,7 @@
 	<data name="ConfirmDelete" xml:space="preserve">
 		<value>Confermi l'eliminazione di questa interrogazione?  Questa operazione non può essere annullata.</value>
 	</data>
+  <data name="txtQueryName.Text" xml:space="preserve">
+    <value>Nome interrogazione</value>
+  </data>
 </root>

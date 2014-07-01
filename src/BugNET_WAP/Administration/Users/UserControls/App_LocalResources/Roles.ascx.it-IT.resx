@@ -132,4 +132,7 @@
 	<data name="BackToUserList" xml:space="preserve">
     <value>Indietro</value>
   </data>
+	<data name="Roles" xml:space="preserve">
+		<value>Regole utente</value>
+	</data>
 </root>
