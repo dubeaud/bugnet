@@ -1,6 +1,8 @@
 using System;
 using BugNET.BLL;
 using BugNET.Entities;
+using System.Collections.Generic;
+using Microsoft.AspNet.FriendlyUrls;
 
 namespace BugNET.SvnBrowse
 {
@@ -26,10 +28,12 @@ namespace BugNET.SvnBrowse
 			// Put user code to initialize the page here
 			if(!Page.IsPostBack)
 			{
+                IList<string> segments = Request.GetFriendlyUrlSegments();
+                
                 //get project id
-                if (Request.QueryString["pid"] != null)
+                if (segments.Count > 0)
                 {
-                    ProjectId = Convert.ToInt32(Request.QueryString["pid"]);
+                    ProjectId = Int32.Parse(segments[0]);
                     Project proj = ProjectManager.GetById(ProjectId);
                     RepoUrl = proj.SvnRepositoryUrl;
 
