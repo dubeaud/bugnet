@@ -74,5 +74,14 @@ namespace BugNET.Account {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListView externalLoginsList;
+        
+        /// <summary>
+        /// Unnamed2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::BugNET.Account.OpenAuthProviders Unnamed2;
     }
 }

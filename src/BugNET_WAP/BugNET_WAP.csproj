@@ -622,6 +622,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Exceptions.ru-RU.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\Exceptions.zh-CN.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Exceptions.zh-CN.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\Notifications.de-DE.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -662,6 +667,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Notifications.ru-RU.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\Notifications.zh-CN.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Notifications.zh-CN.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\SharedIssueProperties.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -696,6 +706,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SharedIssueProperties.ru-RU.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\SharedIssueProperties.zh-CN.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SharedIssueProperties.zh-CN.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\SharedResources.de-DE.designer.cs">
       <AutoGen>True</AutoGen>
@@ -737,6 +752,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SharedResources.ru-RU.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\SharedResources.zh-CN.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SharedResources.zh-CN.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\Web.sitemap.de-DE.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -771,6 +791,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Web.sitemap.ru-RU.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Web.sitemap.zh-CN.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Web.sitemap.zh-CN.resx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -1708,18 +1733,23 @@
     <Content Include="Templates\Html\ForgotPassword.it-IT.xslt" />
     <Content Include="Templates\Html\ForgotPassword.ru-RU.xslt" />
     <Content Include="Templates\Html\ForgotPassword.xslt" />
+    <Content Include="Templates\Html\ForgotPassword.zh-CN.xslt" />
     <Content Include="Templates\Html\IssueAdded.it-IT.xslt" />
     <Content Include="Templates\Html\IssueAdded.ro-RO.xslt" />
     <Content Include="Templates\Html\IssueAdded.ru-RU.xslt" />
+    <Content Include="Templates\Html\IssueAdded.zh-CN.xslt" />
     <Content Include="Templates\Html\IssueUpdated.it-IT.xslt" />
     <Content Include="Templates\Html\IssueUpdated.ro-RO.xslt" />
     <Content Include="Templates\Html\IssueUpdated.ru-RU.xslt" />
+    <Content Include="Templates\Html\IssueUpdated.zh-CN.xslt" />
     <Content Include="Templates\Html\IssueUpdatedWithChanges.it-IT.xslt" />
     <Content Include="Templates\Html\IssueUpdatedWithChanges.ro-RO.xslt" />
     <Content Include="Templates\Html\IssueUpdatedWithChanges.ru-RU.xslt" />
+    <Content Include="Templates\Html\IssueUpdatedWithChanges.zh-CN.xslt" />
     <Content Include="Templates\Html\NewAssignee.it-IT.xslt" />
     <Content Include="Templates\Html\NewAssignee.ro-RO.xslt" />
     <Content Include="Templates\Html\NewAssignee.ru-RU.xslt" />
+    <Content Include="Templates\Html\NewAssignee.zh-CN.xslt" />
     <Content Include="Templates\Html\NewIssueComment.it-IT.xslt" />
     <Content Include="Templates\Html\NewIssueComment.ro-RO.xslt" />
     <Content Include="Templates\Html\NewIssueComment.ru-RU.xslt" />
@@ -1733,65 +1763,78 @@
     <Content Include="Templates\Html\NewAssignee.xslt" />
     <Content Include="Templates\Html\NewIssueComment.nl-NL.xslt" />
     <Content Include="Templates\Html\NewIssueComment.xslt" />
+    <Content Include="Templates\Html\NewIssueComment.zh-CN.xslt" />
     <Content Include="Templates\Html\PasswordReset.it-IT.xslt" />
     <Content Include="Templates\Html\PasswordReset.nl-NL.xslt" />
     <Content Include="Templates\Html\PasswordReset.ro-RO.xslt" />
     <Content Include="Templates\Html\PasswordReset.ru-RU.xslt" />
     <Content Include="Templates\Html\PasswordReset.xslt" />
+    <Content Include="Templates\Html\PasswordReset.zh-CN.xslt" />
     <Content Include="Templates\Html\UserRegistered.it-IT.xslt" />
     <Content Include="Templates\Html\UserRegistered.nl-NL.xslt" />
     <Content Include="Templates\Html\UserRegistered.ro-RO.xslt" />
     <Content Include="Templates\Html\UserRegistered.ru-RU.xslt" />
     <Content Include="Templates\Html\UserRegistered.xslt" />
+    <Content Include="Templates\Html\UserRegistered.zh-CN.xslt" />
     <Content Include="Templates\Html\UserVerification.it-IT.xslt" />
     <Content Include="Templates\Html\UserVerification.nl-NL.xslt" />
     <Content Include="Templates\Html\UserVerification.ro-RO.xslt" />
     <Content Include="Templates\Html\UserVerification.ru-RU.xslt" />
     <Content Include="Templates\Html\UserVerification.xslt" />
+    <Content Include="Templates\Html\UserVerification.zh-CN.xslt" />
     <Content Include="Templates\NewMailboxIssue.xslt" />
     <Content Include="Templates\Text\ForgotPassword.it-IT.xslt" />
     <Content Include="Templates\Text\ForgotPassword.ru-RU.xslt" />
     <Content Include="Templates\Text\ForgotPassword.xslt" />
+    <Content Include="Templates\Text\ForgotPassword.zh-CN.xslt" />
     <Content Include="Templates\Text\IssueAdded.it-IT.xslt" />
     <Content Include="Templates\Text\IssueAdded.nl-NL.xslt" />
     <Content Include="Templates\Text\IssueAdded.ro-RO.xslt" />
     <Content Include="Templates\Text\IssueAdded.ru-RU.xslt" />
     <Content Include="Templates\Text\IssueAdded.xslt" />
+    <Content Include="Templates\Text\IssueAdded.zh-CN.xslt" />
     <Content Include="Templates\Text\IssueUpdated.it-IT.xslt" />
     <Content Include="Templates\Text\IssueUpdated.nl-NL.xslt" />
     <Content Include="Templates\Text\IssueUpdated.ro-RO.xslt" />
     <Content Include="Templates\Text\IssueUpdated.ru-RU.xslt" />
     <Content Include="Templates\Text\IssueUpdated.xslt" />
+    <Content Include="Templates\Text\IssueUpdated.zh-CN.xslt" />
     <Content Include="Templates\Text\IssueUpdatedWithChanges.it-IT.xslt" />
     <Content Include="Templates\Text\IssueUpdatedWithChanges.nl-NL.xslt" />
     <Content Include="Templates\Text\IssueUpdatedWithChanges.ro-RO.xslt" />
     <Content Include="Templates\Text\IssueUpdatedWithChanges.ru-RU.xslt" />
     <Content Include="Templates\Text\IssueUpdatedWithChanges.xslt" />
+    <Content Include="Templates\Text\IssueUpdatedWithChanges.zh-CN.xslt" />
     <Content Include="Templates\Text\NewAssignee.it-IT.xslt" />
     <Content Include="Templates\Text\NewAssignee.nl-NL.xslt" />
     <Content Include="Templates\Text\NewAssignee.ro-RO.xslt" />
     <Content Include="Templates\Text\NewAssignee.ru-RU.xslt" />
     <Content Include="Templates\Text\NewAssignee.xslt" />
+    <Content Include="Templates\Text\NewAssignee.zh-CN.xslt" />
     <Content Include="Templates\Text\NewIssueComment.it-IT.xslt" />
     <Content Include="Templates\Text\NewIssueComment.nl-NL.xslt" />
     <Content Include="Templates\Text\NewIssueComment.ro-RO.xslt" />
     <Content Include="Templates\Text\NewIssueComment.ru-RU.xslt" />
     <Content Include="Templates\Text\NewIssueComment.xslt" />
+    <Content Include="Templates\Text\NewIssueComment.zh-CN.xslt" />
     <Content Include="Templates\Text\PasswordReset.it-IT.xslt" />
     <Content Include="Templates\Text\PasswordReset.nl-NL.xslt" />
     <Content Include="Templates\Text\PasswordReset.ro-RO.xslt" />
     <Content Include="Templates\Text\PasswordReset.ru-RU.xslt" />
     <Content Include="Templates\Text\PasswordReset.xslt" />
+    <Content Include="Templates\Text\PasswordReset.zh-CN.xslt" />
     <Content Include="Templates\Text\UserRegistered.it-IT.xslt" />
     <Content Include="Templates\Text\UserRegistered.nl-NL.xslt" />
     <Content Include="Templates\Text\UserRegistered.ro-RO.xslt" />
     <Content Include="Templates\Text\UserRegistered.ru-RU.xslt" />
     <Content Include="Templates\Text\UserRegistered.xslt" />
+    <Content Include="Templates\Text\UserRegistered.zh-CN.xslt" />
     <Content Include="Templates\Text\UserVerification.it-IT.xslt" />
     <Content Include="Templates\Text\UserVerification.nl-NL.xslt" />
     <Content Include="Templates\Text\UserVerification.ro-RO.xslt" />
     <Content Include="Templates\Text\UserVerification.ru-RU.xslt" />
     <Content Include="Templates\Text\UserVerification.xslt" />
+    <Content Include="Templates\Text\UserVerification.zh-CN.xslt" />
     <Content Include="UserControls\CategoryTreeView.ascx" />
     <Content Include="UserControls\DisplayIssues.ascx" />
     <Content Include="UserControls\DisplayCustomFields.ascx" />
@@ -3100,22 +3143,372 @@
     <Content Include="Account\App_LocalResources\OpenAuthProviders.ascx.ru-RU.resx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Account\App_LocalResources\OpenAuthProviders.ascx.it-IT.resx" />
+    <Content Include="Account\App_LocalResources\OpenAuthProviders.ascx.it-IT.resx" /> 
+    <Content Include="App_LocalResources\Default.aspx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\Feed.aspx.zh-CN.resx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Account\App_LocalResources\PasswordReset.aspx.it-IT.resx" />
+    <Content Include="App_GlobalResources\Exceptions.zh-CN.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Exceptions.zh-CN.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Notifications.zh-CN.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Notifications.zh-CN.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\SharedIssueProperties.zh-CN.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SharedIssueProperties.zh-CN.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\Web.sitemap.zh-CN.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Web.sitemap.zh-CN.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Account\App_LocalResources\PasswordResetSuccess.aspx.it-IT.resx" />
+    <Content Include="Account\App_LocalResources\PasswordResetSuccess.aspx.it-IT.resx" />  
+    <Content Include="App_GlobalResources\SharedResources.zh-CN.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SharedResources.zh-CN.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectDefaultValues.ascx.it-IT.resx" />
+    <Content Include="Errors\App_LocalResources\AccessDenied.aspx.zh-CN.resx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Errors\App_LocalResources\SomethingMissing.aspx.it-IT.resx" />
+    <Content Include="Errors\App_LocalResources\Error.aspx.zh-CN.resx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="UserControls\App_LocalResources\PickDate.ascx.it-IT.resx" />
+    <Content Include="Errors\App_LocalResources\NotFound.aspx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Errors\App_LocalResources\SessionExpired.aspx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Errors\App_LocalResources\SomethingMissing.aspx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Users\App_LocalResources\AddUser.aspx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Users\App_LocalResources\EditUser.aspx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Users\App_LocalResources\ManageUser.aspx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Users\App_LocalResources\UserList.aspx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Users\UserControls\App_LocalResources\DeleteUser.ascx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Users\UserControls\App_LocalResources\Membership.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Users\UserControls\App_LocalResources\Password.ascx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Users\UserControls\App_LocalResources\Profile.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Users\UserControls\App_LocalResources\Roles.ascx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\App_LocalResources\AddProject.aspx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\App_LocalResources\CloneProject.aspx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\App_LocalResources\EditProject.aspx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\App_LocalResources\ProjectList.aspx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\NewProjectIntro.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\NewProjectSummary.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectCategories.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectCustomFields.ascx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectDefaultValues.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectDescription.ascx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectIssueTypes.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Host\App_LocalResources\LogViewer.aspx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Host\App_LocalResources\Settings.aspx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\App_LocalResources\ForgotPassword.aspx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\App_LocalResources\Login.aspx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\App_LocalResources\OpenAuthProviders.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\App_LocalResources\PasswordReset.aspx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\App_LocalResources\Register.aspx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\App_LocalResources\UserProfile.aspx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\App_LocalResources\Verify.aspx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Host\UserControls\App_LocalResources\AttachmentSettings.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Host\UserControls\App_LocalResources\AuthenticationSettings.ascx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Host\UserControls\App_LocalResources\BasicSettings.ascx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Host\UserControls\App_LocalResources\LanguageSettings.ascx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Host\UserControls\App_LocalResources\LoggingSettings.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Host\UserControls\App_LocalResources\MailSettings.ascx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Host\UserControls\App_LocalResources\NotificationSettings.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Host\UserControls\App_LocalResources\POP3Settings.ascx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Host\UserControls\App_LocalResources\SubversionSettings.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectMailbox.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectMembers.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectMilestones.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectNotifications.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectPriorities.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectResolutions.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectRoles.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectStatus.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Projects\UserControls\App_LocalResources\ProjectSubversion.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Projects\App_LocalResources\ChangeLog.aspx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Projects\App_LocalResources\ProjectCalendar.aspx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Projects\App_LocalResources\ProjectSummary.aspx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Projects\App_LocalResources\ReleaseNotes.aspx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Projects\App_LocalResources\Roadmap.aspx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Queries\App_LocalResources\QueryDetail.aspx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Queries\App_LocalResources\QueryList.aspx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\CategoryTreeView.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\DisplayIssues.ascx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\Footer.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\PickCategory.ascx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\PickDate.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\PickImage.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\PickMilestone.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\PickPriority.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\PickProject.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\PickQuery.ascx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\PickResolution.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\PickSingleUser.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\PickStatus.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UserControls\App_LocalResources\PickType.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\App_LocalResources\CreateIssue.aspx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\App_LocalResources\IssueDetail.aspx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\App_LocalResources\IssueList.aspx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\App_LocalResources\IssueSearch.aspx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\App_LocalResources\MyIssues.aspx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\UserControls\App_LocalResources\Attachments.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\UserControls\App_LocalResources\Comments.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\UserControls\App_LocalResources\History.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\UserControls\App_LocalResources\IssueTabs.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\UserControls\App_LocalResources\Notifications.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\UserControls\App_LocalResources\ParentIssues.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\UserControls\App_LocalResources\RelatedIssues.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\UserControls\App_LocalResources\Revisions.ascx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\UserControls\App_LocalResources\SubIssues.ascx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Issues\UserControls\App_LocalResources\TimeTracking.ascx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\App_LocalResources\Manage.aspx.zh-CN.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\App_LocalResources\Manage.aspx.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
