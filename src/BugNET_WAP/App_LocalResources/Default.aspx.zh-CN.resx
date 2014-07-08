@@ -169,7 +169,7 @@
     <value>我的问题</value>
   </data>
   <data name="WelcomeMessageHeader.Text" xml:space="preserve">
-    <value>欢迎使用 BIMTracker!</value>
+    <value>欢迎使用问题跟踪系统!</value>
   </data>
   <data name="NoProjects.Text" xml:space="preserve">
     <value>尚未创建任何项目. 建议参照向导说明创建项目:</value>
