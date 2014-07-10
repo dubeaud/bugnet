@@ -1,0 +1,318 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddAttachments.Text" xml:space="preserve">
+    <value>添加附件</value>
+  </data>
+  <data name="AddComments.Text" xml:space="preserve">
+    <value>添加评论</value>
+  </data>
+  <data name="AddIssues.Text" xml:space="preserve">
+    <value>添加问题</value>
+  </data>
+  <data name="AddLabel.Text" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="AddNewRole.AlternateText" xml:space="preserve">
+    <value>添加新角色</value>
+  </data>
+  <data name="AddNewRole.Text" xml:space="preserve">
+    <value>添加新角色</value>
+  </data>
+  <data name="AddParentIssues.Text" xml:space="preserve">
+    <value>添加父问题</value>
+  </data>
+  <data name="AddQueries.Text" xml:space="preserve">
+    <value>添加查询</value>
+  </data>
+  <data name="AddRelatedIssues.Text" xml:space="preserve">
+    <value>添加相关问题</value>
+  </data>
+  <data name="AddRoleButton.Text" xml:space="preserve">
+    <value>添加角色</value>
+  </data>
+  <data name="AddSubIssues.Text" xml:space="preserve">
+    <value>添加子问题</value>
+  </data>
+  <data name="AddTimeEntries.Text" xml:space="preserve">
+    <value>添加工时</value>
+  </data>
+  <data name="AssignIssue" xml:space="preserve">
+    <value>分配问题</value>
+  </data>
+  <data name="AssignIssues.Text" xml:space="preserve">
+    <value>分配问题</value>
+  </data>
+  <data name="Attachments" xml:space="preserve">
+    <value>附件</value>
+  </data>
+  <data name="AutoAssignment.Text" xml:space="preserve">
+    <value>自动分配</value>
+  </data>
+  <data name="AutoAssignmentColumnHeader.HeaderText" xml:space="preserve">
+    <value>自动分配</value>
+  </data>
+  <data name="ChangeIssueStatus.Text" xml:space="preserve">
+    <value>更改问题状态</value>
+  </data>
+  <data name="CloneProject.Text" xml:space="preserve">
+    <value>克隆项目</value>
+  </data>
+  <data name="CloseIssue" xml:space="preserve">
+    <value>关闭问题</value>
+  </data>
+  <data name="CloseIssues.Text" xml:space="preserve">
+    <value>关闭问题</value>
+  </data>
+  <data name="Comments" xml:space="preserve">
+    <value>评论</value>
+  </data>
+  <data name="ConfirmDelete" xml:space="preserve">
+    <value>您确定要删除 \"{0}\" 角色吗?</value>
+  </data>
+  <data name="CreateProject.Text" xml:space="preserve">
+    <value>创建项目</value>
+  </data>
+  <data name="DeleteAttachments.Text" xml:space="preserve">
+    <value>删除附件</value>
+  </data>
+  <data name="DeleteComments.Text" xml:space="preserve">
+    <value>删除评论</value>
+  </data>
+  <data name="DeleteIssues.Text" xml:space="preserve">
+    <value>删除问题</value>
+  </data>
+  <data name="DeleteLabel.Text" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="DeleteParentIssues.Text" xml:space="preserve">
+    <value>删除父问题</value>
+  </data>
+  <data name="DeleteProject.Text" xml:space="preserve">
+    <value>删除项目</value>
+  </data>
+  <data name="DeleteQueries.Text" xml:space="preserve">
+    <value>删除查询</value>
+  </data>
+  <data name="DeleteRelatedIssues.Text" xml:space="preserve">
+    <value>删除相关问题</value>
+  </data>
+  <data name="DeleteRoleButton.Text" xml:space="preserve">
+    <value>删除角色</value>
+  </data>
+  <data name="DeleteSubIssues.Text" xml:space="preserve">
+    <value>删除子问题</value>
+  </data>
+  <data name="DeleteTimeEntries.Text" xml:space="preserve">
+    <value>删除工时</value>
+  </data>
+  <data name="DescriptionLabel.Text" xml:space="preserve">
+    <value>每个项目有自己的角色或组.  默认情况下，一个新项目有一些预定义的角色.  如果需要创建新角色，请单击添加角色按钮然后为该角色分配权限.</value>
+  </data>
+  <data name="EditComments.Text" xml:space="preserve">
+    <value>编辑评论</value>
+  </data>
+  <data name="EditIssueDescriptions.Text" xml:space="preserve">
+    <value>编辑问题描述</value>
+  </data>
+  <data name="EditIssues.Text" xml:space="preserve">
+    <value>编辑问题</value>
+  </data>
+  <data name="EditIssueTitles.Text" xml:space="preserve">
+    <value>编辑问题标题</value>
+  </data>
+  <data name="EditLabel.Text" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="EditOwnComments.Text" xml:space="preserve">
+    <value>编辑自己的评论</value>
+  </data>
+  <data name="EditProject.Text" xml:space="preserve">
+    <value>编辑项目</value>
+  </data>
+  <data name="EditQueries.Text" xml:space="preserve">
+    <value>编辑查询</value>
+  </data>
+  <data name="Issue" xml:space="preserve">
+    <value>问题</value>
+  </data>
+  <data name="IssueDescription" xml:space="preserve">
+    <value>问题描述</value>
+  </data>
+  <data name="IssueTitle" xml:space="preserve">
+    <value>问题标题</value>
+  </data>
+  <data name="NewRoleDescriptionLabel.Text" xml:space="preserve">
+    <value>请输入角色名称，描述并选择必须的权限，然后点击"保存".</value>
+  </data>
+  <data name="OtherLabel.Text" xml:space="preserve">
+    <value>其他</value>
+  </data>
+  <data name="OwnComments" xml:space="preserve">
+    <value>自己的评论</value>
+  </data>
+  <data name="ParentIssue" xml:space="preserve">
+    <value>父问题</value>
+  </data>
+  <data name="PermissionsTitle.Text" xml:space="preserve">
+    <value>权限</value>
+  </data>
+  <data name="Queries.Text" xml:space="preserve">
+    <value>查询</value>
+  </data>
+  <data name="Query" xml:space="preserve">
+    <value>查询</value>
+  </data>
+  <data name="RelatedIssue" xml:space="preserve">
+    <value>相关问题</value>
+  </data>
+  <data name="ReOpenIssues.Text" xml:space="preserve">
+    <value>重新打开问题</value>
+  </data>
+  <data name="RoleName.Text" xml:space="preserve">
+    <value>角色名</value>
+  </data>
+  <data name="RoleNameTitle.Text" xml:space="preserve">
+    <value>管理用户角色 -</value>
+  </data>
+  <data name="RolesTitle.Text" xml:space="preserve">
+    <value>管理用户角色</value>
+  </data>
+  <data name="SubIssue" xml:space="preserve">
+    <value>子问题</value>
+  </data>
+  <data name="SubscribeIssue" xml:space="preserve">
+    <value>订阅问题</value>
+  </data>
+  <data name="SubscribeIssues.Text" xml:space="preserve">
+    <value>已订阅的问题</value>
+  </data>
+  <data name="TimeEntry" xml:space="preserve">
+    <value>工时管理</value>
+  </data>
+  <data name="UpdateRole" xml:space="preserve">
+    <value>更新角色</value>
+  </data>
+  <data name="ViewCalendar.Text" xml:space="preserve">
+    <value>项目日历</value>
+  </data>
+  <data name="IssueTracking.Text" xml:space="preserve">
+    <value>问题跟踪</value>
+  </data>
+</root>

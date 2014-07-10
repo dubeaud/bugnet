@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Add" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="Admin" xml:space="preserve">
+    <value>管理员</value>
+  </data>
+  <data name="AffectedMilestone" xml:space="preserve">
+    <value>受影响的里程碑</value>
+  </data>
+  <data name="ApplicationConfiguration" xml:space="preserve">
+    <value>网站设置</value>
+  </data>
+  <data name="Assigned" xml:space="preserve">
+    <value>已分配</value>
+  </data>
+  <data name="AssignedTo" xml:space="preserve">
+    <value>已分配给</value>
+  </data>
+  <data name="AssignedToUser" xml:space="preserve">
+    <value>我的问题</value>
+  </data>
+  <data name="Authorized" xml:space="preserve">
+    <value>已授权</value>
+  </data>
+  <data name="Calendar" xml:space="preserve">
+    <value>日历</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>分类</value>
+  </data>
+  <data name="ChangeLog" xml:space="preserve">
+    <value>更改记录</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>更改密码</value>
+  </data>
+  <data name="CloneProject" xml:space="preserve">
+    <value>克隆项目</value>
+  </data>
+  <data name="CompletedMilestone" xml:space="preserve">
+    <value>已完成的里程碑</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>确认密码</value>
+  </data>
+  <data name="ConfirmPasswordMismatchErrorMessage" xml:space="preserve">
+    <value>两次输入的密码必须一致</value>
+  </data>
+  <data name="Created" xml:space="preserve">
+    <value>已创建</value>
+  </data>
+  <data name="Creator" xml:space="preserve">
+    <value>创建者</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>日期</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>天数</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="Disable" xml:space="preserve">
+    <value>禁用</value>
+  </data>
+  <data name="DisplayName" xml:space="preserve">
+    <value>显示名称</value>
+  </data>
+  <data name="Due" xml:space="preserve">
+    <value>到</value>
+  </data>
+  <data name="DueDate" xml:space="preserve">
+    <value>截止日期</value>
+  </data>
+  <data name="DueIn" xml:space="preserve">
+    <value>截止</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="EditProject" xml:space="preserve">
+    <value>编辑项目</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>电子邮件</value>
+  </data>
+  <data name="Enable" xml:space="preserve">
+    <value>启用</value>
+  </data>
+  <data name="Estimation" xml:space="preserve">
+    <value>估算</value>
+  </data>
+  <data name="EstimationHours" xml:space="preserve">
+    <value>估算 (小时)</value>
+  </data>
+  <data name="Finished" xml:space="preserve">
+    <value>结束</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>名</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>主页</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>编号</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>图片</value>
+  </data>
+  <data name="IssueId" xml:space="preserve">
+    <value>问题编号</value>
+  </data>
+  <data name="Issues" xml:space="preserve">
+    <value>问题列表</value>
+  </data>
+  <data name="IssueType" xml:space="preserve">
+    <value>问题类型</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>姓</value>
+  </data>
+  <data name="LastUpdate" xml:space="preserve">
+    <value>最近更新时间</value>
+  </data>
+  <data name="LastUpdateUser" xml:space="preserve">
+    <value>最后更改人</value>
+  </data>
+  <data name="Late" xml:space="preserve">
+    <value>晚于</value>
+  </data>
+  <data name="LogViewer" xml:space="preserve">
+    <value>网站日志</value>
+  </data>
+  <data name="Milestone" xml:space="preserve">
+    <value>里程碑</value>
+  </data>
+  <data name="Months" xml:space="preserve">
+    <value>月</value>
+  </data>
+  <data name="MyIssues" xml:space="preserve">
+    <value>我的问题</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>名称</value>
+  </data>
+  <data name="NewIssue" xml:space="preserve">
+    <value>新建问题</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>否</value>
+  </data>
+  <data name="NoIssueResults" xml:space="preserve">
+    <value>没有返回任何结果</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>评论</value>
+  </data>
+  <data name="Order" xml:space="preserve">
+    <value>序号</value>
+  </data>
+  <data name="Owner" xml:space="preserve">
+    <value>所有者</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>密码</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>优先级</value>
+  </data>
+  <data name="Progress" xml:space="preserve">
+    <value>进度</value>
+  </data>
+  <data name="Project" xml:space="preserve">
+    <value>项目</value>
+  </data>
+  <data name="Projects" xml:space="preserve">
+    <value>项目列表</value>
+  </data>
+  <data name="Queries" xml:space="preserve">
+    <value>所有查询</value>
+  </data>
+  <data name="ReleaseDate" xml:space="preserve">
+    <value>发布日期</value>
+  </data>
+  <data name="Repository" xml:space="preserve">
+    <value>文件仓库</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>必须的</value>
+  </data>
+  <data name="Resolution" xml:space="preserve">
+    <value>解决方案</value>
+  </data>
+  <data name="Return" xml:space="preserve">
+    <value>返回</value>
+  </data>
+  <data name="Roadmap" xml:space="preserve">
+    <value>产品路线图</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>查找</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>状态</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>提交</value>
+  </data>
+  <data name="TimeLogged" xml:space="preserve">
+    <value>记录时间</value>
+  </data>
+  <data name="TimeLoggedHours" xml:space="preserve">
+    <value>记录时间 (小时)</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>标题</value>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>今天</value>
+  </data>
+  <data name="Tomorrow" xml:space="preserve">
+    <value>明天</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>类型</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>更新</value>
+  </data>
+  <data name="UserAccounts" xml:space="preserve">
+    <value>用户管理</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>用户名</value>
+  </data>
+  <data name="UsernameRequiredErrorMessage" xml:space="preserve">
+    <value>必须输入用户名</value>
+  </data>
+  <data name="Votes" xml:space="preserve">
+    <value>投票</value>
+  </data>
+  <data name="Weeks" xml:space="preserve">
+    <value>周</value>
+  </data>
+  <data name="Years" xml:space="preserve">
+    <value>年</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>是</value>
+  </data>
+  <data name="Yesterday" xml:space="preserve">
+    <value>昨天</value>
+  </data>
+  <data name="Added" xml:space="preserve">
+    <value>已添加</value>
+  </data>
+  <data name="Deleted" xml:space="preserve">
+    <value>已删除</value>
+  </data>
+  <data name="RelatedIssue" xml:space="preserve">
+    <value>相关问题</value>
+  </data>
+  <data name="Attachment" xml:space="preserve">
+    <value>附件</value>
+  </data>
+  <data name="ChildIssue" xml:space="preserve">
+    <value>子问题</value>
+  </data>
+  <data name="ParentIssue" xml:space="preserve">
+    <value>父问题</value>
+  </data>
+  <data name="ProjectLabel" xml:space="preserve">
+    <value>项目:</value>
+  </data>
+  <data name="ValidationSummaryHeaderText" xml:space="preserve">
+    <value>请更正如下内容:</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>大小</value>
+  </data>
+  <data name="False" xml:space="preserve">
+    <value>假</value>
+  </data>
+  <data name="True" xml:space="preserve">
+    <value>真</value>
+  </data>
+  <data name="Empty" xml:space="preserve">
+    <value>空</value>
+  </data>
+  <data name="TotalHours" xml:space="preserve">
+    <value>总时间(小时)</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="NotAvailable" xml:space="preserve">
+    <value>没有</value>
+  </data>
+  <data name="NotAvailableAbbr" xml:space="preserve">
+    <value>N/A</value>
+  </data>
+  <data name="GoTo" xml:space="preserve">
+    <value>跳转:</value>
+  </data>
+  <data name="RowXofY" xml:space="preserve">
+    <value>{0} - {1} of {2}</value>
+  </data>
+  <data name="ShowRows" xml:space="preserve">
+    <value>显示行数: </value>
+  </data>
+  <data name="Unassigned" xml:space="preserve">
+    <value>没赋给任何人</value>
+  </data>
+  <data name="CloneProjectInstructions" xml:space="preserve">
+    <value>当你克隆一个项目时，你创建了当前项目的一份拷贝，如项目的分类，里程碑，自定义字段等。但是，项目中的问题列表并不会拷贝过去。</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>评论</value>
+  </data>
+  <data name="Visibility" xml:space="preserve">
+    <value>可见</value>
+  </data>
+  <data name="DropDown_SelectOne" xml:space="preserve">
+    <value>-- 选择一个 --</value>
+  </data>
+  <data name="DropDown_ResetFields" xml:space="preserve">
+    <value>-- 重置字段 --</value>
+  </data>
+  <data name="DropDown_SelectCustomField" xml:space="preserve">
+    <value>-- 选择自定义字段 --</value>
+  </data>
+  <data name="PasswordRequiredErrorMessage" xml:space="preserve">
+    <value>必须输入密码</value>
+  </data>
+  <data name="ProjectSummary" xml:space="preserve">
+    <value>项目概况</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>注册</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>登录</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>退出</value>
+  </data>
+  <data name="ViewProfile" xml:space="preserve">
+    <value>用户信息</value>
+  </data>
+  <data name="ManageAccount" xml:space="preserve">
+    <value>更改密码</value>
+  </data>
+  <data name="ConfirmPasswordRequiredErrorMessage" xml:space="preserve">
+    <value>必须再次输入密码</value>
+  </data>
+  <data name="EmailRequiredErrorMessage" xml:space="preserve">
+    <value>必须输入电子邮件地址</value>
+  </data>
+  <data name="EmailFormatErrorMessage" xml:space="preserve">
+    <value>电子邮件格式错误</value>
+  </data>
+  <data name="SelectProject" xml:space="preserve">
+    <value>选择项目</value>
+  </data>
+</root>

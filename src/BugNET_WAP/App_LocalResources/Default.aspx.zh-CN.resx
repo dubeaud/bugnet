@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AnonymousAccessDisabled" xml:space="preserve">
+    <value>管理员禁止匿名用户登录, 请注册或用已有用户名登录</value>
+  </data>
+  <data name="CreatedRecently.Text" xml:space="preserve">
+    <value>最近创建</value>
+  </data>
+  <data name="Filters.Text" xml:space="preserve">
+    <value>过滤器</value>
+  </data>
+  <data name="lblAll.Text" xml:space="preserve">
+    <value>所有问题</value>
+  </data>
+  <data name="ManagedBy.Text" xml:space="preserve">
+    <value>管理员</value>
+  </data>
+  <data name="NextMilestoneDue" xml:space="preserve">
+    <value>下一个里程碑- {0}</value>
+  </data>
+  <data name="NoDueDatesSet" xml:space="preserve">
+    <value>&lt;font color='red'&gt;没有设置&lt;/font&gt;</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>无</value>
+  </data>
+  <data name="NoProjectsToViewMessage" xml:space="preserve">
+    <value>没有可以访问的项目</value>
+  </data>
+  <data name="OpenIssuesCount" xml:space="preserve">
+    <value>{0} 个未解决问题</value>
+  </data>
+  <data name="Page.Title" xml:space="preserve">
+    <value>主页</value>
+  </data>
+  <data name="QuickLinks.Text" xml:space="preserve">
+    <value>链接</value>
+  </data>
+  <data name="RegisterAndLoginMessage" xml:space="preserve">
+    <value>请登录</value>
+  </data>
+  <data name="UpdatedRecently.Text" xml:space="preserve">
+    <value>最近更新</value>
+  </data>
+  <data name="NoStatusSet" xml:space="preserve">
+    <value>&lt;font color='red'&gt;警告:&lt;/font&gt; 项目没有设置任何状态.</value>
+  </data>
+  <data name="NoClosedStatus" xml:space="preserve">
+    <value>&lt;Font color='red'&gt;警告:&lt;/font&gt; 没有已结束状态</value>
+  </data>
+  <data name="AssignedToUser.Text" xml:space="preserve">
+    <value>我的问题</value>
+  </data>
+  <data name="WelcomeMessageHeader.Text" xml:space="preserve">
+    <value>欢迎使用问题跟踪系统!</value>
+  </data>
+  <data name="NoProjects.Text" xml:space="preserve">
+    <value>尚未创建任何项目. 建议参照向导说明创建项目:</value>
+  </data>
+  <data name="Step1_MessageFormat" xml:space="preserve">
+    <value>创建 {0}</value>
+  </data>
+  <data name="Step1_LinkText" xml:space="preserve">
+    <value>新建项目</value>
+  </data>
+  <data name="Step2_LinkText" xml:space="preserve">
+    <value>访问权限</value>
+  </data>
+  <data name="Step2_MessageFormat" xml:space="preserve">
+    <value>配置你的 {0}</value>
+  </data>
+  <data name="Step3_MessageFormat" xml:space="preserve">
+    <value>配置你的 {0}</value>
+  </data>
+  <data name="Step3_LinkText" xml:space="preserve">
+    <value>邮件设置</value>
+  </data>
+  <data name="LearnMore.Text" xml:space="preserve">
+    <value>更多</value>
+  </data>
+</root>
