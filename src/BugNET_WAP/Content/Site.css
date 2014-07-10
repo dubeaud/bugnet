@@ -101,19 +101,6 @@ input[type="password"] {
     font-size: 13px;
 }
 
-.mainnav {
-    position: relative;
-    background-color: #fff;
-    margin-bottom: 40px;
-    border-bottom: 1px solid #ddd;
-}
-
-.mainnav-menu {
-    padding: 0;
-    margin: 0 -15px;
-    list-style-type: none;
-}
-
 
 
 @media (min-width: 768px) {
@@ -304,7 +291,7 @@ input[type="password"] {
         }
 
     .mainnav-form {
-        margin-top: 20px;
+        margin-top: 5px;
     }
 
     .mainnav-search-query {
@@ -325,7 +312,7 @@ input[type="password"] {
         }
 
             .mainnav-menu > li > a {
-                padding: 21px 15px;
+                padding: 11px 15px;
                 font-size: 14px;
                 letter-spacing: -1px;
                 border-bottom: 1px solid transparent;
@@ -380,6 +367,10 @@ input[type="password"] {
 @media (min-width: 992px) {
     .mainnav-search-query {
         width: auto;
+    }
+
+    .mainnav-form {
+        margin-top: 10px;
     }
 
     .mainnav-menu > li {
