@@ -208,7 +208,7 @@ namespace BugNET.Issues.UserControls
                     e.Item.Cells[0].Style.Add("font-weight", "bold");
                     e.Item.Cells[0].Style.Add("padding-top", "10px");
                     e.Item.Cells[0].Style.Add("border-top", "1px solid #999");
-                    e.Item.Cells[1].Attributes.Add("align", "right");
+                    e.Item.Cells[1].Attributes.Add("align", "left");
                     e.Item.Cells[1].Style.Add("border-top", "1px solid #999");
                     e.Item.Cells[1].Style.Add("padding-top", "10px");
                     e.Item.Cells[1].Text = _total.ToString();

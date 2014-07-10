@@ -117,55 +117,16 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-	<data name="AddCategory.Text" xml:space="preserve">
-    <value>Nuova categoria</value>
+	<data name="Header.Text" xml:space="preserve">
+    <value>Sono necessarie più informazioni</value>
   </data>
-	<data name="CancelButton.Text" xml:space="preserve">
-    <value>Annulla</value>
+	<data name="Description.Text" xml:space="preserve">
+    <value>La risorsa che stai cercando necessita di maggior informazioni. Forse stai accedendo ad una lista senza avere selezionato un progetto.</value>
   </data>
-	<data name="CannotDeleteRootCategory" xml:space="preserve">
-    <value>Non puoi eliminare la categoria principale</value>
+	<data name="Action.Text" xml:space="preserve">
+    <value>&lt;a href='../Default.aspx'&gt;Torna alla pagina home&lt;/a&gt; e riprova, altrimenti contatta l'amministratore.</value>
   </data>
-	<data name="CategoriesTitle.Text" xml:space="preserve">
-    <value>Categorie</value>
-  </data>
-	<data name="CategoryValidator.ErrorMessage" xml:space="preserve">
-    <value>Devi aggiungere almeno una categoria</value>
-  </data>
-	<data name="DeleteCategoriesMessage" xml:space="preserve">
-    <value>Devi cancellare tutte le sotto categorie prima di eliminare questa.</value>
-  </data>
-	<data name="DeleteCategory.Text" xml:space="preserve">
-    <value>Elimina categoria</value>
-  </data>
-	<data name="DeleteCategoryRadioButton.Text" xml:space="preserve">
-    <value>&amp;nbsp;&amp;nbsp;Elimina questa categoria e tutte le segnalazioni ad essa assegnate.</value>
-  </data>
-	<data name="DeleteCategoryRadioButton1.Text" xml:space="preserve">
-    <value>&amp;nbsp;&amp;nbsp;Assegna tutte le segnalazioni ad una categoria esistente.</value>
-  </data>
-	<data name="DeleteCategoryRadioButton2.Text" xml:space="preserve">
-    <value>&amp;nbsp;&amp;nbsp;Assegna tutte le segnalazioni ad una nuova categoria.</value>
-  </data>
-	<data name="DescriptionLabel.Text" xml:space="preserve">
-    <value>Quando crei una segnalazione, essa viene assegnata ad una categoria. Aggiungi categorie cliccando su 'Nuova categoria' e indicando il nome. Puoi aggiungere sotto categorie selezionando la categoria di appartenenza dall'albero sottostante. Per eliminare una categoria, selezionala e clicca su 'Elimina categoria'.</value>
-  </data>
-	<data name="NewCategoryNotEntered" xml:space="preserve">
-    <value>Devi inserire una nuova categoria alla quale assegnare le segnalazioni</value>
-  </data>
-	<data name="NewCategoryWatermark.WatermarkText" xml:space="preserve">
-    <value>Inserisci una nuova categoria</value>
-  </data>
-	<data name="NoCategorySelected" xml:space="preserve">
-    <value>Devi selezionare una categoria per poter riassegnare le segnalazioni.</value>
-  </data>
-	<data name="OkButton.Text" xml:space="preserve">
-    <value>Ok</value>
-  </data>
-	<data name="SameCategorySelected" xml:space="preserve">
-    <value>Non puoi riassegnare le segnalazioni alla stessa categoria</value>
-  </data>
-  <data name="SelectOption.Text" xml:space="preserve">
-    <value>Scegli tra le seguenti opzioni:</value>
-  </data>
+	<data name="Page.Title" xml:space="preserve">
+		<value>Sono necessarie più informazioni</value>
+	</data>
 </root>

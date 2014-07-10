@@ -144,6 +144,9 @@
 	<data name="SVNCommandsTitle.Text" xml:space="preserve">
     <value>Output comandi di Subversion</value>
   </data>
+  <data name="SVNInfoLabel.Text" xml:space="preserve">
+    <value>Crea un tag della linea principale. Devono esistere una linea principale ed una cartella tags. Nome utente e password saranno utilizzati per l'esecuzione del comando e non verranno memorizzati.</value>
+  </data>
 	<data name="CreateATagTitle.Text" xml:space="preserve">
     <value>Crea un tag</value>
   </data>

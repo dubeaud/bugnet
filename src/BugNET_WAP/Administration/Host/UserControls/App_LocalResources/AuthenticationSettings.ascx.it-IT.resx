@@ -129,8 +129,26 @@
 	<data name="DomainPath" xml:space="preserve">
     <value>Dominio / percorso</value>
   </data>
+	<data name="FacebookAppId" xml:space="preserve">
+    <value>App Id</value>
+  </data>
+	<data name="FacebookAppSecret" xml:space="preserve">
+    <value>App Secret</value>
+  </data>
+	<data name="MicrosoftClientId" xml:space="preserve">
+    <value>Client Id</value>
+  </data>
+	<data name="MicrosoftClientSecret" xml:space="preserve">
+    <value>Client Secret</value>
+  </data>
 	<data name="PasswordsMustMatch" xml:space="preserve">
     <value>Le password devono coinsidere</value>
+  </data>
+	<data name="TwitterConsumerKey" xml:space="preserve">
+    <value>Consumer Key</value>
+  </data>
+	<data name="TwitterConsumerSecret" xml:space="preserve">
+    <value>Consumer Secret</value>
   </data>
 	<data name="UserAccountSource" xml:space="preserve">
     <value>Origine account</value>
@@ -156,4 +174,7 @@
 	<data name="UserRegistration_Verified.Text" xml:space="preserve">
     <value>Verificata</value>
   </data>
+	<data name="OAuthOpenID" xml:space="preserve">
+		<value>OAuth / OpenID Login</value>
+	</data>
 </root>

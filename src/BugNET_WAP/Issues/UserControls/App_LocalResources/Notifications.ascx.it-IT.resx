@@ -126,10 +126,16 @@
 	<data name="btnDontRecieveNotfictaions.Text" xml:space="preserve">
     <value>Non ricevere notifiche</value>
   </data>
+  <data name="lblDescription.Text" xml:space="preserve">
+    <value>Le seguenti persone ricevono una notifica quando questa segnalazione viene aggiornata:</value>
+  </data>
 	<data name="btnReceiveNotifications.Text" xml:space="preserve">
     <value>Ricevi notifiche</value>
   </data>
 	<data name="pnlNotificationAdmin.GroupingText" xml:space="preserve">
     <value>Aggiungi / rimuovi notifiche (solo amministratori)</value>
+  </data>
+  <data name="ProjectLevel" xml:space="preserve">
+    <value> (Livello progetto)</value>
   </data>
 </root>

@@ -132,4 +132,7 @@
 	<data name="TitleLabel.Text" xml:space="preserve">
     <value>Crea un nuovo account</value>
   </data>
+	<data name="RegisterButton.Text" xml:space="preserve">
+    <value>Registra</value>
+  </data>
 </root>

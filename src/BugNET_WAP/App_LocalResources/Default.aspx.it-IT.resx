@@ -168,4 +168,31 @@
 	<data name="AssignedToUser.Text" xml:space="preserve">
     <value>Assegnate a me</value>
   </data>
+	<data name="WelcomeMessageHeader.Text" xml:space="preserve">
+		<value>Benvenuto in BugNET!</value>
+	</data>
+	<data name="NoProjects.Text" xml:space="preserve">
+		<value>Non ci sono progetti in BugNET. Inizia da qui per configurarne uno:</value>
+	</data>
+	<data name="Step1_MessageFormat" xml:space="preserve">
+		<value>Crea un {0}</value>
+	</data>
+	<data name="Step1_LinkText" xml:space="preserve">
+		<value>nuovo progetto</value>
+	</data>
+	<data name="Step2_LinkText" xml:space="preserve">
+		<value>impostazioni di autenticazione</value>
+	</data>
+	<data name="Step2_MessageFormat" xml:space="preserve">
+		<value>Configura il tuo {0}</value>
+	</data>
+	<data name="Step3_MessageFormat" xml:space="preserve">
+		<value>Configura il tuo {0}</value>
+	</data>
+	<data name="Step3_LinkText" xml:space="preserve">
+		<value>impostazioni email</value>
+	</data>
+	<data name="LearnMore.Text" xml:space="preserve">
+		<value>Per saperne di più</value>
+	</data>
 </root>

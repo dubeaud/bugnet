@@ -4,8 +4,6 @@ using BugNET.Common;
 using BugNET.UserInterfaceLayer;
 using log4net;
 using BugNET.Entities;
-using Microsoft.AspNet.FriendlyUrls;
-using System.Collections.Generic;
 
 namespace BugNET.Queries
 {
@@ -128,8 +126,7 @@ namespace BugNET.Queries
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            IList<string> segments = Request.GetFriendlyUrlSegments();
-            ProjectId = Int32.Parse(segments[0]);
+            ProjectId = Request.Get("pid", Globals.NEW_ID);
 
             if (Page.IsPostBack) return;
 

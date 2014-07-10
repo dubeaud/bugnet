@@ -180,4 +180,10 @@
 	<data name="SecurityTitle.Text" xml:space="preserve">
     <value>Sicurezza</value>
   </data>
+  <data name="AttachmentStorageTypeDb.Text" xml:space="preserve">
+    <value>Database (consigliato)</value>
+  </data>
+  <data name="AttachmentStorageTypeFs.Text" xml:space="preserve">
+    <value>File System</value>
+  </data>
 </root>

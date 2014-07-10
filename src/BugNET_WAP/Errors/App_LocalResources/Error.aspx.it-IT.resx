@@ -121,7 +121,7 @@
     <value>Errore</value>
   </data>
 	<data name="Message" xml:space="preserve">
-    <value>Si è verificato un errore durente l'esecuzione della tua richiesta.</value>
+    <value>Si è verificato un errore durante l'esecuzione della tua richiesta.</value>
   </data>
 	<data name="Message1" xml:space="preserve">
     <value>&lt;a href="{0}"&gt;Prova ancora&lt;/a&gt;.</value>

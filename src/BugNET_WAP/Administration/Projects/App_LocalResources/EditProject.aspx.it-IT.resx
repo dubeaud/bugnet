@@ -183,4 +183,7 @@
 	<data name="ExistingProjectNameLabel.Text">
 		<value xml:space="preserve">Progetto da duplicare</value>
 	</data>
+  <data name="Defaults" xml:space="preserve">
+    <value>Predefiniti</value>
+  </data>
 </root>

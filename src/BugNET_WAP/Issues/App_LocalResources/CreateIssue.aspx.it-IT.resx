@@ -117,10 +117,19 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
-	<data name="AttachmentLabel.Text" xml:space="preserve">
-		<value>Allegato</value>
-	</data>
 	<data name="Page.Title" xml:space="preserve">
 		<value>Nuova segnalazione</value>
 	</data>
+  <data name="AttachmentLabel.Text" xml:space="preserve">
+    <value>Allegato</value>
+  </data>
+  <data name="AttachmentDescriptionLabel.Text" xml:space="preserve">
+    <value>Descrizione</value>
+  </data>
+  <data name="AttachmentFileLabel.Text" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="AttachmentOptionalLocalize.Text" xml:space="preserve">
+    <value>Facoltativa</value>
+  </data>
 </root>

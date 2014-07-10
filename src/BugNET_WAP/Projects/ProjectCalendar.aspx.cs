@@ -7,7 +7,6 @@ using System.Web.UI.WebControls;
 using BugNET.BLL;
 using BugNET.Common;
 using BugNET.Entities;
-using Microsoft.AspNet.FriendlyUrls;
 
 namespace BugNET.Projects
 {
@@ -23,14 +22,22 @@ namespace BugNET.Projects
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            IList<string> segments = Request.GetFriendlyUrlSegments();
-            ProjectId = Int32.Parse(segments[0]);
-
-            if (!UserManager.HasPermission(ProjectId, Common.Permission.ViewProjectCalendar.ToString()))
+            if (!UserManager.HasPermission(Convert.ToInt32(Request.Params["pid"]), Common.Permission.ViewProjectCalendar.ToString()))
                 Response.Redirect("~/Errors/AccessDenied.aspx");
 
             if (!Page.IsPostBack)
             {
+                // Set Project ID from Query String
+                if (Request.QueryString["pid"] != null)
+                {
+                    try
+                    {
+                        ProjectId = Int32.Parse(Request.QueryString["pid"]);
+                        //dropProjects.SelectedValue = Int32.Parse(Request.QueryString["pid"]);
+                    }
+                    catch { }
+                }
+
                 BindCalendar();
             }
    
