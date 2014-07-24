@@ -267,11 +267,11 @@ namespace BugNET.Administration.Projects
         protected void OkButton_Click(object sender, EventArgs e)
         {
             if (!IsValid) return;
-
+           
             var newProjectId = ProjectManager.CloneProject(ProjectId, txtNewProjectName.Text);
 
             if (newProjectId > 0)
-                Response.Redirect(string.Format("~/Administration/Projects/EditProject.aspx?pid={0}", newProjectId));
+                Response.Redirect(FriendlyUrl.Href("~/Administration/Projects/EditProject", newProjectId));
             else
                 lblError.Text = LoggingManager.GetErrorMessageResource("CloneProjectError");
         }
