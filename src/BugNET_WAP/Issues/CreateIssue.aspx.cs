@@ -203,6 +203,7 @@ namespace BugNET.Issues
                 ResolutionField.Visible = selectedValue.ResolutionVisibility;
                 AffectedMilestoneField.Visible = selectedValue.AffectedMilestoneVisibility;
                 AssignedToField.Visible = selectedValue.AssignedToVisibility;
+                OwnedByField.Visible = selectedValue.OwnedByVisibility;
                 chkNotifyAssignedTo.Checked = selectedValue.AssignedToNotify;
                 chkNotifyOwner.Checked = selectedValue.OwnedByNotify;
 
