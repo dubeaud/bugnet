@@ -25,8 +25,15 @@ namespace BugNET.Issues
         {
             if (!Page.IsPostBack)
             {
-                IList<string> segments = Request.GetFriendlyUrlSegments();
-                ProjectId = Int32.Parse(segments[0]);
+                try
+                {
+                    IList<string> segments = Request.GetFriendlyUrlSegments();
+                    ProjectId = Int32.Parse(segments[0]);
+                }
+                catch
+                {
+                    ProjectId = Request.QueryString.Get("id", 0);
+                }
 
                 // If don't know project or issue then redirect to something missing page
                 if (ProjectId == 0)

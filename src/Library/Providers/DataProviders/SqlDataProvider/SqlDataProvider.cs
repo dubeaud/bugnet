@@ -2035,7 +2035,7 @@ namespace BugNET.Providers.DataProviders
         /// <param name="projectId">The project id.</param>
         /// <param name="queryId">The query id.</param>
         /// <returns></returns>
-        public override List<Issue> PerformSavedQuery(int projectId, int queryId)
+        public override List<Issue> PerformSavedQuery(int projectId, int queryId, ICollection<KeyValuePair<string, string>> sortFields)
         {
             // Validate Parameters
             if (queryId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("queryId"));
@@ -2054,7 +2054,7 @@ namespace BugNET.Providers.DataProviders
 
                 ExecuteReaderCmd(sqlCmd, GenerateQueryClauseListFromReader, ref queryClauses);
 
-                return PerformQuery(queryClauses, null, projectId);   
+                return PerformQuery(queryClauses, sortFields, projectId);   
             }
         }
 

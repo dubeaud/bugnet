@@ -4,6 +4,8 @@ using BugNET.Common;
 using BugNET.UserInterfaceLayer;
 using log4net;
 using BugNET.Entities;
+using System.Collections.Generic;
+using Microsoft.AspNet.FriendlyUrls;
 
 namespace BugNET.Queries
 {
@@ -60,7 +62,23 @@ namespace BugNET.Queries
 
 			try 
 			{
-				var colIssues = IssueManager.PerformSavedQuery(ProjectId,dropQueries.SelectedValue);
+                var sortColumns = new List<KeyValuePair<string, string>>();
+
+                var sorter = ctlDisplayIssues.SortString;
+
+                if (sorter.Trim().Length.Equals(0))
+                {
+                    sorter = "iv.[IssueId] DESC";
+                }
+
+                foreach (var sort in sorter.Split(','))
+                {
+                    var args = sort.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                    if (args.Length.Equals(2))
+                        sortColumns.Add(new KeyValuePair<string, string>(args[0], args[1]));
+                }
+
+				var colIssues = IssueManager.PerformSavedQuery(ProjectId, dropQueries.SelectedValue, sortColumns);
 				ctlDisplayIssues.DataSource = colIssues;
 				ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?pid={1}&q={0}&channel=13",dropQueries.SelectedValue,ProjectId);
 
@@ -126,7 +144,16 @@ namespace BugNET.Queries
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            ProjectId = Request.Get("pid", Globals.NEW_ID);
+            try
+            {
+                IList<string> segments = Request.GetFriendlyUrlSegments();
+                ProjectId = Int32.Parse(segments[0]);
+            }
+            catch
+            {
+                ProjectId = Request.QueryString.Get("pid", 0);
+            }
+
 
             if (Page.IsPostBack) return;
 

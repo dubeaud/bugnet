@@ -169,7 +169,11 @@ namespace BugNET.UserControls
                     case "IssueTypeId":
                     case "IssueResolutionId":
                     case "IssueAffectedMilestoneId":
+                    case "IssueProgress":
                         return SqlDbType.Int;
+                    case "IssueEstimation":
+                    case "TimeLogged":
+                        return SqlDbType.Decimal;
                     case "IssueAssignedUserId":
                     case "IssueOwnerUserId":
                     case "IssueCreatorUserId":
@@ -320,6 +324,9 @@ namespace BugNET.UserControls
                 case "IssueTitle":
                 case "IssueDescription":
                 case "IssueVotes":
+                case "IssueProgress":
+                case "IssueEstimation":
+                case "TimeLogged":
                     txtValue.Visible = true;
                     break;
                 case "IssuePriorityId":

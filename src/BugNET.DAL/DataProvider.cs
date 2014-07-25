@@ -88,7 +88,7 @@ namespace BugNET.DAL
 
         public abstract List<Issue> PerformQuery(List<QueryClause> queryClauses, ICollection<KeyValuePair<string, string>> sortFields, int projectId = 0);
 
-        public abstract List<Issue> PerformSavedQuery(int projectId, int queryId);
+        public abstract List<Issue> PerformSavedQuery(int projectId, int queryId, ICollection<KeyValuePair<string, string>> sortFields);
         public abstract List<QueryClause> GetQueryClausesByQueryId(int queryId);
         public abstract Query GetQueryById(int queryId);
 

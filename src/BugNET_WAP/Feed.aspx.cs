@@ -640,7 +640,7 @@ namespace BugNET
         /// <param name="feed">The feed.</param>
         private void QueryFeed(ref SyndicationFeed feed)
         {
-            var issueList = IssueManager.PerformSavedQuery(_projectId, QueryId);
+            var issueList = IssueManager.PerformSavedQuery(_projectId, QueryId, null);
             var feedItems = CreateSyndicationItemsFromIssueList(issueList);
             var p = ProjectManager.GetById(_projectId);
 

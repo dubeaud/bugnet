@@ -32,7 +32,10 @@
 		    <asp:ListItem Text="Affected Milestone" value="IssueAffectedMilestoneId" />
 		    <asp:ListItem Text="Due Date" value="IssueDueDate" />
 		    <asp:ListItem Text="Votes" Value="IssueVotes" />
-			<asp:ListItem Text="Custom Fields" Value="CustomFieldName" /> 			 
+            <asp:ListItem Text="Progress" Value="IssueProgress" />
+            <asp:ListItem Text="Estimation" Value="IssueEstimation" />
+            <asp:ListItem Text="Time Logged" Value="TimeLogged" />
+			<asp:ListItem Text="Custom Fields" Value="CustomFieldName" />
 		</asp:DropDownList>
 	</td>
 	<td>

@@ -575,13 +575,14 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="projectId">The project id.</param>
         /// <param name="queryId">The query id.</param>
+        /// <param name="sortColumns">key value pair of sort fields and directions</param>
         /// <returns></returns>
-        public static List<Issue> PerformSavedQuery(int projectId, int queryId)
+        public static List<Issue> PerformSavedQuery(int projectId, int queryId, ICollection<KeyValuePair<string, string>> sortColumns)
         {
             if (queryId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("queryId"));
             if (projectId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("projectId"));
 
-            var list = DataProviderManager.Provider.PerformSavedQuery(projectId, queryId);
+            var list = DataProviderManager.Provider.PerformSavedQuery(projectId, queryId, sortColumns);
             LocalizeUnassigned(list);
             return list;
         }
