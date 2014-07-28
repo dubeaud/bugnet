@@ -4,8 +4,7 @@
 <%@ Register TagPrefix="it" TagName="DisplayIssues" Src="~/UserControls/DisplayIssues.ascx" %>
 <asp:Content ID="Content3" runat="server" ContentPlaceHolderID="MainContent">
     <div class="align-center">
-        <h1 class="page-title">
-            <asp:Label ID="lblProjectName" runat="Server" /></h1>
+        <h1 class="page-title">Issues</h1>
         <h1 class="page-title">
             <asp:Literal ID="ltProject" runat="server" Visible="false"></asp:Literal>
             <span>
@@ -15,7 +14,7 @@
     <div class="form-inline">
         <div class="form-group">
             <p class="form-control-static">
-                <asp:Label ID="ViewIssuesLabel" runat="server" Font-Bold="true" Text="View Issues:" meta:resourcekey="ViewIssuesLabel"></asp:Label>
+                <asp:Label ID="ViewIssuesLabel" runat="server" Font-Bold="true" Text="View Issues" meta:resourcekey="ViewIssuesLabel"></asp:Label>
             </p>
         </div>
         <div class="form-group">

@@ -172,7 +172,13 @@ namespace BugNET.UserInterfaceLayer.WebControls
                         {
                             Image imgSortDirection = new Image();
                             imgSortDirection.ImageUrl = sortImgLoc;
-                            dgItem.Cells[i].Controls.Add(imgSortDirection);
+
+                            Label lblSortDir = new Label();
+                            lblSortDir.CssClass = sortOrder;
+                            ((LinkButton)dgItem.Cells[i].Controls[0]).CssClass = sortOrder;
+                            // dgItem.Cells[i].Controls.Add(imgSortDirection);
+                            dgItem.Cells[i].Controls.Add(lblSortDir);
+
                             if (EnableMultiColumnSorting && ShowSortSequence)
                             {
                                 Label lblSortOrder = new Label();

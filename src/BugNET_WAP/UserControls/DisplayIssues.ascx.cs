@@ -148,9 +148,8 @@ namespace BugNET.UserControls
 
                                 //create column for custom control
                                 var tf = new TemplateField { HeaderText = value.FieldName, SortExpression = value.DatabaseFieldName.Replace(" ", "[]") };
-
+                                tf.HeaderStyle.Wrap = false;
                                 gvIssues.Columns.Add(tf);
-
                             }
                         }
                     }
@@ -526,7 +525,7 @@ namespace BugNET.UserControls
                 i++;
             }
 
-            e.Row.FindControl("imgPrivate").Visible = issue.Visibility != 0;
+            e.Row.FindControl("PrivateIssue").Visible = issue.Visibility != 0;
 
             ((HtmlControl)e.Row.FindControl("ProgressBar")).Attributes.CssStyle.Add("width", issue.Progress + "%");
         }

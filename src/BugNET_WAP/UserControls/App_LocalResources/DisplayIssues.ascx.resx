@@ -127,10 +127,10 @@
     <value>(Sort the results by clicking the column headings)</value>
   </data>
   <data name="SelectColumnsLinkButton.Text" xml:space="preserve">
-    <value>Add / remove columns</value>
+    <value>Select columns</value>
   </data>
   <data name="SelectColumnsLiteral.Text" xml:space="preserve">
-    <value>Select columns:</value>
+    <value>Select columns</value>
   </data>
   <data name="SetPropertiesLabel.Text" xml:space="preserve">
     <value>Set properties for selected issues:</value>

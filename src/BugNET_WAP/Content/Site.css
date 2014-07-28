@@ -1,8 +1,9 @@
 ﻿body {
-  padding: 0;
-  margin: 0;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;;
-  font-size: 13px;
+    font-family: 'Open Sans', sans-serif;
+    margin: 0px;
+    font-size: 12px;
+    line-height: 1.42857143;
+    padding: 0px;
 }
 
 .navbar {
@@ -10,11 +11,11 @@
     margin-bottom: 0;
 }
 
-.fluid-container{
-    padding-left:25px;
-    padding-right:25px;
-    margin-left:auto;
-    margin-right:auto;
+.fluid-container {
+    padding-left: 25px;
+    padding-right: 25px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Set widths on the form inputs since otherwise they're 100% wide */
@@ -27,6 +28,68 @@ input[type="password"] {
     width: 100%;
 }*/
 
+.checkbox input[type="checkbox"] {
+    margin-left: 0;
+}
+
+.issueListOptionsContainer{
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
+/* TABLES*/
+
+.table-hover > tbody > tr:hover > td, .table-hover > tbody > tr:hover > th {
+    background-color: #e7ebee;
+}
+
+.table thead > tr > th {
+    border-bottom: 2px solid #e7ebee;
+}
+
+.table tbody > tr > td {
+    font-size: 0.975em;
+    vertical-align: middle;
+    border-top: 1px solid #e7ebee;
+    padding: 12px 8px;
+}
+
+    .table tbody > tr > td:first-child {
+        font-size: 1.125em;
+        font-weight: 300;
+    }
+
+.table thead > tr > th {
+    text-transform: uppercase;
+    font-size:0.975em;
+}
+
+    .table thead > tr > th > a {
+        color: #344644;
+    }
+
+    .table thead > tr > th> a:hover {
+        text-decoration: none;
+        color: #3498db;
+        border-color: #3498db;
+    }
+
+   
+    .table thead>tr>th> a:after {
+    content: "\f0dc";
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    margin-left: 5px;
+    font-size: 0.75em;
+    }
+    .table thead > tr > th > a.DESC:after {
+        content: "\f0de";
+}
+     .table thead>tr>th> a.ASC:after {
+    content: "\f0dd";
+    }
 
 /* Navbar */
 /* ----------------------------------------------- */
@@ -68,14 +131,17 @@ input[type="password"] {
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
 }
-.navbar-inverse .navbar-toggle:active,
-.navbar-inverse .navbar-toggle:focus {
-  background-color: transparent;
-}
-.navbar-inverse .navbar-toggle:hover {
-  color: #fff;
-  background-color: #555;
-}
+
+    .navbar-inverse .navbar-toggle:active,
+    .navbar-inverse .navbar-toggle:focus {
+        background-color: transparent;
+    }
+
+    .navbar-inverse .navbar-toggle:hover {
+        color: #fff;
+        background-color: #555;
+    }
+
 .navbar-inverse .navbar-nav > .navbar-profile > a {
     height: 60px;
     padding-top: 0;

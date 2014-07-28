@@ -205,10 +205,8 @@
                 <div class="form-group">
                     <asp:Label ID="LoggedLabel" Font-Bold="true" CssClass="col-sm-4 control-label" runat="server" Text="<%$Resources:SharedIssueProperties, LoggedLabel %>" />
                     <div class="col-sm-7">
-
                         <asp:Label ID="lblLoggedTime" runat="server" CssClass="text-right form-control-static" />
                         <asp:Label ID="Label1" runat="server" Text="<%$Resources:SharedIssueProperties, HoursLabel %>" />
-
                     </div>
                 </div>
             </div>

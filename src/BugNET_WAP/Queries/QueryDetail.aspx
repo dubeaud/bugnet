@@ -33,27 +33,22 @@
     </div>
     <hr />
     <h2>Save Query</h2>
-        <asp:Panel ID="SaveQueryForm" CssClass="form-horizontal" runat="server">
-            <div class="row">
-                <div class="form-group">
-                    <asp:Label ID="Label1" runat="server" Text="Query Name" CssClass="control-label col-md-2" AssociatedControlID="txtQueryName" meta:resourcekey="txtQueryName" />
-                    <div class="col-md-5">
-                        <asp:TextBox ID="txtQueryName" CssClass="form-control" runat="Server" />
-                    </div>
+    <asp:Panel ID="SaveQueryForm" CssClass="form-horizontal" runat="server">
+        <div class="form-group">
+            <asp:Label ID="Label1" runat="server" Text="Query Name" CssClass="control-label col-md-2" AssociatedControlID="txtQueryName" meta:resourcekey="txtQueryName" />
+            <div class="col-md-5">
+                <asp:TextBox ID="txtQueryName" CssClass="form-control" runat="Server" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <asp:CheckBox ID="chkGlobalQuery" runat="server" />
+                    <asp:Label ID="Label7" runat="server" Text="Public Query:" meta:resourcekey="chkGlobalQuery" AssociatedControlID="chkGlobalQuery" />
                 </div>
             </div>
-            <div class="row">
-                <div class="form-group">
-                    <asp:Label ID="Label7" runat="server" CssClass="control-label col-md-2" Text="Public Query:" meta:resourcekey="chkGlobalQuery" AssociatedControlID="chkGlobalQuery" />
-                    <div class="col-md-5">
-                        <div class="checkbox">
-                            <asp:CheckBox ID="chkGlobalQuery" runat="server" />
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </asp:Panel>
+        </div>
+    </asp:Panel>
         <div style="padding-top: 15px;">
             <asp:Panel ID="pnlPerformQuery" runat="server" CssClass="pull-left" Style="padding-right: 15px;">
                 <asp:ImageButton ID="btnPerformQuery" runat="server" ToolTip="<%$ Resources: btnPerformQuery.Text %>" ImageUrl="~/Images/execute_sql.png"
