@@ -80,7 +80,7 @@ namespace BugNET.UserInterfaceLayer
             // Improvements for BGN-1379 More robust QueryStrings checking
             //
             //1. Application must allow anonymous identification (DisableAnonymousAccess HostSetting)
-            //2. User must be athenticated if anonymous identification is false
+            //2. User must be authenticated if anonymous identification is false
             //3. Default page is not protected so the unauthenticated user may login
             if (!HostSettingManager.Get(HostSettingNames.AnonymousAccess, false) && 
                 !User.Identity.IsAuthenticated && 

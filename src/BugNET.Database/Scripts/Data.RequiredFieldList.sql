@@ -18,7 +18,10 @@ USING (VALUES
 	(15, N'Resolution', N'IssueResolutionId'),
 	(16, N'Affected Milestone', N'IssueAffectedMilestoneId'),
 	(17, N'Due Date', N'IssueDueDate'),
-	(18, N'Custom Fields', N'CustomFieldName')
+	(18, N'Progress', N'IssueProgress'),
+	(19, N'Estimation', N'IssueEstimation'),
+	(20, N'Time Logged', N'TimeLogged'),
+	(21, N'Custom Fields', N'CustomFieldName')
 ) 
 AS Source (RequiredFieldId, FieldName, FieldValue) 
 ON Target.RequiredFieldId = Source.RequiredFieldId

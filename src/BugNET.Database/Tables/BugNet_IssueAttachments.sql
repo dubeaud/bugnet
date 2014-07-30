@@ -13,3 +13,26 @@
     CONSTRAINT [FK_BugNet_IssueAttachments_BugNet_Issues] FOREIGN KEY ([IssueId]) REFERENCES [dbo].[BugNet_Issues] ([IssueId]) ON DELETE CASCADE
 );
 
+
+GO
+CREATE NONCLUSTERED INDEX [IX_BugNet_IssueAttachments_DateCreated_IssueId] ON [dbo].[BugNet_IssueAttachments]
+(
+	[DateCreated] DESC,
+	[IssueId] ASC
+)
+INCLUDE 
+( 	
+	[IssueAttachmentId],
+	[FileName],
+	[Description],
+	[FileSize],
+	[ContentType],
+	[UserId],
+	[Attachment]
+)
+GO
+CREATE STATISTICS [ST_1410104064_1_2] ON [dbo].[BugNet_IssueAttachments]([IssueAttachmentId], [IssueId])
+GO
+CREATE STATISTICS [ST_1410104064_1_8] ON [dbo].[BugNet_IssueAttachments]([IssueAttachmentId], [UserId])
+GO
+CREATE STATISTICS [ST_1410104064_2_8_7] ON [dbo].[BugNet_IssueAttachments]([IssueId], [UserId], [DateCreated])

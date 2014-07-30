@@ -15,3 +15,8 @@ REFERENCES [dbo].[Applications] ([ApplicationId])
 GO
 
 ALTER TABLE [dbo].[Users] CHECK CONSTRAINT [UserApplication]
+GO
+
+CREATE NONCLUSTERED INDEX [IDX_UserName]
+    ON [dbo].[Users]([UserName] ASC);
+GO
