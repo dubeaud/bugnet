@@ -495,4 +495,7 @@
   <data name="SelectProject" xml:space="preserve">
     <value>选择项目</value>
   </data>
+  <data name="PerPage" xml:space="preserve">
+    <value>每页</value>
+  </data>
 </root>

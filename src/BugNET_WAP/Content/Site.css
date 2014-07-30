@@ -36,6 +36,19 @@ input[type="password"] {
   margin-top:10px;
   margin-bottom:10px;
 }
+.grid-footer-left{
+    width:300px;
+    margin-top:20px;
+}
+    .grid-footer-left select{
+        display: inline-block;
+        width: auto;
+        vertical-align: middle;
+        margin-right:10px;
+    }
+    .grid-footer-left span{
+        margin-right:5px;
+    }
 
 /* TABLES*/
 

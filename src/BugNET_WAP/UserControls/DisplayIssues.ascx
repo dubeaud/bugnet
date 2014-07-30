@@ -31,7 +31,7 @@
         <div id="rightButtonContainer" class="pull-right">
             <a href="#" id="showColumns" class="btn btn-primary">
                 <i class="fa fa-columns"></i>
-                <asp:Label ID="Label12" meta:resourcekey="SelectColumnsLinkButton"  runat="server"></asp:Label>
+                <asp:Label ID="Label12" meta:resourcekey="SelectColumnsLinkButton" runat="server"></asp:Label>
             </a>
             <button class="btn btn-primary" runat="server" causesvalidation="false" onserverclick="ExportExcelButton_Click">
                 <i class="fa fa-download"></i>
@@ -262,8 +262,8 @@
                 <ItemTemplate>
                     <%# DataBinder.Eval(Container.DataItem, "AssignedDisplayName" )%>
                 </ItemTemplate>
-                <HeaderStyle HorizontalAlign="Left" />
-                <ItemStyle HorizontalAlign="Left" />
+                <HeaderStyle Wrap="False" />
+                <ItemStyle Wrap="False" />
             </asp:TemplateField>
             <asp:TemplateField HeaderText="<%$ Resources:SharedResources, Type %>" Visible="false" SortExpression="IssueTypeName">
                 <ItemTemplate>
@@ -362,15 +362,12 @@
         </Columns>
     </BNWC:GridView>
 </asp:Panel>
-<div class="pager">
-    <asp:DataPager ID="pager" runat="server" PageSize="10" PagedControlID="gvIssues">
-        <Fields>
-            <BNWC:BugNetPagerField NextPageImageUrl="~/Images/resultset_next.gif" PreviousPageImageUrl="~/Images/resultset_previous.gif"
-                LastPageImageUrl="~/Images/resultset_last.gif" FirstPageImageUrl="~/Images/resultset_first.gif" />
-        </Fields>
-    </asp:DataPager>
-</div>
 
+<asp:DataPager ID="pager" runat="server" PageSize="10"  PagedControlID="gvIssues">
+    <Fields>
+        <BNWC:BugNetPagerField />
+    </Fields>
+</asp:DataPager>
 
 <asp:Label ID="lblResults" ForeColor="Red" Font-Italic="True" runat="server" Text="<%$ Resources:SharedResources, NoIssueResults %>" />
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-	<!-- 
+  <!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,434 +59,437 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-		<xsd:element name="root" msdata:IsDataSet="true">
-			<xsd:complexType>
-				<xsd:choice maxOccurs="unbounded">
-					<xsd:element name="metadata">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" />
-							</xsd:sequence>
-							<xsd:attribute name="name" use="required" type="xsd:string" />
-							<xsd:attribute name="type" type="xsd:string" />
-							<xsd:attribute name="mimetype" type="xsd:string" />
-							<xsd:attribute ref="xml:space" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="assembly">
-						<xsd:complexType>
-							<xsd:attribute name="alias" type="xsd:string" />
-							<xsd:attribute name="name" type="xsd:string" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="data">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-							<xsd:attribute ref="xml:space" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="resheader">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" />
-						</xsd:complexType>
-					</xsd:element>
-				</xsd:choice>
-			</xsd:complexType>
-		</xsd:element>
-	</xsd:schema>
-	<resheader name="resmimetype">
-		<value>text/microsoft-resx</value>
-	</resheader>
-	<resheader name="version">
-		<value>2.0</value>
-	</resheader>
-	<resheader name="reader">
-		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<resheader name="writer">
-		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<data name="Add" xml:space="preserve">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Add" xml:space="preserve">
     <value>Adaugare</value>
   </data>
-	<data name="Admin" xml:space="preserve">
+  <data name="Admin" xml:space="preserve">
     <value>Admin</value>
   </data>
-	<data name="AffectedMilestone" xml:space="preserve">
+  <data name="AffectedMilestone" xml:space="preserve">
     <value>Repere afectate</value>
   </data>
-	<data name="ApplicationConfiguration" xml:space="preserve">
+  <data name="ApplicationConfiguration" xml:space="preserve">
     <value>Configurare Aplicatie</value>
   </data>
-	<data name="Assigned" xml:space="preserve">
+  <data name="Assigned" xml:space="preserve">
     <value>Atribuita</value>
   </data>
-	<data name="AssignedTo" xml:space="preserve">
+  <data name="AssignedTo" xml:space="preserve">
     <value>Atribuita catre</value>
   </data>
-	<data name="AssignedToUser" xml:space="preserve">
+  <data name="AssignedToUser" xml:space="preserve">
     <value>Atribuita mie</value>
   </data>
-	<data name="Authorized" xml:space="preserve">
+  <data name="Authorized" xml:space="preserve">
     <value>Autorizat</value>
   </data>
-	<data name="Calendar" xml:space="preserve">
+  <data name="Calendar" xml:space="preserve">
     <value>Calendar</value>
   </data>
-	<data name="Cancel" xml:space="preserve">
+  <data name="Cancel" xml:space="preserve">
     <value>Anulare</value>
   </data>
-	<data name="Category" xml:space="preserve">
+  <data name="Category" xml:space="preserve">
     <value>Categorie</value>
   </data>
-	<data name="ChangeLog" xml:space="preserve">
+  <data name="ChangeLog" xml:space="preserve">
     <value>Log schimbari</value>
   </data>
-	<data name="ChangePassword" xml:space="preserve">
+  <data name="ChangePassword" xml:space="preserve">
     <value>Schimbare Parola</value>
   </data>
-	<data name="CloneProject" xml:space="preserve">
+  <data name="CloneProject" xml:space="preserve">
     <value>Clonare Proiect</value>
   </data>
-	<data name="CompletedMilestone" xml:space="preserve">
+  <data name="CompletedMilestone" xml:space="preserve">
     <value>Repere atinse</value>
   </data>
-	<data name="ConfirmPassword" xml:space="preserve">
+  <data name="ConfirmPassword" xml:space="preserve">
     <value>Confirmare parola</value>
   </data>
-	<data name="ConfirmPasswordMismatchErrorMessage" xml:space="preserve">
+  <data name="ConfirmPasswordMismatchErrorMessage" xml:space="preserve">
     <value>Parola si parola confirmata nu se potrivesc.</value>
   </data>
-	<data name="Created" xml:space="preserve">
+  <data name="Created" xml:space="preserve">
     <value>Create</value>
   </data>
-	<data name="Creator" xml:space="preserve">
+  <data name="Creator" xml:space="preserve">
     <value>Creator</value>
   </data>
-	<data name="Date" xml:space="preserve">
+  <data name="Date" xml:space="preserve">
     <value>Data</value>
   </data>
-	<data name="Days" xml:space="preserve">
+  <data name="Days" xml:space="preserve">
     <value>zile</value>
   </data>
-	<data name="Delete" xml:space="preserve">
+  <data name="Delete" xml:space="preserve">
     <value>Stergere</value>
   </data>
-	<data name="Description" xml:space="preserve">
+  <data name="Description" xml:space="preserve">
     <value>Descriere</value>
   </data>
-	<data name="Disable" xml:space="preserve">
+  <data name="Disable" xml:space="preserve">
     <value>Dezactivat</value>
   </data>
-	<data name="DisplayName" xml:space="preserve">
+  <data name="DisplayName" xml:space="preserve">
     <value>Nume Afisat</value>
   </data>
-	<data name="Due" xml:space="preserve">
+  <data name="Due" xml:space="preserve">
     <value>scadenta</value>
   </data>
-	<data name="DueDate" xml:space="preserve">
+  <data name="DueDate" xml:space="preserve">
     <value>Data scadenta</value>
   </data>
-	<data name="DueIn" xml:space="preserve">
+  <data name="DueIn" xml:space="preserve">
     <value>scadenta in</value>
   </data>
-	<data name="Edit" xml:space="preserve">
+  <data name="Edit" xml:space="preserve">
     <value>Modifica</value>
   </data>
-	<data name="EditProject" xml:space="preserve">
+  <data name="EditProject" xml:space="preserve">
     <value>Modifica Proiect</value>
   </data>
-	<data name="Email" xml:space="preserve">
+  <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
-	<data name="Enable" xml:space="preserve">
+  <data name="Enable" xml:space="preserve">
     <value>Activeaza</value>
   </data>
-	<data name="Estimation" xml:space="preserve">
+  <data name="Estimation" xml:space="preserve">
     <value>Estimare</value>
   </data>
-	<data name="EstimationHours" xml:space="preserve">
+  <data name="EstimationHours" xml:space="preserve">
     <value>Estimare (ore)</value>
   </data>
-	<data name="Finished" xml:space="preserve">
+  <data name="Finished" xml:space="preserve">
     <value>terminat</value>
   </data>
-	<data name="FirstName" xml:space="preserve">
+  <data name="FirstName" xml:space="preserve">
     <value>Prenume</value>
   </data>
-	<data name="Home" xml:space="preserve">
+  <data name="Home" xml:space="preserve">
     <value>Acasa</value>
   </data>
-	<data name="Id" xml:space="preserve">
+  <data name="Id" xml:space="preserve">
     <value>Id</value>
   </data>
-	<data name="Image" xml:space="preserve">
+  <data name="Image" xml:space="preserve">
     <value>Imagine</value>
   </data>
-	<data name="IssueId" xml:space="preserve">
+  <data name="IssueId" xml:space="preserve">
     <value>Id Problema</value>
   </data>
-	<data name="Issues" xml:space="preserve">
+  <data name="Issues" xml:space="preserve">
     <value>Probleme</value>
   </data>
-	<data name="IssueType" xml:space="preserve">
+  <data name="IssueType" xml:space="preserve">
     <value>Tip Problema</value>
   </data>
-	<data name="LastName" xml:space="preserve">
+  <data name="LastName" xml:space="preserve">
     <value>Nume</value>
   </data>
-	<data name="LastUpdate" xml:space="preserve">
+  <data name="LastUpdate" xml:space="preserve">
     <value>Utlima actualizare</value>
   </data>
-	<data name="LastUpdateUser" xml:space="preserve">
+  <data name="LastUpdateUser" xml:space="preserve">
     <value>Utilizator utlima actualizare</value>
   </data>
-	<data name="Late" xml:space="preserve">
+  <data name="Late" xml:space="preserve">
     <value>tarziu</value>
   </data>
-	<data name="LogViewer" xml:space="preserve">
+  <data name="LogViewer" xml:space="preserve">
     <value>Vizualizare Log</value>
   </data>
-	<data name="Milestone" xml:space="preserve">
+  <data name="Milestone" xml:space="preserve">
     <value>Reper</value>
   </data>
-	<data name="Months" xml:space="preserve">
+  <data name="Months" xml:space="preserve">
     <value>luni</value>
   </data>
-	<data name="MyIssues" xml:space="preserve">
+  <data name="MyIssues" xml:space="preserve">
     <value>Problemele mele</value>
   </data>
-	<data name="Name" xml:space="preserve">
+  <data name="Name" xml:space="preserve">
     <value>Nume</value>
   </data>
-	<data name="NewIssue" xml:space="preserve">
+  <data name="NewIssue" xml:space="preserve">
     <value>Problema Noua</value>
   </data>
-	<data name="No" xml:space="preserve">
+  <data name="No" xml:space="preserve">
     <value>Nu</value>
   </data>
-	<data name="NoIssueResults" xml:space="preserve">
+  <data name="NoIssueResults" xml:space="preserve">
     <value>Nu sunt rezultate.</value>
   </data>
-	<data name="Notes" xml:space="preserve">
+  <data name="Notes" xml:space="preserve">
     <value>Notite</value>
   </data>
-	<data name="Order" xml:space="preserve">
+  <data name="Order" xml:space="preserve">
     <value>Ordonare</value>
   </data>
-	<data name="Owner" xml:space="preserve">
+  <data name="Owner" xml:space="preserve">
     <value>Proprietar</value>
   </data>
-	<data name="Password" xml:space="preserve">
+  <data name="Password" xml:space="preserve">
     <value>Parola</value>
   </data>
-	<data name="Priority" xml:space="preserve">
+  <data name="Priority" xml:space="preserve">
     <value>Prioritate</value>
   </data>
-	<data name="Progress" xml:space="preserve">
+  <data name="Progress" xml:space="preserve">
     <value>Progres</value>
   </data>
-	<data name="Project" xml:space="preserve">
+  <data name="Project" xml:space="preserve">
     <value>Proiect</value>
   </data>
-	<data name="Projects" xml:space="preserve">
+  <data name="Projects" xml:space="preserve">
     <value>Proiecte</value>
   </data>
-	<data name="Queries" xml:space="preserve">
+  <data name="Queries" xml:space="preserve">
     <value>Interogari</value>
   </data>
-	<data name="ReleaseDate" xml:space="preserve">
+  <data name="ReleaseDate" xml:space="preserve">
     <value>Data lansare</value>
   </data>
-	<data name="Repository" xml:space="preserve">
+  <data name="Repository" xml:space="preserve">
     <value>Depozit</value>
   </data>
-	<data name="Required" xml:space="preserve">
+  <data name="Required" xml:space="preserve">
     <value>Necesar</value>
   </data>
-	<data name="Resolution" xml:space="preserve">
+  <data name="Resolution" xml:space="preserve">
     <value>Rezolutie</value>
   </data>
-	<data name="Return" xml:space="preserve">
+  <data name="Return" xml:space="preserve">
     <value>Inapoi</value>
   </data>
-	<data name="Roadmap" xml:space="preserve">
+  <data name="Roadmap" xml:space="preserve">
     <value>Foaie parcurs</value>
   </data>
-	<data name="Save" xml:space="preserve">
+  <data name="Save" xml:space="preserve">
     <value>Salvare</value>
   </data>
-	<data name="Search" xml:space="preserve">
+  <data name="Search" xml:space="preserve">
     <value>Cautare</value>
   </data>
-	<data name="Status" xml:space="preserve">
+  <data name="Status" xml:space="preserve">
     <value>Stare</value>
   </data>
-	<data name="Submit" xml:space="preserve">
+  <data name="Submit" xml:space="preserve">
     <value>Trimite</value>
   </data>
-	<data name="TimeLogged" xml:space="preserve">
+  <data name="TimeLogged" xml:space="preserve">
     <value>Logare timp</value>
   </data>
-	<data name="TimeLoggedHours" xml:space="preserve">
+  <data name="TimeLoggedHours" xml:space="preserve">
     <value>Logare timp (ore)</value>
   </data>
-	<data name="Title" xml:space="preserve">
+  <data name="Title" xml:space="preserve">
     <value>Titlu</value>
   </data>
-	<data name="Today" xml:space="preserve">
+  <data name="Today" xml:space="preserve">
     <value>azi</value>
   </data>
-	<data name="Tomorrow" xml:space="preserve">
+  <data name="Tomorrow" xml:space="preserve">
     <value>maine</value>
   </data>
-	<data name="Type" xml:space="preserve">
+  <data name="Type" xml:space="preserve">
     <value>Tip</value>
   </data>
-	<data name="Update" xml:space="preserve">
+  <data name="Update" xml:space="preserve">
     <value>Actualizare</value>
   </data>
-	<data name="UserAccounts" xml:space="preserve">
+  <data name="UserAccounts" xml:space="preserve">
     <value>Conturi Utilizatori</value>
   </data>
-	<data name="Username" xml:space="preserve">
+  <data name="Username" xml:space="preserve">
     <value>Utilizator</value>
   </data>
-	<data name="UsernameRequiredErrorMessage" xml:space="preserve">
+  <data name="UsernameRequiredErrorMessage" xml:space="preserve">
     <value>Utilizatorul este obligatoriu</value>
   </data>
-	<data name="Votes" xml:space="preserve">
+  <data name="Votes" xml:space="preserve">
     <value>Voturi</value>
   </data>
-	<data name="Weeks" xml:space="preserve">
+  <data name="Weeks" xml:space="preserve">
     <value>saptamani</value>
   </data>
-	<data name="Years" xml:space="preserve">
+  <data name="Years" xml:space="preserve">
     <value>ani</value>
   </data>
-	<data name="Yes" xml:space="preserve">
+  <data name="Yes" xml:space="preserve">
     <value>Da</value>
   </data>
-	<data name="Yesterday" xml:space="preserve">
+  <data name="Yesterday" xml:space="preserve">
     <value>ieri</value>
   </data>
-	<data name="Added" xml:space="preserve">
+  <data name="Added" xml:space="preserve">
     <value>Adaugat</value>
   </data>
-	<data name="Deleted" xml:space="preserve">
+  <data name="Deleted" xml:space="preserve">
     <value>Sters</value>
   </data>
-	<data name="RelatedIssue" xml:space="preserve">
+  <data name="RelatedIssue" xml:space="preserve">
     <value>Legate de problema</value>
   </data>
-	<data name="Attachment" xml:space="preserve">
+  <data name="Attachment" xml:space="preserve">
     <value>Atasament</value>
   </data>
-	<data name="ChildIssue" xml:space="preserve">
+  <data name="ChildIssue" xml:space="preserve">
     <value>Problema copil</value>
   </data>
-	<data name="ParentIssue" xml:space="preserve">
+  <data name="ParentIssue" xml:space="preserve">
     <value>Problema parinte</value>
   </data>
-	<data name="ProjectLabel" xml:space="preserve">
+  <data name="ProjectLabel" xml:space="preserve">
     <value>Proiect:</value>
   </data>
-	<data name="ValidationSummaryHeaderText" xml:space="preserve">
+  <data name="ValidationSummaryHeaderText" xml:space="preserve">
     <value>Va rugam corectati urmatoarele:</value>
   </data>
-	<data name="Size" xml:space="preserve">
+  <data name="Size" xml:space="preserve">
     <value>Dimensiune</value>
   </data>
-	<data name="False" xml:space="preserve">
+  <data name="False" xml:space="preserve">
     <value>Fals</value>
   </data>
-	<data name="True" xml:space="preserve">
+  <data name="True" xml:space="preserve">
     <value>Adevarat</value>
   </data>
-	<data name="Empty" xml:space="preserve">
+  <data name="Empty" xml:space="preserve">
     <value>Gol</value>
   </data>
-	<data name="TotalHours" xml:space="preserve">
+  <data name="TotalHours" xml:space="preserve">
     <value>Total ore</value>
   </data>
-	<data name="Remove" xml:space="preserve">
+  <data name="Remove" xml:space="preserve">
     <value>Scoate</value>
   </data>
-	<data name="NotAvailable" xml:space="preserve">
+  <data name="NotAvailable" xml:space="preserve">
     <value>Nu este disponibil</value>
   </data>
-	<data name="NotAvailableAbbr" xml:space="preserve">
+  <data name="NotAvailableAbbr" xml:space="preserve">
     <value>N/A</value>
   </data>
-	<data name="GoTo" xml:space="preserve">
+  <data name="GoTo" xml:space="preserve">
     <value>Mergi la:</value>
   </data>
-	<data name="RowXofY" xml:space="preserve">
+  <data name="RowXofY" xml:space="preserve">
     <value>{0} - {1} din {2}</value>
   </data>
-	<data name="ShowRows" xml:space="preserve">
+  <data name="ShowRows" xml:space="preserve">
     <value>Afiseaza randuri: </value>
   </data>
-	<data name="Unassigned" xml:space="preserve">
+  <data name="Unassigned" xml:space="preserve">
     <value>Neatribuita</value>
   </data>
-	<data name="CloneProjectInstructions" xml:space="preserve">
+  <data name="CloneProjectInstructions" xml:space="preserve">
     <value>Cand clonati un proiect, faceti o copie a proiectului. De exemplu faceti o copie dupa toate categoriile, reperele si campurile personalizate ale proiectului. Dar, cand clonati un proiect, problemele nu sunt copiate in proiectul nou.</value>
   </data>
-	<data name="Ok" xml:space="preserve">
+  <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
-	<data name="Comment" xml:space="preserve">
+  <data name="Comment" xml:space="preserve">
     <value>Comentariu</value>
   </data>
-	<data name="Visibility" xml:space="preserve">
+  <data name="Visibility" xml:space="preserve">
     <value>Visibilitate</value>
   </data>
-	<data name="DropDown_SelectOne" xml:space="preserve">
+  <data name="DropDown_SelectOne" xml:space="preserve">
     <value>-- Selectati una --</value>
   </data>
-	<data name="DropDown_ResetFields" xml:space="preserve">
+  <data name="DropDown_ResetFields" xml:space="preserve">
     <value>-- Resetare campuri --</value>
   </data>
-	<data name="DropDown_SelectCustomField" xml:space="preserve">
+  <data name="DropDown_SelectCustomField" xml:space="preserve">
     <value>-- Selectati campul personalizat --</value>
   </data>
-	<data name="ProjectSummary" xml:space="preserve">
-		<value>Rezumat</value>
-	</data>
-	<data name="Register" xml:space="preserve">
-		<value>Inregistrare</value>
-	</data>
-	<data name="Login" xml:space="preserve">
-		<value>Autentificare</value>
-	</data>
-	<data name="Logout" xml:space="preserve">
-		<value>Delogare</value>
-	</data>
-	<data name="PasswordRequiredErrorMessage" xml:space="preserve">
-		<value>Parola este obligatorie.</value>
-	</data>
-	<data name="ConfirmPasswordRequiredErrorMessage" xml:space="preserve">
-		<value>Confirmarea parolei este obligatorie.</value>
-	</data>
-	<data name="EmailRequiredErrorMessage" xml:space="preserve">
-		<value>Adresa de email este obligatorie.</value>
-	</data>
-	<data name="EmailFormatErrorMessage" xml:space="preserve">
-		<value>Formatul de email este invalid.</value>
-	</data>
-	<data name="SelectProject" xml:space="preserve">
-		<value>Selectare proiect</value>
-	</data>
+  <data name="ProjectSummary" xml:space="preserve">
+    <value>Rezumat</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Inregistrare</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Autentificare</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Delogare</value>
+  </data>
+  <data name="PasswordRequiredErrorMessage" xml:space="preserve">
+    <value>Parola este obligatorie.</value>
+  </data>
+  <data name="ConfirmPasswordRequiredErrorMessage" xml:space="preserve">
+    <value>Confirmarea parolei este obligatorie.</value>
+  </data>
+  <data name="EmailRequiredErrorMessage" xml:space="preserve">
+    <value>Adresa de email este obligatorie.</value>
+  </data>
+  <data name="EmailFormatErrorMessage" xml:space="preserve">
+    <value>Formatul de email este invalid.</value>
+  </data>
+  <data name="SelectProject" xml:space="preserve">
+    <value>Selectare proiect</value>
+  </data>
+  <data name="PerPage" xml:space="preserve">
+    <value>Pe Pagina</value>
+  </data>
 </root>
