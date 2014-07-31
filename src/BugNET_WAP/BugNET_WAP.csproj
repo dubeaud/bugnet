@@ -3512,7 +3512,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Account\App_LocalResources\Manage.aspx.zh-CN.resx" />
+    <Content Include="Account\App_LocalResources\Manage.aspx.zh-CN.resx">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Account\App_LocalResources\Manage.aspx.resx" />

@@ -222,11 +222,22 @@ namespace BugNET.Issues
             // hack yes but does the trick to make sure that all projects are loaded when select all is selected
             queryClauses.AddRange(GetProjectQueryClauses(selectedProjects.Count().Equals(0)));
 
+            var sortColumns = new List<KeyValuePair<string, string>>();
+            var sorter = ctlDisplayIssues.SortString;
+
+            foreach (var sort in sorter.Split(','))
+            {
+                var args = sort.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                if (args.Length.Equals(2))
+                    sortColumns.Add(new KeyValuePair<string, string>(args[0], args[1]));
+
+            }
+
             if (ViewIssuesDropDownFilter.SelectedValue == "Monitored")
             {
                 ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?channel=15&ec={0}", ExcludeClosedIssuesFilter.Checked);
-                ctlDisplayIssues.DataSource = 
-                    IssueManager.GetMonitoredIssuesByUserName(Security.GetUserName(), ExcludeClosedIssuesFilter.Checked);
+                object userId = UserManager.GetUser(Security.GetUserName()).ProviderUserKey;
+                ctlDisplayIssues.DataSource = IssueManager.GetMonitoredIssuesByUserName(userId, sortColumns, ExcludeClosedIssuesFilter.Checked);
                 ctlDisplayIssues.DataBind();
             }
             else
@@ -281,17 +292,6 @@ namespace BugNET.Issues
                             queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int));
                         }
                         break;
-                }
-
-                var sortColumns = new List<KeyValuePair<string, string>>();
-                var sorter = ctlDisplayIssues.SortString;
-
-                foreach (var sort in sorter.Split(','))
-                {
-                    var args = sort.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-                    if (args.Length.Equals(2))
-                        sortColumns.Add(new KeyValuePair<string, string>(args[0], args[1]));
-
                 }
 
                 ctlDisplayIssues.DataSource = IssueManager.PerformQuery(queryClauses, sortColumns);

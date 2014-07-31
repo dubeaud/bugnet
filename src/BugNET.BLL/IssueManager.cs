@@ -464,6 +464,15 @@ namespace BugNET.BLL
             return list;
         }
 
+        public static List<Issue> GetMonitoredIssuesByUserName(object userId, ICollection<KeyValuePair<string, string>> sortFields, bool excludeClosedStatus)
+        {
+            if (userId == null) throw (new ArgumentOutOfRangeException("userId"));
+
+            var list = DataProviderManager.Provider.GetMonitoredIssuesByUserName(userId, sortFields, excludeClosedStatus);
+            LocalizeUnassigned(list);
+            return list;
+        }
+
         /// <summary>
         /// Returns an Issue object, pre-populated with defaults settings.
         /// </summary>

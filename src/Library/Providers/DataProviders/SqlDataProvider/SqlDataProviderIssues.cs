@@ -359,6 +359,73 @@ namespace BugNET.Providers.DataProviders
             }
         }
 
+        
+        public override List<Issue> GetMonitoredIssuesByUserName(object userId, ICollection<KeyValuePair<string, string>> sortFields, bool excludeClosedStatus)
+        {
+            if (userId == null) throw (new ArgumentNullException("userId"));
+
+            using (var sqlCmd = new SqlCommand())
+            {
+                var sortSql = string.Empty;
+                string sql = "SELECT iv.*, bin.UserId AS NotificationUserId, uv.UserName AS NotificationUserName, uv.DisplayName AS NotificationDisplayName FROM BugNet_IssuesView iv " +
+                    "INNER JOIN BugNet_IssueNotifications bin ON iv.IssueId = bin.IssueId INNER JOIN BugNet_UserView uv ON bin.UserId = uv.UserId  WHERE bin.UserId = @NotificationUserId " +
+                    "AND iv.[Disabled] = 0 AND iv.ProjectDisabled = 0 AND ((@ExcludeClosedStatus = 0) OR (iv.IsClosed = 0)) ";
+
+                // build the sort string (if any)
+                if (sortFields != null)
+                {
+                    foreach (var keyValuePair in sortFields)
+                    {
+                        var field = keyValuePair.Key.Trim();
+
+                        // no field then no sort option
+                        if (field.Length.Equals(0)) continue;
+
+                        // lower the direction
+                        var direction = keyValuePair.Value.Trim().ToLowerInvariant();
+
+                        // check if the direction is valid
+                        if (!direction.Equals("asc") && !direction.Equals("desc"))
+                            direction = "asc";
+
+                        // if the field contains a period then they might be passing in and alias so don't try and clean up
+                        if (!field.Contains("."))
+                        {
+                            field = field.Replace("[]", " ").Trim();    // this is used as a placeholder for spaces in custom
+                            // fields used only for sorting
+
+                            if (!field.EndsWith("]"))
+                                field = string.Concat(field, "]");
+
+                            if (!field.EndsWith("["))
+                                field = string.Concat("[", field);
+                        }
+
+                        // build proper sort string
+                        sortSql = string.Concat(sortSql, " ", field, " ", direction, ",").Trim();
+                    }
+                }
+
+                // set a default sort if no sort fields
+                if (sortFields == null || sortFields.Count.Equals(0))
+                {
+                    sortSql = "iv.[IssueId] desc";
+                }
+
+                sortSql = sortSql.TrimEnd(',');
+                sortSql = sortSql.Insert(0, "ORDER BY ");
+                sql += sortSql;
+                
+                sqlCmd.CommandText = sql;
+                AddParamToSqlCmd(sqlCmd, "@NotificationUserId", SqlDbType.UniqueIdentifier, 255, ParameterDirection.Input, userId);
+                AddParamToSqlCmd(sqlCmd, "@ExcludeClosedStatus", SqlDbType.Bit, 0, ParameterDirection.Input, excludeClosedStatus);
+
+                var issueList = new List<Issue>();
+                ExecuteReaderCmd(sqlCmd, GenerateIssueListFromReader, ref issueList);
+
+                return issueList;
+            }
+        }
         /// <summary>
         /// Gets the name of the monitored issues by user.
         /// </summary>
