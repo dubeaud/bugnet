@@ -1,6 +1,9 @@
 INSERT INTO [dbo].[BugNet_Languages] ([CultureCode], [CultureName], [FallbackCulture]) VALUES('zh-CN', 'Chinese (China)', 'en-US')
 GO
 
+DELETE FROM BugNet_RolePermissions WHERE PermissionId = 30
+GO
+
 TRUNCATE TABLE [BugNet_RequiredFieldList]
 GO
 

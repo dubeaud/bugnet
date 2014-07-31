@@ -9,19 +9,19 @@ using BugNET.UserInterfaceLayer;
 namespace BugNET.Administration.Projects.UserControls
 {
     /// <summary>
-	///	Summary description for ProjectMemberRoles.
-	/// </summary>
-	public partial class ProjectRoles : System.Web.UI.UserControl, IEditProjectControl
-	{
+    ///	Summary description for ProjectMemberRoles.
+    /// </summary>
+    public partial class ProjectRoles : System.Web.UI.UserControl, IEditProjectControl
+    {
         /// <summary>
         /// Handles the Load event of the Page control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-		protected void Page_Load(object sender, System.EventArgs e)
-		{
-		
-		}
+        protected void Page_Load(object sender, System.EventArgs e)
+        {
+
+        }
         /// <summary>
         /// Role Id
         /// </summary>
@@ -35,36 +35,36 @@ namespace BugNET.Administration.Projects.UserControls
             set { ViewState["RoleId"] = value; }
         }
 
-		#region IEditProjectControl Members
+        #region IEditProjectControl Members
 
         /// <summary>
         /// Gets or sets the project id.
         /// </summary>
         /// <value>The project id.</value>
-		public int ProjectId
-		{
+        public int ProjectId
+        {
             get { return ((BasePage)Page).ProjectId; }
             set { ((BasePage)Page).ProjectId = value; }
-		}
+        }
 
         /// <summary>
         /// Inits this instance.
         /// </summary>
-		public void Initialize()
+        public void Initialize()
         {
             txtProjectID.Value = ProjectId.ToString();
             gvRoles.DataBind();
-		}
+        }
 
         /// <summary>
         /// Updates this instance.
         /// </summary>
         /// <returns></returns>
-		public bool Update()
-		{
-            
-			return true;
-		}
+        public bool Update()
+        {
+
+            return true;
+        }
 
         /// <summary>
         /// Gets a value indicating whether [show save button].
@@ -74,9 +74,9 @@ namespace BugNET.Administration.Projects.UserControls
         {
             get { return false; }
         }
-		#endregion
+        #endregion
 
-		#region Private Methods  
+        #region Private Methods
 
         /// <summary>
         /// Handles the Click event of the cmdAddUpdateRole control.
@@ -119,8 +119,8 @@ namespace BugNET.Administration.Projects.UserControls
         /// Binds the role details.
         /// </summary>
         /// <param name="roleId">The role id.</param>
-		private void BindRoleDetails(int roleId)
-		{
+        private void BindRoleDetails(int roleId)
+        {
             if (roleId == -1)
             {
                 cmdAddUpdateRole.Text = (string)GetLocalResourceObject("AddRoleButton.Text");
@@ -189,7 +189,6 @@ namespace BugNET.Administration.Projects.UserControls
                 chkDeleteProject.Checked = false;
                 chkCloneProject.Checked = false;
                 chkCreateProject.Checked = false;
-                chkViewProjectCalendar.Checked = false;
             }
             else
             {
@@ -219,9 +218,9 @@ namespace BugNET.Administration.Projects.UserControls
                 // RoleNameTitle.Text = string.Concat(GetLocalResourceObject("RoleNameTitle.Text"), " ", r.Name);
                 ReBind();
             }
-		}
-		#endregion
-   
+        }
+        #endregion
+
         /// <summary>
         /// Handles the Click event of the AddRole control.
         /// </summary>
@@ -230,7 +229,7 @@ namespace BugNET.Administration.Projects.UserControls
         protected void AddRole_Click(object sender, EventArgs e)
         {
             AddRole.Visible = !AddRole.Visible;
-            Roles.Visible= !Roles.Visible;          
+            Roles.Visible = !Roles.Visible;
             txtRoleName.Visible = true;
             txtRoleName.Text = string.Empty;
             //RoleNameTitle.Text = (string)GetLocalResourceObject("AddNewRole.Text");       
@@ -284,7 +283,7 @@ namespace BugNET.Administration.Projects.UserControls
             { RoleManager.DeletePermission(roleId, (int)Common.Permission.AddTimeEntry); }
 
             if (chkAddQuery.Checked) RoleManager.AddPermission(roleId, (int)Common.Permission.AddQuery); else RoleManager.DeletePermission(roleId, (int)Common.Permission.AddQuery);
-            if (chkAddSubIssue.Checked) RoleManager.AddPermission(roleId, (int)Common.Permission.AddSubIssue); else RoleManager.DeletePermission(roleId,(int)Common.Permission.AddSubIssue);
+            if (chkAddSubIssue.Checked) RoleManager.AddPermission(roleId, (int)Common.Permission.AddSubIssue); else RoleManager.DeletePermission(roleId, (int)Common.Permission.AddSubIssue);
             if (chkAddParentIssue.Checked) RoleManager.AddPermission(roleId, (int)Common.Permission.AddParentIssue); else RoleManager.DeletePermission(roleId, (int)Common.Permission.AddParentIssue);
 
             //edits
@@ -292,7 +291,6 @@ namespace BugNET.Administration.Projects.UserControls
             if (chkDeleteProject.Checked) RoleManager.AddPermission(roleId, (int)Common.Permission.AdminDeleteProject); else RoleManager.DeletePermission(roleId, (int)Common.Permission.AdminDeleteProject);
             if (chkCloneProject.Checked) RoleManager.AddPermission(roleId, (int)Common.Permission.AdminCloneProject); else RoleManager.DeletePermission(roleId, (int)Common.Permission.AdminCloneProject);
             if (chkCreateProject.Checked) RoleManager.AddPermission(roleId, (int)Common.Permission.AdminCreateProject); else RoleManager.DeletePermission(roleId, (int)Common.Permission.AdminCreateProject);
-            if (chkViewProjectCalendar.Checked) RoleManager.AddPermission(roleId, (int)Common.Permission.ViewProjectCalendar); else RoleManager.DeletePermission(roleId, (int)Common.Permission.ViewProjectCalendar);
             if (chkChangeIssueStatus.Checked) RoleManager.AddPermission(roleId, (int)Common.Permission.ChangeIssueStatus); else RoleManager.DeletePermission(roleId, (int)Common.Permission.ChangeIssueStatus);
             if (chkEditQuery.Checked) RoleManager.AddPermission(roleId, (int)Common.Permission.EditQuery); else RoleManager.DeletePermission(roleId, (int)Common.Permission.EditQuery);
 
@@ -354,8 +352,8 @@ namespace BugNET.Administration.Projects.UserControls
             { RoleManager.AddPermission(roleId, (int)Common.Permission.ReopenIssue); }
             else
             { RoleManager.DeletePermission(roleId, (int)Common.Permission.ReopenIssue); }
-            
-            if (chkCloseIssue.Checked) RoleManager.AddPermission(roleId, (int)Common.Permission.CloseIssue); else RoleManager.DeletePermission(roleId, (int)Common.Permission.CloseIssue); 
+
+            if (chkCloseIssue.Checked) RoleManager.AddPermission(roleId, (int)Common.Permission.CloseIssue); else RoleManager.DeletePermission(roleId, (int)Common.Permission.CloseIssue);
 
             if (chkDeleteTimeEntry.Checked)
             { RoleManager.AddPermission(roleId, (int)Common.Permission.DeleteTimeEntry); }
@@ -375,7 +373,7 @@ namespace BugNET.Administration.Projects.UserControls
             chkAddComment.Checked = false;
             chkAddIssue.Checked = false;
             chkAddRelated.Checked = false;
-            chkAddTimeEntry.Checked = false;            
+            chkAddTimeEntry.Checked = false;
             chkDeleteAttachment.Checked = false;
             chkDeleteComment.Checked = false;
             chkDeleteIssue.Checked = false;
@@ -399,7 +397,6 @@ namespace BugNET.Administration.Projects.UserControls
             chkDeleteProject.Checked = false;
             chkCloneProject.Checked = false;
             chkCreateProject.Checked = false;
-            chkViewProjectCalendar.Checked = false;
 
             var permissions = RoleManager.GetPermissionsById(RoleId);
 
@@ -496,9 +493,6 @@ namespace BugNET.Administration.Projects.UserControls
                     case Common.Permission.AdminDeleteProject:
                         chkDeleteProject.Checked = true;
                         break;
-                    case Common.Permission.ViewProjectCalendar:
-                        chkViewProjectCalendar.Checked = true;
-                        break;
                     case Common.Permission.ChangeIssueStatus:
                         chkChangeIssueStatus.Checked = true;
                         break;
@@ -538,8 +532,8 @@ namespace BugNET.Administration.Projects.UserControls
             }
             catch
             {
-                lblError.Text = LoggingManager.GetErrorMessageResource("DeleteRoleError"); 
+                lblError.Text = LoggingManager.GetErrorMessageResource("DeleteRoleError");
             }
         }
-	}
+    }
 }

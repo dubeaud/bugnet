@@ -31,6 +31,7 @@ namespace BugNET.UserInterfaceLayer.WebControls
                 oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/ProjectSummary/{0}", projectId), Resources.SharedResources.ProjectSummary, this));
                 oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/Roadmap/{0}", projectId), Resources.SharedResources.Roadmap,this));
                 oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/ChangeLog/{0}", projectId), Resources.SharedResources.ChangeLog, this));
+                oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/ProjectCalendar.aspx?pid={0}", projectId), Resources.SharedResources.Calendar, this));
 
                 if (!string.IsNullOrEmpty(ProjectManager.GetById(projectId).SvnRepositoryUrl))
                     oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/SvnBrowse/SubversionBrowser.aspx?pid={0}", projectId), Resources.SharedResources.Repository, this)); 
@@ -43,9 +44,6 @@ namespace BugNET.UserInterfaceLayer.WebControls
                     //check add issue permission
                     if (UserManager.HasPermission(projectId, Common.Permission.AddIssue.ToString()))
                         oItemIssues.Items.Insert(0, new SuckerMenuItem(string.Format("~/Issues/CreateIssue/{0}", projectId), Resources.SharedResources.NewIssue, this));
-
-                    if (UserManager.HasPermission(projectId, Common.Permission.ViewProjectCalendar.ToString()))
-                        oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/ProjectCalendar.aspx?pid={0}", projectId), Resources.SharedResources.Calendar, this));
                 }
             }
 

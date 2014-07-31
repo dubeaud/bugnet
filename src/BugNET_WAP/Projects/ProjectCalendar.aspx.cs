@@ -22,9 +22,6 @@ namespace BugNET.Projects
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!UserManager.HasPermission(Convert.ToInt32(Request.Params["pid"]), Common.Permission.ViewProjectCalendar.ToString()))
-                Response.Redirect("~/Errors/AccessDenied.aspx");
-
             if (!Page.IsPostBack)
             {
                 // Set Project ID from Query String
