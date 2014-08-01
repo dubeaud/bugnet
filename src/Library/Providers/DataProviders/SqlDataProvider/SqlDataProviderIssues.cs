@@ -360,7 +360,7 @@ namespace BugNET.Providers.DataProviders
         }
 
         
-        public override List<Issue> GetMonitoredIssuesByUserName(object userId, ICollection<KeyValuePair<string, string>> sortFields, bool excludeClosedStatus)
+        public override List<Issue> GetMonitoredIssuesByUserName(object userId, ICollection<KeyValuePair<string, string>> sortFields, List<int> projects, bool excludeClosedStatus)
         {
             if (userId == null) throw (new ArgumentNullException("userId"));
 
@@ -370,6 +370,20 @@ namespace BugNET.Providers.DataProviders
                 string sql = "SELECT iv.*, bin.UserId AS NotificationUserId, uv.UserName AS NotificationUserName, uv.DisplayName AS NotificationDisplayName FROM BugNet_IssuesView iv " +
                     "INNER JOIN BugNet_IssueNotifications bin ON iv.IssueId = bin.IssueId INNER JOIN BugNet_UserView uv ON bin.UserId = uv.UserId  WHERE bin.UserId = @NotificationUserId " +
                     "AND iv.[Disabled] = 0 AND iv.ProjectDisabled = 0 AND ((@ExcludeClosedStatus = 0) OR (iv.IsClosed = 0)) ";
+
+                if (projects.Count > 0)
+                {
+                    var first = true;
+
+                    foreach (var project in projects)
+                    {
+                        sql += (first) ? " AND (" : " OR ";
+                        sql += "iv.[ProjectId] = " + project.ToString();
+                        first = false;
+                    }
+
+                    sql += ")";
+                }
 
                 // build the sort string (if any)
                 if (sortFields != null)

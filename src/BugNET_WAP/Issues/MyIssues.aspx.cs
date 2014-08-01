@@ -235,9 +235,11 @@ namespace BugNET.Issues
 
             if (ViewIssuesDropDownFilter.SelectedValue == "Monitored")
             {
+                var projects = PresentationUtils.GetSelectedItemsIntegerList(ProjectListBoxFilter, false).Where(project => project > Globals.NEW_ID).ToList();
+
                 ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?channel=15&ec={0}", ExcludeClosedIssuesFilter.Checked);
                 object userId = UserManager.GetUser(Security.GetUserName()).ProviderUserKey;
-                ctlDisplayIssues.DataSource = IssueManager.GetMonitoredIssuesByUserName(userId, sortColumns, ExcludeClosedIssuesFilter.Checked);
+                ctlDisplayIssues.DataSource = IssueManager.GetMonitoredIssuesByUserName(userId, sortColumns, projects, ExcludeClosedIssuesFilter.Checked);
                 ctlDisplayIssues.DataBind();
             }
             else

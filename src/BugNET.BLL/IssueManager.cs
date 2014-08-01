@@ -464,11 +464,11 @@ namespace BugNET.BLL
             return list;
         }
 
-        public static List<Issue> GetMonitoredIssuesByUserName(object userId, ICollection<KeyValuePair<string, string>> sortFields, bool excludeClosedStatus)
+        public static List<Issue> GetMonitoredIssuesByUserName(object userId, ICollection<KeyValuePair<string, string>> sortFields, List<int> projects, bool excludeClosedStatus)
         {
             if (userId == null) throw (new ArgumentOutOfRangeException("userId"));
 
-            var list = DataProviderManager.Provider.GetMonitoredIssuesByUserName(userId, sortFields, excludeClosedStatus);
+            var list = DataProviderManager.Provider.GetMonitoredIssuesByUserName(userId, sortFields, projects, excludeClosedStatus);
             LocalizeUnassigned(list);
             return list;
         }

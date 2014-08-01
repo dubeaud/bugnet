@@ -45,7 +45,7 @@ namespace BugNET.DAL
         public abstract List<Issue> GetIssuesByCreatorUserName(int projectId, string creatorUserName);
         public abstract List<Issue> GetIssuesByOwnerUserName(int projectId, string creatorUserName);
         public abstract List<Issue> GetOpenIssues(int projectId);
-        public abstract List<Issue> GetMonitoredIssuesByUserName(object userId, ICollection<KeyValuePair<string, string>> sortFields, bool excludeClosedStatus);
+        public abstract List<Issue> GetMonitoredIssuesByUserName(object userId, ICollection<KeyValuePair<string, string>> sortFields, List<int> projects, bool excludeClosedStatus);
         public abstract List<Issue> GetMonitoredIssuesByUserName(string userName, bool excludeClosedStatus);
         public abstract bool UpdateIssueLastUpdated(int issueId, string lastUpdatedUsername);
         public abstract List<IssueCount> GetIssueStatusCountByProject(int projectId);
