@@ -142,15 +142,12 @@
             <ul class="permissions">
                 <li>
                     <asp:CheckBox ID="chkEditProject" Text="Edit project" meta:resourcekey="EditProject" runat="server"></asp:CheckBox></li>
-                <!--<li><asp:checkbox  id="Checkbox8" Text="Manage members" runat="server"></asp:checkbox></li>-->
                 <li>
                     <asp:CheckBox ID="chkDeleteProject" Text="Delete project" meta:resourcekey="DeleteProject" runat="server"></asp:CheckBox></li>
                 <li>
                     <asp:CheckBox ID="chkCloneProject" Text="Clone project" meta:resourcekey="CloneProject" runat="server"></asp:CheckBox></li>
                 <li>
                     <asp:CheckBox ID="chkCreateProject" Text="Create project" meta:resourcekey="CreateProject" runat="server"></asp:CheckBox></li>
-                <li>
-                    <asp:CheckBox ID="chkViewProjectCalendar" Text="View calendar" meta:resourcekey="ViewCalendar" runat="server"></asp:CheckBox></li>
             </ul>
         </fieldset>
     </div>

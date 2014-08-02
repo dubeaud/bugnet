@@ -463,15 +463,6 @@ namespace BugNET.Administration.Projects.UserControls {
         protected global::System.Web.UI.WebControls.CheckBox chkEditProject;
         
         /// <summary>
-        /// Checkbox8 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox Checkbox8;
-        
-        /// <summary>
         /// chkDeleteProject control.
         /// </summary>
         /// <remarks>
@@ -499,24 +490,6 @@ namespace BugNET.Administration.Projects.UserControls {
         protected global::System.Web.UI.WebControls.CheckBox chkCreateProject;
         
         /// <summary>
-        /// chkViewProjectCalendar control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkViewProjectCalendar;
-        
-        /// <summary>
-        /// ImageButton1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton ImageButton1;
-        
-        /// <summary>
         /// cmdAddUpdateRole control.
         /// </summary>
         /// <remarks>
@@ -524,15 +497,6 @@ namespace BugNET.Administration.Projects.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton cmdAddUpdateRole;
-        
-        /// <summary>
-        /// Image1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton Image1;
         
         /// <summary>
         /// cmdCancel control.
