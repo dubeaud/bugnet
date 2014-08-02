@@ -139,11 +139,11 @@ namespace BugNET.UserControls
                             {
                                 CustomFieldId = cf.Id;
 
-                                if (cf.FieldType == CustomFieldType.DropDownList)
+                                if (cf.FieldType == CustomFieldType.DropDownList || cf.FieldType == CustomFieldType.YesNo)
                                     return dropValue.SelectedValue;
 
                                 if (cf.FieldType == CustomFieldType.Date)
-                                    return DateValue.SelectedValue != null ? ((DateTime)DateValue.SelectedValue).ToString("yyyy-MM-dd") : string.Empty;   
+                                    return DateValue.SelectedValue != null ? ((DateTime)DateValue.SelectedValue).ToString("yyyy-MM-dd") : string.Empty;  
                             }
                         }
                         return txtValue.Text;
@@ -458,6 +458,12 @@ namespace BugNET.UserControls
                                 break;
                             case CustomFieldType.Date:
                                 DateValue.Visible = true;
+                                break;
+                            case CustomFieldType.YesNo:
+                                dropValue.Visible = true;
+                                dropValue.Items.Add(new ListItem(GetGlobalResourceObject("SharedResources", "DropDown_SelectOne").ToString()));
+                                dropValue.Items.Add(new ListItem(GetGlobalResourceObject("SharedResources", "Yes").ToString(), Boolean.TrueString));
+                                dropValue.Items.Add(new ListItem(GetGlobalResourceObject("SharedResources", "No").ToString(), Boolean.FalseString));
                                 break;
                             default:
                                 txtValue.Visible = true;

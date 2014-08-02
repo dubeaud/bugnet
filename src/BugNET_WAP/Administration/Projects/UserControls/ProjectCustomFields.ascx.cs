@@ -509,7 +509,7 @@ namespace BugNET.Administration.Projects.UserControls
                     dropEditDataType.Enabled = false;
                     break;
                 case 5:
-                    dropEditDataType.SelectedValue = ValidationDataType.Integer.ToString();
+                    dropEditDataType.SelectedValue = ValidationDataType.String.ToString();
                     dropEditDataType.Enabled = false;
                     chkEditRequired.Enabled = false;
                     break;
@@ -550,7 +550,7 @@ namespace BugNET.Administration.Projects.UserControls
                     dropDataType.Enabled = false;
                     break;
                 case 5:
-                    dropDataType.SelectedValue = ValidationDataType.Integer.ToString();
+                    dropDataType.SelectedValue = ValidationDataType.String.ToString();
                     dropDataType.Enabled = false;
                     chkRequired.Enabled = false;
                     break;
