@@ -1,7 +1,16 @@
 INSERT INTO [dbo].[BugNet_Languages] ([CultureCode], [CultureName], [FallbackCulture]) VALUES('zh-CN', 'Chinese (China)', 'en-US')
 GO
 
-DELETE FROM BugNet_RolePermissions WHERE PermissionId = 30
+UPDATE [dbo].[BugNet_ProjectCustomFields] SET CustomFieldDataType = 0 WHERE CustomFieldTypeId = 5
+GO
+UPDATE QC SET FieldValue = 'False' FROM [dbo].[BugNet_QueryClauses] QC JOIN [dbo].[BugNet_ProjectCustomFields] CF ON QC.CustomFieldId = CF.CustomFieldId  WHERE CF.CustomFieldTypeId = 5 AND FieldValue = 0
+GO
+UPDATE QC SET FieldValue = 'True' FROM [dbo].[BugNet_QueryClauses] QC JOIN [dbo].[BugNet_ProjectCustomFields] CF ON QC.CustomFieldId = CF.CustomFieldId  WHERE CF.CustomFieldTypeId = 5 AND FieldValue = 1
+GO
+UPDATE QC SET DataType = 12 FROM [dbo].[BugNet_QueryClauses] QC JOIN [dbo].[BugNet_ProjectCustomFields] CF ON QC.CustomFieldId = CF.CustomFieldId  WHERE CF.CustomFieldTypeId = 5
+GO
+
+DELETE FROM [dbo].[BugNet_RolePermissions] WHERE PermissionId = 30
 GO
 
 TRUNCATE TABLE [BugNet_RequiredFieldList]
