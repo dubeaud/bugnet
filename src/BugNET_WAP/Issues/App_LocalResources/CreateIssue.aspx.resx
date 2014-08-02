@@ -124,7 +124,7 @@
     <value>Attachment</value>
   </data>
   <data name="AttachmentDescriptionLabel.Text" xml:space="preserve">
-    <value>Description</value>
+    <value>Attachment description</value>
   </data>
   <data name="AttachmentFileLabel.Text" xml:space="preserve">
     <value>File</value>
