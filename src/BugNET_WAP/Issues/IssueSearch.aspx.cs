@@ -27,14 +27,14 @@ namespace BugNET.Issues
                 pnlResultsMessage.Visible = true;
                 pnlSearchResults.Visible = false;
 
-                if(Request.QueryString["q"] != null)
+                if (Request.QueryString["q"] != null)
                 {
                     txtSearch.Text = Request.QueryString["q"].ToString();
                     BindIssues();
                 }
             }
 
-            
+
             // The ExpandIssuePaths method is called to handle
             // the SiteMapResolve event.
             SiteMap.SiteMapResolve += ExpandIssuePaths;
@@ -133,8 +133,8 @@ namespace BugNET.Issues
             // ---------------------------------------------------------------
 
             // are we logged in ?
-            var searchProjects = String.IsNullOrEmpty(Context.User.Identity.Name) ? 
-                ProjectManager.GetPublicProjects() : 
+            var searchProjects = String.IsNullOrEmpty(Context.User.Identity.Name) ?
+                ProjectManager.GetPublicProjects() :
                 ProjectManager.GetByMemberUserName(Context.User.Identity.Name);
 
             searchProjects.Sort(new ProjectComparer("Name", false));
@@ -220,19 +220,22 @@ namespace BugNET.Issues
 
                 // if the user wants to exclude closed issues then filter the closed flag otherwise don't bother
                 if (chkExcludeClosedIssues.Checked)
-                    queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int));
-
-                if(chkSearchTitle.Checked || chkSearchDesc.Checked)
                 {
-                    queryClauses.Add(new QueryClause("AND (", "1", "=", "2", SqlDbType.NVarChar));
+                    queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int));
+                }
 
-                    if(chkSearchTitle.Checked)
+                queryClauses.Add(new QueryClause("AND (", "1", "=", "2", SqlDbType.NVarChar));
+                queryClauses.Add(new QueryClause("OR", "iv.[IssueId]", "LIKE", strLike, SqlDbType.NVarChar));
+
+                if (chkSearchTitle.Checked || chkSearchDesc.Checked)
+                {
+                    if (chkSearchTitle.Checked)
                     {
                         queryClauses.Add(new QueryClause("OR", "iv.[IssueTitle]", "LIKE", strLike, SqlDbType.NVarChar));
-                         if (srchHtmlcode)
-                         {
-                             queryClauses.Add(new QueryClause("OR", "iv.[IssueTitle]", "LIKE", strHtmlLike, SqlDbType.NVarChar)); 
-                         }
+                        if (srchHtmlcode)
+                        {
+                            queryClauses.Add(new QueryClause("OR", "iv.[IssueTitle]", "LIKE", strHtmlLike, SqlDbType.NVarChar));
+                        }
                     }
 
                     if (chkSearchDesc.Checked)
@@ -244,8 +247,10 @@ namespace BugNET.Issues
                         }
                     }
 
-                    queryClauses.Add(new QueryClause(")", "", "", "", SqlDbType.NVarChar));
+                   
                 }
+
+                queryClauses.Add(new QueryClause(")", "", "", "", SqlDbType.NVarChar));
 
                 // Use the new Generic way to search with those QueryClauses
                 var issues = IssueManager.PerformQuery(queryClauses, null, p.Id);
@@ -286,27 +291,13 @@ namespace BugNET.Issues
                                          {
                                              new QueryClause("AND (", "Comment", "LIKE", strLike, SqlDbType.NVarChar)
                                          };
-
-                    // NOTE WE ARE OPENING A PARENTHISES using the 
-                    // "William Highfield" trick ;)
-                    // see earlier in this code
-
                     if (srchHtmlcode)
                     {
                         qryComment.Add(new QueryClause("OR", "Comment", "LIKE", strHtmlLike, SqlDbType.NVarChar));
                     }
 
-                    // NOW TO CLOSE PARENTHISES
-                    //
-                    // Using the "William Highfield" trick ;)
-                    //
+                    // close parenthesis 
                     qryComment.Add(new QueryClause(")", "", "", "", SqlDbType.NVarChar));
-
-                    //if (srchUserName)
-                    //{
-                    //    q = new QueryClause("OR", "CreatorUsername", "LIKE", "%" + strSearch + "%", SqlDbType.VarChar, false);
-                    //    qryComment.Add(q);
-                    //}
 
                     issueComments = IssueCommentManager.PerformQuery(iss.Id, qryComment);
 
@@ -317,12 +308,7 @@ namespace BugNET.Issues
                     _mainIssues.Add(iss);
                     // make sure we record the parent issue of the comment(s)
                 }
-
-                //if (srchHistory && (lstprjHistory != null))
-                //{
-                //   // lstMainHistory.AddRange(lstprjHistory);
-                //}
-            } // foreach project
+            }
 
             // ---------------------------------------------------------------
             // Clean up duplicates and sort
@@ -438,10 +424,11 @@ namespace BugNET.Issues
             var i = (Issue)e.Item.DataItem;
             // Only get this projects issues using LINQ
             var filteredComm = new List<IssueComment>(from comm in _mainComments
-                                                                     where i.Id == comm.IssueId
-                                                                     select comm);
+                                                      where i.Id == comm.IssueId
+                                                      select comm);
 
             var pnl1 = (Panel)(e.Item.FindControl("pnlIssueComments"));
+            var row = e.Item.FindControl("CommentsRow");
 
             // Are there any results
             if (filteredComm.Count > 0)
@@ -456,13 +443,14 @@ namespace BugNET.Issues
                 rptr.DataSource = filteredComm;
                 rptr.DataBind();
 
-                pnl1.Visible = true;
+                row.Visible = true;
             }
             else
             {
-                var rptr = ((Repeater)e.Item.FindControl("IssuesCommentList"));
-                rptr.Visible = false;
-                pnl1.Visible = false;
+                row.Visible = false;
+                //var rptr = ((Repeater)e.Item.FindControl("IssuesCommentList"));
+                //rptr.Visible = false;
+                //pnl1.Visible = false;
             }
         }
     }

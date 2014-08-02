@@ -42,14 +42,13 @@
         <asp:Localize runat="server" ID="Localize1" meta:resourcekey="SearchMessage" />
     </p>
     <div class="form-horizontal">
-    <div class="input-group input-group-lg">
-      <asp:TextBox ID="txtSearch" placeholder="<%$ Resources:SearchWatermark %>" CssClass="form-control" runat="server"></asp:TextBox>
-      <span class="input-group-btn">
-        <asp:Button ID="btnGlobalSearch" runat="server" CssClass="btn btn-success btn-lg" OnClick="Button1_Click" Text="Search" meta:resourcekey="SearchButton" />
-      </span>
-    </div><!-- /input-group -->
+        <div class="input-group input-group-lg">
+            <asp:TextBox ID="txtSearch" placeholder="<%$ Resources:SearchWatermark %>" CssClass="form-control" runat="server"></asp:TextBox>
+            <span class="input-group-btn">
+                <asp:Button ID="btnGlobalSearch" runat="server" CssClass="btn btn-success btn-lg" OnClick="Button1_Click" Text="Search" meta:resourcekey="SearchButton" />
+            </span>
         </div>
-
+    </div>
 
     <asp:Panel ID="pnlOptions" runat="server">
         <div class="checkbox">
@@ -153,7 +152,7 @@
                                             ImageUrl='<%# DataBinder.Eval(Container.DataItem, "PriorityImageUrl" )%>' runat="server" />
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr id="CommentsRow" runat="server">
                                     <td colspan="9">
                                         <asp:Panel ID="pnlIssueComments" runat="server">
                                             <p>
