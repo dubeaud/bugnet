@@ -21,7 +21,7 @@ namespace BugNET.UserInterfaceLayer
         /// </summary>
         /// <param name="fileName"></param>
         /// <param name="gv"></param>
-        public static void Export(string fileName, GridView gv, List<int> columnsToInclude)
+        public static void Export(string fileName, GridView gv)
         {
             HttpContext.Current.Response.Clear();
             HttpContext.Current.Response.AddHeader("content-disposition", string.Format("attachment; filename={0}", fileName));
@@ -40,22 +40,37 @@ namespace BugNET.UserInterfaceLayer
                     //  add the header row to the table
                     if (gv.HeaderRow != null)
                     {
-                        PrepareControlForExport(gv.HeaderRow, columnsToInclude);
+                        PrepareControlForExport(gv.HeaderRow);
                         table.Rows.Add(gv.HeaderRow);
                     }
 
                     //  add each of the data rows to the table
                     foreach (GridViewRow row in gv.Rows)
                     {
-                        PrepareControlForExport(row, columnsToInclude);
+                        PrepareControlForExport(row);
                         table.Rows.Add(row);
                     }
 
                     //  add the footer row to the table
                     if (gv.FooterRow != null)
                     {
-                        PrepareControlForExport(gv.FooterRow, columnsToInclude);
+                        PrepareControlForExport(gv.FooterRow);
                         table.Rows.Add(gv.FooterRow);
+                    }
+
+                    for (int j = 0; j < gv.Columns.Count; j++)
+                    {
+                        if (!gv.Columns[j].Visible)
+                        {
+                            for (int i = 0; i < table.Rows.Count; i++)
+                            {
+                                //First 2 columns should be hidden by default.                              
+                                table.Rows[i].Cells[0].Visible = false;
+                                table.Rows[i].Cells[1].Visible = false;
+
+                                table.Rows[i].Cells[j].Visible = false;
+                            }
+                        }
                     }
 
                     //  render the table into the htmlwriter
@@ -72,18 +87,18 @@ namespace BugNET.UserInterfaceLayer
         /// Replace any of the contained controls with literals
         /// </summary>
         /// <param name="control"></param>
-        private static void PrepareControlForExport(Control control, List<int> columnsToInclude)
+        private static void PrepareControlForExport(Control control)
         {
             for (var i = 0; i < control.Controls.Count; i++)
             {
                 var current = control.Controls[i];
 
-                // hide columns
-                if (!columnsToInclude.Contains(i) && (current is System.Web.UI.WebControls.DataControlFieldHeaderCell || current is System.Web.UI.WebControls.DataControlFieldCell) || !current.Visible)
-                {
-                    current.Visible = false;
-                    continue;
-                }                    
+                //// hide columns
+                //if (!columnsToInclude.Contains(i) && (current is System.Web.UI.WebControls.DataControlFieldHeaderCell || current is System.Web.UI.WebControls.DataControlFieldCell) || !current.Visible)
+                //{
+                //    current.Visible = false;
+                //    continue;
+                //}                    
 
                 if (current is LinkButton)
                 {
@@ -143,7 +158,7 @@ namespace BugNET.UserInterfaceLayer
 
                 if (current.HasControls())
                 {
-                    PrepareControlForExport(current, columnsToInclude);
+                    PrepareControlForExport(current);
                 }
             }
         }

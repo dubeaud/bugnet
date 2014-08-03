@@ -245,11 +245,8 @@ namespace BugNET.UserControls
 
             pager.PageSize = 10000000;
             gvIssues.PageIndex = 1;
-            var columns = new List<int> {1, 2, 3, 4 };
-            columns.AddRange(_arrIssueColumns.Select(n => int.Parse(n)).ToList());
-            columns.Remove(0);
 
-            GridViewExportUtil.Export(DateTime.Today.ToString("yyyyMMdd") + "-Issues.xls", gvIssues, columns);
+            GridViewExportUtil.Export(DateTime.Today.ToString("yyyyMMdd") + "-Issues.xls", gvIssues);
 
             CurrentPageIndex = currentPage;
             pager.PageSize = currentPageSize;
