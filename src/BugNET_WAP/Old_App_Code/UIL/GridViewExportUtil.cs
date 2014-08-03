@@ -7,6 +7,7 @@ using BugNET.Common;
 using BugNET.UserControls;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using BugNET.BLL;
 
 namespace BugNET.UserInterfaceLayer
 {
@@ -112,8 +113,9 @@ namespace BugNET.UserInterfaceLayer
                 }
                 else if (current is HyperLink)
                 {
-                    control.Controls.Remove(current);
-                    control.Controls.AddAt(i, new LiteralControl((current as HyperLink).Text));
+                    ((current as HyperLink)).NavigateUrl = HostSettingManager.Get(HostSettingNames.DefaultUrl) + ((current as HyperLink)).NavigateUrl.Substring(2);
+                    // control.Controls.Remove(current);
+                    // control.Controls.AddAt(i, new LiteralControl((current as HyperLink).Text));
                 }
                 else if (current is DropDownList)
                 {
