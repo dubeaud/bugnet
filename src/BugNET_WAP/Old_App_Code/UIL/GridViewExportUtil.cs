@@ -5,6 +5,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BugNET.Common;
 using BugNET.UserControls;
+using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace BugNET.UserInterfaceLayer
 {
@@ -19,39 +21,40 @@ namespace BugNET.UserInterfaceLayer
         /// </summary>
         /// <param name="fileName"></param>
         /// <param name="gv"></param>
-        public static void Export(string fileName, GridView gv)
+        public static void Export(string fileName, GridView gv, List<int> columnsToInclude)
         {
             HttpContext.Current.Response.Clear();
             HttpContext.Current.Response.AddHeader("content-disposition", string.Format("attachment; filename={0}", fileName));
             HttpContext.Current.Response.ContentType = "application/ms-excel";
+            HttpContext.Current.Response.Charset = "utf-8";
 
             using (var sw = new StringWriter())
             {
                 using (var htw = new HtmlTextWriter(sw))
                 {
                     //  Create a table to contain the grid
-                    var table = new Table {GridLines = gv.GridLines};
+                    var table = new Table { GridLines = gv.GridLines };
 
                     //  include the gridline settings
 
                     //  add the header row to the table
                     if (gv.HeaderRow != null)
                     {
-                        PrepareControlForExport(gv.HeaderRow);
+                        PrepareControlForExport(gv.HeaderRow, columnsToInclude);
                         table.Rows.Add(gv.HeaderRow);
                     }
 
                     //  add each of the data rows to the table
                     foreach (GridViewRow row in gv.Rows)
                     {
-                        PrepareControlForExport(row);
+                        PrepareControlForExport(row, columnsToInclude);
                         table.Rows.Add(row);
                     }
 
                     //  add the footer row to the table
                     if (gv.FooterRow != null)
                     {
-                        PrepareControlForExport(gv.FooterRow);
+                        PrepareControlForExport(gv.FooterRow, columnsToInclude);
                         table.Rows.Add(gv.FooterRow);
                     }
 
@@ -69,11 +72,18 @@ namespace BugNET.UserInterfaceLayer
         /// Replace any of the contained controls with literals
         /// </summary>
         /// <param name="control"></param>
-        private static void PrepareControlForExport(Control control)
+        private static void PrepareControlForExport(Control control, List<int> columnsToInclude)
         {
             for (var i = 0; i < control.Controls.Count; i++)
             {
                 var current = control.Controls[i];
+
+                // hide columns
+                if (!columnsToInclude.Contains(i) && (current is System.Web.UI.WebControls.DataControlFieldHeaderCell || current is System.Web.UI.WebControls.DataControlFieldCell) || !current.Visible)
+                {
+                    current.Visible = false;
+                    continue;
+                }                    
 
                 if (current is LinkButton)
                 {
@@ -110,10 +120,30 @@ namespace BugNET.UserInterfaceLayer
                     control.Controls.Remove(current);
                     control.Controls.AddAt(i, new LiteralControl((current as Image).AlternateText));
                 }
+                else if (current is LiteralControl)
+                {
+                    string text = (current as LiteralControl).Text.Replace(System.Environment.NewLine, "replacement text");
+                    text = Regex.Replace((current as LiteralControl).Text, "<.*?>", string.Empty);
+                    control.Controls.Remove(current);
+                    control.Controls.AddAt(i, new LiteralControl(text));
+                }
+                else if (current.ID == "Progress")
+                {
+                    control.Controls.Remove(current);
+                    control.Controls.AddAt(i, new LiteralControl(Regex.Replace((current.Controls[1] as System.Web.UI.HtmlControls.HtmlGenericControl).InnerText, "<.*?>", string.Empty)));
+                }
+                else if (current.ID == "PrivateIssue")
+                {
+                    control.Controls.Remove(current);
+                    if(current.Visible)
+                    { 
+                        control.Controls.AddAt(i, new LiteralControl(Regex.Replace((current as System.Web.UI.HtmlControls.HtmlGenericControl).InnerText, "<.*?>", string.Empty)));
+                    }
+                }
 
                 if (current.HasControls())
                 {
-                    PrepareControlForExport(current);
+                    PrepareControlForExport(current, columnsToInclude);
                 }
             }
         }

@@ -245,8 +245,11 @@ namespace BugNET.UserControls
 
             pager.PageSize = 10000000;
             gvIssues.PageIndex = 1;
+            var columns = new List<int> {1, 2, 3, 4 };
+            columns.AddRange(_arrIssueColumns.Select(n => int.Parse(n)).ToList());
+            columns.Remove(0);
 
-            GridViewExportUtil.Export(DateTime.Today.ToString("yyyyMMdd") + "-Issues.xls", gvIssues);
+            GridViewExportUtil.Export(DateTime.Today.ToString("yyyyMMdd") + "-Issues.xls", gvIssues, columns);
 
             CurrentPageIndex = currentPage;
             pager.PageSize = currentPageSize;
@@ -262,8 +265,6 @@ namespace BugNET.UserControls
                 gvIssues.Columns[index].Visible = false;
 
             // Display columns based on the _arrIssueColumns array (retrieved from cookie)
-            //foreach (var colIndex in _arrIssueColumns)
-            //    gvIssues.Columns[Int32.Parse(colIndex)].Visible = true;
             foreach (var colIndex in _arrIssueColumns)
             {
                 //ensure custom field exist for this project

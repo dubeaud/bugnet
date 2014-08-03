@@ -214,7 +214,7 @@
             </asp:TemplateField>
             <asp:TemplateField>
                 <ItemTemplate>
-                    <span runat="server" id="PrivateIssue"><i class="fa fa-lock"></i></span>
+                    <span runat="server" id="PrivateIssue"><i class="fa fa-lock"></i><span class="sr-only">Private</span></span>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:HyperLinkField HeaderText="<%$ Resources:SharedResources, Id %>" SortExpression="iv.[IssueId]"
@@ -226,10 +226,13 @@
                 DataNavigateUrlFormatString="~/Issues/IssueDetail.aspx?id={0}" DataNavigateUrlFields="Id" DataTextField="Title">
                 <ControlStyle Width="250" />
             </asp:HyperLinkField>
-            <asp:BoundField DataField="ProjectName" HeaderText="<%$ Resources:SharedResources, Project %>" Visible="false" SortExpression="ProjectName">
+            <asp:TemplateField HeaderText="<%$ Resources:SharedResources, Project %>" Visible="false" SortExpression="ProjectName">
+                <ItemTemplate>
+                    <%# DataBinder.Eval(Container.DataItem, "ProjectName")%>
+                </ItemTemplate>
                 <HeaderStyle Wrap="False" />
                 <ItemStyle Wrap="False" />
-            </asp:BoundField>
+            </asp:TemplateField>
             <asp:TemplateField HeaderText="<%$ Resources:SharedResources, Votes %>" Visible="false" SortExpression="IssueVotes">
                 <ItemTemplate>
                     <%# DataBinder.Eval(Container.DataItem, "Votes")%>
@@ -327,8 +330,8 @@
             </asp:TemplateField>
             <asp:TemplateField HeaderText="<%$ Resources:SharedResources, Progress %>" Visible="false" SortExpression="IssueProgress">
                 <ItemTemplate>
-                    <div id="Progress" runat="server" style="vertical-align: top; font-size: 8px; border: 1px solid #ccc; width: 100px; height: 7px; margin: 5px; text-align: center;">
-                        <div id="ProgressBar" runat='server' style="text-align: left; background-color: #C4EFA1; height: 7px;">&nbsp;</div>
+                    <div id="Progress" runat="server" style="vertical-align: middle; font-size: 8px; border: 1px solid #ccc; width: 100px; height: 17px;line-height:10px; margin: 5px;">
+                        <div id="ProgressBar" runat='server' style="text-align: center; background-color: #C4EFA1; height: 15px;line-height:15px;vertical-align: middle;"><span style="margin-left:5px;"><%# DataBinder.Eval(Container.DataItem, "Progress" )%>%</span></div>
                     </div>
                 </ItemTemplate>
             </asp:TemplateField>
