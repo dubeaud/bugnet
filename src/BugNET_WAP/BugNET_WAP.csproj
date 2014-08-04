@@ -3393,9 +3393,6 @@
     <Content Include="Projects\App_LocalResources\ProjectSummary.aspx.zh-CN.resx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Projects\App_LocalResources\ReleaseNotes.aspx.zh-CN.resx" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Projects\App_LocalResources\Roadmap.aspx.zh-CN.resx" />
   </ItemGroup>
   <ItemGroup>
