@@ -113,6 +113,7 @@ namespace BugNET.UserControls
                 gvIssues.Visible = true;
                 pager.Visible = true;
                 ScrollPanel.Visible = true;
+                OptionsContainerPanel.Visible = true;
 
                 var pId = Request.QueryString.Get("pid", -1);
 
