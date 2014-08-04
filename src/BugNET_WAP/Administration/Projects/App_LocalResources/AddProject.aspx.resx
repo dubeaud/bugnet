@@ -120,6 +120,9 @@
   <data name="Back" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="CancelConfirm" xml:space="preserve">
+    <value>Are you sure you want to cancel creating this project?</value>
+  </data>
   <data name="Finish" xml:space="preserve">
     <value>Finish</value>
   </data>

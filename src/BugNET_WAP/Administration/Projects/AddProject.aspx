@@ -14,7 +14,7 @@
         <div class="row">
             <div class="pull-left">
                 <asp:Button Text="<%$ Resources:SharedResources, Cancel %>" CssClass="btn btn-danger" CausesValidation="false" runat="server"
-                    ID="btnCancel" OnClick="btnCancel_Click" />
+                    ID="btnCancel" ClientIDMode="Static" OnClick="btnCancel_Click" />
             </div>
             <div class="pull-right">
                 <asp:Button ID="btnBack" CssClass="btn btn-primary" Text="<%$ Resources:Back %>" CausesValidation="false" runat="Server"
@@ -23,4 +23,18 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        $(function () {
+            $("#btnCancel").click(function (e) {
+                e.preventDefault();
+                BootstrapDialog.confirm('<%=GetLocalResourceObject("CancelConfirm") %> ', function (result) {
+                    if (result) {
+                        <%=this.Page.ClientScript.GetPostBackEventReference(new PostBackOptions(this.btnCancel))%>
+                    } else {
+                        return false;
+                    }
+                });
+            });
+        });
+    </script>
 </asp:Content>
