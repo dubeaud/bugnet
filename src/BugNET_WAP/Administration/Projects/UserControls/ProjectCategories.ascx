@@ -72,6 +72,7 @@
                     //alert($('#HiddenField1').val());
                     
                 }).jstree({
+                    "ui" : { "select_multiple_modifier" : false},
                     "plugins": ["themes", "json_data", "dnd", "crrm", "ui"],
                     "json_data": {
                         "ajax": {

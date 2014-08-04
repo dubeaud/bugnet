@@ -121,24 +121,6 @@ namespace BugNET.Administration.Projects.UserControls {
         protected global::System.Web.UI.WebControls.LinkButton lbDeleteCategory;
         
         /// <summary>
-        /// pnlDeleteCategory control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlDeleteCategory;
-        
-        /// <summary>
-        /// pnlHeader control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlHeader;
-        
-        /// <summary>
         /// SelectOption control.
         /// </summary>
         /// <remarks>
@@ -193,15 +175,6 @@ namespace BugNET.Administration.Projects.UserControls {
         protected global::System.Web.UI.WebControls.TextBox NewCategoryTextBox;
         
         /// <summary>
-        /// OkButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button OkButton;
-        
-        /// <summary>
         /// CancelButton control.
         /// </summary>
         /// <remarks>
@@ -211,22 +184,13 @@ namespace BugNET.Administration.Projects.UserControls {
         protected global::System.Web.UI.WebControls.Button CancelButton;
         
         /// <summary>
-        /// mpeDeleteCategory control.
+        /// OkButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.ModalPopupExtender mpeDeleteCategory;
-        
-        /// <summary>
-        /// cbe control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::AjaxControlToolkit.ConfirmButtonExtender cbe;
+        protected global::System.Web.UI.WebControls.Button OkButton;
         
         /// <summary>
         /// TBWE2 control.

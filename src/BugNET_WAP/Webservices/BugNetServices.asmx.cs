@@ -200,7 +200,7 @@ namespace BugNET.Webservices
                     var pNode = new JsTreeNode {attr = new Attributes()};
                     pNode.attr.id = Convert.ToString(pCat.Id);
                     pNode.attr.rel = "cat" + Convert.ToString(pCat.Id);
-                    pNode.data = new Data {title = Convert.ToString(pCat.Name), icon = "../../images/plugin.gif"};
+                    pNode.data = new Data {title = Convert.ToString(pCat.Name), icon = "../../../images/plugin.gif"};
                     tree.Add(pNode);
 
                     if (pCat.ChildCount > 0)
