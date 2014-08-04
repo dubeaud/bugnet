@@ -53,9 +53,6 @@ namespace BugNET.Administration.Projects
                 {
                     linkCloneProject.Visible = false;
                 }
-
-                var p = ProjectManager.GetById(ProjectId);
-                ProjectDisableEnable(p.Disabled);
             }
 
             _menuItems.Add(GetLocalResourceObject("Details").ToString(), "application_home.png");
@@ -77,7 +74,8 @@ namespace BugNET.Administration.Projects
             AdminMenu.DataBind();    
 
             if (TabId != -1)
-                LoadTab(TabId);      
+                LoadTab(TabId);
+
         }
 
         /// <summary>
@@ -204,11 +202,27 @@ namespace BugNET.Administration.Projects
             plhContent.Controls.Clear();
             plhContent.Controls.Add( _contentControl );
             _contentControl.ID = "ctlContent";
+
             SaveButton.Visible = ((IEditProjectControl)_contentControl).ShowSaveButton;
-            DeleteButton.Visible = controlName == "ProjectDescription.ascx";
-            linkCloneProject.Visible = controlName == "ProjectDescription.ascx"; 
+            
+            
             ((IEditProjectControl)_contentControl).Initialize();
             plhContent.Visible = true;
+
+            if (selectedTab != 0)
+            {
+                DeleteButton.Visible = false;
+                linkCloneProject.Visible = false;
+                RestoreButton.Visible = false;
+                DisableButton.Visible = false;
+            }
+            else
+            {
+                DeleteButton.Visible = true;
+                linkCloneProject.Visible = true;
+                var p = ProjectManager.GetById(ProjectId);
+                ProjectDisableEnable(p.Disabled);
+            }
         }
 
         /// <summary>

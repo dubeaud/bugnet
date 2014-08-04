@@ -647,18 +647,18 @@ td.image-column {
 }
 
 span.radio {
-    padding: 0;
+    padding: 0px;
 }
 
-    span.radio > input[type="radio"] {
-        margin: 6px -5px 7px 15px;
-    }
+span.radio > input[type="radio"] {
+    margin: 8px 0px 7px 0px; 
+}
 
-    span.radio > label {
-        float: left;
-        margin-right: 5px;
-        padding: 0px 5px 0px 10px;
-    }
+span.radio > label {
+    margin-right: 25px;
+    padding: 5px 5px 0px 20px;
+    white-space:nowrap;
+}
 
 .checkbox-list tr td input[type="checkbox"] {
     margin: 6px -5px 7px 15px;
