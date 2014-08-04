@@ -52,7 +52,7 @@
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-right">
                                                 <li>
-                                                    <div class="row" style="width:300px;padding:10px;">
+                                                    <div class="row" style="width:325px;padding:10px;">
                                                         <ul class="list-unstyled col-md-6">
                                                             <li role="presentation" class="dropdown-header">
                                                                <asp:Localize runat="server" ID="QuickLinksLocalize" Text="Quick Links" meta:resourcekey="QuickLinks" />
