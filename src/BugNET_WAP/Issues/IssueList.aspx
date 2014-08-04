@@ -26,6 +26,7 @@
                 <asp:ListItem Text="Created by You" Value="Created" meta:resourcekey="ListItem4" />
                 <asp:ListItem Text="All Issues" Value="All" meta:resourcekey="ListItem5" />
                 <asp:ListItem Text="Open Issues" Value="Open" Selected="True" meta:resourcekey="ListItem7" />
+                <asp:ListItem Text="Closed Issues" Value="Closed" meta:resourcekey="ListItem8" />
             </asp:DropDownList>
         </div>
     </div>

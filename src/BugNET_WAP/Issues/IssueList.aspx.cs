@@ -395,13 +395,15 @@ namespace BugNET.Issues
                         ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?pid={0}&channel=11", ProjectId);
                         break;
                     case "All":
-
                         ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?pid={0}&channel=12", ProjectId);
                         break;
                     case "Open":
                         queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int));
-
                         ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?pid={0}&channel=14", ProjectId);
+                        break;
+                    case "Closed":
+                        queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "1", SqlDbType.Int));
+                        ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?pid={0}&channel=16", ProjectId);
                         break;
                 }
             }

@@ -121,9 +121,9 @@ namespace BugNET
                 case 15: 
                     MonitoredFeed(ref myFeed); 
                     break;
-                //case 16:
-                //    MyIssuesAssignedFeed(ref myFeed);
-                //    break;
+                case 16:
+                    ClosedFeed(ref myFeed);
+                    break;
               
          
             }
@@ -458,6 +458,25 @@ namespace BugNET
             feed.Items = feedItems;
         }
 
+        private void ClosedFeed(ref SyndicationFeed feed)
+        {
+            var queryClauses = new List<QueryClause>();
+            queryClauses.Add(new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int));
+            queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "1", SqlDbType.Int));
+
+            var issueList = IssueManager.PerformQuery(queryClauses, null, _projectId);
+            var feedItems = CreateSyndicationItemsFromIssueList(issueList);
+
+            var p = ProjectManager.GetById(_projectId);
+            feed.Title =
+                SyndicationContent.CreatePlaintextContent(
+                    string.Format(GetLocalResourceObject("FilteredIssuesTitle").ToString(), p.Name));
+            feed.Description =
+                SyndicationContent.CreatePlaintextContent(
+                    string.Format(GetLocalResourceObject("FilteredIssuesDescription").ToString(), p.Name));
+            feed.Items = feedItems;
+            
+        }
         /// <summary>
         /// Filtereds the issues feed.
         /// </summary>

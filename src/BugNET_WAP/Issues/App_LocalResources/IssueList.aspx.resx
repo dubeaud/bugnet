@@ -139,6 +139,9 @@
   <data name="ListItem7.Text" xml:space="preserve">
     <value>Open Issues</value>
   </data>
+  <data name="ListItem8.Text" xml:space="preserve">
+    <value>Closed Issues</value>
+  </data>
   <data name="Page.Title" xml:space="preserve">
     <value>Issue List</value>
   </data>
