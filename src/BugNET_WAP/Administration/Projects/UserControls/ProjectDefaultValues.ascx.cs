@@ -116,10 +116,10 @@ namespace BugNET.Administration.Projects.UserControls
             DropCategory.DataBind();
 
             //Get milestones          
-            DropMilestone.DataSource = MilestoneManager.GetByProjectId(ProjectId);
+            DropMilestone.DataSource = MilestoneManager.GetByProjectId(ProjectId, false);
             DropMilestone.DataBind();
 
-            DropAffectedMilestone.DataSource = MilestoneManager.GetByProjectId(ProjectId);
+            DropAffectedMilestone.DataSource = MilestoneManager.GetByProjectId(ProjectId, false);
             DropAffectedMilestone.DataBind();
 
             //Get Users
