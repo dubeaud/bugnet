@@ -138,8 +138,6 @@ namespace BugNET.Projects
 
                         if (summaryImage != null)
                         {
-                            summaryImage.Text = data.Name;
-
                             if (data.ImageUrl.Length > 0)
                                 summaryImage.ImageUrl = data.ImageUrl;
 

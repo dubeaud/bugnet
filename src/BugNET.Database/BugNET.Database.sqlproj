@@ -107,12 +107,8 @@
     <Build Include="Views\BugNet_IssuesView.sql" />
     <Build Include="Views\BugNet_GetIssuesByProjectIdAndCustomFieldView.sql" />
     <Build Include="Views\BugNet_DefaultValView.sql" />
-    <Build Include="Views\BugNet_IssueMilestoneCountView.sql" />
     <Build Include="Views\BugNet_IssueCommentsView.sql" />
-    <Build Include="Views\BugNet_IssueStatusCountView.sql" />
-    <Build Include="Views\BugNet_IssuePriorityCountView.sql" />
     <Build Include="Views\BugNet_IssueAssignedToCountView.sql" />
-    <Build Include="Views\BugNet_Issue_IssueTypeCountView.sql" />
     <Build Include="Stored Procedures\BugNet_RelatedIssue_DeleteRelatedIssue.sql" />
     <Build Include="Stored Procedures\BugNet_RelatedIssue_DeleteParentIssue.sql" />
     <Build Include="Stored Procedures\BugNet_RelatedIssue_DeleteChildIssue.sql" />

@@ -3,10 +3,22 @@
 AS
 
 SELECT 
-	IssueTypeName,
-	Number,	
-	IssueTypeId,
-	IssueTypeImageUrl
-FROM BugNet_Issue_IssueTypeCountView
-WHERE ProjectId = @ProjectId
-ORDER BY SortOrder
+	t.IssueTypeName, COUNT(nt.IssueTypeId) AS 'Number', t.IssueTypeId, t.IssueTypeImageUrl
+FROM  
+	BugNet_ProjectIssueTypes t 
+LEFT OUTER JOIN 
+(SELECT  
+		IssueTypeId, ProjectId 
+	FROM   
+		BugNet_IssuesView
+	WHERE  
+		BugNet_IssuesView.Disabled = 0 
+		AND BugNet_IssuesView.IsClosed = 0) nt  
+	ON 
+		t.IssueTypeId = nt.IssueTypeId AND nt.ProjectId = @ProjectId
+	WHERE 
+		t.ProjectId = @ProjectId
+	GROUP BY 
+		t.IssueTypeName, t.IssueTypeId, t.IssueTypeImageUrl, t.SortOrder
+	ORDER BY
+		t.SortOrder

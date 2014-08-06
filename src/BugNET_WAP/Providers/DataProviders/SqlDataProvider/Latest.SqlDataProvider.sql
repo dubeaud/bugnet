@@ -1404,3 +1404,116 @@ FROM
 	BugNet_ProjectsView 
 WHERE (@ActiveOnly IS NULL OR (ProjectDisabled = ~@ActiveOnly))
 GO
+
+DROP VIEW [dbo].[BugNet_Issue_IssueTypeCountView]
+GO
+DROP VIEW [dbo].[BugNet_IssueMilestoneCountView]
+GO
+DROP VIEW [dbo].[BugNet_IssuePriorityCountView]
+GO
+DROP VIEW [dbo].[BugNet_IssueStatusCountView]
+GO
+
+ALTER PROCEDURE [dbo].[BugNet_Issue_GetIssueMilestoneCountByProject] 
+	@ProjectId int
+AS
+
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    SELECT v.MilestoneName, COUNT(nt.IssueMilestoneId) AS 'Number', v.MilestoneId, v.MilestoneImageUrl
+	FROM BugNet_ProjectMilestones v 
+	LEFT OUTER JOIN
+	(SELECT IssueMilestoneId
+	FROM   
+		BugNet_IssuesView
+	WHERE  
+		BugNet_IssuesView.Disabled = 0 
+		AND BugNet_IssuesView.IsClosed = 0) nt 
+	ON 
+		v.MilestoneId = nt.IssueMilestoneId 
+	WHERE 
+		(v.ProjectId = @ProjectId) AND v.MilestoneCompleted = 0
+	GROUP BY 
+		v.MilestoneName, v.MilestoneId,v.SortOrder, v.MilestoneImageUrl
+	ORDER BY 
+		v.SortOrder ASC
+END
+GO
+
+ALTER PROCEDURE [dbo].[BugNet_Issue_GetIssuePriorityCountByProject]
+	@ProjectId int
+AS
+SELECT 
+	p.PriorityName, COUNT(nt.IssuePriorityId) AS 'Number', p.PriorityId,  p.PriorityImageUrl
+FROM   
+	BugNet_ProjectPriorities p	
+LEFT OUTER JOIN 
+	(SELECT  
+		IssuePriorityId, ProjectId 
+	FROM   
+		BugNet_IssuesView
+	WHERE  
+		BugNet_IssuesView.Disabled = 0 
+		AND BugNet_IssuesView.IsClosed = 0) nt
+ON 
+	p.PriorityId = nt.IssuePriorityId AND nt.ProjectId = @ProjectId
+WHERE 
+	p.ProjectId = @ProjectId
+GROUP BY 
+	p.PriorityName, p.PriorityId, p.PriorityImageUrl, p.SortOrder
+ORDER BY p.SortOrder
+GO
+
+ALTER PROCEDURE [dbo].[BugNet_Issue_GetIssueStatusCountByProject]
+ @ProjectId int
+AS
+SELECT 
+	s.StatusName,COUNT(nt.IssueStatusId) as 'Number', s.StatusId, s.StatusImageUrl
+FROM 
+	BugNet_ProjectStatus s 
+LEFT OUTER JOIN 
+(SELECT  
+		IssueStatusId, ProjectId 
+	FROM   
+	BugNet_IssuesView
+	WHERE  
+		BugNet_IssuesView.Disabled = 0 
+		AND IssueStatusId IN (SELECT StatusId FROM BugNet_ProjectStatus WHERE ProjectId = @ProjectId)) nt  
+	ON 
+		s.StatusId = nt.IssueStatusId AND nt.ProjectId = @ProjectId
+	WHERE 
+		s.ProjectId = @ProjectId
+	GROUP BY 
+		s.StatusName, s.StatusId, s.StatusImageUrl, s.SortOrder
+	ORDER BY
+		s.SortOrder
+GO
+
+ALTER PROCEDURE [dbo].[BugNet_Issue_GetIssueTypeCountByProject]
+	@ProjectId int
+AS
+
+SELECT 
+	t.IssueTypeName, COUNT(nt.IssueTypeId) AS 'Number', t.IssueTypeId, t.IssueTypeImageUrl
+FROM  
+	BugNet_ProjectIssueTypes t 
+LEFT OUTER JOIN 
+(SELECT  
+		IssueTypeId, ProjectId 
+	FROM   
+		BugNet_IssuesView
+	WHERE  
+		BugNet_IssuesView.Disabled = 0 
+		AND BugNet_IssuesView.IsClosed = 0) nt  
+	ON 
+		t.IssueTypeId = nt.IssueTypeId AND nt.ProjectId = @ProjectId
+	WHERE 
+		t.ProjectId = @ProjectId
+	GROUP BY 
+		t.IssueTypeName, t.IssueTypeId, t.IssueTypeImageUrl, t.SortOrder
+	ORDER BY
+		t.SortOrder
+GO
