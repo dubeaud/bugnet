@@ -1376,3 +1376,31 @@ FROM            dbo.BugNet_Issues LEFT OUTER JOIN
                          dbo.BugNet_UserProfiles AS LastUpdateUsersProfile ON LastUpdateUsers.UserName = LastUpdateUsersProfile.UserName LEFT OUTER JOIN
                          dbo.BugNet_Projects ON dbo.BugNet_Issues.ProjectId = dbo.BugNet_Projects.ProjectId
 GO
+
+ALTER PROCEDURE [dbo].[BugNet_Project_GetAllProjects]
+	@ActiveOnly BIT = NULL
+AS
+SELECT 
+	ProjectId,
+	ProjectName,
+	ProjectCode,
+	ProjectDescription,
+	AttachmentUploadPath,
+	ProjectManagerUserId,
+	ProjectCreatorUserId,
+	DateCreated,
+	ProjectDisabled,
+	ProjectAccessType,
+	ManagerUserName,
+	ManagerDisplayName,
+	CreatorUserName,
+	CreatorDisplayName,
+	AllowAttachments,
+	AllowAttachments,
+	AttachmentStorageType,
+	SvnRepositoryUrl,
+	AllowIssueVoting
+FROM 
+	BugNet_ProjectsView 
+WHERE (@ActiveOnly IS NULL OR (ProjectDisabled = ~@ActiveOnly))
+GO

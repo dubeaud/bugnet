@@ -980,10 +980,11 @@ namespace BugNET.Providers.DataProviders
         /// Gets all projects.
         /// </summary>
         /// <returns></returns>
-        public override List<Project> GetAllProjects()
+        public override List<Project> GetAllProjects(bool? activeOnly = true)
         {
             using (var sqlCmd = new SqlCommand())
             {
+                AddParamToSqlCmd(sqlCmd, "@ActiveOnly", SqlDbType.Bit, 0, ParameterDirection.Input, activeOnly);
                 SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_PROJECT_GETALLPROJECTS);
 
                 var projectList = new List<Project>();

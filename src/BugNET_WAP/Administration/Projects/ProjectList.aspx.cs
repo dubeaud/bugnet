@@ -43,7 +43,17 @@ namespace BugNET.Administration.Projects
         /// </summary>
         private void BindData()
         {
-            var projects = ProjectManager.GetAllProjects();
+            bool? activeOnly = null;
+            if(dropView.SelectedValue == "Active")
+            {
+                activeOnly = true;
+            }
+            else if(dropView.SelectedValue == "Inactive")
+            {
+                activeOnly = false;
+            }
+
+            var projects = ProjectManager.GetAllProjects(activeOnly);
             projects.Sort(new ProjectComparer(SortField, SortAscending));
             dgProjects.DataSource = projects;
             dgProjects.DataBind();
@@ -76,6 +86,16 @@ namespace BugNET.Administration.Projects
 
             if (IsPostBack) return;
 
+            BindData();
+        }
+
+        /// <summary>
+        /// Handles when the view drop down list is changed
+        /// </summary>
+        /// <param name="s">The s.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void ViewSelectedIndexChanged(Object s, EventArgs e)
+        {
             BindData();
         }
 

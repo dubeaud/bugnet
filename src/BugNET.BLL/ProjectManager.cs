@@ -132,9 +132,9 @@ namespace BugNET.BLL
         /// Gets all projects.
         /// </summary>
         /// <returns></returns>
-        public static List<Project> GetAllProjects()
+        public static List<Project> GetAllProjects(bool? activeOnly = true)
         {
-            return DataProviderManager.Provider.GetAllProjects();
+            return DataProviderManager.Provider.GetAllProjects(activeOnly);
         }
 
         /// <summary>
