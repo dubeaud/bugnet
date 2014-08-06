@@ -26,12 +26,18 @@ namespace BugNET.Projects
 			// Put user code to initialize the page here
 	        if (Page.IsPostBack) return;
 
-            IList<string> segments = Request.GetFriendlyUrlSegments();
-
-            ProjectId = Int32.Parse(segments[0]);
+            try
+            {
+                IList<string> segments = Request.GetFriendlyUrlSegments();
+                ProjectId = Int32.Parse(segments[0]);
+            }
+            catch
+            {
+                ProjectId = Request.QueryString.Get("pid", 0);
+            }
 
             // BGN-1379
-            if (ProjectId.Equals(-1))
+            if (ProjectId.Equals(0))
                 ErrorRedirector.TransferToNotFoundPage(Page);
  
 	        BindProjectSummary();

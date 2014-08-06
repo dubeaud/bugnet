@@ -32,7 +32,7 @@ namespace BugNET.Issues
                 }
                 catch
                 {
-                    ProjectId = Request.QueryString.Get("id", 0);
+                    ProjectId = Request.QueryString.Get("pid", 0);
                 }
 
                 // If don't know project or issue then redirect to something missing page

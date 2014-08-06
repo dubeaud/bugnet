@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using BugNET.BLL;
 using BugNET.Common;
 using BugNET.Entities;
+using Microsoft.AspNet.FriendlyUrls;
 
 namespace BugNET.Projects
 {
@@ -24,15 +25,14 @@ namespace BugNET.Projects
         {
             if (!Page.IsPostBack)
             {
-                // Set Project ID from Query String
-                if (Request.QueryString["pid"] != null)
+                try
                 {
-                    try
-                    {
-                        ProjectId = Int32.Parse(Request.QueryString["pid"]);
-                        //dropProjects.SelectedValue = Int32.Parse(Request.QueryString["pid"]);
-                    }
-                    catch { }
+                    IList<string> segments = Request.GetFriendlyUrlSegments();
+                    ProjectId = Int32.Parse(segments[0]);
+                }
+                catch
+                {
+                    ProjectId = Request.QueryString.Get("pid", 0);
                 }
 
                 BindCalendar();

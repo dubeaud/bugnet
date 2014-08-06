@@ -25,8 +25,15 @@ namespace BugNET.Administration.Projects
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            IList<string> segments = Request.GetFriendlyUrlSegments();
-            ProjectId = Int32.Parse(segments[0]);
+            try
+            {
+                IList<string> segments = Request.GetFriendlyUrlSegments();
+                ProjectId = Int32.Parse(segments[0]);
+            }
+            catch
+            {
+                ProjectId = Request.QueryString.Get("pid", 0);
+            }
 
             if (!UserManager.IsSuperUser())
             {
