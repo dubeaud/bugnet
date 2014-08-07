@@ -67,6 +67,7 @@ namespace BugNET.UserControls
                     if (item.ItemType != ListItemType.Item && item.ItemType != ListItemType.AlternatingItem) continue;
 
                     var id = (HiddenField)item.FindControl("Id");
+                    var fieldName = (HiddenField)item.FindControl("Name");
                     var fieldId = Int32.Parse(id.Value);
 
                     var c = item.FindControl("FieldValue");
@@ -101,7 +102,7 @@ namespace BugNET.UserControls
                     if (c.GetType() == typeof (HtmlEditor))
                         fieldValue = ((HtmlEditor) c).Text;
 
-                    colFields.Add(new CustomField {Id = fieldId, Value = fieldValue});
+                    colFields.Add(new CustomField {Id = fieldId, Value = fieldValue, Name = fieldName.Value});
                 }
                 return colFields;
             }
@@ -142,8 +143,10 @@ namespace BugNET.UserControls
 
             var ph = (PlaceHolder)e.Item.FindControl("PlaceHolder");
             var id = (HiddenField)e.Item.FindControl("Id");
+            var name = (HiddenField)e.Item.FindControl("Name");
 
             id.Value = currentField.Id.ToString();
+            name.Value = currentField.Name;
 
             switch (currentField.FieldType)
             {

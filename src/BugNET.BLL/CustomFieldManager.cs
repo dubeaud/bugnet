@@ -72,7 +72,21 @@ namespace BugNET.BLL
             if (issueId <= Globals.NEW_ID) throw new ArgumentNullException("issueId");
             if (fields == null) throw (new ArgumentOutOfRangeException("fields"));
 
-            return (DataProviderManager.Provider.SaveCustomFieldValues(issueId, fields));
+            try
+            {
+                var issueChanges = GetCustomFieldChanges(issueId, CustomFieldManager.GetByIssueId(issueId), fields);
+
+                DataProviderManager.Provider.SaveCustomFieldValues(issueId, fields);
+
+                UpdateHistory(issueChanges);
+
+                return true;
+            }
+            catch(Exception ex)
+            {
+                Log.Error(LoggingManager.GetErrorMessageResource("SaveCustomFieldValuesError"), ex);
+                return false;
+            }
         }
 
         /// <summary>
@@ -179,32 +193,53 @@ namespace BugNET.BLL
             }
 
             return false;
-            // sample of the SQL we would need to create
-            //CREATE VIEW dbo.BugNet_P96_CFV
-            //AS
-            //SELECT i.ProjectId, i.IssueId, i.IsClosed, i.[Disabled]
-            //    ,ISNULL(p.[Environment], '') AS [Environment]
-            //    ,ISNULL(p.[Start Date], '') AS [Start Date]
-            //    ,ISNULL(p.[Form Id], '') AS [Form Id]
-            //FROM
-            //BugNet_IssuesView i
-            //LEFT JOIN 
-            //(
-            //    SELECT pcf.ProjectId, pcfv.IssueId, pcf.CustomFieldName, pcfv.CustomFieldValue
-            //    FROM BugNet_ProjectCustomFields pcf
-            //    INNER JOIN BugNet_ProjectCustomFieldValues pcfv ON pcf.CustomFieldId = pcfv.CustomFieldId
-            //    WHERE pcf.ProjectId = 96	
-            //) AS data
-            //PIVOT
-            //(
-            //    MAX(data.CustomFieldValue) FOR data.CustomFieldName IN 
-            //(
-            //    [Environment] 
-            //    ,[Start Date] 
-            //    ,[Form Id]
-            //)
-            //) AS p ON i.IssueId = p.IssueId AND i.ProjectId = p.ProjectId
-            //WHERE i.ProjectId = 96
+        }
+
+        private static List<IssueHistory> GetCustomFieldChanges(int issueId, List<CustomField> originalFields, List<CustomField> newFields)
+        {
+            var fieldChanges = new List<IssueHistory>();
+            foreach(CustomField cf in newFields)
+            {
+                var field = originalFields.Find(f => f.Id == cf.Id);
+                if(field != null && field.Value != cf.Value)
+                {
+                    var history = new IssueHistory { CreatedUserName = Security.GetUserName(), IssueId = issueId, DateChanged = DateTime.Now };
+                    fieldChanges.Add(GetNewIssueHistory(history, cf.Name, field.Value, cf.Value));
+                }
+                else if(field == null)
+                {
+                    // new field added - do we want to track history for this since a value wasn't selected
+                    var history = new IssueHistory { CreatedUserName = Security.GetUserName(), IssueId = issueId, DateChanged = DateTime.Now };
+                    fieldChanges.Add(GetNewIssueHistory(history, cf.Name, string.Empty, cf.Value));                 
+                }
+            }
+
+            return fieldChanges;
+        }
+
+        private static IssueHistory GetNewIssueHistory(IssueHistory history, string fieldChanged, string oldValue, string newValue)
+        {
+            return new IssueHistory
+            {
+                CreatedUserName = history.CreatedUserName,
+                CreatorDisplayName = string.Empty,
+                DateChanged = history.DateChanged,
+                FieldChanged = fieldChanged,
+                IssueId = history.IssueId,
+                NewValue = newValue,
+                OldValue = oldValue
+            };
+        }
+
+        private static void UpdateHistory(IEnumerable<IssueHistory> issueChanges)
+        {
+            if (issueChanges == null) return;
+
+            foreach (var issueHistory in issueChanges)
+            {
+                issueHistory.TriggerLastUpdateChange = false; // set this to false since we don't trigger it from here
+                IssueHistoryManager.SaveOrUpdate(issueHistory);
+            }
         }
     }
 }

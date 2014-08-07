@@ -9,6 +9,7 @@
                 <asp:Label id="lblFieldName" Runat="Server" CssClass="control-label col-sm-4" />
                 <div class="col-sm-7">
                     <asp:HiddenField ID="Id" runat="server" />
+                    <asp:HiddenField ID="Name" runat="server" />
                     <asp:PlaceHolder id="PlaceHolder" runat="server">
                     </asp:PlaceHolder>
                 </div>
