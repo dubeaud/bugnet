@@ -121,11 +121,7 @@
             <div class="pager">
                 <asp:DataPager ID="pager" runat="server" PageSize="10" PagedControlID="gvLog">
                     <Fields>
-                        <BNWC:BugNetPagerField
-                            NextPageImageUrl="~/Images/resultset_next.gif"
-                            PreviousPageImageUrl="~/Images/resultset_previous.gif"
-                            LastPageImageUrl="~/Images/resultset_last.gif"
-                            FirstPageImageUrl="~/Images/resultset_first.gif" />
+                        <BNWC:BugNetPagerField />
                     </Fields>
                 </asp:DataPager>
             </div>

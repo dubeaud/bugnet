@@ -127,17 +127,6 @@ namespace BugNET.HttpModules
 							Membership.UpdateUser(user);
 						}
 					}
-					//else
-					//{
-					//    // Warning:
-					//    // This line may generate too many log entries!!
-					//    // We will have to see in practice.
-					//    if (System.Web.HttpContext.Current.User != null)
-					//        MDC.Set("user", System.Web.HttpContext.Current.User.Identity.Name);
-
-					//    if (Log.IsErrorEnabled)
-					//        Log.Error(String.Format("Unknown Authentication Type '{0}'.", HttpContext.Current.User.Identity.Name));
-					//}
 				}
 			}
 		}
@@ -201,7 +190,7 @@ namespace BugNET.HttpModules
 					UserPrincipal user = UserPrincipal.FindByIdentity(domainContext, username);
 					if (user != null)
 					{
-						// exstract full name
+						// extract full name
 						if (!string.IsNullOrWhiteSpace(user.GivenName) || !string.IsNullOrWhiteSpace(user.Surname))
 						{
 							userprop.FirstName = user.GivenName == null ? "" : user.GivenName.Trim();
@@ -242,7 +231,7 @@ namespace BugNET.HttpModules
 			}
 			else
 			{
-				// The user has not choosen an UserAccountSource or UserAccountSource as None
+				// The user has not chosen an UserAccountSource or UserAccountSource as None
 				// Usernames will be displayed as "Domain\Username"
 				return userprop;
 			}
