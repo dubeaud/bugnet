@@ -78,7 +78,7 @@ namespace BugNET.Issues
 
                 BindValues(_currentIssue);
 
-                Page.Title = string.Concat(_currentIssue.FullId, ": ", Server.HtmlDecode(_currentIssue.Title));
+                // Page.Title = string.Concat(_currentIssue.FullId, ": ", Server.HtmlDecode(_currentIssue.Title));
                 lblIssueNumber.Text = string.Format("{0}-{1}", _currentProject.Code, IssueId);
                 ctlIssueTabs.Visible = true;
 
@@ -101,6 +101,8 @@ namespace BugNET.Issues
                 }
 
             }
+
+            Page.Title = string.Concat(lblIssueNumber.Text, ": ", Server.HtmlDecode(TitleTextBox.Text));
 
             //need to rebind these on every postback because of dynamic controls
             ctlCustomFields.DataSource = CustomFieldManager.GetByIssueId(IssueId);

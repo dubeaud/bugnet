@@ -17,10 +17,8 @@ namespace BugNET.UserInterfaceLayer
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            if (!IsPostBack)
-            { 
-                Page.Title = string.Format("{0} - {1}", Page.Title, HostSettingManager.Get(HostSettingNames.ApplicationTitle));
-            }
+
+            Page.Title = string.Format("{0} - {1}", Page.Title, HostSettingManager.Get(HostSettingNames.ApplicationTitle));
         }
 
         /// <summary>
