@@ -12,8 +12,7 @@
 <%@ Register TagPrefix="it" TagName="IssueTabs" Src="~/Issues/UserControls/IssueTabs.ascx" %>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="Server">
-    <asp:ValidationSummary ID="ValidationSummary1" DisplayMode="BulletList" HeaderText="<%$ Resources:SharedResources, ValidationSummaryHeaderText %>"
-        CssClass="validationSummary" runat="server" />
+    <asp:ValidationSummary ID="ValidationSummary1" CssClass="alert alert-danger" HeaderText="<%$ Resources:SharedResources, ValidationSummaryHeaderText %>" runat="server" />
     <bn:Message ID="Message1" runat="server" Width="100%" Visible="False" />
     <div class="form-horizontal" style="padding-top: 2em;">
         <div class="row">
@@ -180,7 +179,7 @@
                 </div>
             </div>
             <div class="col-md-6" id="EstimationField" runat="server">
-                <div class="form-group">
+                <div class="form-group <%= !RangeValidator2.IsValid ? "has-error" : "" %>">
                     <asp:Label ID="EstimationLabel" CssClass="col-sm-4 control-label" runat="server" AssociatedControlID="txtEstimation" Text="<%$Resources:SharedIssueProperties, EstimationLabel %>" />
                     <div class="col-sm-3">
                         <div class="input-group">
@@ -189,7 +188,7 @@
                                 <asp:Label ID="HoursLabel" runat="server" Text="<%$Resources:SharedIssueProperties, HoursLabel %>" /></span>
                         </div>
                         <asp:RangeValidator ID="RangeValidator2" runat="server" ErrorMessage="<%$Resources:SharedIssueProperties, EstimationValidatorMessage %>" ControlToValidate="txtEstimation"
-                            MaximumValue="999" MinimumValue="0" SetFocusOnError="True" Display="Dynamic" ForeColor="Red" />
+                            MaximumValue="999" MinimumValue="0" SetFocusOnError="True" Display="None" ForeColor="Red" />
                     </div>
                 </div>
             </div>

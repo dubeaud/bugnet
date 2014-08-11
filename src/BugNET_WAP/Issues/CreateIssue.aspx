@@ -16,18 +16,18 @@
         </h1>
     </div>
     <div class="form-horizontal" style="padding-top:2em;">
-        <asp:ValidationSummary ID="ValidationSummary1" DisplayMode="BulletList"
+        <asp:ValidationSummary ID="ValidationSummary1"  DisplayMode="BulletList"
         HeaderText="<%$ Resources:SharedResources, ValidationSummaryHeaderText %>"
-        CssClass="validationSummary text-danger" runat="server" />
+        CssClass="alert alert-danger" runat="server" />
         <bn:Message ID="Message1" runat="server" Width="100%" Visible="False" />
         <div class="row">
             <div class="col-md-12">
-                <div class="form-group">
+                <div class="form-group <%= !TitleRequired.IsValid ? "has-error" : "" %>">
                     <label for="TitleTextBox" class="control-label col-sm-2">Title</label>
                     <div class="col-sm-10">
                         <asp:TextBox ID="TitleTextBox" CssClass="form-control input-lg" placeholder="<%$ Resources:SharedIssueProperties, IssueTitleWatermark %>" runat="server" />
-                        <asp:RequiredFieldValidator ControlToValidate="TitleTextBox" ErrorMessage="<%$ Resources:SharedIssueProperties, IssueTitleRequiredErrorMessage %>"
-                            Text="<%$ Resources:SharedResources, Required %>" Display="Dynamic" CssClass="text-danger" runat="server" ID="TitleRequired" />
+                        <asp:RequiredFieldValidator ControlToValidate="TitleTextBox" SetFocusOnError="true" ErrorMessage="<%$ Resources:SharedIssueProperties, IssueTitleRequiredErrorMessage %>"
+                            Text="<%$ Resources:SharedResources, Required %>" Display="Dynamic" CssClass="sr-only validation-error" runat="server" ID="TitleRequired" />
                     </div>
                 </div>
             </div>
@@ -127,12 +127,12 @@
                 </div>
             </div>
             <div class="col-md-6" id="EstimationField" runat="server">
-                <div class="form-group">
+                <div class="form-group <%= !RangeValidator2.IsValid ? "has-error" : string.Empty %>">
                     <asp:Label ID="EstimationLabel" CssClass="col-sm-4 control-label" runat="server" AssociatedControlID="txtEstimation" Text="<%$Resources:SharedIssueProperties, EstimationLabel %>" />
                     <div class="col-sm-3">
                         <asp:TextBox ID="txtEstimation" CssClass="form-control text-right" runat="server" />
                         <asp:RangeValidator ID="RangeValidator2" runat="server" ErrorMessage="<%$Resources:SharedIssueProperties, EstimationValidatorMessage %>" ControlToValidate="txtEstimation"
-                            MaximumValue="999" MinimumValue="0" SetFocusOnError="True" Text="<%$Resources:SharedIssueProperties, EstimationValidatorMessage %>" CssClass="text-danger" Display="Dynamic" />
+                            MaximumValue="999" MinimumValue="0" SetFocusOnError="True" Text="<%$Resources:SharedIssueProperties, EstimationValidatorMessage %>" CssClass="validation-error sr-only" Display="Dynamic" />
                     </div>
                     <div class="col-sm-1">
                         <asp:Label ID="HoursLabel" CssClass="control-label" runat="server" Text="<%$Resources:SharedIssueProperties, HoursLabel %>" />
@@ -204,4 +204,40 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript"
+        src="https://rawgit.com/meetselva/attrchange/master/attrchange.js"></script>
+    <script>
+        $(document).ready(function (e) {
+            $("span.validation-error").attrchange({
+                trackValues: false, /* Default to false, if set to true the event object is 
+				updated with old and new value.*/
+                callback: function (event) {
+                    var controlToValidate = $("#" + this.controltovalidate);
+                    var validators = controlToValidate.prop('Validators');
+
+                    if (validators == null) return;
+
+                    var isValid = true;
+                    $(validators).each(function () {
+                        if (this.isvalid !== true) {
+                            isValid = false;
+                        }
+                    });
+
+                    if (isValid) {
+                        $(controlToValidate).closest('.form-group').removeClass("has-error");
+                    }
+                    else {
+                        $(controlToValidate).closest('.form-group').addClass("has-error");
+                    }
+
+                    //event    	          - event object
+                    //event.attributeName - Name of the attribute modified
+                    //event.oldValue      - Previous value of the modified attribute
+                    //event.newValue      - New value of the modified attribute
+                    //Triggered when the selected elements attribute is added/updated/removed
+                }
+            });
+        });
+    </script>
 </asp:Content>
