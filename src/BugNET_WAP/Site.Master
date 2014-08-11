@@ -43,17 +43,18 @@
         </ajaxToolkit:ToolkitScriptManager>
 
         <div class="navbar navbar-inverse">
-            <div class="fluid-container">
+            <div class="container-fluid">
                 <div class="navbar-header">
                     <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="sr-only">Toggle navigation</span>
-                        <i class="fa fa-cog"></i>
+                        <i class="fa fa-bars"></i>
                     </button> 
                     <a class="navbar-brand navbar-brand-img" runat="server" href="~/">
                         <img runat="server" src="~/images/logo.png" height="40" width="40" />
                         BugNET</a>
                 </div>
                 <div class="navbar-collapse collapse">
+                    <asp:Literal ID="litMenu" Visible="true" runat="server"></asp:Literal>
                     <asp:LoginView runat="server" ID="LoginView1" ViewStateMode="Disabled">
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">
@@ -87,9 +88,14 @@
                             </ul>
                         </LoggedInTemplate>
                     </asp:LoginView>
-
                     <div class="navbar-form navbar-right">
-                        <div class="form-group">
+                        <div class="input-group">
+                            <asp:textbox CssClass="form-control mainnav-search-query" placeholder="<%$ Resources:SharedResources, Search %>" id="SearchBox" runat="server" />
+                            <span class="input-group-btn">
+                                <button id="SearchButton" class="btn btn-success" runat="server" onserverclick="SearchButton_Click"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                        <div class="form-group" style="margin-left:10px;">
                             <asp:DropDownList ID="ProjectsList" runat="server" OnSelectedIndexChanged="ProjectList_SelectedIndexChanged" AutoPostBack="true" CssClass="form-control">
                             </asp:DropDownList>
                         </div>
@@ -97,24 +103,7 @@
                 </div>
             </div>
         </div>
-        <div class="mainnav">
-            <div class="fluid-container">
-                <a class="mainnav-toggle collapsed" data-toggle="collapse" data-target=".mainnav-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <i class="fa fa-bars"></i>
-                </a>
-                <div class="mainnav-collapse navbar-collapse collapse">   
-                    <div class="pull-right mainnav-form">
-                        <asp:textbox CssClass="form-control mainnav-search-query" placeholder="<%$ Resources:SharedResources, Search %>" id="SearchBox" runat="server" />
-                        <button id="SearchButton" class="btn btn-sm mainnav-form-btn" runat="server" onserverclick="SearchButton_Click"><i class="fa fa-search"></i></button>
-                    </div>
-                    <asp:Literal ID="litMenu" Visible="true" runat="server"></asp:Literal>
-                </div>
-                <!--/.navbar-collapse -->
-            </div>
-        </div>
-
-        <div class="fluid-container body-content">
+        <div class="container-fluid body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
             <hr />

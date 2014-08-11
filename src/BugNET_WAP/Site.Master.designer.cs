@@ -22,6 +22,15 @@ namespace BugNET {
         protected global::System.Web.UI.WebControls.ContentPlaceHolder HeadContent;
         
         /// <summary>
+        /// litMenu control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litMenu;
+        
+        /// <summary>
         /// LoginView1 control.
         /// </summary>
         /// <remarks>
@@ -29,15 +38,6 @@ namespace BugNET {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LoginView LoginView1;
-        
-        /// <summary>
-        /// ProjectsList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ProjectsList;
         
         /// <summary>
         /// SearchBox control.
@@ -58,13 +58,13 @@ namespace BugNET {
         protected global::System.Web.UI.HtmlControls.HtmlButton SearchButton;
         
         /// <summary>
-        /// litMenu control.
+        /// ProjectsList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litMenu;
+        protected global::System.Web.UI.WebControls.DropDownList ProjectsList;
         
         /// <summary>
         /// MainContent control.

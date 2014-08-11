@@ -20,11 +20,13 @@ namespace BugNET.UserInterfaceLayer.WebControls
 
             if (HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                oItemIssues.Items.Add(new SuckerMenuItem("~/Issues/MyIssues", Resources.SharedResources.MyIssues, this));
+                oItemIssues.Items.Insert(0, new SuckerMenuItem("~/Issues/MyIssues", Resources.SharedResources.MyIssues, this));
             }
 
             if (projectId > Globals.NEW_ID)
             {
+                oItemIssues.Items.Add(new SuckerMenuItem(string.Format("~/Issues/IssueList.aspx?pid={0}", projectId), Resources.SharedResources.Issues, this));
+
                 var oItemProject = new SuckerMenuItem("#", Resources.SharedResources.Project, this, "dropdown");
 
                 Items.Insert(1, oItemProject);
@@ -35,21 +37,27 @@ namespace BugNET.UserInterfaceLayer.WebControls
 
                 if (!string.IsNullOrEmpty(ProjectManager.GetById(projectId).SvnRepositoryUrl))
                     oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/SvnBrowse/SubversionBrowser.aspx?pid={0}", projectId), Resources.SharedResources.Repository, this)); 
-              
-                oItemIssues.Items.Add(new SuckerMenuItem(string.Format("~/Issues/IssueList.aspx?pid={0}", projectId), Resources.SharedResources.Issues, this));
-                oItemIssues.Items.Add(new SuckerMenuItem(string.Format("~/Queries/QueryList.aspx?pid={0}", projectId), Resources.SharedResources.Queries, this));
+                            
+                Items.Add(new SuckerMenuItem(string.Format("~/Queries/QueryList.aspx?pid={0}", projectId), Resources.SharedResources.Queries, this));
 
                 if (HttpContext.Current.User.Identity.IsAuthenticated)
                 {
                     //check add issue permission
                     if (UserManager.HasPermission(projectId, Common.Permission.AddIssue.ToString()))
-                        oItemIssues.Items.Insert(0, new SuckerMenuItem(string.Format("~/Issues/CreateIssue/{0}", projectId), Resources.SharedResources.NewIssue, this));
+                        Items.Add(new SuckerMenuItem(string.Format("~/Issues/CreateIssue/{0}", projectId), Resources.SharedResources.NewIssue, this));
                 }
             }
 
             if(oItemIssues.Items.Count > 0)
             {
-                Items.Add(oItemIssues);
+                if (Items.Count > 2)
+                {
+                    Items.Insert(2, oItemIssues);
+                }
+                else
+                {
+                    Items.Add(oItemIssues);
+                }
             }
 
             if (!HttpContext.Current.User.Identity.IsAuthenticated) return;
