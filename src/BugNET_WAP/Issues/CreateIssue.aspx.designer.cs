@@ -373,6 +373,15 @@ namespace BugNET.Issues {
         protected global::System.Web.UI.WebControls.TextBox txtEstimation;
         
         /// <summary>
+        /// Label1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
+        
+        /// <summary>
         /// RangeValidator2 control.
         /// </summary>
         /// <remarks>
@@ -380,15 +389,6 @@ namespace BugNET.Issues {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RangeValidator RangeValidator2;
-        
-        /// <summary>
-        /// HoursLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label HoursLabel;
         
         /// <summary>
         /// ResolutionField control.

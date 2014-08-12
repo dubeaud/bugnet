@@ -101,6 +101,13 @@ namespace BugNET
                     ProjectsList.DataSource = ProjectManager.GetByMemberUserName(Security.GetUserName(), true);
                     ProjectsList.DataBind();
                     ProjectsList.Items.Insert(0, new ListItem(localizedSelectProject));
+
+                    //check add issue permission
+                    if (ProjectId > 0 && UserManager.HasPermission(ProjectId, Common.Permission.AddIssue.ToString()))
+                    {
+                        NewIssueButton.Visible = true;
+                        NewIssueLink.NavigateUrl = string.Format("~/Issues/CreateIssue/{0}", ProjectId);
+                    }
                 }
                 else if (!Page.User.Identity.IsAuthenticated && Boolean.Parse(HostSettingManager.Get(HostSettingNames.AnonymousAccess)))
                 {

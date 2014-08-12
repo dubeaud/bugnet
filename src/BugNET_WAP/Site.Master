@@ -38,6 +38,8 @@
                 <asp:ScriptReference Name="Focus.js" Path="~/Scripts/WebForms/Focus.js" />
                 <asp:ScriptReference Name="WebFormsBundle" />
                 <asp:ScriptReference Path="~/Scripts/bootstrap-dialog.min.js" />
+                <asp:ScriptReference Path="~/Scripts/attrchange.js" />
+                <asp:ScriptReference Path="~/Scripts/site.js" />
                 <%--Site Scripts--%>
             </Scripts>
         </ajaxToolkit:ToolkitScriptManager>
@@ -55,6 +57,9 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <asp:Literal ID="litMenu" Visible="true" runat="server"></asp:Literal>
+                    <div class="navbar-form navbar-left" id="NewIssueButton" runat="server" visible="false">
+                        <asp:HyperLink ID="NewIssueLink" CssClass="btn btn-success" runat="server" Text="<%$ Resources:SharedResources, NewIssue %>" />
+                    </div>
                     <asp:LoginView runat="server" ID="LoginView1" ViewStateMode="Disabled">
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">
@@ -89,13 +94,15 @@
                         </LoggedInTemplate>
                     </asp:LoginView>
                     <div class="navbar-form navbar-right">
-                        <div class="input-group">
-                            <asp:textbox CssClass="form-control mainnav-search-query" placeholder="<%$ Resources:SharedResources, Search %>" id="SearchBox" runat="server" />
-                            <span class="input-group-btn">
-                                <button id="SearchButton" class="btn btn-success" runat="server" onserverclick="SearchButton_Click"><i class="fa fa-search"></i></button>
-                            </span>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <asp:textbox CssClass="form-control mainnav-search-query" placeholder="<%$ Resources:SharedResources, Search %>" id="SearchBox" runat="server" />
+                                <span class="input-group-btn">
+                                    <button id="SearchButton" class="btn btn-success" runat="server" onserverclick="SearchButton_Click"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
                         </div>
-                        <div class="form-group" style="margin-left:10px;">
+                        <div class="form-group">
                             <asp:DropDownList ID="ProjectsList" runat="server" OnSelectedIndexChanged="ProjectList_SelectedIndexChanged" AutoPostBack="true" CssClass="form-control">
                             </asp:DropDownList>
                         </div>

@@ -281,7 +281,7 @@ namespace BugNET.UserControls
 
             var lblFieldName = (Label)e.Item.FindControl("lblFieldName");
             lblFieldName.AssociatedControlID = FIELD_VALUE_NAME;
-            lblFieldName.Text = string.Format("{0}:", currentField.Name);
+            lblFieldName.Text = currentField.Name;
 
             if (EnableValidation)
             {

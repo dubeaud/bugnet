@@ -16,17 +16,15 @@ namespace BugNET.UserInterfaceLayer.WebControls
             //Setup menu... 
             Items.Add(new SuckerMenuItem("~/Default", Resources.SharedResources.Home, this));
     
-            var oItemIssues = new SuckerMenuItem("#", Resources.SharedResources.Issues, this, "dropdown");
+           
 
             if (HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                oItemIssues.Items.Insert(0, new SuckerMenuItem("~/Issues/MyIssues", Resources.SharedResources.MyIssues, this));
+                Items.Add(new SuckerMenuItem("~/Issues/MyIssues", Resources.SharedResources.MyIssues, this));
             }
 
             if (projectId > Globals.NEW_ID)
             {
-                oItemIssues.Items.Add(new SuckerMenuItem(string.Format("~/Issues/IssueList.aspx?pid={0}", projectId), Resources.SharedResources.Issues, this));
-
                 var oItemProject = new SuckerMenuItem("#", Resources.SharedResources.Project, this, "dropdown");
 
                 Items.Insert(1, oItemProject);
@@ -36,28 +34,20 @@ namespace BugNET.UserInterfaceLayer.WebControls
                 oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/ProjectCalendar.aspx?pid={0}", projectId), Resources.SharedResources.Calendar, this));
 
                 if (!string.IsNullOrEmpty(ProjectManager.GetById(projectId).SvnRepositoryUrl))
-                    oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/SvnBrowse/SubversionBrowser.aspx?pid={0}", projectId), Resources.SharedResources.Repository, this)); 
-                            
-                Items.Add(new SuckerMenuItem(string.Format("~/Queries/QueryList.aspx?pid={0}", projectId), Resources.SharedResources.Queries, this));
+                    oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/SvnBrowse/SubversionBrowser.aspx?pid={0}", projectId), Resources.SharedResources.Repository, this));
 
-                if (HttpContext.Current.User.Identity.IsAuthenticated)
-                {
-                    //check add issue permission
-                    if (UserManager.HasPermission(projectId, Common.Permission.AddIssue.ToString()))
-                        Items.Add(new SuckerMenuItem(string.Format("~/Issues/CreateIssue/{0}", projectId), Resources.SharedResources.NewIssue, this));
-                }
-            }
+                var oItemIssues = new SuckerMenuItem("#", Resources.SharedResources.Issues, this, "dropdown");
 
-            if(oItemIssues.Items.Count > 0)
-            {
-                if (Items.Count > 2)
-                {
-                    Items.Insert(2, oItemIssues);
-                }
-                else
-                {
-                    Items.Add(oItemIssues);
-                }
+                oItemIssues.Items.Add(new SuckerMenuItem(string.Format("~/Issues/IssueList.aspx?pid={0}", projectId), Resources.SharedResources.Issues, this));
+                oItemIssues.Items.Add(new SuckerMenuItem(string.Format("~/Queries/QueryList.aspx?pid={0}", projectId), Resources.SharedResources.Queries, this));
+                Items.Insert(2, oItemIssues);
+
+                //if (HttpContext.Current.User.Identity.IsAuthenticated)
+                //{
+                //    //check add issue permission
+                //    if (UserManager.HasPermission(projectId, Common.Permission.AddIssue.ToString()))
+                //        Items.Add(new SuckerMenuItem(string.Format("~/Issues/CreateIssue/{0}", projectId), Resources.SharedResources.NewIssue, this));
+                //}
             }
 
             if (!HttpContext.Current.User.Identity.IsAuthenticated) return;
