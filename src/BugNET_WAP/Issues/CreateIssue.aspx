@@ -135,7 +135,7 @@
                             <span class="input-group-addon"><asp:Label ID="Label1" runat="server" Text="<%$Resources:SharedIssueProperties, HoursLabel %>" /></span>
                         </div>
                         <asp:RangeValidator ID="RangeValidator2" runat="server" ErrorMessage="<%$Resources:SharedIssueProperties, EstimationValidatorMessage %>" ControlToValidate="txtEstimation"
-                                MaximumValue="999" MinimumValue="0" SetFocusOnError="True" Text="<%$Resources:SharedIssueProperties, EstimationValidatorMessage %>" CssClass="validation-error sr-only" Display="Dynamic" />
+                                MaximumValue="999" MinimumValue="0" Type="Integer" SetFocusOnError="True" Text="<%$Resources:SharedIssueProperties, EstimationValidatorMessage %>" CssClass="validation-error sr-only" Display="Dynamic" />
                     </div>
                 </div>
             </div>

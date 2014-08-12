@@ -188,7 +188,7 @@
                                 <asp:Label ID="HoursLabel" runat="server" Text="<%$Resources:SharedIssueProperties, HoursLabel %>" /></span>
                         </div>
                         <asp:RangeValidator ID="RangeValidator2" runat="server" ErrorMessage="<%$Resources:SharedIssueProperties, EstimationValidatorMessage %>" ControlToValidate="txtEstimation"
-                            MaximumValue="999" MinimumValue="0" SetFocusOnError="True" Display="Dynamic" CssClass="validation-error sr-only" ForeColor="Red" />
+                            MaximumValue="999" MinimumValue="0" Type="Integer" SetFocusOnError="True" Display="Dynamic" CssClass="validation-error sr-only" ForeColor="Red" />
                     </div>
                 </div>
             </div>

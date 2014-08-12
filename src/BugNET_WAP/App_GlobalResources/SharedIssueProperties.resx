@@ -157,7 +157,7 @@
     <value>(hrs)</value>
   </data>
   <data name="EstimationValidatorMessage" xml:space="preserve">
-    <value>Estimation must be a sensible number.</value>
+    <value>Estimation must be a number between 1 and 999.</value>
   </data>
   <data name="ResolutionLabel" xml:space="preserve">
     <value>Resolution</value>
