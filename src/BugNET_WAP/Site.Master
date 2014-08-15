@@ -57,9 +57,6 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <asp:Literal ID="litMenu" Visible="true" runat="server"></asp:Literal>
-                    <div class="navbar-form navbar-left" id="NewIssueButton" runat="server" visible="false">
-                        <asp:HyperLink ID="NewIssueLink" CssClass="btn btn-success" runat="server" Text="<%$ Resources:SharedResources, NewIssue %>" />
-                    </div>
                     <asp:LoginView runat="server" ID="LoginView1" ViewStateMode="Disabled">
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">

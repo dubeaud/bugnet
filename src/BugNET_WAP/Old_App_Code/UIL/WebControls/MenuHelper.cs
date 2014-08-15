@@ -42,12 +42,12 @@ namespace BugNET.UserInterfaceLayer.WebControls
                 oItemIssues.Items.Add(new SuckerMenuItem(string.Format("~/Queries/QueryList.aspx?pid={0}", projectId), Resources.SharedResources.Queries, this));
                 Items.Insert(2, oItemIssues);
 
-                //if (HttpContext.Current.User.Identity.IsAuthenticated)
-                //{
-                //    //check add issue permission
-                //    if (UserManager.HasPermission(projectId, Common.Permission.AddIssue.ToString()))
-                //        Items.Add(new SuckerMenuItem(string.Format("~/Issues/CreateIssue/{0}", projectId), Resources.SharedResources.NewIssue, this));
-                //}
+                if (HttpContext.Current.User.Identity.IsAuthenticated)
+                {
+                    //check add issue permission
+                    if (UserManager.HasPermission(projectId, Common.Permission.AddIssue.ToString()))
+                        Items.Add(new SuckerMenuItem(string.Format("~/Issues/CreateIssue/{0}", projectId), Resources.SharedResources.NewIssue, this));
+                }
             }
 
             if (!HttpContext.Current.User.Identity.IsAuthenticated) return;
