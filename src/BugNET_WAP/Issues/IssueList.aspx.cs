@@ -315,10 +315,15 @@ namespace BugNET.Issues
 
                 if (!string.IsNullOrEmpty(IssueStatusId))
                 {
-                    if (IssueStatusId != "-1")
+                    if(IssueStatusId == "-2")
+                    {
+                        // filter by closed issues
+                        isStatus = true;
+                        queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "1", SqlDbType.Int));
+                    }
+                    else if (IssueStatusId != "-1")
                     {
                         isStatus = true;
-
                         q = IssueStatusId == "0" ?
                             new QueryClause("AND", "iv.[IssueStatusId]", "IS", null, SqlDbType.Int) :
                             new QueryClause("AND", "iv.[IssueStatusId]", "=", IssueStatusId, SqlDbType.Int);

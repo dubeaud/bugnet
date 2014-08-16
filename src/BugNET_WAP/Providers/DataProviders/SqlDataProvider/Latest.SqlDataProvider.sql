@@ -1,6 +1,14 @@
 INSERT INTO [dbo].[BugNet_Languages] ([CultureCode], [CultureName], [FallbackCulture]) VALUES('zh-CN', 'Chinese (China)', 'en-US')
 GO
 
+ALTER TABLE [dbo].[BugNet_RelatedIssues]
+DROP CONSTRAINT PK_BugNet_RelatedIssues
+GO
+
+ALTER TABLE [dbo].[BugNet_RelatedIssues]
+ADD CONSTRAINT PK_BugNet_RelatedIssues PRIMARY KEY CLUSTERED ([PrimaryIssueId] ASC, [SecondaryIssueId] ASC, [RelationType] ASC)
+GO
+
 UPDATE [dbo].[BugNet_ProjectCustomFields] SET CustomFieldDataType = 0 WHERE CustomFieldTypeId = 5
 GO
 UPDATE QC SET FieldValue = 'False' FROM [dbo].[BugNet_QueryClauses] QC JOIN [dbo].[BugNet_ProjectCustomFields] CF ON QC.CustomFieldId = CF.CustomFieldId  WHERE CF.CustomFieldTypeId = 5 AND FieldValue = '0'
