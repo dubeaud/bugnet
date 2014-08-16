@@ -374,3 +374,5 @@
 
 <asp:Label ID="lblResults" ForeColor="Red" Font-Italic="True" runat="server" Text="<%$ Resources:SharedResources, NoIssueResults %>" />
 
+<br/>
+<br />
