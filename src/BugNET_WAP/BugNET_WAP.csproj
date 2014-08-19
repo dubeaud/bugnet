@@ -1311,7 +1311,6 @@
     <Content Include="Images\arrow_out.gif" />
     <Content Include="Images\attach.gif" />
     <Content Include="Images\btn_red.png" />
-    <Content Include="Images\Bug-Head.png" />
     <Content Include="Images\bullet_arrow_down.png" />
     <Content Include="Images\bullet_arrow_left.png" />
     <Content Include="Images\bullet_arrow_up.png" />
@@ -1909,7 +1908,6 @@
     <Content Include="UserControls\PickProject.ascx" />
     <Content Include="UserControls\PickStatus.ascx" />
     <Content Include="UserControls\TextImage.ascx" />
-    <Content Include="Install\Install.css" />
     <Content Include="Install\Install.htm" />
     <Content Include="Uploads\placeholder.txt" />
     <Content Include="UserControls\Footer.ascx" />
