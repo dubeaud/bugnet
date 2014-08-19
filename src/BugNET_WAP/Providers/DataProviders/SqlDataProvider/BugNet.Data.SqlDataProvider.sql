@@ -28,7 +28,6 @@ INSERT [BugNet_Permissions] ([PermissionId], [PermissionKey], [PermissionName]) 
 INSERT [BugNet_Permissions] ([PermissionId], [PermissionKey], [PermissionName]) VALUES (27, N'AddParentIssue', N'Add Parent Issues')
 INSERT [BugNet_Permissions] ([PermissionId], [PermissionKey], [PermissionName]) VALUES (28, N'DeleteParentIssue', N'Delete Parent Issues')
 INSERT [BugNet_Permissions] ([PermissionId], [PermissionKey], [PermissionName]) VALUES (29, N'AdminDeleteProject', N'Delete a project')
-INSERT [BugNet_Permissions] ([PermissionId], [PermissionKey], [PermissionName]) VALUES (30, N'ViewProjectCalendar', N'View the project calendar')
 INSERT [BugNet_Permissions] ([PermissionId], [PermissionKey], [PermissionName]) VALUES (31, N'ChangeIssueStatus', N'Change an issues status field')
 INSERT [BugNet_Permissions] ([PermissionId], [PermissionKey], [PermissionName]) VALUES (32, N'EditQuery', N'Edit queries')
 
