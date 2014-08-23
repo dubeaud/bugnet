@@ -94,7 +94,6 @@ namespace BugNET.Common
         AddParentIssue = 27,
         DeleteParentIssue = 28,
         AdminDeleteProject = 29,
-        ViewProjectCalendar = 30,
         ChangeIssueStatus = 31,
         EditQuery = 32
     }

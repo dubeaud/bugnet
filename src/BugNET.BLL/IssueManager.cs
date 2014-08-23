@@ -239,11 +239,16 @@ namespace BugNET.BLL
             {
                 var count = (decimal)issueCount.Count;
 
-                var value = (count / issueSum) * 100;
-
-                value = Math.Round(value, MidpointRounding.ToEven); // might help make the percentages closer to 100% on UI
-
-                issueCount.Percentage = issueSum != 0 ? value : 0;
+                if(count == 0)
+                {
+                    issueCount.Percentage = 0;
+                }
+                else
+                {
+                    var value = (count / issueSum) * 100;
+                    value = Math.Round(value, MidpointRounding.ToEven); // might help make the percentages closer to 100% on UI
+                    issueCount.Percentage = issueSum != 0 ? value : 0;
+                } 
             }
 
             return issueCountList;

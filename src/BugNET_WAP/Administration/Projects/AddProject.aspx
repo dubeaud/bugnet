@@ -12,11 +12,11 @@
         <br />
         <br />
         <div class="row">
-            <div class="pull-left">
+            <div class="text-left col-md-6">
                 <asp:Button Text="<%$ Resources:SharedResources, Cancel %>" CssClass="btn btn-danger" CausesValidation="false" runat="server"
                     ID="btnCancel" ClientIDMode="Static" OnClick="btnCancel_Click" />
             </div>
-            <div class="pull-right">
+            <div class="text-right col-md-6">
                 <asp:Button ID="btnBack" CssClass="btn btn-primary" Text="<%$ Resources:Back %>" CausesValidation="false" runat="Server"
                     OnClick="btnBack_Click" />
                 <asp:Button ID="btnNext" CssClass="btn btn-primary" Text="<%$ Resources:Next %>" runat="Server" OnClick="btnNext_Click" />

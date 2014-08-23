@@ -47,8 +47,7 @@ namespace BugNET.Common
         /// Default read only role permissions
         /// </summary>
         public static readonly int[] ReadOnlyPermissions = { 
-                (int)Permission.SubscribeIssue,
-                (int)Permission.ViewProjectCalendar
+                (int)Permission.SubscribeIssue
             };
 
         /// <summary>
@@ -62,8 +61,7 @@ namespace BugNET.Common
                 (int)Permission.AddAttachment, 
                 (int)Permission.AddRelated,
                 (int)Permission.AddParentIssue,
-                (int)Permission.AddSubIssue,
-                (int)Permission.ViewProjectCalendar
+                (int)Permission.AddSubIssue
             };
 
         /// <summary>
@@ -82,8 +80,7 @@ namespace BugNET.Common
                 (int)Permission.SubscribeIssue,
                 (int)Permission.EditIssue,
                 (int)Permission.AssignIssue,
-                (int)Permission.ChangeIssueStatus,
-                (int)Permission.ViewProjectCalendar
+                (int)Permission.ChangeIssueStatus
             };
 
         /// <summary>
@@ -105,8 +102,7 @@ namespace BugNET.Common
                 (int)Permission.AssignIssue,
                 (int)Permission.CloseIssue,
                 (int)Permission.DeleteIssue,
-                (int)Permission.ChangeIssueStatus,
-                (int)Permission.ViewProjectCalendar
+                (int)Permission.ChangeIssueStatus
             };
 
         /// <summary>
@@ -141,8 +137,7 @@ namespace BugNET.Common
                 (int)Permission.CloseIssue,
                 (int)Permission.AdminEditProject,
                 (int)Permission.ChangeIssueStatus,
-                (int)Permission.ReopenIssue,
-                (int)Permission.ViewProjectCalendar
+                (int)Permission.ReopenIssue
             };
 
         #endregion
