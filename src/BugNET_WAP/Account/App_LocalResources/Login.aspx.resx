@@ -117,41 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AlreadyLoggedIn.Text" xml:space="preserve">
-    <value>You are already logged in.</value>
-  </data>
-  <data name="CreateAccountFailed" xml:space="preserve">
-    <value>: Unsuccessful creation of Account: </value>
-  </data>
-  <data name="CreateUserLink.Text" xml:space="preserve">
-    <value>click here to get one</value>
-  </data>
-  <data name="LoginCancelled.Text" xml:space="preserve">
-    <value>Login cancelled</value>
-  </data>
-  <data name="LoginFailed.Text" xml:space="preserve">
-    <value>Login failed</value>
-  </data>
   <data name="LoginLabel.Text" xml:space="preserve">
     <value>Login</value>
-  </data>
-  <data name="LoginMemberAccount.Text" xml:space="preserve">
-    <value>You can login with your member account</value>
-  </data>
-  <data name="LoginOpenIDAccount.Text" xml:space="preserve">
-    <value>You can login using your OpenID</value>
-  </data>
-  <data name="NoAccount.Text" xml:space="preserve">
-    <value>If you don&amp;#39;t have an account yet you can</value>
   </data>
   <data name="Page.Title" xml:space="preserve">
     <value>Login</value>
   </data>
   <data name="RegistrationDisabled" xml:space="preserve">
     <value>: User registration has been disabled by the administrator.</value>
-  </data>
-  <data name="NotAuthorized.Text" xml:space="preserve">
-    <value>Account is not authorized or is locked.</value>
   </data>
   <data name="UseLocalAccount.Text" xml:space="preserve">
     <value>Use a local account to log in.</value>
@@ -162,13 +135,13 @@
   <data name="LoginButton.Text" xml:space="preserve">
     <value>Login</value>
   </data>
-  <data name="Register_MessageFormat" xml:space="preserve">
-    <value>{0} if you don't have a local account.</value>
-  </data>
   <data name="Register_LinkText" xml:space="preserve">
     <value>Register</value>
   </data>
-  <data name="PasswordRecoveryLink.Text" xml:space="preserve">
+  <data name="PasswordRecoveryLink" xml:space="preserve">
     <value>Forgot your password?</value>
+  </data>
+  <data name="InvalidLoginAttempt" xml:space="preserve">
+    <value>Invalid login attempt</value>
   </data>
 </root>

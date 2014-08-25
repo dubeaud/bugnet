@@ -22,66 +22,21 @@ namespace BugNET.Account {
         protected global::System.Web.UI.WebControls.PlaceHolder successMessage;
         
         /// <summary>
-        /// setPassword control.
+        /// ChangePassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder setPassword;
+        protected global::System.Web.UI.WebControls.HyperLink ChangePassword;
         
         /// <summary>
-        /// password control.
+        /// CreatePassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox password;
-        
-        /// <summary>
-        /// newPasswordMessage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label newPasswordMessage;
-        
-        /// <summary>
-        /// confirmPassword control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox confirmPassword;
-        
-        /// <summary>
-        /// changePassword control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder changePassword;
-        
-        /// <summary>
-        /// externalLoginsList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView externalLoginsList;
-        
-        /// <summary>
-        /// Unnamed2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::BugNET.Account.OpenAuthProviders Unnamed2;
+        protected global::System.Web.UI.WebControls.HyperLink CreatePassword;
     }
 }

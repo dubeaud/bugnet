@@ -1,11 +1,12 @@
-﻿using BugNET.BLL;
-using BugNET.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Owin;
+using BugNET.Models;
+using BugNET.BLL;
+using BugNET.Common;
 
 namespace BugNET.Account
 {
@@ -13,28 +14,57 @@ namespace BugNET.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Register_Localize.Text = GetLocalizedText(ResolveUrl("~/Account/Register.aspx"));
+            RegisterHyperLink.NavigateUrl = "Register";
+            RegisterHyperLink.Text = GetLocalResourceObject("Register_LinkText").ToString();
+            // Enable this once you have account confirmation enabled for password reset functionality
+            ForgotPasswordHyperLink.NavigateUrl = "Forgot";
+            ForgotPasswordHyperLink.Text = GetLocalResourceObject("PasswordRecoveryLink").ToString();
             OpenAuthLogin.ReturnUrl = Request.QueryString["ReturnUrl"];
-            this.Form.DefaultButton = this.LoginView.FindControl("LoginButton").UniqueID;
-
-            if (Convert.ToInt32(HostSettingManager.Get(HostSettingNames.UserRegistration)) == (int)UserRegistration.None)
-            {
-                Register_Localize.Visible = false;
-            }
-
-        }
-
-        private string GetLocalizedText(string linkUrl)
-        {
             var returnUrl = HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"]);
             if (!String.IsNullOrEmpty(returnUrl))
             {
-                linkUrl += "?ReturnUrl=" + returnUrl;
+                RegisterHyperLink.NavigateUrl += "?ReturnUrl=" + returnUrl;
             }
-            string messageFormat = GetLocalResourceObject("Register_MessageFormat").ToString();
-            string linkText = GetLocalResourceObject("Register_LinkText").ToString();
-            string link = String.Format("<a href=\"{0}\">{1}</a>", linkUrl, Server.HtmlEncode(linkText));
-            return String.Format(messageFormat, link);
+
+            if (Convert.ToInt32(HostSettingManager.Get(HostSettingNames.UserRegistration)) == (int)UserRegistration.None)
+            {
+                RegisterHyperLink.Visible = false;
+            }
+        }
+
+        protected void LogIn(object sender, EventArgs e)
+        {
+            if (IsValid)
+            {
+                // Validate the user password
+                var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                var signinManager = Context.GetOwinContext().GetUserManager<ApplicationSignInManager>();
+
+                // This doesn't count login failures towards account lockout
+                // To enable password failures to trigger lockout, change to shouldLockout: true
+                var result = signinManager.PasswordSignIn(UserName.Text, Password.Text, RememberMe.Checked, shouldLockout: false);
+
+                switch (result)
+                {
+                    case SignInStatus.Success:
+                        IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
+                        break;
+                    case SignInStatus.LockedOut:
+                        Response.Redirect("/Account/Lockout");
+                        break;
+                    case SignInStatus.RequiresVerification:
+                        Response.Redirect(String.Format("/Account/TwoFactorAuthenticationSignIn?ReturnUrl={0}&RememberMe={1}", 
+                                                        Request.QueryString["ReturnUrl"],
+                                                        RememberMe.Checked),
+                                          true);
+                        break;
+                    case SignInStatus.Failure:
+                    default:
+                        FailureText.Text = GetLocalResourceObject("InvalidLoginAttempt").ToString();
+                        ErrorMessage.Visible = true;
+                        break;
+                }
+            }
         }
     }
 }

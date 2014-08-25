@@ -161,5 +161,10 @@ namespace BugNET
         {
             Response.Redirect(string.Format("~/Issues/IssueSearch.aspx?q={0}", SearchBox.Text));
         }
+
+        protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
+        {
+            Context.GetOwinContext().Authentication.SignOut();
+        }
     }
 }

@@ -1,65 +1,35 @@
-﻿
+﻿using System;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Owin;
+using BugNET.Models;
+
 namespace BugNET.Account
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
-    using System.Web.Security;
-    using System.Web.UI;
-    using System.Web.UI.WebControls;
-    using Microsoft.AspNet.Membership.OpenAuth;
-    using BugNET.BLL;
-    using BugNET.Common;
-
     public partial class Register : Page
     {
-        protected void Page_Load(object sender, EventArgs e)
+        protected void CreateUser_Click(object sender, EventArgs e)
         {
-            //redirect to access denied if user registration disabled
-            switch (Convert.ToInt32(HostSettingManager.Get(HostSettingNames.UserRegistration)))
+            var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var user = new ApplicationUser() { UserName = Email.Text, Email = Email.Text };
+            IdentityResult result = manager.Create(user, Password.Text);
+            if (result.Succeeded)
             {
-                case (int)UserRegistration.None:
-                    Response.Redirect("~/Errors/AccessDenied", true);
-                    break;
-                case (int)UserRegistration.Verified:
-                    RegisterUser.DisableCreatedUser = true;
-                    RegisterUser.CompleteStep.ContentTemplateContainer.FindControl("VerificationPanel").Visible = true;
-                    break;
+                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                //string code = manager.GenerateEmailConfirmationToken(user.Id);
+                //string callbackUrl = IdentityHelper.GetUserConfirmationRedirectUrl(code, user.Id, Request);
+                //manager.SendEmail(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>.");
+
+                IdentityHelper.SignIn(manager, user, isPersistent: false);
+                IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
             }
-
-            RegisterUser.ContinueDestinationPageUrl = Request.QueryString["ReturnUrl"];
-        }
-
-        protected void RegisterUser_CreatedUser(object sender, EventArgs e)
-        {
-            FormsAuthentication.SetAuthCookie(RegisterUser.UserName, createPersistentCookie: false);
-
-            string continueUrl = RegisterUser.ContinueDestinationPageUrl;
-            if (!OpenAuth.IsLocalUrl(continueUrl))
+            else 
             {
-                continueUrl = "~/";
+                ErrorMessage.Text = result.Errors.FirstOrDefault();
             }
-
-            var user = UserManager.GetUser(RegisterUser.UserName);
-
-            // add users to all auto assigned roles
-            var roles = RoleManager.GetAll();
-            foreach (var r in roles.Where(r => r.AutoAssign))
-            {
-                RoleManager.AddUser(user.UserName, r.Id);
-            }
-
-            // send user verification email if enabled
-            if (Convert.ToBoolean(HostSettingManager.Get(HostSettingNames.UserRegistration, (int)UserRegistration.Verified)))
-            {
-                UserManager.SendUserVerificationNotification(user);
-            }
-
-            //send notification this user was created
-            UserManager.SendUserRegisteredNotification(user.UserName);
-
-            Response.Redirect(continueUrl);
         }
     }
 }

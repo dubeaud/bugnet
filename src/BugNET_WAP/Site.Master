@@ -83,7 +83,7 @@
                                             <asp:Localize runat="server" Text="<%$ Resources:SharedResources, ManageAccount %>" /></a></li>
                                         <li class="divider"></li>
                                         <li>
-                                            <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="<%$ Resources:SharedResources, Logout %>" LogoutPageUrl="~/" />
+                                            <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="<%$ Resources:SharedResources, Logout %>" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
                                         </li>
                                     </ul>
                                 </li>

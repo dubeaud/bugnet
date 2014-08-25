@@ -22,30 +22,30 @@ namespace BugNET.Account {
         protected global::System.Web.UI.WebControls.Literal ErrorMessage;
         
         /// <summary>
-        /// RegisterUser control.
+        /// Email control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CreateUserWizard RegisterUser;
+        protected global::System.Web.UI.WebControls.TextBox Email;
         
         /// <summary>
-        /// RegisterUserWizardStep control.
+        /// Password control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CreateUserWizardStep RegisterUserWizardStep;
+        protected global::System.Web.UI.WebControls.TextBox Password;
         
         /// <summary>
-        /// CompleteWizardStep1 control.
+        /// ConfirmPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CompleteWizardStep CompleteWizardStep1;
+        protected global::System.Web.UI.WebControls.TextBox ConfirmPassword;
     }
 }

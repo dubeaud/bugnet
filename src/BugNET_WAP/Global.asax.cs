@@ -128,7 +128,7 @@ namespace BugNET
 
                 LoggingManager.ConfigureLogging();
 
-                AuthConfig.RegisterOpenAuth();
+                // AuthConfig.RegisterOpenAuth();
 
                 Log.Info("Application Start");
 
