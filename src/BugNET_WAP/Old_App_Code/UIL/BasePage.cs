@@ -2,6 +2,8 @@ using System;
 using System.Web;
 using BugNET.BLL;
 using BugNET.Common;
+using Microsoft.AspNet.FriendlyUrls;
+using System.Collections.Generic;
 
 namespace BugNET.UserInterfaceLayer
 {
@@ -51,13 +53,13 @@ namespace BugNET.UserInterfaceLayer
 
             base.OnInit(e);
 
-            //Check for session timeouts
+            // Check for session timeouts
             if (Context.Session != null && User.Identity.IsAuthenticated)
             {
-                //check whether a new session was generated
+                // check whether a new session was generated
                 if (Session.IsNewSession)
                 {
-                    //check whether a cookies had already been associated with this request
+                    // check whether a cookies had already been associated with this request
                     var sessionCookie = Request.Cookies["ASP.NET_SessionId"];
                     if (sessionCookie != null)
                     {
@@ -74,12 +76,10 @@ namespace BugNET.UserInterfaceLayer
                 }
             }
 
-            //Security check using the following rules:
-            // Improvements for BGN-1379 More robust QueryStrings checking
-            //
-            //1. Application must allow anonymous identification (DisableAnonymousAccess HostSetting)
-            //2. User must be authenticated if anonymous identification is false
-            //3. Default page is not protected so the unauthenticated user may login
+            // Security check using the following rules:
+            // 1. Application must allow anonymous identification (DisableAnonymousAccess HostSetting)
+            // 2. User must be authenticated if anonymous identification is false
+            // 3. Default page is not protected so the unauthenticated user may login
             if (!HostSettingManager.Get(HostSettingNames.AnonymousAccess, false) && 
                 !User.Identity.IsAuthenticated && 
                 !Request.Url.LocalPath.EndsWith("Default.aspx"))
@@ -87,7 +87,16 @@ namespace BugNET.UserInterfaceLayer
                 ErrorRedirector.TransferToLoginPage(Page);
             }
 
-            var projectId = Request.QueryString.Get("pid", Globals.NEW_ID);
+            int projectId = 0;
+            try
+            {
+                IList<string> segments = Request.GetFriendlyUrlSegments();
+                projectId = Int32.Parse(segments[0]);
+            }
+            catch
+            {
+                projectId = Request.QueryString.Get("pid", Globals.NEW_ID);
+            }
 
             if (projectId <= Globals.NEW_ID) return;
 
@@ -111,9 +120,9 @@ namespace BugNET.UserInterfaceLayer
             // set the project id if we have one
             ProjectId = projectId;
 
-            //Security check using the following rules:
-            //1. Anonymous user
-            //2. The project type is private
+            // Security check using the following rules:
+            // 1. Anonymous user
+            // 2. The project type is private
             if (!User.Identity.IsAuthenticated &&
                 myProj.AccessType == ProjectAccessType.Private)
             {
@@ -121,11 +130,11 @@ namespace BugNET.UserInterfaceLayer
                 return;
             }
 
-            //Security check using the following rules:
-            //1. Not Super user
-            //2. Authenticated user
-            //3. The project type is private 
-            //4. The user is not a project member
+            // Security check using the following rules:
+            // 1. Not Super user
+            // 2. Authenticated user
+            // 3. The project type is private 
+            // 4. The user is not a project member
             if (User.Identity.IsAuthenticated && !UserManager.IsSuperUser() &&
                 myProj.AccessType == ProjectAccessType.Private &&
                 !ProjectManager.IsUserProjectMember(User.Identity.Name, projectId))
