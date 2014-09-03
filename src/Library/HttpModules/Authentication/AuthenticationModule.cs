@@ -4,11 +4,15 @@ using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using System.Text.RegularExpressions;
 using System.Web;
-using System.Web.Security;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Owin;
+using BugNET.Models;
 using BugNET.BLL;
 using BugNET.Common;
 using BugNET.Entities;
 using log4net;
+using System.Threading.Tasks;
 
 namespace BugNET.HttpModules
 {
@@ -45,91 +49,80 @@ namespace BugNET.HttpModules
 		/// <param name="context">An <see cref="T:System.Web.HttpApplication"></see> that provides access to the methods, properties, and events common to all application objects within an ASP.NET application</param>
 		public void Init(HttpApplication context)
 		{
-			context.AuthenticateRequest += context_AuthenticateRequest;
+            // It wraps the Task-based method
+            EventHandlerTaskAsyncHelper asyncHelper = new EventHandlerTaskAsyncHelper(AuthenticateRequest);
+
+            // asyncHelper's BeginEventHandler and EndEventHandler eventhandler that is used
+            // as Begin and End methods for Asynchronous HTTP modules
+            context.AddOnAuthenticateRequestAsync(asyncHelper.BeginEventHandler, asyncHelper.EndEventHandler);
 		}
 
-		/// <summary>
-		/// Handles the AuthenticateRequest event of the context control.
-		/// </summary>
-		/// <param name="sender">The source of the event.</param>
-		/// <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
-		void context_AuthenticateRequest(object sender, EventArgs e)
-		{
-			//check if we are upgrading/installing
-			if (HttpContext.Current.Request.Url.LocalPath.ToLower().EndsWith("install.aspx"))
-				return;
+        private async Task AuthenticateRequest(object sender, EventArgs e)
+        {
+            //check if we are upgrading/installing
+            if (HttpContext.Current.Request.Url.LocalPath.ToLower().EndsWith("install.aspx"))
+                return;
 
-			//get host settings
-			bool enabled = HostSettingManager.Get(HostSettingNames.UserAccountSource) == "ActiveDirectory" || HostSettingManager.Get(HostSettingNames.UserAccountSource) == "WindowsSAM";
+            //get host settings
+            bool enabled = HostSettingManager.Get(HostSettingNames.UserAccountSource) == "ActiveDirectory" || HostSettingManager.Get(HostSettingNames.UserAccountSource) == "WindowsSAM";
 
-			//check if windows authentication is enabled in the host settings
-			if (enabled)
-			{
-				if (System.Web.HttpContext.Current.User != null)
-					MDC.Set("user", System.Web.HttpContext.Current.User.Identity.Name);
+            //check if windows authentication is enabled in the host settings
+            if (enabled)
+            {
+                if (System.Web.HttpContext.Current.User != null)
+                    MDC.Set("user", System.Web.HttpContext.Current.User.Identity.Name);
 
-				// This was moved from outside "if enabled" to only happen when we need it.
-				HttpRequest request = HttpContext.Current.Request;
+                // This was moved from outside "if enabled" to only happen when we need it.
+                HttpRequest request = HttpContext.Current.Request;
 
-				// not needed to be removed
-				// HttpResponse response = HttpContext.Current.Response;
+                if (request.IsAuthenticated)
+                {
+                    if ((HttpContext.Current.User.Identity.AuthenticationType == "NTLM" || HttpContext.Current.User.Identity.AuthenticationType == "Negotiate"))
+                    {
+                        //check if the user exists in the database 
+                        Models.ApplicationUser user = BugNET.BLL.UserManager.GetUser(HttpContext.Current.User.Identity.Name);
 
-				if (request.IsAuthenticated)
-				{
-					if ((HttpContext.Current.User.Identity.AuthenticationType == "NTLM" || HttpContext.Current.User.Identity.AuthenticationType == "Negotiate"))
-					{
-						//check if the user exists in the database 
-						MembershipUser user = UserManager.GetUser(HttpContext.Current.User.Identity.Name);
+                        if (user == null)
+                        {
+                            try
+                            {
+                                UserProperties userprop = GetUserProperties(HttpContext.Current.User.Identity.Name);
 
-						if (user == null)
-						{
-							try
-							{
-								UserProperties userprop = GetUserProperties(HttpContext.Current.User.Identity.Name);
-								MembershipUser mu = null;
-								MembershipCreateStatus createStatus = MembershipCreateStatus.Success;
+                                var manager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                                user = new ApplicationUser() { UserName = HttpContext.Current.User.Identity.Name, Email = userprop.Email };
+                                var password = await manager.GenerateRandomPasswordAsync();
+                                IdentityResult result = manager.Create(user, password);
 
-								//create a new user with the current identity and a random password.
-								if (Membership.RequiresQuestionAndAnswer)
-									mu = Membership.CreateUser(HttpContext.Current.User.Identity.Name, Membership.GeneratePassword(7, 2), userprop.Email, "WindowsAuth", "WindowsAuth", true, out createStatus);
-								else
-									mu = Membership.CreateUser(HttpContext.Current.User.Identity.Name, Membership.GeneratePassword(7, 2), userprop.Email);
+                                if (result.Succeeded)
+                                {
+                                    WebProfile Profile = new WebProfile().GetProfile(HttpContext.Current.User.Identity.Name);
+                                    if (!string.IsNullOrWhiteSpace(userprop.DisplayName))
+                                        Profile.DisplayName = userprop.DisplayName;
+                                    else
+                                        Profile.DisplayName = String.Format("{0} {1}", userprop.FirstName, userprop.LastName);
+                                    Profile.FirstName = userprop.FirstName;
+                                    Profile.LastName = userprop.LastName;
+                                    Profile.Save();
 
-								if (createStatus == MembershipCreateStatus.Success && mu != null)
-								{
-									WebProfile Profile = new WebProfile().GetProfile(HttpContext.Current.User.Identity.Name);
-									if (!string.IsNullOrWhiteSpace(userprop.DisplayName))
-										Profile.DisplayName = userprop.DisplayName;
-									else
-										Profile.DisplayName = String.Format("{0} {1}", userprop.FirstName, userprop.LastName);
-									Profile.FirstName = userprop.FirstName;
-									Profile.LastName = userprop.LastName;
-									Profile.Save();
+                                    // auto assign user to roles
+                                    List<Role> roles = RoleManager.GetAll().FindAll(r => r.AutoAssign == true);
+                                    foreach (Role r in roles)
+                                    { 
+                                        RoleManager.AddUser(user.UserName, r.Id);
+                                    }
+                                }
 
-									//auto assign user to roles
-									List<Role> roles = RoleManager.GetAll().FindAll(r => r.AutoAssign == true);
-									foreach (Role r in roles)
-										RoleManager.AddUser(mu.UserName, r.Id);
-								}
-
-								user = Membership.GetUser(HttpContext.Current.User.Identity.Name);
-							}
-							catch (Exception ex)
-							{
-								if (Log.IsErrorEnabled)
-									Log.Error(String.Format("Unable to add new user '{0}' to BugNET application. Authentication Type='{1}'.", HttpContext.Current.User.Identity.Name, HttpContext.Current.User.Identity.AuthenticationType), ex);
-							}
-						}
-						else
-						{
-							//update the user's last login date.
-							user.LastLoginDate = DateTime.Now;
-							Membership.UpdateUser(user);
-						}
-					}
-				}
-			}
-		}
+                            }
+                            catch (Exception ex)
+                            {
+                                if (Log.IsErrorEnabled)
+                                    Log.Error(String.Format("Unable to add new user '{0}' to BugNET application. Authentication Type='{1}'.", HttpContext.Current.User.Identity.Name, HttpContext.Current.User.Identity.AuthenticationType), ex);
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
 		/// <summary>
 		/// Gets the users properties from the specified user store.

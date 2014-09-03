@@ -288,6 +288,12 @@
     <Build Include="Tables\UsersInRoles.sql" />
     <Build Include="Stored Procedures\BugNet_User_GetUserIdByUserName.sql" />
     <Build Include="Stored Procedures\BugNet_User_GetUserNameByPasswordResetToken.sql" />
+    <Build Include="Tables\AspNetRoles.sql" />
+    <Build Include="Tables\AspNetUserClaims.sql" />
+    <Build Include="Tables\AspNetUserLogins.sql" />
+    <Build Include="Tables\AspNetUserRoles.sql" />
+    <Build Include="Tables\AspNetUsers.sql" />
+    <None Include="Scripts\ScriptsIgnoredOnImport.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />

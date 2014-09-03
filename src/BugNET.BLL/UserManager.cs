@@ -12,6 +12,10 @@ using BugNET.Entities;
 using BugNET.Providers.MembershipProviders;
 using log4net;
 using System.Net.Mail;
+using BugNET.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Owin;
 
 namespace BugNET.BLL
 {
@@ -25,10 +29,10 @@ namespace BugNET.BLL
         /// <param name="userName"></param>
         /// <param name="password"></param>
         /// <param name="email"></param>
-        public static void CreateUser(string userName, string password, string email)
-        {
-            Membership.CreateUser(userName, password, email);
-        }
+        //public static void CreateUser(string userName, string password, string email)
+        //{
+        //    Membership.CreateUser(userName, password, email);
+        //}
 
         /// <summary>
         /// Provides a BugNET way of checking if the user's credentials are
@@ -37,9 +41,22 @@ namespace BugNET.BLL
         /// <param name="userName"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public static bool ValidateUser(string userName, string password)
+        //public static bool ValidateUser(string userName, string password)
+        //{
+        //    return Membership.ValidateUser(userName, password);
+        //}
+        public static ApplicationUser GetUser(Guid userId)
         {
-            return Membership.ValidateUser(userName, password);
+            var manager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var user = manager.FindById(userId);
+            return user;
+        }
+
+        public static ApplicationUser GetUser(string userName)
+        {
+            var manager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var user = manager.FindByName(userName);
+            return user;
         }
 
         /// <summary>
@@ -47,22 +64,22 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="userProviderKey">The user provider key.</param>
         /// <returns></returns>
-        public static MembershipUser GetUser(object userProviderKey)
-        {
-            if (userProviderKey == null) throw (new ArgumentOutOfRangeException("userProviderKey"));
-            return Membership.GetUser(userProviderKey);
-        }
+        //public static MembershipUser GetUser(object userProviderKey)
+        //{
+        //    if (userProviderKey == null) throw (new ArgumentOutOfRangeException("userProviderKey"));
+        //    return Membership.GetUser(userProviderKey);
+        //}
 
         /// <summary>
         /// Gets the user.
         /// </summary>
         /// <param name="userName">Name of the user.</param>
         /// <returns></returns>
-        public static MembershipUser GetUser(string userName)
-        {
-            if (String.IsNullOrEmpty(userName)) throw (new ArgumentOutOfRangeException("userName"));
-            return Membership.GetUser(userName);
-        }
+        //public static MembershipUser GetUser(string userName)
+        //{
+        //    if (String.IsNullOrEmpty(userName)) throw (new ArgumentOutOfRangeException("userName"));
+        //    return Membership.GetUser(userName);
+        //}
 
         /// <summary>
         /// Gets all users in the application
@@ -340,7 +357,7 @@ namespace BugNET.BLL
             if (userName == "") throw new ArgumentNullException("userName");
 
             var user = GetUser(userName);
-            if (user.ProviderUserKey == null) throw new ArgumentNullException("userName");
+            if (user == null) throw new ArgumentNullException("userName");
 
             // TODO - create this via dependency injection at some point.
             IMailDeliveryService mailService = new SmtpMailDeliveryService();
@@ -355,8 +372,8 @@ namespace BugNET.BLL
 
             var notificationUser = new NotificationUser
             {
-                Id = (Guid)user.ProviderUserKey,
-                CreationDate = user.CreationDate,
+                Id = user.Id,
+                CreationDate = user.CreateDate,
                 Email = user.Email,
                 UserName = user.UserName,
                 DisplayName = profile.DisplayName,

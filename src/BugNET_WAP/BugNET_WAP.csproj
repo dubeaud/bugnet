@@ -842,7 +842,6 @@
       <DependentUpon>Web.sitemap.zh-CN.resx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Default.aspx.designer.cs">
@@ -984,7 +983,6 @@
     <Compile Include="Issues\UserControls\Revisions.ascx.designer.cs">
       <DependentUpon>Revisions.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Old_App_Code\SimpleSqlProfileProvider.cs" />
     <Compile Include="Old_App_Code\UIL\DownloadAttachment.cs" />
     <Compile Include="Old_App_Code\UIL\ErrorRedirector.cs">
@@ -2838,6 +2836,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Models\" />
     <Folder Include="Scripts\ckeditor\plugins\a11yhelp\lang\" />
     <Folder Include="Scripts\ckeditor\plugins\specialchar\lang\" />
   </ItemGroup>
