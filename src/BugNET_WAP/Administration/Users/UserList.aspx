@@ -55,36 +55,36 @@
                 <HeaderStyle HorizontalAlign="Center" />
                 <ItemStyle HorizontalAlign="Center" Width="16px" />
                 <ItemTemplate>
-                    <asp:ImageButton ID="Edit" runat="server" CommandName="Edit" CommandArgument='<%#DataBinder.Eval(Container.DataItem, "ProviderUserKey") %>' AlternateText="<%$ Resources:SharedResources, Edit %>" ImageUrl="~/images/pencil.gif" />
+                    <asp:ImageButton ID="Edit" runat="server" CommandName="Edit" CommandArgument='<%#DataBinder.Eval(Container.DataItem, "Id") %>' AlternateText="<%$ Resources:SharedResources, Edit %>" ImageUrl="~/images/pencil.gif" />
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField>
                 <HeaderStyle HorizontalAlign="Center" />
                 <ItemStyle HorizontalAlign="Center" Width="16px" />
                 <ItemTemplate>
-                    <asp:ImageButton ID="Delete" runat="server" CommandName="Delete" CommandArgument='<%#DataBinder.Eval(Container.DataItem, "ProviderUserKey") %>' AlternateText="<%$ Resources:SharedResources, Delete %>" ImageUrl="~/images/cross.gif" />
+                    <asp:ImageButton ID="Delete" runat="server" CommandName="Delete" CommandArgument='<%#DataBinder.Eval(Container.DataItem, "Id") %>' AlternateText="<%$ Resources:SharedResources, Delete %>" ImageUrl="~/images/cross.gif" />
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField>
                 <HeaderStyle HorizontalAlign="Center" />
                 <ItemStyle HorizontalAlign="Center" Width="16px" />
                 <ItemTemplate>
-                    <asp:ImageButton ID="ManageRoles" runat="server" CommandName="ManageRoles" CommandArgument='<%#DataBinder.Eval(Container.DataItem, "ProviderUserKey") %>' AlternateText="<%$ Resources:ManageRoles %>" ImageUrl="~/images/shield.gif" />
+                    <asp:ImageButton ID="ManageRoles" runat="server" CommandName="ManageRoles" CommandArgument='<%#DataBinder.Eval(Container.DataItem, "Id") %>' AlternateText="<%$ Resources:ManageRoles %>" ImageUrl="~/images/shield.gif" />
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:BoundField DataField="UserName" HeaderText="<%$ Resources:SharedResources, Username %>" ReadOnly="True" SortExpression="UserName">
                 <HeaderStyle HorizontalAlign="Left" />
                 <ItemStyle HorizontalAlign="Left" />
             </asp:BoundField>
-            <asp:BoundField DataField="DisplayName" HeaderText="<%$ Resources:SharedResources, Name %>" ReadOnly="True" SortExpression="DisplayName">
+            <%--<asp:BoundField DataField="DisplayName" HeaderText="<%$ Resources:SharedResources, Name %>" ReadOnly="True" SortExpression="DisplayName">
                 <HeaderStyle HorizontalAlign="Left" />
                 <ItemStyle HorizontalAlign="Left" />
-            </asp:BoundField>
+            </asp:BoundField>--%>
             <asp:BoundField DataField="Email" HeaderText="<%$ Resources:SharedResources, Email %>" SortExpression="Email">
                 <HeaderStyle HorizontalAlign="Left" />
                 <ItemStyle HorizontalAlign="Left" />
             </asp:BoundField>
-            <asp:BoundField DataField="CreationDate" HeaderText="<%$ Resources:SharedResources, Created %>" SortExpression="CreationDate" DataFormatString="{0:g}">
+            <asp:BoundField DataField="CreateDate" HeaderText="<%$ Resources:SharedResources, Created %>" SortExpression="CreateDate" DataFormatString="{0:g}">
                 <HeaderStyle HorizontalAlign="Left" />
                 <ItemStyle HorizontalAlign="Left" />
             </asp:BoundField>

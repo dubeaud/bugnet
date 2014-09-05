@@ -36,12 +36,14 @@ CREATE TABLE [dbo].[AspNetUsers](
 	[LockoutEnabled] [bit] NOT NULL,
 	[AccessFailedCount] [int] NOT NULL,
 	[UserName] [nvarchar](256) NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[IsApproved] [bit] NOT NULL,
 	CONSTRAINT [PK_dbo.AspNetUsers] PRIMARY KEY CLUSTERED ([Id] ASC),
  );
 GO
 
-INSERT INTO AspNetUsers([Id], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnabled],[AccessFailedCount],[UserName])
-SELECT Users.UserId, Memberships.Email, 1, (Memberships.Password+'|'+CAST(Memberships.PasswordFormat as varchar)+'|'+Memberships.PasswordSalt), NewID(), 0, 0, 0, 0, Users.UserName
+INSERT INTO AspNetUsers([Id], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnabled],[AccessFailedCount],[UserName], [CreateDate], [IsApproved])
+SELECT Users.UserId, Memberships.Email, 1, (Memberships.Password+'|'+CAST(Memberships.PasswordFormat as varchar)+'|'+Memberships.PasswordSalt), NewID(), 0, 0, 0, 0, Users.UserName, Memberships.CreateDate, Memberships.IsApproved
 FROM Users
 LEFT OUTER JOIN Memberships ON Memberships.ApplicationId = Users.ApplicationId 
 AND Users.UserId = Memberships.UserId;

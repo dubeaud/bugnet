@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Web.Security;
 using BugNET.BLL;
+using BugNET.Models;
 
 namespace BugNET.Administration.Users
 {
     public abstract class BaseUserControlUserAdmin : System.Web.UI.UserControl
     {
-        protected MembershipUser MembershipData { get; set; }
+        protected ApplicationUser MembershipData { get; set; }
 
         protected void GetMembershipData(Guid userId)
         {

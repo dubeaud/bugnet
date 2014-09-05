@@ -50,11 +50,19 @@ namespace BugNET.Administration.Users
         {
             get
             {
-                IList<string> segments = Request.GetFriendlyUrlSegments();
-                var userId = segments[0];
-                // var userId = Request.QueryString.Get("user", "");
+                string userId;
 
-                if (!userId.Equals(""))
+                try
+                {
+                    IList<string> segments = Request.GetFriendlyUrlSegments();
+                    userId = segments[0];
+                }
+                catch
+                {
+                    userId = Request.QueryString.Get("user");
+                }
+
+                if (userId != null)
                 {
                     Guid userGuid;
 
@@ -130,8 +138,7 @@ namespace BugNET.Administration.Users
             MenuItems.Add(new AdminMenuItem { Id = 0, Text = GetLocalResourceObject("UserDetails").ToString(), Argument = "UserDetails", ImageUrl = "vcard.gif" });
             MenuItems.Add(new AdminMenuItem { Id = 1, Text = GetLocalResourceObject("UserRoles").ToString(), Argument = "UserRoles", ImageUrl = "shield.gif" });
             MenuItems.Add(new AdminMenuItem { Id = 2, Text = GetLocalResourceObject("UserPassword").ToString(), Argument = "UserPassword", ImageUrl = "key.gif" });
-            MenuItems.Add(new AdminMenuItem { Id = 3, Text = GetLocalResourceObject("UserProfile").ToString(), Argument = "UserProfile", ImageUrl = "user.gif" });
-            MenuItems.Add(new AdminMenuItem { Id = 4, Text = GetLocalResourceObject("UserDelete").ToString(), Argument = "UserDelete", ImageUrl = "user_delete.gif" });
+            MenuItems.Add(new AdminMenuItem { Id = 3, Text = GetLocalResourceObject("UserDelete").ToString(), Argument = "UserDelete", ImageUrl = "user_delete.gif" });
 
             AdminMenu.DataSource = MenuItems;
             AdminMenu.DataBind();

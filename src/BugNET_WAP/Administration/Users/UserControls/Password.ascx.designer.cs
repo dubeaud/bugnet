@@ -31,24 +31,6 @@ namespace BugNET.Administration.Users.UserControls {
         protected global::BugNET.UserControls.Message ActionMessage;
         
         /// <summary>
-        /// PasswordLastChangedLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal PasswordLastChangedLabel;
-        
-        /// <summary>
-        /// PasswordLastChanged control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal PasswordLastChanged;
-        
-        /// <summary>
         /// ChangePassword control.
         /// </summary>
         /// <remarks>

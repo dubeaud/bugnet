@@ -2,7 +2,6 @@ using System;
 using System.Web.UI;
 using BugNET.BLL;
 using BugNET.Common;
-using BugNET.Providers.MembershipProviders;
 using BugNET.UserInterfaceLayer;
 using log4net;
 
@@ -41,27 +40,26 @@ namespace BugNET.Administration.Users.UserControls
             GetMembershipData(UserId);
 
             //get this user and bind the data
-            var user = (CustomMembershipUser)MembershipData;
+            var user = MembershipData;
 
             if (user == null) return;
 
             // this is to fix the UI if no data is present
             // stops the ol / li from shifting to the right under IE 
-            CreatedDate.Text = string.Concat(user.CreationDate.ToString("g"), "&nbsp;");
-            LastActivityDate.Text = string.Concat(user.LastActivityDate.ToString("g"), "&nbsp;");
-            LastLoginDate.Text = string.Concat(user.LastLoginDate.ToString("g"), "&nbsp;");
+            CreatedDate.Text = string.Concat(user.CreateDate.ToString("g"), "&nbsp;");
+            //LastActivityDate.Text = string.Concat(user.LastActivityDate.ToString("g"), "&nbsp;");
+            //LastLoginDate.Text = string.Concat(user.LastLoginDate.ToString("g"), "&nbsp;");
 
             UserName.Text = user.UserName;
             Email.Text = user.Email;
-            LockedOut.Checked = user.IsLockedOut;
+            LockedOut.Checked = user.LockoutEnabled;
             Authorized.Checked = user.IsApproved;
-            Online.Checked = user.IsOnline;
-            FirstName.Text = user.FirstName; 
-            LastName.Text = user.LastName;
-            DisplayName.Text = user.DisplayName;
+            //FirstName.Text = user.FirstName; 
+            //LastName.Text = user.LastName;
+            //DisplayName.Text = user.DisplayName;
             cmdAuthorize.Visible = !user.IsApproved;
             cmdUnAuthorize.Visible = user.IsApproved;
-            cmdUnLock.Visible = user.IsLockedOut;
+            cmdUnLock.Visible = user.LockoutEnabled;
         }
 
         /// <summary>
@@ -75,15 +73,15 @@ namespace BugNET.Administration.Users.UserControls
             {
                 GetMembershipData(UserId);
 
-                var user = (CustomMembershipUser)MembershipData;
+                var user = MembershipData;
 
                 if (user != null)
                 {
                     //user.IsApproved = Authorized.Checked;
                     user.Email = Email.Text;
-                    user.DisplayName = DisplayName.Text;
-                    user.FirstName = FirstName.Text;
-                    user.LastName =  LastName.Text;
+                    //user.DisplayName = DisplayName.Text;
+                    //user.FirstName = FirstName.Text;
+                    //user.LastName =  LastName.Text;
                     UserManager.UpdateUser(user);
                     OnAction(new ActionEventArgs { Trigger = ActionTriggers.Save });
                 }
@@ -126,7 +124,10 @@ namespace BugNET.Administration.Users.UserControls
             {
                 try
                 {
-                    MembershipData.UnlockUser();
+
+                    MembershipData.LockoutEnabled = false;
+                    UserManager.UpdateUser(MembershipData);
+
                     ActionMessage.ShowSuccessMessage(GetLocalResourceObject("UpdateUserMessage").ToString());
                     BindData();
                 }

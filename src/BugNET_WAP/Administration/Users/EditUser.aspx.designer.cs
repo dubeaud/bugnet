@@ -74,15 +74,7 @@ namespace BugNET.Administration.Users {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::BugNET.Administration.Users.UserControls.Password UserPassword;
-        
-        /// <summary>
-        /// UserProfile control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::BugNET.Administration.Users.UserControls.Profile UserProfile;
+       
         
         /// <summary>
         /// UserDelete control.

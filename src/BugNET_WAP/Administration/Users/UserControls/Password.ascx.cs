@@ -4,9 +4,9 @@ using System.Web.Security;
 using System.Web.UI;
 using BugNET.BLL;
 using BugNET.Common;
-using BugNET.Providers.MembershipProviders;
 using BugNET.UserInterfaceLayer;
 using log4net;
+using System.Threading.Tasks;
 
 namespace BugNET.Administration.Users.UserControls
 {
@@ -43,6 +43,7 @@ namespace BugNET.Administration.Users.UserControls
         /// </summary>
         public void Initialize()
         {
+           
             GetMembershipData(UserId);
             DataBind();
         }
@@ -53,15 +54,6 @@ namespace BugNET.Administration.Users.UserControls
         public override void DataBind()
         {
             base.DataBind();
-
-            if (UserId == Guid.Empty) return;
-
-            //get this user and bind the data
-            var user = (CustomMembershipUser)MembershipData;
-
-            if (user == null) return;
-
-            PasswordLastChanged.Text = string.Concat(user.LastPasswordChangedDate.ToString("g"), "&nbsp;");
         }
 
         /// <summary>
@@ -79,8 +71,16 @@ namespace BugNET.Administration.Users.UserControls
 
             try
             {
-                MembershipData.ChangePassword(MembershipData.ResetPassword(), NewPassword.Text);
-                ActionMessage.ShowSuccessMessage(GetLocalResourceObject("PasswordChangeSuccess").ToString());
+                var result = UserManager.ChangePasswordAdmin(UserId, NewPassword.Text);
+                if(result.Succeeded)
+                {
+                    ActionMessage.ShowSuccessMessage(GetLocalResourceObject("PasswordChangeSuccess").ToString());
+                }
+                else
+                {
+                    ActionMessage.ShowErrorMessage(LoggingManager.GetErrorMessageResource("PasswordChangeError"));
+                }
+                
                 GetMembershipData(UserId);
                 DataBind();
             }
@@ -92,6 +92,45 @@ namespace BugNET.Administration.Users.UserControls
                         MDC.Set("user", HttpContext.Current.User.Identity.Name);
 
                     Log.Error(LoggingManager.GetErrorMessageResource("PasswordChangeError"),ex);
+                }
+                ActionMessage.ShowErrorMessage(LoggingManager.GetErrorMessageResource("PasswordChangeError"));
+            }
+        }
+
+        protected void CmdResetPasswordClick(object sender, EventArgs e)
+        {
+            Page.RegisterAsyncTask(new PageAsyncTask(ResetPasswordAdmin));
+        }
+
+        private async Task ResetPasswordAdmin()
+        {
+            GetMembershipData(UserId);
+
+            if (MembershipData == null) return;
+
+            try
+            {
+                var result = await UserManager.ChangePasswordAdmin(UserId);
+                if (result.Succeeded)
+                {
+                    ActionMessage.ShowSuccessMessage(GetLocalResourceObject("PasswordChangeSuccess").ToString());
+                }
+                else
+                {
+                    ActionMessage.ShowErrorMessage(LoggingManager.GetErrorMessageResource("PasswordChangeError"));
+                }
+
+                GetMembershipData(UserId);
+                DataBind();
+            }
+            catch (Exception ex)
+            {
+                if (Log.IsErrorEnabled)
+                {
+                    if (HttpContext.Current.User != null && HttpContext.Current.User.Identity.IsAuthenticated)
+                        MDC.Set("user", HttpContext.Current.User.Identity.Name);
+
+                    Log.Error(LoggingManager.GetErrorMessageResource("PasswordChangeError"), ex);
                 }
                 ActionMessage.ShowErrorMessage(LoggingManager.GetErrorMessageResource("PasswordChangeError"));
             }

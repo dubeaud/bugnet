@@ -199,13 +199,11 @@ namespace BugNET
 					OpenIssuesLink.Text = GetLocalResourceObject("NoStatusSet").ToString();
 				}
 			   
-
 				HyperLink atu = (HyperLink)e.Item.FindControl("AssignedToUser");
 				Control AssignedUserFilter = e.Item.FindControl("AssignedUserFilter");
 				if(Context.User.Identity.IsAuthenticated && ProjectManager.IsUserProjectMember(User.Identity.Name,p.Id))
 				{
-					System.Web.Security.MembershipUser user = UserManager.GetUser(User.Identity.Name);
-					atu.NavigateUrl = string.Format("~/Issues/IssueList.aspx?pid={0}&u={1}", p.Id, user.UserName);
+                    atu.NavigateUrl = string.Format("~/Issues/IssueList.aspx?pid={0}&u={1}", p.Id, User.Identity.Name);
 				}
 				else
 				{

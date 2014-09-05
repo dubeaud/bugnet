@@ -9,21 +9,22 @@
 </p>
 <div class="form-horizontal">
     <div class="form-group">
-        <asp:Label ID="lblSuperUsers" CssClass="col-md-4 control-label" AssociatedControlID="chkSuperUsers" runat="server" Text="<%$ Resources:SuperUsers %>" />
-        <div class="col-md-8">
+        <asp:Label ID="lblSuperUsers" CssClass="col-md-2 control-label" AssociatedControlID="chkSuperUsers" runat="server" Text="<%$ Resources:SuperUsers %>" />
+        <div class="col-md-10">
             <div class="checkbox">
                 <asp:CheckBox ID="chkSuperUsers" OnCheckedChanged="ChkSuperUsersCheckChanged" AutoPostBack="true" Visible="false" Text="" runat="server" />
             </div>
         </div>
     </div>
     <div class="form-group">
-        <asp:Label ID="Label1" CssClass="col-md-4 control-label" AssociatedControlID="dropProjects" runat="server" Text="<%$ Resources:SharedResources, Project %>" />
-        <div class="col-md-8">
+        <asp:Label ID="Label1" CssClass="col-md-2 control-label" AssociatedControlID="dropProjects" runat="server" Text="<%$ Resources:SharedResources, Project %>" />
+        <div class="col-md-10">
             <bn:PickProject ID="dropProjects" CssClass="form-control" DisplayDefault="true" OnSelectedIndexChanged="DdlProjectsSelectedIndexChanged" AutoPostBack="true" runat="Server" />
         </div>
     </div>
 </div>
-<h3><asp:Literal ID="Literal1" runat="server" Text="<%$ Resources:Roles %>"/></h3>
+<h3>
+    <asp:Literal ID="Literal1" runat="server" Text="<%$ Resources:Roles %>" /></h3>
 <asp:CheckBoxList ID="RoleList" CssClass="checkbox" RepeatLayout="Flow" RepeatDirection="Vertical" runat="server">
 </asp:CheckBoxList>
 <hr />

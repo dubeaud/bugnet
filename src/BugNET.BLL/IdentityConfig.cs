@@ -88,6 +88,13 @@ namespace BugNET
             return manager;
         }
 
+        public IdentityResult ChangePasswordAdmin(Guid userId, string newPassword)
+        {
+            var user = this.FindById(userId);
+            user.PasswordHash = PasswordHasher.HashPassword(newPassword);
+            return this.Update(user);
+        }
+
         protected async override Task<bool> VerifyPasswordAsync(IUserPasswordStore<ApplicationUser, Guid> store, ApplicationUser user, string password)
         {
             var hash = await store.GetPasswordHashAsync(user).ConfigureAwait(false);

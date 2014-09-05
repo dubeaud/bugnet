@@ -11,5 +11,7 @@
 	[LockoutEnabled] [bit] NOT NULL,
 	[AccessFailedCount] [int] NOT NULL,
 	[UserName] [nvarchar](256) NOT NULL,
+	[CreateDate] [datetime] NOT NULL,
+	[IsApproved] [bit] NOT NULL,
 	CONSTRAINT [PK_dbo.AspNetUsers] PRIMARY KEY CLUSTERED ( [Id] ASC) 
 );

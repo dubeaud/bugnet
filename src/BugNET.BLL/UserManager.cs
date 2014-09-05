@@ -9,13 +9,13 @@ using BugNET.BLL.Notifications;
 using BugNET.Common;
 using BugNET.DAL;
 using BugNET.Entities;
-using BugNET.Providers.MembershipProviders;
 using log4net;
 using System.Net.Mail;
 using BugNET.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Owin;
+using System.Threading.Tasks;
 
 namespace BugNET.BLL
 {
@@ -34,17 +34,6 @@ namespace BugNET.BLL
         //    Membership.CreateUser(userName, password, email);
         //}
 
-        /// <summary>
-        /// Provides a BugNET way of checking if the user's credentials are
-        /// correct.
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        //public static bool ValidateUser(string userName, string password)
-        //{
-        //    return Membership.ValidateUser(userName, password);
-        //}
         public static ApplicationUser GetUser(Guid userId)
         {
             var manager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -60,41 +49,20 @@ namespace BugNET.BLL
         }
 
         /// <summary>
-        /// Gets the user.
-        /// </summary>
-        /// <param name="userProviderKey">The user provider key.</param>
-        /// <returns></returns>
-        //public static MembershipUser GetUser(object userProviderKey)
-        //{
-        //    if (userProviderKey == null) throw (new ArgumentOutOfRangeException("userProviderKey"));
-        //    return Membership.GetUser(userProviderKey);
-        //}
-
-        /// <summary>
-        /// Gets the user.
-        /// </summary>
-        /// <param name="userName">Name of the user.</param>
-        /// <returns></returns>
-        //public static MembershipUser GetUser(string userName)
-        //{
-        //    if (String.IsNullOrEmpty(userName)) throw (new ArgumentOutOfRangeException("userName"));
-        //    return Membership.GetUser(userName);
-        //}
-
-        /// <summary>
         /// Gets all users in the application
         /// </summary>
         /// <returns>Collection of membership users</returns>
-        public static List<CustomMembershipUser> GetAllUsers()
+        public static List<ApplicationUser> GetAllUsers()
         {
-            return Membership.GetAllUsers().Cast<CustomMembershipUser>().ToList();
+            var manager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            return manager.Users.ToList();
         }
 
         /// <summary>
         /// Gets all users.
         /// </summary>
         /// <returns>Authorized Users Only</returns>
-        public static List<CustomMembershipUser> GetAllAuthorizedUsers()
+        public static List<ApplicationUser> GetAllAuthorizedUsers()
         {
             var users = GetAllUsers();
             var authenticatedUsers = users.Where(user => user.IsApproved).ToList();
@@ -102,28 +70,31 @@ namespace BugNET.BLL
             return users;
         }
 
+        public static IdentityResult ChangePasswordAdmin(Guid userId, string newPassword)
+        {
+            var manager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            return manager.ChangePasswordAdmin(userId, newPassword);
+        }
+
+        public static async Task<IdentityResult> ChangePasswordAdmin(Guid userId)
+        {
+            var manager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+
+            var password = await manager.GenerateRandomPasswordAsync();
+            return manager.ChangePasswordAdmin(userId, password);
+        }
+
         /// <summary>
         /// Finds users by name
         /// </summary>
         /// <param name="userNameToMatch">The user name to match.</param>
         /// <returns></returns>
-        public static List<CustomMembershipUser> FindUsersByName(string userNameToMatch)
+        public static List<ApplicationUser> FindUsersByName(string userNameToMatch)
         {
-            var userList = new Dictionary<string, CustomMembershipUser>();
+            var userList = new List<ApplicationUser>();
 
-            // find standard usernames
-            foreach (CustomMembershipUser u in Membership.FindUsersByName(userNameToMatch))
-                userList[u.UserName] = u;
-
-            // find windows user names [domain\username] pattern
-            foreach (CustomMembershipUser u in Membership.FindUsersByName(string.Concat("%\\", userNameToMatch)))
-                userList[u.UserName] = u;
-
-            // find open id user names [http://username] pattern
-            foreach (CustomMembershipUser u in Membership.FindUsersByName(string.Concat("%//", userNameToMatch)))
-                userList[u.UserName] = u;
-            
-            return new List<CustomMembershipUser>(userList.Values);
+            var manager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            return manager.Users.Where(u => u.UserName.Contains(userNameToMatch)).ToList();
         }
 
         /// <summary>
@@ -131,20 +102,24 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="emailToMatch">The email to match.</param>
         /// <returns></returns>
-        public static List<CustomMembershipUser> FindUsersByEmail(string emailToMatch)
+        public static List<ApplicationUser> FindUsersByEmail(string emailToMatch)
         {
-            return Membership.FindUsersByEmail(emailToMatch).Cast<CustomMembershipUser>().ToList();
+            var userList = new List<ApplicationUser>();
+
+            var manager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            return manager.Users.Where(u => u.Email.Contains(emailToMatch)).ToList();
         }
 
         /// <summary>
         /// Updates the user.
         /// </summary>
         /// <param name="user">The user.</param>
-        public static void UpdateUser(MembershipUser user)
+        public static void UpdateUser(ApplicationUser user)
         {
             if (user == null) throw new ArgumentNullException("user");
 
-            Membership.UpdateUser(user);
+            var manager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            manager.Update(user);
         }
 
         /// <summary>
@@ -178,19 +153,6 @@ namespace BugNET.BLL
 
             var roles = RoleManager.GetForUser(HttpContext.Current.User.Identity.Name);
             return roles.Exists(r => r.Name == Globals.SUPER_USER_ROLE);
-        }
-
-        /// <summary>
-        /// Determines whether [is in role] [the specified role name].
-        /// </summary>
-        /// <param name="roleName">Name of the role.</param>
-        /// <returns>
-        /// 	<c>true</c> if [is in role] [the specified role name]; otherwise, <c>false</c>.
-        /// </returns>
-        [Obsolete("When testing for super user use IsSuperUser() method, otherwise use IsInRole() with project id overload")]
-        public static bool IsInRole(string roleName)
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>

@@ -156,9 +156,9 @@ namespace BugNET.Account
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void SaveButton_Click(object s, EventArgs e)
         {
-            var membershipUser = UserManager.GetUser(User.Identity.Name);
+            var user = UserManager.GetUser(User.Identity.Name);
 
-            membershipUser.Email = Email.Text;
+            user.Email = Email.Text;
             WebProfile.Current.FirstName = FirstName.Text;
             WebProfile.Current.LastName = LastName.Text;
             WebProfile.Current.DisplayName = FullName.Text;
@@ -166,7 +166,7 @@ namespace BugNET.Account
             try
             {
                 WebProfile.Current.Save();
-                Membership.UpdateUser(membershipUser);
+                UserManager.UpdateUser(user);
                
                 Message1.ShowSuccessMessage(GetLocalResourceObject("ProfileSaved").ToString());
 

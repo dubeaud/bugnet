@@ -4,6 +4,7 @@ using System.Web.UI.WebControls;
 using BugNET.BLL;
 using BugNET.Common;
 using BugNET.UserInterfaceLayer;
+using System.Collections.Generic;
 
 namespace BugNET.Administration.Users
 {
@@ -124,28 +125,21 @@ namespace BugNET.Administration.Users
         private void BindData(string filter)
         {
             SearchFilter = filter;
-            string searchText;
+
+            List<Models.ApplicationUser> users = new List<Models.ApplicationUser>();
 
             switch (filter)
             {
-                case "All":
-                    searchText = string.Empty;
-                    break;
                 case "Unauthorized":
-                    searchText = string.Empty;
+                    users.Where(user => !user.IsApproved).ToList();
+                    break;
+                case "All":
+                case "":
+                    users = UserManager.GetAllUsers();
                     break;
                 default:
-                    searchText = string.Concat(filter, "%");
-                    break;
-            }
-
-            var users = String.IsNullOrEmpty(searchText) ? 
-                UserManager.GetAllUsers() : 
-                UserManager.FindUsersByName(searchText);
-
-            if (filter == "Unauthorized")
-            {
-                users = users.Where(user => !user.IsApproved || user.LastLoginDate == DateTime.MinValue).ToList();
+                   users = UserManager.GetAllUsers().Where(u => u.UserName.StartsWith(filter)).ToList();
+                   break;
             }
 
             var sort = string.Format("{0} {1}", SortField, ((SortAscending) ? "asc" : "desc"));
@@ -223,8 +217,8 @@ namespace BugNET.Administration.Users
         protected void IbSearchClick(object sender, EventArgs e)
         {
             var users = SearchField.SelectedValue == "Email" ? 
-                UserManager.FindUsersByEmail(txtSearch.Text + "%") : 
-                UserManager.FindUsersByName(txtSearch.Text + "%");
+                UserManager.FindUsersByEmail(txtSearch.Text) : 
+                UserManager.FindUsersByName(txtSearch.Text);
 
             gvUsers.DataSource = users;
             gvUsers.DataBind();

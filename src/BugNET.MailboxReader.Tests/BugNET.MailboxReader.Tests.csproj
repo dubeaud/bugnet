@@ -85,10 +85,6 @@
       <Project>{DF8C87FA-3398-4AEE-99B0-D47F1831C158}</Project>
       <Name>Provider.SqlDataProvider</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Library\Providers\MembershipProviders\Provider.MembershipProviders.csproj">
-      <Project>{6B8EBBE2-196F-4F79-BC2F-918FC0AF3D67}</Project>
-      <Name>Provider.MembershipProviders</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LumiSoft.Net\LumiSoft.Net.csproj">
       <Project>{7AB36CCF-5FFD-4780-A54E-A102ECA028B5}</Project>
       <Name>LumiSoft.Net</Name>

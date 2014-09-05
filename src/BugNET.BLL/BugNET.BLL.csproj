@@ -156,10 +156,6 @@
       <Project>{5A0AE67B-1F8C-4A6D-A02B-B57BB219288F}</Project>
       <Name>BugNET.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Library\Providers\MembershipProviders\Provider.MembershipProviders.csproj">
-      <Project>{6B8EBBE2-196F-4F79-BC2F-918FC0AF3D67}</Project>
-      <Name>Provider.MembershipProviders</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
