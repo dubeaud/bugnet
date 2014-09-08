@@ -11,6 +11,7 @@ namespace BugNET
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.EnableFriendlyUrls();
+            routes.LowercaseUrls = true;
         }
     }
 }

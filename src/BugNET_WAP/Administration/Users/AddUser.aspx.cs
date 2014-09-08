@@ -1,8 +1,14 @@
 ﻿using System;
 using System.Linq;
-using System.Web.Security;
+using System.Web;
 using BugNET.BLL;
 using BugNET.UserInterfaceLayer;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Owin;
+using BugNET.Models;
+using System.Web.UI;
+using System.Threading.Tasks;
 
 namespace BugNET.Administration.Users
 {
@@ -17,14 +23,10 @@ namespace BugNET.Administration.Users
             Email.Text = string.Empty;
             Password.Text = string.Empty;
             ConfirmPassword.Text = string.Empty;
+            ActiveUser.Checked = true;
 
             chkRandomPassword.Checked = false;
             RandomPasswordCheckChanged(null, null);
-
-            if (Membership.RequiresQuestionAndAnswer) return;
-
-            ActiveUser.Checked = true;
-            ActiveUser.Enabled = false;
         }
 
         /// <summary>
@@ -70,46 +72,41 @@ namespace BugNET.Administration.Users
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void AddNewUserClick(object sender, EventArgs e)
         {
+            Page.RegisterAsyncTask(new PageAsyncTask(AddUser)); 
+        }
+
+        private async Task AddUser()
+        {
             if (!Page.IsValid) { return; }
 
-            var password = chkRandomPassword.Checked ? Membership.GeneratePassword(7, 0) : Password.Text;
-
-            var createStatus = MembershipCreateStatus.Success;
             string resultMsg;
 
-            var userIdText = UserName.Text;
-            var emailText = Email.Text;
-            var isActive = ActiveUser.Checked;
-            
-            try
+            var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var user = new ApplicationUser() { UserName = UserName.Text, Email = Email.Text };
+            var password = chkRandomPassword.Checked ? await manager.GenerateRandomPasswordAsync() : Password.Text;
+
+            IdentityResult result = manager.Create(user, Password.Text);
+            if (result.Succeeded)
             {
-                var mu = Membership.CreateUser(userIdText, password, emailText);
+                var profile = new WebProfile().GetProfile(UserName.Text);
+                profile.DisplayName = DisplayName.Text;
+                profile.FirstName = FirstName.Text;
+                profile.LastName = LastName.Text;
+                profile.Save();
 
-                if (createStatus == MembershipCreateStatus.Success && mu != null)
+                //auto assign user to roles
+                var roles = RoleManager.GetAll();
+                foreach (var r in roles.Where(r => r.AutoAssign))
                 {
-                    var profile = new WebProfile().GetProfile(mu.UserName);
-                    profile.DisplayName = DisplayName.Text;
-                    profile.FirstName = FirstName.Text;
-                    profile.LastName = LastName.Text;
-                    profile.Save();
-
-                    //auto assign user to roles
-                    var roles = RoleManager.GetAll();
-                    foreach (var r in roles.Where(r => r.AutoAssign))
-                    {
-                        RoleManager.AddUser(mu.UserName, r.Id);
-                    }
+                    RoleManager.AddUser(UserName.Text, r.Id);
                 }
 
-                ResetForNewUser();
-  
                 resultMsg = GetLocalResourceObject("UserCreated").ToString();
                 MessageContainer.IconType = BugNET.UserControls.Message.MessageType.Information;
-                
             }
-            catch (Exception ex)
+            else
             {
-                resultMsg = GetLocalResourceObject("UserCreatedError") + "<br/>" + ex.Message;
+                resultMsg = GetLocalResourceObject("UserCreatedError").ToString();
                 MessageContainer.IconType = BugNET.UserControls.Message.MessageType.Error;
             }
 
