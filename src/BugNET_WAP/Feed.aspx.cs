@@ -253,7 +253,7 @@ namespace BugNET
                 //}
                 var profile = new WebProfile().GetProfile(issue.CreatorUserName);
                 var authInfo = new SyndicationPerson {Name = profile.DisplayName};
-                //authInfo.Email = Membership.GetUser(IssueCreatorUserId).Email;
+
                 item.Authors.Add(authInfo);
 
                 // Add the item to the feed

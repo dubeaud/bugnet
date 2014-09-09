@@ -18,8 +18,8 @@
     [ProjectImageContentType] NVARCHAR (50)    NULL,
     [ProjectImageFileSize]    BIGINT           NULL,
     CONSTRAINT [PK_BugNet_Projects] PRIMARY KEY CLUSTERED ([ProjectId] ASC),
-    CONSTRAINT [FK_BugNet_Projects_Users] FOREIGN KEY ([ProjectCreatorUserId]) REFERENCES [dbo].[Users] ([UserId]),
-    CONSTRAINT [FK_BugNet_Projects_Users1] FOREIGN KEY ([ProjectManagerUserId]) REFERENCES [dbo].[Users] ([UserId])
+    CONSTRAINT [FK_BugNet_Projects_Users] FOREIGN KEY ([ProjectCreatorUserId]) REFERENCES [dbo].[AspNetUsers] ([Id]),
+    CONSTRAINT [FK_BugNet_Projects_Users1] FOREIGN KEY ([ProjectManagerUserId]) REFERENCES [dbo].[AspNetUsers] ([Id])
 );
 
 

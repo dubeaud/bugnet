@@ -72,10 +72,10 @@ namespace BugNET.Administration.Users
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void AddNewUserClick(object sender, EventArgs e)
         {
-            Page.RegisterAsyncTask(new PageAsyncTask(AddUser)); 
+            Page.RegisterAsyncTask(new PageAsyncTask(AddUserAsync)); 
         }
 
-        private async Task AddUser()
+        private async Task AddUserAsync()
         {
             if (!Page.IsValid) { return; }
 

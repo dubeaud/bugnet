@@ -61,8 +61,7 @@ namespace BugNET.Administration.Users.UserControls
         {
             try
             {
-                GetMembershipData(UserId);
-                System.Web.Security.Membership.DeleteUser(MembershipData.UserName);
+                UserManager.DeleteUser(UserId);
                 Response.Redirect("~/Administration/Users/UserList.aspx");
             }
             catch (Exception)

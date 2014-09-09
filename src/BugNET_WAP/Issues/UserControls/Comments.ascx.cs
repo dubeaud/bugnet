@@ -9,7 +9,6 @@ using BugNET.BLL;
 using BugNET.Common;
 using BugNET.Entities;
 using BugNET.UserInterfaceLayer;
-using System.Web.Security;
 using System.Security.Cryptography;
 using System.Diagnostics;
 using System.Text;
@@ -121,7 +120,7 @@ namespace BugNET.Issues.UserControls
 
             if (HostSettingManager.Get(HostSettingNames.EnableGravatar, true))
             {
-                var user = Membership.GetUser(currentComment.CreatorUserName);
+                var user = UserManager.GetUser(currentComment.CreatorUserName);
                 if (user != null) avatar.Attributes.Add("src", GetGravatarImageUrl(user.Email, 64));
             }
 

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
-using System.Web.Security;
 using BugNET.BLL.Notifications;
 using BugNET.Common;
 using BugNET.DAL;
@@ -33,6 +32,15 @@ namespace BugNET.BLL
         //{
         //    Membership.CreateUser(userName, password, email);
         //}
+
+        public static bool DeleteUser(Guid userId)
+        {
+            var manager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var user = manager.FindById(userId);
+            var result = manager.Delete(user);
+            return result.Succeeded;
+        }
+
 
         public static ApplicationUser GetUser(Guid userId)
         {
@@ -262,10 +270,9 @@ namespace BugNET.BLL
         /// Sends the user verification notification.
         /// </summary>
         /// <param name="user">The user.</param>
-        public static void SendUserVerificationNotification(MembershipUser user)
+        public static void SendUserVerificationNotification(ApplicationUser user)
         {
             if (user == null) throw new ArgumentNullException("user");
-            if (user.ProviderUserKey == null) throw new ArgumentNullException("user");
 
             // TODO - create this via dependency injection at some point.
             IMailDeliveryService mailService = new SmtpMailDeliveryService();
@@ -280,8 +287,8 @@ namespace BugNET.BLL
 
             var notificationUser = new NotificationUser
             {
-                Id = (Guid)user.ProviderUserKey,
-                CreationDate = user.CreationDate,
+                Id = user.Id,
+                CreationDate = user.CreateDate,
                 Email = user.Email,
                 UserName = user.UserName,
                 DisplayName = profile.DisplayName,
@@ -374,10 +381,9 @@ namespace BugNET.BLL
         /// or
         /// user
         /// </exception>
-        public static void SendForgotPasswordEmail(MembershipUser user, string token)
+        public static void SendForgotPasswordEmail(ApplicationUser user, string token)
         {
             if (user == null) throw new ArgumentNullException("user");
-            if (user.ProviderUserKey == null) throw new ArgumentNullException("user");
 
             IMailDeliveryService mailService = new SmtpMailDeliveryService();
 
@@ -391,8 +397,8 @@ namespace BugNET.BLL
 
             var notificationUser = new NotificationUser
             {
-                Id = (Guid)user.ProviderUserKey,
-                CreationDate = user.CreationDate,
+                Id = user.Id,
+                CreationDate = user.CreateDate,
                 Email = user.Email,
                 UserName = user.UserName,
                 DisplayName = profile.DisplayName,
@@ -456,10 +462,10 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="token">The token.</param>
         /// <returns></returns>
-        public static MembershipUser GetUserByPasswordResetToken(string token)
+        public static ApplicationUser GetUserByPasswordResetToken(string token)
         {
             var username = DataProviderManager.Provider.GetUserNameByPasswordResetToken(token);
-            return string.IsNullOrWhiteSpace(username) ? null : Membership.GetUser(username);
+            return string.IsNullOrWhiteSpace(username) ? null : UserManager.GetUser(username);
         }
     }
 }

@@ -7,7 +7,6 @@ using System.Text;
 using System.Web;
 using System.Web.Configuration;
 using System.Collections.Generic;
-using System.Web.Security;
 using BugNET.Common;
 using BugNET.DAL;
 using log4net;

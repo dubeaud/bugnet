@@ -9,7 +9,7 @@
     [UserId]            UNIQUEIDENTIFIER NOT NULL,
     [Attachment]        VARBINARY (MAX)  NULL,
     CONSTRAINT [PK_BugNet_IssueAttachments] PRIMARY KEY CLUSTERED ([IssueAttachmentId] ASC),
-    CONSTRAINT [FK_BugNet_IssueAttachments_Users] FOREIGN KEY ([UserId]) REFERENCES [dbo].[Users] ([UserId]),
+    CONSTRAINT [FK_BugNet_IssueAttachments_Users] FOREIGN KEY ([UserId]) REFERENCES [dbo].[AspNetUsers] ([Id]),
     CONSTRAINT [FK_BugNet_IssueAttachments_BugNet_Issues] FOREIGN KEY ([IssueId]) REFERENCES [dbo].[BugNet_Issues] ([IssueId]) ON DELETE CASCADE
 );
 

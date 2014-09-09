@@ -1,7 +1,14 @@
 ﻿using System;
+using System.Web;
 using System.Security.Principal;
 using System.Threading;
 using System.Web.Services;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Owin;
+using BugNET.Models;
+using BugNET.BLL;
+using BugNET.Common;
 
 namespace BugNET.Webservices
 {
@@ -90,7 +97,30 @@ namespace BugNET.Webservices
         public virtual bool LogIn(string userName, string password)
         {
             bool authenticated;
-            authenticated = System.Web.Security.Membership.ValidateUser(userName, password);
+
+          
+            
+            var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var user = manager.FindByName(userName);
+           
+
+            if (user == null)
+            {
+                authenticated = false;
+            }
+            else
+            {
+                var result = manager.PasswordHasher.VerifyHashedPassword(user.PasswordHash, password);
+                if(result == PasswordVerificationResult.Success || result == PasswordVerificationResult.SuccessRehashNeeded)
+                {
+                    authenticated = true;
+                }
+                else
+                {
+                    authenticated = false;
+                }
+            }
+
             IsAuthenticated = authenticated;
 
             if (authenticated)

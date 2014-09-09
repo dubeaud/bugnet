@@ -6,10 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Configuration;
-using System.Web.Security;
 using BugNET.BLL;
 using BugNET.Common;
 using log4net;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Owin;
+using BugNET.Models;
 
 namespace BugNET.Install
 {
@@ -87,7 +90,7 @@ namespace BugNET.Install
             var tmpuser = HttpContext.Current.User.Identity.Name;
 
             // Sign out before writing the headers!
-            FormsAuthentication.SignOut();
+            Context.GetOwinContext().Authentication.SignOut();
 
             WriteHeader("logout");
             WriteMessage(string.Format("<h3>You were logged in as user '{0}'</h3>", tmpuser));
@@ -159,39 +162,18 @@ namespace BugNET.Install
                     ExecuteSqlInFile(string.Format("{0}BugNET.Data.SqlDataProvider.sql", providerPath));
                     WriteMessage("Creating Administrator Account<br/>", 0, true);
 
-                    //create admin user
-                    MembershipCreateStatus status;
+                    // create admin user
 
-                    var newUser = Membership.CreateUser("Admin", "password", "admin@yourdomain.com", "no question", "no answer", true, out status);
-
-                    switch (status)
+                    var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                    var user = new ApplicationUser() { UserName = "Admin", Email = "admin@yourdomain.com", IsApproved = true, EmailConfirmed = true};
+                    IdentityResult result = manager.Create(user, "password");
+                    if (result.Succeeded)
                     {
-                        case MembershipCreateStatus.Success:
-                            WriteMessage("Created Administrator Account", 0, true);
-                            WriteScriptSuccessError(true);
-                            break;
-                        case MembershipCreateStatus.InvalidUserName:
-                        case MembershipCreateStatus.InvalidPassword:
-                        case MembershipCreateStatus.InvalidQuestion:
-                        case MembershipCreateStatus.InvalidAnswer:
-                        case MembershipCreateStatus.InvalidEmail:
-                        case MembershipCreateStatus.DuplicateUserName:
-                        case MembershipCreateStatus.DuplicateEmail:
-                        case MembershipCreateStatus.UserRejected:
-                        case MembershipCreateStatus.InvalidProviderUserKey:
-                        case MembershipCreateStatus.DuplicateProviderUserKey:
-                        case MembershipCreateStatus.ProviderError:
-                            var message = string.Format("Creating Administrator Account Failed, status returned: {0} <br/>", status);
-                            WriteMessage(message, 0, true);
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
+                        WriteMessage("Created Administrator Account", 0, true);
+                        WriteScriptSuccessError(true);
 
-                    WriteMessage("Creating Administrator Account default profile <br/>", 0, true);
+                        WriteMessage("Creating Administrator Account default profile <br/>", 0, true);
 
-                    if (status == MembershipCreateStatus.Success)
-                    {
                         //add the admin user to the Super Users role.
                         RoleManager.AddUser("Admin", 1);
 
@@ -208,9 +190,10 @@ namespace BugNET.Install
                     }
                     else
                     {
-                        WriteMessage("Created Administrator Account default profile failed, due to status returned from account creation", 0, true);
-                        WriteScriptSuccessError(false);
+                        var message = string.Format("Creating Administrator Account Failed <br/>", result.Errors);
+                        WriteMessage(message, 0, true);
                     }
+ 
 
                     UpgradeManager.UpdateDatabaseVersion(UpgradeManager.GetCurrentVersion());
                 }

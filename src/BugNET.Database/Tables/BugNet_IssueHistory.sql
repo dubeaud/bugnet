@@ -7,7 +7,7 @@
     [DateCreated]    DATETIME         CONSTRAINT [DF_BugNet_IssueHistory_DateCreated] DEFAULT (getdate()) NOT NULL,
     [UserId]         UNIQUEIDENTIFIER NOT NULL,
     CONSTRAINT [PK_BugNet_IssueHistory] PRIMARY KEY CLUSTERED ([IssueHistoryId] ASC),
-    CONSTRAINT [FK_BugNet_IssueHistory_Users] FOREIGN KEY ([UserId]) REFERENCES [dbo].[Users] ([UserId]) ON DELETE CASCADE,
+    CONSTRAINT [FK_BugNet_IssueHistory_Users] FOREIGN KEY ([UserId]) REFERENCES [dbo].[AspNetUsers] ([Id]) ON DELETE CASCADE,
     CONSTRAINT [FK_BugNet_IssueHistory_BugNet_Issues] FOREIGN KEY ([IssueId]) REFERENCES [dbo].[BugNet_Issues] ([IssueId]) ON DELETE CASCADE
 );
 
