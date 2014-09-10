@@ -7,7 +7,7 @@ SET NOCOUNT ON
 
 DECLARE @LastUpdateUserId  UNIQUEIDENTIFIER
 
-SELECT @LastUpdateUserId = UserId FROM Users WHERE UserName = @LastUpdateUserName
+SELECT @LastUpdateUserId = Id FROM AspNetUsers WHERE UserName = @LastUpdateUserName
 
 BEGIN TRAN
 	UPDATE BugNet_Issues SET

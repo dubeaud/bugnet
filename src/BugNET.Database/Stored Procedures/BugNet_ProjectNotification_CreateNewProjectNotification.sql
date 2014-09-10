@@ -3,7 +3,7 @@
 	@NotificationUserName NVarChar(255) 
 AS
 DECLARE @UserId UniqueIdentifier
-SELECT @UserId = UserId FROM Users WHERE UserName = @NotificationUserName
+SELECT @UserId = Id FROM AspNetUsers WHERE UserName = @NotificationUserName
 
 IF NOT EXISTS( SELECT ProjectNotificationId FROM BugNet_ProjectNotifications WHERE UserId = @UserId AND ProjectId = @ProjectId)
 BEGIN

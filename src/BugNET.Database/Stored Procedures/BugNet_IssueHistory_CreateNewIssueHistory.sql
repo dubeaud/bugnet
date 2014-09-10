@@ -6,7 +6,7 @@
   @NewValue nvarchar(50)
 AS
 DECLARE @UserId UniqueIdentifier
-SELECT @UserId = UserId FROM Users WHERE UserName = @CreatedUserName
+SELECT @UserId = Id FROM AspNetUsers WHERE UserName = @CreatedUserName
 
 	INSERT BugNet_IssueHistory
 	(

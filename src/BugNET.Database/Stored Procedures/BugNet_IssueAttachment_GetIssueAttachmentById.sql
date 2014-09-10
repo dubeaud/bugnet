@@ -14,7 +14,7 @@ SELECT
 	DateCreated
 FROM
 	BugNet_IssueAttachments
-	INNER JOIN Users U ON BugNet_IssueAttachments.UserId = U.UserId
+	INNER JOIN AspNetUsers U ON BugNet_IssueAttachments.UserId = U.Id
 	LEFT OUTER JOIN BugNet_UserProfiles ON U.UserName = BugNet_UserProfiles.UserName
 WHERE
 	IssueAttachmentId = @IssueAttachmentId

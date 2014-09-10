@@ -5,7 +5,7 @@
     [AssignToUserId]   UNIQUEIDENTIFIER NULL,
     [IssueTypeId]      INT              NULL,
     CONSTRAINT [PK_BugNet_ProjectMailBoxes] PRIMARY KEY CLUSTERED ([ProjectMailboxId] ASC),
-    CONSTRAINT [FK_BugNet_ProjectMailBoxes_Users] FOREIGN KEY ([AssignToUserId]) REFERENCES [dbo].[Users] ([UserId]),
+    CONSTRAINT [FK_BugNet_ProjectMailBoxes_Users] FOREIGN KEY ([AssignToUserId]) REFERENCES [dbo].[AspNetUsers] ([Id]),
     CONSTRAINT [FK_BugNet_ProjectMailBoxes_BugNet_ProjectIssueTypes] FOREIGN KEY ([IssueTypeId]) REFERENCES [dbo].[BugNet_ProjectIssueTypes] ([IssueTypeId]),
     CONSTRAINT [FK_BugNet_ProjectMailBoxes_BugNet_Projects] FOREIGN KEY ([ProjectId]) REFERENCES [dbo].[BugNet_Projects] ([ProjectId]) ON DELETE CASCADE
 );

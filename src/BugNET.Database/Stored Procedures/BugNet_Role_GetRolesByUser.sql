@@ -3,7 +3,7 @@
 AS
 
 DECLARE @UserId UNIQUEIDENTIFIER
-SELECT	@UserId = UserId FROM Users WHERE UserName = @UserName
+SELECT	@UserId = Id FROM AspNetUsers WHERE UserName = @UserName
 
 SELECT	BugNet_Roles.RoleName,
 		BugNet_Roles.ProjectId,
@@ -11,6 +11,6 @@ SELECT	BugNet_Roles.RoleName,
 		BugNet_Roles.RoleId,
 		BugNet_Roles.AutoAssign
 FROM	BugNet_UserRoles
-INNER JOIN Users ON BugNet_UserRoles.UserId = Users.UserId
+INNER JOIN AspNetUsers ON BugNet_UserRoles.UserId = AspNetUsers.Id
 INNER JOIN BugNet_Roles ON BugNet_UserRoles.RoleId = BugNet_Roles.RoleId
-WHERE  Users.UserId = @UserId
+WHERE  AspNetUsers.Id = @UserId

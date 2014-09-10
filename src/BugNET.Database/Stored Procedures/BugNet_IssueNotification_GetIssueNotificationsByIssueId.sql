@@ -14,15 +14,14 @@ INSERT @tmpTable
 SELECT 
 	IssueNotificationId,
 	IssueId,
-	U.UserId NotificationUserId,
+	U.Id NotificationUserId,
 	U.UserName NotificationUserName,
 	IsNull(DisplayName,'') NotificationDisplayName,
-	M.Email NotificationEmail,
+	U.Email NotificationEmail,
 	ISNULL(UP.PreferredLocale, @DefaultCulture) AS NotificationCulture
 FROM
 	BugNet_IssueNotifications
-	INNER JOIN Users U ON BugNet_IssueNotifications.UserId = U.UserId
-	INNER JOIN Memberships M ON BugNet_IssueNotifications.UserId = M.UserId
+	INNER JOIN AspNetUsers U ON BugNet_IssueNotifications.UserId = U.Id
 	LEFT OUTER JOIN BugNet_UserProfiles UP ON U.UserName = UP.UserName
 WHERE
 	IssueId = @IssueId
@@ -35,22 +34,20 @@ INSERT @tmpTable
 SELECT
 	ProjectNotificationId,
 	IssueId = @IssueId,
-	u.UserId NotificationUserId,
+	u.Id NotificationUserId,
 	u.UserName NotificationUserName,
 	IsNull(DisplayName,'') NotificationDisplayName,
-	m.Email NotificationEmail,
+	U.Email NotificationEmail,
 	ISNULL(UP.PreferredLocale, @DefaultCulture) AS NotificationCulture
 FROM
 	BugNet_ProjectNotifications p,
 	BugNet_Issues i,
-	Users u,
-	Memberships m ,
+	AspNetUsers u,
 	BugNet_UserProfiles up
 WHERE
 	IssueId = @IssueId
 	AND p.ProjectId = i.ProjectId
-	AND u.UserId = p.UserId
-	AND u.UserId = m.UserId
+	AND u.Id = p.UserId
 	AND u.UserName = up.UserName
 
 SELECT DISTINCT IssueId,NotificationUserId, NotificationUserName, NotificationDisplayName, NotificationEmail, NotificationCulture FROM @tmpTable ORDER BY NotificationDisplayName

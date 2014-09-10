@@ -25,10 +25,10 @@ DECLARE @IssueCreatorUserId		UNIQUEIDENTIFIER
 DECLARE @IssueOwnerUserId		UNIQUEIDENTIFIER
 DECLARE @LastUpdateUserId  UNIQUEIDENTIFIER
 
-SELECT @IssueAssignedUserId = UserId FROM Users WHERE UserName = @IssueAssignedUserName
-SELECT @IssueCreatorUserId = UserId FROM Users WHERE UserName = @IssueCreatorUserName
-SELECT @IssueOwnerUserId = UserId FROM Users WHERE UserName = @IssueOwnerUserName
-SELECT @LastUpdateUserId = UserId FROM Users WHERE UserName = @LastUpdateUserName
+SELECT @IssueAssignedUserId = Id FROM AspNetUsers WHERE UserName = @IssueAssignedUserName
+SELECT @IssueCreatorUserId = Id FROM AspNetUsers WHERE UserName = @IssueCreatorUserName
+SELECT @IssueOwnerUserId = Id FROM AspNetUsers WHERE UserName = @IssueOwnerUserName
+SELECT @LastUpdateUserId = Id FROM AspNetUsers WHERE UserName = @LastUpdateUserName
 
 BEGIN TRAN
 	UPDATE BugNet_Issues SET

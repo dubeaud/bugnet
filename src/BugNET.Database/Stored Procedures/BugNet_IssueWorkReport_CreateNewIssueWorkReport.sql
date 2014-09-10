@@ -7,7 +7,7 @@
 AS
 -- Get Last Update UserID
 DECLARE @CreatorUserId uniqueidentifier
-SELECT @CreatorUserId = UserId FROM Users WHERE UserName = @CreatorUserName
+SELECT @CreatorUserId = Id FROM AspNetUsers WHERE UserName = @CreatorUserName
 INSERT BugNet_IssueWorkReports
 (
 	IssueId,

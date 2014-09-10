@@ -280,12 +280,6 @@
     <Build Include="Stored Procedures\BugNet_RelatedIssue_GetRelatedIssues.sql" />
     <Build Include="Stored Procedures\BugNet_RelatedIssue_GetParentIssues.sql" />
     <Build Include="Stored Procedures\BugNet_RelatedIssue_GetChildIssues.sql" />
-    <Build Include="Tables\Applications.sql" />
-    <Build Include="Tables\Memberships.sql" />
-    <Build Include="Tables\Profiles.sql" />
-    <Build Include="Tables\Roles.sql" />
-    <Build Include="Tables\Users.sql" />
-    <Build Include="Tables\UsersInRoles.sql" />
     <Build Include="Stored Procedures\BugNet_User_GetUserIdByUserName.sql" />
     <Build Include="Stored Procedures\BugNet_User_GetUserNameByPasswordResetToken.sql" />
     <Build Include="Tables\AspNetRoles.sql" />

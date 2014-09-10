@@ -3,11 +3,11 @@
 AS
 SELECT UserName
 FROM 
-	Users
+	AspNetUsers
 LEFT OUTER JOIN
 	BugNet_UserProjects
 ON
-	Users.UserId = BugNet_UserProjects.UserId
+	AspNetUsers.Id = BugNet_UserProjects.UserId
 WHERE
 	BugNet_UserProjects.ProjectId = @ProjectId
 ORDER BY UserName ASC

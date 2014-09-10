@@ -3,7 +3,7 @@
   @UserName NVarChar(255)
 AS
 DECLARE @CreatorId UniqueIdentifier
-SELECT @CreatorId = UserId FROM Users WHERE UserName = @UserName
+SELECT @CreatorId = Id FROM AspNetUsers WHERE UserName = @UserName
 	
 SELECT 
 	*

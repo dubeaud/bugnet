@@ -7,7 +7,7 @@
 AS
 
 DECLARE @AssignToUserId UNIQUEIDENTIFIER
-SELECT @AssignToUserId = UserId FROM Users WHERE UserName = @AssignToUserName
+SELECT @AssignToUserId = Id FROM AspNetUsers WHERE UserName = @AssignToUserName
 
 UPDATE BugNet_ProjectMailBoxes SET
 	MailBox = @MailBoxEmailAddress,

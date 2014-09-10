@@ -3,7 +3,7 @@
 	@VoteUserName NVarChar(255) 
 AS
 DECLARE @UserId UniqueIdentifier
-SELECT @UserId = UserId FROM Users WHERE UserName = @VoteUserName
+SELECT @UserId = Id FROM AspNetUsers WHERE UserName = @VoteUserName
 
 BEGIN
     IF EXISTS(SELECT IssueVoteId FROM BugNet_IssueVotes WHERE UserId = @UserId AND IssueId = @IssueId)

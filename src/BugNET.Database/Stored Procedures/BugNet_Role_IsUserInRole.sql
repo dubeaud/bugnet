@@ -5,7 +5,7 @@
 AS
 
 DECLARE @UserId UNIQUEIDENTIFIER
-SELECT	@UserId = UserId FROM Users WHERE UserName = @UserName
+SELECT	@UserId = Id FROM AspNetUsers WHERE UserName = @UserName
 
 SELECT	UR.UserId,
 		UR.RoleId

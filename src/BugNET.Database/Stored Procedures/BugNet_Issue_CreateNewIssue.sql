@@ -22,9 +22,9 @@ DECLARE @IssueAssignedUserId	UNIQUEIDENTIFIER
 DECLARE @IssueCreatorUserId		UNIQUEIDENTIFIER
 DECLARE @IssueOwnerUserId		UNIQUEIDENTIFIER
 
-SELECT @IssueAssignedUserId = UserId FROM Users WHERE UserName = @IssueAssignedUserName
-SELECT @IssueCreatorUserId = UserId FROM Users WHERE UserName = @IssueCreatorUserName
-SELECT @IssueOwnerUserId = UserId FROM Users WHERE UserName = @IssueOwnerUserName
+SELECT @IssueAssignedUserId = Id FROM AspNetUsers WHERE UserName = @IssueAssignedUserName
+SELECT @IssueCreatorUserId = Id FROM AspNetUsers WHERE UserName = @IssueCreatorUserName
+SELECT @IssueOwnerUserId = Id FROM AspNetUsers WHERE UserName = @IssueOwnerUserName
 
 	INSERT BugNet_Issues
 	(

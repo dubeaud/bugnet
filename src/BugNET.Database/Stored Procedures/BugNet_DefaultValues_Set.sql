@@ -32,8 +32,8 @@ AS
 DECLARE @IssueAssignedUserId	UNIQUEIDENTIFIER
 DECLARE @IssueOwnerUserId		UNIQUEIDENTIFIER
 
-SELECT @IssueOwnerUserId = UserId FROM Users WHERE UserName = @IssueOwnerUserName
-SELECT @IssueAssignedUserId = UserId FROM Users WHERE UserName = @IssueAssignedUserName
+SELECT @IssueOwnerUserId = Id FROM AspNetUsers WHERE UserName = @IssueOwnerUserName
+SELECT @IssueAssignedUserId = Id FROM AspNetUsers WHERE UserName = @IssueAssignedUserName
 BEGIN
 	BEGIN TRAN
 		DECLARE @defVisExists int

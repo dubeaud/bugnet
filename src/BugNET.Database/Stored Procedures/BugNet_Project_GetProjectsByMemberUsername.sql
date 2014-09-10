@@ -5,7 +5,7 @@ AS
 DECLARE @Disabled bit
 SET @Disabled = 1
 DECLARE @UserId UNIQUEIDENTIFIER
-SELECT @UserId = UserId FROM Users WHERE UserName = @UserName
+SELECT @UserId = Id FROM AspNetUsers WHERE UserName = @UserName
 IF @ActiveOnly = 1
 BEGIN
 	SET @Disabled = 0

@@ -17,7 +17,7 @@
  @ProjectImageFileSize bigint
 AS
 DECLARE @ProjectManagerUserId UNIQUEIDENTIFIER
-SELECT @ProjectManagerUserId = UserId FROM Users WHERE UserName = @ProjectManagerUserName
+SELECT @ProjectManagerUserId = Id FROM AspNetUsers WHERE UserName = @ProjectManagerUserName
 
 IF @ProjectImageFileContent IS NULL
 	UPDATE BugNet_Projects SET

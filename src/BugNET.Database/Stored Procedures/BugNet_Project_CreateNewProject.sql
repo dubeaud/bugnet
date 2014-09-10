@@ -19,8 +19,8 @@ IF NOT EXISTS( SELECT ProjectId,ProjectCode  FROM BugNet_Projects WHERE LOWER(Pr
 BEGIN
 	DECLARE @ProjectManagerUserId UNIQUEIDENTIFIER
 	DECLARE @ProjectCreatorUserId UNIQUEIDENTIFIER
-	SELECT @ProjectManagerUserId = UserId FROM Users WHERE UserName = @ProjectManagerUserName
-	SELECT @ProjectCreatorUserId = UserId FROM Users WHERE UserName = @ProjectCreatorUserName
+	SELECT @ProjectManagerUserId = Id FROM AspNetUsers WHERE UserName = @ProjectManagerUserName
+	SELECT @ProjectCreatorUserId = Id FROM AspNetUsers WHERE UserName = @ProjectCreatorUserName
 	
 	INSERT BugNet_Projects 
 	(

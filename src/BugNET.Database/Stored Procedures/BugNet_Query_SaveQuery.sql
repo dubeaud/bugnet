@@ -6,7 +6,7 @@
 AS
 -- Get UserID
 DECLARE @UserId UNIQUEIDENTIFIER
-SELECT @UserId = UserId FROM Users WHERE UserName = @UserName
+SELECT @UserId = Id FROM AspNetUsers WHERE UserName = @UserName
 
 IF EXISTS(SELECT QueryName FROM BugNet_Queries WHERE QueryName = @QueryName AND UserId = @UserId AND ProjectId = @ProjectId)
 BEGIN

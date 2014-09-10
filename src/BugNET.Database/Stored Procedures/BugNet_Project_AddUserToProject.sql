@@ -3,7 +3,7 @@
 @ProjectId int
 AS
 DECLARE @UserId UNIQUEIDENTIFIER
-SELECT	@UserId = UserId FROM Users WHERE UserName = @UserName
+SELECT	@UserId = Id FROM AspNetUsers WHERE UserName = @UserName
 
 IF NOT EXISTS (SELECT UserId FROM BugNet_UserProjects WHERE UserId = @UserId AND ProjectId = @ProjectId)
 BEGIN

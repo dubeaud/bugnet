@@ -9,7 +9,7 @@
 AS
 -- Get Uploaded UserID
 DECLARE @UserId UniqueIdentifier
-SELECT @UserId = UserId FROM Users WHERE UserName = @CreatorUserName
+SELECT @UserId = Id FROM AspNetUsers WHERE UserName = @CreatorUserName
 INSERT BugNet_IssueAttachments
 (
 	IssueId,

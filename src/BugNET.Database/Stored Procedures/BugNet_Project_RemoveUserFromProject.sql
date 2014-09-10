@@ -3,7 +3,7 @@
 	@ProjectId Int 
 AS
 DECLARE @UserId UNIQUEIDENTIFIER
-SELECT	@UserId = UserId FROM Users WHERE UserName = @UserName
+SELECT	@UserId = Id FROM AspNetUsers WHERE UserName = @UserName
 
 DELETE 
 	BugNet_UserProjects
