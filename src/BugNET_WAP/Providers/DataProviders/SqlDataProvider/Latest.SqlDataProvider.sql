@@ -2370,7 +2370,7 @@ ALTER PROCEDURE [dbo].[BugNet_User_GetUsersByProjectId]
 	@ProjectId Int,
 	@ExcludeReadonlyUsers bit
 AS
-SELECT DISTINCT U.Id, U.UserName, FirstName, LastName, DisplayName FROM 
+SELECT DISTINCT U.Id AS UserId, U.UserName, FirstName, LastName, DisplayName FROM 
 	AspNetUsers U
 JOIN BugNet_UserProjects
 	ON U.Id = BugNet_UserProjects.UserId
