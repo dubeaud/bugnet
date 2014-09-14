@@ -11,8 +11,7 @@
         </h1>
     </div>
     <div class="row">
-        <div class="col-md-3">
-
+        <div class="col-md-2">
             <asp:Repeater ID="AdminMenu" OnItemDataBound="AdminMenu_ItemDataBound" OnItemCommand="AdminMenu_ItemCommand" runat="server">
                 <HeaderTemplate>
                     <ul class="nav nav-pills nav-stacked">
@@ -25,9 +24,8 @@
                     </ul>
                 </FooterTemplate>
             </asp:Repeater>
-
         </div>
-        <div class="col-md-9">
+        <div class="col-md-10">
             <asp:PlaceHolder ID="plhContent" runat="Server" />
         </div>
     </div>

@@ -18,11 +18,10 @@ SELECT
 	U.UserName NotificationUserName,
 	IsNull(DisplayName,'') NotificationDisplayName,
 	U.Email NotificationEmail,
-	ISNULL(UP.PreferredLocale, @DefaultCulture) AS NotificationCulture
+	ISNULL(u.PreferredLocale, @DefaultCulture) AS NotificationCulture
 FROM
 	BugNet_IssueNotifications
 	INNER JOIN AspNetUsers U ON BugNet_IssueNotifications.UserId = U.Id
-	LEFT OUTER JOIN BugNet_UserProfiles UP ON U.UserName = UP.UserName
 WHERE
 	IssueId = @IssueId
 ORDER BY
@@ -38,16 +37,14 @@ SELECT
 	u.UserName NotificationUserName,
 	IsNull(DisplayName,'') NotificationDisplayName,
 	U.Email NotificationEmail,
-	ISNULL(UP.PreferredLocale, @DefaultCulture) AS NotificationCulture
+	ISNULL(u.PreferredLocale, @DefaultCulture) AS NotificationCulture
 FROM
 	BugNet_ProjectNotifications p,
 	BugNet_Issues i,
-	AspNetUsers u,
-	BugNet_UserProfiles up
+	AspNetUsers u
 WHERE
 	IssueId = @IssueId
 	AND p.ProjectId = i.ProjectId
 	AND u.Id = p.UserId
-	AND u.UserName = up.UserName
 
 SELECT DISTINCT IssueId,NotificationUserId, NotificationUserName, NotificationDisplayName, NotificationEmail, NotificationCulture FROM @tmpTable ORDER BY NotificationDisplayName

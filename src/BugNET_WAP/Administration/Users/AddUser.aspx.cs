@@ -84,16 +84,13 @@ namespace BugNET.Administration.Users
             var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var user = new ApplicationUser() { UserName = UserName.Text, Email = Email.Text };
             var password = chkRandomPassword.Checked ? await manager.GenerateRandomPasswordAsync() : Password.Text;
+            user.DisplayName = DisplayName.Text;
+            user.FirstName = FirstName.Text;
+            user.LastName = LastName.Text;
 
             IdentityResult result = manager.Create(user, Password.Text);
             if (result.Succeeded)
             {
-                var profile = new WebProfile().GetProfile(UserName.Text);
-                profile.DisplayName = DisplayName.Text;
-                profile.FirstName = FirstName.Text;
-                profile.LastName = LastName.Text;
-                profile.Save();
-
                 //auto assign user to roles
                 var roles = RoleManager.GetAll();
                 foreach (var r in roles.Where(r => r.AutoAssign))

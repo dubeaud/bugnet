@@ -71,10 +71,10 @@ namespace BugNET.BLL
                                 NotificationCulture = string.Empty
                             };
 
-                        var profile = new WebProfile().GetProfile(entity.AssignedUserName);
-                        if (profile != null && !string.IsNullOrWhiteSpace(profile.PreferredLocale))
+                        var user = UserManager.GetUser(entity.AssignedUserName);
+                        if (!string.IsNullOrWhiteSpace(user.PreferredLocale))
                         {
-                            notification.NotificationCulture = profile.PreferredLocale;
+                            notification.NotificationCulture = user.PreferredLocale;
                         }
 
                         IssueNotificationManager.SaveOrUpdate(notification);

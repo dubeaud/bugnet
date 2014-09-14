@@ -89,21 +89,18 @@ namespace BugNET.HttpModules
                                 UserProperties userprop = GetUserProperties(HttpContext.Current.User.Identity.Name);
 
                                 var manager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                                user = new ApplicationUser() { UserName = HttpContext.Current.User.Identity.Name, Email = userprop.Email };
+                                user = new ApplicationUser() { UserName = HttpContext.Current.User.Identity.Name, Email = userprop.Email, FirstName = userprop.FirstName, 
+                                    LastName = userprop.LastName };
+                                if (!string.IsNullOrWhiteSpace(userprop.DisplayName))
+                                    user.DisplayName = userprop.DisplayName;
+                                else
+                                    user.DisplayName = String.Format("{0} {1}", userprop.FirstName, userprop.LastName);
+
                                 var password = await manager.GenerateRandomPasswordAsync();
                                 IdentityResult result = manager.Create(user, password);
 
                                 if (result.Succeeded)
                                 {
-                                    WebProfile Profile = new WebProfile().GetProfile(HttpContext.Current.User.Identity.Name);
-                                    if (!string.IsNullOrWhiteSpace(userprop.DisplayName))
-                                        Profile.DisplayName = userprop.DisplayName;
-                                    else
-                                        Profile.DisplayName = String.Format("{0} {1}", userprop.FirstName, userprop.LastName);
-                                    Profile.FirstName = userprop.FirstName;
-                                    Profile.LastName = userprop.LastName;
-                                    Profile.Save();
-
                                     // auto assign user to roles
                                     List<Role> roles = RoleManager.GetAll().FindAll(r => r.AutoAssign == true);
                                     foreach (Role r in roles)

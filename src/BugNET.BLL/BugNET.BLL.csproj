@@ -141,7 +141,6 @@
     <Compile Include="SourceIntegrationManager.cs" />
     <Compile Include="UpgradeManager.cs" />
     <Compile Include="UserManager.cs" />
-    <Compile Include="WebProfile.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BugNET.Common\BugNET.Common.csproj">

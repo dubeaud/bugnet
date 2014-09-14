@@ -55,8 +55,12 @@ namespace BugNET.UserControls
                 }
                 else //if it is myIssues and not a specific project
                 {
-                    if (!string.IsNullOrEmpty(WebProfile.Current.SelectedIssueColumns))
-                        _arrIssueColumns = WebProfile.Current.SelectedIssueColumns.Trim().Split();
+                    var user = UserManager.GetUser(Security.GetUserName());
+
+                    if (!string.IsNullOrEmpty(user.SelectedIssueColumns))
+                    {
+                        _arrIssueColumns = user.SelectedIssueColumns.Trim().Split();
+                    }
                 }
             }
             else
@@ -399,8 +403,9 @@ namespace BugNET.UserControls
                 }
                 else //if it is MyIssue and not a specific project
                 {
-                    WebProfile.Current.SelectedIssueColumns = strIssueColumns.Trim();
-                    WebProfile.Current.Save();
+                    var user = UserManager.GetUser(Security.GetUserName());
+                    user.SelectedIssueColumns = strIssueColumns.Trim();
+                    UserManager.UpdateUser(user);
                 }
             }
             else

@@ -7,12 +7,11 @@ SELECT @UserId = Id FROM AspNetUsers WHERE UserName = @UserName
 
 SELECT
 	QueryId,
-	QueryName + ' (' + BugNet_UserProfiles.DisplayName + ')' AS QueryName,
+	QueryName + ' (' + DisplayName + ')' AS QueryName,
 	IsPublic
 FROM
 	BugNet_Queries INNER JOIN
-	AspNetUsers M ON BugNet_Queries.UserId = M.Id JOIN
-	BugNet_UserProfiles ON M.UserName = BugNet_UserProfiles.UserName
+	AspNetUsers M ON BugNet_Queries.UserId = M.Id
 WHERE
 	IsPublic = 1 AND ProjectId = @ProjectId
 UNION

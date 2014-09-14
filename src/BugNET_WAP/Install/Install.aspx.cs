@@ -165,7 +165,17 @@ namespace BugNET.Install
                     // create admin user
 
                     var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                    var user = new ApplicationUser() { UserName = "Admin", Email = "admin@yourdomain.com", IsApproved = true, EmailConfirmed = true};
+                    var user = new ApplicationUser() 
+                    { 
+                        UserName = "Admin", 
+                        Email = "admin@yourdomain.com", 
+                        IsApproved = true, 
+                        EmailConfirmed = true, 
+                        FirstName = "Admin",
+                        LastName = "Admin", 
+                        DisplayName = "Administrator"
+                    };
+
                     IdentityResult result = manager.Create(user, "password");
                     if (result.Succeeded)
                     {
@@ -176,14 +186,6 @@ namespace BugNET.Install
 
                         //add the admin user to the Super Users role.
                         RoleManager.AddUser("Admin", 1);
-
-                        //add user profile information
-                        var profile = new WebProfile().GetProfile("Admin");
-                        profile.FirstName = "Admin";
-                        profile.LastName = "Admin";
-                        profile.DisplayName = "Administrator";
-                        profile.PasswordVerificationTokenExpirationDate = null;
-                        profile.Save();
 
                         WriteMessage("Created Administrator Account default profile", 0, true);
                         WriteScriptSuccessError(true);

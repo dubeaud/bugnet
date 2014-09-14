@@ -7,12 +7,11 @@ SET NOCOUNT ON
 SELECT 
 	BugNet_ProjectMailboxes.*,
 	u.UserName AssignToUserName,
-	p.DisplayName AssignToDisplayName,
+	u.DisplayName AssignToDisplayName,
 	pit.IssueTypeName
 FROM 
 	BugNet_ProjectMailBoxes
 	INNER JOIN AspNetUsers u ON u.Id = AssignToUserId
-	INNER JOIN BugNet_UserProfiles p ON u.UserName = p.UserName
 	INNER JOIN BugNet_ProjectIssueTypes pit ON pit.IssueTypeId = BugNet_ProjectMailboxes.IssueTypeId		
 WHERE
 	BugNet_ProjectMailBoxes.ProjectId = @ProjectId

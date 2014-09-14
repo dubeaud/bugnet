@@ -230,8 +230,8 @@ namespace BugNET.BLL
         {
             if (string.IsNullOrEmpty(userName)) throw new ArgumentNullException("userName");
 
-            var displayName = new WebProfile().GetProfile(userName).DisplayName;
-            return !string.IsNullOrEmpty(displayName) ? displayName : userName;
+            var user = UserManager.GetUser(userName);
+            return !string.IsNullOrEmpty(user.DisplayName) ? user.DisplayName : userName;
         }
 
         /// <summary>
@@ -241,8 +241,7 @@ namespace BugNET.BLL
         public static int GetProfilePageSize()
         {
             return HttpContext.Current.User.Identity.IsAuthenticated ? 
-                WebProfile.Current.IssuesPageSize : 
-                10;
+                GetUser(HttpContext.Current.User.Identity.Name).IssuesPageSize : 10;
         }
 
         /// <summary>
@@ -281,9 +280,8 @@ namespace BugNET.BLL
             var emailFormatKey = (emailFormatType == EmailFormatType.Text) ? "" : "HTML";
             const string subjectKey = "UserVerificationSubject";
             var bodyKey = string.Concat("UserVerification", emailFormatKey);
-            var profile = new WebProfile().GetProfile(user.UserName);
 
-            var nc = new CultureNotificationContent().LoadContent(profile.PreferredLocale, subjectKey, bodyKey);
+            var nc = new CultureNotificationContent().LoadContent(user.PreferredLocale, subjectKey, bodyKey);
 
             var notificationUser = new NotificationUser
             {
@@ -291,9 +289,9 @@ namespace BugNET.BLL
                 CreationDate = user.CreateDate,
                 Email = user.Email,
                 UserName = user.UserName,
-                DisplayName = profile.DisplayName,
-                FirstName = profile.FirstName,
-                LastName = profile.LastName,
+                DisplayName = user.DisplayName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 IsApproved = user.IsApproved
             };
 
@@ -335,9 +333,8 @@ namespace BugNET.BLL
             var emailFormatKey = (emailFormatType == EmailFormatType.Text) ? "" : "HTML";
             const string subjectKey = "UserRegisteredSubject";
             var bodyKey = string.Concat("UserRegistered", emailFormatKey);
-            var profile = new WebProfile().GetProfile(user.UserName);
 
-            var nc = new CultureNotificationContent().LoadContent(profile.PreferredLocale, subjectKey, bodyKey);
+            var nc = new CultureNotificationContent().LoadContent(user.PreferredLocale, subjectKey, bodyKey);
 
             var notificationUser = new NotificationUser
             {
@@ -345,9 +342,9 @@ namespace BugNET.BLL
                 CreationDate = user.CreateDate,
                 Email = user.Email,
                 UserName = user.UserName,
-                DisplayName = profile.DisplayName,
-                FirstName = profile.FirstName,
-                LastName = profile.LastName,
+                DisplayName = user.DisplayName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 IsApproved = user.IsApproved
             };
 
@@ -391,9 +388,8 @@ namespace BugNET.BLL
             var emailFormatKey = (emailFormatType == EmailFormatType.Text) ? "" : "HTML";
             const string subjectKey = "ForgotPasswordSubject";
             var bodyKey = string.Concat("ForgotPassword", emailFormatKey);
-            var profile = new WebProfile().GetProfile(user.UserName);
 
-            var nc = new CultureNotificationContent().LoadContent(profile.PreferredLocale, subjectKey, bodyKey);
+            var nc = new CultureNotificationContent().LoadContent(user.PreferredLocale, subjectKey, bodyKey);
 
             var notificationUser = new NotificationUser
             {
@@ -401,9 +397,9 @@ namespace BugNET.BLL
                 CreationDate = user.CreateDate,
                 Email = user.Email,
                 UserName = user.UserName,
-                DisplayName = profile.DisplayName,
-                FirstName = profile.FirstName,
-                LastName = profile.LastName,
+                DisplayName = user.DisplayName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 IsApproved = user.IsApproved
             };
 

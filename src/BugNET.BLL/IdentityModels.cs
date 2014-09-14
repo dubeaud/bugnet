@@ -32,6 +32,13 @@ namespace BugNET.Models
 
         public System.DateTime CreateDate { get; set; }
         public bool IsApproved { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string DisplayName { get; set; }
+        public string SelectedIssueColumns { get; set; }
+        public int IssuesPageSize { get; set; }
+        public string PreferredLocale { get; set; }
+        public bool ReceiveEmailNotifications { get; set; }
 
         public ClaimsIdentity GenerateUserIdentity(ApplicationUserManager manager)
         {

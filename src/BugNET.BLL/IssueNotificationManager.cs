@@ -101,8 +101,8 @@ namespace BugNET.BLL
                     
                     // skip to the next user if this user is not approved
                     if(!user.IsApproved) continue; 
-                    // skip to next user if this user doesn't have notifications enabled.
-                    if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications) continue;
+                    // skip to next user if this user doesn't have notifications enabled.                   
+                    if (!user.ReceiveEmailNotifications) continue;
 
                     var nc = templateCache.First(p => p.CultureString == notification.NotificationCulture);
 
@@ -176,7 +176,7 @@ namespace BugNET.BLL
                     // skip to the next user if this user is not approved
                     if (!user.IsApproved) continue; 
                     // skip to next user if this user doesn't have notifications enabled.
-                    if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications) continue;
+                    if (!user.ReceiveEmailNotifications) continue;
 
                     var nc = templateCache.First(p => p.CultureString == notification.NotificationCulture);
 
@@ -272,7 +272,7 @@ namespace BugNET.BLL
                     // skip to the next user if this user is not approved
                     if (!user.IsApproved) continue; 
                     // skip to next user if this user doesn't have notifications enabled.
-                    if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications) continue;
+                    if (!user.ReceiveEmailNotifications) continue;
 
                     var nc = templateCache.First(p => p.CultureString == notification.NotificationCulture);
 
@@ -333,7 +333,7 @@ namespace BugNET.BLL
                 // skip to the next user if this user is not approved
                 if (!user.IsApproved) return; 
                 // skip to next user if this user doesn't have notifications enabled.
-                if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications)
+                if (!user.ReceiveEmailNotifications)
                     return;
 
                 var emailSubject = nc.CultureContents
@@ -418,7 +418,7 @@ namespace BugNET.BLL
                     // skip to the next user if this user is not approved
                     if (!user.IsApproved) continue; 
                     // skip to next user if this user doesn't have notifications enabled.
-                    if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications) continue;
+                    if (!user.ReceiveEmailNotifications) continue;
 
                     var message = new MailMessage
                         {

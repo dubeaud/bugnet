@@ -12,6 +12,5 @@ SELECT
 FROM
 	BugNet_IssueComments
 	INNER JOIN AspNetUsers U ON BugNet_IssueComments.UserId = U.Id
-	LEFT OUTER JOIN BugNet_UserProfiles ON U.UserName = BugNet_UserProfiles.UserName
 WHERE
 	IssueCommentId = @IssueCommentId

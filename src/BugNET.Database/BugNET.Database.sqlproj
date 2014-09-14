@@ -281,7 +281,6 @@
     <Build Include="Stored Procedures\BugNet_RelatedIssue_GetParentIssues.sql" />
     <Build Include="Stored Procedures\BugNet_RelatedIssue_GetChildIssues.sql" />
     <Build Include="Stored Procedures\BugNet_User_GetUserIdByUserName.sql" />
-    <Build Include="Stored Procedures\BugNet_User_GetUserNameByPasswordResetToken.sql" />
     <Build Include="Tables\AspNetRoles.sql" />
     <Build Include="Tables\AspNetUserClaims.sql" />
     <Build Include="Tables\AspNetUserLogins.sql" />

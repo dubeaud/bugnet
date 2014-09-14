@@ -251,8 +251,9 @@ namespace BugNET
                 //    if (outputRss)
                 //        break;
                 //}
-                var profile = new WebProfile().GetProfile(issue.CreatorUserName);
-                var authInfo = new SyndicationPerson {Name = profile.DisplayName};
+
+                var user = UserManager.GetUser(issue.CreatorUserName);
+                var authInfo = new SyndicationPerson {Name = user.DisplayName};
 
                 item.Authors.Add(authInfo);
 
@@ -642,14 +643,14 @@ namespace BugNET
 
             var issueList = IssueManager.GetMonitoredIssuesByUserName(Security.GetUserName(), excludeClosedIssues);
             var feedItems = CreateSyndicationItemsFromIssueList(issueList);
-            var profile = new WebProfile().GetProfile(Security.GetUserName());
+            var user = UserManager.GetUser(Security.GetUserName());
 
             feed.Title =
                 SyndicationContent.CreatePlaintextContent(
-                    string.Format(GetLocalResourceObject("MonitoredIssuesTitle").ToString(), profile.DisplayName));
+                    string.Format(GetLocalResourceObject("MonitoredIssuesTitle").ToString(), user.DisplayName));
             feed.Description =
                 SyndicationContent.CreatePlaintextContent(
-                    string.Format(GetLocalResourceObject("MonitoredIssuesDescription").ToString(), profile.DisplayName));
+                    string.Format(GetLocalResourceObject("MonitoredIssuesDescription").ToString(), user.DisplayName));
             feed.Items = feedItems;
         }
 

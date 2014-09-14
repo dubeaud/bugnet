@@ -38,15 +38,25 @@ CREATE TABLE [dbo].[AspNetUsers](
 	[UserName] [nvarchar](256) NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[IsApproved] [bit] NOT NULL,
+	[FirstName] [nvarchar] (100) NULL,
+	[LastName]  [nvarchar] (100) NULL,
+	[DisplayName] [nvarchar](256) NULL,
+	[SelectedIssueColumns]  [nvarchar] (50) NULL,
+	[IssuesPageSize] [int] NULL,
+	[PreferredLocale] [nvarchar](50) NULL,
+	[ReceiveEmailNotifications] [bit]  CONSTRAINT [DF_BugNet_AspNetUsers_RecieveEmailNotifications] DEFAULT ((1)) NOT NULL,
 	CONSTRAINT [PK_dbo.AspNetUsers] PRIMARY KEY CLUSTERED ([Id] ASC),
  );
 GO
 
-INSERT INTO AspNetUsers([Id], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnabled],[AccessFailedCount],[UserName], [CreateDate], [IsApproved])
-SELECT Users.UserId, Memberships.Email, 1, (Memberships.Password+'|'+CAST(Memberships.PasswordFormat as varchar)+'|'+Memberships.PasswordSalt), NewID(), 0, 0, 0, 0, Users.UserName, Memberships.CreateDate, Memberships.IsApproved
+INSERT INTO AspNetUsers([Id], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnabled],[AccessFailedCount],[UserName], [CreateDate], [IsApproved] , [FirstName], [LastName],
+[DisplayName], [SelectedIssueColumns], [IssuesPageSize], [PreferredLocale], [ReceiveEmailNotifications])
+SELECT Users.UserId, Memberships.Email, 1, (Memberships.Password+'|'+CAST(Memberships.PasswordFormat as varchar)+'|'+Memberships.PasswordSalt), NewID(), 0, 0, 0, 0, Users.UserName, Memberships.CreateDate, Memberships.IsApproved,
+BugNet_UserProfiles.FirstName, BugNet_UserProfiles.LastName, BugNet_UserProfiles.DisplayName, BugNet_UserProfiles.SelectedIssueColumns, BugNet_UserProfiles.IssuesPageSize, BugNet_UserProfiles.PreferredLocale, BugNet_UserProfiles.ReceiveEmailNotifications
 FROM Users
 LEFT OUTER JOIN Memberships ON Memberships.ApplicationId = Users.ApplicationId 
-AND Users.UserId = Memberships.UserId;
+AND Users.UserId = Memberships.UserId
+LEFT OUTER JOIN BugNet_UserProfiles ON Users.UserName = BugNet_UserProfiles.UserName;
 GO
 
 CREATE TABLE [dbo].[AspNetRoles](
@@ -103,6 +113,14 @@ GO
 --
 --
 
+PRINT N'Dropping [dbo].[DF_BugNet_UserProfiles_RecieveEmailNotifications]...';
+
+
+GO
+ALTER TABLE [dbo].[BugNet_UserProfiles] DROP CONSTRAINT [DF_BugNet_UserProfiles_RecieveEmailNotifications];
+
+
+GO
 PRINT N'Dropping [dbo].[FK_BugNet_DefaultValues_Users]...';
 
 
@@ -359,6 +377,22 @@ DROP TABLE [dbo].[UsersInRoles];
 
 
 GO
+PRINT N'Dropping [dbo].[BugNet_User_GetUserNameByPasswordResetToken]...';
+
+
+GO
+DROP PROCEDURE [dbo].[BugNet_User_GetUserNameByPasswordResetToken];
+
+
+GO
+PRINT N'Dropping [dbo].[BugNet_UserProfiles]...';
+
+
+GO
+DROP TABLE [dbo].[BugNet_UserProfiles];
+
+
+GO
 PRINT N'Creating [dbo].[FK_BugNet_DefaultValues_Users]...';
 
 
@@ -539,8 +573,8 @@ ALTER VIEW [dbo].[BugNet_DefaultValView]
 AS
 SELECT     dbo.BugNet_DefaultValues.DefaultType, dbo.BugNet_DefaultValues.StatusId, dbo.BugNet_DefaultValues.IssueOwnerUserId, 
                       dbo.BugNet_DefaultValues.IssuePriorityId, dbo.BugNet_DefaultValues.IssueAffectedMilestoneId, dbo.BugNet_DefaultValues.ProjectId, 
-                      ISNULL(OwnerUsers.UserName, N'none') AS OwnerUserName, ISNULL(OwnerUsersProfile.DisplayName, N'none') AS OwnerDisplayName, 
-                      ISNULL(AssignedUsers.UserName, N'none') AS AssignedUserName, ISNULL(AssignedUsersProfile.DisplayName, N'none') AS AssignedDisplayName, 
+                      ISNULL(OwnerUsers.UserName, N'none') AS OwnerUserName, ISNULL(OwnerUsers.DisplayName, N'none') AS OwnerDisplayName, 
+                      ISNULL(AssignedUsers.UserName, N'none') AS AssignedUserName, ISNULL(AssignedUsers.DisplayName, N'none') AS AssignedDisplayName, 
                       dbo.BugNet_DefaultValues.IssueAssignedUserId, dbo.BugNet_DefaultValues.IssueCategoryId, dbo.BugNet_DefaultValues.IssueVisibility, 
                       dbo.BugNet_DefaultValues.IssueDueDate, dbo.BugNet_DefaultValues.IssueProgress, dbo.BugNet_DefaultValues.IssueMilestoneId, 
                       dbo.BugNet_DefaultValues.IssueEstimation, dbo.BugNet_DefaultValues.IssueResolutionId, dbo.BugNet_DefaultValuesVisibility.StatusVisibility, 
@@ -554,8 +588,6 @@ SELECT     dbo.BugNet_DefaultValues.DefaultType, dbo.BugNet_DefaultValues.Status
 FROM         dbo.BugNet_DefaultValues LEFT OUTER JOIN
                       dbo.AspNetUsers AS OwnerUsers ON dbo.BugNet_DefaultValues.IssueOwnerUserId = OwnerUsers.Id LEFT OUTER JOIN
                       dbo.AspNetUsers AS AssignedUsers ON dbo.BugNet_DefaultValues.IssueAssignedUserId = AssignedUsers.Id LEFT OUTER JOIN
-                      dbo.BugNet_UserProfiles AS AssignedUsersProfile ON AssignedUsers.UserName = AssignedUsersProfile.UserName LEFT OUTER JOIN
-                      dbo.BugNet_UserProfiles AS OwnerUsersProfile ON OwnerUsers.UserName = OwnerUsersProfile.UserName LEFT OUTER JOIN
                       dbo.BugNet_DefaultValuesVisibility ON dbo.BugNet_DefaultValues.ProjectId = dbo.BugNet_DefaultValuesVisibility.ProjectId
 GO
 PRINT N'Altering [dbo].[BugNet_GetIssuesByProjectIdAndCustomFieldView]...';
@@ -597,12 +629,12 @@ SELECT
 	ISNULL(dbo.BugNet_ProjectResolutions.ResolutionName, 'none') AS ResolutionName, 
 	LastUpdateUsers.UserName AS LastUpdateUserName, 
 	ISNULL(AssignedUsers.UserName, N'none') AS AssignedUserName, 
-	ISNULL(AssignedUsersProfile.DisplayName, N'none') AS AssignedDisplayName, 
+	ISNULL(AssignedUsers.DisplayName, N'none') AS AssignedDisplayName, 
 	CreatorUsers.UserName AS CreatorUserName, 
-	ISNULL(CreatorUsersProfile.DisplayName, N'none') AS CreatorDisplayName, 
+	ISNULL(CreatorUsers.DisplayName, N'none') AS CreatorDisplayName, 
 	ISNULL(OwnerUsers.UserName, 'none') AS OwnerUserName, 
-	ISNULL(OwnerUsersProfile.DisplayName, N'none') AS OwnerDisplayName, 
-	ISNULL(LastUpdateUsersProfile.DisplayName, 'none') AS LastUpdateDisplayName, 
+	ISNULL(OwnerUsers.DisplayName, N'none') AS OwnerDisplayName, 
+	ISNULL(LastUpdateUsers.DisplayName, 'none') AS LastUpdateDisplayName, 
 	ISNULL(dbo.BugNet_ProjectPriorities.PriorityImageUrl, '') AS PriorityImageUrl, 
 	ISNULL(dbo.BugNet_ProjectIssueTypes.IssueTypeImageUrl, '') AS IssueTypeImageUrl, 
 	ISNULL(dbo.BugNet_ProjectStatus.StatusImageUrl, '') AS StatusImageUrl, 
@@ -651,14 +683,6 @@ LEFT OUTER JOIN
 LEFT OUTER JOIN
     dbo.AspNetUsers AS OwnerUsers ON dbo.BugNet_Issues.IssueOwnerUserId = OwnerUsers.Id 
 LEFT OUTER JOIN
-    dbo.BugNet_UserProfiles AS CreatorUsersProfile ON CreatorUsers.UserName = CreatorUsersProfile.UserName 
-LEFT OUTER JOIN
-    dbo.BugNet_UserProfiles AS AssignedUsersProfile ON AssignedUsers.UserName = AssignedUsersProfile.UserName 
-LEFT OUTER JOIN
-    dbo.BugNet_UserProfiles AS OwnerUsersProfile ON OwnerUsers.UserName = OwnerUsersProfile.UserName 
-LEFT OUTER JOIN
-    dbo.BugNet_UserProfiles AS LastUpdateUsersProfile ON LastUpdateUsers.UserName = LastUpdateUsersProfile.UserName 
-LEFT OUTER JOIN
     dbo.BugNet_Projects ON dbo.BugNet_Issues.ProjectId = dbo.BugNet_Projects.ProjectId
 GO
 PRINT N'Altering [dbo].[BugNet_IssuesView]...';
@@ -677,9 +701,9 @@ SELECT        dbo.BugNet_Issues.IssueId, dbo.BugNet_Issues.IssueTitle, dbo.BugNe
                          AS IssueTypeName, ISNULL(dbo.BugNet_ProjectCategories.CategoryName, N'Unassigned') AS CategoryName, ISNULL(dbo.BugNet_ProjectStatus.StatusName, N'Unassigned') AS StatusName, 
                          ISNULL(dbo.BugNet_ProjectMilestones.MilestoneName, N'Unassigned') AS MilestoneName, ISNULL(AffectedMilestone.MilestoneName, N'Unassigned') AS AffectedMilestoneName, 
                          ISNULL(dbo.BugNet_ProjectResolutions.ResolutionName, 'Unassigned') AS ResolutionName, LastUpdateUsers.UserName AS LastUpdateUserName, ISNULL(AssignedUsers.UserName, N'Unassigned') 
-                         AS AssignedUserName, ISNULL(AssignedUsersProfile.DisplayName, N'Unassigned') AS AssignedDisplayName, CreatorUsers.UserName AS CreatorUserName, ISNULL(CreatorUsersProfile.DisplayName, 
-                         N'Unassigned') AS CreatorDisplayName, ISNULL(OwnerUsers.UserName, 'Unassigned') AS OwnerUserName, ISNULL(OwnerUsersProfile.DisplayName, N'Unassigned') AS OwnerDisplayName, 
-                         ISNULL(LastUpdateUsersProfile.DisplayName, 'Unassigned') AS LastUpdateDisplayName, ISNULL(dbo.BugNet_ProjectPriorities.PriorityImageUrl, '') AS PriorityImageUrl, 
+                         AS AssignedUserName, ISNULL(AssignedUsers.DisplayName, N'Unassigned') AS AssignedDisplayName, CreatorUsers.UserName AS CreatorUserName, ISNULL(CreatorUsers.DisplayName, 
+                         N'Unassigned') AS CreatorDisplayName, ISNULL(OwnerUsers.UserName, 'Unassigned') AS OwnerUserName, ISNULL(OwnerUsers.DisplayName, N'Unassigned') AS OwnerDisplayName, 
+                         ISNULL(LastUpdateUsers.DisplayName, 'Unassigned') AS LastUpdateDisplayName, ISNULL(dbo.BugNet_ProjectPriorities.PriorityImageUrl, '') AS PriorityImageUrl, 
                          ISNULL(dbo.BugNet_ProjectIssueTypes.IssueTypeImageUrl, '') AS IssueTypeImageUrl, ISNULL(dbo.BugNet_ProjectStatus.StatusImageUrl, '') AS StatusImageUrl, 
                          ISNULL(dbo.BugNet_ProjectMilestones.MilestoneImageUrl, '') AS MilestoneImageUrl, ISNULL(dbo.BugNet_ProjectResolutions.ResolutionImageUrl, '') AS ResolutionImageUrl, 
                          ISNULL(AffectedMilestone.MilestoneImageUrl, '') AS AffectedMilestoneImageUrl, ISNULL(dbo.BugNet_ProjectStatus.SortOrder, 0) AS StatusSortOrder, ISNULL(dbo.BugNet_ProjectPriorities.SortOrder, 0) 
@@ -705,10 +729,6 @@ FROM            dbo.BugNet_Issues LEFT OUTER JOIN
                          dbo.AspNetUsers AS LastUpdateUsers ON dbo.BugNet_Issues.LastUpdateUserId = LastUpdateUsers.Id LEFT OUTER JOIN
                          dbo.AspNetUsers AS CreatorUsers ON dbo.BugNet_Issues.IssueCreatorUserId = CreatorUsers.Id LEFT OUTER JOIN
                          dbo.AspNetUsers AS OwnerUsers ON dbo.BugNet_Issues.IssueOwnerUserId = OwnerUsers.Id LEFT OUTER JOIN
-                         dbo.BugNet_UserProfiles AS CreatorUsersProfile ON CreatorUsers.UserName = CreatorUsersProfile.UserName LEFT OUTER JOIN
-                         dbo.BugNet_UserProfiles AS AssignedUsersProfile ON AssignedUsers.UserName = AssignedUsersProfile.UserName LEFT OUTER JOIN
-                         dbo.BugNet_UserProfiles AS OwnerUsersProfile ON OwnerUsers.UserName = OwnerUsersProfile.UserName LEFT OUTER JOIN
-                         dbo.BugNet_UserProfiles AS LastUpdateUsersProfile ON LastUpdateUsers.UserName = LastUpdateUsersProfile.UserName LEFT OUTER JOIN
                          dbo.BugNet_Projects ON dbo.BugNet_Issues.ProjectId = dbo.BugNet_Projects.ProjectId
 GO
 PRINT N'Altering [dbo].[BugNet_ProjectsView]...';
@@ -720,14 +740,12 @@ AS
 SELECT     TOP (100) PERCENT dbo.BugNet_Projects.ProjectId, dbo.BugNet_Projects.ProjectName, dbo.BugNet_Projects.ProjectCode, dbo.BugNet_Projects.ProjectDescription, 
                       dbo.BugNet_Projects.AttachmentUploadPath, dbo.BugNet_Projects.ProjectManagerUserId, dbo.BugNet_Projects.ProjectCreatorUserId, 
                       dbo.BugNet_Projects.DateCreated, dbo.BugNet_Projects.ProjectDisabled, dbo.BugNet_Projects.ProjectAccessType, Managers.UserName AS ManagerUserName, 
-                      ISNULL(ManagerUsersProfile.DisplayName, N'none') AS ManagerDisplayName, Creators.UserName AS CreatorUserName, ISNULL(CreatorUsersProfile.DisplayName, 
+                      ISNULL(Managers.DisplayName, N'none') AS ManagerDisplayName, Creators.UserName AS CreatorUserName, ISNULL(Creators.DisplayName, 
                       N'none') AS CreatorDisplayName, dbo.BugNet_Projects.AllowAttachments, dbo.BugNet_Projects.AttachmentStorageType, dbo.BugNet_Projects.SvnRepositoryUrl, 
                       dbo.BugNet_Projects.AllowIssueVoting
 FROM         dbo.BugNet_Projects INNER JOIN
                       dbo.AspNetUsers AS Managers ON Managers.Id = dbo.BugNet_Projects.ProjectManagerUserId INNER JOIN
-                      dbo.AspNetUsers AS Creators ON Creators.Id = dbo.BugNet_Projects.ProjectCreatorUserId LEFT OUTER JOIN
-                      dbo.BugNet_UserProfiles AS CreatorUsersProfile ON Creators.UserName = CreatorUsersProfile.UserName LEFT OUTER JOIN
-                      dbo.BugNet_UserProfiles AS ManagerUsersProfile ON Managers.UserName = ManagerUsersProfile.UserName
+                      dbo.AspNetUsers AS Creators ON Creators.Id = dbo.BugNet_Projects.ProjectCreatorUserId 
 ORDER BY dbo.BugNet_Projects.ProjectName
 GO
 PRINT N'Altering [dbo].[BugNet_UserView]...';
@@ -737,14 +755,11 @@ GO
 ALTER VIEW [dbo].[BugNet_UserView]
 AS
 SELECT  
-	dbo.AspNetUsers.Id AS UserId, dbo.BugNet_UserProfiles.FirstName, dbo.BugNet_UserProfiles.LastName, dbo.BugNet_UserProfiles.DisplayName, 
-    dbo.AspNetUsers.UserName, dbo.AspNetUsers.Email, dbo.AspNetUsers.IsApproved, dbo.BugNet_UserProfiles.IssuesPageSize, dbo.BugNet_UserProfiles.PreferredLocale
+	Id AS UserId, FirstName, LastName, DisplayName, UserName, Email, IsApproved, IssuesPageSize, PreferredLocale
 FROM    
-	dbo.AspNetUsers INNER JOIN dbo.BugNet_UserProfiles ON dbo.AspNetUsers.UserName = dbo.BugNet_UserProfiles.UserName
+	dbo.AspNetUsers 
 GROUP BY 
-	dbo.AspNetUsers.Id, dbo.AspNetUsers.UserName, dbo.AspNetUsers.Email, dbo.AspNetUsers.IsApproved, dbo.BugNet_UserProfiles.FirstName, 
-	dbo.BugNet_UserProfiles.LastName, dbo.BugNet_UserProfiles.DisplayName, 
-    dbo.BugNet_UserProfiles.IssuesPageSize, dbo.BugNet_UserProfiles.PreferredLocale
+	Id, UserName, Email, IsApproved, FirstName, LastName, DisplayName, IssuesPageSize, PreferredLocale
 GO
 PRINT N'Refreshing [dbo].[BugNet_IssueAssignedToCountView]...';
 
@@ -1235,7 +1250,6 @@ SELECT
 FROM
 	BugNet_IssueAttachments
 	INNER JOIN AspNetUsers U ON BugNet_IssueAttachments.UserId = U.Id
-	LEFT OUTER JOIN BugNet_UserProfiles ON U.UserName = BugNet_UserProfiles.UserName
 WHERE
 	IssueAttachmentId = @IssueAttachmentId
 GO
@@ -1261,7 +1275,6 @@ SELECT
 FROM
 	BugNet_IssueAttachments
 	INNER JOIN AspNetUsers U ON BugNet_IssueAttachments.UserId = U.Id
-	LEFT OUTER JOIN BugNet_UserProfiles ON U.UserName = BugNet_UserProfiles.UserName
 WHERE
 	IssueId = @IssueId
 ORDER BY 
@@ -1317,7 +1330,6 @@ SELECT
 FROM
 	BugNet_IssueComments
 	INNER JOIN AspNetUsers U ON BugNet_IssueComments.UserId = U.Id
-	LEFT OUTER JOIN BugNet_UserProfiles ON U.UserName = BugNet_UserProfiles.UserName
 WHERE
 	IssueCommentId = @IssueCommentId
 GO
@@ -1340,7 +1352,6 @@ SELECT
 FROM
 	BugNet_IssueComments
 	INNER JOIN AspNetUsers U ON BugNet_IssueComments.UserId = U.Id
-	LEFT OUTER JOIN BugNet_UserProfiles ON U.UserName = BugNet_UserProfiles.UserName
 WHERE
 	IssueId = @IssueId
 ORDER BY 
@@ -1419,7 +1430,6 @@ AS
 FROM 
 	BugNet_IssueHistory
 	INNER JOIN AspNetUsers U ON BugNet_IssueHistory.UserId = U.Id
-	LEFT OUTER JOIN BugNet_UserProfiles ON U.UserName = BugNet_UserProfiles.UserName
 WHERE 
 	IssueId = @IssueId
 ORDER BY
@@ -1491,11 +1501,10 @@ SELECT
 	U.UserName NotificationUserName,
 	IsNull(DisplayName,'') NotificationDisplayName,
 	U.Email NotificationEmail,
-	ISNULL(UP.PreferredLocale, @DefaultCulture) AS NotificationCulture
+	ISNULL(u.PreferredLocale, @DefaultCulture) AS NotificationCulture
 FROM
 	BugNet_IssueNotifications
 	INNER JOIN AspNetUsers U ON BugNet_IssueNotifications.UserId = U.Id
-	LEFT OUTER JOIN BugNet_UserProfiles UP ON U.UserName = UP.UserName
 WHERE
 	IssueId = @IssueId
 ORDER BY
@@ -1511,17 +1520,15 @@ SELECT
 	u.UserName NotificationUserName,
 	IsNull(DisplayName,'') NotificationDisplayName,
 	U.Email NotificationEmail,
-	ISNULL(UP.PreferredLocale, @DefaultCulture) AS NotificationCulture
+	ISNULL(u.PreferredLocale, @DefaultCulture) AS NotificationCulture
 FROM
 	BugNet_ProjectNotifications p,
 	BugNet_Issues i,
-	AspNetUsers u,
-	BugNet_UserProfiles up
+	AspNetUsers u
 WHERE
 	IssueId = @IssueId
 	AND p.ProjectId = i.ProjectId
 	AND u.Id = p.UserId
-	AND u.UserName = up.UserName
 
 SELECT DISTINCT IssueId,NotificationUserId, NotificationUserName, NotificationDisplayName, NotificationEmail, NotificationCulture FROM @tmpTable ORDER BY NotificationDisplayName
 GO
@@ -1623,7 +1630,6 @@ SELECT
 FROM         
 	BugNet_IssueWorkReports
 	INNER JOIN AspNetUsers U ON BugNet_IssueWorkReports.UserId = U.Id
-	LEFT OUTER JOIN BugNet_UserProfiles ON U.UserName = BugNet_UserProfiles.UserName
 	LEFT OUTER JOIN BugNet_IssueComments ON BugNet_IssueComments.IssueCommentId =  BugNet_IssueWorkReports.IssueCommentId
 WHERE
 	 BugNet_IssueWorkReports.IssueId = @IssueId
@@ -1768,14 +1774,12 @@ ALTER PROCEDURE [dbo].[BugNet_Project_GetMemberRolesByProjectId]
 	@ProjectId Int
 AS
 
-SELECT ISNULL(UsersProfile.DisplayName, AspNetUsers.UserName) as DisplayName, BugNet_Roles.RoleName
+SELECT ISNULL(AspNetUsers.DisplayName, AspNetUsers.UserName) as DisplayName, BugNet_Roles.RoleName
 FROM
 	AspNetUsers INNER JOIN
 	BugNet_UserProjects ON AspNetUsers.Id = BugNet_UserProjects.UserId INNER JOIN
 	BugNet_UserRoles ON AspNetUsers.Id = BugNet_UserRoles.UserId INNER JOIN
-	BugNet_Roles ON BugNet_UserRoles.RoleId = BugNet_Roles.RoleId LEFT OUTER JOIN
-	BugNet_UserProfiles AS UsersProfile ON AspNetUsers.UserName = UsersProfile.UserName
-
+	BugNet_Roles ON BugNet_UserRoles.RoleId = BugNet_Roles.RoleId
 WHERE
 	BugNet_UserProjects.ProjectId = @ProjectId
 ORDER BY DisplayName, RoleName ASC
@@ -1977,12 +1981,11 @@ SET NOCOUNT ON
 SELECT 
 	BugNet_ProjectMailboxes.*,
 	u.UserName AssignToUserName,
-	p.DisplayName AssignToDisplayName,
+	u.DisplayName AssignToDisplayName,
 	BugNet_ProjectIssueTypes.IssueTypeName
 FROM 
 	BugNet_ProjectMailBoxes
 	INNER JOIN AspNetUsers u ON u.Id = AssignToUserId
-	INNER JOIN BugNet_UserProfiles p ON u.UserName = p.UserName
 	INNER JOIN BugNet_ProjectIssueTypes ON BugNet_ProjectIssueTypes.IssueTypeId = BugNet_ProjectMailboxes.IssueTypeId	
 WHERE
 	BugNet_ProjectMailBoxes.ProjectMailboxId = @ProjectMailboxId
@@ -2000,12 +2003,11 @@ SET NOCOUNT ON
 SELECT 
 	BugNet_ProjectMailboxes.*,
 	u.UserName AssignToUserName,
-	p.DisplayName AssignToDisplayName,
+	u.DisplayName AssignToDisplayName,
 	pit.IssueTypeName
 FROM 
 	BugNet_ProjectMailBoxes
 	INNER JOIN AspNetUsers u ON u.Id = AssignToUserId
-	INNER JOIN BugNet_UserProfiles p ON u.UserName = p.UserName
 	INNER JOIN BugNet_ProjectIssueTypes pit ON pit.IssueTypeId = BugNet_ProjectMailboxes.IssueTypeId		
 WHERE
 	BugNet_ProjectMailBoxes.ProjectId = @ProjectId
@@ -2023,12 +2025,11 @@ SET NOCOUNT ON
 SELECT 
 	BugNet_ProjectMailboxes.*,
 	u.UserName AssignToUserName,
-	p.DisplayName AssignToDisplayName,
+	u.DisplayName AssignToDisplayName,
 	pit.IssueTypeName
 FROM 
 	BugNet_ProjectMailBoxes
 	INNER JOIN AspNetUsers u ON u.Id = AssignToUserId
-	INNER JOIN BugNet_UserProfiles p ON u.UserName = p.UserName
 	INNER JOIN BugNet_ProjectIssueTypes pit ON pit.IssueTypeId = BugNet_ProjectMailboxes.IssueTypeId	
 WHERE
 	BugNet_ProjectMailBoxes.MailBox = @mailbox
@@ -2117,7 +2118,6 @@ FROM
 	BugNet_ProjectNotifications
 	INNER JOIN AspNetUsers U ON BugNet_ProjectNotifications.UserId = U.Id
 	INNER JOIN BugNet_Projects P ON BugNet_ProjectNotifications.ProjectId = P.ProjectId
-	LEFT OUTER JOIN BugNet_UserProfiles ON U.UserName = BugNet_UserProfiles.UserName
 WHERE
 	P.ProjectId = @ProjectId
 ORDER BY
@@ -2145,7 +2145,6 @@ FROM
 	BugNet_ProjectNotifications
 	INNER JOIN AspNetUsers U ON BugNet_ProjectNotifications.UserId = U.Id
 	INNER JOIN BugNet_Projects P ON BugNet_ProjectNotifications.ProjectId = P.ProjectId
-	LEFT OUTER JOIN BugNet_UserProfiles ON U.UserName = BugNet_UserProfiles.UserName
 WHERE
 	U.Id = @UserId
 ORDER BY
@@ -2164,12 +2163,11 @@ SELECT @UserId = Id FROM AspNetUsers WHERE UserName = @UserName
 
 SELECT
 	QueryId,
-	QueryName + ' (' + BugNet_UserProfiles.DisplayName + ')' AS QueryName,
+	QueryName + ' (' + DisplayName + ')' AS QueryName,
 	IsPublic
 FROM
 	BugNet_Queries INNER JOIN
-	AspNetUsers M ON BugNet_Queries.UserId = M.Id JOIN
-	BugNet_UserProfiles ON M.UserName = BugNet_UserProfiles.UserName
+	AspNetUsers M ON BugNet_Queries.UserId = M.Id
 WHERE
 	IsPublic = 1 AND ProjectId = @ProjectId
 UNION
@@ -2370,12 +2368,10 @@ ALTER PROCEDURE [dbo].[BugNet_User_GetUsersByProjectId]
 	@ProjectId Int,
 	@ExcludeReadonlyUsers bit
 AS
-SELECT DISTINCT U.Id AS UserId, U.UserName, FirstName, LastName, DisplayName FROM 
+SELECT DISTINCT U.Id AS UserId, U.UserName, U.FirstName, U.LastName, U.DisplayName FROM 
 	AspNetUsers U
 JOIN BugNet_UserProjects
 	ON U.Id = BugNet_UserProjects.UserId
-JOIN BugNet_UserProfiles
-	ON U.UserName = BugNet_UserProfiles.UserName
 LEFT JOIN BugNet_UserRoles UR
 	ON U.Id = UR.UserId 
 LEFT JOIN BugNet_Roles R
@@ -2606,4 +2602,3 @@ ALTER TABLE [dbo].[BugNet_UserRoles] WITH CHECK CHECK CONSTRAINT [FK_BugNet_User
 
 GO
 PRINT N'Update complete.';
-

@@ -88,7 +88,7 @@
                 <asp:Literal ID="AddNewStatusLabel" runat="Server" meta:resourcekey="AddNewStatusLabel" Text="Add New Status" /></h3>
             <div class="form-group">
                 <asp:Label ID="StatusNameLabel" CssClass="control-label col-md-2" AssociatedControlID="txtName" runat="Server" Text="<%$ Resources:SharedResources, Name %>" />
-                <div class="col-md-6">
+                <div class="col-md-10">
                     <asp:TextBox ID="txtName" MaxLength="50" CssClass="form-control" runat="Server" />
                 </div>
             </div>

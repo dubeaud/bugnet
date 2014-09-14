@@ -13,5 +13,12 @@
 	[UserName] [nvarchar](256) NOT NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[IsApproved] [bit] NOT NULL,
+	[FirstName] [nvarchar] (100) NULL,
+	[LastName]  [nvarchar] (100) NULL,
+	[DisplayName] [nvarchar](256) NULL,
+	[SelectedIssueColumns]  [nvarchar] (50) NULL,
+	[IssuesPageSize] [int] NULL,
+	[PreferredLocale] [nvarchar](50) NULL,
+	[ReceiveEmailNotifications] [bit]  CONSTRAINT [DF_BugNet_AspNetUsers_RecieveEmailNotifications] DEFAULT ((1)) NOT NULL,
 	CONSTRAINT [PK_dbo.AspNetUsers] PRIMARY KEY CLUSTERED ( [Id] ASC) 
 );

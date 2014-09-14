@@ -39,19 +39,17 @@ namespace BugNET.Account
             ddlPreferredLocale.DataSource = resourceItems;
             ddlPreferredLocale.DataBind();
 
-            var membershipUser = UserManager.GetUser(User.Identity.Name);
+            var user = UserManager.GetUser(User.Identity.Name);
+
             litUserName.Text = User.Identity.Name;
-            FirstName.Text = WebProfile.Current.FirstName;
-            LastName.Text = WebProfile.Current.LastName;
-            FullName.Text = WebProfile.Current.DisplayName;
-            ddlPreferredLocale.SelectedValue = WebProfile.Current.PreferredLocale;
-            IssueListItems.SelectedValue = UserManager.GetProfilePageSize().ToString();
-            AllowNotifications.Checked = WebProfile.Current.ReceiveEmailNotifications;
-
-            if (membershipUser == null) return;
-
-            UserName.Text = membershipUser.UserName;
-            Email.Text = membershipUser.Email;
+            FirstName.Text = user.FirstName;
+            LastName.Text = user.LastName;
+            FullName.Text = user.DisplayName;
+            ddlPreferredLocale.SelectedValue = user.PreferredLocale;
+            IssueListItems.SelectedValue = user.IssuesPageSize.ToString();
+            AllowNotifications.Checked = user.ReceiveEmailNotifications;
+            UserName.Text = user.UserName;
+            Email.Text = user.Email;
 
             var isFromOpenIdRegistration = Request.Get("oid", false);
 
@@ -158,13 +156,12 @@ namespace BugNET.Account
             var user = UserManager.GetUser(User.Identity.Name);
 
             user.Email = Email.Text;
-            WebProfile.Current.FirstName = FirstName.Text;
-            WebProfile.Current.LastName = LastName.Text;
-            WebProfile.Current.DisplayName = FullName.Text;
+            user.FirstName = FirstName.Text;
+            user.LastName = LastName.Text;
+            user.DisplayName = FullName.Text;
 
             try
             {
-                WebProfile.Current.Save();
                 UserManager.UpdateUser(user);
                
                 Message1.ShowSuccessMessage(GetLocalResourceObject("ProfileSaved").ToString());
@@ -212,13 +209,15 @@ namespace BugNET.Account
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void SaveCustomSettings_Click(object sender, EventArgs e)
         {
-            WebProfile.Current.IssuesPageSize = Convert.ToInt32(IssueListItems.SelectedValue);
-            WebProfile.Current.PreferredLocale = ddlPreferredLocale.SelectedValue;
-            WebProfile.Current.ReceiveEmailNotifications = AllowNotifications.Checked;
+            var user = UserManager.GetUser(User.Identity.Name);
+
+            user.IssuesPageSize = Convert.ToInt32(IssueListItems.SelectedValue);
+            user.PreferredLocale = ddlPreferredLocale.SelectedValue;
+            user.ReceiveEmailNotifications = AllowNotifications.Checked;
 
             try
             {
-                WebProfile.Current.Save();
+                UserManager.UpdateUser(user);
                 Message3.ShowSuccessMessage(GetLocalResourceObject("CustomSettingsSaved").ToString());
 
                 if (Log.IsInfoEnabled)

@@ -33,12 +33,12 @@ SELECT
 	ISNULL(dbo.BugNet_ProjectResolutions.ResolutionName, 'none') AS ResolutionName, 
 	LastUpdateUsers.UserName AS LastUpdateUserName, 
 	ISNULL(AssignedUsers.UserName, N'none') AS AssignedUserName, 
-	ISNULL(AssignedUsersProfile.DisplayName, N'none') AS AssignedDisplayName, 
+	ISNULL(AssignedUsers.DisplayName, N'none') AS AssignedDisplayName, 
 	CreatorUsers.UserName AS CreatorUserName, 
-	ISNULL(CreatorUsersProfile.DisplayName, N'none') AS CreatorDisplayName, 
+	ISNULL(CreatorUsers.DisplayName, N'none') AS CreatorDisplayName, 
 	ISNULL(OwnerUsers.UserName, 'none') AS OwnerUserName, 
-	ISNULL(OwnerUsersProfile.DisplayName, N'none') AS OwnerDisplayName, 
-	ISNULL(LastUpdateUsersProfile.DisplayName, 'none') AS LastUpdateDisplayName, 
+	ISNULL(OwnerUsers.DisplayName, N'none') AS OwnerDisplayName, 
+	ISNULL(LastUpdateUsers.DisplayName, 'none') AS LastUpdateDisplayName, 
 	ISNULL(dbo.BugNet_ProjectPriorities.PriorityImageUrl, '') AS PriorityImageUrl, 
 	ISNULL(dbo.BugNet_ProjectIssueTypes.IssueTypeImageUrl, '') AS IssueTypeImageUrl, 
 	ISNULL(dbo.BugNet_ProjectStatus.StatusImageUrl, '') AS StatusImageUrl, 
@@ -86,13 +86,5 @@ LEFT OUTER JOIN
     dbo.AspNetUsers AS CreatorUsers ON dbo.BugNet_Issues.IssueCreatorUserId = CreatorUsers.Id 
 LEFT OUTER JOIN
     dbo.AspNetUsers AS OwnerUsers ON dbo.BugNet_Issues.IssueOwnerUserId = OwnerUsers.Id 
-LEFT OUTER JOIN
-    dbo.BugNet_UserProfiles AS CreatorUsersProfile ON CreatorUsers.UserName = CreatorUsersProfile.UserName 
-LEFT OUTER JOIN
-    dbo.BugNet_UserProfiles AS AssignedUsersProfile ON AssignedUsers.UserName = AssignedUsersProfile.UserName 
-LEFT OUTER JOIN
-    dbo.BugNet_UserProfiles AS OwnerUsersProfile ON OwnerUsers.UserName = OwnerUsersProfile.UserName 
-LEFT OUTER JOIN
-    dbo.BugNet_UserProfiles AS LastUpdateUsersProfile ON LastUpdateUsers.UserName = LastUpdateUsersProfile.UserName 
 LEFT OUTER JOIN
     dbo.BugNet_Projects ON dbo.BugNet_Issues.ProjectId = dbo.BugNet_Projects.ProjectId
