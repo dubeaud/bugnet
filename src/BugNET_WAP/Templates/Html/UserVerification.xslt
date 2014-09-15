@@ -15,9 +15,7 @@
         a new account at <xsl:value-of select="HostSetting_ApplicationTitle" />. Before you can login, however, you need to first visit the following link 
 		to confirm your account: </p>
 		<p>
-			<a href="{HostSetting_DefaultUrl}Account/Verify.aspx?ID={NotificationUser/Id}" target="_blank">
-                <xsl:value-of select="HostSetting_DefaultUrl" />Account/Verify.aspx?ID=<xsl:value-of select="NotificationUser/Id" />
-            </a>
+			<a href="{callbackUrl}" target="_blank"><xsl:value-of select="callbackUrl" /></a>
 		</p>
 		<p>After visiting the above link you can log into the site!</p>
 		<p>If you have any problems verifying your account, please reply to this email to get assistance.</p>

@@ -269,7 +269,7 @@ namespace BugNET.BLL
         /// Sends the user verification notification.
         /// </summary>
         /// <param name="user">The user.</param>
-        public static void SendUserVerificationNotification(ApplicationUser user)
+        public static void SendUserVerificationNotification(ApplicationUser user, string callbackUrl)
         {
             if (user == null) throw new ArgumentNullException("user");
 
@@ -295,7 +295,7 @@ namespace BugNET.BLL
                 IsApproved = user.IsApproved
             };
 
-            var data = new Dictionary<string, object> { { "User", notificationUser } };
+            var data = new Dictionary<string, object> { { "User", notificationUser }, {"callbackUrl", callbackUrl } };
 
             var emailSubject = nc.CultureContents
                 .First(p => p.ContentKey == subjectKey)
