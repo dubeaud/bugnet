@@ -40,7 +40,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <asp:Button runat="server" OnClick="LogIn" meta:resourceKey="LoginButton" Text="[Resource Required]" CssClass="btn btn-primary" />
+                            <asp:Button runat="server" ID="LoginButton" OnClick="LogIn" meta:resourceKey="LoginButton" Text="[Resource Required]" CssClass="btn btn-primary" />
                         </div>
                     </div>
                 </div>

@@ -5,6 +5,10 @@ using System.Threading;
 using System.Web;
 using BugNET.BLL;
 using BugNET.Common;
+using System.Web;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Owin;
 
 namespace BugNET.HttpModules
 {
@@ -54,7 +58,7 @@ namespace BugNET.HttpModules
 
             string culture;
 
-            if (HttpContext.Current.User == null || HttpContext.Current.Profile == null || !HttpContext.Current.User.Identity.IsAuthenticated)
+            if (HttpContext.Current.User == null || !HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 culture = HostSettingManager.Get(HostSettingNames.ApplicationDefaultLanguage);
                 Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(culture);
@@ -62,17 +66,21 @@ namespace BugNET.HttpModules
             }
             else
             {
-                if (HttpContext.Current.Profile["PreferredLocale"] != null &&
-                !string.IsNullOrEmpty(HttpContext.Current.Profile["PreferredLocale"].ToString()))
+                var manager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+
+                var user  = manager.FindByName(HttpContext.Current.User.Identity.Name);
+                if (user != null)
                 {
-                    //retrieve culture
-                    culture = HttpContext.Current.Profile["PreferredLocale"].ToString();
+                    if(!string.IsNullOrWhiteSpace(user.PreferredLocale))
+                    {
+                        //retrieve culture
+                        culture = user.PreferredLocale;
 
-                    //set culture
-                    Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(culture);
-                    Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture);
+                        //set culture
+                        Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(culture);
+                        Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture);
+                    }
                 }
-
             }
         }
     }

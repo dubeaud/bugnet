@@ -174,6 +174,35 @@ namespace BugNET
         {
             return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
         }
+
+
+        /// <summary>
+        /// Custom password sign in async method to check if the user IsApproved field 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <param name="isPersistent"></param>
+        /// <param name="shouldLockout"></param>
+        /// <returns></returns>
+        public override async Task<SignInStatus> PasswordSignInAsync(string userName, string password, bool isPersistent, bool shouldLockout)
+        {
+            if (UserManager == null)
+            {
+                return SignInStatus.Failure;
+            }
+            var user = await UserManager.FindByNameAsync(userName);
+            if (user == null)
+            {
+                return SignInStatus.Failure;
+            }
+
+            if(!user.IsApproved)
+            {
+                return SignInStatus.Failure;
+            }
+
+            return await base.PasswordSignInAsync(userName, password, isPersistent, shouldLockout);
+        }
     }
 
     public class SqlPasswordHasher : PasswordHasher

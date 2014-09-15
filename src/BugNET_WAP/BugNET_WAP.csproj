@@ -977,7 +977,6 @@
     <Compile Include="Issues\UserControls\Revisions.ascx.designer.cs">
       <DependentUpon>Revisions.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Old_App_Code\SimpleSqlProfileProvider.cs" />
     <Compile Include="Old_App_Code\UIL\DownloadAttachment.cs" />
     <Compile Include="Old_App_Code\UIL\ErrorRedirector.cs">
       <SubType>Code</SubType>

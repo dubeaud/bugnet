@@ -11,7 +11,7 @@
         </h1>
     </div>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <asp:BulletedList ID="BulletedList4" DisplayMode="LinkButton" CssClass="nav nav-pills nav-stacked"
                 runat="server" OnClick="BulletedList4_Click1">
                 <asp:ListItem meta:resourceKey="UserDetails">User Details</asp:ListItem>
@@ -19,18 +19,17 @@
                 <asp:ListItem meta:resourceKey="Notifications">Notifications</asp:ListItem>
             </asp:BulletedList>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-10">
             <asp:MultiView ID="ProfileView" ActiveViewIndex="0" runat="server">
                 <asp:View ID="UserDetails" runat="server">
                     <bn:Message ID="Message1" runat="server" Width="650px" Visible="False" />
-
 
                     <div class="form-horizontal">
                         <h2>
                             <asp:Literal ID="Literal3" runat="server" Text="[Resource Needed]" meta:resourceKey="UserDetails" /></h2>
                         <div class="form-group">
-                            <asp:Label ID="Label2" CssClass="control-label col-md-4" AssociatedControlID="UserName" runat="server" Text="<%$ Resources:SharedResources, Username %>" />
-                            <div class="col-md-8">
+                            <asp:Label ID="Label2" CssClass="control-label col-md-2" AssociatedControlID="UserName" runat="server" Text="<%$ Resources:SharedResources, Username %>" />
+                            <div class="col-md-10">
                                 <asp:TextBox ID="UserName" CssClass="form-control" ReadOnly="True" Enabled="false" runat="server" />
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" Display="Dynamic"
                                     Text="<%$ Resources:SharedResources, Required %>" ControlToValidate="UserName" />
@@ -38,32 +37,32 @@
                         </div>
 
                         <div class="form-group">
-                            <asp:Label ID="Label1" CssClass="control-label col-md-4" AssociatedControlID="FirstName" runat="server" Text="<%$ Resources:SharedResources, FirstName %>" />
-                            <div class="col-md-8">
+                            <asp:Label ID="Label1" CssClass="control-label col-md-2" AssociatedControlID="FirstName" runat="server" Text="<%$ Resources:SharedResources, FirstName %>" />
+                            <div class="col-md-10">
                                 <asp:TextBox CssClass="form-control" ID="FirstName" runat="server" />
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" Display="Dynamic"
                                     Text="<%$ Resources:SharedResources, Required %>" ControlToValidate="FirstName" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <asp:Label ID="Label3" CssClass="control-label col-md-4" AssociatedControlID="LastName" runat="server" Text="<%$ Resources:SharedResources, LastName %>" />
-                            <div class="col-md-8">
+                            <asp:Label ID="Label3" CssClass="control-label col-md-2" AssociatedControlID="LastName" runat="server" Text="<%$ Resources:SharedResources, LastName %>" />
+                            <div class="col-md-10">
                                 <asp:TextBox ID="LastName" CssClass="form-control" runat="server" />
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" Display="Dynamic"
                                     Text="<%$ Resources:SharedResources, Required %>" ControlToValidate="LastName"></asp:RequiredFieldValidator>
                             </div>
                         </div>
                         <div class="form-group">
-                            <asp:Label ID="Label5" CssClass="control-label col-md-4" AssociatedControlID="FullName" runat="server" Text="<%$ Resources:SharedResources, DisplayName %>" />
-                            <div class="col-md-8">
+                            <asp:Label ID="Label5" CssClass="control-label col-md-2" AssociatedControlID="FullName" runat="server" Text="<%$ Resources:SharedResources, DisplayName %>" />
+                            <div class="col-md-10">
                                 <asp:TextBox ID="FullName" CssClass="form-control" runat="server" />
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" Display="Dynamic"
                                     Text="<%$ Resources:SharedResources, Required %>" ControlToValidate="FullName"></asp:RequiredFieldValidator>
                             </div>
                         </div>
                         <div class="form-group">
-                            <asp:Label ID="Label4" CssClass="control-label col-md-4" AssociatedControlID="Email" runat="server" Text="<%$ Resources:SharedResources, Email %>" />
-                            <div class="col-md-8">
+                            <asp:Label ID="Label4" CssClass="control-label col-md-2" AssociatedControlID="Email" runat="server" Text="<%$ Resources:SharedResources, Email %>" />
+                            <div class="col-md-10">
                                 <asp:TextBox ID="Email" CssClass="form-control" runat="server" />
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" Display="Dynamic"
                                     Text="<%$ Resources:SharedResources, Required %>" ControlToValidate="Email" />
@@ -72,7 +71,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-offset-2 col-md-4">
+                            <div class="col-md-offset-2 col-md-2">
                                 <asp:LinkButton ID="SaveButton" runat="server" CssClass="btn btn-primary" OnClick="SaveButton_Click"
                                     Text="<%$ Resources:SharedResources, Save %>" />
                                 <asp:LinkButton ID="BackButton" runat="server" CssClass="btn btn-default" CausesValidation="false"
@@ -87,9 +86,9 @@
                         <asp:Literal ID="Literal2" runat="server" Text="[Resource Needed]" meta:resourceKey="Preferences" /></h2>
                     <div class="form-horizontal">
                         <div class="form-group">
-                            <asp:Label ID="Label8" CssClass="control-label col-md-4" AssociatedControlID="IssueListItems" runat="server" Text="Issue Page Size:"
+                            <asp:Label ID="Label8" CssClass="control-label col-md-2" AssociatedControlID="IssueListItems" runat="server" Text="Issue Page Size:"
                                 meta:resourcekey="lblItemPageSize" />
-                            <div class="col-md-8">
+                            <div class="col-md-10">
                                 <asp:DropDownList ID="IssueListItems" CssClass="form-control" runat="server">
                                     <asp:ListItem Text="5" Value="5" />
                                     <asp:ListItem Text="10" Value="10" />
@@ -103,8 +102,8 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <asp:Label ID="Label6" CssClass="control-label col-md-4" AssociatedControlID="ddlPreferredLocale" runat="server" Text="Preferred Locale:" meta:resourcekey="PreferredLocale" />
-                            <div class="col-md-8">
+                            <asp:Label ID="Label6" CssClass="control-label col-md-2" AssociatedControlID="ddlPreferredLocale" runat="server" Text="Preferred Locale:" meta:resourcekey="PreferredLocale" />
+                            <div class="col-md-10">
                                 <asp:DropDownList CssClass="form-control" ID="ddlPreferredLocale" DataTextField="Text" DataValueField="Value"
                                     runat="server">
                                 </asp:DropDownList>
@@ -126,8 +125,8 @@
                         <asp:Literal ID="Label13" runat="server" meta:resourcekey="Notifications" Text="[Resource Needed]" /></h2>
                     <div class="form-horizontal">
                         <div class="form-group">
-                            <asp:Label CssClass="control-label col-md-4" runat="server" Text="[Resource Needed]" meta:resourceKey="AllowNotifications" AssociatedControlID="AllowNotifications" />
-                            <div class="col-md-8">
+                            <asp:Label CssClass="control-label col-md-2" runat="server" Text="[Resource Needed]" meta:resourceKey="AllowNotifications" AssociatedControlID="AllowNotifications" />
+                            <div class="col-md-10">
                                 <div class="checkbox">
                                     <asp:CheckBox ID="AllowNotifications" runat="server" Text="" />
                                 </div>
