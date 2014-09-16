@@ -5,7 +5,6 @@ using System.Threading;
 using System.Web;
 using BugNET.BLL;
 using BugNET.Common;
-using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Owin;

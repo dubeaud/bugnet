@@ -53,7 +53,7 @@ namespace BugNET.Administration.Host.UserControls
             UserAccountSource.SelectedValue = HostSettingManager.Get(HostSettingNames.UserAccountSource);
             ADUserName.Text = HostSettingManager.Get(HostSettingNames.ADUserName);
             ADPath.Text = HostSettingManager.Get(HostSettingNames.ADPath);
-            UserRegistration.SelectedValue = HostSettingManager.Get(HostSettingNames.UserRegistration,(int)Common.UserRegistration.Public).ToString();
+            UserRegistration.SelectedValue = HostSettingManager.Get(HostSettingNames.UserRegistration,(int)Common.UserRegistration.Verified).ToString();
             AnonymousAccess.SelectedValue = HostSettingManager.Get(HostSettingNames.AnonymousAccess, true).ToString();
             ADPassword.Attributes.Add("value", HostSettingManager.Get(HostSettingNames.ADPassword));
             TwitterAuthentication.Checked = HostSettingManager.Get(HostSettingNames.TwitterAuthentication, false);

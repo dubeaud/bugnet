@@ -22,7 +22,6 @@
                 <div class="col-md-10">
                     <asp:RadioButtonList RepeatDirection="Horizontal" CssClass="radio" RepeatLayout="Flow" ID="UserRegistration" runat="server">
                         <asp:ListItem runat="server" meta:resourceKey="UserRegistration_None" Text="None" Value="0" />
-                        <asp:ListItem runat="server" meta:resourceKey="UserRegistration_Public" Text="Public" Value="1" />
                         <asp:ListItem runat="server" meta:resourceKey="UserRegistration_Verified" Text="Verified" Value="2" />
                     </asp:RadioButtonList>
                 </div>

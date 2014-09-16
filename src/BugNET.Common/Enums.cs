@@ -37,7 +37,6 @@ namespace BugNET.Common
     public enum UserRegistration
     {
         None = 0,
-        Public = 1,
         Verified = 2
     }
 

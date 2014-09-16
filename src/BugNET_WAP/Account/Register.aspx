@@ -13,6 +13,14 @@
                     <hr />
                     <asp:ValidationSummary runat="server" CssClass="text-danger" />
                     <div class="form-group">
+                        <asp:Label runat="server" AssociatedControlID="UserName" CssClass="col-md-2 control-label">User Name</asp:Label>
+                        <div class="col-md-10">
+                            <asp:TextBox runat="server" ID="UserName" CssClass="form-control" />
+                            <asp:RequiredFieldValidator runat="server" ControlToValidate="UserName"
+                                CssClass="text-danger validation-error" ErrorMessage="The username field is required." />
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <asp:Label runat="server" AssociatedControlID="Email" CssClass="col-md-2 control-label">Email</asp:Label>
                         <div class="col-md-10">
                             <asp:TextBox runat="server" ID="Email" CssClass="form-control" TextMode="Email" />
@@ -33,7 +41,7 @@
                         <div class="col-md-10">
                             <asp:TextBox runat="server" ID="ConfirmPassword" TextMode="Password" CssClass="form-control" />
                             <asp:RequiredFieldValidator runat="server" ControlToValidate="ConfirmPassword"
-                                CssClass="text-danger" Display="Dynamic" ErrorMessage="The confirm password field is required." />
+                                CssClass="text-danger validation-error" Display="Dynamic" ErrorMessage="The confirm password field is required." />
                             <asp:CompareValidator runat="server" ControlToCompare="Password" ControlToValidate="ConfirmPassword"
                                 CssClass="text-danger validation-error" Display="Dynamic" ErrorMessage="The password and confirmation password do not match." />
                         </div>
@@ -47,7 +55,7 @@
             </asp:PlaceHolder>
             <asp:PlaceHolder runat="server" ID="DisplayEmail" Visible="false">
                 <p class="text-info">
-                    Please check your email to confirm your account.
+                    <asp:Localize runat="server" Text="<%$Resources:VerificationInstructions %>">Please check your email to confirm your account.</asp:Localize>                
                 </p>
             </asp:PlaceHolder>
         </div>

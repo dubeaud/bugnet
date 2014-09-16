@@ -19,7 +19,7 @@
         <xsl:text>. Inainte de a va autentifica,trebuie sa accesati urmatorul link pentru a confirma contul d-voastra: </xsl:text>
         <xsl:text>&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
-        <xsl:value-of select="HostSetting_DefaultUrl" />Account/Verify.aspx?ID=<xsl:value-of select="NotificationUser/Id" />
+        <xsl:value-of select="string" />
         <xsl:text>&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
         <xsl:text>Dupa ce ati viziatat link-ul de mai sus puteti sa va autentificati pe site!</xsl:text>

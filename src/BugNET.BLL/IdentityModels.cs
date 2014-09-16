@@ -26,6 +26,7 @@ namespace BugNET.Models
     {
         public ApplicationUser()
         {
+            Id = Guid.NewGuid();
             CreateDate = DateTime.Now;
             IsApproved = false;
         }

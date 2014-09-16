@@ -14,9 +14,9 @@
 		<p>你好, <xsl:value-of select="NotificationUser/DisplayName" disable-output-escaping="yes" />.  你收到此邮件，因为你在 <xsl:value-of select="HostSetting_ApplicationTitle" />注册了新用户. 在登录之前, 
 		请访问如下链接激活该账户: </p>
 		<p>
-			<a href="{HostSetting_DefaultUrl}Account/Verify.aspx?ID={NotificationUser/Id}" target="_blank">
-                <xsl:value-of select="HostSetting_DefaultUrl" />Account/Verify.aspx?ID=<xsl:value-of select="NotificationUser/Id" />
-            </a>
+      <a href="{string}" target="_blank">
+        <xsl:value-of select="string" />
+      </a>
 		</p>
 		<p>激活之后，您就可以访问网站的服务!</p>
 		<p>如果您遇到任何问题, 您都可以回复此邮件以寻求帮助.</p>

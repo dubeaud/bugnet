@@ -15,7 +15,9 @@
         a new account at <xsl:value-of select="HostSetting_ApplicationTitle" />. Before you can login, however, you need to first visit the following link 
 		to confirm your account: </p>
 		<p>
-			<a href="{callbackUrl}" target="_blank"><xsl:value-of select="callbackUrl" /></a>
+			<a href="{string}" target="_blank">
+        <xsl:value-of select="string" />
+      </a>
 		</p>
 		<p>After visiting the above link you can log into the site!</p>
 		<p>If you have any problems verifying your account, please reply to this email to get assistance.</p>

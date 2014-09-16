@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeBehind="AccessDenied.aspx.cs" Inherits="BugNET.Errors.AccessDenied" %>
+﻿<%@ Page Language="C#" Title="Access Denied" meta:ResourceKey="Page" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeBehind="AccessDenied.aspx.cs" Inherits="BugNET.Errors.AccessDenied" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <h1><asp:literal ID="litTitle" runat="server" Text="<%$ Resources:AccessDenied %>"></asp:literal></h1>

@@ -33,9 +33,10 @@
                         for details on setting up this ASP.NET application to support two-factor authentication using SMS.
                         Uncomment the following block after you have set up two-factor authentication
                     --%>
-
-                    <dt>Phone Number:</dt>
+                    
                     <%--
+                    <dt>Phone Number:</dt>
+                    
                     <% if (HasPhoneNumber)
                        { %>
                     <dd>
@@ -52,12 +53,12 @@
                     <% } %>
                     --%>
 
-                    <dt>Two-Factor Authentication:</dt>
+                   <%-- <dt>Two-Factor Authentication:</dt>
                     <dd>
                         <p>
                             There are no two-factor authentication providers configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=313242">this article</a>
                             for details on setting up this ASP.NET application to support two-factor authentication.
-                        </p>
+                        </p>--%>
                         <% if (TwoFactorEnabled)
                           { %> 
                         <%--

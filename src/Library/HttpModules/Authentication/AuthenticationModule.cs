@@ -90,7 +90,7 @@ namespace BugNET.HttpModules
 
                                 var manager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
                                 user = new ApplicationUser() { UserName = HttpContext.Current.User.Identity.Name, Email = userprop.Email, FirstName = userprop.FirstName, 
-                                    LastName = userprop.LastName };
+                                    LastName = userprop.LastName, IsApproved = true };
                                 if (!string.IsNullOrWhiteSpace(userprop.DisplayName))
                                     user.DisplayName = userprop.DisplayName;
                                 else
@@ -101,6 +101,7 @@ namespace BugNET.HttpModules
 
                                 if (result.Succeeded)
                                 {
+
                                     // auto assign user to roles
                                     List<Role> roles = RoleManager.GetAll().FindAll(r => r.AutoAssign == true);
                                     foreach (Role r in roles)

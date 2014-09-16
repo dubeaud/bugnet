@@ -19,7 +19,7 @@
         <xsl:text>. Пройдите по следующей ссылке для подтверждения Вашей учётной записи: </xsl:text>
         <xsl:text>&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
-        <xsl:value-of select="HostSetting_DefaultUrl" />Account/Verify.aspx?ID=<xsl:value-of select="NotificationUser/Id" />
+        <xsl:value-of select="string" />
         <xsl:text>&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
         <xsl:text>После подтверждения учётной записи Вы сможете войти в систему!</xsl:text>

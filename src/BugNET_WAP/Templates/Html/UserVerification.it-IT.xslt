@@ -16,9 +16,9 @@
 		Prima di loggarti, tuttavia, devi visitare il seguente link per attivare il tuo account:
 		</p>
 		<p>
-			<a href="{HostSetting_DefaultUrl}Account/Verify.aspx?ID={NotificationUser/Id}" target="_blank">
-                <xsl:value-of select="HostSetting_DefaultUrl" />Account/Verify.aspx?ID=<xsl:value-of select="NotificationUser/Id" />
-            </a>
+      <a href="{string}" target="_blank">
+        <xsl:value-of select="string" />
+      </a>
 		</p>
 		<p>Solamente dopo aver visitato il link sopra potrai loggarti con successo!</p>
 		<p>Se hai problemi di attivazione dell'account, rispondi a questa notifica per ottenere assistenza.</p>

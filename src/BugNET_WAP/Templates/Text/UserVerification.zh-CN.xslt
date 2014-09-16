@@ -19,7 +19,7 @@
         <xsl:text>. 在登录之前,请访问如下链接激活该账户: </xsl:text>
         <xsl:text>&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
-        <xsl:value-of select="HostSetting_DefaultUrl" />Account/Verify.aspx?ID=<xsl:value-of select="NotificationUser/Id" />
+        <xsl:value-of select="string" />
         <xsl:text>&#10;</xsl:text>
         <xsl:text>&#10;</xsl:text>
         <xsl:text>激活之后，您就可以访问网站的服务!</xsl:text>
