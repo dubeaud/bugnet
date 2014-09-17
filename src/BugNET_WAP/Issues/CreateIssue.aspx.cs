@@ -324,7 +324,7 @@ namespace BugNET.Issues
                 return false;
             }
 
-            if (!CustomFieldManager.SaveCustomFieldValues(issue.Id, ctlCustomFields.Values))
+            if (!CustomFieldManager.SaveCustomFieldValues(issue.Id, ctlCustomFields.Values, true))
             {
                 Message1.ShowErrorMessage(Resources.Exceptions.SaveCustomFieldValuesError);
                 return false;

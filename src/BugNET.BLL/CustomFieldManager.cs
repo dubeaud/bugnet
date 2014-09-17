@@ -67,7 +67,7 @@ namespace BugNET.BLL
         /// <param name="issueId">The issue id.</param>
         /// <param name="fields">The fields.</param>
         /// <returns></returns>
-        public static bool SaveCustomFieldValues(int issueId, List<CustomField> fields)
+        public static bool SaveCustomFieldValues(int issueId, List<CustomField> fields, bool isNewIssue = false)
         {
             if (issueId <= Globals.NEW_ID) throw new ArgumentNullException("issueId");
             if (fields == null) throw (new ArgumentOutOfRangeException("fields"));
@@ -75,10 +75,12 @@ namespace BugNET.BLL
             try
             {
                 var issueChanges = GetCustomFieldChanges(issueId, CustomFieldManager.GetByIssueId(issueId), fields);
-
                 DataProviderManager.Provider.SaveCustomFieldValues(issueId, fields);
 
-                UpdateHistory(issueChanges);
+                if(!isNewIssue)
+                { 
+                    UpdateHistory(issueChanges);
+                }
 
                 return true;
             }

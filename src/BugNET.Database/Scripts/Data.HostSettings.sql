@@ -47,6 +47,8 @@ USING (VALUES
 	(N'Pop3ProcessAttachments', N'False'),
 	(N'EnableGravatar', N'False'),
 	(N'GoogleAuthentication', N'False'),
+	(N'GoogleClientId', N''),
+	(N'GoogleClientSecret', N''),
 	(N'FacebookAuthentication', N'False'),
 	(N'FacebookAppId', N''),
 	(N'FacebookAppSecret', N''),
