@@ -101,7 +101,7 @@ namespace BugNET.Queries
 		/// </summary>
 		void AddQuery() 
 		{
-			Response.Redirect(string.Format("QueryDetail.aspx?pid={0}",ProjectId));
+            Response.Redirect(string.Format("~/Queries/QueryDetail.aspx?pid={0}", ProjectId));
 		}
 
 		/// <summary>
