@@ -253,6 +253,7 @@ namespace BugNET.Administration.Projects.UserControls
                         var grid = (DataGrid)e.Item.Cells[grdCustomFields.Columns.Count - 1].FindControl("grdSelectionValues");
                         ViewState["CustomFieldId"] = currentCustomField.Id;
                         grid.DataSource = GetCustomFieldSelections(currentCustomField.Id);
+                        grid.DataKeyField = "Id";
                         grid.DataBind();
                     }
                     else
@@ -371,22 +372,24 @@ namespace BugNET.Administration.Projects.UserControls
             CustomFieldSelection cfs;
             var itemIndex = e.Item.ItemIndex;
             int itemId;
+            var grid = source as DataGrid;
+
             switch (e.CommandName)
             {
                 case "up":
                     //move row up
                     if (itemIndex == 0)
                         return;
-                    itemId = Convert.ToInt32(e.Item.Cells[0].Text);
+                    itemId = Convert.ToInt32(grid.DataKeys[itemIndex]);
                     cfs = CustomFieldSelectionManager.GetById(itemId);
                     cfs.SortOrder -= 1;
                     CustomFieldSelectionManager.SaveOrUpdate(cfs);
                     break;
                 case "down":
                     //move row down
-                    if (itemIndex == ((DataGrid) source).Items.Count - 1)
+                    if (itemIndex == grid.Items.Count - 1)
                         return;
-                    itemId = Convert.ToInt32(e.Item.Cells[0].Text);
+                    itemId = Convert.ToInt32(grid.DataKeys[itemIndex]);
                     cfs = CustomFieldSelectionManager.GetById(itemId);
                     cfs.SortOrder += 1;
                     CustomFieldSelectionManager.SaveOrUpdate(cfs);
