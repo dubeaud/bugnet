@@ -6,18 +6,22 @@
          <asp:Localize runat="server" ID="Localize1" Text="<%$ Resources:SuccessLabel %>"  />
     </asp:PlaceHolder> 
     <asp:PlaceHolder runat="server" ID="forgotPassword" Visible="true">
-        <br />
-        <asp:Label ID="lblInstructions" runat="server" Text="BugNET will send reset instructions to the email address associated with your account." meta:resourcekey="lblInstructions" />
-        <br />
-        <br />
-        <asp:Label ID="UserNameLabel" runat="server" AssociatedControlID="UserName" Text="<%$ Resources:SharedResources, Username %>" />
-        &nbsp;
-        <asp:TextBox ID="UserName" CssClass="form-control" runat="server"  />
-        <asp:RequiredFieldValidator ID="UserNameRequired" runat="server" ControlToValidate="UserName"
-            ErrorMessage="<%$ Resources:UsernameRequiredErrorMessage %>" ToolTip="<%$ Resources:UsernameRequiredErrorMessage %>">*</asp:RequiredFieldValidator>
-        <br />
-        <br />
-        <asp:Button ID="SubmitButton" CssClass="btn btn-primary" runat="server" OnClick="SubmitButton_Click" Text="<%$ Resources:SharedResources, Submit %>" />
+        <p><asp:Label ID="lblInstructions" runat="server" Text="BugNET will send reset instructions to the email address associated with your account." meta:resourcekey="lblInstructions" /></p>
+        <div class="form-horizontal">
+            <div class="form-group">
+                <asp:Label ID="UserNameLabel" runat="server" CssClass="col-md-2 control-label" AssociatedControlID="UserName" Text="<%$ Resources:SharedResources, Username %>" />
+                <div class="col-md-5">
+                    <asp:TextBox ID="UserName" CssClass="form-control" runat="server"  />
+                    <asp:RequiredFieldValidator ID="UserNameRequired" runat="server" ControlToValidate="UserName"
+                    ErrorMessage="<%$ Resources:UsernameRequiredErrorMessage %>" CssClass="text-danger validation-error" ToolTip="<%$ Resources:UsernameRequiredErrorMessage %>"></asp:RequiredFieldValidator>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <asp:Button ID="SubmitButton" CssClass="btn btn-primary" runat="server" OnClick="SubmitButton_Click" Text="<%$ Resources:SharedResources, Submit %>" />
+                </div>
+            </div>
+        </div>
     </asp:PlaceHolder>
     
    

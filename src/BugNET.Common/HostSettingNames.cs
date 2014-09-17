@@ -50,6 +50,8 @@
         WelcomeMessage,
         Pop3Port,
         GoogleAuthentication,
+        GoogleClientId,
+        GoogleClientSecret,
         FacebookAuthentication,
         FacebookAppId,
         FacebookAppSecret,

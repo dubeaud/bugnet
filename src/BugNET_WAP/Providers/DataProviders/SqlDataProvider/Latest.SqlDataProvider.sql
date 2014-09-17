@@ -683,3 +683,8 @@ GO
 if not exists (select * from sys.stats where name = N'ST_1813581499_9_1_7' and object_id = object_id(N'[dbo].[BugNet_Projects]'))
 CREATE STATISTICS [ST_1813581499_9_1_7] ON [dbo].[BugNet_Projects]([ProjectManagerUserId], [ProjectId], [ProjectDisabled])
 GO
+
+
+INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('GoogleClientId', '')
+INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('GoogleClientSecret', '')
+GO

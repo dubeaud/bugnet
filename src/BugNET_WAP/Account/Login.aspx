@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-8">
             <section id="loginForm">
-                <asp:Login ID="LoginView" runat="server" ViewStateMode="Disabled" RenderOuterTable="false" DestinationPageUrl="~/Default">
+                <asp:Login ID="LoginView" runat="server" ViewStateMode="Disabled" RenderOuterTable="false"  DestinationPageUrl="~/Default">
                     <LayoutTemplate>
                         <div class="form-horizontal">
                             <h4><asp:Localize runat="server" meta:resourceKey="UseLocalAccount" Text="[Resource Required]"/></h4>
@@ -17,18 +17,18 @@
                                 </p>
                             </asp:PlaceHolder>
                             <div class="form-group">
-                                <asp:Label runat="server" AssociatedControlID="UserName" CssClass="col-md-4 control-label" Text="<%$ Resources:SharedResources, UserName%>">User name</asp:Label>
+                                <asp:Label runat="server" AssociatedControlID="UserName" CssClass="col-md-2 control-label" Text="<%$ Resources:SharedResources, UserName%>">User name</asp:Label>
                                 <div class="col-md-5">
                                     <asp:TextBox runat="server" ID="UserName" CssClass="form-control" />
                                     <asp:RequiredFieldValidator runat="server" ControlToValidate="UserName"
-                                        CssClass="text-danger" ErrorMessage="<%$ Resources:SharedResources, UsernameRequiredErrorMessage%>" />
+                                        CssClass="text-danger validation-error" ErrorMessage="<%$ Resources:SharedResources, UsernameRequiredErrorMessage%>" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-4 control-label" Text="<%$ Resources:SharedResources, Password%>">Password</asp:Label>
+                                <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-2 control-label" Text="<%$ Resources:SharedResources, Password%>">Password</asp:Label>
                                 <div class="col-md-5">
                                     <asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="form-control" />
-                                    <asp:RequiredFieldValidator runat="server" ControlToValidate="Password" CssClass="text-danger" ErrorMessage="<%$ Resources:SharedResources, PasswordRequiredErrorMessage%>" />
+                                    <asp:RequiredFieldValidator runat="server" ControlToValidate="Password" CssClass="text-danger validation-error" ErrorMessage="<%$ Resources:SharedResources, PasswordRequiredErrorMessage%>" />
                                 </div>
                             </div>
                             <div class="form-group">

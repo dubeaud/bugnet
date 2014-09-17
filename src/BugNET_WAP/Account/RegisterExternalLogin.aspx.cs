@@ -5,6 +5,7 @@ using DotNetOpenAuth.AspNet;
 using Microsoft.AspNet.Membership.OpenAuth;
 using BugNET.BLL;
 using BugNET.Common;
+using DotNetOpenAuth.GoogleOAuth2;
 
 namespace BugNET.Account
 {
@@ -68,6 +69,12 @@ namespace BugNET.Account
             if (!String.IsNullOrEmpty(returnUrl))
             {
                 redirectUrl += "?ReturnUrl=" + HttpUtility.UrlEncode(returnUrl);
+            }
+
+           
+            if(ProviderName == "Google")
+            {
+                GoogleOAuth2Client.RewriteRequest();
             }
 
             // Verify the OpenAuth payload

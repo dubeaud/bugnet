@@ -9,7 +9,7 @@
         </h1>
     </div>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <ul class="nav nav-pills nav-stacked">
                 <asp:Repeater ID="AdminMenu" OnItemDataBound="AdminMenu_ItemDataBound" OnItemCommand="AdminMenu_ItemCommand"
                     runat="server">
@@ -20,7 +20,7 @@
                 </asp:Repeater>
             </ul>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-10">
             <bn:Message ID="Message1" runat="server" Visible="False" />
             <asp:PlaceHolder ID="plhSettingsControl" runat="Server" />
             <hr />

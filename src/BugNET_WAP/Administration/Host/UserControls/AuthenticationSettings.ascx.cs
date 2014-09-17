@@ -38,6 +38,8 @@ namespace BugNET.Administration.Host.UserControls
             HostSettingManager.UpdateHostSetting(HostSettingNames.FacebookAppId, FacebookAppId.Text);
             HostSettingManager.UpdateHostSetting(HostSettingNames.FacebookAppSecret, FacebookAppSecret.Text);
             HostSettingManager.UpdateHostSetting(HostSettingNames.GoogleAuthentication, GoogleAuthentication.Checked.ToString());
+            HostSettingManager.UpdateHostSetting(HostSettingNames.GoogleClientId, GoogleClientId.Text);
+            HostSettingManager.UpdateHostSetting(HostSettingNames.GoogleClientSecret, GoogleClientSecret.Text);
             HostSettingManager.UpdateHostSetting(HostSettingNames.MicrosoftClientId, MicrosoftClientId.Text);
             HostSettingManager.UpdateHostSetting(HostSettingNames.MicrosoftClientSecret, MicrosoftClientSecret.Text);
             HostSettingManager.UpdateHostSetting(HostSettingNames.MicrosoftAuthentication, MicrosoftAuthentication.Checked.ToString());
@@ -63,6 +65,8 @@ namespace BugNET.Administration.Host.UserControls
             FacebookAppId.Text = HostSettingManager.Get(HostSettingNames.FacebookAppId);
             FacebookAppSecret.Attributes.Add("value", HostSettingManager.Get(HostSettingNames.FacebookAppSecret));
             GoogleAuthentication.Checked = HostSettingManager.Get(HostSettingNames.GoogleAuthentication, false);
+            GoogleClientId.Text = HostSettingManager.Get(HostSettingNames.GoogleClientId);
+            GoogleClientSecret.Attributes.Add("value", HostSettingManager.Get(HostSettingNames.GoogleClientSecret));
             MicrosoftAuthentication.Checked = HostSettingManager.Get(HostSettingNames.MicrosoftAuthentication, false);
             MicrosoftClientId.Text = HostSettingManager.Get(HostSettingNames.MicrosoftClientId);
             MicrosoftClientSecret.Attributes.Add("value", HostSettingManager.Get(HostSettingNames.MicrosoftClientSecret));
