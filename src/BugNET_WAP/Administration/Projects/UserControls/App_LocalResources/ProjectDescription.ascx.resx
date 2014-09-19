@@ -118,19 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AccessTypeLabel.Text" xml:space="preserve">
-    <value>Access Type:</value>
+    <value>Access Type</value>
   </data>
   <data name="AttachmentStorageTypeLabel.Text" xml:space="preserve">
-    <value>Storage Type:</value>
+    <value>Storage Type</value>
   </data>
   <data name="Description.Text" xml:space="preserve">
-    <value>Description:</value>
+    <value>Description</value>
   </data>
   <data name="EnableAttachmentsLabel.Text" xml:space="preserve">
-    <value>Allow Attachments:</value>
+    <value>Allow Attachments</value>
   </data>
   <data name="ProjectCodeLabel.Text" xml:space="preserve">
-    <value>Project Code:</value>
+    <value>Project Code</value>
   </data>
   <data name="ProjectCodeValidator.ErrorMessage" xml:space="preserve">
     <value>Project Code is required</value>
@@ -142,13 +142,13 @@
     <value>Description is required</value>
   </data>
   <data name="ProjectManagerLabel.Text" xml:space="preserve">
-    <value>Manager:</value>
+    <value>Manager</value>
   </data>
   <data name="ProjectManagerValidator.ErrorMessage" xml:space="preserve">
     <value>Project Manager is required</value>
   </data>
   <data name="ProjectName.Text" xml:space="preserve">
-    <value>Project Name:</value>
+    <value>Project Name</value>
   </data>
   <data name="ProjectNameRequiredFieldValidator.ErrorMessage" xml:space="preserve">
     <value>Project Name is required</value>
@@ -157,10 +157,10 @@
     <value>-- Select User --</value>
   </data>
   <data name="UploadPath.Text" xml:space="preserve">
-    <value>Upload Path:</value>
+    <value>Upload Path</value>
   </data>
   <data name="AllowIssueVotingLabel.Text" xml:space="preserve">
-    <value>Allow Issue Voting:</value>
+    <value>Allow Issue Voting</value>
   </data>
   <data name="DetailsTitle.Text" xml:space="preserve">
     <value>Details</value>
@@ -172,7 +172,7 @@
     <value>Private</value>
   </data>
   <data name="ProjectImageLabel.Text" xml:space="preserve">
-    <value>Project Image:</value>
+    <value>Project Image</value>
   </data>
   <data name="PublicListItem.Text" xml:space="preserve">
     <value>Public</value>

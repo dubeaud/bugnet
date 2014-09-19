@@ -33,8 +33,6 @@ namespace BugNET.Account
 
         protected void RegisterUser_CreatedUser(object sender, EventArgs e)
         {
-            FormsAuthentication.SetAuthCookie(RegisterUser.UserName, createPersistentCookie: false);
-
             string continueUrl = RegisterUser.ContinueDestinationPageUrl;
             if (!OpenAuth.IsLocalUrl(continueUrl))
             {
@@ -50,16 +48,18 @@ namespace BugNET.Account
                 RoleManager.AddUser(user.UserName, r.Id);
             }
 
-            // send user verification email if enabled
-            if (Convert.ToBoolean(HostSettingManager.Get(HostSettingNames.UserRegistration, (int)UserRegistration.Verified)))
-            {
-                UserManager.SendUserVerificationNotification(user);
-            }
-
             //send notification this user was created
             UserManager.SendUserRegisteredNotification(user.UserName);
 
-            Response.Redirect(continueUrl);
+            // send user verification email if enabled
+            if (HostSettingManager.Get(HostSettingNames.UserRegistration, (int)UserRegistration.Verified) == (int)UserRegistration.Verified)
+            {
+                UserManager.SendUserVerificationNotification(user);
+            }
+            else
+            {
+                Response.Redirect(continueUrl);
+            }
         }
     }
 }

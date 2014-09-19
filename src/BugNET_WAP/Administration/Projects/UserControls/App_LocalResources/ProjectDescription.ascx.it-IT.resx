@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-	<!-- 
+  <!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,125 +59,125 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-		<xsd:element name="root" msdata:IsDataSet="true">
-			<xsd:complexType>
-				<xsd:choice maxOccurs="unbounded">
-					<xsd:element name="metadata">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" />
-							</xsd:sequence>
-							<xsd:attribute name="name" use="required" type="xsd:string" />
-							<xsd:attribute name="type" type="xsd:string" />
-							<xsd:attribute name="mimetype" type="xsd:string" />
-							<xsd:attribute ref="xml:space" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="assembly">
-						<xsd:complexType>
-							<xsd:attribute name="alias" type="xsd:string" />
-							<xsd:attribute name="name" type="xsd:string" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="data">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-							<xsd:attribute ref="xml:space" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="resheader">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" />
-						</xsd:complexType>
-					</xsd:element>
-				</xsd:choice>
-			</xsd:complexType>
-		</xsd:element>
-	</xsd:schema>
-	<resheader name="resmimetype">
-		<value>text/microsoft-resx</value>
-	</resheader>
-	<resheader name="version">
-		<value>2.0</value>
-	</resheader>
-	<resheader name="reader">
-		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<resheader name="writer">
-		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<data name="AccessTypeLabel.Text" xml:space="preserve">
-    <value>Tipo accesso:</value>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AccessTypeLabel.Text" xml:space="preserve">
+    <value>Tipo accesso</value>
   </data>
-	<data name="AttachmentStorageTypeLabel.Text" xml:space="preserve">
-    <value>Memorizzazione:</value>
+  <data name="AttachmentStorageTypeLabel.Text" xml:space="preserve">
+    <value>Memorizzazione</value>
   </data>
-	<data name="Description.Text" xml:space="preserve">
-    <value>Descrizione:</value>
+  <data name="Description.Text" xml:space="preserve">
+    <value>Descrizione</value>
   </data>
-	<data name="EnableAttachmentsLabel.Text" xml:space="preserve">
-    <value>Consenti allegati:</value>
+  <data name="EnableAttachmentsLabel.Text" xml:space="preserve">
+    <value>Consenti allegati</value>
   </data>
-	<data name="ProjectCodeLabel.Text" xml:space="preserve">
-    <value>Codice progetto:</value>
+  <data name="ProjectCodeLabel.Text" xml:space="preserve">
+    <value>Codice progetto</value>
   </data>
-	<data name="ProjectCodeValidator.ErrorMessage" xml:space="preserve">
+  <data name="ProjectCodeValidator.ErrorMessage" xml:space="preserve">
     <value>Il codice progetto è obbligatorio</value>
   </data>
-	<data name="ProjectDescription.Text" xml:space="preserve">
+  <data name="ProjectDescription.Text" xml:space="preserve">
     <value>Inserisci i dettagli del progetto.</value>
   </data>
-	<data name="ProjectDescriptionValidator.ErrorMessage" xml:space="preserve">
+  <data name="ProjectDescriptionValidator.ErrorMessage" xml:space="preserve">
     <value>La descrizione è obbligatoria</value>
   </data>
-	<data name="ProjectManagerLabel.Text" xml:space="preserve">
-    <value>Gestore:</value>
+  <data name="ProjectManagerLabel.Text" xml:space="preserve">
+    <value>Gestore</value>
   </data>
-	<data name="ProjectManagerValidator.ErrorMessage" xml:space="preserve">
+  <data name="ProjectManagerValidator.ErrorMessage" xml:space="preserve">
     <value>Il progetto deve avere un gestore</value>
   </data>
-	<data name="ProjectName.Text" xml:space="preserve">
-    <value>Nome progetto:</value>
+  <data name="ProjectName.Text" xml:space="preserve">
+    <value>Nome progetto</value>
   </data>
-	<data name="ProjectNameRequiredFieldValidator.ErrorMessage" xml:space="preserve">
+  <data name="ProjectNameRequiredFieldValidator.ErrorMessage" xml:space="preserve">
     <value>Il progetto deve avere un nome</value>
   </data>
-	<data name="SelectUser" xml:space="preserve">
+  <data name="SelectUser" xml:space="preserve">
     <value>-- seleziona utente --</value>
   </data>
-	<data name="UploadPath.Text" xml:space="preserve">
-    <value>Percorso allegati:</value>
+  <data name="UploadPath.Text" xml:space="preserve">
+    <value>Percorso allegati</value>
   </data>
-	<data name="AllowIssueVotingLabel.Text" xml:space="preserve">
-    <value>Valutazione segnalazioni:</value>
+  <data name="AllowIssueVotingLabel.Text" xml:space="preserve">
+    <value>Valutazione segnalazioni</value>
   </data>
-	<data name="DetailsTitle.Text" xml:space="preserve">
+  <data name="DetailsTitle.Text" xml:space="preserve">
     <value>Dettagli</value>
   </data>
-	<data name="IssueAttachmentsTitle.Text" xml:space="preserve">
+  <data name="IssueAttachmentsTitle.Text" xml:space="preserve">
     <value>Allegati</value>
   </data>
-	<data name="PrivateListItem.Text" xml:space="preserve">
+  <data name="PrivateListItem.Text" xml:space="preserve">
     <value>Privato</value>
   </data>
-	<data name="ProjectImageLabel.Text" xml:space="preserve">
-    <value>Logo progetto:</value>
+  <data name="ProjectImageLabel.Text" xml:space="preserve">
+    <value>Logo progetto</value>
   </data>
-	<data name="PublicListItem.Text" xml:space="preserve">
+  <data name="PublicListItem.Text" xml:space="preserve">
     <value>Pubblico</value>
   </data>
-	<data name="SecurityTitle.Text" xml:space="preserve">
+  <data name="SecurityTitle.Text" xml:space="preserve">
     <value>Sicurezza</value>
   </data>
   <data name="AttachmentStorageTypeDb.Text" xml:space="preserve">

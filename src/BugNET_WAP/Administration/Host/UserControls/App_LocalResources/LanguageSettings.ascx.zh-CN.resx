@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ApplicationDefault" xml:space="preserve">
-    <value>网站默认语言:</value>
+    <value>网站默认语言</value>
   </data>
   <data name="InstalledLanguages" xml:space="preserve">
     <value>已安装语言</value>

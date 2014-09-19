@@ -118,19 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AccessTypeLabel.Text" xml:space="preserve">
-    <value>Zugriffstyp:</value>
+    <value>Zugriffstyp</value>
   </data>
   <data name="AttachmentStorageTypeLabel.Text" xml:space="preserve">
-    <value>Speicherort:</value>
+    <value>Speicherort</value>
   </data>
   <data name="Description.Text" xml:space="preserve">
-    <value>Beschreibung:</value>
+    <value>Beschreibung</value>
   </data>
   <data name="EnableAttachmentsLabel.Text" xml:space="preserve">
-    <value>Anhänge erlauben:</value>
+    <value>Anhänge erlauben</value>
   </data>
   <data name="ProjectCodeLabel.Text" xml:space="preserve">
-    <value>Projektcode:</value>
+    <value>Projektcode</value>
   </data>
   <data name="ProjectCodeValidator.ErrorMessage" xml:space="preserve">
     <value>Projektcode ist erforderlich</value>
@@ -142,7 +142,7 @@
     <value>Beschreibung ist erforderlich.</value>
   </data>
   <data name="ProjectManagerLabel.Text" xml:space="preserve">
-    <value>Manager:</value>
+    <value>Manager</value>
   </data>
   <data name="ProjectManagerValidator.ErrorMessage" xml:space="preserve">
     <value>Manager ist erforderlich</value>
@@ -157,10 +157,10 @@
     <value>-- Benutzer wählen --</value>
   </data>
   <data name="UploadPath.Text" xml:space="preserve">
-    <value>Upload-Pfad:</value>
+    <value>Upload-Pfad</value>
   </data>
   <data name="AllowIssueVotingLabel.Text" xml:space="preserve">
-    <value>Aufgabenabstimmung erlauben:</value>
+    <value>Aufgabenabstimmung erlauben</value>
   </data>
   <data name="DetailsTitle.Text" xml:space="preserve">
     <value>Details</value>

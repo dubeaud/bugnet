@@ -118,19 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AccessTypeLabel.Text" xml:space="preserve">
-    <value>Доступ:</value>
+    <value>Доступ</value>
   </data>
   <data name="AttachmentStorageTypeLabel.Text" xml:space="preserve">
-    <value>Тип хранилища:</value>
+    <value>Тип хранилища</value>
   </data>
   <data name="Description.Text" xml:space="preserve">
-    <value>Описание:</value>
+    <value>Описание</value>
   </data>
   <data name="EnableAttachmentsLabel.Text" xml:space="preserve">
-    <value>Разрешить вложения:</value>
+    <value>Разрешить вложения</value>
   </data>
   <data name="ProjectCodeLabel.Text" xml:space="preserve">
-    <value>Код проекта:</value>
+    <value>Код проекта</value>
   </data>
   <data name="ProjectCodeValidator.ErrorMessage" xml:space="preserve">
     <value>Требуется указать код проекта</value>
@@ -142,13 +142,13 @@
     <value>Требуется указать описание</value>
   </data>
   <data name="ProjectManagerLabel.Text" xml:space="preserve">
-    <value>Администратор:</value>
+    <value>Администратор</value>
   </data>
   <data name="ProjectManagerValidator.ErrorMessage" xml:space="preserve">
     <value>Требуется указать администратора проекта</value>
   </data>
   <data name="ProjectName.Text" xml:space="preserve">
-    <value>Название проекта:</value>
+    <value>Название проекта</value>
   </data>
   <data name="ProjectNameRequiredFieldValidator.ErrorMessage" xml:space="preserve">
     <value>Требуется указать название проекта</value>
@@ -160,7 +160,7 @@
     <value>Путь загрузки вложений</value>
   </data>
   <data name="AllowIssueVotingLabel.Text" xml:space="preserve">
-    <value>Разрешить голосование:</value>
+    <value>Разрешить голосование</value>
   </data>
   <data name="DetailsTitle.Text" xml:space="preserve">
     <value>Сведения</value>
@@ -172,7 +172,7 @@
     <value>Закрытый</value>
   </data>
   <data name="ProjectImageLabel.Text" xml:space="preserve">
-    <value>Иконка:</value>
+    <value>Иконка</value>
   </data>
   <data name="PublicListItem.Text" xml:space="preserve">
     <value>Публичный</value>

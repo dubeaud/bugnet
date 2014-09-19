@@ -19,44 +19,44 @@
                         <hr />
                         <asp:ValidationSummary runat="server" CssClass="text-danger" />
                         <div class="form-group">
-                            <asp:Label runat="server" AssociatedControlID="UserName" CssClass="col-md-4 control-label" Text="<%$ Resources:SharedResources, UserName%>">User name</asp:Label>
+                            <asp:Label runat="server" AssociatedControlID="UserName" CssClass="col-md-2 control-label" Text="<%$ Resources:SharedResources, UserName%>">User name</asp:Label>
                             <div class="col-md-5">
                                 <asp:TextBox runat="server" ID="UserName" CssClass="form-control" />
                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="UserName"
-                                    CssClass="text-danger" ErrorMessage="<%$ Resources:SharedResources, UsernameRequiredErrorMessage%>" />
+                                    CssClass="text-danger validation-error" ErrorMessage="<%$ Resources:SharedResources, UsernameRequiredErrorMessage%>" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <asp:Label runat="server" AssociatedControlID="Email" CssClass="col-md-4 control-label" Text="<%$ Resources:SharedResources, EMail%>">Email</asp:Label>
+                            <asp:Label runat="server" AssociatedControlID="Email" CssClass="col-md-2 control-label" Text="<%$ Resources:SharedResources, EMail%>">Email</asp:Label>
                             <div class="col-md-5">
-                                <asp:TextBox runat="server" ID="Email" CssClass="form-control" />
-                                <asp:RequiredFieldValidator runat="server" ControlToValidate="Email"
-                                    CssClass="text-danger" ErrorMessage="<%$ Resources:SharedResources, EmailRequiredErrorMessage %>" />
-                                <asp:RegularExpressionValidator ID="regexEmailValid" runat="server"
-                                     ValidationExpression="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+                                <asp:TextBox runat="server" ID="Email" TextMode="Email" CssClass="form-control" />
+                                <asp:RequiredFieldValidator runat="server" ControlToValidate="Email" Display="Dynamic"
+                                    CssClass="text-danger validation-error" ErrorMessage="<%$ Resources:SharedResources, EmailRequiredErrorMessage %>" />
+                                <asp:RegularExpressionValidator ID="regexEmailValid" runat="server" CssClass="text-danger validation-error"
+                                     ValidationExpression="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" Display="Dynamic"
                                      ControlToValidate="Email" ErrorMessage="<%$ Resources:SharedResources, EmailFormatErrorMessage %>" />
                             </div>
                         </div>
                          <div class="form-group">
-                            <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-4 control-label" Text="<%$ Resources:SharedResources, Password%>">Password</asp:Label>
+                            <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-2 control-label" Text="<%$ Resources:SharedResources, Password%>">Password</asp:Label>
                             <div class="col-md-5">
                                 <asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="form-control" />
                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="Password"
-                                    CssClass="text-danger" ErrorMessage="<%$ Resources:SharedResources, PasswordRequiredErrorMessage%>" />
+                                    CssClass="text-danger validation-error" ErrorMessage="<%$ Resources:SharedResources, PasswordRequiredErrorMessage%>" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <asp:Label runat="server" AssociatedControlID="ConfirmPassword" CssClass="col-md-4 control-label" Text="<%$ Resources:SharedResources, ConfirmPassword%>">Confirm password</asp:Label>
+                            <asp:Label runat="server" AssociatedControlID="ConfirmPassword" CssClass="col-md-2 control-label" Text="<%$ Resources:SharedResources, ConfirmPassword%>">Confirm password</asp:Label>
                             <div class="col-md-5">
                                 <asp:TextBox runat="server" ID="ConfirmPassword" TextMode="Password" CssClass="form-control" />
                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="ConfirmPassword"
-                                    CssClass="text-danger" Display="Dynamic" ErrorMessage="<%$ Resources:SharedResources, ConfirmPasswordRequiredErrorMessage%>" />
+                                    CssClass="text-danger validation-error" Display="Dynamic" ErrorMessage="<%$ Resources:SharedResources, ConfirmPasswordRequiredErrorMessage%>" />
                                 <asp:CompareValidator runat="server" ControlToCompare="Password" ControlToValidate="ConfirmPassword"
-                                    CssClass="text-danger" Display="Dynamic" ErrorMessage="<%$ Resources:SharedResources, ConfirmPasswordMismatchErrorMessage%>" />
+                                    CssClass="text-danger validation-error" Display="Dynamic" ErrorMessage="<%$ Resources:SharedResources, ConfirmPasswordMismatchErrorMessage%>" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-offset-4 col-md-5">
+                            <div class="col-md-offset-2 col-md-5">
                                 <asp:Button runat="server" CommandName="MoveNext" Text="Register"  CssClass="btn btn-primary" meta:resourcekey="RegisterButton" />
                             </div>
                         </div>

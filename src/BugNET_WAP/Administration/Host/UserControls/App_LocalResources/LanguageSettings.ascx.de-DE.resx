@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ApplicationDefault" xml:space="preserve">
-    <value>Anwendungsstandard:</value>
+    <value>Anwendungsstandard</value>
   </data>
   <data name="InstalledLanguages" xml:space="preserve">
-    <value>Momentan installierte Sprachen:</value>
+    <value>Momentan installierte Sprachen</value>
   </data>
   <data name="LanguageSettings" xml:space="preserve">
     <value>Sprachen</value>
