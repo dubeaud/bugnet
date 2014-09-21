@@ -461,12 +461,12 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[BugNet_ProjectNotifications](
-	[ProjectNotificationid] [int] IDENTITY(1,1) NOT NULL,
+	[ProjectNotificationId] [int] IDENTITY(1,1) NOT NULL,
 	[ProjectId] [int] NOT NULL,
 	[UserId] [uniqueidentifier] NOT NULL,
  CONSTRAINT [PK_BugNet_ProjectNotifications] PRIMARY KEY CLUSTERED 
 (
-	[ProjectNotificationid] ASC
+	[ProjectNotificationId] ASC
 )WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF)
 )
 

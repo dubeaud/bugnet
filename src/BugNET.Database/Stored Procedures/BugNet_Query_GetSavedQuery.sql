@@ -1,5 +1,5 @@
 ﻿
-CREATE PROCEDURE [BugNet_Query_GetSavedQuery] 
+CREATE PROCEDURE [dbo].[BugNet_Query_GetSavedQuery] 
   @QueryId INT
 AS
 

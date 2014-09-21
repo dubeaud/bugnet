@@ -1,5 +1,5 @@
 ﻿
-CREATE PROCEDURE [BugNet_Query_SaveQueryClause] 
+CREATE PROCEDURE [dbo].[BugNet_Query_SaveQueryClause] 
   @QueryId INT,
   @BooleanOperator NVarChar(50),
   @FieldName NVarChar(50),

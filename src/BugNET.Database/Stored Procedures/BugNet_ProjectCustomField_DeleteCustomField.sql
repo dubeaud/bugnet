@@ -1,5 +1,5 @@
 ﻿
-CREATE PROCEDURE [BugNet_ProjectCustomField_DeleteCustomField]
+CREATE PROCEDURE [dbo].[BugNet_ProjectCustomField_DeleteCustomField]
 	@CustomFieldIdToDelete INT
 AS
 
