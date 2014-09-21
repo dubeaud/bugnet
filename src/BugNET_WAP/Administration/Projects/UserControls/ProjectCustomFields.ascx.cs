@@ -508,6 +508,7 @@ namespace BugNET.Administration.Projects.UserControls
                     dropEditDataType.Enabled = false;
                     break;
                 case 4:
+                case 6:
                     dropEditDataType.SelectedValue = ValidationDataType.String.ToString();
                     dropEditDataType.Enabled = false;
                     break;
@@ -515,10 +516,6 @@ namespace BugNET.Administration.Projects.UserControls
                     dropEditDataType.SelectedValue = ValidationDataType.String.ToString();
                     dropEditDataType.Enabled = false;
                     chkEditRequired.Enabled = false;
-                    break;
-                case 6:
-                    dropEditDataType.SelectedValue = ValidationDataType.String.ToString();
-                    dropEditDataType.Enabled = false;
                     break;
             }
         }

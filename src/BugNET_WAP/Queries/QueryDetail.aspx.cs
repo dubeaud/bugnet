@@ -59,7 +59,14 @@ namespace BugNET.Queries
 
             // If no project id or query id then redirect away
             if (ProjectId == 0)
+            { 
                 ErrorRedirector.TransferToSomethingMissingPage(Page);
+            }
+
+            if (!Page.User.Identity.IsAuthenticated || (_queryId != 0 && !UserManager.HasPermission(ProjectId, Common.Permission.EditQuery.ToString())) )
+            {
+                Response.Redirect("~/Errors/AccessDenied");
+            }
 
             if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Common.Permission.AddQuery.ToString()))
             {

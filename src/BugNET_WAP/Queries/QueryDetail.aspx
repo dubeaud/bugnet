@@ -38,13 +38,15 @@
             <asp:Label ID="Label1" runat="server" Text="Query Name" CssClass="control-label col-md-2" AssociatedControlID="txtQueryName" meta:resourcekey="txtQueryName" />
             <div class="col-md-5">
                 <asp:TextBox ID="txtQueryName" CssClass="form-control" runat="Server" />
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="txtQueryName"
+                    CssClass="text-danger validation-error" ErrorMessage="Query name field is required" />
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <div class="checkbox">
                     <asp:CheckBox ID="chkGlobalQuery" runat="server" />
-                    <asp:Label ID="Label7" runat="server" Text="Public Query:" meta:resourcekey="chkGlobalQuery" AssociatedControlID="chkGlobalQuery" />
+                    <asp:Label ID="Label7" runat="server" Text="Public Query" meta:resourcekey="chkGlobalQuery" AssociatedControlID="chkGlobalQuery" />
                 </div>
             </div>
         </div>

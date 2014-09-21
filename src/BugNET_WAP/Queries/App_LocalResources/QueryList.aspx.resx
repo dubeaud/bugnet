@@ -127,7 +127,7 @@
     <value>Perform Query</value>
   </data>
   <data name="lblProject.Text" xml:space="preserve">
-    <value>Project:</value>
+    <value>Project</value>
   </data>
   <data name="Page.Title" xml:space="preserve">
     <value>Queries</value>
@@ -136,7 +136,7 @@
     <value>Error in query. Please check query values.</value>
   </data>
   <data name="Results.Text" xml:space="preserve">
-    <value>Results:</value>
+    <value>Results</value>
   </data>
   <data name="btnEditQuery.Text" xml:space="preserve">
     <value>Edit Query</value>
@@ -145,6 +145,6 @@
     <value>Are you sure you wish to delete this query?  This action cannot be undone.</value>
   </data>
   <data name="lblQuery.Text" xml:space="preserve">
-    <value>Query:</value>
+    <value>Query</value>
   </data>
 </root>

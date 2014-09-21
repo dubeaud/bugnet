@@ -26,6 +26,9 @@ namespace BugNET.Queries
 			dropQueries.DataSource = QueryManager.GetByUsername(User.Identity.Name,ProjectId);
 			dropQueries.DataBind();
 
+            pnlDeleteQuery.Visible = (dropQueries.DataSource.Count > 0);
+            pnlEditQuery.Visible = pnlDeleteQuery.Visible;
+
 			if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Common.Permission.DeleteQuery.ToString()))
 			{
                 pnlDeleteQuery.Visible = false;
@@ -35,9 +38,6 @@ namespace BugNET.Queries
             {
                 pnlEditQuery.Visible = false;
             }
-
-		    pnlDeleteQuery.Visible = (dropQueries.DataSource.Count > 0);
-            pnlEditQuery.Visible = pnlDeleteQuery.Visible;
 		}
 
 		/// <summary>
