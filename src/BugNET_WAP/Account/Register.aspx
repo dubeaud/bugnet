@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="Register" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Register.aspx.cs" Inherits="BugNET.Account.Register" meta:ResourceKey="Page" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <h2><%: Title %>.</h2>
+    <h2><%: Title %></h2>
     <p class="text-danger">
         <asp:Literal runat="server" ID="ErrorMessage" />
     </p>
@@ -14,10 +14,11 @@
         <WizardSteps>
             <asp:CreateUserWizardStep runat="server" ID="RegisterUserWizardStep">
                 <ContentTemplate>
+                    <p class="text-danger">
+                        <asp:Literal runat="server" ID="ErrorMessage" />
+                    </p>
                     <div class="form-horizontal">
                         <h4><asp:Localize runat="server" meta:resourceKey="TitleLabel" Text="[Resource Required]"/></h4>
-                        <hr />
-                        <asp:ValidationSummary runat="server" CssClass="text-danger" />
                         <div class="form-group">
                             <asp:Label runat="server" AssociatedControlID="UserName" CssClass="col-md-2 control-label" Text="<%$ Resources:SharedResources, UserName%>">User name</asp:Label>
                             <div class="col-md-5">

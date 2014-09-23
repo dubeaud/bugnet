@@ -16,7 +16,7 @@ namespace BugNET.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //redirect to access denied if user registration disabled
+            // redirect to access denied if user registration disabled
             switch (Convert.ToInt32(HostSettingManager.Get(HostSettingNames.UserRegistration)))
             {
                 case (int)UserRegistration.None:
