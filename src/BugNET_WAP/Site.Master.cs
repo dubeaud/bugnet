@@ -159,7 +159,15 @@ namespace BugNET
 
         protected void SearchButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect(string.Format("~/Issues/IssueSearch.aspx?q={0}", SearchBox.Text));
+            int issueId;
+            if(Int32.TryParse(SearchBox.Text, out issueId))
+            {
+                Response.Redirect(string.Format("~/Issues/IssueDetail.aspx?id={0}", issueId));
+            }
+            else
+            {
+                Response.Redirect(string.Format("~/Issues/IssueSearch.aspx?q={0}", SearchBox.Text));
+            } 
         }
     }
 }
