@@ -26,7 +26,7 @@
                             <div class="col-md-10">
                                 <asp:TextBox runat="server" ID="password" TextMode="Password" CssClass="form-control" meta:resourcekey="passwordResource1" />
                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="password" 
-                                    CssClass="text-danger" ErrorMessage="The password field is required."
+                                    CssClass="text-danger validation-error" ErrorMessage="The password field is required."
                                     Display="Dynamic" ValidationGroup="SetPassword" meta:resourcekey="RequiredFieldValidatorResource1" />
                                 <asp:Label runat="server" ID="newPasswordMessage" CssClass="text-danger"
                                     AssociatedControlID="password" meta:resourcekey="newPasswordMessageResource1" />
@@ -37,10 +37,10 @@
                             <div class="col-md-10">
                                 <asp:TextBox runat="server" ID="confirmPassword" TextMode="Password" CssClass="form-control" meta:resourcekey="confirmPasswordResource1" />
                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="confirmPassword"
-                                    CssClass="text-danger" Display="Dynamic" ErrorMessage="The confirm password field is required."
+                                    CssClass="text-danger validation-error" Display="Dynamic" ErrorMessage="The confirm password field is required."
                                     ValidationGroup="SetPassword" meta:resourcekey="RequiredFieldValidatorResource2" />
                                 <asp:CompareValidator runat="server" ControlToCompare="Password" ControlToValidate="confirmPassword"
-                                    CssClass="text-danger" Display="Dynamic" ErrorMessage="The password and confirmation password do not match."
+                                    CssClass="text-danger validation-error" Display="Dynamic" ErrorMessage="The password and confirmation password do not match."
                                     ValidationGroup="SetPassword" meta:resourcekey="CompareValidatorResource1" />
                             </div>
                         </div>
@@ -66,7 +66,7 @@
                             <div class="col-md-10">
                                 <asp:TextBox runat="server" ID="CurrentPassword" TextMode="Password" CssClass="form-control" meta:resourcekey="CurrentPasswordResource1" />
                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="CurrentPassword"
-                                    CssClass="text-danger" ErrorMessage="The current password field is required."
+                                    CssClass="text-danger validation-error" ErrorMessage="The current password field is required."
                                     ValidationGroup="ChangePassword" meta:resourcekey="RequiredFieldValidatorResource3" />
                             </div>
                         </div>
@@ -75,7 +75,7 @@
                             <div class="col-md-10">
                                 <asp:TextBox runat="server" ID="NewPassword" TextMode="Password" CssClass="form-control" meta:resourcekey="NewPasswordResource1" />
                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="NewPassword"
-                                    CssClass="text-danger" ErrorMessage="The new password is required."
+                                    CssClass="text-danger validation-error" ErrorMessage="The new password is required."
                                     ValidationGroup="ChangePassword" meta:resourcekey="RequiredFieldValidatorResource4" />
                             </div>
                         </div>
@@ -84,10 +84,10 @@
                             <div class="col-md-10">
                                 <asp:TextBox runat="server" ID="ConfirmNewPassword" TextMode="Password" CssClass="form-control" meta:resourcekey="ConfirmNewPasswordResource1" />
                                 <asp:RequiredFieldValidator runat="server" ControlToValidate="ConfirmNewPassword"
-                                    CssClass="text-danger" Display="Dynamic" ErrorMessage="Confirm new password is required."
+                                    CssClass="text-danger validation-error" Display="Dynamic" ErrorMessage="Confirm new password is required."
                                     ValidationGroup="ChangePassword" meta:resourcekey="RequiredFieldValidatorResource5" />
                                 <asp:CompareValidator runat="server" ControlToCompare="NewPassword" ControlToValidate="ConfirmNewPassword"
-                                    CssClass="text-danger" Display="Dynamic" ErrorMessage="The new password and confirmation password do not match."
+                                    CssClass="text-danger validation-error" Display="Dynamic" ErrorMessage="The new password and confirmation password do not match."
                                     ValidationGroup="ChangePassword" meta:resourcekey="CompareValidatorResource2" />
                             </div>
                         </div>

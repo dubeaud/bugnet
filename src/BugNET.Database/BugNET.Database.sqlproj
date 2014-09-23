@@ -288,6 +288,8 @@
     <Build Include="Tables\UsersInRoles.sql" />
     <Build Include="Stored Procedures\BugNet_User_GetUserIdByUserName.sql" />
     <Build Include="Stored Procedures\BugNet_User_GetUserNameByPasswordResetToken.sql" />
+    <Build Include="Tables\UsersOpenAuthAccounts.sql" />
+    <Build Include="Tables\UsersOpenAuthData.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
