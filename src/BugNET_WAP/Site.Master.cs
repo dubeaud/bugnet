@@ -162,7 +162,14 @@ namespace BugNET
             int issueId;
             if(Int32.TryParse(SearchBox.Text, out issueId))
             {
-                Response.Redirect(string.Format("~/Issues/IssueDetail.aspx?id={0}", issueId));
+                if(IssueManager.GetById(issueId) != null)
+                {
+                    Response.Redirect(string.Format("~/Issues/IssueDetail.aspx?id={0}", issueId));
+                }
+                else
+                {
+                    Response.Redirect(string.Format("~/Issues/IssueSearch.aspx?q={0}", SearchBox.Text));
+                }
             }
             else
             {
