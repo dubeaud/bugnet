@@ -68,7 +68,7 @@
                             else
                             {
                                 node.obj.remove();
-                                alert('<asp:Literal runat="server" Text="<%$ Resources:DuplicateCategoryMessage%>" />');
+                                BootstrapDialog.alert('<asp:Literal runat="server" Text="<%$ Resources:DuplicateCategoryMessage%>" />');
                             }
                         }, OnError);   
                     }
@@ -112,7 +112,7 @@
                 var node = $("#divJsTree").jstree('get_selected');
                 if(node.find("> ul > li").length > 0)
                 {
-                    return alert('<asp:Literal runat="server" Text="<%$ Resources:DeleteCategoriesMessage%>" />');
+                    return BootstrapDialog.danger('<asp:Literal runat="server" Text="<%$ Resources:DeleteCategoriesMessage%>" />');
                 }
 
                 $('#deleteCategoryModal').modal().show();
@@ -128,7 +128,7 @@
     }
     
     function OnError(result){
-        alert("Error: " + result.get_message());
+        BootstrapDialog.alert("Error: " + result.get_message());
     }  
     
     function onOk(sender,e){
