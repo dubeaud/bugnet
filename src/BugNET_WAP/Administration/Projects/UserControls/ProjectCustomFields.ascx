@@ -225,14 +225,14 @@
                 <h3>
                     <asp:Literal ID="DetailsTitle" runat="Server" meta:resourcekey="NewCustomFieldTitle" /></h3>
                 <div class="form-group">
-                    <asp:Label ID="label1" CssClass="control-label col-md-4" runat="server" AssociatedControlID="txtName" Text="<%$ Resources:FieldName %>" />
-                    <div class="col-md-8">
+                    <asp:Label ID="label1" CssClass="control-label col-md-2" runat="server" AssociatedControlID="txtName" Text="<%$ Resources:FieldName %>" />
+                    <div class="col-md-10">
                         <asp:TextBox ID="txtName" CssClass="form-control" MaxLength="255" runat="Server" />
                     </div>
                 </div>
                 <div class="form-group">
-                    <asp:Label ID="label2" CssClass="col-md-4 control-label" runat="server" AssociatedControlID="rblCustomFieldType" Text="<%$ Resources:FieldType %>" />
-                    <div class="col-md-8">
+                    <asp:Label ID="label2" CssClass="col-md-2 control-label" runat="server" AssociatedControlID="rblCustomFieldType" Text="<%$ Resources:FieldType %>" />
+                    <div class="col-md-10">
                         <asp:RadioButtonList AutoPostBack="True" CssClass="radio" OnSelectedIndexChanged="rblCustomFieldType_SelectedIndexChanged" ID="rblCustomFieldType"
                             runat="server">
                             <asp:ListItem Text="Text" Selected="True" Value="1" meta:resourcekey="TextType" />
@@ -244,16 +244,15 @@
                         </asp:RadioButtonList>
                     </div>
                 </div>
-
                 <div class="form-group">
-                    <asp:Label ID="label3" CssClass="control-label col-md-4" runat="server" AssociatedControlID="dropDataType" Text="<%$ Resources:DataType %>" />
-                    <div class="col-md-8">
+                    <asp:Label ID="label3" CssClass="control-label col-md-2" runat="server" AssociatedControlID="dropDataType" Text="<%$ Resources:DataType %>" />
+                    <div class="col-md-10">
                         <asp:DropDownList ID="dropDataType" CssClass="form-control" runat="Server" />
                     </div>
                 </div>
                 <div class="form-group">
-                    <asp:Label ID="label4" CssClass="control-label col-md-4" runat="server" AssociatedControlID="chkRequired" Text="<%$ Resources:Required %>" />
-                    <div class="col-md-8">
+                    <asp:Label ID="label4" CssClass="control-label col-md-2" runat="server" AssociatedControlID="chkRequired" Text="<%$ Resources:Required %>" />
+                    <div class="col-md-10">
                         <div class="checkbox">
                             <asp:CheckBox ID="chkRequired" runat="Server" />
                         </div>

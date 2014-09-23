@@ -69,8 +69,8 @@
                 <h3>
                     <asp:Literal ID="NewMailboxText" runat="server" Text="New Mailbox" meta:resourcekey="NewMailboxText" /></h3>
                 <div class="form-group">
-                        <asp:Label ID="EmailAddressLabel" CssClass="control-label col-md-4" runat="server" AssociatedControlID="txtMailbox" Text="Email Address:" meta:resourcekey="EmailAddressLabel" />
-                    <div class="col-md-8">
+                        <asp:Label ID="EmailAddressLabel" CssClass="control-label col-md-2" runat="server" AssociatedControlID="txtMailbox" Text="Email Address:" meta:resourcekey="EmailAddressLabel" />
+                    <div class="col-md-10">
                     <asp:TextBox ID="txtMailbox" runat="server" CssClass="form-control" EnableViewState="false"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="reqVal" Display="dynamic" ControlToValidate="txtMailBox" CssClass="text-danger"  Text=" (required)" runat="Server" />
                         <asp:RegularExpressionValidator ID="regexEmailValid" runat="server" ValidationExpression="\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"
@@ -78,14 +78,14 @@
                     </div>
                 </div>
                     <div class="form-group">
-                        <asp:Label ID="IssueAssignedUserLabel" runat="server" CssClass="control-label col-md-4" AssociatedControlID="IssueAssignedUser" Text="Assign To:" meta:resourcekey="IssueAssignedUserLabel" />
-                        <div class="col-md-8">
+                        <asp:Label ID="IssueAssignedUserLabel" runat="server" CssClass="control-label col-md-2" AssociatedControlID="IssueAssignedUser" Text="Assign To:" meta:resourcekey="IssueAssignedUserLabel" />
+                        <div class="col-md-10">
                         <it:PickSingleUser ID="IssueAssignedUser" runat="Server" Required="true" DisplayDefault="true"></it:PickSingleUser>
                             </div>
                     </div>
                     <div class="form-group">
-                        <asp:Label ID="IssueTypeLabel" runat="server" CssClass="control-label col-md-4"  AssociatedControlID="IssueAssignedType" Text="Issue Type:" meta:resourcekey="IssueTypeLabel" />
-                        <div class="col-md-8">
+                        <asp:Label ID="IssueTypeLabel" runat="server" CssClass="control-label col-md-2"  AssociatedControlID="IssueAssignedType" Text="Issue Type:" meta:resourcekey="IssueTypeLabel" />
+                        <div class="col-md-10">
                             <it:PickType ID="IssueAssignedType" runat="Server" Required="true" DisplayDefault="true"></it:PickType>
                         </div>
                     </div>

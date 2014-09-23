@@ -76,15 +76,6 @@ namespace BugNET.Administration.Projects.UserControls {
         protected global::BugNET.UserControls.PickSingleUser DropOwned;
         
         /// <summary>
-        /// chkNotifyOwner control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkNotifyOwner;
-        
-        /// <summary>
         /// chkOwnedByVisibility control.
         /// </summary>
         /// <remarks>
@@ -92,6 +83,15 @@ namespace BugNET.Administration.Projects.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkOwnedByVisibility;
+        
+        /// <summary>
+        /// chkNotifyOwner control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkNotifyOwner;
         
         /// <summary>
         /// PriorityLabel control.
@@ -166,15 +166,6 @@ namespace BugNET.Administration.Projects.UserControls {
         protected global::BugNET.UserControls.PickSingleUser DropAssignedTo;
         
         /// <summary>
-        /// chkNotifyAssignedTo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkNotifyAssignedTo;
-        
-        /// <summary>
         /// chkAssignedToVisibility control.
         /// </summary>
         /// <remarks>
@@ -182,6 +173,15 @@ namespace BugNET.Administration.Projects.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkAssignedToVisibility;
+        
+        /// <summary>
+        /// chkNotifyAssignedTo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkNotifyAssignedTo;
         
         /// <summary>
         /// PrivateLabel control.

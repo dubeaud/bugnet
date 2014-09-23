@@ -150,6 +150,9 @@
   <data name="DescriptionLabel.Text" xml:space="preserve">
     <value>When you create an issue, you assign the issue a category. Add categories by clicking the add category button and entering the name of the category. You can add sub-categories by selecting a parent category from the tree view below then entering the child category in the textbox and clicking the add button. To delete a category select the category then click the delete button.</value>
   </data>
+  <data name="DuplicateCategoryMessage" xml:space="preserve">
+    <value>You can not create a duplicate category.</value>
+  </data>
   <data name="NewCategoryNotEntered" xml:space="preserve">
     <value>You must enter a new category to assign the issues to</value>
   </data>

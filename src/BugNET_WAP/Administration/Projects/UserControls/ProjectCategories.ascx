@@ -61,7 +61,15 @@
 			        
                         //add the new node
                         window.BugNET.Webservices.BugNetServices.AddCategory(pid, name ,parentNodeId, function(result){
-                            data.rslt.obj.attr("id", result); //set the new id to the new node
+                            if(result != 0)
+                            {
+                                data.rslt.obj.attr("id", result); //set the new id to the new node
+                            }
+                            else
+                            {
+                                node.obj.remove();
+                                alert('<asp:Literal runat="server" Text="<%$ Resources:DuplicateCategoryMessage%>" />');
+                            }
                         }, OnError);   
                     }
                         
@@ -175,19 +183,18 @@
                 <p>
                     <asp:Literal ID="SelectOption" runat="Server" meta:resourcekey="SelectOption" /></p>
                 <div class="form-horizontal">
-                    <div class="form-group">
+                    <div class="radio">
                         <asp:RadioButton ID="RadioButton1" GroupName="DeleteCategory" CssClass="radio" runat="server" Checked="true" Height="30px" Text="&nbsp;&nbsp;Delete this category and all assigned issues." meta:resourcekey="DeleteCategoryRadioButton" />
                     </div>
-                    <div class="form-group">
+                    <div class="radio">
                         <asp:RadioButton ID="RadioButton2" GroupName="DeleteCategory" CssClass="radio" runat="server" Height="30px" Text="&nbsp;&nbsp;Assign all issues to an existing category." meta:resourcekey="DeleteCategoryRadioButton1" />
-                        <div class="col-sm-offset-1">
+                        <div style="margin-left:25px;">
                             <it:PickCategory ID="DropCategory" DisplayDefault="true" Required="false" runat="Server" />
                         </div>
-
                     </div>
-                    <div class="form-group">
+                    <div class="radio">
                         <asp:RadioButton ID="RadioButton3" GroupName="DeleteCategory" CssClass="radio" runat="server" Height="30px" Text="&nbsp;&nbsp;Assign all issues to a new category." meta:resourcekey="DeleteCategoryRadioButton2" />
-                        <div class="col-sm-offset-1">
+                        <div style="margin-left:25px;">
                             <asp:TextBox ID="NewCategoryTextBox" CssClass="form-control" runat="server" placeholder="Enter a new category"></asp:TextBox>
                         </div>
                     </div>
@@ -203,6 +210,3 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-
-<ajaxToolkit:TextBoxWatermarkExtender ID="TBWE2" runat="server" TargetControlID="NewCategoryTextBox" WatermarkText="Enter a new category"
-    meta:resourcekey="NewCategoryWatermark" WatermarkCssClass="watermarked" />

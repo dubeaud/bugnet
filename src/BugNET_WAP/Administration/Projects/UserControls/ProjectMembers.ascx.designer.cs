@@ -58,15 +58,6 @@ namespace BugNET.Administration.Projects.UserControls {
         protected global::System.Web.UI.WebControls.ListBox lstAllUsers;
         
         /// <summary>
-        /// Button1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton Button1;
-        
-        /// <summary>
         /// Button4 control.
         /// </summary>
         /// <remarks>
@@ -74,6 +65,15 @@ namespace BugNET.Administration.Projects.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlButton Button4;
+        
+        /// <summary>
+        /// Button1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton Button1;
         
         /// <summary>
         /// Label2 control.

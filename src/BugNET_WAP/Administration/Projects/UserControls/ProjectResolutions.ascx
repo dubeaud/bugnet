@@ -37,7 +37,7 @@
                                 CssClass="icon" ImageUrl="~/images/disk.gif" BorderWidth="0px" CommandName="Update" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
                                 runat="server" />&nbsp;
                             <asp:ImageButton ID="cmdCancel" ToolTip="<%$ Resources:SharedResources, Cancel %>" AlternateText="<%$ Resources:SharedResources, Cancel %>"
-                                CssClass="icon" ImageUrl="~/images/cancel.gif" BorderWidth="0px" CommandName="Cancel" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
+                                CssClass="icon" ImageUrl="~/images/cancel.gif" BorderWidth="0px" CommandName="Cancel" CausesValidation="false" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
                                 runat="server" />
                         </EditItemTemplate>
                     </asp:TemplateColumn>
@@ -46,9 +46,9 @@
                             <asp:Label ID="lblResolutionName" runat="Server" />
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:TextBox runat="server" ID="txtResolutionName" />
+                            <asp:TextBox runat="server" CssClass="form-control"  ID="txtResolutionName" />
                             <asp:RequiredFieldValidator ID="RequiredFieldValidator1" Display="Dynamic" runat="server" ControlToValidate="txtResolutionName"
-                                ErrorMessage="Resolution name is required." SetFocusOnError="True"></asp:RequiredFieldValidator>
+                                ErrorMessage="Resolution name is required." CssClass="text-danger validation-error" SetFocusOnError="True"></asp:RequiredFieldValidator>
                         </EditItemTemplate>
                     </asp:TemplateColumn>
                     <asp:TemplateColumn HeaderText="Image">
@@ -79,21 +79,23 @@
                 <h3>
                     <asp:Literal ID="AddNewResolutionLabel" runat="Server" meta:resourcekey="AddNewResolutionLabel" Text="Add New Resolution" /></h3>
                 <div class="form-group">
-                    <asp:Label ID="ResolutionNameLabel" CssClass="control-label col-md-4" AssociatedControlID="txtName" runat="Server" Text="<%$ Resources:SharedResources, Name %>" />
-                    <div class="col-md-8">
+                    <asp:Label ID="ResolutionNameLabel" CssClass="control-label col-md-2" AssociatedControlID="txtName" runat="Server" Text="<%$ Resources:SharedResources, Name %>" />
+                    <div class="col-md-10">
                         <asp:TextBox ID="txtName" CssClass="form-control" MaxLength="50" runat="Server" />
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" Display="Dynamic" runat="server" ControlToValidate="txtName" ValidationGroup="Add"
+                                ErrorMessage="Resolution name is required." CssClass="text-danger validation-error" SetFocusOnError="True"></asp:RequiredFieldValidator>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="<%= lstImages.ClientID %>" class="control-label col-md-4">
+                    <label for="<%= lstImages.ClientID %>" class="control-label col-md-2">
                         <asp:Literal ID="Literal1" runat="server" Text="<%$ Resources:SharedResources, Image%>" /></label>
-                    <div class="col-md-8">
+                    <div class="col-md-10">
                         <IT:PickImage ID="lstImages" ImageDirectory="/Resolution" runat="Server" />
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <asp:Button Text="Add Resolution" CssClass="btn btn-primary" OnClick="AddResolution" meta:resourcekey="AddResolutionButton" CausesValidation="false"
+                        <asp:Button Text="Add Resolution" CssClass="btn btn-primary" OnClick="AddResolution" meta:resourcekey="AddResolutionButton" CausesValidation="true" ValidationGroup="Add"
                             runat="server" ID="btnAdd" />
                     </div>
                 </div>

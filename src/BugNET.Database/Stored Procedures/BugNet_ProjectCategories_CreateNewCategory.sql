@@ -3,6 +3,8 @@
   @CategoryName nvarchar(100),
   @ParentCategoryId int
 AS
+IF NOT EXISTS(SELECT CategoryId  FROM BugNet_ProjectCategories WHERE LOWER(CategoryName)= LOWER(@CategoryName) AND ProjectId = @ProjectId)
+BEGIN
 	INSERT BugNet_ProjectCategories
 	(
 		ProjectId,
@@ -15,4 +17,6 @@ AS
 		@CategoryName,
 		@ParentCategoryId
 	)
-RETURN scope_identity()
+	RETURN SCOPE_IDENTITY()
+END
+RETURN -1

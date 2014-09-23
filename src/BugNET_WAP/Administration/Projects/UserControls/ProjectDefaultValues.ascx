@@ -20,7 +20,7 @@
 
 <div class="form-horizontal">
     <div class="form-group">
-        <asp:Label ID="StatusLabel" runat="server" CssClass="control-label col-md-3" AssociatedControlID="DropStatus" Text="<%$Resources:SharedIssueProperties, StatusLabel %>" />
+        <asp:Label ID="StatusLabel" runat="server" CssClass="control-label col-md-2" AssociatedControlID="DropStatus" Text="<%$Resources:SharedIssueProperties, StatusLabel %>" />
         <div class="col-md-5">
             <it:PickStatus ID="DropStatus" runat="Server" DisplayDefault="true" />
         </div>
@@ -31,7 +31,7 @@
         </div>
     </div>
     <div class="form-group">
-        <asp:Label ID="OwnerLabel" runat="server" CssClass="control-label col-md-3" AssociatedControlID="DropOwned" Text="<%$Resources:SharedIssueProperties, OwnedByLabel %>" />
+        <asp:Label ID="OwnerLabel" runat="server" CssClass="control-label col-md-2" AssociatedControlID="DropOwned" Text="<%$Resources:SharedIssueProperties, OwnedByLabel %>" />
         <div class="col-md-5">
             <it:PickSingleUser ID="DropOwned" DisplayDefault="True" Required="False" runat="Server" />
         </div>
@@ -47,7 +47,7 @@
         </div>
     </div>
     <div class="form-group">
-        <asp:Label ID="PriorityLabel" CssClass="control-label col-md-3" runat="server" AssociatedControlID="DropPriority" Text="<%$Resources:SharedIssueProperties, PriorityLabel %>" />
+        <asp:Label ID="PriorityLabel" CssClass="control-label col-md-2" runat="server" AssociatedControlID="DropPriority" Text="<%$Resources:SharedIssueProperties, PriorityLabel %>" />
         <div class="col-md-5">
            <it:PickPriority ID="DropPriority" DisplayDefault="true" runat="Server" />
         </div>
@@ -58,7 +58,7 @@
         </div>
     </div>
     <div class="form-group">
-        <asp:Label ID="Label4" CssClass="control-label col-md-3" AssociatedControlID="DropAffectedMilestone" runat="server" Text="<%$Resources:SharedIssueProperties, AffectedMilestoneLabel %>" />
+        <asp:Label ID="Label4" CssClass="control-label col-md-2" AssociatedControlID="DropAffectedMilestone" runat="server" Text="<%$Resources:SharedIssueProperties, AffectedMilestoneLabel %>" />
         <div class="col-md-5">
            <it:PickMilestone ID="DropAffectedMilestone" DisplayDefault="True" runat="Server" />
         </div>
@@ -69,7 +69,7 @@
         </div>
     </div>
     <div class="form-group">
-        <asp:Label ID="AssignedToLabel" CssClass="control-label col-md-3" runat="server" AssociatedControlID="DropAssignedTo" Text="<%$Resources:SharedIssueProperties, AssignedToLabel %>" />
+        <asp:Label ID="AssignedToLabel" CssClass="control-label col-md-2" runat="server" AssociatedControlID="DropAssignedTo" Text="<%$Resources:SharedIssueProperties, AssignedToLabel %>" />
         <div class="col-md-5">
             <it:PickSingleUser ID="DropAssignedTo" DisplayUnassigned="False" DisplayDefault="True" Required="false" runat="Server" />
         </div>
@@ -85,7 +85,7 @@
         </div>
     </div>
     <div class="form-group">
-        <asp:Label ID="PrivateLabel" CssClass="control-label col-md-3" AssociatedControlID="chkPrivate" runat="server" Text="<%$Resources:SharedIssueProperties, PrivateLabel %>" />
+        <asp:Label ID="PrivateLabel" CssClass="control-label col-md-2" AssociatedControlID="chkPrivate" runat="server" Text="<%$Resources:SharedIssueProperties, PrivateLabel %>" />
         <div class="col-md-5">
             <div class="checkbox">
                 <asp:CheckBox ID="chkPrivate" runat="server" />
@@ -98,7 +98,7 @@
         </div>
     </div>
     <div class="form-group">
-        <asp:Label ID="CategoryLabel" CssClass="control-label col-md-3" AssociatedControlID="DropCategory" runat="server" Text="<%$Resources:SharedIssueProperties, CategoryLabel %>" />
+        <asp:Label ID="CategoryLabel" CssClass="control-label col-md-2" AssociatedControlID="DropCategory" runat="server" Text="<%$Resources:SharedIssueProperties, CategoryLabel %>" />
         <div class="col-md-5">
             <it:PickCategory ID="DropCategory" DisplayDefault="true" Required="false" runat="Server" />
         </div>
@@ -109,7 +109,7 @@
         </div>
     </div>
     <div class="form-group">
-        <asp:Label runat="server" CssClass="control-label col-md-3" AssociatedControlID="DueDate" ID="DueDateLabel" Text="<%$Resources:SharedIssueProperties, DueDateLabel %>" />
+        <asp:Label runat="server" CssClass="control-label col-md-2" AssociatedControlID="DueDate" ID="DueDateLabel" Text="<%$Resources:SharedIssueProperties, DueDateLabel %>" />
         <div class="col-md-5">
             <asp:TextBox ID="DueDate" Width="40" CssClass="form-control text-right" runat="server" />
             <small>
@@ -123,7 +123,7 @@
         </div>
     </div>
     <div class="form-group">
-        <asp:Label ID="IssueTypeLabel" CssClass="control-label col-md-3" AssociatedControlID="DropIssueType" runat="server" Text="<%$Resources:SharedIssueProperties, IssueTypeLabel %>" />
+        <asp:Label ID="IssueTypeLabel" CssClass="control-label col-md-2" AssociatedControlID="DropIssueType" runat="server" Text="<%$Resources:SharedIssueProperties, IssueTypeLabel %>" />
         <div class="col-md-5">
             <it:PickType ID="DropIssueType" DisplayDefault="True" runat="Server" />
         </div>
@@ -134,7 +134,7 @@
         </div>
     </div>
     <div class="form-group">
-        <asp:Label ID="Label3" CssClass="control-label col-md-3" runat="server" AssociatedControlID="ProgressSlider" Text="<%$Resources:SharedIssueProperties, ProgressLabel %>" />
+        <asp:Label ID="Label3" CssClass="control-label col-md-2" runat="server" AssociatedControlID="ProgressSlider" Text="<%$Resources:SharedIssueProperties, ProgressLabel %>" />
         <div class="col-md-5">
             <asp:TextBox ID="ProgressSlider" runat="server" CssClass="form-control" Text="0" />
         </div>
@@ -145,7 +145,7 @@
         </div>
     </div>
     <div class="form-group">
-        <asp:Label ID="MilestoneLabel" CssClass="control-label col-md-3" AssociatedControlID="DropMilestone" runat="server" Text="<%$Resources:SharedIssueProperties, MilestoneLabel %>" />
+        <asp:Label ID="MilestoneLabel" CssClass="control-label col-md-2" AssociatedControlID="DropMilestone" runat="server" Text="<%$Resources:SharedIssueProperties, MilestoneLabel %>" />
         <div class="col-md-5">
             <it:PickMilestone ID="DropMilestone" DisplayDefault="True" runat="Server" />
         </div>
@@ -156,7 +156,7 @@
         </div>
     </div>
     <div class="form-group">
-        <asp:Label ID="EstimationLabel" CssClass="control-label col-md-3" runat="server" AssociatedControlID="txtEstimation" Text="<%$Resources:SharedIssueProperties, EstimationLabel %>" />
+        <asp:Label ID="EstimationLabel" CssClass="control-label col-md-2" runat="server" AssociatedControlID="txtEstimation" Text="<%$Resources:SharedIssueProperties, EstimationLabel %>" />
         <div class="col-md-5">
             <asp:TextBox ID="txtEstimation" CssClass="form-control text-right" Width="80px" runat="server" />
             &nbsp;<small><asp:Label ID="HoursLabel" runat="server" Text="<%$Resources:SharedIssueProperties, HoursLabel %>" /></small>
@@ -170,7 +170,7 @@
         </div>
     </div>
     <div class="form-group">
-        <asp:Label ID="ResolutionLabel" CssClass="control-label col-md-3" runat="server" AssociatedControlID="DropResolution" Text="<%$Resources:SharedIssueProperties, ResolutionLabel %>" />
+        <asp:Label ID="ResolutionLabel" CssClass="control-label col-md-2" runat="server" AssociatedControlID="DropResolution" Text="<%$Resources:SharedIssueProperties, ResolutionLabel %>" />
         <div class="col-md-5">
             <it:PickResolution ID="DropResolution" DisplayDefault="True" runat="Server" />
         </div>

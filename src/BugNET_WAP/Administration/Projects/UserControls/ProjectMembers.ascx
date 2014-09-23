@@ -45,8 +45,8 @@
     <ContentTemplate>
         <div class="row" style="margin-bottom: 15px;">
             <div class="form-group">
-                <asp:Label ID="Label4" runat="server" AssociatedControlID="ddlProjectMembers" Text="<%$ Resources:SharedResources, Username %>" CssClass="control-label col-md-4" />
-                <div class="col-md-8">
+                <asp:Label ID="Label4" runat="server" AssociatedControlID="ddlProjectMembers" Text="<%$ Resources:SharedResources, Username %>" CssClass="control-label col-md-2" />
+                <div class="col-md-10">
                     <asp:DropDownList CssClass="form-control" AutoPostBack="True" ID="ddlProjectMembers" DataTextField="DisplayName" DataValueField="UserName" runat="Server" />
                 </div>
             </div>
