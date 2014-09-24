@@ -515,12 +515,22 @@ namespace BugNET.UserControls
 
             foreach (var value in issue.IssueCustomFields.Select(customFieldValue => customFieldValue.FieldValue))
             {
-                DateTime dt;
                 e.Row.Cells[i].Text = value;
+
+                // this is not an ideal method to replace user custom field names with the display name.
+                // if a value is stored in any other custom field with the same name as the user then it will be replaced with the display name.
+                if(!string.IsNullOrWhiteSpace(value))
+                {
+                    var name = UserManager.GetUserDisplayName(value);
+                    e.Row.Cells[i].Text = name;
+                }
+
+                DateTime dt;
                 if(DateTime.TryParse(value, out dt))
                 {
                     e.Row.Cells[i].Text = dt.ToShortDateString();
                 }
+
                 i++;
             }
 
