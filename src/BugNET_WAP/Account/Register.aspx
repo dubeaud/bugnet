@@ -69,7 +69,7 @@
                 <ContentTemplate>
                     <asp:Panel ID="VerificationPanel" runat="server" Visible="false">
                         <p><strong><asp:Localize runat="server" ID="Localize1" Text="Thanks for registering with us" meta:resourcekey="VerificationInstructionsTitle" /></strong></p>
-                        <p><asp:Localize runat="server" ID="Localize5" Text="Now wait for an email to be sent to the email address you specified with instructions to enable your account and login." meta:resourcekey="VerificationInstructions" />     </p>
+                        <p><asp:Localize runat="server" ID="Localize5" Text="Please check your email to confirm your account." meta:resourcekey="VerificationInstructions" /></p>
                     </asp:Panel>
                 </ContentTemplate>
             </asp:CompleteWizardStep>

@@ -12,7 +12,6 @@
 <%@ Register TagPrefix="it" TagName="IssueTabs" Src="~/Issues/UserControls/IssueTabs.ascx" %>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="Server">
-    <asp:ValidationSummary ID="ValidationSummary1" CssClass="alert alert-danger" HeaderText="<%$ Resources:SharedResources, ValidationSummaryHeaderText %>" runat="server" />
     <bn:Message ID="Message1" runat="server" Width="100%" Visible="False" />
     <div class="form-horizontal" style="padding-top: 2em;">
         <div class="row">
@@ -51,7 +50,7 @@
                             <asp:Label ID="TitleLabel" Visible="false" runat="server" AssociatedControlID="TitleTextBox" meta:resourcekey="TitleLabel" />
                             <asp:TextBox ID="TitleTextBox" Visible="False" CssClass="form-control" runat="server" />
                             <asp:RequiredFieldValidator ControlToValidate="TitleTextBox" ErrorMessage="<%$ Resources:SharedIssueProperties, IssueTitleRequiredErrorMessage %>"
-                                Text="<%$ Resources:SharedResources, Required %>" Display="Dynamic" CssClass="req" runat="server" ID="TitleRequired" />
+                                Text="<%$ Resources:SharedResources, Required %>" Display="Dynamic" CssClass="validation-error text-danger" runat="server" ID="TitleRequired" />
 
                             <h2 style="margin-top: 5px;">
                                 <asp:Label ID="DisplayTitleLabel" runat="server" Visible="True" Text="Label"></asp:Label></h2>
@@ -188,7 +187,7 @@
                                 <asp:Label ID="HoursLabel" runat="server" Text="<%$Resources:SharedIssueProperties, HoursLabel %>" /></span>
                         </div>
                         <asp:RangeValidator ID="RangeValidator2" runat="server" ErrorMessage="<%$Resources:SharedIssueProperties, EstimationValidatorMessage %>" ControlToValidate="txtEstimation"
-                            MaximumValue="999" MinimumValue="0" Type="Double" SetFocusOnError="True" Display="Dynamic" CssClass="validation-error sr-only" ForeColor="Red" />
+                            MaximumValue="999" MinimumValue="0" Type="Double" SetFocusOnError="True" Display="Dynamic" CssClass="validation-error text-danger" />
                     </div>
                 </div>
             </div>

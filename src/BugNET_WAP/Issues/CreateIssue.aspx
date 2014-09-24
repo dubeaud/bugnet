@@ -16,9 +16,6 @@
         </h1>
     </div>
     <div class="form-horizontal" style="padding-top:2em;">
-        <asp:ValidationSummary ID="ValidationSummary1"  DisplayMode="BulletList"
-        HeaderText="<%$ Resources:SharedResources, ValidationSummaryHeaderText %>"
-        CssClass="alert alert-danger" runat="server" />
         <bn:Message ID="Message1" runat="server" Width="100%" Visible="False" />
         <div class="row">
             <div class="col-md-12">
@@ -27,7 +24,7 @@
                     <div class="col-sm-10">
                         <asp:TextBox ID="TitleTextBox" CssClass="form-control input-lg" placeholder="<%$ Resources:SharedIssueProperties, IssueTitleWatermark %>" runat="server" />
                         <asp:RequiredFieldValidator ControlToValidate="TitleTextBox" SetFocusOnError="true" ErrorMessage="<%$ Resources:SharedIssueProperties, IssueTitleRequiredErrorMessage %>"
-                            Text="<%$ Resources:SharedResources, Required %>" Display="Dynamic" CssClass="sr-only validation-error" runat="server" ID="TitleRequired" />
+                            Text="<%$ Resources:SharedResources, Required %>" Display="Dynamic" CssClass="text-danger validation-error" runat="server" ID="TitleRequired" />
                     </div>
                 </div>
             </div>
@@ -131,11 +128,11 @@
                     <asp:Label ID="EstimationLabel" CssClass="col-sm-4 control-label" runat="server" AssociatedControlID="txtEstimation" Text="<%$Resources:SharedIssueProperties, EstimationLabel %>" />
                     <div class="col-sm-3">
                         <div class="input-group">
-                            <asp:TextBox ID="txtEstimation" CssClass="form-control text-right" runat="server" />
+                            <asp:TextBox ID="txtEstimation" CssClass="form-control text-righ " runat="server" />
                             <span class="input-group-addon"><asp:Label ID="Label1" runat="server" Text="<%$Resources:SharedIssueProperties, HoursLabel %>" /></span>
                         </div>
                         <asp:RangeValidator ID="RangeValidator2" runat="server" ErrorMessage="<%$Resources:SharedIssueProperties, EstimationValidatorMessage %>" ControlToValidate="txtEstimation"
-                                MaximumValue="999" MinimumValue="0" Type="Double" SetFocusOnError="True" Text="<%$Resources:SharedIssueProperties, EstimationValidatorMessage %>" CssClass="validation-error sr-only" Display="Dynamic" />
+                                MaximumValue="999" MinimumValue="0" Type="Double" SetFocusOnError="True" Text="<%$Resources:SharedIssueProperties, EstimationValidatorMessage %>" CssClass="validation-error text-danger" Display="Dynamic" />
                     </div>
                 </div>
             </div>
@@ -198,7 +195,7 @@
                     <div class="col-sm-offset-2 col-sm-10">
                         <asp:LinkButton ID="lnkSave" CssClass="btn btn-primary" OnClick="LnkSaveClick" runat="server" Text="<%$ Resources:SharedResources, Save %>" />
                         <asp:LinkButton ID="lnkDone"  CssClass="btn btn-primary" OnClick="LnkDoneClick" runat="server" Text="<%$ Resources:SharedIssueProperties, SaveReturnText %>" />
-                        <asp:LinkButton ID="lnkCancel"  CssClass="btn btn-default" OnClick="CancelButtonClick" CausesValidation="false" runat="server" Text="<%$ Resources:SharedResources, Cancel %>" />
+                        <asp:LinkButton ID="lnkCancel" CssClass="btn btn-default" OnClick="CancelButtonClick" CausesValidation="false" runat="server" Text="<%$ Resources:SharedResources, Cancel %>" />
                     </div>
                 </div>
             </div>
