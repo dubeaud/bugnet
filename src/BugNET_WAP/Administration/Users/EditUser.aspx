@@ -14,7 +14,7 @@
         </h1>
     </div>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <ul class="nav nav-pills nav-stacked">
 
                 <asp:Repeater ID="AdminMenu" OnItemDataBound="AdminMenuItemDataBound" OnItemCommand="AdminMenuItemCommand" runat="server">
@@ -25,7 +25,7 @@
                 </asp:Repeater>
             </ul>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-10">
             <asp:Panel ID="pnlAdminControls" runat="server">
                 <bn:Membership ID="UserDetails" runat="server" Visible="false" />
                 <bn:Roles ID="UserRoles" runat="server" Visible="false" />

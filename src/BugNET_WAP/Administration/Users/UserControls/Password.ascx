@@ -6,9 +6,9 @@
 <bn:Message ID="ActionMessage" runat="server" Visible="False" />
 <div class="form-horizontal">
     <div class="form-group">
-        <label class="col-md-4 control-label">
+        <label class="col-md-2 control-label">
             <asp:Literal ID="PasswordLastChangedLabel" runat="server" Text="<%$ Resources:PasswordLastChanged %>" /></label>
-        <p class="form-control-static col-md-8">
+        <p class="form-control-static col-md-10">
             <asp:Literal ID="PasswordLastChanged" runat="server" />
         </p>
     </div>
@@ -18,20 +18,20 @@
         <h3>
             <asp:Label ID="TitleLabel" Text="<%$ Resources:ChangePassword %>" runat="server" /></h3>
         <div class="form-group">
-            <asp:Label ID="Label11" CssClass="col-md-4 control-label" AssociatedControlID="NewPassword" runat="server" Text="<%$ Resources:NewPassword %>" />
-            <div class="col-md-8">
+            <asp:Label ID="Label11" CssClass="col-md-2 control-label" AssociatedControlID="NewPassword" runat="server" Text="<%$ Resources:NewPassword %>" />
+            <div class="col-md-10">
                 <asp:TextBox ID="NewPassword" CssClass="form-control" runat="server" TextMode="Password" />
             </div>
         </div>
         <div class="form-group">
-            <asp:Label ID="Label12" CssClass="col-md-4 control-label" AssociatedControlID="ConfirmPassword" runat="server" Text="<%$ Resources:ConfirmPassword %>" />
-            <div class="col-md-8">
+            <asp:Label ID="Label12" CssClass="col-md-2 control-label" AssociatedControlID="ConfirmPassword" runat="server" Text="<%$ Resources:ConfirmPassword %>" />
+            <div class="col-md-10">
                 <asp:TextBox ID="ConfirmPassword" CssClass="form-control" runat="server" TextMode="Password" />
                 <asp:CompareValidator ID="cvPasswords" runat="server" ControlToValidate="NewPassword" ControlToCompare="ConfirmPassword" Type="String" ErrorMessage="<%$ Resources:PasswordsMustMatch %>"></asp:CompareValidator>
             </div>
         </div>
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-4">
+            <div class="col-md-offset-2 col-md-2">
                 <asp:LinkButton ID="cmdChangePassword" CssClass="btn btn-primary" OnClick="CmdChangePasswordClick" runat="server" Text="<%$ Resources:ChangePassword %>"></asp:LinkButton>
             </div>
         </div>

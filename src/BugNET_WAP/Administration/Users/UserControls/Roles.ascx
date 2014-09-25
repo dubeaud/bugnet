@@ -9,16 +9,16 @@
 </p>
 <div class="form-horizontal">
     <div class="form-group">
-        <asp:Label ID="lblSuperUsers" CssClass="col-md-4 control-label" AssociatedControlID="chkSuperUsers" runat="server" Text="<%$ Resources:SuperUsers %>" />
-        <div class="col-md-8">
+        <asp:Label ID="lblSuperUsers" CssClass="col-md-2 control-label" AssociatedControlID="chkSuperUsers" runat="server" Text="<%$ Resources:SuperUsers %>" />
+        <div class="col-md-10">
             <div class="checkbox">
                 <asp:CheckBox ID="chkSuperUsers" OnCheckedChanged="ChkSuperUsersCheckChanged" AutoPostBack="true" Visible="false" Text="" runat="server" />
             </div>
         </div>
     </div>
     <div class="form-group">
-        <asp:Label ID="Label1" CssClass="col-md-4 control-label" AssociatedControlID="dropProjects" runat="server" Text="<%$ Resources:SharedResources, Project %>" />
-        <div class="col-md-8">
+        <asp:Label ID="Label1" CssClass="col-md-2 control-label" AssociatedControlID="dropProjects" runat="server" Text="<%$ Resources:SharedResources, Project %>" />
+        <div class="col-md-10">
             <bn:PickProject ID="dropProjects" CssClass="form-control" DisplayDefault="true" OnSelectedIndexChanged="DdlProjectsSelectedIndexChanged" AutoPostBack="true" runat="Server" />
         </div>
     </div>
