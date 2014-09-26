@@ -21,10 +21,12 @@
                 </span>
                 <h4 class="media-heading">
                     <asp:Label CssClass="commentAuthor" ID="CreatorDisplayName" runat="server" />
-                    <small><asp:Label ID="lblDateCreated" runat="Server" Text='' />  <asp:HyperLink ID="hlPermalink" ToolTip="<%$Resources:hlPermalink.Text%>" runat="server" Text="#"></asp:HyperLink></small></h4>
+                    <small>
+                        <asp:Label ID="lblDateCreated" runat="Server" Text='' />
+                        <asp:HyperLink ID="hlPermalink" ToolTip="<%$Resources:hlPermalink.Text%>" runat="server" Text="#"></asp:HyperLink></small></h4>
                 <asp:Literal ID="ltlComment" runat="Server" />
             </div>
-           
+
 
 
         </asp:Panel>

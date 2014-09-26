@@ -58,6 +58,15 @@ namespace BugNET.Administration.Projects.UserControls {
         protected global::System.Web.UI.WebControls.CheckBox chkStatusVisibility;
         
         /// <summary>
+        /// chkStatusEditVisibility control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkStatusEditVisibility;
+        
+        /// <summary>
         /// OwnerLabel control.
         /// </summary>
         /// <remarks>
@@ -83,6 +92,15 @@ namespace BugNET.Administration.Projects.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkOwnedByVisibility;
+        
+        /// <summary>
+        /// chkOwnedByEditVisibility control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkOwnedByEditVisibility;
         
         /// <summary>
         /// chkNotifyOwner control.
@@ -121,6 +139,15 @@ namespace BugNET.Administration.Projects.UserControls {
         protected global::System.Web.UI.WebControls.CheckBox chkPriorityVisibility;
         
         /// <summary>
+        /// chkPriorityEditVisibility control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkPriorityEditVisibility;
+        
+        /// <summary>
         /// Label4 control.
         /// </summary>
         /// <remarks>
@@ -148,6 +175,15 @@ namespace BugNET.Administration.Projects.UserControls {
         protected global::System.Web.UI.WebControls.CheckBox chkAffectedMilestoneVisibility;
         
         /// <summary>
+        /// chkAffectedMilestoneEditVisibility control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkAffectedMilestoneEditVisibility;
+        
+        /// <summary>
         /// AssignedToLabel control.
         /// </summary>
         /// <remarks>
@@ -173,6 +209,15 @@ namespace BugNET.Administration.Projects.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkAssignedToVisibility;
+        
+        /// <summary>
+        /// chkAssignedToEditVisibility control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkAssignedToEditVisibility;
         
         /// <summary>
         /// chkNotifyAssignedTo control.
@@ -211,6 +256,15 @@ namespace BugNET.Administration.Projects.UserControls {
         protected global::System.Web.UI.WebControls.CheckBox chkPrivateVisibility;
         
         /// <summary>
+        /// chkPrivateEditVisibility control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkPrivateEditVisibility;
+        
+        /// <summary>
         /// CategoryLabel control.
         /// </summary>
         /// <remarks>
@@ -236,6 +290,15 @@ namespace BugNET.Administration.Projects.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkCategoryVisibility;
+        
+        /// <summary>
+        /// chkCategoryEditVisibility control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkCategoryEditVisibility;
         
         /// <summary>
         /// DueDateLabel control.
@@ -274,6 +337,15 @@ namespace BugNET.Administration.Projects.UserControls {
         protected global::System.Web.UI.WebControls.CheckBox chkDueDateVisibility;
         
         /// <summary>
+        /// chkDueDateEditVisibility control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkDueDateEditVisibility;
+        
+        /// <summary>
         /// IssueTypeLabel control.
         /// </summary>
         /// <remarks>
@@ -299,6 +371,15 @@ namespace BugNET.Administration.Projects.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkTypeVisibility;
+        
+        /// <summary>
+        /// chkTypeEditVisibility control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkTypeEditVisibility;
         
         /// <summary>
         /// Label3 control.
@@ -328,6 +409,15 @@ namespace BugNET.Administration.Projects.UserControls {
         protected global::System.Web.UI.WebControls.CheckBox chkPercentCompleteVisibility;
         
         /// <summary>
+        /// chkPercentCompleteEditVisibility control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkPercentCompleteEditVisibility;
+        
+        /// <summary>
         /// MilestoneLabel control.
         /// </summary>
         /// <remarks>
@@ -353,6 +443,15 @@ namespace BugNET.Administration.Projects.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkMilestoneVisibility;
+        
+        /// <summary>
+        /// chkMilestoneEditVisibility control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkMilestoneEditVisibility;
         
         /// <summary>
         /// EstimationLabel control.
@@ -400,6 +499,15 @@ namespace BugNET.Administration.Projects.UserControls {
         protected global::System.Web.UI.WebControls.CheckBox chkEstimationVisibility;
         
         /// <summary>
+        /// chkEstimationEditVisibility control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkEstimationEditVisibility;
+        
+        /// <summary>
         /// ResolutionLabel control.
         /// </summary>
         /// <remarks>
@@ -425,5 +533,14 @@ namespace BugNET.Administration.Projects.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkResolutionVisibility;
+        
+        /// <summary>
+        /// chkResolutionEditVisibility control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkResolutionEditVisibility;
     }
 }

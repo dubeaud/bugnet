@@ -26,6 +26,19 @@
 	@EstimationVisibility	 Bit,
 	@ResolutionVisibility	 Bit,
 	@AffectedMilestoneVisibility Bit,
+	@StatusEditVisibility		 Bit,
+	@OwnedByEditVisibility		 Bit,
+	@PriorityEditVisibility		 Bit,
+	@AssignedToEditVisibility	 Bit,
+	@PrivateEditVisibility		 Bit,
+	@CategoryEditVisibility		 Bit,
+	@DueDateEditVisibility		 Bit,
+	@TypeEditVisibility			 Bit,
+	@PercentCompleteEditVisibility Bit,
+	@MilestoneEditVisibility	Bit, 
+	@EstimationEditVisibility	 Bit,
+	@ResolutionEditVisibility	 Bit,
+	@AffectedMilestoneEditVisibility Bit,
 	@OwnedByNotify Bit,
 	@AssignedToNotify Bit
 AS
@@ -56,7 +69,20 @@ BEGIN
 							MilestoneVisibility	= @MilestoneVisibility,			
 							EstimationVisibility = @EstimationVisibility,			
 							ResolutionVisibility = @ResolutionVisibility,
-							AffectedMilestoneVisibility = @AffectedMilestoneVisibility		
+							AffectedMilestoneVisibility = @AffectedMilestoneVisibility,
+							StatusEditVisibility = @StatusEditVisibility,			
+							OwnedByEditVisibility = @OwnedByEditVisibility,				
+							PriorityEditVisibility = @PriorityEditVisibility,			
+							AssignedToEditVisibility = @AssignedToEditVisibility,			
+							PrivateEditVisibility= @PrivateEditVisibility,			
+							CategoryEditVisibility= @CategoryEditVisibility,			
+							DueDateEditVisibility= @DueDateEditVisibility,				
+							TypeEditVisibility	= @TypeEditVisibility,				
+							PercentCompleteEditVisibility = @PercentCompleteEditVisibility,		
+							MilestoneEditVisibility	= @MilestoneEditVisibility,			
+							EstimationEditVisibility = @EstimationEditVisibility,			
+							ResolutionEditVisibility = @ResolutionEditVisibility,
+							AffectedMilestoneEditVisibility = @AffectedMilestoneEditVisibility	
 					WHERE ProjectId = @ProjectId							
 					END
 				ELSE
@@ -77,7 +103,20 @@ BEGIN
 						@MilestoneVisibility	,	 
 						@EstimationVisibility	 ,
 						@ResolutionVisibility	,
-						@AffectedMilestoneVisibility	  					
+						@AffectedMilestoneVisibility,
+						@StatusEditVisibility		 ,
+						@OwnedByEditVisibility		 ,
+						@PriorityEditVisibility		 ,
+						@AssignedToEditVisibility	 ,
+						@PrivateEditVisibility		 ,
+						@CategoryEditVisibility		 ,
+						@DueDateEditVisibility		 ,
+						@TypeEditVisibility			 ,
+						@PercentCompleteEditVisibility,
+						@MilestoneEditVisibility	,	 
+						@EstimationEditVisibility	 ,
+						@ResolutionEditVisibility	,
+						@AffectedMilestoneEditVisibility	  					
 					)
 					END
 

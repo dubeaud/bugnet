@@ -89,7 +89,6 @@
         </div>
         <div class="row">
             <div class="col-md-6" id="StatusField" runat="server">
-
                 <div class="form-group">
                     <asp:Label ID="StatusLabel" CssClass="col-sm-4 control-label" runat="server" AssociatedControlID="DropStatus" Text="<%$Resources:SharedIssueProperties, StatusLabel %>" />
                     <div class="col-sm-7">
@@ -105,17 +104,13 @@
                     </div>
                 </div>
             </div>
-
-
             <div class="col-md-6" id="PriorityField" runat="server">
-
                 <div class="form-group">
                     <asp:Label ID="PriorityLabel" CssClass="col-sm-4 control-label" runat="server" AssociatedControlID="DropPriority" Text="<%$Resources:SharedIssueProperties, PriorityLabel %>" />
                     <div class="col-sm-7">
                         <it:PickPriority ID="DropPriority" DisplayDefault="true" runat="Server" />
                     </div>
                 </div>
-
             </div>
             <div class="col-md-6" id="AffectedMilestoneField" runat="server">
                 <div class="form-group">
@@ -133,7 +128,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="col-md-6" id="CategoryField" runat="server">
                 <div class="form-group">
                     <asp:Label ID="CategoryLabel" CssClass="col-sm-4 control-label" AssociatedControlID="DropCategory" runat="server" Text="<%$Resources:SharedIssueProperties, CategoryLabel %>" />
@@ -178,7 +172,7 @@
                 </div>
             </div>
             <div class="col-md-6" id="EstimationField" runat="server">
-                <div class="form-group <%= !RangeValidator2.IsValid ? "has-error" : "" %>">
+                <div class="form-group">
                     <asp:Label ID="EstimationLabel" CssClass="col-sm-4 control-label" runat="server" AssociatedControlID="txtEstimation" Text="<%$Resources:SharedIssueProperties, EstimationLabel %>" />
                     <div class="col-sm-3">
                         <div class="input-group">
@@ -191,7 +185,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6" id="ResolutionField" runat="server" >
+            <div class="col-md-6" id="ResolutionField" runat="server">
                 <div class="form-group">
                     <asp:Label ID="ResolutionLabel" CssClass="col-sm-4 control-label" runat="server" AssociatedControlID="DropResolution" Text="<%$Resources:SharedIssueProperties, ResolutionLabel %>" />
                     <div class="col-sm-7">
@@ -219,7 +213,7 @@
                 </div>
             </div>
             <it:DisplayCustomFields ID="ctlCustomFields" EnableValidation="true" runat="server" />
-        </div>
+        </div> <!-- close fields row-->
         <hr />
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>
@@ -234,7 +228,8 @@
                 </div>
             </ContentTemplate>
         </asp:UpdatePanel>
-
-        <it:IssueTabs ID="ctlIssueTabs" runat="server"></it:IssueTabs>
+        <div>
+            <it:IssueTabs ID="ctlIssueTabs" runat="server"></it:IssueTabs>
+        </div>
     </div>
 </asp:Content>

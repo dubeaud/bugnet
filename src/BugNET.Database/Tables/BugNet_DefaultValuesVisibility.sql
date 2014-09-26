@@ -12,7 +12,20 @@
     [MilestoneVisibility]         BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_MilestoneVisibility] DEFAULT ((1)) NOT NULL,
     [EstimationVisibility]        BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_EstimationVisibility] DEFAULT ((1)) NOT NULL,
     [ResolutionVisibility]        BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_ResolutionVisibility] DEFAULT ((1)) NOT NULL,
-    [AffectedMilestoneVisibility] BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_AffectedMilestoneVisivility] DEFAULT ((1)) NOT NULL,
+    [AffectedMilestoneVisibility] BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_AffectedMilestoneVisibility] DEFAULT ((1)) NOT NULL,
+    [StatusEditVisibility]		  BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_StatusEditVisibility] DEFAULT (1)  NOT NULL, 
+	[OwnedByEditVisibility]		  BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_OwnedByEditVisibility] DEFAULT (1)  NOT NULL,
+	[PriorityEditVisibility]		  BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_PriorityEditVisibility] DEFAULT (1)  NOT NULL, 
+	[AssignedToEditVisibility]	  BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_AssignedToEditVisibility] DEFAULT (1)  NOT NULL,  
+	[PrivateEditVisibility]	  BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_PrivateEditVisibility] DEFAULT (1)  NOT NULL, 
+	[CategoryEditVisibility]	  BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_CategoryEditVisibility] DEFAULT (1)  NOT NULL, 
+	[DueDateEditVisibility]	  BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_DueDateEditVisibility] DEFAULT (1)  NOT NULL,
+	[TypeEditVisibility]	  BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_TypeEditVisibility] DEFAULT (1)  NOT NULL, 
+	[PercentCompleteEditVisibility]	  BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_PercentCompleteEditVisibility] DEFAULT (1)  NOT NULL, 
+	[MilestoneEditVisibility]	  BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_MilestoneEditVisibility] DEFAULT (1)  NOT NULL, 
+	[EstimationEditVisibility]	  BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_EstimationEditVisibility] DEFAULT (1)  NOT NULL, 
+	[ResolutionEditVisibility]	  BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_ResolutionEditVisibility] DEFAULT (1)  NOT NULL, 
+	[AffectedMilestoneEditVisibility]	  BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_AffectedMilestoneEditVisibility] DEFAULT (1)  NOT NULL, 
     CONSTRAINT [PK_Bugnet_DefaultValuesVisibility] PRIMARY KEY CLUSTERED ([ProjectId] ASC)
 );
 

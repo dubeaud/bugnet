@@ -32,8 +32,34 @@ namespace BugNET.Entities
         public bool EstimationVisibility { get; set; }
 
         public bool ResolutionVisibility { get; set; }
-    
+
         public bool AffectedMilestoneVisibility { get; set; }
+
+        public bool StatusEditVisibility { get; set; }
+
+        public bool OwnedByEditVisibility { get; set; }
+
+        public bool PriorityEditVisibility { get; set; }
+
+        public bool AssignedToEditVisibility { get; set; }
+
+        public bool PrivateEditVisibility { get; set; }
+
+        public bool CategoryEditVisibility { get; set; }
+
+        public bool DueDateEditVisibility { get; set; }
+
+        public bool TypeEditVisibility { get; set; }
+
+        public bool PercentCompleteEditVisibility { get; set; }
+
+        public bool MilestoneEditVisibility { get; set; }
+
+        public bool EstimationEditVisibility { get; set; }
+
+        public bool ResolutionEditVisibility { get; set; }
+
+        public bool AffectedMilestoneEditVisibility { get; set; }
      
         public bool AssignedToNotify { get; set; }
        

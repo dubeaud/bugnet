@@ -52,10 +52,10 @@ namespace BugNET.Administration.Projects.UserControls
                 DropMilestone.SelectedValue = selectedValue.MilestoneId;
                 DropAffectedMilestone.SelectedValue = selectedValue.AffectedMilestoneId;
 
-                if (selectedValue.AssignedUserName != "none")
+                if (selectedValue.AssignedUserName != "none" && DropAssignedTo.DataSource.Exists(i => i.UserName == selectedValue.AssignedUserName))
                     DropAssignedTo.SelectedValue = selectedValue.AssignedUserName;
 
-                if (selectedValue.OwnerUserName != "none")
+                if (selectedValue.OwnerUserName != "none" && DropOwned.DataSource.Exists(i => i.UserName == selectedValue.OwnerUserName))
                     DropOwned.SelectedValue = selectedValue.OwnerUserName;
 
                 DropStatus.SelectedValue = selectedValue.StatusId;
@@ -88,6 +88,20 @@ namespace BugNET.Administration.Projects.UserControls
                 chkAffectedMilestoneVisibility.Checked = selectedValue.AffectedMilestoneVisibility;
                 chkNotifyAssignedTo.Checked = selectedValue.AssignedToNotify;
                 chkNotifyOwner.Checked = selectedValue.OwnedByNotify;
+
+                chkStatusEditVisibility.Checked = selectedValue.StatusEditVisibility;
+                chkOwnedByEditVisibility.Checked = selectedValue.OwnedByEditVisibility;
+                chkPriorityEditVisibility.Checked = selectedValue.PriorityEditVisibility;
+                chkAssignedToEditVisibility.Checked = selectedValue.AssignedToEditVisibility;
+                chkPrivateEditVisibility.Checked = selectedValue.PrivateEditVisibility;
+                chkCategoryEditVisibility.Checked = selectedValue.CategoryEditVisibility;
+                chkDueDateEditVisibility.Checked = selectedValue.DueDateEditVisibility;
+                chkTypeEditVisibility.Checked = selectedValue.TypeEditVisibility;
+                chkPercentCompleteEditVisibility.Checked = selectedValue.PercentCompleteEditVisibility;
+                chkMilestoneEditVisibility.Checked = selectedValue.MilestoneEditVisibility;
+                chkEstimationEditVisibility.Checked = selectedValue.EstimationEditVisibility;
+                chkResolutionEditVisibility.Checked = selectedValue.ResolutionEditVisibility;
+                chkAffectedMilestoneEditVisibility.Checked = selectedValue.AffectedMilestoneEditVisibility;
             }                                             
         }
 
@@ -229,7 +243,19 @@ namespace BugNET.Administration.Projects.UserControls
                 AssignedToNotify = chkNotifyAssignedTo.Checked,
                 OwnedByNotify = chkNotifyOwner.Checked,
                 CategoryVisibility = chkCategoryVisibility.Checked,
-                DueDateVisibility = chkDueDateVisibility.Checked
+                DueDateVisibility = chkDueDateVisibility.Checked,
+                StatusEditVisibility = chkStatusEditVisibility.Checked,
+                OwnedByEditVisibility = chkOwnedByEditVisibility.Checked,
+                PriorityEditVisibility = chkPriorityEditVisibility.Checked,
+                AssignedToEditVisibility = chkAssignedToEditVisibility.Checked,
+                TypeEditVisibility = chkTypeEditVisibility.Checked,
+                PercentCompleteEditVisibility = chkPercentCompleteEditVisibility.Checked,
+                MilestoneEditVisibility = chkMilestoneEditVisibility.Checked,
+                EstimationEditVisibility = chkEstimationEditVisibility.Checked,
+                ResolutionEditVisibility = chkResolutionEditVisibility.Checked,
+                AffectedMilestoneEditVisibility = chkAffectedMilestoneEditVisibility.Checked,
+                CategoryEditVisibility = chkCategoryEditVisibility.Checked,
+                DueDateEditVisibility = chkDueDateEditVisibility.Checked
             };
 
             return IssueManager.SaveDefaultValues(newDefaultValues);

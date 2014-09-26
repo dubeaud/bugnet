@@ -14,7 +14,14 @@ SELECT     dbo.BugNet_DefaultValues.DefaultType, dbo.BugNet_DefaultValues.Status
                       dbo.BugNet_DefaultValuesVisibility.TypeVisibility, dbo.BugNet_DefaultValuesVisibility.PercentCompleteVisibility, 
                       dbo.BugNet_DefaultValuesVisibility.MilestoneVisibility, dbo.BugNet_DefaultValuesVisibility.ResolutionVisibility, 
                       dbo.BugNet_DefaultValuesVisibility.EstimationVisibility, dbo.BugNet_DefaultValuesVisibility.AffectedMilestoneVisibility, 
-                      dbo.BugNet_DefaultValues.OwnedByNotify, dbo.BugNet_DefaultValues.AssignedToNotify
+                      dbo.BugNet_DefaultValues.OwnedByNotify, dbo.BugNet_DefaultValues.AssignedToNotify,
+					  dbo.BugNet_DefaultValuesVisibility.StatusEditVisibility, 
+                      dbo.BugNet_DefaultValuesVisibility.PriorityEditVisibility, dbo.BugNet_DefaultValuesVisibility.OwnedByEditVisibility, 
+                      dbo.BugNet_DefaultValuesVisibility.AssignedToEditVisibility, dbo.BugNet_DefaultValuesVisibility.PrivateEditVisibility, 
+                      dbo.BugNet_DefaultValuesVisibility.CategoryEditVisibility, dbo.BugNet_DefaultValuesVisibility.DueDateEditVisibility, 
+                      dbo.BugNet_DefaultValuesVisibility.TypeEditVisibility, dbo.BugNet_DefaultValuesVisibility.PercentCompleteEditVisibility, 
+                      dbo.BugNet_DefaultValuesVisibility.MilestoneEditVisibility, dbo.BugNet_DefaultValuesVisibility.ResolutionEditVisibility, 
+                      dbo.BugNet_DefaultValuesVisibility.EstimationEditVisibility, dbo.BugNet_DefaultValuesVisibility.AffectedMilestoneEditVisibility
 FROM         dbo.BugNet_DefaultValues LEFT OUTER JOIN
                       dbo.Users AS OwnerUsers ON dbo.BugNet_DefaultValues.IssueOwnerUserId = OwnerUsers.UserId LEFT OUTER JOIN
                       dbo.Users AS AssignedUsers ON dbo.BugNet_DefaultValues.IssueAssignedUserId = AssignedUsers.UserId LEFT OUTER JOIN

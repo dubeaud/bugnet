@@ -712,3 +712,171 @@ BEGIN
 END
 RETURN -1
 GO
+
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] DROP CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_AffectedMilestoneVisivility];
+
+
+GO
+PRINT N'Altering [dbo].[BugNet_DefaultValuesVisibility]...';
+
+
+GO
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility]
+    ADD [StatusEditVisibility]            BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_StatusEditVisibility] DEFAULT (1) NOT NULL,
+        [OwnedByEditVisibility]           BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_OwnedByEditVisibility] DEFAULT (1) NOT NULL,
+        [PriorityEditVisibility]          BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_PriorityEditVisibility] DEFAULT (1) NOT NULL,
+        [AssignedToEditVisibility]        BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_AssignedToEditVisibility] DEFAULT (1) NOT NULL,
+        [PrivateEditVisibility]           BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_PrivateEditVisibility] DEFAULT (1) NOT NULL,
+        [CategoryEditVisibility]          BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_CategoryEditVisibility] DEFAULT (1) NOT NULL,
+        [DueDateEditVisibility]           BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_DueDateEditVisibility] DEFAULT (1) NOT NULL,
+        [TypeEditVisibility]              BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_TypeEditVisibility] DEFAULT (1) NOT NULL,
+        [PercentCompleteEditVisibility]   BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_PercentCompleteEditVisibility] DEFAULT (1) NOT NULL,
+        [MilestoneEditVisibility]         BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_MilestoneEditVisibility] DEFAULT (1) NOT NULL,
+        [EstimationEditVisibility]        BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_EstimationEditVisibility] DEFAULT (1) NOT NULL,
+        [ResolutionEditVisibility]        BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_ResolutionEditVisibility] DEFAULT (1) NOT NULL,
+        [AffectedMilestoneEditVisibility] BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_AffectedMilestoneEditVisibility] DEFAULT (1) NOT NULL;
+
+
+GO
+PRINT N'Creating [dbo].[DF_Bugnet_DefaultValuesVisibility_AffectedMilestoneVisibility]...';
+
+
+GO
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility]
+    ADD CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_AffectedMilestoneVisibility] DEFAULT ((1)) FOR [AffectedMilestoneVisibility];
+
+
+GO
+PRINT N'Altering [dbo].[BugNet_DefaultValView]...';
+
+
+GO
+
+ALTER VIEW [dbo].[BugNet_DefaultValView]
+AS
+SELECT     dbo.BugNet_DefaultValues.DefaultType, dbo.BugNet_DefaultValues.StatusId, dbo.BugNet_DefaultValues.IssueOwnerUserId, 
+                      dbo.BugNet_DefaultValues.IssuePriorityId, dbo.BugNet_DefaultValues.IssueAffectedMilestoneId, dbo.BugNet_DefaultValues.ProjectId, 
+                      ISNULL(OwnerUsers.UserName, N'none') AS OwnerUserName, ISNULL(OwnerUsersProfile.DisplayName, N'none') AS OwnerDisplayName, 
+                      ISNULL(AssignedUsers.UserName, N'none') AS AssignedUserName, ISNULL(AssignedUsersProfile.DisplayName, N'none') AS AssignedDisplayName, 
+                      dbo.BugNet_DefaultValues.IssueAssignedUserId, dbo.BugNet_DefaultValues.IssueCategoryId, dbo.BugNet_DefaultValues.IssueVisibility, 
+                      dbo.BugNet_DefaultValues.IssueDueDate, dbo.BugNet_DefaultValues.IssueProgress, dbo.BugNet_DefaultValues.IssueMilestoneId, 
+                      dbo.BugNet_DefaultValues.IssueEstimation, dbo.BugNet_DefaultValues.IssueResolutionId, dbo.BugNet_DefaultValuesVisibility.StatusVisibility, 
+                      dbo.BugNet_DefaultValuesVisibility.PriorityVisibility, dbo.BugNet_DefaultValuesVisibility.OwnedByVisibility, 
+                      dbo.BugNet_DefaultValuesVisibility.AssignedToVisibility, dbo.BugNet_DefaultValuesVisibility.PrivateVisibility, 
+                      dbo.BugNet_DefaultValuesVisibility.CategoryVisibility, dbo.BugNet_DefaultValuesVisibility.DueDateVisibility, 
+                      dbo.BugNet_DefaultValuesVisibility.TypeVisibility, dbo.BugNet_DefaultValuesVisibility.PercentCompleteVisibility, 
+                      dbo.BugNet_DefaultValuesVisibility.MilestoneVisibility, dbo.BugNet_DefaultValuesVisibility.ResolutionVisibility, 
+                      dbo.BugNet_DefaultValuesVisibility.EstimationVisibility, dbo.BugNet_DefaultValuesVisibility.AffectedMilestoneVisibility, 
+                      dbo.BugNet_DefaultValues.OwnedByNotify, dbo.BugNet_DefaultValues.AssignedToNotify,
+					  dbo.BugNet_DefaultValuesVisibility.StatusEditVisibility, 
+                      dbo.BugNet_DefaultValuesVisibility.PriorityEditVisibility, dbo.BugNet_DefaultValuesVisibility.OwnedByEditVisibility, 
+                      dbo.BugNet_DefaultValuesVisibility.AssignedToEditVisibility, dbo.BugNet_DefaultValuesVisibility.PrivateEditVisibility, 
+                      dbo.BugNet_DefaultValuesVisibility.CategoryEditVisibility, dbo.BugNet_DefaultValuesVisibility.DueDateEditVisibility, 
+                      dbo.BugNet_DefaultValuesVisibility.TypeEditVisibility, dbo.BugNet_DefaultValuesVisibility.PercentCompleteEditVisibility, 
+                      dbo.BugNet_DefaultValuesVisibility.MilestoneEditVisibility, dbo.BugNet_DefaultValuesVisibility.ResolutionEditVisibility, 
+                      dbo.BugNet_DefaultValuesVisibility.EstimationEditVisibility, dbo.BugNet_DefaultValuesVisibility.AffectedMilestoneEditVisibility
+FROM         dbo.BugNet_DefaultValues LEFT OUTER JOIN
+                      dbo.Users AS OwnerUsers ON dbo.BugNet_DefaultValues.IssueOwnerUserId = OwnerUsers.UserId LEFT OUTER JOIN
+                      dbo.Users AS AssignedUsers ON dbo.BugNet_DefaultValues.IssueAssignedUserId = AssignedUsers.UserId LEFT OUTER JOIN
+                      dbo.BugNet_UserProfiles AS AssignedUsersProfile ON AssignedUsers.UserName = AssignedUsersProfile.UserName LEFT OUTER JOIN
+                      dbo.BugNet_UserProfiles AS OwnerUsersProfile ON OwnerUsers.UserName = OwnerUsersProfile.UserName LEFT OUTER JOIN
+                      dbo.BugNet_DefaultValuesVisibility ON dbo.BugNet_DefaultValues.ProjectId = dbo.BugNet_DefaultValuesVisibility.ProjectId
+GO
+PRINT N'Altering [dbo].[BugNet_ProjectCustomField_DeleteCustomField]...';
+
+
+GO
+
+ALTER PROCEDURE [dbo].[BugNet_ProjectCustomField_DeleteCustomField]
+	@CustomFieldIdToDelete INT
+AS
+
+SET XACT_ABORT ON
+
+BEGIN TRAN
+
+	DELETE
+	FROM BugNet_QueryClauses
+	WHERE CustomFieldId = @CustomFieldIdToDelete
+	
+	DELETE 
+	FROM BugNet_ProjectCustomFieldValues 
+	WHERE CustomFieldId = @CustomFieldIdToDelete
+	
+	DELETE 
+	FROM BugNet_ProjectCustomFields 
+	WHERE CustomFieldId = @CustomFieldIdToDelete
+COMMIT
+GO
+PRINT N'Altering [dbo].[BugNet_Query_GetSavedQuery]...';
+
+
+GO
+
+ALTER PROCEDURE [dbo].[BugNet_Query_GetSavedQuery] 
+  @QueryId INT
+AS
+
+SELECT 
+	BooleanOperator,
+	FieldName,
+	ComparisonOperator,
+	FieldValue,
+	DataType,
+	CustomFieldId
+FROM 
+	BugNet_QueryClauses
+WHERE 
+	QueryId = @QueryId;
+GO
+PRINT N'Altering [dbo].[BugNet_Query_SaveQueryClause]...';
+
+
+GO
+
+ALTER PROCEDURE [dbo].[BugNet_Query_SaveQueryClause] 
+  @QueryId INT,
+  @BooleanOperator NVarChar(50),
+  @FieldName NVarChar(50),
+  @ComparisonOperator NVarChar(50),
+  @FieldValue NVarChar(50),
+  @DataType INT,
+  @CustomFieldId INT = NULL
+AS
+INSERT BugNet_QueryClauses
+(
+  QueryId,
+  BooleanOperator,
+  FieldName,
+  ComparisonOperator,
+  FieldValue,
+  DataType, 
+  CustomFieldId
+) 
+VALUES (
+  @QueryId,
+  @BooleanOperator,
+  @FieldName,
+  @ComparisonOperator,
+  @FieldValue,
+  @DataType,
+  @CustomFieldId
+)
+GO
+PRINT N'Refreshing [dbo].[BugNet_DefaultValues_Set]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_DefaultValues_Set]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_DefaultValues_GetByProjectId]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_DefaultValues_GetByProjectId]';
+
+
+GO
+PRINT N'Update complete.';

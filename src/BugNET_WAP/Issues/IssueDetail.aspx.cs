@@ -217,27 +217,26 @@ namespace BugNET.Issues
                 VotedLabel.Visible = false;
             }
 
-            //List<DefaultValue> defValues = IssueManager.GetDefaultIssueTypeByProjectId(ProjectId);
-            //DefaultValue selectedValue = defValues.FirstOrDefault();
+            List<DefaultValue> defValues = IssueManager.GetDefaultIssueTypeByProjectId(ProjectId);
+            DefaultValue selectedValue = defValues.FirstOrDefault();
 
-            //if (selectedValue != null)
-            //{
-            //    // Visibility Section
-            //    IssueTypeField.Visible = selectedValue.TypeVisibility;
-            //    StatusField.Visible = selectedValue.StatusVisibility;
-            //    PriorityField.Visible = selectedValue.PriorityVisibility;
-            //    PrivateField.Visible = selectedValue.PrivateVisibility;
-            //    CategoryField.Visible = selectedValue.CategoryVisibility;
-            //    DueDateField.Visible = selectedValue.DueDateVisibility;
-            //    ProgressField.Visible = selectedValue.PercentCompleteVisibility;
-            //    MilestoneField.Visible = selectedValue.MilestoneVisibility;
-            //    EstimationField.Visible = selectedValue.EstimationVisibility;
-            //    ResolutionField.Visible = selectedValue.ResolutionVisibility;
-            //    AffectedMilestoneField.Visible = selectedValue.AffectedMilestoneVisibility;
-            //    AssignedToField.Visible = selectedValue.AssignedToVisibility;
-            //    //chkNotifyAssignedTo.Checked = selectedValue.AssignedToNotify;
-            //    //chkNotifyOwner.Checked = selectedValue.OwnedByNotify;
-            //}
+            if (selectedValue != null)
+            {
+                // Visibility Section
+                IssueTypeField.Visible = selectedValue.TypeEditVisibility;
+                StatusField.Visible = selectedValue.StatusEditVisibility;
+                PriorityField.Visible = selectedValue.PriorityEditVisibility;
+                PrivateField.Visible = selectedValue.PrivateEditVisibility;
+                CategoryField.Visible = selectedValue.CategoryEditVisibility;
+                DueDateField.Visible = selectedValue.DueDateEditVisibility;
+                ProgressField.Visible = selectedValue.PercentCompleteEditVisibility;
+                MilestoneField.Visible = selectedValue.MilestoneEditVisibility;
+                EstimationField.Visible = selectedValue.EstimationEditVisibility;
+                ResolutionField.Visible = selectedValue.ResolutionEditVisibility;
+                AffectedMilestoneField.Visible = selectedValue.AffectedMilestoneEditVisibility;
+                AssignedToField.Visible = selectedValue.AssignedToEditVisibility;
+                OwnedByField.Visible = selectedValue.OwnedByEditVisibility;
+            }
         }
 
         /// <summary>

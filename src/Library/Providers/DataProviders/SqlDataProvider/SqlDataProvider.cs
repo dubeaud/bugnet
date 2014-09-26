@@ -375,6 +375,19 @@ namespace BugNET.Providers.DataProviders
                 AddParamToSqlCmd(sqlCmd, "@EstimationVisibility", SqlDbType.Bit, 0, ParameterDirection.Input, defaultVal.EstimationVisibility);
                 AddParamToSqlCmd(sqlCmd, "@ResolutionVisibility", SqlDbType.Bit, 0, ParameterDirection.Input, defaultVal.ResolutionVisibility);
                 AddParamToSqlCmd(sqlCmd, "@AffectedMilestoneVisibility", SqlDbType.Bit, 0, ParameterDirection.Input, defaultVal.AffectedMilestoneVisibility);
+                AddParamToSqlCmd(sqlCmd, "@StatusEditVisibility", SqlDbType.Bit, 0, ParameterDirection.Input, defaultVal.StatusEditVisibility);
+                AddParamToSqlCmd(sqlCmd, "@OwnedByEditVisibility", SqlDbType.Bit, 0, ParameterDirection.Input, defaultVal.OwnedByEditVisibility);
+                AddParamToSqlCmd(sqlCmd, "@PriorityEditVisibility", SqlDbType.Bit, 0, ParameterDirection.Input, defaultVal.PriorityEditVisibility);
+                AddParamToSqlCmd(sqlCmd, "@AssignedToEditVisibility", SqlDbType.Bit, 0, ParameterDirection.Input, defaultVal.AssignedToEditVisibility);
+                AddParamToSqlCmd(sqlCmd, "@PrivateEditVisibility", SqlDbType.Bit, 0, ParameterDirection.Input, defaultVal.PrivateEditVisibility);
+                AddParamToSqlCmd(sqlCmd, "@CategoryEditVisibility", SqlDbType.Bit, 0, ParameterDirection.Input, defaultVal.CategoryEditVisibility);
+                AddParamToSqlCmd(sqlCmd, "@DueDateEditVisibility", SqlDbType.Bit, 0, ParameterDirection.Input, defaultVal.DueDateEditVisibility);
+                AddParamToSqlCmd(sqlCmd, "@TypeEditVisibility", SqlDbType.Bit, 0, ParameterDirection.Input, defaultVal.TypeEditVisibility);
+                AddParamToSqlCmd(sqlCmd, "@PercentCompleteEditVisibility", SqlDbType.Bit, 0, ParameterDirection.Input, defaultVal.PercentCompleteEditVisibility);
+                AddParamToSqlCmd(sqlCmd, "@MilestoneEditVisibility", SqlDbType.Bit, 0, ParameterDirection.Input, defaultVal.MilestoneEditVisibility);
+                AddParamToSqlCmd(sqlCmd, "@EstimationEditVisibility", SqlDbType.Bit, 0, ParameterDirection.Input, defaultVal.EstimationEditVisibility);
+                AddParamToSqlCmd(sqlCmd, "@ResolutionEditVisibility", SqlDbType.Bit, 0, ParameterDirection.Input, defaultVal.ResolutionEditVisibility);
+                AddParamToSqlCmd(sqlCmd, "@AffectedMilestoneEditVisibility", SqlDbType.Bit, 0, ParameterDirection.Input, defaultVal.AffectedMilestoneEditVisibility);
                 AddParamToSqlCmd(sqlCmd, "@OwnedByNotify", SqlDbType.Bit, 0, ParameterDirection.Input, defaultVal.OwnedByNotify);
                 AddParamToSqlCmd(sqlCmd, "@AssignedToNotify", SqlDbType.Bit, 0, ParameterDirection.Input, defaultVal.AssignedToNotify);
 
