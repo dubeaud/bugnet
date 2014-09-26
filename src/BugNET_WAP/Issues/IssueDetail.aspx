@@ -62,27 +62,31 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <div class="col-sm-4 text-right">
-                        <asp:Label ID="DateCreatedLabel" Font-Bold="true" runat="server" CssClass="control-label" meta:resourcekey="DateCreatedLabel"></asp:Label>
+                    <label class="control-label col-sm-4">
+                        <asp:Label ID="DateCreatedLabel" Font-Bold="true"  runat="server" meta:resourcekey="DateCreatedLabel"></asp:Label>
                         <asp:Label ID="ByLabel" Font-Bold="true" runat="server" meta:resourcekey="ByLabel" Text="By" />
-                    </div>
+                    </label>
                     <div class="col-sm-7">
-                        <asp:Label ID="lblReporter" CssClass="form-control-static" runat="server" />
-                        <asp:Label ID="Label8" runat="server" meta:resourcekey="OnLabel" Text="On" />
-                        <asp:Label ID="lblDateCreated" runat="server" />
+                        <p class="form-control-static">
+                            <asp:Label ID="lblReporter" CssClass="form-control-static" runat="server" />
+                            <asp:Label ID="Label8" runat="server" meta:resourcekey="OnLabel" Text="On" />
+                            <asp:Label ID="lblDateCreated" runat="server" />
+                        </p>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <div class="col-sm-4 text-right">
-                        <asp:Label ID="LastModifiedLabel" Font-Bold="true" runat="server" meta:resourcekey="LastUpdateLabel"></asp:Label>
-                        <asp:Label ID="Label2" Font-Bold="true" runat="server" meta:resourcekey="ByLabel" Text="By" />
-                    </div>
+                    <label class="control-label col-sm-4">
+                        <asp:Label ID="LastModifiedLabel" runat="server" meta:resourcekey="LastUpdateLabel"></asp:Label>
+                        <asp:Label ID="Label2" runat="server" meta:resourcekey="ByLabel" Text="By" />
+                    </label>
                     <div class="col-sm-7">
-                        <asp:Label ID="lblLastUpdateUser" runat="server" />
-                        <asp:Label ID="Label9" runat="server" meta:resourcekey="OnLabel" Text="On" />
-                        <asp:Label ID="lblLastModified" runat="server" />
+                        <p class="form-control-static">
+                            <asp:Label ID="lblLastUpdateUser" runat="server" />
+                            <asp:Label ID="Label9" runat="server" meta:resourcekey="OnLabel" Text="On" />
+                            <asp:Label ID="lblLastModified" runat="server" />
+                        </p>
                     </div>
                 </div>
             </div>
@@ -197,8 +201,10 @@
                 <div class="form-group">
                     <asp:Label ID="LoggedLabel" Font-Bold="true" CssClass="col-sm-4 control-label" runat="server" Text="<%$Resources:SharedIssueProperties, LoggedLabel %>" />
                     <div class="col-sm-7">
-                        <asp:Label ID="lblLoggedTime" runat="server" CssClass="text-right form-control-static" />
-                        <asp:Label ID="Label1" runat="server" Text="<%$Resources:SharedIssueProperties, HoursLabel %>" />
+                        <p class="form-control-static">
+                            <asp:Label ID="lblLoggedTime" runat="server" />
+                            <asp:Label ID="Label1" runat="server" Text="<%$Resources:SharedIssueProperties, HoursLabel %>" />
+                        </p>
                     </div>
                 </div>
             </div>
@@ -207,7 +213,7 @@
                     <asp:Label ID="PrivateLabel" CssClass="col-sm-4 control-label" AssociatedControlID="chkPrivate" runat="server" Text="<%$Resources:SharedIssueProperties, PrivateLabel %>" />
                     <div class="col-sm-7">
                         <div class="checkbox">
-                            <asp:CheckBox ID="chkPrivate" runat="server" />
+                            <asp:CheckBox ID="chkPrivate"  runat="server" />
                         </div>
                     </div>
                 </div>

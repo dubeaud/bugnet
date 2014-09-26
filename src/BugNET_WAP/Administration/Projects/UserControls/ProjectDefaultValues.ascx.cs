@@ -255,7 +255,8 @@ namespace BugNET.Administration.Projects.UserControls
                 ResolutionEditVisibility = chkResolutionEditVisibility.Checked,
                 AffectedMilestoneEditVisibility = chkAffectedMilestoneEditVisibility.Checked,
                 CategoryEditVisibility = chkCategoryEditVisibility.Checked,
-                DueDateEditVisibility = chkDueDateEditVisibility.Checked
+                DueDateEditVisibility = chkDueDateEditVisibility.Checked,
+                PrivateEditVisibility = chkPrivateEditVisibility.Checked
             };
 
             return IssueManager.SaveDefaultValues(newDefaultValues);

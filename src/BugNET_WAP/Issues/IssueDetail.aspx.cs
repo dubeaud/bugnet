@@ -236,6 +236,7 @@ namespace BugNET.Issues
                 AffectedMilestoneField.Visible = selectedValue.AffectedMilestoneEditVisibility;
                 AssignedToField.Visible = selectedValue.AssignedToEditVisibility;
                 OwnedByField.Visible = selectedValue.OwnedByEditVisibility;
+                
             }
         }
 
