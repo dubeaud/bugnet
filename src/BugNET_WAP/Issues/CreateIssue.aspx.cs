@@ -40,6 +40,8 @@ namespace BugNET.Issues
                     ErrorRedirector.TransferToSomethingMissingPage(Page);
 
                 CurrentProject = ProjectManager.GetById(ProjectId);
+                litProject.Text = CurrentProject.Name;
+                litProjectCode.Text = CurrentProject.Code;
 
                 if (CurrentProject == null)
                 {
