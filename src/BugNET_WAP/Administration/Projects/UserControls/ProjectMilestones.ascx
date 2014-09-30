@@ -27,7 +27,6 @@
             CssClass="table table-striped">
             <Columns>
                 <asp:TemplateColumn>
-
                     <ItemTemplate>
                         <asp:ImageButton ID="cmdEdit" ToolTip="<%$ Resources:SharedResources, Edit %>" AlternateText="<%$ Resources:SharedResources, Edit %>"
                             CssClass="icon" ImageUrl="~/images/pencil.gif" BorderWidth="0px" CommandName="Edit" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
@@ -39,22 +38,20 @@
                             runat="server" />&nbsp;
                             <asp:ImageButton ID="cmdCancel" ToolTip="<%$ Resources:SharedResources, Cancel %>" AlternateText="<%$ Resources:SharedResources, Cancel %>"
                                 CssClass="icon" ImageUrl="~/images/cancel.gif" BorderWidth="0px" CommandName="Cancel" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
-                                runat="server" />
+                                runat="server" CausesValidation="false" />
                     </EditItemTemplate>
                 </asp:TemplateColumn>
                 <asp:TemplateColumn HeaderText="Milestone">
-
                     <ItemTemplate>
                         <asp:Label ID="lblMilestoneName" runat="Server" />
                     </ItemTemplate>
                     <EditItemTemplate>
-                        <asp:TextBox runat="server" ID="txtMilestoneName" Width="125" />
+                        <asp:TextBox runat="server" ID="txtMilestoneName" CssClass="form-control" />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" Display="Dynamic" ControlToValidate="txtMilestoneName"
-                            ErrorMessage="A name is required." SetFocusOnError="True"></asp:RequiredFieldValidator>
+                            ErrorMessage="A name is required." SetFocusOnError="True" CssClass="text-danger validation-error"></asp:RequiredFieldValidator>
                     </EditItemTemplate>
                 </asp:TemplateColumn>
                 <asp:TemplateColumn HeaderText="Image">
-
                     <ItemTemplate>
                         <asp:Image ID="imgMilestone" runat="Server" />
                     </ItemTemplate>
@@ -63,7 +60,6 @@
                     </EditItemTemplate>
                 </asp:TemplateColumn>
                 <asp:TemplateColumn HeaderText="Due Date" ItemStyle-Wrap="false">
-
                     <ItemTemplate>
                         <asp:Label ID="lblMilestoneDueDate" runat="Server" />
                     </ItemTemplate>
@@ -92,7 +88,7 @@
                         <asp:Label ID="lblMilestoneNotes" runat="Server" />
                     </ItemTemplate>
                     <EditItemTemplate>
-                        <asp:TextBox runat="server" ID="txtMilestoneNotes" TextMode="MultiLine" />
+                        <asp:TextBox runat="server" ID="txtMilestoneNotes" CssClass="form-control" TextMode="MultiLine" />
                     </EditItemTemplate>
                 </asp:TemplateColumn>
                 <asp:TemplateColumn HeaderText="Order">
@@ -116,10 +112,10 @@
                 <asp:Literal ID="AddNewMilestoneLabel" runat="Server" meta:resourcekey="AddNewMilestoneLabel" Text="Add New Milestone" /></h3>
             <div class="form-group">
                 <asp:Label ID="MilestoneNameLabel" CssClass="control-label col-md-2" runat="Server" AssociatedControlID="txtName" Text="<%$ Resources:SharedResources, Name %>" />
-                <div class="col-md-6">
+                <div class="col-md-10">
                     <asp:TextBox ID="txtName" CssClass="form-control" MaxLength="50" runat="Server" />
-                    <asp:RequiredFieldValidator Text="*" Display="Dynamic" ValidationGroup="Update" ControlToValidate="txtName" runat="server"
-                        ID="RequiredFieldValidator4" />
+                     <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" Display="Dynamic" ControlToValidate="txtName" ValidationGroup="AddMilestone"
+                            ErrorMessage="A name is required." SetFocusOnError="True" CssClass="text-danger validation-error"></asp:RequiredFieldValidator>
                 </div>
             </div>
             <div class="form-group">
@@ -135,8 +131,6 @@
                     <bn:PickDate ID="DueDate" runat="server" />
                 </div>
             </div>
-
-
             <div class="form-group">
                 <asp:Label ID="Label2" CssClass="control-label col-md-2" runat="Server" AssociatedControlID="ReleaseDate:DateTextBox" Text="<%$ Resources:SharedResources, ReleaseDate %>" />
                 <div class="col-md-10">
@@ -159,7 +153,7 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <asp:Button Text="Add Milestone" CssClass="btn btn-primary" meta:resourcekey="AddMilestoneButton" OnClick="AddMilestone" CausesValidation="false" runat="server"
+                    <asp:Button Text="Add Milestone" CssClass="btn btn-primary" meta:resourcekey="AddMilestoneButton" ValidationGroup="AddMilestone" OnClick="AddMilestone" runat="server"
                         ID="btnAdd" />
                 </div>
             </div>

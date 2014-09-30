@@ -10,8 +10,8 @@
                 <div class="col-md-7">
                     <asp:TextBox ID="SMTPServer" CssClass="form-control" runat="Server" />
                 </div>
-                <div class="col-md-1">
-                    <asp:LinkButton ID="TestEmailSettings" runat="server" OnClick="TestEmailSettings_Click" Text="[Test]" meta:resourcekey="TestEmailSettings" />
+                <div class="col-md-3">
+                    <asp:LinkButton ID="TestEmailSettings" runat="server" OnClick="TestEmailSettings_Click" Text="[Test]" CssClass="btn btn-success" meta:resourcekey="TestEmailSettings" />
                     <asp:Label ID="lblEmail" runat="server" Font-Bold="true" />
                 </div>
             </div>

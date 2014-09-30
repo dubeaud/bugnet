@@ -25,7 +25,7 @@
 <table class="table">
     <thead>
         <tr>
-            <th colspan="2" rowspan="2"></th>
+            <th colspan="2" class="text-center" rowspan="2">Default Value</th>
             <th colspan="2" class="text-center bg-info">Visibility</th>
         </tr>
         <tr>

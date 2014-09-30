@@ -38,7 +38,7 @@
                             runat="server" />&nbsp;
                             <asp:ImageButton ID="cmdCancel" ToolTip="<%$ Resources:SharedResources, Cancel %>" AlternateText="<%$ Resources:SharedResources, Cancel %>"
                                 CssClass="icon" ImageUrl="~/images/cancel.gif" BorderWidth="0px" CommandName="Cancel" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
-                                runat="server" />
+                                runat="server" CausesValidation="false" />
                     </EditItemTemplate>
                 </asp:TemplateColumn>
                 <asp:TemplateColumn HeaderText="Status">
@@ -46,9 +46,9 @@
                         <asp:Label ID="lblStatusName" runat="Server" />
                     </ItemTemplate>
                     <EditItemTemplate>
-                        <asp:TextBox runat="server" ID="txtStatusName" />
+                        <asp:TextBox runat="server" CssClass="form-control" ID="txtStatusName" />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtStatusName" Display="Dynamic"
-                            ErrorMessage="A status name is required." SetFocusOnError="True"></asp:RequiredFieldValidator>
+                            ErrorMessage="A status name is required." SetFocusOnError="True" CssClass="text-danger validation-error"></asp:RequiredFieldValidator>
                     </EditItemTemplate>
                 </asp:TemplateColumn>
                 <asp:TemplateColumn HeaderText="Image">
@@ -90,6 +90,8 @@
                 <asp:Label ID="StatusNameLabel" CssClass="control-label col-md-2" AssociatedControlID="txtName" runat="Server" Text="<%$ Resources:SharedResources, Name %>" />
                 <div class="col-md-6">
                     <asp:TextBox ID="txtName" MaxLength="50" CssClass="form-control" runat="Server" />
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtName" Display="Dynamic" ValidationGroup="AddStatus"
+                        ErrorMessage="A status name is required." SetFocusOnError="True" CssClass="text-danger validation-error"></asp:RequiredFieldValidator>
                 </div>
             </div>
             <div class="form-group">
@@ -110,7 +112,7 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <asp:Button Text="Add Status" CssClass="btn btn-primary" meta:resourcekey="AddStatusButton" CausesValidation="false" runat="server" ID="Button1" OnClick="AddStatus" />
+                    <asp:Button Text="Add Status" CssClass="btn btn-primary" meta:resourcekey="AddStatusButton" CausesValidation="true" ValidationGroup="AddStatus" runat="server" ID="Button1" OnClick="AddStatus" />
                 </div>
             </div>
         </div>

@@ -37,7 +37,7 @@
                                 runat="server" />&nbsp;
                             <asp:ImageButton ID="cmdCancel" ToolTip="<%$ Resources:SharedResources, Cancel %>" AlternateText="<%$ Resources:SharedResources, Cancel %>"
                                 CssClass="icon" ImageUrl="~/images/cancel.gif" BorderWidth="0px" CommandName="Cancel" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
-                                runat="server" />
+                                runat="server" CausesValidation="false" />
                         </EditItemTemplate>
                     </asp:TemplateColumn>
                     <asp:TemplateColumn HeaderText="Issue Type">
@@ -45,8 +45,8 @@
                             <asp:Label ID="lblIssueTypeName" runat="Server" />
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:TextBox runat="server" ID="txtIssueTypeName" />
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" Display="Dynamic" ControlToValidate="txtIssueTypeName"
+                            <asp:TextBox runat="server" ID="txtIssueTypeName" CssClass="form-control" />
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" Display="Dynamic" ControlToValidate="txtIssueTypeName" CssClass="text-danger validation-error"
                                 ErrorMessage="Issue Type name is required." SetFocusOnError="True"></asp:RequiredFieldValidator>
                         </EditItemTemplate>
                     </asp:TemplateColumn>
@@ -81,8 +81,10 @@
 
                     <asp:Label ID="IssueTypeNameLabel" CssClass="col-md-2 control-label"
                         AssociatedControlID="txtName" runat="Server" Text="<%$ Resources:SharedResources, Name %>" />
-                    <div class="col-md-6">
+                    <div class="col-md-10">
                         <asp:TextBox ID="txtName" CssClass="form-control" MaxLength="50" runat="Server" />
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" Display="Dynamic" ControlToValidate="txtName" CssClass="text-danger validation-error"
+                            ErrorMessage="Issue Type name is required." SetFocusOnError="True" ValidationGroup="AddIssueType"></asp:RequiredFieldValidator>
                     </div>
                 </div>
                 <div class="form-group">
@@ -95,7 +97,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <asp:Button Text="Add IssueType" CssClass="btn btn-primary" meta:resourcekey="AddIssueTypeButton" CausesValidation="false" runat="server" ID="Button1"
+                        <asp:Button Text="Add IssueType" CssClass="btn btn-primary" meta:resourcekey="AddIssueTypeButton" ValidationGroup="AddIssueType" runat="server" ID="Button1"
                             OnClick="AddIssueType" />
                     </div>
                 </div>

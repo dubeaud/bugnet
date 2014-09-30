@@ -37,7 +37,7 @@
                                 runat="server" />&nbsp;
                             <asp:ImageButton ID="cmdCancel" ToolTip="<%$ Resources:SharedResources, Cancel %>" AlternateText="<%$ Resources:SharedResources, Cancel %>"
                                 CssClass="icon" ImageUrl="~/images/cancel.gif" BorderWidth="0px" CommandName="Cancel" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
-                                runat="server" />
+                                runat="server" CausesValidation="false" />
                         </EditItemTemplate>
                     </asp:TemplateColumn>
                     <asp:TemplateColumn HeaderText="Priority">
@@ -45,9 +45,9 @@
                             <asp:Label ID="lblPriorityName" runat="Server" />
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:TextBox runat="server" ID="txtPriorityName" />
+                            <asp:TextBox runat="server" ID="txtPriorityName" CssClass="form-control" />
                             <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" Display="Dynamic" ControlToValidate="txtPriorityName"
-                                ErrorMessage="A priority name is required." SetFocusOnError="True"></asp:RequiredFieldValidator>
+                                ErrorMessage="A priority name is required." SetFocusOnError="True" CssClass="text-danger validation-error"></asp:RequiredFieldValidator>
                         </EditItemTemplate>
                     </asp:TemplateColumn>
                     <asp:TemplateColumn HeaderText="Image">
@@ -60,14 +60,12 @@
                         </EditItemTemplate>
                     </asp:TemplateColumn>
                     <asp:TemplateColumn HeaderText="Order">
-
                         <ItemTemplate>
                             <asp:ImageButton ID="MoveUp" ImageUrl="~/Images/up.gif" CommandName="up" runat="server" />
                             <asp:ImageButton ID="MoveDown" ImageUrl="~/Images/down.gif" CommandName="down" runat="server" />
                         </ItemTemplate>
                     </asp:TemplateColumn>
                     <asp:TemplateColumn>
-
                         <ItemTemplate>
                             <asp:ImageButton ID="cmdDelete" ToolTip="<%$ Resources:SharedResources, Delete %>" AlternateText="<%$ Resources:SharedResources, Delete %>"
                                 CssClass="icon" ImageUrl="~/images/cross.gif" BorderWidth="0px" CommandName="Delete" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
@@ -84,6 +82,8 @@
                     <asp:Label ID="PriorityNameLabel" CssClass="control-label col-md-2" AssociatedControlID="txtName" runat="Server" Text="<%$ Resources:SharedResources, Name %>" />
                     <div class="col-md-6">
                         <asp:TextBox ID="txtName" CssClass="form-control" MaxLength="50" runat="Server" />
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" Display="Dynamic" ControlToValidate="txtName" ValidationGroup="AddPriority"
+                            ErrorMessage="A priority name is required." SetFocusOnError="True" CssClass="text-danger validation-error"></asp:RequiredFieldValidator>
                     </div>
                 </div>
                 <div class="form-group">
@@ -95,7 +95,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <asp:Button Text="Add Priority" CssClass="btn btn-primary" meta:resourcekey="AddPriorityButton" CausesValidation="false" runat="server" ID="Button1"
+                        <asp:Button Text="Add Priority" CssClass="btn btn-primary" meta:resourcekey="AddPriorityButton" ValidationGroup="AddPriority" runat="server" ID="Button1"
                             OnClick="AddPriority" />
                     </div>
                 </div>

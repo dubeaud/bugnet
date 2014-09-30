@@ -56,17 +56,16 @@
                                 runat="server" />
                         </EditItemTemplate>
                     </asp:TemplateColumn>
-
                     <asp:TemplateColumn HeaderText="<%$ Resources:Field %>">
                         <ItemTemplate>
                             <asp:Label ID="lblName" runat="Server" />
                         </ItemTemplate>
                         <EditItemTemplate>
                             <asp:TextBox runat="server" CssClass="form-control" ID="txtCustomFieldName" />
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" Text="<%$ Resources:SharedResources, Required %>"
+                                ControlToValidate="txtCustomFieldName" ValidationGroup="AddSelection" Display="Dynamic" CssClass="text-danger validation-error"></asp:RequiredFieldValidator>
                         </EditItemTemplate>
                     </asp:TemplateColumn>
-
-
                     <asp:TemplateColumn HeaderText="<%$ Resources:FieldType %>">
                         <ItemTemplate>
                             <asp:Label ID="lblFieldType" runat="Server"></asp:Label>
@@ -165,12 +164,12 @@
                                                                 <EditItemTemplate>
                                                                     <asp:TextBox ID="txtEditSelectionName" CssClass="form-control" MaxLength="255" Text='<%# DataBinder.Eval(Container.DataItem, "Name") %>' runat="server" />
                                                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" Text="<%$ Resources:SharedResources, Required %>"
-                                                                        ControlToValidate="txtEditSelectionName" ValidationGroup="UpdateSelection"></asp:RequiredFieldValidator>
+                                                                        ControlToValidate="txtEditSelectionName" ValidationGroup="UpdateSelection" Display="Dynamic" CssClass="text-danger validation-error"></asp:RequiredFieldValidator>
                                                                 </EditItemTemplate>
                                                                 <FooterTemplate>
                                                                     <asp:TextBox ID="txtAddSelectionName" MaxLength="255" CssClass="form-control" runat="server" />
                                                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" Text="<%$ Resources:SharedResources, Required %>"
-                                                                        ControlToValidate="txtAddSelectionName" ValidationGroup="AddSelection"></asp:RequiredFieldValidator>
+                                                                        ControlToValidate="txtAddSelectionName" ValidationGroup="AddSelection" Display="Dynamic" CssClass="text-danger validation-error"></asp:RequiredFieldValidator>
                                                                 </FooterTemplate>
                                                             </asp:TemplateColumn>
 
@@ -181,12 +180,12 @@
                                                                 <EditItemTemplate>
                                                                     <asp:TextBox ID="txtEditSelectionValue" CssClass="form-control" Text='<%# DataBinder.Eval(Container.DataItem, "Value") %>' runat="server" MaxLength="255" />
                                                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" Text="<%$ Resources:SharedResources, Required %>"
-                                                                        ControlToValidate="txtEditSelectionValue" ValidationGroup="UpdateSelection"></asp:RequiredFieldValidator>
+                                                                        ControlToValidate="txtEditSelectionValue" ValidationGroup="UpdateSelection" Display="Dynamic" CssClass="text-danger validation-error"></asp:RequiredFieldValidator>
                                                                 </EditItemTemplate>
                                                                 <FooterTemplate>
                                                                     <asp:TextBox ID="txtAddSelectionValue" CssClass="form-control" MaxLength="255" runat="server" />
                                                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" Text="<%$ Resources:SharedResources, Required %>"
-                                                                        ControlToValidate="txtAddSelectionValue" ValidationGroup="AddSelection"></asp:RequiredFieldValidator>
+                                                                        ControlToValidate="txtAddSelectionValue" ValidationGroup="AddSelection" Display="Dynamic" CssClass="text-danger validation-error"></asp:RequiredFieldValidator>
                                                                 </FooterTemplate>
                                                             </asp:TemplateColumn>
 
@@ -228,6 +227,8 @@
                     <asp:Label ID="label1" CssClass="control-label col-md-2" runat="server" AssociatedControlID="txtName" Text="<%$ Resources:FieldName %>" />
                     <div class="col-md-10">
                         <asp:TextBox ID="txtName" CssClass="form-control" MaxLength="255" runat="Server" />
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" Display="Dynamic" ControlToValidate="txtName" ValidationGroup="AddCustomField"
+                            ErrorMessage="A name is required." SetFocusOnError="True" CssClass="text-danger validation-error"></asp:RequiredFieldValidator>
                     </div>
                 </div>
                 <div class="form-group">
@@ -260,7 +261,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <asp:Button Text="<%$ Resources:AddNew %>" CssClass="btn btn-primary" CausesValidation="false" runat="server" ID="Button1" OnClick="lnkAddCustomField_Click" />
+                        <asp:Button Text="<%$ Resources:AddNew %>" CssClass="btn btn-primary" ValidationGroup="AddCustomField" runat="server" ID="Button1" OnClick="lnkAddCustomField_Click" />
                     </div>
                 </div>
             </div>

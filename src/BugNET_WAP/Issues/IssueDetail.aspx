@@ -16,10 +16,10 @@
     <div class="form-horizontal" style="padding-top: 2em;">
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-8">
+                <div class="col-md-3 col-sm-1 col-xs-2">
                     <asp:Label ID="lblIssueNumber" Font-Bold="true" runat="server"></asp:Label>
                 </div>
-                <div class="pull-right">
+                <div class="col-md-9 text-right">
                     <asp:LinkButton ID="lnkSave" CssClass="btn btn-primary" OnClick="LnkSaveClick" runat="server" Text="<%$ Resources:SharedResources, Save %>" />
                     <asp:LinkButton ID="lnkDone" CssClass="btn btn-primary" OnClick="LnkDoneClick" runat="server" Text="<%$ Resources:SharedIssueProperties, SaveReturnText %>" />
                     <asp:LinkButton ID="lnkCancel" CssClass="btn btn-default" OnClick="CancelButtonClick" CausesValidation="false" runat="server" Text="<%$ Resources:SharedResources, Cancel %>" />
@@ -29,7 +29,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-1" id="VoteBox" runat="server">
+                <div class="col-md-1 col-sm-3 col-xs-3" id="VoteBox" runat="server">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <div class="text-center" style="padding: 0px;">
