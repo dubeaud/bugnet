@@ -39,7 +39,17 @@ namespace BugNET.Account
                 continueUrl = "~/";
             }
 
-            var user = UserManager.GetUser(RegisterUser.UserName);
+            var user = UserManager.GetUser(RegisterUser.UserName); 
+            var profile = new WebProfile().GetProfile(user.UserName);
+            var displayName = (TextBox)RegisterUser.CreateUserStep.ContentTemplateContainer.FindControl("DisplayName");
+            var firstName = (TextBox)RegisterUser.CreateUserStep.ContentTemplateContainer.FindControl("FirstName");
+            var lastName = (TextBox)RegisterUser.CreateUserStep.ContentTemplateContainer.FindControl("LastName");
+
+            profile.DisplayName = displayName.Text;
+            profile.FirstName = firstName.Text;
+            profile.LastName = lastName.Text;
+
+            profile.Save();
 
             // add users to all auto assigned roles
             var roles = RoleManager.GetAll();
