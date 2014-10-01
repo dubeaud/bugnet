@@ -11,25 +11,16 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $('.milestone-group-header').click(function () {
-                var li = $(this).parent();
-                if (li.hasClass('active')) {
-                    li.removeClass('active');
-                    li.children('.milestone-content').hide();
-                    $.cookie(li.attr('id'), null);
-                }
-                else {
-                    li.addClass('active');
-                    li.children('.milestone-content').show();
-                    $.cookie(li.attr('id'), 'expanded');
-                }
-
-            });
-            $("li.expand").each(function () {
+            $('.milestone-content').on('hidden.bs.collapse', function () {
+                $.cookie($(this).attr('id'), null);
+            })
+            $('.milestone-content').on('shown.bs.collapse', function () {
+                $.cookie($(this).attr('id'), 'expanded');
+            })
+            $(".milestone-content").each(function () {
                 var isExpanded = $.cookie($(this).attr('id'));
                 if (isExpanded == 'expanded') {
-                    $(this).addClass('active');
-                    $(this).children('.milestone-content').show();
+                    $(this).collapse('show');
                 }
             });
         });
@@ -46,28 +37,27 @@
     </div>
 
     <asp:Repeater runat="server" ID="RoadmapRepeater" OnItemDataBound="RoadmapRepeater_ItemDataBound">
-        <HeaderTemplate>
-            <ul class="milestone-list list-unstyled">
-        </HeaderTemplate>
         <ItemTemplate>
-            <li class="expand" id='milestoneRoadmap-<%#DataBinder.Eval(Container.DataItem, "Id") %>'>
-                <div class="milestone-group-header">
+            <div class="panel panel-default">
+                <div class="milestone-group-header panel-heading" data-toggle="collapse" data-target="#milestone-content-<%#DataBinder.Eval(Container.DataItem, "Id") %>">
                     <div class="milestoneProgress pull-right">
-                        <asp:Label ID="PercentLabel" runat="Server" CssClass="pull-right" Style="padding-left: 5px; width: 40px; text-align: right;"></asp:Label>
-                        <div class="roadMapProgress" style="float: right; vertical-align: top; background-color: #FA0000; font-size: 8px; width: 150px; height: 15px; margin: 0px;">
-                            <div id="ProgressBar" runat='server' style="display: block; height: 15px; background: #6FB423 url('../images/fade.png') repeat-x 0% -3px;">&nbsp;</div>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" id="ProgressBar" runat='server' role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                            </div>
                         </div>
-                        <br />
                         <asp:Label CssClass="pull-right" ID="lblProgress" runat="Server"></asp:Label>
                     </div>
-                    <asp:HyperLink ID="MilestoneLink" runat="server" />
-                    <asp:Label ID="MilestoneNotes" runat="Server"></asp:Label>
-                    <br />
+                    <h4 class="panel-title">
+                        <asp:HyperLink ID="MilestoneLink" runat="server" /> <small><asp:Label ID="MilestoneNotes" runat="Server"></asp:Label></small>
+                    </h4>
+                   
                     <asp:Label ID="lblDueDate" CssClass="milestone-release-date" runat="Server"></asp:Label>
                 </div>
-                <div class="milestone-content" style="display: none;">
+                <div class="milestone-content panel-collapse collapse" id="milestone-content-<%#DataBinder.Eval(Container.DataItem, "Id") %>">
+                    <div class="panel-body">
                     <asp:Repeater ID="IssuesList" OnItemCreated="rptRoadMap_ItemCreated" runat="server">
                         <HeaderTemplate>
+                            <div class="table-responsive">
                             <table class="table table-hover table-striped">
                                 <tr>
                                     <th runat="server" id="tdId" class="gridHeader">
@@ -129,13 +119,12 @@
                         </ItemTemplate>
                         <FooterTemplate>
                             </table>
+                            </div>
                         </FooterTemplate>
                     </asp:Repeater>
+                        </div>
                 </div>
-            </li>
+            </div>
         </ItemTemplate>
-        <FooterTemplate>
-            </ul>
-        </FooterTemplate>
     </asp:Repeater>
 </asp:Content>

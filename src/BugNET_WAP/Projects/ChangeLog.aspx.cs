@@ -308,7 +308,12 @@ namespace BugNET.Projects
             if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem) return;
 
             var m = (Milestone)e.Item.DataItem;
-            ((Label)e.Item.FindControl("MilestoneNotes")).Text = m.Notes;
+
+            if (!string.IsNullOrWhiteSpace(m.Notes))
+            {
+                ((Label)e.Item.FindControl("MilestoneNotes")).Text = " - " + m.Notes;
+            }
+
             ((HyperLink)e.Item.FindControl("ReleaseNotes")).NavigateUrl = string.Format(Page.ResolveUrl("~/Projects/ReleaseNotes.aspx") + "?pid={0}&m={1}", ProjectId, m.Id);
             if (m.ReleaseDate.HasValue)
             {

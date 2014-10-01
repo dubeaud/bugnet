@@ -267,10 +267,12 @@ namespace BugNET.Projects
 
             if (m == null) return;
 
-            ((Label)e.Item.FindControl("MilestoneNotes")).Text = m.Notes;
+            if(!string.IsNullOrWhiteSpace(m.Notes))
+            { 
+                ((Label)e.Item.FindControl("MilestoneNotes")).Text = " - " + m.Notes;
+            }
             var dueDate = (Label)e.Item.FindControl("lblDueDate");
-
-                
+       
             if (m.DueDate.HasValue)
             {
                 var date = (DateTime)m.DueDate;
@@ -322,8 +324,10 @@ namespace BugNET.Projects
             var match = Regex.Match(pct, @"\d+").Value.ToOrDefault(0);
 
             ((Label)e.Item.FindControl("lblProgress")).Text = string.Format(GetLocalResourceObject("ProgressMessage").ToString(), progressValues[0], progressValues[1]);
-            ((Label)e.Item.FindControl("PercentLabel")).Text = pct;
+  
             ((HtmlControl)e.Item.FindControl("ProgressBar")).Attributes.CssStyle.Add("width", string.Format("{0}%", match));
+            ((HtmlControl)e.Item.FindControl("ProgressBar")).Controls.Add(new LiteralControl(string.Format("{0}%", match)));
+
             ((HyperLink)e.Item.FindControl("MilestoneLink")).NavigateUrl = string.Format(Page.ResolveUrl("~/Issues/IssueList.aspx") + "?pid={0}&m={1}", ProjectId, m.Id);
             ((HyperLink)e.Item.FindControl("MilestoneLink")).Text = m.Name;
         }

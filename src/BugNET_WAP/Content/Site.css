@@ -183,23 +183,18 @@ td.image-column {
     margin-left: 10px;
 }
 
-.milestone-group-header {
-    text-align: left;
-    padding: 5px;
-    cursor: pointer;
-    padding-left: 40px;
-    margin: 10px 0 0 10px;
-    background: url(../images/package.gif) no-repeat 10px 7px;
-    min-height: 50px;
-}
-
-.milestone-list li:hover {
+.progress {
     background-color: #eee;
+    border-radius: 0;
+    height: 20px;
+    margin-bottom: 5px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
-.milestone-list li.active {
-    background-color: #f7f7f9;
-    border-top: 1px solid #e1e1e8;
+.milestone-group-header {
+    min-height: 60px;
+    cursor:pointer;
 }
 
 .milestone-release-date {
@@ -207,11 +202,8 @@ td.image-column {
     float: left;
     padding-right: 5px;
     font-style: italic;
+    padding-top:5px;
     font-weight: normal;
-}
-
-.milestone-content {
-    background: white;
 }
 
 /* Project Calendar Styles */
