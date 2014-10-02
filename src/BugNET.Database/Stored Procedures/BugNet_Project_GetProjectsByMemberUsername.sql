@@ -27,7 +27,6 @@ SELECT DISTINCT
 	CreatorDisplayName,
 	AllowAttachments,
 	AllowAttachments,
-	AttachmentStorageType,
 	SvnRepositoryUrl,
 	AllowIssueVoting
  FROM [BugNet_ProjectsView]

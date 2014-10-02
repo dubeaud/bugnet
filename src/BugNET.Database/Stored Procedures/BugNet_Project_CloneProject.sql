@@ -29,7 +29,6 @@ INSERT BugNet_Projects
   ProjectManagerUserId,
   ProjectCreatorUserId,
   AllowAttachments,
-  AttachmentStorageType,
   SvnRepositoryUrl 
 )
 SELECT
@@ -43,7 +42,6 @@ SELECT
   ProjectManagerUserId,
   @CreatorUserId,
   AllowAttachments,
-  AttachmentStorageType,
   SvnRepositoryUrl
 FROM 
   BugNet_Projects
