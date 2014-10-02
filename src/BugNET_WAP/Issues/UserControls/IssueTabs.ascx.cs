@@ -62,7 +62,10 @@ namespace BugNET.Issues.UserControls
             if (!Page.IsPostBack)
             {
                 IssueTabsMenu.Items.Add(new MenuItem(GetTabName(GetLocalResourceObject("Comments").ToString(), "0"), "TabComments", "~/images/comment.gif"));
-                IssueTabsMenu.Items.Add(new MenuItem(GetTabName(GetLocalResourceObject("Attachments").ToString(), "1"), "TabAttachments", "~/images/attach.gif"));
+                if(HostSettingManager.Get(HostSettingNames.AllowAttachments, false) && ProjectManager.GetById(ProjectId).AllowAttachments)
+                {
+                    IssueTabsMenu.Items.Add(new MenuItem(GetTabName(GetLocalResourceObject("Attachments").ToString(), "1"), "TabAttachments", "~/images/attach.gif"));
+                }
                 IssueTabsMenu.Items.Add(new MenuItem(GetLocalResourceObject("History").ToString(), "TabHistory", "~/images/history.gif"));
                 IssueTabsMenu.Items.Add(new MenuItem(GetLocalResourceObject("Notifications").ToString(), "TabNotifications", "~/images/email.gif"));
                 IssueTabsMenu.Items.Add(new MenuItem(GetLocalResourceObject("SubIssues").ToString(), "TabSubIssues", "~/images/link.gif"));

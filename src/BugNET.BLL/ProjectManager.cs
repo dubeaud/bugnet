@@ -25,6 +25,7 @@ namespace BugNET.BLL
             if (entity.Id > 0)
                 return (Update(entity));
 
+            entity.UploadPath = Guid.NewGuid().ToString();
             var tempId = DataProviderManager.Provider.CreateNewProject(entity);
             if (tempId <= Globals.NEW_ID)
                 return false;
@@ -246,8 +247,13 @@ namespace BugNET.BLL
                 try
                 {
 
-                    uploadpath = string.Concat("~", Globals.UPLOAD_FOLDER, uploadpath);
-                    Directory.Delete(HttpContext.Current.Server.MapPath(uploadpath), true);
+                    uploadpath = string.Concat(HostSettingManager.Get(HostSettingNames.AttachmentUploadPath), uploadpath);
+                    if(uploadpath.StartsWith("~"))
+                    {
+                        uploadpath = HttpContext.Current.Server.MapPath(uploadpath);
+                    }
+
+                    Directory.Delete(uploadpath, true);
                 }
                 catch (Exception ex)
                 {
@@ -308,7 +314,12 @@ namespace BugNET.BLL
 
                         DataProviderManager.Provider.UpdateProject(newProject);
 
-                        var fullPath = HttpContext.Current.Server.MapPath(string.Concat("~", Globals.UPLOAD_FOLDER, newProject.UploadPath));
+                        var fullPath = string.Concat(HostSettingManager.Get(HostSettingNames.AttachmentUploadPath), newProject.UploadPath);
+
+                        if (fullPath.StartsWith("~"))
+                        {
+                            fullPath = HttpContext.Current.Server.MapPath(fullPath);
+                        }
                         Directory.CreateDirectory(fullPath);
                     }
                 }
