@@ -124,7 +124,7 @@
     <value>Description</value>
   </data>
   <data name="EnableAttachmentsLabel.Text" xml:space="preserve">
-    <value>Allow Issue Attachments</value>
+    <value>Allow Attachments</value>
   </data>
   <data name="ProjectCodeLabel.Text" xml:space="preserve">
     <value>Project Code</value>

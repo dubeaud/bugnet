@@ -114,7 +114,7 @@ namespace BugNET.BLL
 
                     entity.Size = entity.Attachment.Length;
 
-                    if (project.AttachmentStorageType == IssueAttachmentStorageTypes.Database)
+                    if (HostSettingManager.Get(HostSettingNames.AttachmentStorageType, 0) == (int)IssueAttachmentStorageTypes.Database)
                     {
                         //save the attachment record to the database.
                         var tempId = DataProviderManager.Provider.CreateNewIssueAttachment(entity);
@@ -263,7 +263,7 @@ namespace BugNET.BLL
                     if (Log.IsErrorEnabled) Log.Error(ex);
                 }
 
-                if (project.AttachmentStorageType == IssueAttachmentStorageTypes.FileSystem)
+                if (HostSettingManager.Get(HostSettingNames.AttachmentStorageType, 0) == (int)IssueAttachmentStorageTypes.FileSystem)
                 {
                     //delete IssueAttachment from file system.
                     try

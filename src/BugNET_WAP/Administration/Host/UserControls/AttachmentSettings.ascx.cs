@@ -80,10 +80,10 @@ namespace BugNET.Administration.Host.UserControls
             AttachmentUploadPathRow.Visible = AllowAttachments.Checked && AttachmentStorageType.SelectedValue == "1";
         }
 
-        protected void validUploadPath_ServerValidate(object source, ServerValidateEventArgs args)
-        {
-            // BGN-1909
-            args.IsValid = Utilities.CheckUploadPath(txtUploadPath.Text);
-        }
+        //protected void validUploadPath_ServerValidate(object source, ServerValidateEventArgs args)
+        //{
+        //    // BGN-1909
+        //    args.IsValid = Utilities.CheckUploadPath(txtUploadPath.Text);
+        //}
     }
 }

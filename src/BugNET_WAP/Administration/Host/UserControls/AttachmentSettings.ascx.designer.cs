@@ -112,15 +112,6 @@ namespace BugNET.Administration.Host.UserControls {
         protected global::System.Web.UI.WebControls.TextBox txtUploadPath;
         
         /// <summary>
-        /// validUploadPath control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator validUploadPath;
-        
-        /// <summary>
         /// lblAllowedFileExtentions control.
         /// </summary>
         /// <remarks>

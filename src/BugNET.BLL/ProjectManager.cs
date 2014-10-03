@@ -50,7 +50,7 @@ namespace BugNET.BLL
             }
 
             //create attachment directory
-            if (entity.AttachmentStorageType == IssueAttachmentStorageTypes.FileSystem)
+            if (HostSettingManager.Get(HostSettingNames.AttachmentStorageType, 0) == (int)IssueAttachmentStorageTypes.FileSystem)
             {
                 var uploadPath = string.Concat(HostSettingManager.Get(HostSettingNames.AttachmentUploadPath), entity.UploadPath);
                 if(uploadPath.StartsWith("~"))
@@ -311,9 +311,9 @@ namespace BugNET.BLL
 
                 try
                 {
-                    if (newProject.AllowAttachments && newProject.AttachmentStorageType == IssueAttachmentStorageTypes.FileSystem)
+                    if (newProject.AllowAttachments && HostSettingManager.Get(HostSettingNames.AttachmentStorageType, 0) == (int)IssueAttachmentStorageTypes.FileSystem)
                     {
-                        // Old bugfix which wasn't carried forward.
+                        // set upload path to new Guid
                         newProject.UploadPath = Guid.NewGuid().ToString();
 
                         DataProviderManager.Provider.UpdateProject(newProject);
@@ -324,6 +324,7 @@ namespace BugNET.BLL
                         {
                             fullPath = HttpContext.Current.Server.MapPath(fullPath);
                         }
+
                         Directory.CreateDirectory(fullPath);
                     }
                 }
@@ -332,7 +333,9 @@ namespace BugNET.BLL
                     if (Log.IsErrorEnabled)
                         Log.Error(string.Format(LoggingManager.GetErrorMessageResource("CreateProjectUploadFolderError"), newProject.UploadPath, projectId), ex);
                 }
+
                 HttpContext.Current.Cache.Remove("RolePermission");
+
                 return newProjectId;
             }
 

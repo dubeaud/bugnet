@@ -59,6 +59,9 @@
             <div class="checkbox">
                 <asp:CheckBox CssClass="inputCheckBox" ID="AllowAttachments" runat="server" />
             </div>
+            <p class="help-block">
+                <asp:Localize ID="lclAttachments" runat="server" Text="Allows file attachments to issues" meta:resourcekey="lclAttachments" />
+            </p>
         </div>
     </div>
     <div class="form-group">

@@ -187,7 +187,7 @@ namespace BugNET.Issues.UserControls
 
             if (lnkAttachment != null)
             {
-                if (ProjectManager.GetById(ProjectId).AttachmentStorageType == IssueAttachmentStorageTypes.FileSystem)
+                if (HostSettingManager.Get(HostSettingNames.AttachmentStorageType, 0) == (int)IssueAttachmentStorageTypes.FileSystem)
                 {
                     lnkAttachment.InnerText = IssueAttachmentManager.StripGuidFromFileName(currentAttachment.FileName);
                 }

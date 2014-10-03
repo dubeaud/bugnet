@@ -295,7 +295,6 @@ namespace BugNET.Providers.DataProviders
                         AllowAttachments = returnData.GetBoolean(returnData.GetOrdinal("AllowAttachments")),
                         AccessType = (ProjectAccessType) returnData["ProjectAccessType"],
                         AllowIssueVoting = returnData.GetBoolean(returnData.GetOrdinal("AllowIssueVoting")),
-                        AttachmentStorageType = (IssueAttachmentStorageTypes) returnData["AttachmentStorageType"],
                         Code = returnData.GetString(returnData.GetOrdinal("ProjectCode")),
                         Disabled = returnData.GetBoolean(returnData.GetOrdinal("ProjectDisabled")),
                         ManagerDisplayName = returnData.GetString(returnData.GetOrdinal("ManagerDisplayName")),

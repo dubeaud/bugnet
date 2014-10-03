@@ -34,7 +34,7 @@
         <asp:PostBackTrigger ControlID="UploadButton" />
     </Triggers>
     <ContentTemplate>
-        <asp:Panel ID="pnlAddAttachment" CssClass="form-horizontal" Visible="false" runat="server">
+        <asp:Panel ID="pnlAddAttachment" CssClass="form-horizontal" runat="server">
             <h3>
                 <asp:Label ID="lblAddAttachment" runat="server" meta:resourcekey="lblAddAttachment" Text="Add Attachment"></asp:Label>
             </h3>

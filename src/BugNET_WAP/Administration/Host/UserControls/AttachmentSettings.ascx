@@ -29,9 +29,6 @@
                 <asp:Label CssClass="col-md-2 control-label" ID="Label5" AssociatedControlID="txtUploadPath" meta:resourcekey="UploadPath" runat="server" Text="Upload Path" />
                 <div class="col-md-10">
                     <asp:TextBox ID="txtUploadPath" CssClass="form-control" runat="Server" Text="~\Uploads" />
-                    <asp:CustomValidator ID="validUploadPath" runat="server"
-                        ControlToValidate="txtUploadPath" Display="Dynamic"
-                        OnServerValidate="validUploadPath_ServerValidate">Upload path is not valid</asp:CustomValidator>
                 </div>
             </div>
         </ContentTemplate>
