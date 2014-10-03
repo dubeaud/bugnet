@@ -326,6 +326,7 @@ namespace BugNET.Projects
             ((Label)e.Item.FindControl("lblProgress")).Text = string.Format(GetLocalResourceObject("ProgressMessage").ToString(), progressValues[0], progressValues[1]);
   
             ((HtmlControl)e.Item.FindControl("ProgressBar")).Attributes.CssStyle.Add("width", string.Format("{0}%", match));
+            ((HtmlControl)e.Item.FindControl("ProgressBar")).Attributes.Add("aria-valuenow", match.ToString());
             ((HtmlControl)e.Item.FindControl("ProgressBar")).Controls.Add(new LiteralControl(string.Format("{0}%", match)));
 
             ((HyperLink)e.Item.FindControl("MilestoneLink")).NavigateUrl = string.Format(Page.ResolveUrl("~/Issues/IssueList.aspx") + "?pid={0}&m={1}", ProjectId, m.Id);

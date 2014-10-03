@@ -537,6 +537,7 @@ namespace BugNET.UserControls
             e.Row.FindControl("PrivateIssue").Visible = issue.Visibility != 0;
 
             ((HtmlControl)e.Row.FindControl("ProgressBar")).Attributes.CssStyle.Add("width", issue.Progress + "%");
+            ((HtmlControl)e.Row.FindControl("ProgressBar")).Attributes.Add("aria-valuenow", issue.Progress.ToString());
         }
 
         /// <summary>

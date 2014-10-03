@@ -330,8 +330,10 @@
             </asp:TemplateField>
             <asp:TemplateField HeaderText="<%$ Resources:SharedResources, Progress %>" Visible="false" SortExpression="IssueProgress">
                 <ItemTemplate>
-                    <div id="Progress" runat="server" style="vertical-align: middle; font-size: 8px; border: 1px solid #ccc; width: 100px; height: 17px;line-height:10px; margin: 5px;">
-                        <div id="ProgressBar" runat='server' style="text-align: center; background-color: #C4EFA1; height: 15px;line-height:15px;vertical-align: middle;"><span style="margin-left:5px;"><%# DataBinder.Eval(Container.DataItem, "Progress" )%>%</span></div>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-success" id="ProgressBar" runat="server" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                            <%# DataBinder.Eval(Container.DataItem, "Progress" )%>%
+                        </div>
                     </div>
                 </ItemTemplate>
             </asp:TemplateField>

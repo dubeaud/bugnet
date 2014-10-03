@@ -42,7 +42,7 @@
                 <div class="milestone-group-header panel-heading" data-toggle="collapse" data-target="#milestone-content-<%#DataBinder.Eval(Container.DataItem, "Id") %>">
                     <div class="milestoneProgress pull-right">
                         <div class="progress">
-                            <div class="progress-bar progress-bar-success" id="ProgressBar" runat='server' role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar progress-bar-success" id="ProgressBar" runat="server" role="progressbar"  aria-valuemin="0" aria-valuemax="100">
                             </div>
                         </div>
                         <asp:Label CssClass="pull-right" ID="lblProgress" runat="Server"></asp:Label>
