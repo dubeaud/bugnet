@@ -22,15 +22,6 @@ namespace BugNET.UserControls {
         protected global::System.Web.UI.WebControls.Panel MessageContainer;
         
         /// <summary>
-        /// CloseImage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image CloseImage;
-        
-        /// <summary>
         /// lblMessage control.
         /// </summary>
         /// <remarks>

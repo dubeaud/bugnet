@@ -48,9 +48,11 @@
         <asp:Label ID="lblFileSizeLimit" CssClass="col-md-2 control-label" runat="server" AssociatedControlID="FileSizeLimit"
             Text="<%$ Resources:FileSizeLimit %>" />
         <div class="col-md-10">
-            <asp:TextBox ID="FileSizeLimit" CssClass="form-control" runat="Server" />
+            <p class="form-control-static">
+                <asp:Label ID="FileSizeLimit" runat="Server" />
+            </p>
             <p class="help-block">
-                <asp:Localize ID="lclBytes" runat="server" Text="[(bytes)]" meta:resourcekey="lclBytes" />
+                <asp:Localize ID="lclBytes" runat="server" Text="" meta:resourcekey="lclBytes" />
             </p>
         </div>
     </div>

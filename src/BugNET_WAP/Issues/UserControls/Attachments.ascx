@@ -42,7 +42,8 @@
                 <div class="form-group">
                     <asp:Label ID="Label1" runat="server" CssClass="col-md-2 control-label" Text="File" AssociatedControlID="AspUploadFile" meta:resourcekey="FileLabel" />
                     <div class="col-md-10">
-                         <asp:FileUpload ID="AspUploadFile" runat="server" />
+                        <asp:FileUpload ID="AspUploadFile" runat="server" />
+                        <p class="help-block"><asp:Literal ID="FileSizeLimit" runat="server"></asp:Literal></p>
                     </div>
                 </div>
             <div class="form-group">

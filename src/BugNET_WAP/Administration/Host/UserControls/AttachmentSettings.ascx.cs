@@ -3,6 +3,7 @@ using BugNET.Common;
 using BugNET.BLL;
 using BugNET.UserInterfaceLayer;
 using System.Web.UI.WebControls;
+using System.Web.Configuration;
 
 namespace BugNET.Administration.Host.UserControls
 {
@@ -25,10 +26,13 @@ namespace BugNET.Administration.Host.UserControls
         /// </summary>
         public bool Update()
         {
+            System.Configuration.Configuration config = WebConfigurationManager.OpenWebConfiguration("~");
+            HttpRuntimeSection section = config.GetSection("system.web/httpRuntime") as HttpRuntimeSection;
+
             HostSettingManager.UpdateHostSetting(HostSettingNames.AllowAttachments, AllowAttachments.Checked.ToString());
             HostSettingManager.UpdateHostSetting(HostSettingNames.AttachmentStorageType, AttachmentStorageType.SelectedValue);
             HostSettingManager.UpdateHostSetting(HostSettingNames.AllowedFileExtensions, AllowedFileExtentions.Text.Trim());
-            HostSettingManager.UpdateHostSetting(HostSettingNames.FileSizeLimit, FileSizeLimit.Text.Trim());
+            HostSettingManager.UpdateHostSetting(HostSettingNames.FileSizeLimit, section.MaxRequestLength.ToString());
             HostSettingManager.UpdateHostSetting(HostSettingNames.AttachmentUploadPath, txtUploadPath.Text.Trim().EndsWith(@"\") ? txtUploadPath.Text.Trim() : txtUploadPath.Text.Trim() + @"\");
             return true;
         }
@@ -47,7 +51,12 @@ namespace BugNET.Administration.Host.UserControls
             }
 
             AllowedFileExtentions.Text = HostSettingManager.Get(HostSettingNames.AllowedFileExtensions);
-            FileSizeLimit.Text = HostSettingManager.Get(HostSettingNames.FileSizeLimit);
+
+            System.Configuration.Configuration config = WebConfigurationManager.OpenWebConfiguration("~");
+            HttpRuntimeSection section = config.GetSection("system.web/httpRuntime") as HttpRuntimeSection;
+            double maxFileSize = Math.Round(section.MaxRequestLength / 1024.0, 1);
+
+            FileSizeLimit.Text = string.Format("{0} MB", maxFileSize.ToString());
             txtUploadPath.Text = HostSettingManager.Get(HostSettingNames.AttachmentUploadPath);
         }
 

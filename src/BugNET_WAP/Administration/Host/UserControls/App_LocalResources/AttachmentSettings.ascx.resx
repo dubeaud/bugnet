@@ -136,7 +136,7 @@
     <value>File Size Limit</value>
   </data>
   <data name="lclBytes.Text" xml:space="preserve">
-    <value>bytes</value>
+    <value>Set file size in the system.web/httpRuntime section of the web.config</value>
   </data>
   <data name="lclSeperation.Text" xml:space="preserve">
     <value>separated by semi colon</value>
