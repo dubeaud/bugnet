@@ -17,11 +17,6 @@
 <p>
     <asp:Label ID="DescriptionLabel" runat="server" meta:resourcekey="DescriptionLabel" />
 </p>
-<%--<div class="row">
-    <div class="col-md-offset-7 col-md-2 text-center">
-        <strong>Visibility</strong>
-    </div>
-</div>--%>
 <table class="table">
     <thead>
         <tr>
