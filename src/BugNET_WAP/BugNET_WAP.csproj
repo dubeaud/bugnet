@@ -1229,6 +1229,7 @@
     <Content Include="Administration\Projects\UserControls\ProjectMilestones.ascx" />
     <Content Include="Administration\Users\EditUser.aspx" />
     <Content Include="Administration\Users\UserList.aspx" />
+    <Content Include="Content\bootstrap-dialog.css" />
     <Content Include="Content\bootstrap-dialog.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -1427,6 +1428,7 @@
     <Content Include="Providers\DataProviders\SqlDataProvider\BugNet.Schema.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\Latest.SqlDataProvider.sql" />
     <Content Include="Scripts\attrchange.js" />
+    <Content Include="Scripts\bootstrap-dialog.js" />
     <Content Include="Scripts\bootstrap-dialog.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
