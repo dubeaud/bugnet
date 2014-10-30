@@ -1,6 +1,6 @@
 ﻿body {
     font-family: 'Open Sans', sans-serif;
-    margin: 0px;
+    margin: 0;
     font-size: 12px;
     line-height: 1.42857143;
     padding-bottom: 20px;
@@ -140,37 +140,37 @@ input[type="select"] {
             font-size: 0.75em;
         }
 
-        .table thead > tr > th > a.DESC:after {
+        .table thead > tr > th > .DESC:after {
             content: "\f0de";
         }
 
-        .table thead > tr > th > a.ASC:after {
+        .table thead > tr > th > .ASC:after {
             content: "\f0dd";
         }
 
 /* Summary Page */
 /* ----------------------------------------------- */
-table.summary {
+.summary {
     border-collapse: collapse;
     border-spacing: 3px;
     width: 100%;
     margin-bottom: 10px;
 }
 
-td.count-column {
+.count-column {
     width: 15px;
     text-align: right;
     padding: 3px;
     white-space: nowrap;
 }
 
-td.item-column {
+.item-column {
     padding: 3px;
     text-align: left;
     width: 90%;
 }
 
-td.image-column {
+.image-column {
     padding: 3px;
     width: 15px;
 }
@@ -213,10 +213,6 @@ td.image-column {
     vertical-align: top;
 }
 
-.calendar-day-header {
-    /*background-color:#F2F3E5;*/
-}
-
 .calIssuePastDue a {
     font-family: Arial, Verdana;
     font-size: 0.8em;
@@ -226,15 +222,15 @@ td.image-column {
 .calIssuePastDue {
     margin: 3px;
     background-color: #FF7777;
+     -moz-border-radius: 0.25em 0.25em;
     border-radius: 0.25em 0.25em;
-    -moz-border-radius: 0.25em 0.25em;
     color: #fff;
     padding: 3px;
 }
 
 .calIssue {
-    border-radius: 0.25em 0.25em;
     -moz-border-radius: 0.25em 0.25em;
+    border-radius: 0.25em 0.25em;
     background-color: #8888BB;
     margin: 3px;
     color: #fff;
@@ -255,16 +251,16 @@ td.image-column {
 }
 
 span.radio {
-    padding: 0px;
+    padding: 0;
 }
 
     span.radio > input[type="radio"] {
-        margin: 8px 0px 7px 0px;
+        margin: 8px 0 7px 0;
     }
 
     span.radio > label {
         margin-right: 25px;
-        padding: 5px 5px 0px 20px;
+        padding: 5px 5px 0 20px;
         white-space: nowrap;
     }
 
@@ -275,7 +271,7 @@ span.radio {
 .checkbox-list tr td label {
     font-weight: normal;
     margin-right: 5px;
-    padding: 0px 5px 0px 10px;
+    padding: 0 5px 0 10px;
 }
 
 ul.permissions {
@@ -290,15 +286,14 @@ ul.permissions {
     }
 
     ul.permissions > li > input[type="checkbox"] {
-        margin: 6px 10px 7px 0px;
+        margin: 6px 10px 7px 0;
     }
 
 .btn-signup {
     border-radius: 0;
-    font-weight: bold;
     text-align: left;
     margin: 0 0 10px;
-    padding-left: 0px;
+    padding-left: 0;
     width: 250px;
     border: 0;
     box-shadow: none;
