@@ -689,31 +689,61 @@ INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('
 INSERT INTO [dbo].[BugNet_HostSettings] ([SettingName], [SettingValue]) VALUES('GoogleClientSecret', '')
 GO
 
-ALTER PROCEDURE [dbo].[BugNet_ProjectCategories_CreateNewCategory]
-  @ProjectId int,
-  @CategoryName nvarchar(100),
-  @ParentCategoryId int
-AS
-IF NOT EXISTS(SELECT CategoryId  FROM BugNet_ProjectCategories WHERE LOWER(CategoryName)= LOWER(@CategoryName) AND ProjectId = @ProjectId)
-BEGIN
-	INSERT BugNet_ProjectCategories
-	(
-		ProjectId,
-		CategoryName,
-		ParentCategoryId
-	)
-	VALUES
-	(
-		@ProjectId,
-		@CategoryName,
-		@ParentCategoryId
-	)
-	RETURN SCOPE_IDENTITY()
-END
-RETURN -1
-GO
+PRINT N'Dropping [dbo].[BugNet_Languages].[IX_BugNet_Languages]...';
 
+
+GO
+DROP INDEX [IX_BugNet_Languages]
+    ON [dbo].[BugNet_Languages];
+
+
+GO
+PRINT N'Dropping [dbo].[BugNet_RelatedIssues].[IX_BugNet_RelatedIssues]...';
+
+
+GO
+DROP INDEX [IX_BugNet_RelatedIssues]
+    ON [dbo].[BugNet_RelatedIssues];
+
+
+GO
+PRINT N'Dropping on [dbo].[BugNet_UserProfiles].[ReceiveEmailNotifications]...';
+
+
+GO
+ALTER TABLE [dbo].[BugNet_UserProfiles] DROP CONSTRAINT [DF__BugNet_Us__Recei__56D3D912];
+
+
+GO
+PRINT N'Dropping [dbo].[DF_Bugnet_DefaultValuesVisibility_AffectedMilestoneVisivility]...';
+
+
+GO
 ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] DROP CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_AffectedMilestoneVisivility];
+
+
+GO
+PRINT N'Dropping on [dbo].[BugNet_ProjectCategories].[Disabled]...';
+
+
+GO
+ALTER TABLE [dbo].[BugNet_ProjectCategories] DROP CONSTRAINT [DF__BugNet_Pr__Disab__1ABEEF0B];
+
+
+GO
+PRINT N'Dropping on [dbo].[BugNet_ProjectMilestones].[MilestoneCompleted]...';
+
+
+GO
+ALTER TABLE [dbo].[BugNet_ProjectMilestones] DROP CONSTRAINT [DF__BugNet_Pr__Miles__131DCD43];
+
+
+GO
+PRINT N'Dropping on [dbo].[BugNet_UserProjects].[SelectedIssueColumns]...';
+
+
+GO
+ALTER TABLE [dbo].[BugNet_UserProjects] DROP CONSTRAINT [DF__BugNet_Us__Selec__2DD1C37F];
 
 
 GO
@@ -722,19 +752,75 @@ PRINT N'Altering [dbo].[BugNet_DefaultValuesVisibility]...';
 
 GO
 ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility]
-    ADD [StatusEditVisibility]            BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_StatusEditVisibility] DEFAULT (1) NOT NULL,
-        [OwnedByEditVisibility]           BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_OwnedByEditVisibility] DEFAULT (1) NOT NULL,
-        [PriorityEditVisibility]          BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_PriorityEditVisibility] DEFAULT (1) NOT NULL,
-        [AssignedToEditVisibility]        BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_AssignedToEditVisibility] DEFAULT (1) NOT NULL,
-        [PrivateEditVisibility]           BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_PrivateEditVisibility] DEFAULT (1) NOT NULL,
-        [CategoryEditVisibility]          BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_CategoryEditVisibility] DEFAULT (1) NOT NULL,
-        [DueDateEditVisibility]           BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_DueDateEditVisibility] DEFAULT (1) NOT NULL,
-        [TypeEditVisibility]              BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_TypeEditVisibility] DEFAULT (1) NOT NULL,
-        [PercentCompleteEditVisibility]   BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_PercentCompleteEditVisibility] DEFAULT (1) NOT NULL,
-        [MilestoneEditVisibility]         BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_MilestoneEditVisibility] DEFAULT (1) NOT NULL,
-        [EstimationEditVisibility]        BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_EstimationEditVisibility] DEFAULT (1) NOT NULL,
-        [ResolutionEditVisibility]        BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_ResolutionEditVisibility] DEFAULT (1) NOT NULL,
-        [AffectedMilestoneEditVisibility] BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_AffectedMilestoneEditVisibility] DEFAULT (1) NOT NULL;
+    ADD [StatusEditVisibility]            BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_StatusEditVisibility] DEFAULT ((1)) NOT NULL,
+        [OwnedByEditVisibility]           BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_OwnedByEditVisibility] DEFAULT ((1)) NOT NULL,
+        [PriorityEditVisibility]          BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_PriorityEditVisibility] DEFAULT ((1)) NOT NULL,
+        [AssignedToEditVisibility]        BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_AssignedToEditVisibility] DEFAULT ((1)) NOT NULL,
+        [PrivateEditVisibility]           BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_PrivateEditVisibility] DEFAULT ((1)) NOT NULL,
+        [CategoryEditVisibility]          BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_CategoryEditVisibility] DEFAULT ((1)) NOT NULL,
+        [DueDateEditVisibility]           BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_DueDateEditVisibility] DEFAULT ((1)) NOT NULL,
+        [TypeEditVisibility]              BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_TypeEditVisibility] DEFAULT ((1)) NOT NULL,
+        [PercentCompleteEditVisibility]   BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_PercentCompleteEditVisibility] DEFAULT ((1)) NOT NULL,
+        [MilestoneEditVisibility]         BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_MilestoneEditVisibility] DEFAULT ((1)) NOT NULL,
+        [EstimationEditVisibility]        BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_EstimationEditVisibility] DEFAULT ((1)) NOT NULL,
+        [ResolutionEditVisibility]        BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_ResolutionEditVisibility] DEFAULT ((1)) NOT NULL,
+        [AffectedMilestoneEditVisibility] BIT CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_AffectedMilestoneEditVisibility] DEFAULT ((1)) NOT NULL;
+
+
+GO
+PRINT N'Starting rebuilding table [dbo].[BugNet_UserProfiles]...';
+
+
+GO
+BEGIN TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+SET XACT_ABORT ON;
+
+CREATE TABLE [dbo].[tmp_ms_xx_BugNet_UserProfiles] (
+    [UserName]                                NVARCHAR (50)  NOT NULL,
+    [FirstName]                               NVARCHAR (100) NULL,
+    [LastName]                                NVARCHAR (100) NULL,
+    [DisplayName]                             NVARCHAR (100) NULL,
+    [IssuesPageSize]                          INT            NULL,
+    [PreferredLocale]                         NVARCHAR (50)  NULL,
+    [LastUpdate]                              DATETIME       NOT NULL,
+    [SelectedIssueColumns]                    NVARCHAR (50)  NULL,
+    [ReceiveEmailNotifications]               BIT            CONSTRAINT [DF_BugNet_UserProfiles_RecieveEmailNotifications] DEFAULT ((1)) NOT NULL,
+    [PasswordVerificationToken]               NVARCHAR (128) NULL,
+    [PasswordVerificationTokenExpirationDate] DATETIME       NULL,
+    CONSTRAINT [tmp_ms_xx_constraint_PK_BugNet_UserProfiles] PRIMARY KEY CLUSTERED ([UserName] ASC)
+);
+
+IF EXISTS (SELECT TOP 1 1 
+           FROM   [dbo].[BugNet_UserProfiles])
+    BEGIN
+        INSERT INTO [dbo].[tmp_ms_xx_BugNet_UserProfiles] ([UserName], [FirstName], [LastName], [DisplayName], [IssuesPageSize], [PreferredLocale], [LastUpdate], [SelectedIssueColumns], [ReceiveEmailNotifications], [PasswordVerificationToken], [PasswordVerificationTokenExpirationDate])
+        SELECT   [UserName],
+                 [FirstName],
+                 [LastName],
+                 [DisplayName],
+                 [IssuesPageSize],
+                 [PreferredLocale],
+                 [LastUpdate],
+                 [SelectedIssueColumns],
+                 [ReceiveEmailNotifications],
+                 [PasswordVerificationToken],
+                 [PasswordVerificationTokenExpirationDate]
+        FROM     [dbo].[BugNet_UserProfiles]
+        ORDER BY [UserName] ASC;
+    END
+
+DROP TABLE [dbo].[BugNet_UserProfiles];
+
+EXECUTE sp_rename N'[dbo].[tmp_ms_xx_BugNet_UserProfiles]', N'BugNet_UserProfiles';
+
+EXECUTE sp_rename N'[dbo].[tmp_ms_xx_constraint_PK_BugNet_UserProfiles]', N'PK_BugNet_UserProfiles', N'OBJECT';
+
+COMMIT TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
 
 
 GO
@@ -744,6 +830,33 @@ PRINT N'Creating [dbo].[DF_Bugnet_DefaultValuesVisibility_AffectedMilestoneVisib
 GO
 ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility]
     ADD CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_AffectedMilestoneVisibility] DEFAULT ((1)) FOR [AffectedMilestoneVisibility];
+
+
+GO
+PRINT N'Creating [dbo].[DF_BugNet_ProjectCategories_Disabled]...';
+
+
+GO
+ALTER TABLE [dbo].[BugNet_ProjectCategories]
+    ADD CONSTRAINT [DF_BugNet_ProjectCategories_Disabled] DEFAULT ((0)) FOR [Disabled];
+
+
+GO
+PRINT N'Creating [dbo].[DF_BugNet_ProjectMilestones_Completed]...';
+
+
+GO
+ALTER TABLE [dbo].[BugNet_ProjectMilestones]
+    ADD CONSTRAINT [DF_BugNet_ProjectMilestones_Completed] DEFAULT ((0)) FOR [MilestoneCompleted];
+
+
+GO
+PRINT N'Creating [dbo].[DF__BugNet_Us__Selec__7E42ABEE]...';
+
+
+GO
+ALTER TABLE [dbo].[BugNet_UserProjects]
+    ADD CONSTRAINT [DF__BugNet_Us__Selec__7E42ABEE] DEFAULT ((0)) FOR [SelectedIssueColumns];
 
 
 GO
@@ -782,94 +895,399 @@ FROM         dbo.BugNet_DefaultValues LEFT OUTER JOIN
                       dbo.BugNet_UserProfiles AS OwnerUsersProfile ON OwnerUsers.UserName = OwnerUsersProfile.UserName LEFT OUTER JOIN
                       dbo.BugNet_DefaultValuesVisibility ON dbo.BugNet_DefaultValues.ProjectId = dbo.BugNet_DefaultValuesVisibility.ProjectId
 GO
-PRINT N'Altering [dbo].[BugNet_ProjectCustomField_DeleteCustomField]...';
+PRINT N'Refreshing [dbo].[BugNet_GetIssuesByProjectIdAndCustomFieldView]...';
 
 
 GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_GetIssuesByProjectIdAndCustomFieldView]';
 
-ALTER PROCEDURE [dbo].[BugNet_ProjectCustomField_DeleteCustomField]
-	@CustomFieldIdToDelete INT
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_IssuesView]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_IssuesView]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_ProjectsView]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_ProjectsView]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_UserView]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_UserView]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_IssueAssignedToCountView]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_IssueAssignedToCountView]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_IssueCommentsView]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_IssueCommentsView]';
+
+
+GO
+PRINT N'Altering [dbo].[BugNet_DefaultValues_Set]...';
+
+
+GO
+ALTER PROCEDURE [dbo].[BugNet_DefaultValues_Set]
+	@Type nvarchar(50),
+	@ProjectId Int,
+	@StatusId Int,
+	@IssueOwnerUserName NVarChar(255),
+	@IssuePriorityId Int,
+	@IssueAssignedUserName NVarChar(255),
+	@IssueVisibility int,
+	@IssueCategoryId Int,
+	@IssueAffectedMilestoneId Int,
+	@IssueDueDate int,
+	@IssueProgress Int,
+	@IssueMilestoneId Int,
+	@IssueEstimation decimal(5,2),
+	@IssueResolutionId Int,
+	@StatusVisibility		 Bit,
+	@OwnedByVisibility		 Bit,
+	@PriorityVisibility		 Bit,
+	@AssignedToVisibility	 Bit,
+	@PrivateVisibility		 Bit,
+	@CategoryVisibility		 Bit,
+	@DueDateVisibility		 Bit,
+	@TypeVisibility			 Bit,
+	@PercentCompleteVisibility Bit,
+	@MilestoneVisibility	Bit, 
+	@EstimationVisibility	 Bit,
+	@ResolutionVisibility	 Bit,
+	@AffectedMilestoneVisibility Bit,
+	@StatusEditVisibility		 Bit,
+	@OwnedByEditVisibility		 Bit,
+	@PriorityEditVisibility		 Bit,
+	@AssignedToEditVisibility	 Bit,
+	@PrivateEditVisibility		 Bit,
+	@CategoryEditVisibility		 Bit,
+	@DueDateEditVisibility		 Bit,
+	@TypeEditVisibility			 Bit,
+	@PercentCompleteEditVisibility Bit,
+	@MilestoneEditVisibility	Bit, 
+	@EstimationEditVisibility	 Bit,
+	@ResolutionEditVisibility	 Bit,
+	@AffectedMilestoneEditVisibility Bit,
+	@OwnedByNotify Bit,
+	@AssignedToNotify Bit
+AS
+DECLARE @IssueAssignedUserId	UNIQUEIDENTIFIER
+DECLARE @IssueOwnerUserId		UNIQUEIDENTIFIER
+
+SELECT @IssueOwnerUserId = UserId FROM Users WHERE UserName = @IssueOwnerUserName
+SELECT @IssueAssignedUserId = UserId FROM Users WHERE UserName = @IssueAssignedUserName
+BEGIN
+	BEGIN TRAN
+		DECLARE @defVisExists int
+		SELECT @defVisExists = COUNT(*) 
+		FROM BugNet_DefaultValuesVisibility
+			WHERE BugNet_DefaultValuesVisibility.ProjectId = @ProjectId
+				IF(@defVisExists>0)
+					BEGIN
+						UPDATE BugNet_DefaultValuesVisibility
+						SET 								
+							StatusVisibility = @StatusVisibility,			
+							OwnedByVisibility = @OwnedByVisibility,				
+							PriorityVisibility = @PriorityVisibility,			
+							AssignedToVisibility = @AssignedToVisibility,			
+							PrivateVisibility= @PrivateVisibility,			
+							CategoryVisibility= @CategoryVisibility,			
+							DueDateVisibility= @DueDateVisibility,				
+							TypeVisibility	= @TypeVisibility,				
+							PercentCompleteVisibility = @PercentCompleteVisibility,		
+							MilestoneVisibility	= @MilestoneVisibility,			
+							EstimationVisibility = @EstimationVisibility,			
+							ResolutionVisibility = @ResolutionVisibility,
+							AffectedMilestoneVisibility = @AffectedMilestoneVisibility,
+							StatusEditVisibility = @StatusEditVisibility,			
+							OwnedByEditVisibility = @OwnedByEditVisibility,				
+							PriorityEditVisibility = @PriorityEditVisibility,			
+							AssignedToEditVisibility = @AssignedToEditVisibility,			
+							PrivateEditVisibility= @PrivateEditVisibility,			
+							CategoryEditVisibility= @CategoryEditVisibility,			
+							DueDateEditVisibility= @DueDateEditVisibility,				
+							TypeEditVisibility	= @TypeEditVisibility,				
+							PercentCompleteEditVisibility = @PercentCompleteEditVisibility,		
+							MilestoneEditVisibility	= @MilestoneEditVisibility,			
+							EstimationEditVisibility = @EstimationEditVisibility,			
+							ResolutionEditVisibility = @ResolutionEditVisibility,
+							AffectedMilestoneEditVisibility = @AffectedMilestoneEditVisibility	
+					WHERE ProjectId = @ProjectId							
+					END
+				ELSE
+					BEGIN
+					INSERT INTO BugNet_DefaultValuesVisibility
+					VALUES 
+					(
+						@ProjectId				 ,  
+						@StatusVisibility		 ,
+						@OwnedByVisibility		 ,
+						@PriorityVisibility		 ,
+						@AssignedToVisibility	 ,
+						@PrivateVisibility		 ,
+						@CategoryVisibility		 ,
+						@DueDateVisibility		 ,
+						@TypeVisibility			 ,
+						@PercentCompleteVisibility,
+						@MilestoneVisibility	,	 
+						@EstimationVisibility	 ,
+						@ResolutionVisibility	,
+						@AffectedMilestoneVisibility,
+						@StatusEditVisibility		 ,
+						@OwnedByEditVisibility		 ,
+						@PriorityEditVisibility		 ,
+						@AssignedToEditVisibility	 ,
+						@PrivateEditVisibility		 ,
+						@CategoryEditVisibility		 ,
+						@DueDateEditVisibility		 ,
+						@TypeEditVisibility			 ,
+						@PercentCompleteEditVisibility,
+						@MilestoneEditVisibility	,	 
+						@EstimationEditVisibility	 ,
+						@ResolutionEditVisibility	,
+						@AffectedMilestoneEditVisibility	  					
+					)
+					END
+
+
+		DECLARE @defExists int
+		SELECT @defExists = COUNT(*) 
+			FROM BugNet_DefaultValues
+			WHERE BugNet_DefaultValues.ProjectId = @ProjectId
+		
+		IF (@defExists > 0)
+		BEGIN
+			UPDATE BugNet_DefaultValues 
+				SET DefaultType = @Type,
+					StatusId = @StatusId,
+					IssueOwnerUserId = @IssueOwnerUserId,
+					IssuePriorityId = @IssuePriorityId,
+					IssueAffectedMilestoneId = @IssueAffectedMilestoneId,
+					IssueAssignedUserId = @IssueAssignedUserId,
+					IssueVisibility = @IssueVisibility,
+					IssueCategoryId = @IssueCategoryId,
+					IssueDueDate = @IssueDueDate,
+					IssueProgress = @IssueProgress,
+					IssueMilestoneId = @IssueMilestoneId,
+					IssueEstimation = @IssueEstimation,
+					IssueResolutionId = @IssueResolutionId,
+					OwnedByNotify = @OwnedByNotify,
+					AssignedToNotify = @AssignedToNotify
+				WHERE ProjectId = @ProjectId
+		END
+		ELSE
+		BEGIN
+			INSERT INTO BugNet_DefaultValues 
+				VALUES (
+					@ProjectId,
+					@Type,
+					@StatusId,
+					@IssueOwnerUserId,
+					@IssuePriorityId,
+					@IssueAffectedMilestoneId,
+					@IssueAssignedUserId,
+					@IssueVisibility,
+					@IssueCategoryId,
+					@IssueDueDate,
+					@IssueProgress,
+					@IssueMilestoneId,
+					@IssueEstimation,
+					@IssueResolutionId,
+					@OwnedByNotify,
+					@AssignedToNotify 
+				)
+		END
+	COMMIT TRAN
+END
+GO
+PRINT N'Altering [dbo].[BugNet_User_GetUsersByProjectId]...';
+
+
+GO
+ALTER PROCEDURE [dbo].[BugNet_User_GetUsersByProjectId]
+	@ProjectId Int,
+	@ExcludeReadonlyUsers bit
+AS
+SELECT DISTINCT U.UserId, U.UserName, FirstName, LastName, DisplayName FROM 
+	Users U
+JOIN BugNet_UserProjects
+	ON U.UserId = BugNet_UserProjects.UserId
+JOIN BugNet_UserProfiles
+	ON U.UserName = BugNet_UserProfiles.UserName
+JOIN  Memberships M 
+	ON U.UserId = M.UserId
+LEFT JOIN BugNet_UserRoles UR
+	ON U.UserId = UR.UserId 
+LEFT JOIN BugNet_Roles R
+	ON UR.RoleId = R.RoleId AND R.ProjectId = @ProjectId
+WHERE
+	BugNet_UserProjects.ProjectId = @ProjectId 
+	AND M.IsApproved = 1
+	AND (@ExcludeReadonlyUsers = 0 OR @ExcludeReadonlyUsers = 1 AND R.RoleName != 'Read Only')
+ORDER BY DisplayName ASC
+GO
+PRINT N'Altering [dbo].[BugNet_ProjectCategories_CreateNewCategory]...';
+
+
+GO
+ALTER PROCEDURE [dbo].[BugNet_ProjectCategories_CreateNewCategory]
+  @ProjectId int,
+  @CategoryName nvarchar(100),
+  @ParentCategoryId int
+AS
+IF NOT EXISTS(SELECT CategoryId  FROM BugNet_ProjectCategories WHERE LOWER(CategoryName)= LOWER(@CategoryName) AND ProjectId = @ProjectId)
+BEGIN
+	INSERT BugNet_ProjectCategories
+	(
+		ProjectId,
+		CategoryName,
+		ParentCategoryId
+	)
+	VALUES
+	(
+		@ProjectId,
+		@CategoryName,
+		@ParentCategoryId
+	)
+	RETURN SCOPE_IDENTITY()
+END
+RETURN -1
+GO
+PRINT N'Altering [dbo].[BugNet_ProjectIssueTypes_CanDeleteIssueType]...';
+
+
+GO
+ALTER PROCEDURE [dbo].[BugNet_ProjectIssueTypes_CanDeleteIssueType]
+	@IssueTypeId INT
 AS
 
-SET XACT_ABORT ON
+SET NOCOUNT ON
 
-BEGIN TRAN
-
-	DELETE
-	FROM BugNet_QueryClauses
-	WHERE CustomFieldId = @CustomFieldIdToDelete
+DECLARE
+	@ProjectId INT,
+	@Count INT
 	
-	DELETE 
-	FROM BugNet_ProjectCustomFieldValues 
-	WHERE CustomFieldId = @CustomFieldIdToDelete
-	
-	DELETE 
-	FROM BugNet_ProjectCustomFields 
-	WHERE CustomFieldId = @CustomFieldIdToDelete
-COMMIT
-GO
-PRINT N'Altering [dbo].[BugNet_Query_GetSavedQuery]...';
+SET @ProjectId = (SELECT ProjectId FROM BugNet_ProjectIssueTypes WHERE IssueTypeId = @IssueTypeId)
 
-
-GO
-
-ALTER PROCEDURE [dbo].[BugNet_Query_GetSavedQuery] 
-  @QueryId INT
-AS
-
-SELECT 
-	BooleanOperator,
-	FieldName,
-	ComparisonOperator,
-	FieldValue,
-	DataType,
-	CustomFieldId
-FROM 
-	BugNet_QueryClauses
-WHERE 
-	QueryId = @QueryId;
-GO
-PRINT N'Altering [dbo].[BugNet_Query_SaveQueryClause]...';
-
-
-GO
-
-ALTER PROCEDURE [dbo].[BugNet_Query_SaveQueryClause] 
-  @QueryId INT,
-  @BooleanOperator NVarChar(50),
-  @FieldName NVarChar(50),
-  @ComparisonOperator NVarChar(50),
-  @FieldValue NVarChar(50),
-  @DataType INT,
-  @CustomFieldId INT = NULL
-AS
-INSERT BugNet_QueryClauses
+SET @Count = 
 (
-  QueryId,
-  BooleanOperator,
-  FieldName,
-  ComparisonOperator,
-  FieldValue,
-  DataType, 
-  CustomFieldId
-) 
-VALUES (
-  @QueryId,
-  @BooleanOperator,
-  @FieldName,
-  @ComparisonOperator,
-  @FieldValue,
-  @DataType,
-  @CustomFieldId
+	SELECT COUNT(*)
+	FROM BugNet_Issues
+	WHERE (IssueTypeId = @IssueTypeId)
+	AND ProjectId = @ProjectId
 )
+
+IF(@Count = 0)
+	RETURN 1
+ELSE
+	RETURN 0
 GO
-PRINT N'Refreshing [dbo].[BugNet_DefaultValues_Set]...';
+PRINT N'Altering [dbo].[BugNet_ProjectPriorities_CanDeletePriority]...';
 
 
 GO
-EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_DefaultValues_Set]';
+ALTER PROCEDURE [dbo].[BugNet_ProjectPriorities_CanDeletePriority]
+	@PriorityId INT
+AS
+
+SET NOCOUNT ON
+
+DECLARE
+	@ProjectId INT,
+	@Count INT
+	
+SET @ProjectId = (SELECT ProjectId FROM BugNet_ProjectPriorities WHERE PriorityId = @PriorityId)
+
+SET @Count = 
+(
+	SELECT COUNT(*)
+	FROM BugNet_Issues
+	WHERE (IssuePriorityId = @PriorityId)
+	AND ProjectId = @ProjectId
+)
+
+IF(@Count = 0)
+	RETURN 1
+ELSE
+	RETURN 0
+GO
+PRINT N'Altering [dbo].[BugNet_ProjectResolutions_CanDeleteResolution]...';
 
 
+GO
+ALTER PROCEDURE [dbo].[BugNet_ProjectResolutions_CanDeleteResolution]
+	@ResolutionId INT
+AS
+
+SET NOCOUNT ON
+
+DECLARE
+	@ProjectId INT,
+	@Count INT
+	
+SET @ProjectId = (SELECT ProjectId FROM BugNet_ProjectResolutions WHERE ResolutionId = @ResolutionId)
+
+SET @Count = 
+(
+	SELECT COUNT(*)
+	FROM BugNet_Issues
+	WHERE (IssueResolutionId = @ResolutionId)
+	AND ProjectId = @ProjectId
+)
+
+IF(@Count = 0)
+	RETURN 1
+ELSE
+	RETURN 0
+GO
+PRINT N'Altering [dbo].[BugNet_ProjectStatus_CanDeleteStatus]...';
+
+
+GO
+ALTER PROCEDURE [dbo].[BugNet_ProjectStatus_CanDeleteStatus]
+	@StatusId INT
+AS
+
+SET NOCOUNT ON
+
+DECLARE
+	@ProjectId INT,
+	@Count INT
+	
+SET @ProjectId = (SELECT ProjectId FROM BugNet_ProjectStatus WHERE StatusId = @StatusId)
+
+SET @Count = 
+(
+	SELECT COUNT(*)
+	FROM BugNet_Issues
+	WHERE (IssueStatusId = @StatusId)
+	AND ProjectId = @ProjectId
+)
+
+IF(@Count = 0)
+	RETURN 1
+ELSE
+	RETURN 0
 GO
 PRINT N'Refreshing [dbo].[BugNet_DefaultValues_GetByProjectId]...';
 
@@ -879,4 +1297,327 @@ EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_DefaultValues_GetByProjectId]';
 
 
 GO
+PRINT N'Refreshing [dbo].[BugNet_IssueAttachment_GetIssueAttachmentById]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_IssueAttachment_GetIssueAttachmentById]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_IssueAttachment_GetIssueAttachmentsByIssueId]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_IssueAttachment_GetIssueAttachmentsByIssueId]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_IssueComment_GetIssueCommentById]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_IssueComment_GetIssueCommentById]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_IssueComment_GetIssueCommentsByIssueId]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_IssueComment_GetIssueCommentsByIssueId]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_IssueHistory_GetIssueHistoryByIssueId]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_IssueHistory_GetIssueHistoryByIssueId]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_IssueNotification_GetIssueNotificationsByIssueId]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_IssueNotification_GetIssueNotificationsByIssueId]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_IssueWorkReport_GetIssueWorkReportsByIssueId]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_IssueWorkReport_GetIssueWorkReportsByIssueId]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_Project_GetMemberRolesByProjectId]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_Project_GetMemberRolesByProjectId]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_ProjectMailbox_GetMailboxById]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_ProjectMailbox_GetMailboxById]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_ProjectMailbox_GetMailboxByProjectId]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_ProjectMailbox_GetMailboxByProjectId]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_ProjectMailbox_GetProjectByMailbox]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_ProjectMailbox_GetProjectByMailbox]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_ProjectNotification_GetProjectNotificationsByProjectId]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_ProjectNotification_GetProjectNotificationsByProjectId]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_ProjectNotification_GetProjectNotificationsByUsername]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_ProjectNotification_GetProjectNotificationsByUsername]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_Query_GetQueriesByUserName]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_Query_GetQueriesByUserName]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_User_GetUserNameByPasswordResetToken]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_User_GetUserNameByPasswordResetToken]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_Issue_GetIssueById]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_Issue_GetIssueById]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_Issue_GetIssueCategoryCountByProject]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_Issue_GetIssueCategoryCountByProject]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_Issue_GetIssueMilestoneCountByProject]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_Issue_GetIssueMilestoneCountByProject]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_Issue_GetIssuePriorityCountByProject]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_Issue_GetIssuePriorityCountByProject]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_Issue_GetIssuesByAssignedUserName]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_Issue_GetIssuesByAssignedUserName]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_Issue_GetIssuesByCreatorUserName]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_Issue_GetIssuesByCreatorUserName]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_Issue_GetIssuesByOwnerUserName]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_Issue_GetIssuesByOwnerUserName]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_Issue_GetIssuesByProjectId]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_Issue_GetIssuesByProjectId]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_Issue_GetIssuesByRelevancy]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_Issue_GetIssuesByRelevancy]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_Issue_GetIssueStatusCountByProject]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_Issue_GetIssueStatusCountByProject]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_Issue_GetIssueTypeCountByProject]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_Issue_GetIssueTypeCountByProject]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_Issue_GetMonitoredIssuesByUserName]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_Issue_GetMonitoredIssuesByUserName]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_Issue_GetOpenIssues]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_Issue_GetOpenIssues]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_IssueAttachment_ValidateDownload]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_IssueAttachment_ValidateDownload]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_Project_GetRoadMapProgress]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_Project_GetRoadMapProgress]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_ProjectCategories_GetCategoriesByProjectId]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_ProjectCategories_GetCategoriesByProjectId]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_ProjectCategories_GetCategoryById]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_ProjectCategories_GetCategoryById]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_ProjectCategories_GetChildCategoriesByCategoryId]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_ProjectCategories_GetChildCategoriesByCategoryId]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_ProjectCategories_GetRootCategoriesByProjectId]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_ProjectCategories_GetRootCategoriesByProjectId]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_Project_GetAllProjects]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_Project_GetAllProjects]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_Project_GetProjectByCode]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_Project_GetProjectByCode]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_Project_GetProjectById]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_Project_GetProjectById]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_Project_GetProjectsByMemberUsername]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_Project_GetProjectsByMemberUsername]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_Project_GetPublicProjects]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_Project_GetPublicProjects]';
+
+
+GO
+PRINT N'Refreshing [dbo].[BugNet_Issue_GetIssueUserCountByProject]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'[dbo].[BugNet_Issue_GetIssueUserCountByProject]';
+
+
+GO
 PRINT N'Update complete.';
+
+
+GO

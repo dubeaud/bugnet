@@ -1,4 +1,4 @@
-/****** Object:  Table [dbo].[Applications]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[Applications]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -14,7 +14,7 @@ PRIMARY KEY CLUSTERED
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_ApplicationLog]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_ApplicationLog]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -35,7 +35,7 @@ CREATE TABLE [dbo].[BugNet_ApplicationLog](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_DefaultValues]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_DefaultValues]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -64,7 +64,7 @@ CREATE TABLE [dbo].[BugNet_DefaultValues](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_DefaultValuesVisibility]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_DefaultValuesVisibility]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -84,6 +84,19 @@ CREATE TABLE [dbo].[BugNet_DefaultValuesVisibility](
 	[EstimationVisibility] [bit] NOT NULL,
 	[ResolutionVisibility] [bit] NOT NULL,
 	[AffectedMilestoneVisibility] [bit] NOT NULL,
+	[StatusEditVisibility] [bit] NOT NULL,
+	[OwnedByEditVisibility] [bit] NOT NULL,
+	[PriorityEditVisibility] [bit] NOT NULL,
+	[AssignedToEditVisibility] [bit] NOT NULL,
+	[PrivateEditVisibility] [bit] NOT NULL,
+	[CategoryEditVisibility] [bit] NOT NULL,
+	[DueDateEditVisibility] [bit] NOT NULL,
+	[TypeEditVisibility] [bit] NOT NULL,
+	[PercentCompleteEditVisibility] [bit] NOT NULL,
+	[MilestoneEditVisibility] [bit] NOT NULL,
+	[EstimationEditVisibility] [bit] NOT NULL,
+	[ResolutionEditVisibility] [bit] NOT NULL,
+	[AffectedMilestoneEditVisibility] [bit] NOT NULL,
  CONSTRAINT [PK_Bugnet_DefaultValuesVisibility] PRIMARY KEY CLUSTERED 
 (
 	[ProjectId] ASC
@@ -91,7 +104,7 @@ CREATE TABLE [dbo].[BugNet_DefaultValuesVisibility](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_HostSettings]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_HostSettings]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -106,7 +119,7 @@ CREATE TABLE [dbo].[BugNet_HostSettings](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_IssueAttachments]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_IssueAttachments]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -128,7 +141,7 @@ CREATE TABLE [dbo].[BugNet_IssueAttachments](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_IssueComments]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_IssueComments]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -146,7 +159,7 @@ CREATE TABLE [dbo].[BugNet_IssueComments](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_IssueHistory]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_IssueHistory]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -166,7 +179,7 @@ CREATE TABLE [dbo].[BugNet_IssueHistory](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_IssueNotifications]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_IssueNotifications]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -182,7 +195,7 @@ CREATE TABLE [dbo].[BugNet_IssueNotifications](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_IssueRevisions]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_IssueRevisions]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -205,7 +218,7 @@ CREATE TABLE [dbo].[BugNet_IssueRevisions](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_Issues]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_Issues]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -240,7 +253,7 @@ CREATE TABLE [dbo].[BugNet_Issues](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_IssueVotes]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_IssueVotes]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -257,7 +270,7 @@ CREATE TABLE [dbo].[BugNet_IssueVotes](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_IssueWorkReports]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_IssueWorkReports]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -276,7 +289,7 @@ CREATE TABLE [dbo].[BugNet_IssueWorkReports](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_Languages]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_Languages]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -293,7 +306,7 @@ CREATE TABLE [dbo].[BugNet_Languages](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_Permissions]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_Permissions]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -309,7 +322,7 @@ CREATE TABLE [dbo].[BugNet_Permissions](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_ProjectCategories]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_ProjectCategories]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -327,7 +340,7 @@ CREATE TABLE [dbo].[BugNet_ProjectCategories](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_ProjectCustomFields]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_ProjectCustomFields]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -346,7 +359,7 @@ CREATE TABLE [dbo].[BugNet_ProjectCustomFields](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_ProjectCustomFieldSelections]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_ProjectCustomFieldSelections]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -364,7 +377,7 @@ CREATE TABLE [dbo].[BugNet_ProjectCustomFieldSelections](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_ProjectCustomFieldTypes]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_ProjectCustomFieldTypes]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -379,7 +392,7 @@ CREATE TABLE [dbo].[BugNet_ProjectCustomFieldTypes](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_ProjectCustomFieldValues]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_ProjectCustomFieldValues]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -396,7 +409,7 @@ CREATE TABLE [dbo].[BugNet_ProjectCustomFieldValues](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_ProjectIssueTypes]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_ProjectIssueTypes]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -414,7 +427,7 @@ CREATE TABLE [dbo].[BugNet_ProjectIssueTypes](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_ProjectMailBoxes]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_ProjectMailBoxes]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -432,7 +445,7 @@ CREATE TABLE [dbo].[BugNet_ProjectMailBoxes](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_ProjectMilestones]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_ProjectMilestones]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -455,7 +468,7 @@ CREATE TABLE [dbo].[BugNet_ProjectMilestones](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_ProjectNotifications]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_ProjectNotifications]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -471,7 +484,7 @@ CREATE TABLE [dbo].[BugNet_ProjectNotifications](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_ProjectPriorities]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_ProjectPriorities]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -489,7 +502,7 @@ CREATE TABLE [dbo].[BugNet_ProjectPriorities](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_ProjectResolutions]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_ProjectResolutions]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -507,7 +520,7 @@ CREATE TABLE [dbo].[BugNet_ProjectResolutions](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_Projects]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_Projects]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -538,7 +551,7 @@ CREATE TABLE [dbo].[BugNet_Projects](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_ProjectStatus]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_ProjectStatus]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -557,7 +570,7 @@ CREATE TABLE [dbo].[BugNet_ProjectStatus](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_Queries]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_Queries]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -575,7 +588,7 @@ CREATE TABLE [dbo].[BugNet_Queries](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_QueryClauses]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_QueryClauses]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -596,7 +609,7 @@ CREATE TABLE [dbo].[BugNet_QueryClauses](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_RelatedIssues]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_RelatedIssues]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -614,7 +627,7 @@ CREATE TABLE [dbo].[BugNet_RelatedIssues](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_RequiredFieldList]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_RequiredFieldList]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -630,7 +643,7 @@ CREATE TABLE [dbo].[BugNet_RequiredFieldList](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_RolePermissions]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_RolePermissions]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -646,7 +659,7 @@ CREATE TABLE [dbo].[BugNet_RolePermissions](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_Roles]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_Roles]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -664,7 +677,7 @@ CREATE TABLE [dbo].[BugNet_Roles](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_UserProfiles]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_UserProfiles]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -678,7 +691,7 @@ CREATE TABLE [dbo].[BugNet_UserProfiles](
 	[PreferredLocale] [nvarchar](50) NULL,
 	[LastUpdate] [datetime] NOT NULL,
 	[SelectedIssueColumns] [nvarchar](50) NULL,
-	[ReceiveEmailNotifications] [bit] NOT NULL,
+	[ReceiveEmailNotifications] [bit] NOT NULL CONSTRAINT [DF_BugNet_UserProfiles_RecieveEmailNotifications]  DEFAULT ((1)),
 	[PasswordVerificationToken] [nvarchar](128) NULL,
 	[PasswordVerificationTokenExpirationDate] [datetime] NULL,
  CONSTRAINT [PK_BugNet_UserProfiles] PRIMARY KEY CLUSTERED 
@@ -688,7 +701,7 @@ CREATE TABLE [dbo].[BugNet_UserProfiles](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_UserProjects]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_UserProjects]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -707,7 +720,7 @@ CREATE TABLE [dbo].[BugNet_UserProjects](
 )
 
 GO
-/****** Object:  Table [dbo].[BugNet_UserRoles]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[BugNet_UserRoles]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -723,7 +736,7 @@ CREATE TABLE [dbo].[BugNet_UserRoles](
 )
 
 GO
-/****** Object:  Table [dbo].[Memberships]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[Memberships]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -755,7 +768,7 @@ PRIMARY KEY CLUSTERED
 )
 
 GO
-/****** Object:  Table [dbo].[Profiles]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[Profiles]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -773,7 +786,7 @@ PRIMARY KEY CLUSTERED
 )
 
 GO
-/****** Object:  Table [dbo].[Roles]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[Roles]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -790,7 +803,7 @@ PRIMARY KEY CLUSTERED
 )
 
 GO
-/****** Object:  Table [dbo].[Users]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -808,7 +821,7 @@ PRIMARY KEY CLUSTERED
 )
 
 GO
-/****** Object:  Table [dbo].[UsersInRoles]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[UsersInRoles]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -824,7 +837,45 @@ PRIMARY KEY CLUSTERED
 )
 
 GO
-/****** Object:  View [dbo].[BugNet_IssuesView]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Table [dbo].[UsersOpenAuthAccounts]    Script Date: 11/2/2014 3:54:01 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[UsersOpenAuthAccounts](
+	[ApplicationName] [nvarchar](128) NOT NULL,
+	[ProviderName] [nvarchar](128) NOT NULL,
+	[ProviderUserId] [nvarchar](128) NOT NULL,
+	[ProviderUserName] [nvarchar](max) NOT NULL,
+	[MembershipUserName] [nvarchar](128) NOT NULL,
+	[LastUsedUtc] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ApplicationName] ASC,
+	[ProviderName] ASC,
+	[ProviderUserId] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF)
+)
+
+GO
+/****** Object:  Table [dbo].[UsersOpenAuthData]    Script Date: 11/2/2014 3:54:01 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[UsersOpenAuthData](
+	[ApplicationName] [nvarchar](128) NOT NULL,
+	[MembershipUserName] [nvarchar](128) NOT NULL,
+	[HasLocalPassword] [bit] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ApplicationName] ASC,
+	[MembershipUserName] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF)
+)
+
+GO
+/****** Object:  View [dbo].[BugNet_IssuesView]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -874,8 +925,9 @@ FROM            dbo.BugNet_Issues LEFT OUTER JOIN
                          dbo.BugNet_UserProfiles AS OwnerUsersProfile ON OwnerUsers.UserName = OwnerUsersProfile.UserName LEFT OUTER JOIN
                          dbo.BugNet_UserProfiles AS LastUpdateUsersProfile ON LastUpdateUsers.UserName = LastUpdateUsersProfile.UserName LEFT OUTER JOIN
                          dbo.BugNet_Projects ON dbo.BugNet_Issues.ProjectId = dbo.BugNet_Projects.ProjectId
+
 GO
-/****** Object:  View [dbo].[BugNet_UserView]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  View [dbo].[BugNet_UserView]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -892,8 +944,9 @@ FROM         dbo.Users INNER JOIN
 GROUP BY dbo.Users.UserId, dbo.Users.UserName, dbo.Memberships.Email, dbo.Memberships.IsApproved, dbo.Memberships.IsLockedOut, dbo.Users.IsAnonymous, 
                       dbo.Users.LastActivityDate, dbo.BugNet_UserProfiles.FirstName, dbo.BugNet_UserProfiles.LastName, dbo.BugNet_UserProfiles.DisplayName, 
                       dbo.BugNet_UserProfiles.IssuesPageSize, dbo.BugNet_UserProfiles.PreferredLocale
+
 GO
-/****** Object:  View [dbo].[BugNet_IssueAssignedToCountView]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  View [dbo].[BugNet_IssueAssignedToCountView]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -908,8 +961,9 @@ FROM         dbo.BugNet_IssuesView LEFT OUTER JOIN
 WHERE     (dbo.BugNet_IssuesView.IsClosed = 0) AND (dbo.BugNet_IssuesView.Disabled = 0)
 GROUP BY dbo.BugNet_IssuesView.ProjectId, dbo.BugNet_IssuesView.AssignedDisplayName, CASE WHEN dbo.BugNet_IssuesView.IssueAssignedUserId IS NULL 
                       THEN 999 ELSE 0 END, ISNULL(dbo.BugNet_IssuesView.IssueAssignedUserId, '00000000-0000-0000-0000-000000000000')
+
 GO
-/****** Object:  View [dbo].[BugNet_IssueCommentsView]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  View [dbo].[BugNet_IssueCommentsView]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -924,8 +978,9 @@ FROM         dbo.BugNet_IssuesView INNER JOIN
                       dbo.BugNet_IssueComments ON dbo.BugNet_IssuesView.IssueId = dbo.BugNet_IssueComments.IssueId INNER JOIN
                       dbo.BugNet_UserView ON dbo.BugNet_IssueComments.UserId = dbo.BugNet_UserView.UserId
 
+
 GO
-/****** Object:  View [dbo].[BugNet_DefaultValView]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  View [dbo].[BugNet_DefaultValView]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -946,7 +1001,14 @@ SELECT     dbo.BugNet_DefaultValues.DefaultType, dbo.BugNet_DefaultValues.Status
                       dbo.BugNet_DefaultValuesVisibility.TypeVisibility, dbo.BugNet_DefaultValuesVisibility.PercentCompleteVisibility, 
                       dbo.BugNet_DefaultValuesVisibility.MilestoneVisibility, dbo.BugNet_DefaultValuesVisibility.ResolutionVisibility, 
                       dbo.BugNet_DefaultValuesVisibility.EstimationVisibility, dbo.BugNet_DefaultValuesVisibility.AffectedMilestoneVisibility, 
-                      dbo.BugNet_DefaultValues.OwnedByNotify, dbo.BugNet_DefaultValues.AssignedToNotify
+                      dbo.BugNet_DefaultValues.OwnedByNotify, dbo.BugNet_DefaultValues.AssignedToNotify,
+					  dbo.BugNet_DefaultValuesVisibility.StatusEditVisibility, 
+                      dbo.BugNet_DefaultValuesVisibility.PriorityEditVisibility, dbo.BugNet_DefaultValuesVisibility.OwnedByEditVisibility, 
+                      dbo.BugNet_DefaultValuesVisibility.AssignedToEditVisibility, dbo.BugNet_DefaultValuesVisibility.PrivateEditVisibility, 
+                      dbo.BugNet_DefaultValuesVisibility.CategoryEditVisibility, dbo.BugNet_DefaultValuesVisibility.DueDateEditVisibility, 
+                      dbo.BugNet_DefaultValuesVisibility.TypeEditVisibility, dbo.BugNet_DefaultValuesVisibility.PercentCompleteEditVisibility, 
+                      dbo.BugNet_DefaultValuesVisibility.MilestoneEditVisibility, dbo.BugNet_DefaultValuesVisibility.ResolutionEditVisibility, 
+                      dbo.BugNet_DefaultValuesVisibility.EstimationEditVisibility, dbo.BugNet_DefaultValuesVisibility.AffectedMilestoneEditVisibility
 FROM         dbo.BugNet_DefaultValues LEFT OUTER JOIN
                       dbo.Users AS OwnerUsers ON dbo.BugNet_DefaultValues.IssueOwnerUserId = OwnerUsers.UserId LEFT OUTER JOIN
                       dbo.Users AS AssignedUsers ON dbo.BugNet_DefaultValues.IssueAssignedUserId = AssignedUsers.UserId LEFT OUTER JOIN
@@ -954,7 +1016,7 @@ FROM         dbo.BugNet_DefaultValues LEFT OUTER JOIN
                       dbo.BugNet_UserProfiles AS OwnerUsersProfile ON OwnerUsers.UserName = OwnerUsersProfile.UserName LEFT OUTER JOIN
                       dbo.BugNet_DefaultValuesVisibility ON dbo.BugNet_DefaultValues.ProjectId = dbo.BugNet_DefaultValuesVisibility.ProjectId
 GO
-/****** Object:  View [dbo].[BugNet_GetIssuesByProjectIdAndCustomFieldView]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  View [dbo].[BugNet_GetIssuesByProjectIdAndCustomFieldView]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1057,8 +1119,9 @@ LEFT OUTER JOIN
     dbo.BugNet_UserProfiles AS LastUpdateUsersProfile ON LastUpdateUsers.UserName = LastUpdateUsersProfile.UserName 
 LEFT OUTER JOIN
     dbo.BugNet_Projects ON dbo.BugNet_Issues.ProjectId = dbo.BugNet_Projects.ProjectId
+
 GO
-/****** Object:  View [dbo].[BugNet_ProjectsView]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  View [dbo].[BugNet_ProjectsView]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1077,11 +1140,12 @@ FROM         dbo.BugNet_Projects INNER JOIN
                       dbo.BugNet_UserProfiles AS CreatorUsersProfile ON Creators.UserName = CreatorUsersProfile.UserName LEFT OUTER JOIN
                       dbo.BugNet_UserProfiles AS ManagerUsersProfile ON Managers.UserName = ManagerUsersProfile.UserName
 ORDER BY dbo.BugNet_Projects.ProjectName
+
 GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IX_BugNet_IssueAttachments_DateCreated_IssueId]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Index [IX_BugNet_IssueAttachments_DateCreated_IssueId]    Script Date: 11/2/2014 3:54:01 PM ******/
 CREATE NONCLUSTERED INDEX [IX_BugNet_IssueAttachments_DateCreated_IssueId] ON [dbo].[BugNet_IssueAttachments]
 (
 	[DateCreated] DESC,
@@ -1098,7 +1162,7 @@ GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IX_BugNet_IssueComments_IssueId_UserId_DateCreated]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Index [IX_BugNet_IssueComments_IssueId_UserId_DateCreated]    Script Date: 11/2/2014 3:54:01 PM ******/
 CREATE NONCLUSTERED INDEX [IX_BugNet_IssueComments_IssueId_UserId_DateCreated] ON [dbo].[BugNet_IssueComments]
 (
 	[IssueId] ASC,
@@ -1111,7 +1175,7 @@ GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IX_BugNet_IssueHistory_IssueId_UserId_DateCreated]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Index [IX_BugNet_IssueHistory_IssueId_UserId_DateCreated]    Script Date: 11/2/2014 3:54:01 PM ******/
 CREATE NONCLUSTERED INDEX [IX_BugNet_IssueHistory_IssueId_UserId_DateCreated] ON [dbo].[BugNet_IssueHistory]
 (
 	[IssueId] ASC,
@@ -1123,7 +1187,7 @@ INCLUDE ( 	[IssueHistoryId],
 	[OldValue],
 	[NewValue]) WITH (STATISTICS_NORECOMPUTE = OFF, DROP_EXISTING = OFF, ONLINE = OFF)
 GO
-/****** Object:  Index [IX_BugNet_Issues_IssueCategoryId_ProjectId_Disabled_IssueStatusId]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Index [IX_BugNet_Issues_IssueCategoryId_ProjectId_Disabled_IssueStatusId]    Script Date: 11/2/2014 3:54:01 PM ******/
 CREATE NONCLUSTERED INDEX [IX_BugNet_Issues_IssueCategoryId_ProjectId_Disabled_IssueStatusId] ON [dbo].[BugNet_Issues]
 (
 	[IssueCategoryId] ASC,
@@ -1132,7 +1196,7 @@ CREATE NONCLUSTERED INDEX [IX_BugNet_Issues_IssueCategoryId_ProjectId_Disabled_I
 	[IssueStatusId] ASC
 )WITH (STATISTICS_NORECOMPUTE = OFF, DROP_EXISTING = OFF, ONLINE = OFF)
 GO
-/****** Object:  Index [IX_BugNet_Issues_IssueId_ProjectId_Disabled]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Index [IX_BugNet_Issues_IssueId_ProjectId_Disabled]    Script Date: 11/2/2014 3:54:01 PM ******/
 CREATE NONCLUSTERED INDEX [IX_BugNet_Issues_IssueId_ProjectId_Disabled] ON [dbo].[BugNet_Issues]
 (
 	[IssueId] DESC,
@@ -1144,7 +1208,7 @@ GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IX_BugNet_Issues_K12_K22_K1_K15_K9_K8_K6_K5_K7_K4_K10_K21_K11_K13_2_3_14_16_17_18_19_20]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Index [IX_BugNet_Issues_K12_K22_K1_K15_K9_K8_K6_K5_K7_K4_K10_K21_K11_K13_2_3_14_16_17_18_19_20]    Script Date: 11/2/2014 3:54:01 PM ******/
 CREATE NONCLUSTERED INDEX [IX_BugNet_Issues_K12_K22_K1_K15_K9_K8_K6_K5_K7_K4_K10_K21_K11_K13_2_3_14_16_17_18_19_20] ON [dbo].[BugNet_Issues]
 (
 	[IssueAssignedUserId] ASC,
@@ -1174,7 +1238,7 @@ GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IX_BugNet_Issues_K8_K22_K1_K13_K11_K21_K12_K10_K15_K9_K4_K7_K5_K6_2_3_14_16_17_18_19_20]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Index [IX_BugNet_Issues_K8_K22_K1_K13_K11_K21_K12_K10_K15_K9_K4_K7_K5_K6_2_3_14_16_17_18_19_20]    Script Date: 11/2/2014 3:54:01 PM ******/
 CREATE NONCLUSTERED INDEX [IX_BugNet_Issues_K8_K22_K1_K13_K11_K21_K12_K10_K15_K9_K4_K7_K5_K6_2_3_14_16_17_18_19_20] ON [dbo].[BugNet_Issues]
 (
 	[ProjectId] ASC,
@@ -1204,7 +1268,7 @@ GO
 SET ANSI_PADDING ON
 
 GO
-/****** Object:  Index [IDX_UserName]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  Index [IDX_UserName]    Script Date: 11/2/2014 3:54:01 PM ******/
 CREATE NONCLUSTERED INDEX [IDX_UserName] ON [dbo].[Users]
 (
 	[UserName] ASC
@@ -1238,7 +1302,33 @@ ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_De
 GO
 ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_ResolutionVisibility]  DEFAULT ((1)) FOR [ResolutionVisibility]
 GO
-ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_AffectedMilestoneVisivility]  DEFAULT ((1)) FOR [AffectedMilestoneVisibility]
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_AffectedMilestoneVisibility]  DEFAULT ((1)) FOR [AffectedMilestoneVisibility]
+GO
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_StatusEditVisibility]  DEFAULT ((1)) FOR [StatusEditVisibility]
+GO
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_OwnedByEditVisibility]  DEFAULT ((1)) FOR [OwnedByEditVisibility]
+GO
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_PriorityEditVisibility]  DEFAULT ((1)) FOR [PriorityEditVisibility]
+GO
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_AssignedToEditVisibility]  DEFAULT ((1)) FOR [AssignedToEditVisibility]
+GO
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_PrivateEditVisibility]  DEFAULT ((1)) FOR [PrivateEditVisibility]
+GO
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_CategoryEditVisibility]  DEFAULT ((1)) FOR [CategoryEditVisibility]
+GO
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_DueDateEditVisibility]  DEFAULT ((1)) FOR [DueDateEditVisibility]
+GO
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_TypeEditVisibility]  DEFAULT ((1)) FOR [TypeEditVisibility]
+GO
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_PercentCompleteEditVisibility]  DEFAULT ((1)) FOR [PercentCompleteEditVisibility]
+GO
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_MilestoneEditVisibility]  DEFAULT ((1)) FOR [MilestoneEditVisibility]
+GO
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_EstimationEditVisibility]  DEFAULT ((1)) FOR [EstimationEditVisibility]
+GO
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_ResolutionEditVisibility]  DEFAULT ((1)) FOR [ResolutionEditVisibility]
+GO
+ALTER TABLE [dbo].[BugNet_DefaultValuesVisibility] ADD  CONSTRAINT [DF_Bugnet_DefaultValuesVisibility_AffectedMilestoneEditVisibility]  DEFAULT ((1)) FOR [AffectedMilestoneEditVisibility]
 GO
 ALTER TABLE [dbo].[BugNet_IssueAttachments] ADD  CONSTRAINT [DF_BugNet_IssueAttachments_DateCreated]  DEFAULT (getdate()) FOR [DateCreated]
 GO
@@ -1275,8 +1365,6 @@ GO
 ALTER TABLE [dbo].[BugNet_Projects] ADD  CONSTRAINT [DF_BugNet_Projects_AllowIssueVoting]  DEFAULT ((1)) FOR [AllowIssueVoting]
 GO
 ALTER TABLE [dbo].[BugNet_Queries] ADD  CONSTRAINT [DF_BugNet_Queries_IsPublic]  DEFAULT ((0)) FOR [IsPublic]
-GO
-ALTER TABLE [dbo].[BugNet_UserProfiles] ADD  CONSTRAINT [DF_BugNet_UserProfiles_RecieveEmailNotifications]  DEFAULT ((1)) FOR [ReceiveEmailNotifications]
 GO
 ALTER TABLE [dbo].[BugNet_UserProjects] ADD  CONSTRAINT [DF__BugNet_Us__Selec__7E42ABEE]  DEFAULT ((0)) FOR [SelectedIssueColumns]
 GO
@@ -1639,7 +1727,13 @@ REFERENCES [dbo].[Users] ([UserId])
 GO
 ALTER TABLE [dbo].[UsersInRoles] CHECK CONSTRAINT [UsersInRoleUser]
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ApplicationLog_ClearLog]    Script Date: 9/11/2014 10:01:37 PM ******/
+ALTER TABLE [dbo].[UsersOpenAuthAccounts]  WITH CHECK ADD  CONSTRAINT [OpenAuthUserData_Accounts] FOREIGN KEY([ApplicationName], [MembershipUserName])
+REFERENCES [dbo].[UsersOpenAuthData] ([ApplicationName], [MembershipUserName])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[UsersOpenAuthAccounts] CHECK CONSTRAINT [OpenAuthUserData_Accounts]
+GO
+/****** Object:  StoredProcedure [dbo].[BugNet_ApplicationLog_ClearLog]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1650,8 +1744,9 @@ AS
 	DELETE FROM BugNet_ApplicationLog
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ApplicationLog_GetLog]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ApplicationLog_GetLog]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1667,8 +1762,9 @@ WHERE
 ORDER BY L.Date DESC
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_DefaultValues_GetByProjectId]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_DefaultValues_GetByProjectId]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1684,8 +1780,9 @@ WHERE
 
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_DefaultValues_Set]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_DefaultValues_Set]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1718,6 +1815,19 @@ CREATE PROCEDURE [dbo].[BugNet_DefaultValues_Set]
 	@EstimationVisibility	 Bit,
 	@ResolutionVisibility	 Bit,
 	@AffectedMilestoneVisibility Bit,
+	@StatusEditVisibility		 Bit,
+	@OwnedByEditVisibility		 Bit,
+	@PriorityEditVisibility		 Bit,
+	@AssignedToEditVisibility	 Bit,
+	@PrivateEditVisibility		 Bit,
+	@CategoryEditVisibility		 Bit,
+	@DueDateEditVisibility		 Bit,
+	@TypeEditVisibility			 Bit,
+	@PercentCompleteEditVisibility Bit,
+	@MilestoneEditVisibility	Bit, 
+	@EstimationEditVisibility	 Bit,
+	@ResolutionEditVisibility	 Bit,
+	@AffectedMilestoneEditVisibility Bit,
 	@OwnedByNotify Bit,
 	@AssignedToNotify Bit
 AS
@@ -1748,7 +1858,20 @@ BEGIN
 							MilestoneVisibility	= @MilestoneVisibility,			
 							EstimationVisibility = @EstimationVisibility,			
 							ResolutionVisibility = @ResolutionVisibility,
-							AffectedMilestoneVisibility = @AffectedMilestoneVisibility		
+							AffectedMilestoneVisibility = @AffectedMilestoneVisibility,
+							StatusEditVisibility = @StatusEditVisibility,			
+							OwnedByEditVisibility = @OwnedByEditVisibility,				
+							PriorityEditVisibility = @PriorityEditVisibility,			
+							AssignedToEditVisibility = @AssignedToEditVisibility,			
+							PrivateEditVisibility= @PrivateEditVisibility,			
+							CategoryEditVisibility= @CategoryEditVisibility,			
+							DueDateEditVisibility= @DueDateEditVisibility,				
+							TypeEditVisibility	= @TypeEditVisibility,				
+							PercentCompleteEditVisibility = @PercentCompleteEditVisibility,		
+							MilestoneEditVisibility	= @MilestoneEditVisibility,			
+							EstimationEditVisibility = @EstimationEditVisibility,			
+							ResolutionEditVisibility = @ResolutionEditVisibility,
+							AffectedMilestoneEditVisibility = @AffectedMilestoneEditVisibility	
 					WHERE ProjectId = @ProjectId							
 					END
 				ELSE
@@ -1769,7 +1892,20 @@ BEGIN
 						@MilestoneVisibility	,	 
 						@EstimationVisibility	 ,
 						@ResolutionVisibility	,
-						@AffectedMilestoneVisibility	  					
+						@AffectedMilestoneVisibility,
+						@StatusEditVisibility		 ,
+						@OwnedByEditVisibility		 ,
+						@PriorityEditVisibility		 ,
+						@AssignedToEditVisibility	 ,
+						@PrivateEditVisibility		 ,
+						@CategoryEditVisibility		 ,
+						@DueDateEditVisibility		 ,
+						@TypeEditVisibility			 ,
+						@PercentCompleteEditVisibility,
+						@MilestoneEditVisibility	,	 
+						@EstimationEditVisibility	 ,
+						@ResolutionEditVisibility	,
+						@AffectedMilestoneEditVisibility	  					
 					)
 					END
 
@@ -1823,9 +1959,8 @@ BEGIN
 		END
 	COMMIT TRAN
 END
-
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_GetProjectSelectedColumnsWithUserIdAndProjectId]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_GetProjectSelectedColumnsWithUserIdAndProjectId]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1846,8 +1981,9 @@ BEGIN
 	
 END
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_HostSetting_GetHostSettings]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_HostSetting_GetHostSettings]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1857,8 +1993,9 @@ CREATE PROCEDURE [dbo].[BugNet_HostSetting_GetHostSettings] AS
 SELECT SettingName, SettingValue FROM BugNet_HostSettings
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_HostSetting_UpdateHostSetting]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_HostSetting_UpdateHostSetting]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1874,8 +2011,9 @@ WHERE
 	SettingName  = @SettingName
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Issue_CreateNewIssue]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Issue_CreateNewIssue]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1956,8 +2094,9 @@ SELECT @IssueOwnerUserId = UserId FROM Users WHERE UserName = @IssueOwnerUserNam
 	)
 RETURN scope_identity()
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Issue_Delete]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Issue_Delete]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1971,8 +2110,9 @@ WHERE
 	IssueId = @IssueId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetIssueById]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetIssueById]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1988,8 +2128,9 @@ WHERE
 	IssueId = @IssueId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetIssueCategoryCountByProject]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetIssueCategoryCountByProject]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2014,8 +2155,9 @@ WHERE
 	AND IsClosed = 0
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetIssueMilestoneCountByProject]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetIssueMilestoneCountByProject]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2049,8 +2191,9 @@ BEGIN
 END
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetIssuePriorityCountByProject]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetIssuePriorityCountByProject]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2078,8 +2221,9 @@ GROUP BY
 	p.PriorityName, p.PriorityId, p.PriorityImageUrl, p.SortOrder
 ORDER BY p.SortOrder
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetIssuesByAssignedUserName]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetIssuesByAssignedUserName]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2102,8 +2246,9 @@ WHERE
 ORDER BY
 	IssueId Desc
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetIssuesByCreatorUserName]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetIssuesByCreatorUserName]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2126,8 +2271,9 @@ WHERE
 ORDER BY
 	IssueId Desc
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetIssuesByOwnerUserName]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetIssuesByOwnerUserName]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2150,8 +2296,9 @@ WHERE
 ORDER BY
 	IssueId Desc
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetIssuesByProjectId]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetIssuesByProjectId]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2166,8 +2313,9 @@ WHERE
 Order By IssuePriorityId, IssueStatusId ASC
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetIssuesByRelevancy]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetIssuesByRelevancy]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2190,8 +2338,9 @@ WHERE
 ORDER BY
 	IssueId Desc
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetIssueStatusCountByProject]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetIssueStatusCountByProject]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2220,8 +2369,9 @@ AS
 		ORDER BY s.SortOrder
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetIssueTypeCountByProject]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetIssueTypeCountByProject]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2252,8 +2402,9 @@ LEFT OUTER JOIN
 		t.SortOrder
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetIssueUnassignedCountByProject]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetIssueUnassignedCountByProject]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2272,8 +2423,9 @@ AS
 		AND IssueStatusId IN(SELECT StatusId FROM BugNet_ProjectStatus WHERE IsClosedState = 0 AND ProjectId = @ProjectId)
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetIssueUnscheduledMilestoneCountByProject]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetIssueUnscheduledMilestoneCountByProject]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2292,8 +2444,9 @@ AS
 		AND IssueStatusId IN(SELECT StatusId FROM BugNet_ProjectStatus WHERE IsClosedState = 0 AND ProjectId = @ProjectId)
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetIssueUserCountByProject]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetIssueUserCountByProject]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2312,8 +2465,9 @@ WHERE ProjectId = @ProjectId
 ORDER BY SortOrder, AssignedName
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetMonitoredIssuesByUserName]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetMonitoredIssuesByUserName]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2343,8 +2497,9 @@ AND iv.ProjectDisabled = 0
 AND ((@ExcludeClosedStatus = 0) OR (iv.IsClosed = 0))
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetOpenIssues]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Issue_GetOpenIssues]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2364,8 +2519,9 @@ ORDER BY
 	IssueId Desc
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Issue_UpdateIssue]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Issue_UpdateIssue]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2428,8 +2584,9 @@ BEGIN TRAN
 	/*EXEC BugNet_IssueHistory_CreateNewHistory @IssueId, @IssueCreatorId*/
 COMMIT TRAN
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Issue_UpdateLastUpdated]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Issue_UpdateLastUpdated]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2453,8 +2610,9 @@ BEGIN TRAN
 		IssueId = @IssueId
 COMMIT TRAN
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_IssueAttachment_CreateNewIssueAttachment]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueAttachment_CreateNewIssueAttachment]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2498,8 +2656,9 @@ VALUES
 RETURN scope_identity()
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_IssueAttachment_DeleteIssueAttachment]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueAttachment_DeleteIssueAttachment]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2514,8 +2673,9 @@ WHERE
 	IssueAttachmentId = @IssueAttachmentId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_IssueAttachment_GetIssueAttachmentById]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueAttachment_GetIssueAttachmentById]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2541,8 +2701,9 @@ FROM
 WHERE
 	IssueAttachmentId = @IssueAttachmentId
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_IssueAttachment_GetIssueAttachmentsByIssueId]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueAttachment_GetIssueAttachmentsByIssueId]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2571,8 +2732,9 @@ WHERE
 ORDER BY 
 	DateCreated DESC
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_IssueAttachment_ValidateDownload]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueAttachment_ValidateDownload]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2735,8 +2897,9 @@ END
 RETURN @ReturnValue;
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_IssueComment_CreateNewIssueComment]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueComment_CreateNewIssueComment]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2769,8 +2932,9 @@ UPDATE BugNet_Issues SET LastUpdate = GetDate(),LastUpdateUserId = @UserId WHERE
 
 RETURN scope_identity()
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_IssueComment_DeleteIssueComment]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueComment_DeleteIssueComment]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS OFF
 GO
 SET QUOTED_IDENTIFIER OFF
@@ -2784,8 +2948,9 @@ WHERE
 	IssueCommentId = @IssueCommentId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_IssueComment_GetIssueCommentById]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueComment_GetIssueCommentById]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2808,8 +2973,9 @@ FROM
 WHERE
 	IssueCommentId = @IssueCommentId
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_IssueComment_GetIssueCommentsByIssueId]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueComment_GetIssueCommentsByIssueId]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2835,8 +3001,9 @@ WHERE
 ORDER BY 
 	DateCreated DESC
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_IssueComment_UpdateIssueComment]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueComment_UpdateIssueComment]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2857,8 +3024,9 @@ UPDATE BugNet_IssueComments SET
 	Comment = @Comment
 WHERE IssueCommentId= @IssueCommentId
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_IssueHistory_CreateNewIssueHistory]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueHistory_CreateNewIssueHistory]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2893,8 +3061,9 @@ SELECT @UserId = UserId FROM Users WHERE UserName = @CreatedUserName
 	)
 RETURN scope_identity()
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_IssueHistory_GetIssueHistoryByIssueId]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueHistory_GetIssueHistoryByIssueId]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2920,8 +3089,9 @@ WHERE
 ORDER BY
 	DateCreated DESC
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_IssueNotification_CreateNewIssueNotification]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueNotification_CreateNewIssueNotification]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2948,8 +3118,9 @@ BEGIN
 	RETURN scope_identity()
 END
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_IssueNotification_DeleteIssueNotification]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueNotification_DeleteIssueNotification]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2966,8 +3137,9 @@ WHERE
 	IssueId = @IssueId
 	AND UserId = @UserId
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_IssueNotification_GetIssueNotificationsByIssueId]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueNotification_GetIssueNotificationsByIssueId]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3029,8 +3201,9 @@ WHERE
 
 SELECT DISTINCT IssueId,NotificationUserId, NotificationUserName, NotificationDisplayName, NotificationEmail, NotificationCulture FROM @tmpTable ORDER BY NotificationDisplayName
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_IssueRevision_CreateNewIssueRevision]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueRevision_CreateNewIssueRevision]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3077,8 +3250,9 @@ BEGIN
 	RETURN scope_identity()
 END
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_IssueRevision_DeleteIssueRevisions]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueRevision_DeleteIssueRevisions]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3092,8 +3266,9 @@ WHERE
 	IssueRevisionId = @IssueRevisionId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_IssueRevision_GetIssueRevisionsByIssueId]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueRevision_GetIssueRevisionsByIssueId]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3109,8 +3284,9 @@ WHERE
 	IssueId = @IssueId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_IssueVote_CreateNewIssueVote]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueVote_CreateNewIssueVote]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3139,8 +3315,9 @@ BEGIN
 	RETURN scope_identity()
 END
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_IssueVote_HasUserVoted]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueVote_HasUserVoted]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3159,8 +3336,9 @@ BEGIN
         RETURN(0)
 END
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_IssueWorkReport_CreateNewIssueWorkReport]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueWorkReport_CreateNewIssueWorkReport]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3193,8 +3371,9 @@ VALUES
 )
 RETURN scope_identity()
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_IssueWorkReport_DeleteIssueWorkReport]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueWorkReport_DeleteIssueWorkReport]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3208,8 +3387,9 @@ WHERE
 	IssueWorkReportId = @IssueWorkReportId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_IssueWorkReport_GetIssueWorkReportsByIssueId]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_IssueWorkReport_GetIssueWorkReportsByIssueId]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3236,8 +3416,9 @@ WHERE
 	 BugNet_IssueWorkReports.IssueId = @IssueId
 ORDER BY WorkDate DESC
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Languages_GetInstalledLanguages]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Languages_GetInstalledLanguages]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3250,8 +3431,9 @@ BEGIN
 END
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Permission_AddRolePermission]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Permission_AddRolePermission]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3275,8 +3457,9 @@ BEGIN
 END
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Permission_DeleteRolePermission]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Permission_DeleteRolePermission]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3292,8 +3475,9 @@ WHERE
 	AND RoleId = @RoleId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Permission_GetAllPermissions]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Permission_GetAllPermissions]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS OFF
 GO
 SET QUOTED_IDENTIFIER OFF
@@ -3303,8 +3487,9 @@ CREATE PROCEDURE [dbo].[BugNet_Permission_GetAllPermissions] AS
 SELECT PermissionId, PermissionKey, PermissionName  FROM BugNet_Permissions
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Permission_GetPermissionsByRole]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Permission_GetPermissionsByRole]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3317,8 +3502,9 @@ INNER JOIN BugNet_RolePermissions on BugNet_RolePermissions.PermissionId = BugNe
 WHERE RoleId = @RoleId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Permission_GetRolePermission]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Permission_GetRolePermission]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3333,8 +3519,9 @@ JOIN
 BugNet_Roles R ON RP.RoleId = R.RoleId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Project_AddUserToProject]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Project_AddUserToProject]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3362,8 +3549,9 @@ BEGIN
 	)
 END
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Project_CloneProject]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Project_CloneProject]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3785,8 +3973,9 @@ WHERE
 RETURN @NewProjectId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Project_CreateNewProject]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Project_CreateNewProject]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3858,8 +4047,9 @@ END
 ELSE
   RETURN 0
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Project_DeleteProject]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Project_DeleteProject]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3896,8 +4086,9 @@ DELETE FROM BugNet_Projects WHERE ProjectId = @ProjectIdToDelete
 
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Project_GetAllProjects]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Project_GetAllProjects]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3930,8 +4121,9 @@ FROM
 WHERE (@ActiveOnly IS NULL OR (ProjectDisabled = ~@ActiveOnly))
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Project_GetMemberRolesByProjectId]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Project_GetMemberRolesByProjectId]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3952,8 +4144,9 @@ WHERE
 	BugNet_UserProjects.ProjectId = @ProjectId
 ORDER BY DisplayName, RoleName ASC
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Project_GetProjectByCode]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Project_GetProjectByCode]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3964,8 +4157,9 @@ AS
 SELECT * FROM BugNet_ProjectsView WHERE ProjectCode = @ProjectCode
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Project_GetProjectById]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Project_GetProjectById]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3976,8 +4170,9 @@ AS
 SELECT * FROM BugNet_ProjectsView WHERE ProjectId = @ProjectId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Project_GetProjectMembers]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Project_GetProjectMembers]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3996,8 +4191,9 @@ WHERE
 	BugNet_UserProjects.ProjectId = @ProjectId
 ORDER BY UserName ASC
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Project_GetProjectsByMemberUsername]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Project_GetProjectsByMemberUsername]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4042,8 +4238,9 @@ WHERE
  
 ORDER BY ProjectName ASC
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Project_GetPublicProjects]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Project_GetPublicProjects]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4057,8 +4254,9 @@ WHERE
 ORDER BY ProjectName ASC
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Project_GetRoadMapProgress]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Project_GetRoadMapProgress]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4076,8 +4274,9 @@ WHERE
 (SELECT COUNT(*) FROM BugNet_IssuesView WHERE BugNet_IssuesView.Disabled = 0 AND ProjectId = @ProjectId AND IssueMilestoneId = @MilestoneId) As TotalCount
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Project_IsUserProjectMember]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Project_IsUserProjectMember]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4094,8 +4293,9 @@ IF EXISTS( SELECT UserId FROM BugNet_UserProjects WHERE UserId = @UserId AND Pro
 ELSE
   RETURN -1
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Project_RemoveUserFromProject]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Project_RemoveUserFromProject]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4112,8 +4312,9 @@ DELETE
 WHERE
 	UserId = @UserId AND ProjectId = @ProjectId
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Project_UpdateProject]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Project_UpdateProject]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4174,8 +4375,9 @@ ELSE
 	WHERE
 		ProjectId = @ProjectId
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCategories_CreateNewCategory]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCategories_CreateNewCategory]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4185,6 +4387,8 @@ CREATE PROCEDURE [dbo].[BugNet_ProjectCategories_CreateNewCategory]
   @CategoryName nvarchar(100),
   @ParentCategoryId int
 AS
+IF NOT EXISTS(SELECT CategoryId  FROM BugNet_ProjectCategories WHERE LOWER(CategoryName)= LOWER(@CategoryName) AND ProjectId = @ProjectId)
+BEGIN
 	INSERT BugNet_ProjectCategories
 	(
 		ProjectId,
@@ -4197,11 +4401,11 @@ AS
 		@CategoryName,
 		@ParentCategoryId
 	)
-RETURN scope_identity()
-
-
+	RETURN SCOPE_IDENTITY()
+END
+RETURN -1
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCategories_DeleteCategory]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCategories_DeleteCategory]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4215,8 +4419,9 @@ WHERE
 	CategoryId = @CategoryId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCategories_GetCategoriesByProjectId]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCategories_GetCategoriesByProjectId]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4238,8 +4443,9 @@ AND [Disabled] = 0
 ORDER BY CategoryName
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCategories_GetCategoryById]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCategories_GetCategoryById]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4259,8 +4465,9 @@ FROM BugNet_ProjectCategories c
 WHERE CategoryId = @CategoryId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCategories_GetChildCategoriesByCategoryId]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCategories_GetChildCategoriesByCategoryId]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4282,8 +4489,9 @@ AND [Disabled] = 0
 ORDER BY CategoryName
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCategories_GetRootCategoriesByProjectId]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCategories_GetRootCategoriesByProjectId]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4306,8 +4514,9 @@ AND [Disabled] = 0
 ORDER BY CategoryName
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCategories_UpdateCategory]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCategories_UpdateCategory]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4327,8 +4536,9 @@ UPDATE BugNet_ProjectCategories SET
 WHERE CategoryId = @CategoryId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCustomField_CreateNewCustomField]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCustomField_CreateNewCustomField]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4364,8 +4574,9 @@ END
 RETURN 0
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCustomField_DeleteCustomField]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCustomField_DeleteCustomField]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4393,8 +4604,9 @@ BEGIN TRAN
 COMMIT
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCustomField_GetCustomFieldById]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCustomField_GetCustomFieldById]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4417,8 +4629,9 @@ WHERE
 	Fields.CustomFieldId = @CustomFieldId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCustomField_GetCustomFieldsByIssueId]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCustomField_GetCustomFieldsByIssueId]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4444,8 +4657,9 @@ WHERE
 	Fields.ProjectId = @ProjectId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCustomField_GetCustomFieldsByProjectId]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCustomField_GetCustomFieldsByProjectId]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4467,8 +4681,9 @@ WHERE
 	ProjectId = @ProjectId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCustomField_SaveCustomFieldValue]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCustomField_SaveCustomFieldValue]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4501,8 +4716,9 @@ IF @@ROWCOUNT = 0
 	)
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCustomField_UpdateCustomField]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCustomField_UpdateCustomField]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4527,8 +4743,9 @@ WHERE
 	CustomFieldId = @CustomFieldId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCustomFieldSelection_CreateNewCustomFieldSelection]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCustomFieldSelection_CreateNewCustomFieldSelection]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4565,8 +4782,9 @@ END
 RETURN 0
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCustomFieldSelection_DeleteCustomFieldSelection]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCustomFieldSelection_DeleteCustomFieldSelection]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4595,8 +4813,9 @@ BEGIN TRAN
 COMMIT TRAN
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCustomFieldSelection_GetCustomFieldSelectionById]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCustomFieldSelection_GetCustomFieldSelectionById]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4619,8 +4838,9 @@ WHERE
 ORDER BY CustomFieldSelectionSortOrder
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCustomFieldSelection_GetCustomFieldSelectionsByCustomFieldId]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCustomFieldSelection_GetCustomFieldSelectionsByCustomFieldId]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4643,8 +4863,9 @@ WHERE
 ORDER BY CustomFieldSelectionSortOrder
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCustomFieldSelection_Update]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectCustomFieldSelection_Update]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4700,8 +4921,9 @@ BEGIN
 END
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectIssueTypes_CanDeleteIssueType]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectIssueTypes_CanDeleteIssueType]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4732,8 +4954,9 @@ ELSE
 	RETURN 0
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectIssueTypes_CreateNewIssueType]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectIssueTypes_CreateNewIssueType]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4764,8 +4987,9 @@ END
 RETURN -1
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectIssueTypes_DeleteIssueType]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectIssueTypes_DeleteIssueType]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4784,8 +5008,9 @@ ELSE
 	RETURN 1
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectIssueTypes_GetIssueTypeById]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectIssueTypes_GetIssueTypeById]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4805,8 +5030,9 @@ WHERE
 	IssueTypeId = @IssueTypeId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectIssueTypes_GetIssueTypesByProjectId]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectIssueTypes_GetIssueTypesByProjectId]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4827,8 +5053,9 @@ WHERE
 ORDER BY SortOrder
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectIssueTypes_UpdateIssueType]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectIssueTypes_UpdateIssueType]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4860,8 +5087,9 @@ UPDATE BugNet_ProjectIssueTypes SET
 WHERE IssueTypeId = @OldIssueTypeId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectMailbox_CreateProjectMailbox]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectMailbox_CreateProjectMailbox]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4892,8 +5120,9 @@ VALUES
 )
 RETURN scope_identity()
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectMailbox_DeleteProjectMailbox]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectMailbox_DeleteProjectMailbox]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS OFF
 GO
 SET QUOTED_IDENTIFIER OFF
@@ -4912,8 +5141,9 @@ ELSE
 	RETURN 1
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectMailbox_GetMailboxById]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectMailbox_GetMailboxById]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4937,8 +5167,9 @@ FROM
 WHERE
 	BugNet_ProjectMailBoxes.ProjectMailboxId = @ProjectMailboxId
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectMailbox_GetMailboxByProjectId]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectMailbox_GetMailboxByProjectId]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4962,8 +5193,9 @@ FROM
 WHERE
 	BugNet_ProjectMailBoxes.ProjectId = @ProjectId
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectMailbox_GetProjectByMailbox]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectMailbox_GetProjectByMailbox]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4987,8 +5219,9 @@ FROM
 WHERE
 	BugNet_ProjectMailBoxes.MailBox = @mailbox
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectMailbox_UpdateProjectMailbox]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectMailbox_UpdateProjectMailbox]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5011,8 +5244,9 @@ UPDATE BugNet_ProjectMailBoxes SET
 	IssueTypeId = @IssueTypeId
 WHERE ProjectMailboxId = @ProjectMailboxId
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectMilestones_CanDeleteMilestone]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectMilestones_CanDeleteMilestone]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5045,8 +5279,9 @@ ELSE
 
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectMilestones_CreateNewMilestone]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectMilestones_CreateNewMilestone]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5089,8 +5324,9 @@ END
 RETURN -1
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectMilestones_DeleteMilestone]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectMilestones_DeleteMilestone]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5109,8 +5345,9 @@ ELSE
 	RETURN 1
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectMilestones_GetMilestoneById]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectMilestones_GetMilestoneById]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5134,8 +5371,9 @@ WHERE
 	MilestoneId = @MilestoneId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectMilestones_GetMilestonesByProjectId]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectMilestones_GetMilestonesByProjectId]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5148,8 +5386,9 @@ SELECT * FROM BugNet_ProjectMilestones WHERE ProjectId = @ProjectId AND
 MilestoneCompleted = (CASE WHEN  @MilestoneCompleted = 1 THEN MilestoneCompleted ELSE @MilestoneCompleted END) ORDER BY SortOrder ASC
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectMilestones_UpdateMilestone]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectMilestones_UpdateMilestone]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5189,8 +5428,9 @@ UPDATE BugNet_ProjectMilestones SET
 WHERE MilestoneId = @OldMilestoneId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectNotification_CreateNewProjectNotification]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectNotification_CreateNewProjectNotification]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5217,8 +5457,9 @@ BEGIN
 	RETURN scope_identity()
 END
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectNotification_DeleteProjectNotification]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectNotification_DeleteProjectNotification]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5235,8 +5476,9 @@ WHERE
 	ProjectId = @ProjectId
 	AND UserId = @UserId
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectNotification_GetProjectNotificationsByProjectId]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectNotification_GetProjectNotificationsByProjectId]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5264,8 +5506,9 @@ WHERE
 ORDER BY
 	DisplayName
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectNotification_GetProjectNotificationsByUsername]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectNotification_GetProjectNotificationsByUsername]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5295,8 +5538,9 @@ WHERE
 ORDER BY
 	DisplayName
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectPriorities_CanDeletePriority]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectPriorities_CanDeletePriority]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5327,8 +5571,9 @@ ELSE
 	RETURN 0
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectPriorities_CreateNewPriority]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectPriorities_CreateNewPriority]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5359,8 +5604,9 @@ END
 RETURN 0
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectPriorities_DeletePriority]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectPriorities_DeletePriority]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5379,8 +5625,9 @@ ELSE
 	RETURN 1
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectPriorities_GetPrioritiesByProjectId]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectPriorities_GetPrioritiesByProjectId]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5401,8 +5648,9 @@ WHERE
 ORDER BY SortOrder
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectPriorities_GetPriorityById]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectPriorities_GetPriorityById]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5422,8 +5670,9 @@ WHERE
 	PriorityId = @PriorityId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectPriorities_UpdatePriority]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectPriorities_UpdatePriority]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5455,8 +5704,9 @@ UPDATE BugNet_ProjectPriorities SET
 WHERE PriorityId = @OldPriorityId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectResolutions_CanDeleteResolution]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectResolutions_CanDeleteResolution]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5487,8 +5737,9 @@ ELSE
 	RETURN 0
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectResolutions_CreateNewResolution]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectResolutions_CreateNewResolution]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5519,8 +5770,9 @@ END
 RETURN -1
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectResolutions_DeleteResolution]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectResolutions_DeleteResolution]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5539,8 +5791,9 @@ ELSE
 	RETURN 1
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectResolutions_GetResolutionById]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectResolutions_GetResolutionById]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5560,8 +5813,9 @@ WHERE
 	ResolutionId = @ResolutionId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectResolutions_GetResolutionsByProjectId]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectResolutions_GetResolutionsByProjectId]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5575,8 +5829,9 @@ WHERE ProjectId = @ProjectId
 ORDER BY SortOrder
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectResolutions_UpdateResolution]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectResolutions_UpdateResolution]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5608,8 +5863,9 @@ UPDATE BugNet_ProjectResolutions SET
 WHERE ResolutionId = @OldResolutionId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectStatus_CanDeleteStatus]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectStatus_CanDeleteStatus]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5640,8 +5896,9 @@ ELSE
 	RETURN 0
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectStatus_CreateNewStatus]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectStatus_CreateNewStatus]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5675,8 +5932,9 @@ END
 RETURN -1
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectStatus_DeleteStatus]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectStatus_DeleteStatus]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5695,8 +5953,9 @@ ELSE
 	RETURN 1
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectStatus_GetStatusById]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectStatus_GetStatusById]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5717,8 +5976,9 @@ WHERE
 	StatusId = @StatusId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectStatus_GetStatusByProjectId]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectStatus_GetStatusByProjectId]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5732,8 +5992,9 @@ WHERE ProjectId = @ProjectId
 ORDER BY SortOrder
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_ProjectStatus_UpdateStatus]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_ProjectStatus_UpdateStatus]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5766,8 +6027,9 @@ UPDATE BugNet_ProjectStatus SET
 WHERE StatusId = @OldStatusId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Query_DeleteQuery]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Query_DeleteQuery]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5779,8 +6041,9 @@ DELETE BugNet_Queries WHERE QueryId = @QueryId
 DELETE BugNet_QueryClauses WHERE QueryId = @QueryId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Query_GetQueriesByUserName]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Query_GetQueriesByUserName]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5816,8 +6079,9 @@ WHERE
 ORDER BY
 	QueryName
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Query_GetQueryById]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Query_GetQueryById]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5838,8 +6102,9 @@ ORDER BY
 	QueryName
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Query_GetSavedQuery]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Query_GetSavedQuery]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5862,8 +6127,9 @@ WHERE
 	QueryId = @QueryId;
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Query_SaveQuery]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Query_SaveQuery]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5899,8 +6165,9 @@ VALUES
 )
 RETURN scope_identity()
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Query_SaveQueryClause]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Query_SaveQueryClause]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5936,8 +6203,9 @@ VALUES (
 )
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Query_UpdateQuery]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Query_UpdateQuery]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5965,8 +6233,9 @@ WHERE
 
 DELETE FROM BugNet_QueryClauses WHERE QueryId = @QueryId
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_RelatedIssue_CreateNewChildIssue]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_RelatedIssue_CreateNewChildIssue]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5993,8 +6262,9 @@ BEGIN
 END
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_RelatedIssue_CreateNewParentIssue]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_RelatedIssue_CreateNewParentIssue]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6021,8 +6291,9 @@ BEGIN
 END
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_RelatedIssue_CreateNewRelatedIssue]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_RelatedIssue_CreateNewRelatedIssue]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6049,8 +6320,9 @@ BEGIN
 END
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_RelatedIssue_DeleteChildIssue]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_RelatedIssue_DeleteChildIssue]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6068,8 +6340,9 @@ WHERE
 	AND RelationType = @RelationType
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_RelatedIssue_DeleteParentIssue]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_RelatedIssue_DeleteParentIssue]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6087,8 +6360,9 @@ WHERE
 	AND RelationType = @RelationType
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_RelatedIssue_DeleteRelatedIssue]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_RelatedIssue_DeleteRelatedIssue]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6105,8 +6379,9 @@ WHERE
 	AND RelationType = @RelationType
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_RelatedIssue_GetChildIssues]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_RelatedIssue_GetChildIssues]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6135,8 +6410,9 @@ ORDER BY
 	SecondaryIssueId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_RelatedIssue_GetParentIssues]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_RelatedIssue_GetParentIssues]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6165,8 +6441,9 @@ ORDER BY
 	PrimaryIssueId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_RelatedIssue_GetRelatedIssues]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_RelatedIssue_GetRelatedIssues]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6193,8 +6470,9 @@ ORDER BY
 	IssueId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_RequiredField_GetRequiredFieldListForIssues]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_RequiredField_GetRequiredFieldListForIssues]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6208,8 +6486,9 @@ BEGIN
 END
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Role_AddUserToRole]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Role_AddUserToRole]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6243,8 +6522,9 @@ BEGIN
 	)
 END
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Role_CreateNewRole]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Role_CreateNewRole]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6272,8 +6552,9 @@ AS
 RETURN scope_identity()
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Role_DeleteRole]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Role_DeleteRole]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6291,8 +6572,9 @@ ELSE
 	RETURN 1
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Role_GetAllRoles]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Role_GetAllRoles]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6302,8 +6584,9 @@ AS
 SELECT RoleId, RoleName,RoleDescription,ProjectId,AutoAssign FROM BugNet_Roles
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Role_GetProjectRolesByUser]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Role_GetProjectRolesByUser]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6327,8 +6610,9 @@ INNER JOIN BugNet_Roles R ON BugNet_UserRoles.RoleId = R.RoleId
 WHERE  Users.UserId = @UserId
 AND    (R.ProjectId IS NULL OR R.ProjectId = @ProjectId)
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Role_GetRoleById]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Role_GetRoleById]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6341,8 +6625,9 @@ FROM BugNet_Roles
 WHERE RoleId = @RoleId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Role_GetRolesByProject]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Role_GetRolesByProject]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6355,8 +6640,9 @@ FROM BugNet_Roles
 WHERE ProjectId = @ProjectId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Role_GetRolesByUser]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Role_GetRolesByUser]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6378,8 +6664,9 @@ INNER JOIN Users ON BugNet_UserRoles.UserId = Users.UserId
 INNER JOIN BugNet_Roles ON BugNet_UserRoles.RoleId = BugNet_Roles.RoleId
 WHERE  Users.UserId = @UserId
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Role_IsUserInRole]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Role_IsUserInRole]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6401,8 +6688,9 @@ WHERE	UR.UserId = @UserId
 AND		UR.RoleId = @RoleId
 AND		R.ProjectId = @ProjectId
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Role_RemoveUserFromRole]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Role_RemoveUserFromRole]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6416,8 +6704,9 @@ SELECT	@UserId = UserId FROM Users WHERE UserName = @UserName
 
 DELETE BugNet_UserRoles WHERE UserId = @UserId AND RoleId = @RoleId
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Role_RoleExists]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Role_RoleExists]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6434,8 +6723,9 @@ BEGIN
 END
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Role_RoleHasPermission]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Role_RoleHasPermission]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6456,8 +6746,9 @@ AND
 BugNet_Roles.RoleName = @Role
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_Role_UpdateRole]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_Role_UpdateRole]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6478,8 +6769,9 @@ WHERE
 	RoleId = @RoleId
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_SetProjectSelectedColumnsWithUserIdAndProjectId]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_SetProjectSelectedColumnsWithUserIdAndProjectId]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6503,8 +6795,9 @@ BEGIN
 	
 END
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_User_GetUserIdByUserName]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_User_GetUserIdByUserName]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6520,8 +6813,9 @@ SELECT @UserId = UserId
 FROM Users
 WHERE UserName = @UserName
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_User_GetUserNameByPasswordResetToken]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_User_GetUserNameByPasswordResetToken]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6538,8 +6832,9 @@ FROM BugNet_UserProfiles
 WHERE PasswordVerificationToken = @Token
 
 
+
 GO
-/****** Object:  StoredProcedure [dbo].[BugNet_User_GetUsersByProjectId]    Script Date: 9/11/2014 10:01:37 PM ******/
+/****** Object:  StoredProcedure [dbo].[BugNet_User_GetUsersByProjectId]    Script Date: 11/2/2014 3:54:01 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6565,6 +6860,7 @@ WHERE
 	AND M.IsApproved = 1
 	AND (@ExcludeReadonlyUsers = 0 OR @ExcludeReadonlyUsers = 1 AND R.RoleName != 'Read Only')
 ORDER BY DisplayName ASC
+
 
 GO
 /****** Object:  Statistic [ST_1410104064_1_2]    Script Date: 9/11/2014 10:01:37 PM ******/
