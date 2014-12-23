@@ -147,19 +147,30 @@ namespace BugNET.BLL
         }
 
         /// <summary>
-        /// Determines if the user is in the super user role
+        /// Determines if the logged-in user is in the super user role
         /// </summary>
         /// <returns>
         /// <c>true</c> if is in role otherwise, <c>false</c>.
         /// </returns>
         public static bool IsSuperUser()
         {
-            if (string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+            return IsSuperUser(HttpContext.Current.User.Identity.Name);
+        }
+
+        /// <summary>
+        /// Determines if the supplied user is in the super user role
+        /// </summary>
+        /// <returns>
+        /// <c>true</c> if is in role otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsSuperUser(string username)
+        {
+            if (string.IsNullOrEmpty(username))
             {
                 return false;
             }
 
-            var roles = RoleManager.GetForUser(HttpContext.Current.User.Identity.Name);
+            var roles = RoleManager.GetForUser(username);
             return roles.Exists(r => r.Name == Globals.SUPER_USER_ROLE);
         }
 
@@ -227,7 +238,7 @@ namespace BugNET.BLL
             //if (projectId <= Globals.NEW_ID) throw new ArgumentNullException("projectId");
 
             //return true for all permission checks if the user is in the super users role.
-            if (IsSuperUser()) return true;
+            if (IsSuperUser(userName)) return true;
 
             var roles = RoleManager.GetForUser(userName, projectId);
 
