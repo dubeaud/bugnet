@@ -944,7 +944,6 @@ namespace BugNET.Providers.DataProviders
                 AddParamToSqlCmd(sqlCmd, "@ProjectAccessType", SqlDbType.Int, 0, ParameterDirection.Input, newProject.AccessType);
                 AddParamToSqlCmd(sqlCmd, "@AttachmentUploadPath", SqlDbType.NVarChar, 80, ParameterDirection.Input, newProject.UploadPath);
                 AddParamToSqlCmd(sqlCmd, "@ProjectCode", SqlDbType.NVarChar, 80, ParameterDirection.Input, newProject.Code);
-                AddParamToSqlCmd(sqlCmd, "@AttachmentStorageType", SqlDbType.Int, 1, ParameterDirection.Input, newProject.AttachmentStorageType);
                 AddParamToSqlCmd(sqlCmd, "@SvnRepositoryUrl", SqlDbType.NVarChar, 0, ParameterDirection.Input, newProject.SvnRepositoryUrl);
                 AddParamToSqlCmd(sqlCmd, "@AllowIssueVoting", SqlDbType.Bit, 0, ParameterDirection.Input, newProject.AllowIssueVoting);
                 if (newProject.Image != null)
@@ -1092,7 +1091,6 @@ namespace BugNET.Providers.DataProviders
                 AddParamToSqlCmd(sqlCmd, "@ProjectAccessType", SqlDbType.Int, 0, ParameterDirection.Input, projectToUpdate.AccessType);
                 AddParamToSqlCmd(sqlCmd, "@AttachmentUploadPath", SqlDbType.NVarChar, 80, ParameterDirection.Input, projectToUpdate.UploadPath);
                 AddParamToSqlCmd(sqlCmd, "@ProjectCode", SqlDbType.NVarChar, 80, ParameterDirection.Input, projectToUpdate.Code);
-                AddParamToSqlCmd(sqlCmd, "@AttachmentStorageType", SqlDbType.Int, 1, ParameterDirection.Input, projectToUpdate.AttachmentStorageType);
                 AddParamToSqlCmd(sqlCmd, "@SvnRepositoryUrl", SqlDbType.NVarChar, 0, ParameterDirection.Input, projectToUpdate.SvnRepositoryUrl);
                 AddParamToSqlCmd(sqlCmd, "@AllowIssueVoting", SqlDbType.Bit, 0, ParameterDirection.Input, projectToUpdate.AllowIssueVoting);
                 if (projectToUpdate.Image == null)

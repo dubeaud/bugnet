@@ -15,15 +15,33 @@
             </div>
             <div class="col-sm-9">
                 <!-- projects -->
-                <div class="jumbotron" id="BlankSlate" runat="server" visible="false">
-                    <h1><asp:Localize ID="WelcomeLocalize" Text="Welcome to BugNET!" meta:resourceKey="WelcomeMessageHeader" runat="server" /></h1>
-                    <p><asp:Localize ID="StartWorkLocalize" Text="[Resource Required]" meta:resourceKey="NoProjects" runat="server"/></p>
-                    <ol class="unstyled">
-                        <li><asp:Localize runat="server" ID="Step1_Localize" /></li>
-                        <li><asp:Localize runat="server" ID="Step2_Localize" /></li>
-                        <li><asp:Localize runat="server" ID="Step3_Localize" /></li>
-                    </ol>
-                    <p><a class="btn btn-primary btn-lg" href="http://bugnet.codeplex.com/documentation" role="button"><asp:Localize runat="server" ID="LearnMoreLocalize" meta:resourcekey="LearnMore"/></a></p>
+                <div class="jumbotron" id="BlankSlate" visible="false" runat="server">
+                    <h1>
+                        <asp:Localize ID="WelcomeLocalize" Text="Welcome to BugNET!" meta:resourceKey="WelcomeMessageHeader" runat="server" /></h1>
+                    <p>
+                        <asp:Localize ID="StartWorkLocalize" Text="[Resource Required]" meta:resourceKey="NoProjects" runat="server" /></p>
+                    <ul class="list-unstyled">
+                        <li>
+                            <span class="fa-stack fa-2x">
+                                <i class="fa fa-circle fa-stack-2x number"></i>
+                                <strong class="fa-stack-1x number-text">1</strong>
+                            </span>&nbsp;
+                            <asp:Localize runat="server" ID="Step1_Localize" /></li>
+                        <li>
+                            <span class="fa-stack fa-2x">
+                                <i class="fa fa-circle fa-stack-2x number"></i>
+                                <strong class="fa-stack-1x number-text">2</strong>
+                            </span>>&nbsp;
+                            <asp:Localize runat="server" ID="Step2_Localize" /></li>
+                        <li>
+                            <span class="fa-stack fa-2x">
+                                <i class="fa fa-circle fa-stack-2x number"></i>
+                                <strong class="fa-stack-1x number-text">3</strong>
+                            </span>>&nbsp;
+                            <asp:Localize runat="server" ID="Step3_Localize" /></li>
+                    </ul>
+                    <p><a class="btn btn-primary btn-lg" href="http://bugnet.codeplex.com/documentation" role="button">
+                        <asp:Localize runat="server" ID="LearnMoreLocalize" meta:resourcekey="LearnMore" /></a></p>
                 </div>
                 <br>
                 <div class="alert alert-info" id="UserMessage" runat="server" visible="False">
@@ -34,7 +52,7 @@
                         <div class="row">
                             <div class="col-md-2 col-sm-3 text-center">
                                 <a href="Projects/ProjectSummary/<%# ((Project)Container.DataItem).Id %>">
-                                    <asp:Image runat="server" AlternateText="<%# ((Project)Container.DataItem).Name %>" ID="ProjectImage" Height="90"  Width="90"/>
+                                    <asp:Image runat="server" AlternateText="<%# ((Project)Container.DataItem).Name %>" ID="ProjectImage" Height="90" Width="90" />
                                 </a>
                             </div>
                             <div class="col-md-10 col-sm-9">
@@ -52,10 +70,10 @@
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-right">
                                                 <li>
-                                                    <div class="row" style="width:325px;padding:10px;">
+                                                    <div class="row" style="width: 325px; padding: 10px;">
                                                         <ul class="list-unstyled col-md-6">
                                                             <li role="presentation" class="dropdown-header">
-                                                               <asp:Localize runat="server" ID="QuickLinksLocalize" Text="Quick Links" meta:resourcekey="QuickLinks" />
+                                                                <asp:Localize runat="server" ID="QuickLinksLocalize" Text="Quick Links" meta:resourcekey="QuickLinks" />
                                                             </li>
                                                             <li>
                                                                 <a href="Projects/ProjectSummary/<%# ((Project)Container.DataItem).Id %>">
@@ -82,7 +100,7 @@
                                                         </ul>
                                                         <ul class="list-unstyled col-md-6">
                                                             <li role="presentation" class="dropdown-header">
-                                                              <asp:Localize runat="server" ID="FiltersLocalize" Text="Filters" meta:resourceKey="Filters" />
+                                                                <asp:Localize runat="server" ID="FiltersLocalize" Text="Filters" meta:resourceKey="Filters" />
                                                             </li>
                                                             <li><a href='Issues/IssueList.aspx?pid=<%# ((Project)Container.DataItem).Id %>'>
                                                                 <asp:Label ID="Label1" runat="server" Text="All" meta:resourcekey="lblAll" /></a></li>

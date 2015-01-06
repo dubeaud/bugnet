@@ -114,7 +114,7 @@ namespace BugNET.BLL
 
                     entity.Size = entity.Attachment.Length;
 
-                    if (project.AttachmentStorageType == IssueAttachmentStorageTypes.Database)
+                    if (HostSettingManager.Get(HostSettingNames.AttachmentStorageType, 0) == (int)IssueAttachmentStorageTypes.Database)
                     {
                         //save the attachment record to the database.
                         var tempId = DataProviderManager.Provider.CreateNewIssueAttachment(entity);
@@ -145,7 +145,12 @@ namespace BugNET.BLL
                         // we need to supply the actual folder path on the entity
                         if (HttpContext.Current != null)
                         {
-                            uploadedFilePath = string.Format("{0}\\{1}", HttpContext.Current.Server.MapPath(string.Format("~{0}{1}", Globals.UPLOAD_FOLDER, projectPath)), entity.FileName);
+                            uploadedFilePath = string.Format(@"{0}\{1}", string.Format("{0}{1}", HostSettingManager.Get(HostSettingNames.AttachmentUploadPath), projectPath), entity.FileName);
+
+                            if (uploadedFilePath.StartsWith("~"))
+                            {
+                                uploadedFilePath = HttpContext.Current.Server.MapPath(uploadedFilePath);
+                            }
                         }
                         else
                         {
@@ -258,12 +263,17 @@ namespace BugNET.BLL
                     if (Log.IsErrorEnabled) Log.Error(ex);
                 }
 
-                if (project.AttachmentStorageType == IssueAttachmentStorageTypes.FileSystem)
+                if (HostSettingManager.Get(HostSettingNames.AttachmentStorageType, 0) == (int)IssueAttachmentStorageTypes.FileSystem)
                 {
                     //delete IssueAttachment from file system.
                     try
                     {
-                        var filePath = HttpContext.Current.Server.MapPath(String.Format("~{2}{0}\\{1}", project.UploadPath, att.FileName, Globals.UPLOAD_FOLDER));
+                        var filePath = String.Format(@"{2}{0}\{1}", project.UploadPath, att.FileName, HostSettingManager.Get(HostSettingNames.AttachmentUploadPath));
+
+                        if (filePath.StartsWith("~"))
+                        {
+                            filePath = HttpContext.Current.Server.MapPath(filePath);
+                        }
 
                         if (File.Exists(filePath))
                         {

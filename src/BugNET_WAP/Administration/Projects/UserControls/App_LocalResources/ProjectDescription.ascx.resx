@@ -120,9 +120,6 @@
   <data name="AccessTypeLabel.Text" xml:space="preserve">
     <value>Access Type</value>
   </data>
-  <data name="AttachmentStorageTypeLabel.Text" xml:space="preserve">
-    <value>Storage Type</value>
-  </data>
   <data name="Description.Text" xml:space="preserve">
     <value>Description</value>
   </data>
@@ -156,34 +153,22 @@
   <data name="SelectUser" xml:space="preserve">
     <value>-- Select User --</value>
   </data>
-  <data name="UploadPath.Text" xml:space="preserve">
-    <value>Upload Path</value>
-  </data>
   <data name="AllowIssueVotingLabel.Text" xml:space="preserve">
     <value>Allow Issue Voting</value>
   </data>
   <data name="DetailsTitle.Text" xml:space="preserve">
     <value>Details</value>
   </data>
-  <data name="IssueAttachmentsTitle.Text" xml:space="preserve">
-    <value>Issue Attachments</value>
-  </data>
   <data name="PrivateListItem.Text" xml:space="preserve">
-    <value>Private</value>
+    <value>Private &amp;mdash; Only project members can see and access this project</value>
   </data>
   <data name="ProjectImageLabel.Text" xml:space="preserve">
     <value>Project Image</value>
   </data>
   <data name="PublicListItem.Text" xml:space="preserve">
-    <value>Public</value>
+    <value>Public &amp;mdash; All users can see and access this project</value>
   </data>
   <data name="SecurityTitle.Text" xml:space="preserve">
     <value>Security</value>
-  </data>
-  <data name="AttachmentStorageTypeDb.Text" xml:space="preserve">
-    <value>Database (recommended)</value>
-  </data>
-  <data name="AttachmentStorageTypeFs.Text" xml:space="preserve">
-    <value>File System</value>
   </data>
 </root>

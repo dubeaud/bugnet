@@ -96,16 +96,16 @@ namespace BugNET.UserControls
             switch (_messageType)
             {
                 case MessageType.Information:
-                    MessageContainer.CssClass = "info";
+                    MessageContainer.CssClass = "alert alert-info alert-dismissible";
                     break;
                 case MessageType.Success:
-                    MessageContainer.CssClass = "success";
+                    MessageContainer.CssClass = "alert alert-success alert-dismissible";
                     break;
                 case MessageType.Error:
-                    MessageContainer.CssClass = "error";
+                    MessageContainer.CssClass = "alert alert-danger alert-dismissible";
                     break;
                 case MessageType.Warning:
-                    MessageContainer.CssClass = "warn";
+                    MessageContainer.CssClass = "alert alert-warning alert-dismissible";
                     break;
             }
         }

@@ -18,7 +18,6 @@ namespace BugNET.Common
         public const string ISSUE_COLUMNS = "issuecolumns";
 
         public const string CONFIG_FOLDER = "\\Config\\";
-        public const string UPLOAD_FOLDER = "\\Uploads\\";
         public const string UPLOAD_TOKEN = "UploadToken";
         public const int UPLOAD_FOLDER_LIMIT = 64;
 

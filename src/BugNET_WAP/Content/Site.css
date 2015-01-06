@@ -63,6 +63,13 @@ input[type="select"] {
     max-width: 280px;
 }*/
 
+.number{
+    color:#bbb;
+}
+.number-text{
+    color:white;
+}
+
 .checkbox input[type="checkbox"] {
     margin-left: 0;
 

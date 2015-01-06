@@ -17,8 +17,6 @@ SELECT
 	CreatorUserName,
 	CreatorDisplayName,
 	AllowAttachments,
-	AllowAttachments,
-	AttachmentStorageType,
 	SvnRepositoryUrl,
 	AllowIssueVoting
 FROM 

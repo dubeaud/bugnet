@@ -9,6 +9,7 @@ using BugNET.Common;
 using BugNET.Entities;
 using BugNET.UserInterfaceLayer;
 using log4net;
+using System.Web.Configuration;
 
 namespace BugNET.Issues.UserControls
 {
@@ -62,6 +63,11 @@ namespace BugNET.Issues.UserControls
             AttachmentsDataGrid.Columns[2].HeaderText = GetLocalResourceObject("AttachmentsGrid.Description.Text").ToString();
 
             BindAttachments();
+
+            System.Configuration.Configuration config = WebConfigurationManager.OpenWebConfiguration("~");
+            HttpRuntimeSection section = config.GetSection("system.web/httpRuntime") as HttpRuntimeSection;
+            double maxFileSize = Math.Round(section.MaxRequestLength / 1024.0, 1);
+            FileSizeLimit.Text = string.Format("Make sure your file is under {0:0.#} MB.", maxFileSize);
 
             //check users role permission for adding an attachment
             if (!Page.User.Identity.IsAuthenticated || !UserManager.HasPermission(ProjectId, Common.Permission.AddAttachment.ToString()))
@@ -187,7 +193,7 @@ namespace BugNET.Issues.UserControls
 
             if (lnkAttachment != null)
             {
-                if (ProjectManager.GetById(ProjectId).AttachmentStorageType == IssueAttachmentStorageTypes.FileSystem)
+                if (HostSettingManager.Get(HostSettingNames.AttachmentStorageType, 0) == (int)IssueAttachmentStorageTypes.FileSystem)
                 {
                     lnkAttachment.InnerText = IssueAttachmentManager.StripGuidFromFileName(currentAttachment.FileName);
                 }
