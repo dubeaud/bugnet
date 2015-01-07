@@ -151,25 +151,27 @@ namespace BugNET.BLL
                 if (originalIssue.ResolutionId != issueToCompare.ResolutionId)
                     issueChanges.Add(GetNewIssueHistory(history, "Resolution", originalIssue.ResolutionName, issueToCompare.ResolutionName));
 
-                var newAssignedUserName = String.IsNullOrEmpty(issueToCompare.AssignedUserName) ? Globals.UNASSIGNED_DISPLAY_TEXT : issueToCompare.AssignedUserName;
+                var unassignedLiteral = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Unassigned", "Unassigned");
 
-                if ((originalIssue.AssignedUserName != newAssignedUserName))
+                var newAssignedUserName = String.IsNullOrEmpty(issueToCompare.AssignedUserName) ? unassignedLiteral : issueToCompare.AssignedUserName;
+                
+                if (originalIssue.AssignedUserName != newAssignedUserName)
                 {
                     // if the new assigned user is the unassigned user then don't trigger the new assignee notification
-					issueToCompare.SendNewAssigneeNotification = (newAssignedUserName != Globals.UNASSIGNED_DISPLAY_TEXT);
-					issueToCompare.NewAssignee = true;
-
-                    var newAssignedDisplayName = (newAssignedUserName == Globals.UNASSIGNED_DISPLAY_TEXT) ? newAssignedUserName : UserManager.GetUserDisplayName(newAssignedUserName);
+                    issueToCompare.SendNewAssigneeNotification = (newAssignedUserName != unassignedLiteral);
+                    issueToCompare.NewAssignee = true;
+                    var newAssignedDisplayName = (newAssignedUserName == unassignedLiteral) ? newAssignedUserName : UserManager.GetUserDisplayName(newAssignedUserName);
                     issueChanges.Add(GetNewIssueHistory(history, "Assigned to", originalIssue.AssignedDisplayName, newAssignedDisplayName));
                 }
 
-                var newOwnerUserName = String.IsNullOrEmpty(issueToCompare.OwnerUserName) ? Globals.UNASSIGNED_DISPLAY_TEXT : issueToCompare.OwnerUserName;
-
+                var newOwnerUserName = String.IsNullOrEmpty(issueToCompare.OwnerUserName) ? unassignedLiteral : issueToCompare.OwnerUserName;
+                
                 if (originalIssue.OwnerUserName != newOwnerUserName)
                 {
-                    var newOwnerDisplayName = (newOwnerUserName == Globals.UNASSIGNED_DISPLAY_TEXT) ? newOwnerUserName : UserManager.GetUserDisplayName(issueToCompare.OwnerUserName);
+                    var newOwnerDisplayName = (newOwnerUserName == unassignedLiteral) ? newOwnerUserName : UserManager.GetUserDisplayName(issueToCompare.OwnerUserName);
                     issueChanges.Add(GetNewIssueHistory(history, "Owner", originalIssue.OwnerDisplayName, newOwnerDisplayName));
                 }
+
 
                 if (originalIssue.Estimation != issueToCompare.Estimation)
                     issueChanges.Add(GetNewIssueHistory(history, "Estimation", Utilities.EstimationToString(originalIssue.Estimation), Utilities.EstimationToString(issueToCompare.Estimation)));
