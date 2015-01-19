@@ -23,7 +23,8 @@ http://blog.bugnetproject.com/announcing-the-release-of-bugnet-pro
  * [Setting up Git for Windows and connecting to GitHub](http://help.github.com/win-set-up-git/)
  * [Forking a GitHub repository](http://help.github.com/fork-a-repo/)
  * [The simple gude to GIT guide](http://rogerdudler.github.com/git-guide/)
- * 
+ 
+
 ### License
 
 Source code is licensed under [MS-PL](http://opensource.org/licenses/MS-PL)
