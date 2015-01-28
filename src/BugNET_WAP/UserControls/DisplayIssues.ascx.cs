@@ -530,6 +530,10 @@ namespace BugNET.UserControls
                 {
                     e.Row.Cells[i].Text = dt.ToShortDateString();
                 }
+                else if (value.Trim().ToLower().StartsWith("http"))
+                {
+                    e.Row.Cells[i].Text = string.Format("<a href='{0}' target='_blank'>{0}</a>", value);
+                }
 
                 i++;
             }
