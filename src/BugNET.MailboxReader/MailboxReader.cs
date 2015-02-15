@@ -91,7 +91,7 @@ namespace BugNET.MailboxReader
                             foreach (var address in recipients)
                             {
                                 var pmbox = ProjectMailboxManager.GetByMailbox(address);
-                                
+
                                 // cannot find the mailbox skip the rest
                                 if (pmbox == null)
                                 {
@@ -101,7 +101,7 @@ namespace BugNET.MailboxReader
 
                                 var project = projects.FirstOrDefault(p => p.Id == pmbox.ProjectId);
 
-                                if(project == null)
+                                if (project == null)
                                 {
                                     project = ProjectManager.GetById(pmbox.ProjectId);
 
@@ -156,7 +156,10 @@ namespace BugNET.MailboxReader
                                 }
 
                                 //save this message
-                                SaveMailboxEntry(entry);
+                                Issue issue = SaveMailboxEntry(entry);
+
+                                //send notifications for the new issue
+                                SendNotifications(issue);
 
                                 // add the entry if the save did not throw any exceptions
                                 result.MailboxEntries.Add(entry);
@@ -239,14 +242,14 @@ namespace BugNET.MailboxReader
         /// Saves the mailbox entry.
         /// </summary>
         /// <param name="entry">The entry.</param>
-        void SaveMailboxEntry(MailboxEntry entry)
+        Issue SaveMailboxEntry(MailboxEntry entry)
         {
             try
             {
                 //load template 
                 var body = string.Format("<div >Sent by:{1} on: {2}<br/>{0}</div>", entry.Content.Trim(), entry.From, entry.Date);
 
-                if(Config.BodyTemplate.Trim().Length > 0)
+                if (Config.BodyTemplate.Trim().Length > 0)
                 {
                     var data = new Dictionary<string, object> { { "MailboxEntry", entry } };
                     body = NotificationManager.GenerateNotificationContent(Config.BodyTemplate, data);
@@ -255,13 +258,13 @@ namespace BugNET.MailboxReader
                 var projectId = entry.ProjectMailbox.ProjectId;
 
                 var mailIssue = IssueManager.GetDefaultIssueByProjectId(
-                    projectId, 
-                    entry.Title.Trim(), 
-                    body.Trim(),                
-                    entry.ProjectMailbox.AssignToUserName,                                               
+                    projectId,
+                    entry.Title.Trim(),
+                    body.Trim(),
+                    entry.ProjectMailbox.AssignToUserName,
                     Config.ReportingUserName);
 
-                if (!IssueManager.SaveOrUpdate(mailIssue)) return;
+                if (!IssueManager.SaveOrUpdate(mailIssue)) return null;
 
                 entry.IssueId = mailIssue.Id;
                 entry.WasProcessed = true;
@@ -295,7 +298,7 @@ namespace BugNET.MailboxReader
 
                     switch (contentType)
                     {
-                        case"application":
+                        case "application":
                             attachment.Attachment = ((MIME_b_SinglepartBase)mimeEntity.Body).Data;
                             break;
                         case "attachment":
@@ -303,9 +306,9 @@ namespace BugNET.MailboxReader
                         case "video":
                         case "audio":
 
-                            attachment.Attachment = ((MIME_b_SinglepartBase) mimeEntity.Body).Data;
+                            attachment.Attachment = ((MIME_b_SinglepartBase)mimeEntity.Body).Data;
                             break;
-                        case"message":
+                        case "message":
 
                             // we need to pull the actual email message out of the entity, and strip the "content type" out so that
                             // email programs will read the file properly
@@ -334,8 +337,8 @@ namespace BugNET.MailboxReader
                     else
                     {
                         isInline = true;
-                        fileName = string.IsNullOrWhiteSpace(mimeEntity.ContentType.Param_Name) ? 
-                            string.Format("untitled.{0}", mimeEntity.ContentType.SubType) : 
+                        fileName = string.IsNullOrWhiteSpace(mimeEntity.ContentType.Param_Name) ?
+                            string.Format("untitled.{0}", mimeEntity.ContentType.SubType) :
                             mimeEntity.ContentType.Param_Name;
                     }
 
@@ -345,7 +348,7 @@ namespace BugNET.MailboxReader
                     var fileSaved = false;
 
                     // can we save the file?
-                    if(saveFile)
+                    if (saveFile)
                     {
                         fileSaved = IssueAttachmentManager.SaveOrUpdate(attachment);
 
@@ -388,12 +391,55 @@ namespace BugNET.MailboxReader
 
                     IssueManager.SaveOrUpdate(mailIssue);
                 }
+
+                return mailIssue;
             }
             catch (Exception ex)
             {
                 LogException(ex);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Send notifications for the new issue
+        /// </summary>
+        /// <param name="issue">The issue generated from the email</param>
+        void SendNotifications(Issue issue)
+        {
+            if (issue == null)
+            {
+                return;
+            }
+
+            List<DefaultValue> defValues = IssueManager.GetDefaultIssueTypeByProjectId(issue.ProjectId);
+            DefaultValue selectedValue = defValues.FirstOrDefault();
+
+            if (selectedValue != null)
+            {
+                if (selectedValue.OwnedByNotify)
+                {
+                    var oUser = UserManager.GetUser(issue.OwnerUserName);
+                    if (oUser != null)
+                    {
+                        var notify = new IssueNotification { IssueId = issue.Id, NotificationUsername = oUser.UserName };
+                        IssueNotificationManager.SaveOrUpdate(notify);
+                    }
+                }
+
+                if (selectedValue.AssignedToNotify)
+                {
+                    var oUser = UserManager.GetUser(issue.AssignedUserName);
+                    if (oUser != null)
+                    {
+                        var notify = new IssueNotification { IssueId = issue.Id, NotificationUsername = oUser.UserName };
+                        IssueNotificationManager.SaveOrUpdate(notify);
+                    }
+                }
+            }
+
+            //send issue notifications
+            IssueNotificationManager.SendIssueAddNotifications(issue.Id);
         }
 
         /// <summary>
@@ -417,7 +463,7 @@ namespace BugNET.MailboxReader
             // match extension in allowed extensions list
             var allowed = allowedFileTypes.Select(allowedFileType => allowedFileType.Replace("*", "")).Any(fileType => fileName.EndsWith(fileType));
 
-            if(!allowed)
+            if (!allowed)
             {
                 LogWarning(string.Format("MailboxReader: Attachment {0} was not one of the allowed attachment extensions {1} skipping.", fileName, Config.AllowedFileExtensions.ToLower()));
             }
