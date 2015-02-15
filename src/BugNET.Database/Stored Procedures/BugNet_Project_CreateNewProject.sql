@@ -7,7 +7,6 @@
  @ProjectAccessType int,
  @ProjectCreatorUserName nvarchar(255),
  @AllowAttachments int,
- @AttachmentStorageType	int,
  @SvnRepositoryUrl	nvarchar(255),
  @AllowIssueVoting bit,
  @ProjectImageFileContent varbinary(max),
