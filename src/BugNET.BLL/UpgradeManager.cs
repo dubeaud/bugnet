@@ -29,13 +29,16 @@ namespace BugNET.BLL
             try
             {
                 var projects = DataProviderManager.Provider.GetAllProjects();
-
+                bool successful = true;
                 foreach (var project in projects)
                 {
-                    CustomFieldManager.UpdateCustomFieldView(project.Id);
+                    if(!CustomFieldManager.UpdateCustomFieldView(project.Id))
+                    {
+                        successful = false;
+                    }               
                 }
 
-                return true;
+                return successful;
             }
             catch (Exception ex)
             {
