@@ -113,7 +113,7 @@ namespace BugNET.Projects
                         if (issue.Visibility == (int)IssueVisibility.Private)
                             cssClass += " calIssuePrivate";
 
-                        string title = string.Format(@"<div id=""issue"" class=""{3}""><a href=""../Issues/IssueDetail.aspx?id={2}"">{0} - {1}</a></div>", issue.FullId.ToUpper(), issue.Title, issue.Id,cssClass);
+                        string title = string.Format(@"<div id=""issue"" class=""{3}""><a href=""{4}{2}"">{0} - {1}</a></div>", issue.FullId.ToUpper(), issue.Title, issue.Id,cssClass, Page.ResolveUrl("~/Issues/IssueDetail.aspx?id="));
                         e.Cell.Controls.Add(new LiteralControl(title));
                     }
                     break;
@@ -129,7 +129,7 @@ namespace BugNET.Projects
                             cssClass = "calIssue";
 
                         string projectName = ProjectManager.GetById(ProjectId).Name;
-                        string title = string.Format(@"<div id=""issue"" class=""{4}""><a href=""../Issues/IssueList.aspx?pid={2}&m={3}"">{1} - {0} </a><br/>{5}</div>",m.Name,projectName,m.ProjectId,m.Id, cssClass,m.Notes);
+                        string title = string.Format(@"<div id=""issue"" class=""{4}""><a href=""{6}{2}&m={3}"">{1} - {0} </a><br/>{5}</div>", m.Name, projectName, m.ProjectId, m.Id, cssClass, m.Notes, Page.ResolveUrl("~/Issues/IssueDetail.aspx?pid="));
                         e.Cell.Controls.Add(new LiteralControl(title));
                     }
                     break;
