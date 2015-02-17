@@ -241,7 +241,7 @@ namespace BugNET.MailboxReader
         /// <summary>
         /// Saves the mailbox entry.
         /// </summary>
-        /// <param name="entry">The entry.</param>
+        /// <param name="entry">The entry to be saved</param>
         Issue SaveMailboxEntry(MailboxEntry entry)
         {
             try

@@ -486,6 +486,7 @@ namespace BugNET.BLL
         /// <param name="projectId">The project id.</param>
         /// <param name="title"></param>
         /// <param name="description"></param>
+        /// <param name="issueTypeId"></param>
         /// <param name="assignedName"></param>
         /// <param name="ownerName"></param>
         /// <returns></returns>
