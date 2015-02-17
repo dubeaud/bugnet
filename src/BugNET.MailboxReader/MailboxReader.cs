@@ -261,6 +261,7 @@ namespace BugNET.MailboxReader
                     projectId,
                     entry.Title.Trim(),
                     body.Trim(),
+                    entry.ProjectMailbox.IssueTypeId,
                     entry.ProjectMailbox.AssignToUserName,
                     Config.ReportingUserName);
 
