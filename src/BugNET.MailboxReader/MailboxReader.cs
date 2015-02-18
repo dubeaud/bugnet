@@ -241,7 +241,7 @@ namespace BugNET.MailboxReader
         /// <summary>
         /// Saves the mailbox entry.
         /// </summary>
-        /// <param name="entry">The entry.</param>
+        /// <param name="entry">The entry to be saved</param>
         Issue SaveMailboxEntry(MailboxEntry entry)
         {
             try
@@ -261,6 +261,7 @@ namespace BugNET.MailboxReader
                     projectId,
                     entry.Title.Trim(),
                     body.Trim(),
+                    entry.ProjectMailbox.IssueTypeId,
                     entry.ProjectMailbox.AssignToUserName,
                     Config.ReportingUserName);
 

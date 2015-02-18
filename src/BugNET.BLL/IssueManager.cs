@@ -486,10 +486,11 @@ namespace BugNET.BLL
         /// <param name="projectId">The project id.</param>
         /// <param name="title"></param>
         /// <param name="description"></param>
+        /// <param name="issueTypeId"></param>
         /// <param name="assignedName"></param>
         /// <param name="ownerName"></param>
         /// <returns></returns>
-        public static Issue GetDefaultIssueByProjectId(int projectId, string title, string description, string assignedName, string ownerName)
+        public static Issue GetDefaultIssueByProjectId(int projectId, string title, string description, int issueTypeId, string assignedName, string ownerName)
         {
             if (projectId <= Globals.NEW_ID)
                 throw new ArgumentException(string.Format(LoggingManager.GetErrorMessageResource("InvalidProjectId"), projectId));
@@ -511,6 +512,7 @@ namespace BugNET.BLL
             issue.CreatorUserName = ownerName;
             issue.DateCreated = DateTime.Now;
             issue.Description = description;
+            issue.IssueTypeId = issueTypeId;
             issue.AssignedUserName = assignedName;
             issue.OwnerUserName = ownerName;
 
