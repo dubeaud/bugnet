@@ -29,3 +29,6 @@ http://blog.bugnetproject.com/announcing-the-release-of-bugnet-pro
 
 Source code is licensed under [MS-PL](http://opensource.org/licenses/MS-PL)
 
+### BugNET MVC
+An experimental build of BugNET for ASP.NET MVC has been started @ https://github.com/dubeaud/bugnet-mvc
+
