@@ -24,7 +24,7 @@ configuration: Release
 
 build:
   project: src\BuildScripts\build.proj
-  verbosity: normal
+  verbosity: Diagnostic
   
   
 #---------------------------------#
