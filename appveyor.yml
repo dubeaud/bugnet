@@ -1,0 +1,53 @@
+
+#---------------------------------#
+#      general configuration      #
+#---------------------------------#
+
+# version format
+version: 1.0.{build}
+
+
+#---------------------------------#
+#    environment configuration    #
+#---------------------------------#
+
+services:
+  - mssql2014           # start SQL Server 2014 Express
+   
+
+#---------------------------------#
+#       build configuration       #
+#---------------------------------#
+    
+# build Configuration, i.e. Debug, Release, etc.
+configuration: Release
+
+build:
+  project: src\BuildScripts\build.proj
+  verbosity: minimal
+  
+  
+#---------------------------------#
+#       tests configuration       #
+#---------------------------------#
+test: off
+
+
+#---------------------------------#
+#      artifacts configuration    #
+#---------------------------------#
+
+
+#---------------------------------#
+#     deployment configuration    #
+#---------------------------------#
+
+
+#---------------------------------#
+#        global handlers          #
+#---------------------------------#
+
+
+#---------------------------------#
+#         notifications           #
+#---------------------------------#
