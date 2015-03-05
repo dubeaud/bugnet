@@ -6,7 +6,7 @@
   <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets"/>
   
 
-  <Target Name="ci" DependsOnTargets="clean;nugetRestore;build;unittest;publish;archive"/>
+  <Target Name="ci" DependsOnTargets="clean;nugetRestore;version;build;unittest;publish;archive"/>
 
   <!--Restore Nuget Packages-->
   <Target Name="nugetRestore">
@@ -16,6 +16,29 @@
   <!--Target to clean output folder if exists-->
   <Target Name="clean">
     <RemoveDir Directories="$(OutputPath)" Condition="Exists($(OutputPath))" />
+  </Target>
+  
+  <!--Target to create assembly version info-->
+  <Target Name="version">
+    <Time>
+      <Output TaskParameter="Year" PropertyName="Year" />
+    </Time>
+
+    <Message Text="Version: $(Version)"/>
+
+    <Attrib Files="$(SolutionPath)\Common\GlobalAssemblyInfo.cs" ReadOnly="False" />
+
+    <AssemblyInfo CodeLanguage="CS"
+                  OutputFile="$(SolutionPath)\Common\GlobalAssemblyInfo.cs"
+                  GenerateClass="true"
+                  AssemblyCompany="http://www.bugnetproject.com"
+                  AssemblyCopyright="Copyright (C) 2006-$(Year) BugNET Project"
+                  AssemblyProduct="BugNET Open Source Issue Tracker"
+                  AssemblyConfiguration="$(BuildConfiguration)"
+                  AssemblyVersion="$(Version)"
+                  AssemblyFileVersion="$(FileVersion)"
+                  AssemblyInformationalVersion="$(InformationalVersion)" />
+  
   </Target>
 
   <!--Target to build solution using the sln file-->
