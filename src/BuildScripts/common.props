@@ -6,7 +6,7 @@
     <SolutionFileName>$(SolutionPath)BugNET.sln</SolutionFileName>
     <OutputPath>$(SolutionPath)\output</OutputPath>
     <MSBuildCommunityTasksPath>$(SolutionPath).build</MSBuildCommunityTasksPath>
-    <NunitToolsPath>$(SolutionPath)\packages</NunitToolsPath>
+    
 
 
   </PropertyGroup>
