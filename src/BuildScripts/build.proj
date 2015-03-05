@@ -6,7 +6,7 @@
   <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets"/>
   
 
-  <Target Name="ci" DependsOnTargets="clean;build;unittest;publish;archive"/>
+  <Target Name="ci" DependsOnTargets="clean;nugetRestore;build;unittest;publish;archive"/>
 
   <!--Restore Nuget Packages-->
   <Target Name="nugetRestore">
