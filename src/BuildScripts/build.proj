@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Project  xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="ci" ToolsVersion="4.0">
+
+  <Import Project="common.props"/>
+  <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets"/>
+  
+
+  <Target Name="ci" DependsOnTargets="clean;build;unittest;publish;archive"/>
+
+  <!--Restore Nuget Packages-->
+  <Target Name="nugetRestore">
+    <NuGetRestore Solution ="$(SolutionPath)" />
+  </Target>
+  
+  <!--Target to clean output folder if exists-->
+  <Target Name="clean">
+    <RemoveDir Directories="$(OutputPath)" Condition="Exists($(OutputPath))" />
+  </Target>
+
+  <!--Target to build solution using the sln file-->
+  <Target Name="build" DependsOnTargets="clean">
+    <Message Text="Building $(SolutionFileName)"/>
+    
+    <MSBuild Projects="$(SolutionFileName)" Properties="Configuration=$(BuildConfiguration);OutputPath=$(OutputPath)"/>
+
+  </Target>
+
+
+  <ItemGroup>
+    <UnitTestAssemblies Include="$(OutputPath)\.Tests.dll"/>
+  </ItemGroup>
+  
+  <Target Name="unittest" DependsOnTargets="build">
+    <Message Text="Running Unit Tests..."/>
+
+   
+
+  </Target>
+
+  <Target Name="publish" DependsOnTargets="unittest">
+    <Message Text="Publishing..."/>
+    
+  </Target>
+
+  <Target Name="archive" DependsOnTargets="publish">
+    <Message Text="Archiving..."/>
+    
+  </Target>
+
+</Project>
