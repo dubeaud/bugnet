@@ -8,19 +8,37 @@
     <MSBuildCommunityTasksPath>$(SolutionPath).build</MSBuildCommunityTasksPath>
     
   </PropertyGroup>
-  
+
+  <PropertyGroup>
+    
+    <Publish Condition="'$(PUBLISH)' == ''" >true</Publish>
+    <Publish Condition="'$(PUBLISH)' != ''" >$(PUBLISH)</Publish>
+    
+    <Archive Condition="'$(ARQUIVE)' == ''">true</Archive>
+    <Archive Condition="'$(ARQUIVE)' != ''">$(ARQUIVE)</Archive>
+    
+    <UnitTest Condition="'$(UNIT_TEST)' == ''">false</UnitTest>
+    <UnitTest Condition="'$(UNIT_TEST)' != ''">$(UNIT_TEST)</UnitTest>
+    
+  </PropertyGroup>
+
   <!-- Version Number -->
-  <PropertyGroup Condition=" '$(BUILD_NUMBER)' == '' ">
+  <PropertyGroup Condition="'$(APPVEYOR)' != '' And '$(APPVEYOR)'">
+    <Version>$(APPVEYOR_BUILD_VERSION)</Version>
+    <FileVersion>$(APPVEYOR_BUILD_VERSION)</FileVersion>
+    <InformationalVersion>$(APPVEYOR_BUILD_VERSION)</InformationalVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="('$(APPVEYOR)' == '' Or !'$(APPVEYOR)') And '$(BUILD_VERSION)' != '' ">
+    <Version>$(BUILD_VERSION)</Version>
+    <FileVersion>$(BUILD_VERSION)</FileVersion>
+    <InformationalVersion>$(BUILD_VERSION)</InformationalVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="('$(APPVEYOR)' == '' Or !'$(APPVEYOR)') And  '$(BUILD_VERSION)' == '' ">
     <Version>1.0.0.0</Version>
     <FileVersion>1.0.0.0</FileVersion>
     <InformationalVersion>1.0.0.0</InformationalVersion>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(BUILD_NUMBER)' != '' ">
-    <!-- Build Server Number -->
-    <Version>1.0.0.0</Version>
-    <FileVersion>$(BUILD_NUMBER)</FileVersion>
-    <InformationalVersion>$(BUILD_NUMBER)</InformationalVersion>
   </PropertyGroup>
   
 

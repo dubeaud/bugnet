@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
-<Project  xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="ci" ToolsVersion="4.0">
+<Project  xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="ci" ToolsVersion="12.0">
 
   <Import Project="common.props"/>
   <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets"/>
@@ -54,19 +54,19 @@
     <UnitTestAssemblies Include="$(OutputPath)\.Tests.dll"/>
   </ItemGroup>
   
-  <Target Name="unittest" DependsOnTargets="build">
+  <Target Name="unittest" Condition="'$(UnitTest)'" DependsOnTargets="build">
     <Message Text="Running Unit Tests..."/>
 
    
 
   </Target>
 
-  <Target Name="publish" DependsOnTargets="unittest">
+  <Target Name="publish" Condition="'$(Publish)'" DependsOnTargets="unittest">
     <Message Text="Publishing..."/>
     
   </Target>
 
-  <Target Name="archive" DependsOnTargets="publish">
+  <Target Name="archive" Condition="'$(Archive)'"  DependsOnTargets="publish">
     <Message Text="Archiving..."/>
     
   </Target>
