@@ -4,7 +4,7 @@
 
   <Import Project="common.props"/>
   <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets"/>
-  
+
 
   <Target Name="ci" DependsOnTargets="clean;nugetRestore;version;build;unittest;publish;archive"/>
 
@@ -12,12 +12,12 @@
   <Target Name="nugetRestore">
     <NuGetRestore Solution ="$(SolutionPath)" />
   </Target>
-  
+
   <!--Target to clean output folder if exists-->
   <Target Name="clean">
     <RemoveDir Directories="$(OutputPath)" Condition="Exists($(OutputPath))" />
   </Target>
-  
+
   <!--Target to create assembly version info-->
   <Target Name="version">
     <Time>
@@ -38,40 +38,42 @@
                   AssemblyVersion="$(Version)"
                   AssemblyFileVersion="$(FileVersion)"
                   AssemblyInformationalVersion="$(InformationalVersion)" />
-  
+
   </Target>
 
   <!--Target to build solution using the sln file-->
   <Target Name="build" DependsOnTargets="clean">
     <Message Text="Building $(SolutionFileName)"/>
-    
+
     <MSBuild Projects="$(SolutionFileName)" Properties="Configuration=$(BuildConfiguration);OutputPath=$(OutputPath)"/>
 
   </Target>
 
 
   <ItemGroup>
-    <UnitTestAssemblies Include="$(OutputPath)\.Tests.dll"/>
+    <UnitTestAssemblies Include="$(OutputPath)\*.Tests.dll"/>
   </ItemGroup>
-  
+
   <Target Name="unittest" Condition="'$(UnitTest)'" DependsOnTargets="build">
     <Message Text="Running Unit Tests..."/>
-    <NUnit Assemblies="@(UnitTestAssemblies)">
-      
-    </NUnit>
 
-   
+    <Exec Command="nunit-console @(UnitTestAssemblies->'%(FullPath)',' ') /nologo"/>
 
+
+
+
+
+    <Message Text="Unit Tests Done."/>
   </Target>
 
   <Target Name="publish" Condition="'$(Publish)'" DependsOnTargets="unittest">
     <Message Text="Publishing..."/>
-    
+
   </Target>
 
   <Target Name="archive" Condition="'$(Archive)'"  DependsOnTargets="publish">
     <Message Text="Archiving..."/>
-    
+
   </Target>
 
 </Project>

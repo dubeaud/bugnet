@@ -16,7 +16,7 @@
   <PropertyGroup>
 
     <Publish Condition="'$(Publish)' == ''" >true</Publish>
-    <Archive Condition="'$(Arquive)' == ''">true</Archive>
+    <Archive Condition="'$(Archive)' == ''">true</Archive>
     <UnitTest Condition="'$(UnitTest)' == ''">false</UnitTest>
 
   </PropertyGroup>
