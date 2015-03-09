@@ -56,18 +56,17 @@
 
   <Target Name="unittest" Condition="'$(UnitTest)'" DependsOnTargets="build">
     <Message Text="Running Unit Tests..."/>
+    <Message Text="Dlls:  @(UnitTestAssemblies->'%(FullPath)',' ')"/>
 
-    <Exec Command="nunit-console @(UnitTestAssemblies->'%(FullPath)',' ') /nologo"/>
-
-
-
-
+    <Exec Command="nunit-console @(UnitTestAssemblies->'%(FullPath)',' ')  /nologo"/>
 
     <Message Text="Unit Tests Done."/>
   </Target>
 
   <Target Name="publish" Condition="'$(Publish)'" DependsOnTargets="unittest">
     <Message Text="Publishing..."/>
+    
+  
 
   </Target>
 
