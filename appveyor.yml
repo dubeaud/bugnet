@@ -11,9 +11,14 @@ version: 1.0.0.{build}
 #    environment configuration    #
 #---------------------------------#
 
+# environment variables
+environment:
+  UnitTest: true
+
+# enable service required for build/tests
 services:
   - mssql2014           # start SQL Server 2014 Express
-   
+
 
 #---------------------------------#
 #       build configuration       #
@@ -25,7 +30,7 @@ configuration: Release
 build:
   project: src\BuildScripts\build.proj
   verbosity: Diagnostic
-  property: UnitTest=true
+
   
   
 #---------------------------------#
