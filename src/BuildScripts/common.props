@@ -4,7 +4,7 @@
   <PropertyGroup>
     <SolutionPath>..\</SolutionPath>
     <SolutionFileName>$(SolutionPath)BugNET.sln</SolutionFileName>
-    <OutputPath>$(SolutionPath)\output</OutputPath>
+    <OutputPath>$(SolutionPath)output</OutputPath>
     <MSBuildCommunityTasksPath>$(SolutionPath).build</MSBuildCommunityTasksPath>
 
   </PropertyGroup>
