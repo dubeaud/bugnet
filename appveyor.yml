@@ -13,7 +13,7 @@ version: 1.0.0.{build}
 
 # environment variables
 environment:
-  UnitTest: true
+  UnitTest: false
 
 # enable service required for build/tests
 services:
