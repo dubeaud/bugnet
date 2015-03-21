@@ -271,7 +271,7 @@ namespace BugNET.Providers.DataProviders
             while (returnData.Read())
             {
                 var user = new ITUser((Guid) returnData["UserId"], (string) returnData["UserName"],
-                                      (string) returnData["DisplayName"]);
+                                      (string)returnData["DisplayName"], (string)returnData["Email"]);
                 userList.Add(user);
             }
         }

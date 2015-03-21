@@ -257,13 +257,22 @@ namespace BugNET.MailboxReader
 
                 var projectId = entry.ProjectMailbox.ProjectId;
 
+                // try to find if the creator is valid user in the project, otherwise take
+                // the user defined in the mailbox config
+                var creator = Config.ReportingUserName;
+                var users = UserManager.GetUsersByProjectId(projectId);
+                var emails = entry.From.Split(';').Select( e => e.Trim().ToLower());
+                var user = users.Find(x => emails.Contains(x.Email.ToLower()));
+                if (user != null)
+                    creator = user.UserName;
+
                 var mailIssue = IssueManager.GetDefaultIssueByProjectId(
                     projectId,
                     entry.Title.Trim(),
                     body.Trim(),
                     entry.ProjectMailbox.IssueTypeId,
                     entry.ProjectMailbox.AssignToUserName,
-                    Config.ReportingUserName);
+                    creator);
 
                 if (!IssueManager.SaveOrUpdate(mailIssue)) return null;
 
