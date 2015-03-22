@@ -4,7 +4,10 @@
   <PropertyGroup>
     <SolutionPath>..\</SolutionPath>
     <SolutionFileName>$(SolutionPath)BugNET.sln</SolutionFileName>
-    <OutputPath>$(SolutionPath)\output</OutputPath>
+    <MainProjectPath>$(SolutionPath)\build</MainProjectPath>
+    <BuildPath>$(SolutionPath)\build</BuildPath>
+    <PublishPath>$(BuildPath)\publish</PublishPath>
+    <OutputPath>$(BuildPath)\output</OutputPath>
     <MSBuildCommunityTasksPath>$(SolutionPath).build</MSBuildCommunityTasksPath>
 
   </PropertyGroup>
