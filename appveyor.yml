@@ -42,6 +42,12 @@ test: off
 #---------------------------------#
 #      artifacts configuration    #
 #---------------------------------#
+ 
+artifacts:
+ 
+  # pushing entire folder as a zip archive
+  - path: src\build\dist
+    name: BugNet_$(version)
 
 
 #---------------------------------#
