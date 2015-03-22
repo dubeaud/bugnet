@@ -149,7 +149,32 @@ namespace BugNET.MailboxReader
 
                                 if (Config.ProcessAttachments && project.AllowAttachments)
                                 {
-                                    foreach (var attachment in mailbody.GetAttachments(Config.ProcessInlineAttachedPictures).Where(p => p.ContentType != null))
+                                    List<MIME_Entity> attachments = mailbody.GetAttachments(Config.ProcessInlineAttachedPictures).Where(p => p.ContentType != null).ToList();
+                                    List<MIME_Entity> parsed = new List<MIME_Entity>();
+
+                                    // parse inline images
+                                    for (int i = 0; i < attachments.Count; i++)
+                                    {
+                                        var attachment = attachments[i];
+                                        if (attachment.Body is MIME_b_Image && !string.IsNullOrEmpty(attachment.ContentID))
+                                        {
+                                            var inlineKey = "cid:" + attachment.ContentID.Replace("<", "").Replace(">", "");
+                                            if (entry.Content.Contains(inlineKey))
+                                            {
+                                                entry.Content = entry.Content.Replace(inlineKey, ConvertImageToBase64(attachment));
+                                            }
+                                            else
+                                            {
+                                                parsed.Add(attachment);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            parsed.Add(attachment);
+                                        }
+                                    }
+
+                                    foreach (var attachment in parsed)
                                     {
                                         entry.MailAttachments.Add(attachment);
                                     }
@@ -261,7 +286,7 @@ namespace BugNET.MailboxReader
                 // the user defined in the mailbox config
                 var creator = Config.ReportingUserName;
                 var users = UserManager.GetUsersByProjectId(projectId);
-                var emails = entry.From.Split(';').Select( e => e.Trim().ToLower());
+                var emails = entry.From.Split(';').Select(e => e.Trim().ToLower());
                 var user = users.Find(x => emails.Contains(x.Email.ToLower()));
                 if (user != null)
                     creator = user.UserName;
@@ -274,7 +299,7 @@ namespace BugNET.MailboxReader
                     entry.ProjectMailbox.AssignToUserName,
                     creator);
 
-                if( entry.ProjectMailbox.CategoryId != 0)
+                if (entry.ProjectMailbox.CategoryId != 0)
                 {
                     // overwrite default category with mailbox category
                     mailIssue.CategoryId = entry.ProjectMailbox.CategoryId;
@@ -538,6 +563,11 @@ namespace BugNET.MailboxReader
         static string ObjectToString(object o)
         {
             return o == null ? "" : o.ToString();
+        }
+
+        string ConvertImageToBase64(MIME_Entity image)
+        {
+            return String.Format("data:{0};base64,{1}", image.ContentType.TypeWithSubtype, Convert.ToBase64String((image.Body as MIME_b_Image).Data));
         }
     }
 }
