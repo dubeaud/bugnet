@@ -6,7 +6,7 @@
 	<Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets"/>
 
 
-	<Target Name="ci" DependsOnTargets="clean;nugetRestore;version;build;unittest;publish;archive"/>
+	<Target Name="ci" DependsOnTargets="clean;nugetRestore;version;build;unittest;publish"/>
 
 	<!--Restore Nuget Packages-->
 	<Target Name="nugetRestore">
@@ -87,27 +87,46 @@
 			<LatestSqlDataProviderSqlDest>$(BuildPath)\dist\BugNet\Providers\DataProviders\SqlDataProvider\$(Version)_Latest.SqlDataProvider.sql</LatestSqlDataProviderSqlDest>
 
 		</PropertyGroup>
-		
+
 		<Copy Condition="Exists('$(LatestSqlDataProviderSql)')"
-				SourceFiles="$(LatestSqlDataProviderSql)" 
+				SourceFiles="$(LatestSqlDataProviderSql)"
 						DestinationFiles="$(LatestSqlDataProviderSqlDest)"/>
-		
+
 		<!--Copy Latest Release Notes-->
 		<PropertyGroup>
 			<LatestReleaseNotes>$(OutputPath)\_PublishedWebsites\BugNET_WAP\Install\LatestReleaseNotes.htm</LatestReleaseNotes>
 			<LatestReleaseNotesDest>$(BuildPath)\dist\BugNET\Install\$(Version).htm</LatestReleaseNotesDest>
-
 		</PropertyGroup>
-		
+
 		<Copy Condition="Exists('$(LatestReleaseNotes)')"
-				SourceFiles="$(LatestReleaseNotes)" 
+				SourceFiles="$(LatestReleaseNotes)"
 						DestinationFiles="$(LatestReleaseNotesDest)"/>
 
+		<!-- copy svn hooks utility-->
 
-	</Target>
+		<ItemGroup>
+			<SubversionHooks
+				Include="$(SolutionPath)BugNET.SubversionHooks\bin\Release\**\*"
+			Exclude="$(SolutionPath)BugNET.SubversionHooks\bin\Release\**\*.pdb"/>
+		</ItemGroup>
+		<PropertyGroup>
+			<SubversionHooksDest>$(BuildPath)\dist\BugNET.SubversionHooks</SubversionHooksDest>
+		</PropertyGroup>
 
-	<Target Name="archive" Condition="'$(Archive)'"  DependsOnTargets="publish">
-		<Message Text="Archiving..."/>
+		<Copy SourceFiles="@(SubversionHooks)" DestinationFolder="$(SubversionHooksDest)"/>
+
+		<!-- copy hg hooks utility-->
+		<ItemGroup>
+			<HgHooks
+				Include="$(SolutionPath)BugNET.MercurialChangeGroupHook\bin\Release\**\*"
+			Exclude="$(SolutionPath)BugNET.MercurialChangeGroupHook\bin\Release\**\*.pdb"/>
+		</ItemGroup>
+		<PropertyGroup>
+			<HgHooksDest>$(BuildPath)\dist\BugNET.MercurialChangeGroupHook</HgHooksDest>
+		</PropertyGroup>
+
+		<Copy SourceFiles="@(HgHooks)" DestinationFolder="$(HgHooksDest)"/>
+
 
 	</Target>
 
