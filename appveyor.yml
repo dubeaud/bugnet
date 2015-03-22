@@ -4,7 +4,7 @@
 #---------------------------------#
 
 # version format
-version: 1.0.0.{build}-{branch}
+version: 1.0.0.{build}
 
 
 #---------------------------------#
@@ -46,7 +46,7 @@ test: off
 artifacts:
 # pushing entire folder as a zip archive
   - path: src\build\dist
-    name: BugNet_{version}
+    name: BugNet-{branch}_{version}
     type: zip
 
 
