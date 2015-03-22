@@ -1,4 +1,5 @@
 <%@ Register TagPrefix="it" TagName="PickType" Src="~/UserControls/PickType.ascx" %>
+<%@ Register TagPrefix="it" TagName="PickCategory" Src="~/UserControls/PickCategory.ascx" %>
 <%@ Register TagPrefix="it" TagName="PickSingleUser" Src="~/UserControls/PickSingleUser.ascx" %>
 <%@ Control Language="c#" Inherits="BugNET.Administration.Projects.UserControls.Mailboxes" CodeBehind="ProjectMailbox.ascx.cs" %>
 <div>
@@ -56,6 +57,14 @@
                             <it:PickType ID="IssueType" runat="Server" DisplayDefault="true"></it:PickType>
                         </EditItemTemplate>
                     </asp:TemplateColumn>
+                    <asp:TemplateColumn HeaderText="Category">
+                        <ItemTemplate>
+                            <asp:Label ID="IssueCategoryName" runat="Server" />
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <it:PickCategory ID="IssueCategory" runat="Server" DisplayDefault="true"></it:PickCategory>
+                        </EditItemTemplate>
+                    </asp:TemplateColumn>                    
                     <asp:TemplateColumn>
                         <ItemTemplate>
                             <asp:ImageButton ID="cmdDelete" ToolTip="<%$ Resources:SharedResources, Delete %>" AlternateText="<%$ Resources:SharedResources, Delete %>"
@@ -88,6 +97,12 @@
                     <asp:Label ID="IssueTypeLabel" runat="server" CssClass="control-label col-md-2" AssociatedControlID="IssueAssignedType" Text="Issue Type:" meta:resourcekey="IssueTypeLabel" />
                     <div class="col-md-10">
                         <it:PickType ID="IssueAssignedType" runat="Server" Required="true" DisplayDefault="true"></it:PickType>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <asp:Label ID="IssueCategoryLabel" runat="server" CssClass="control-label col-md-2" AssociatedControlID="IssueAssignedCategory" Text="Category:" meta:resourcekey="IssueCategoryLabel" />
+                    <div class="col-md-10">
+                        <it:PickCategory ID="IssueAssignedCategory" runat="Server" Required="true" DisplayDefault="true"></it:PickCategory>
                     </div>
                 </div>
                 <div class="form-group">

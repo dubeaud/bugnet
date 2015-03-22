@@ -274,6 +274,12 @@ namespace BugNET.MailboxReader
                     entry.ProjectMailbox.AssignToUserName,
                     creator);
 
+                if( entry.ProjectMailbox.CategoryId != 0)
+                {
+                    // overwrite default category with mailbox category
+                    mailIssue.CategoryId = entry.ProjectMailbox.CategoryId;
+                }
+
                 if (!IssueManager.SaveOrUpdate(mailIssue)) return null;
 
                 entry.IssueId = mailIssue.Id;

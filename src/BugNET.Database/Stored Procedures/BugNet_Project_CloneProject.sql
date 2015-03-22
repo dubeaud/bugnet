@@ -257,13 +257,15 @@ INSERT BugNet_ProjectMailBoxes
   MailBox,
   ProjectId,
   AssignToUserId,
-  IssueTypeId
+  IssueTypeId,
+  CategoryId
 )
 SELECT
   Mailbox,
   @NewProjectId,
   AssignToUserId,
-  IssueTypeId
+  IssueTypeId,
+  CategoryId
 FROM
   BugNet_ProjectMailBoxes
 WHERE
