@@ -46,7 +46,7 @@ test: off
 artifacts:
 # pushing entire folder as a zip archive
   - path: src\build\dist
-    name: BugNet-{branch}_{version}
+    name: BugNet-%APPVEYOR_REPO_BRANCH%_%APPVEYOR_BUILD_VERSION%
     type: zip
 
 
