@@ -42,6 +42,7 @@ namespace BugNET.Administration.Host.UserControls
             HostSettingManager.UpdateHostSetting(HostSettingNames.Pop3Interval, POP3Interval.Text);
             HostSettingManager.UpdateHostSetting(HostSettingNames.Pop3DeleteAllMessages, POP3DeleteMessages.Checked.ToString());
             HostSettingManager.UpdateHostSetting(HostSettingNames.Pop3InlineAttachedPictures, POP3InlineAttachedPictures.Checked.ToString());
+            HostSettingManager.UpdateHostSetting(HostSettingNames.Pop3AllowReplyToEmail, POP3AllowReplyTo.Checked.ToString());
             HostSettingManager.UpdateHostSetting(HostSettingNames.Pop3BodyTemplate, POP3BodyTemplate.Text);
             HostSettingManager.UpdateHostSetting(HostSettingNames.Pop3ReportingUsername, POP3ReportingUsername.Text);
             HostSettingManager.UpdateHostSetting(HostSettingNames.Pop3Port, POP3Port.Text);
@@ -93,6 +94,7 @@ namespace BugNET.Administration.Host.UserControls
             POP3Interval.Text = HostSettingManager.Get(HostSettingNames.Pop3Interval);
             POP3DeleteMessages.Checked = Boolean.Parse(HostSettingManager.Get(HostSettingNames.Pop3DeleteAllMessages));
             POP3ProcessAttachments.Checked = Boolean.Parse(HostSettingManager.Get(HostSettingNames.Pop3InlineAttachedPictures));
+            POP3AllowReplyTo.Checked = Boolean.Parse(HostSettingManager.Get(HostSettingNames.Pop3AllowReplyToEmail, "false"));
             POP3BodyTemplate.Text = HostSettingManager.Get(HostSettingNames.Pop3BodyTemplate);
             POP3ReportingUsername.Text = HostSettingManager.Get(HostSettingNames.Pop3ReportingUsername);
             POP3Password.Attributes.Add("value", HostSettingManager.Get(HostSettingNames.Pop3Password));

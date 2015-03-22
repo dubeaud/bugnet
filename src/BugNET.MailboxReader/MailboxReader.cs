@@ -68,13 +68,6 @@ namespace BugNET.MailboxReader
 
                         if (mailHeader != null)
                         {
-                            var messageFrom = string.Empty;
-
-                            if (mailHeader.From.Count > 0)
-                            {
-                                messageFrom = string.Join("; ", mailHeader.From.ToList().Select(p => p.Address).ToArray()).Trim();
-                            }
-
                             var recipients = mailHeader.To.Mailboxes.Select(mailbox => mailbox.Address).ToList();
 
                             if (mailHeader.Cc != null)
@@ -87,129 +80,40 @@ namespace BugNET.MailboxReader
                                 recipients.AddRange(mailHeader.Bcc.Mailboxes.Select(mailbox => mailbox.Address));
                             }
 
-                            // loop through the mailboxes
-                            foreach (var address in recipients)
+                            // first check if this is a comment (comments are implemented using plus addressing)
+                            // a comment will have a replyto address like [email]+iid-[number]@domain.com
+                            bool isProcessed = false;
+                            if (HostSettingManager.Get<bool>(HostSettingNames.Pop3AllowReplyToEmail, false))
                             {
-                                var pmbox = ProjectMailboxManager.GetByMailbox(address);
+                                isProcessed = ProcessNewComment(recipients, message, mailHeader, result);
+                            }
+                            if (!isProcessed)
+                            {
+                                isProcessed = ProcessNewIssue(recipients, message, mailHeader, projects, result);
+                            }
 
-                                // cannot find the mailbox skip the rest
-                                if (pmbox == null)
-                                {
-                                    LogWarning(string.Format("MailboxReader: could not find project mailbox: {0} skipping.", address));
-                                    continue;
-                                }
-
-                                var project = projects.FirstOrDefault(p => p.Id == pmbox.ProjectId);
-
-                                if (project == null)
-                                {
-                                    project = ProjectManager.GetById(pmbox.ProjectId);
-
-                                    // project is disabled skip
-                                    if (project.Disabled)
-                                    {
-                                        LogWarning(string.Format("MailboxReader: Project {0} - {1} is flagged as disabled skipping.", project.Id, project.Code));
-                                        continue;
-                                    }
-
-                                    projects.Add(project);
-                                }
-
-                                var entry = new MailboxEntry
-                                {
-                                    Title = mailHeader.Subject.Trim(),
-                                    From = messageFrom,
-                                    ProjectMailbox = pmbox,
-                                    Date = mailHeader.Date,
-                                    Project = project,
-                                    Content = "Email Body could not be parsed."
-                                };
-
-                                var mailbody = Mail_Message.ParseFromByte(message.MessageToByte());
-
-                                if (string.IsNullOrEmpty(mailbody.BodyHtmlText)) // no html must be text
-                                {
-                                    entry.Content = mailbody.BodyText.Replace("\n\r", "<br/>").Replace("\r\n", "<br/>").Replace("\r", "");
-                                }
-                                else
-                                {
-                                    //TODO: Enhancements could include regular expressions / string matching or not matching 
-                                    // for particular strings values in the subject or body.
-                                    // strip the <body> out of the message (using code from below)
-                                    var bodyExtractor = new Regex("<body.*?>(?<content>.*)</body>", RegexOptions.IgnoreCase | RegexOptions.Singleline);
-                                    var match = bodyExtractor.Match(mailbody.BodyHtmlText);
-
-                                    var emailContent = match.Success && match.Groups["content"] != null
-                                        ? match.Groups["content"].Value
-                                        : mailbody.BodyHtmlText;
-
-                                    entry.Content = emailContent.Replace("&lt;", "<").Replace("&gt;", ">");
-                                    entry.IsHtml = true;
-                                }
-
-                                if (Config.ProcessAttachments && project.AllowAttachments)
-                                {
-                                    List<MIME_Entity> attachments = mailbody.GetAttachments(Config.ProcessInlineAttachedPictures).Where(p => p.ContentType != null).ToList();
-                                    List<MIME_Entity> parsed = new List<MIME_Entity>();
-
-                                    // parse inline images
-                                    for (int i = 0; i < attachments.Count; i++)
-                                    {
-                                        var attachment = attachments[i];
-                                        if (attachment.Body is MIME_b_Image && !string.IsNullOrEmpty(attachment.ContentID))
-                                        {
-                                            var inlineKey = "cid:" + attachment.ContentID.Replace("<", "").Replace(">", "");
-                                            if (entry.Content.Contains(inlineKey))
-                                            {
-                                                entry.Content = entry.Content.Replace(inlineKey, ConvertImageToBase64(attachment));
-                                            }
-                                            else
-                                            {
-                                                parsed.Add(attachment);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            parsed.Add(attachment);
-                                        }
-                                    }
-
-                                    foreach (var attachment in parsed)
-                                    {
-                                        entry.MailAttachments.Add(attachment);
-                                    }
-                                }
-
-                                //save this message
-                                Issue issue = SaveMailboxEntry(entry);
-
-                                //send notifications for the new issue
-                                SendNotifications(issue);
-
-                                // add the entry if the save did not throw any exceptions
-                                result.MailboxEntries.Add(entry);
-
+                            if (isProcessed)
+                            {
                                 LogInfo(string.Format(
                                     "MailboxReader: Message #{0} processing finished, found [{1}] attachments, total saved [{2}].",
                                     message.SequenceNumber,
-                                    entry.MailAttachments.Count, entry.AttachmentsSavedCount));
-
-                                // delete the message?.
-                                if (!Config.DeleteAllMessages) continue;
+                                    0, 0));
 
                                 try
                                 {
-                                    message.MarkForDeletion();
+                                    // delete the message?.
+                                    if (Config.DeleteAllMessages)
+                                    {
+                                        message.MarkForDeletion();
+                                    }
                                 }
                                 catch (Exception)
-                                {
-
-                                }
+                                { }
                             }
-                        }
-                        else
-                        {
-                            LogWarning(string.Format("pop3Client: Message #{0} header could not be parsed.", message.SequenceNumber));
+                            else
+                            {
+                                LogWarning(string.Format("pop3Client: Message #{0} header could not be parsed.", message.SequenceNumber));
+                            }
                         }
                     }
                 }
@@ -224,6 +128,280 @@ namespace BugNET.MailboxReader
             LogInfo("MailboxReader: End read mail.");
 
             return result;
+        }
+
+        private bool ProcessNewIssue(List<string> recipients, POP3_ClientMessage message, Mail_Message mailHeader, IList<Project> projects, MailboxReaderResult result)
+        {
+            var messageFrom = string.Empty;
+            if (mailHeader.From.Count > 0)
+            {
+                messageFrom = string.Join("; ", mailHeader.From.ToList().Select(p => p.Address).ToArray()).Trim();
+            }
+
+            bool processed = false;
+
+            // loop through the mailboxes
+            foreach (var address in recipients)
+            {
+                var pmbox = ProjectMailboxManager.GetByMailbox(address);
+
+                // cannot find the mailbox skip the rest
+                if (pmbox == null)
+                {
+                    LogWarning(string.Format("MailboxReader: could not find project mailbox: {0} skipping.", address));
+                    continue;
+                }
+
+                var project = projects.FirstOrDefault(p => p.Id == pmbox.ProjectId);
+
+                if (project == null)
+                {
+                    project = ProjectManager.GetById(pmbox.ProjectId);
+
+                    // project is disabled skip
+                    if (project.Disabled)
+                    {
+                        LogWarning(string.Format("MailboxReader: Project {0} - {1} is flagged as disabled skipping.", project.Id, project.Code));
+                        continue;
+                    }
+
+                    projects.Add(project);
+                }
+
+                var entry = new MailboxEntry
+                {
+                    Title = mailHeader.Subject.Trim(),
+                    From = messageFrom,
+                    ProjectMailbox = pmbox,
+                    Date = mailHeader.Date,
+                    Project = project,
+                    Content = "Email Body could not be parsed."
+                };
+
+                var mailbody = Mail_Message.ParseFromByte(message.MessageToByte());
+
+                bool isHtml;
+                List<MIME_Entity> attachments = null;
+                string content = GetMessageContent(mailbody, project, out isHtml, ref attachments);
+
+                entry.Content = content;
+                entry.IsHtml = isHtml;
+                foreach (var attachment in attachments)
+                {
+                    entry.MailAttachments.Add(attachment);
+                }
+
+                //save this message
+                Issue issue = SaveMailboxEntry(entry);
+
+                //send notifications for the new issue
+                SendNotifications(issue);
+
+                // add the entry if the save did not throw any exceptions
+                result.MailboxEntries.Add(entry);
+
+                processed = true;
+            }
+
+            return processed;
+        }
+
+        private bool ProcessNewComment(List<string> recipients, POP3_ClientMessage message, Mail_Message mailHeader, MailboxReaderResult result)
+        {
+            string messageFrom = string.Empty;
+            if (mailHeader.From.Count > 0)
+            {
+                messageFrom = string.Join("; ", mailHeader.From.ToList().Select(p => p.Address).ToArray()).Trim();
+            }
+
+            bool processed = false;
+
+            foreach (var address in recipients)
+            {
+                Regex isReply = new Regex(@"(.*)(\+iid-)(\d+)@(.*)");
+                Match commentMatch = isReply.Match(address);
+                if (commentMatch.Success && commentMatch.Groups.Count >= 4)
+                {
+                    // we are in a reply and group 4 must contain the id of the original issue
+                    int issueId;
+                    if (int.TryParse(commentMatch.Groups[3].Value, out issueId))
+                    {
+                        var _currentIssue = IssueManager.GetById(issueId);
+
+                        if (_currentIssue != null)
+                        {
+                            var project = ProjectManager.GetById(_currentIssue.ProjectId);
+
+                            var mailbody = Mail_Message.ParseFromByte(message.MessageToByte());
+
+                            bool isHtml;
+                            List<MIME_Entity> attachments = null;
+                            string content = GetMessageContent(mailbody, project, out isHtml, ref attachments);
+
+                            IssueComment comment = new IssueComment
+                            {
+                                IssueId = issueId,
+                                Comment = content,
+                                DateCreated = mailHeader.Date
+                            };
+
+                            // try to find if the creator is valid user in the project, otherwise take
+                            // the user defined in the mailbox config
+                            var users = UserManager.GetUsersByProjectId(project.Id);
+                            var emails = messageFrom.Split(';').Select(e => e.Trim().ToLower());
+                            var user = users.Find(x => emails.Contains(x.Email.ToLower()));
+                            if (user != null)
+                            {
+                                comment.CreatorUserName = user.UserName;
+                            }
+                            else
+                            {
+                                // user not found
+                                continue;
+                            }
+
+                            var saved = IssueCommentManager.SaveOrUpdate(comment);
+                            if (saved)
+                            {
+                                //add history record
+                                var history = new IssueHistory
+                                {
+                                    IssueId = issueId,
+                                    CreatedUserName = comment.CreatorUserName,
+                                    DateChanged = comment.DateCreated,
+                                    FieldChanged = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Comment", "Comment"),
+                                    OldValue = string.Empty,
+                                    NewValue = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Added", "Added"),
+                                    TriggerLastUpdateChange = true
+                                };
+                                IssueHistoryManager.SaveOrUpdate(history);
+
+                                var projectFolderPath = Path.Combine(Config.UploadsFolderPath, project.UploadPath);
+
+                                // save attachments as new files
+                                int attachmentsSavedCount = 1;
+                                foreach (MIME_Entity mimeEntity in attachments)
+                                {
+                                    string fileName;
+                                    var contentType = mimeEntity.ContentType.Type.ToLower();
+
+                                    var attachment = new IssueAttachment
+                                    {
+                                        Id = 0,
+                                        Description = "File attached by mailbox reader",
+                                        DateCreated = DateTime.Now,
+                                        ContentType = mimeEntity.ContentType.TypeWithSubtype,
+                                        CreatorDisplayName = user.DisplayName,
+                                        CreatorUserName = user.UserName,
+                                        IssueId = issueId,
+                                        ProjectFolderPath = projectFolderPath
+                                    };
+                                    attachment.Attachment = ((MIME_b_SinglepartBase)mimeEntity.Body).Data;
+
+                                    if (contentType.Equals("attachment")) // this is an attached email
+                                    {
+                                        fileName = mimeEntity.ContentDisposition.Param_FileName;
+                                    }
+                                    else if (contentType.Equals("message")) // message has no filename so we create one
+                                    {
+                                        fileName = string.Format("Attached_Message_{0}.eml", attachmentsSavedCount);
+                                    }
+                                    else
+                                    {
+                                        fileName = string.IsNullOrWhiteSpace(mimeEntity.ContentType.Param_Name) ?
+                                            string.Format("untitled.{0}", mimeEntity.ContentType.SubType) :
+                                            mimeEntity.ContentType.Param_Name;
+                                    }
+
+                                    attachment.FileName = fileName;
+
+                                    var saveFile = IsAllowedFileExtension(fileName);
+                                    var fileSaved = false;
+
+                                    // can we save the file?
+                                    if (saveFile)
+                                    {
+                                        fileSaved = IssueAttachmentManager.SaveOrUpdate(attachment);
+
+                                        if (fileSaved)
+                                        {
+                                            attachmentsSavedCount++;
+                                        }
+                                        else
+                                        {
+                                            LogWarning("MailboxReader: Attachment could not be saved, please see previous logs");
+                                        }
+                                    }
+                                }
+
+                                processed = true;
+
+                                // add the entry if the save did not throw any exceptions
+                                result.MailboxEntries.Add(new MailboxEntry());
+                            }
+                        }
+                    }
+                }
+            }
+            return processed;
+        }
+
+        private string GetMessageContent(Mail_Message mailbody, Project project, out bool isContentHtml, ref List<MIME_Entity> attachments)
+        {
+            string content = "";
+            isContentHtml = false;
+            attachments = new List<MIME_Entity>();
+
+            // parse the text content
+            if (string.IsNullOrEmpty(mailbody.BodyHtmlText)) // no html must be text
+            {
+                content = mailbody.BodyText.Replace("\n\r", "<br/>").Replace("\r\n", "<br/>").Replace("\r", "");
+            }
+            else
+            {
+                //TODO: Enhancements could include regular expressions / string matching or not matching 
+                // for particular strings values in the subject or body.
+                // strip the <body> out of the message (using code from below)
+                var bodyExtractor = new Regex("<body.*?>(?<content>.*)</body>", RegexOptions.IgnoreCase | RegexOptions.Singleline);
+                var match = bodyExtractor.Match(mailbody.BodyHtmlText);
+
+                var emailContent = match.Success && match.Groups["content"] != null
+                    ? match.Groups["content"].Value
+                    : mailbody.BodyHtmlText;
+
+                isContentHtml = true;
+                content = emailContent.Replace("&lt;", "<").Replace("&gt;", ">");
+            }
+
+            // parse attachments
+            if (Config.ProcessAttachments && project.AllowAttachments)
+            {
+                List<MIME_Entity> allAttachs = mailbody.GetAttachments(Config.ProcessInlineAttachedPictures).Where(p => p.ContentType != null).ToList();
+
+                // parse inline images
+                for (int i = 0; i < allAttachs.Count; i++)
+                {
+                    var attachment = allAttachs[i];
+                    if (attachment.Body is MIME_b_Image && !string.IsNullOrEmpty(attachment.ContentID))
+                    {
+                        var inlineKey = "cid:" + attachment.ContentID.Replace("<", "").Replace(">", "");
+                        if (content.Contains(inlineKey))
+                        {
+                            content = content.Replace(inlineKey, ConvertImageToBase64(attachment));
+                        }
+                        else
+                        {
+                            attachments.Add(attachment);
+                        }
+                    }
+                    else
+                    {
+                        attachments.Add(attachment);
+                    }
+                }
+            }
+
+            return content;
         }
 
         /// <summary>

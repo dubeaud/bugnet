@@ -202,6 +202,24 @@ namespace BugNET.Administration.Host.UserControls {
         protected global::System.Web.UI.WebControls.CheckBox POP3InlineAttachedPictures;
         
         /// <summary>
+        /// label3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label label3;
+        
+        /// <summary>
+        /// POP3AllowReplyTo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox POP3AllowReplyTo;
+        
+        /// <summary>
         /// label20 control.
         /// </summary>
         /// <remarks>

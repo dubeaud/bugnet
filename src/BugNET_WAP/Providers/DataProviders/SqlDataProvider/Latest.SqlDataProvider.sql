@@ -1,6 +1,10 @@
 SET ANSI_PADDING ON
 GO
 
+if not exists (select 1 from [dbo].[BugNet_HostSettings] where SettingName = 'Pop3AllowReplyToEmail')
+	INSERT INTO [dbo].[BugNet_HostSettings](SettingName, SettingValue) VALUES (N'Pop3AllowReplyToEmail', N'False')
+GO
+
 
 IF Not Exists(SELECT * FROM syscolumns c JOIN sysobjects o on o.id = c.id WHERE o.name = 'BugNet_ProjectMailBoxes' And c.Name = 'CategoryId')
 	ALTER TABLE [dbo].[BugNet_ProjectMailBoxes] ADD CategoryId int
@@ -11,7 +15,6 @@ IF  NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[db
 	FOREIGN KEY([CategoryId])
 	REFERENCES [dbo].[BugNet_ProjectCategories] ([CategoryId])
 GO
-
 
 
 ALTER PROCEDURE [dbo].[BugNet_Project_CloneProject] 

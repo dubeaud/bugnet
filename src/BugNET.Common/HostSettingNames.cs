@@ -33,6 +33,7 @@
         Pop3Server,
         Pop3Username,
         Pop3UseSSL,
+        Pop3AllowReplyToEmail,
         RepositoryBackupPath,
         RepositoryRootPath,
         RepositoryRootUrl,
