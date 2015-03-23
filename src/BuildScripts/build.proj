@@ -46,7 +46,7 @@
 		<Message Text="Building $(SolutionFileName)"/>
 
 		<MSBuild
-			Projects="$(SolutionPath)BugNET_WAP/BugNET_WAP.csproj" Targets="Package"
+			Projects="$(MainProjectPath)" Targets="Package"
 			Properties="Configuration=$(BuildConfiguration);
 									OutputPath=$(OutputPath);
 									PackageLocation=$(BuildPath)\DeployPackage\BugNET_WAP_Package.zip;

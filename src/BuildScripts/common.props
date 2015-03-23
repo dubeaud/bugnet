@@ -4,7 +4,7 @@
   <PropertyGroup>
     <SolutionPath>..\</SolutionPath>
     <SolutionFileName>$(SolutionPath)BugNET.sln</SolutionFileName>
-    <MainProjectPath>$(SolutionPath)\build</MainProjectPath>
+    <MainProjectPath>$(SolutionPath)BugNET_WAP/BugNET_WAP.csproj</MainProjectPath>
     <BuildPath>$(SolutionPath)\build</BuildPath>
     <PublishPath>$(BuildPath)\publish</PublishPath>
     <OutputPath>$(BuildPath)\output</OutputPath>
