@@ -356,6 +356,9 @@ namespace BugNET.MailboxReader
             if (string.IsNullOrEmpty(mailbody.BodyHtmlText)) // no html must be text
             {
                 content = mailbody.BodyText.Replace("\n\r", "<br/>").Replace("\r\n", "<br/>").Replace("\r", "");
+                int replyToPos = content.IndexOf("-- WRITE ABOVE THIS LINE TO REPLY --");
+                if (replyToPos != -1)
+                    content = content.Substring(0, replyToPos);
             }
             else
             {
@@ -371,6 +374,14 @@ namespace BugNET.MailboxReader
 
                 isContentHtml = true;
                 content = emailContent.Replace("&lt;", "<").Replace("&gt;", ">");
+
+                content = Regex.Replace(content, "</?o:p>", string.Empty); // Clean MSWord stuff
+
+                int replyToStart = content.IndexOf("<p>-- WRITE ABOVE THIS LINE TO REPLY --</p>");
+                int replyToEnd = content.IndexOf("<p>-- WRITE BELOW THIS LINE TO REPLY --</p>");
+                if (replyToStart != -1 && replyToEnd != -1)
+                    content = content.Substring(0, replyToStart) +
+                              content.Substring(replyToEnd + 43);
             }
 
             // parse attachments
