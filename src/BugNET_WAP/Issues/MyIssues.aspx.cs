@@ -70,10 +70,9 @@ namespace BugNET.Issues
         /// <returns></returns>
         protected string GetTotalAssignedIssueCount()
         {
-            var user = Membership.GetUser();
+            var user = ViewIssueMemberDropDown.SelectedValue;
 
-            if (user == null) return "0";
-            if (user.ProviderUserKey == null) return "0";
+            if (string.IsNullOrEmpty(user)) return "0";
 
             var queryClauses = new List<QueryClause>
             {
@@ -84,7 +83,7 @@ namespace BugNET.Issues
                 new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int),
 
                 // add the user id to the filtered field
-                new QueryClause("AND", "iv.[IssueAssignedUserId]", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar)
+                new QueryClause("AND", "iv.[IssueAssignedUserId]", "=", user, SqlDbType.NVarChar)
             };
 
             // return the projects in the list box, this represents all the projects the user has access to
@@ -100,10 +99,9 @@ namespace BugNET.Issues
         /// <returns></returns>
         protected string GetTotalCreatedIssueCount()
         {
-            var user = Membership.GetUser();
+            var user = ViewIssueMemberDropDown.SelectedValue;
 
-            if (user == null) return "0";
-            if (user.ProviderUserKey == null) return "0";
+            if (string.IsNullOrEmpty(user)) return "0";
 
             var queryClauses = new List<QueryClause>
             {
@@ -114,7 +112,7 @@ namespace BugNET.Issues
                 new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int),
 
                 // add the user id to the filtered field
-                new QueryClause("AND", "iv.[IssueCreatorUserId]", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar)
+                new QueryClause("AND", "iv.[IssueCreatorUserId]", "=", user, SqlDbType.NVarChar)
             };
 
             // return the projects in the list box, this represents all the projects the user has access to
@@ -130,10 +128,9 @@ namespace BugNET.Issues
         /// <returns></returns>
         protected string GetTotalClosedIssueCount()
         {
-            var user = Membership.GetUser();
+            var user = ViewIssueMemberDropDown.SelectedValue;
 
-            if (user == null) return "0";
-            if (user.ProviderUserKey == null) return "0";
+            if (string.IsNullOrEmpty(user)) return "0";
 
             var queryClauses = new List<QueryClause>
             {
@@ -147,7 +144,7 @@ namespace BugNET.Issues
                 new QueryClause("AND", "iv.[IsClosed]", "=", "1", SqlDbType.Int),
 
                 // add the user id to the filtered field
-                new QueryClause("AND", "iv.[IssueAssignedUserId]", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar)
+                new QueryClause("AND", "iv.[IssueAssignedUserId]", "=", user, SqlDbType.NVarChar)
             };
 
             // return the projects in the list box, this represents all the projects the user has access to
@@ -163,10 +160,9 @@ namespace BugNET.Issues
         /// <returns></returns>
         protected string GetTotalOwnedIssueCount()
         {
-            var user = Membership.GetUser();
+            var user = ViewIssueMemberDropDown.SelectedValue;
 
-            if (user == null) return "0";
-            if (user.ProviderUserKey == null) return "0";
+            if (string.IsNullOrEmpty(user)) return "0";
 
             var queryClauses = new List<QueryClause>
             {
@@ -177,7 +173,7 @@ namespace BugNET.Issues
                 new QueryClause("AND", "iv.[Disabled]", "=", "0", SqlDbType.Int),
 
                 // add the user id to the filtered field
-                new QueryClause("AND", "iv.[IssueOwnerUserId]", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar)
+                new QueryClause("AND", "iv.[IssueOwnerUserId]", "=", user, SqlDbType.NVarChar)
             };
 
             // return the projects in the list box, this represents all the projects the user has access to
@@ -191,9 +187,11 @@ namespace BugNET.Issues
         /// Gets the total monitored issues count.
         /// </summary>
         /// <returns></returns>
-        protected static string GetTotalMonitoredIssuesCount()
+        protected string GetTotalMonitoredIssuesCount()
         {
-            return IssueManager.GetMonitoredIssuesByUserName(Security.GetUserName(), false).Count.ToString();
+            var user = UserManager.GetUser(new Guid(ViewIssueMemberDropDown.SelectedValue));
+
+            return IssueManager.GetMonitoredIssuesByUserName(user.UserName, false).Count.ToString();
         }
 
         /// <summary>
@@ -201,10 +199,8 @@ namespace BugNET.Issues
         /// </summary>
         private void BindIssues()
         {
-            var user = Membership.GetUser();
-
-            if (user == null) return;
-            if (user.ProviderUserKey == null) return;
+            string userId = ViewIssueMemberDropDown.SelectedValue;
+            if (userId == null) return;
 
             var queryClauses = new List<QueryClause>
             {
@@ -238,7 +234,6 @@ namespace BugNET.Issues
                 var projects = PresentationUtils.GetSelectedItemsIntegerList(ProjectListBoxFilter, false).Where(project => project > Globals.NEW_ID).ToList();
 
                 ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?channel=15&ec={0}", ExcludeClosedIssuesFilter.Checked);
-                object userId = UserManager.GetUser(Security.GetUserName()).ProviderUserKey;
                 ctlDisplayIssues.DataSource = IssueManager.GetMonitoredIssuesByUserName(userId, sortColumns, projects, ExcludeClosedIssuesFilter.Checked);
                 ctlDisplayIssues.DataBind();
             }
@@ -253,7 +248,7 @@ namespace BugNET.Issues
                             queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int));
                         }
 
-                        queryClauses.Add(new QueryClause("AND", "iv.[IssueAssignedUserId]", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar));
+                        queryClauses.Add(new QueryClause("AND", "iv.[IssueAssignedUserId]", "=", userId, SqlDbType.NVarChar));
 
                         ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?channel=7&u={0}&ec={1}", Security.GetUserName(), ExcludeClosedIssuesFilter.Checked);
 
@@ -262,7 +257,7 @@ namespace BugNET.Issues
 
                         queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "1", SqlDbType.Int));
 
-                        queryClauses.Add(new QueryClause("AND", "iv.[IssueAssignedUserId]", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar));
+                        queryClauses.Add(new QueryClause("AND", "iv.[IssueAssignedUserId]", "=", userId, SqlDbType.NVarChar));
 
                         ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?channel=7&u={0}&ec={1}", Security.GetUserName(), bool.FalseString);
 
@@ -274,7 +269,7 @@ namespace BugNET.Issues
                             queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int));
                         }
 
-                        queryClauses.Add(new QueryClause("AND", "iv.[IssueOwnerUserId]", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar));
+                        queryClauses.Add(new QueryClause("AND", "iv.[IssueOwnerUserId]", "=", userId, SqlDbType.NVarChar));
                         ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?channel=7&ou={0}&ec={1}", Security.GetUserName(), ExcludeClosedIssuesFilter.Checked);
                         break;
                     case "Created":
@@ -284,7 +279,7 @@ namespace BugNET.Issues
                             queryClauses.Add(new QueryClause("AND", "iv.[IsClosed]", "=", "0", SqlDbType.Int));
                         }
 
-                        queryClauses.Add(new QueryClause("AND", "iv.[IssueCreatorUserId]", "=", user.ProviderUserKey.ToString(), SqlDbType.NVarChar));
+                        queryClauses.Add(new QueryClause("AND", "iv.[IssueCreatorUserId]", "=", userId, SqlDbType.NVarChar));
                         ctlDisplayIssues.RssUrl = string.Format("~/Feed.aspx?channel=7&ru={0}&ec={1}", Security.GetUserName(), bool.FalseString);
                         break;
                     default:
@@ -299,6 +294,27 @@ namespace BugNET.Issues
                 ctlDisplayIssues.DataSource = IssueManager.PerformQuery(queryClauses, sortColumns);
                 ctlDisplayIssues.DataBind();
             }
+        }
+
+        private void BindMembers()
+        {
+            if (ProjectListBoxFilter.SelectedValue == "0")
+            {
+                ViewIssueMemberDropDown.DataSource = UserManager.GetAllUsers();
+                ViewIssueMemberDropDown.DataTextField = "DisplayName";
+                ViewIssueMemberDropDown.DataValueField = "ProviderUserKey";
+            }
+            else
+            {
+                ViewIssueMemberDropDown.DataSource = IssueManager.GetUserCountByProjectId(int.Parse(ProjectListBoxFilter.SelectedValue));
+                ViewIssueMemberDropDown.DataTextField = "Name";
+                ViewIssueMemberDropDown.DataValueField = "Id";
+            }
+            ViewIssueMemberDropDown.DataBind();
+
+            var user = Membership.GetUser();
+            if (user != null && user.ProviderUserKey != null && ViewIssueMemberDropDown.Items.FindByValue(user.ProviderUserKey.ToString()) != null)
+                ViewIssueMemberDropDown.SelectedValue = user.ProviderUserKey.ToString();
         }
 
         /// <summary>
@@ -326,6 +342,8 @@ namespace BugNET.Issues
             ProjectListBoxFilter.Items.Insert(0, new ListItem(GetLocalResourceObject("ProjectListBoxFilter_SelectAll.Text").ToString(), "0"));
             ProjectListBoxFilter.SelectedIndex = 0;
 
+            BindMembers();
+
             ExcludeClosedIssuesFilter.Enabled = ViewIssuesDropDownFilter.SelectedValue != "Closed";
             BindIssues();
         }
@@ -337,6 +355,18 @@ namespace BugNET.Issues
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void ProjectListBoxFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
+            BindMembers();
+            BindIssues();
+        }
+
+        protected void ViewIssueMemberDropDown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var user = UserManager.GetUser(new Guid(ViewIssueMemberDropDown.SelectedValue));
+            var name = UserManager.GetUserDisplayName(user.UserName);
+
+            DisplayNameLabel.Text = string.Format(GetLocalResourceObject("MyIssuesPage_Title.Text").ToString(),
+                                      name);
+
             BindIssues();
         }
     }
