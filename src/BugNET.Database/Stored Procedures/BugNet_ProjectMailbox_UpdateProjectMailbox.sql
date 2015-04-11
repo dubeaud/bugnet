@@ -3,7 +3,8 @@
 	@MailBoxEmailAddress nvarchar (100),
 	@ProjectId int,
 	@AssignToUserName nvarchar(255),
-	@IssueTypeId int
+	@IssueTypeId int,
+	@CategoryId int
 AS
 
 DECLARE @AssignToUserId UNIQUEIDENTIFIER
@@ -13,5 +14,6 @@ UPDATE BugNet_ProjectMailBoxes SET
 	MailBox = @MailBoxEmailAddress,
 	ProjectId = @ProjectId,
 	AssignToUserId = @AssignToUserId,
-	IssueTypeId = @IssueTypeId
+	IssueTypeId = @IssueTypeId,
+	CategoryId = @CategoryId
 WHERE ProjectMailboxId = @ProjectMailboxId

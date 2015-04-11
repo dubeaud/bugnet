@@ -339,7 +339,7 @@ namespace BugNET.BLL
                 IsBodyHtml = true
             };
 
-            mailService.Send(user.Email, message);
+            mailService.Send(user.Email, message, null);
         }
 
         /// <summary>
@@ -393,7 +393,7 @@ namespace BugNET.BLL
                 IsBodyHtml = true
             };
 
-            mailService.Send(user.Email, message);
+            mailService.Send(user.Email, message, null);
         }
 
         /// <summary>
@@ -453,7 +453,7 @@ namespace BugNET.BLL
                 IsBodyHtml = true
             };
 
-            mailService.Send(user.Email, message);
+            mailService.Send(user.Email, message, null);
         }
 
         /// <summary>

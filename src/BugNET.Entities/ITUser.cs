@@ -103,6 +103,18 @@ namespace BugNET.Entities
             : this(userId, userName, string.Empty, string.Empty, displayName, DateTime.MinValue, DateTime.MinValue, true)
         { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ITUser"/> class.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="displayName">The display name.</param>
+        /// <param name="email">The email of the user.</param>
+        public ITUser(Guid userId, string userName, string displayName, string email)
+            : this(userId, userName, string.Empty, string.Empty, displayName, DateTime.MinValue, DateTime.MinValue, true)
+        {
+            Email = email;
+        }
         #endregion
     }
 }

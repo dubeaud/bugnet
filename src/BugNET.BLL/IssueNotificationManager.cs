@@ -121,7 +121,7 @@ namespace BugNET.BLL
                             IsBodyHtml = true
                         };
 
-                    mailService.Send(user.Email, message);
+                    mailService.Send(user.Email, message, issueId);
                 }
                 catch (Exception ex)
                 {
@@ -195,7 +195,7 @@ namespace BugNET.BLL
                             IsBodyHtml = true
                         };
 
-                    mailService.Send(user.Email, message);
+                    mailService.Send(user.Email, message, issueId);
                 }
                 catch (Exception ex)
                 {
@@ -291,7 +291,7 @@ namespace BugNET.BLL
                             IsBodyHtml = true
                         };
 
-                    mailService.Send(user.Email, message);
+                    mailService.Send(user.Email, message, issueId);
                 }
                 catch (Exception ex)
                 {
@@ -351,7 +351,7 @@ namespace BugNET.BLL
                         IsBodyHtml = true
                     };
 
-                mailService.Send(user.Email, message);
+                mailService.Send(user.Email, message, notification.IssueId);
             }
             catch (Exception ex)
             {
@@ -378,7 +378,7 @@ namespace BugNET.BLL
 
             // data for template
             var data = new Dictionary<string, object> { { "Issue", issue }, { "Comment", newComment } };
-            var displayname = UserManager.GetUserDisplayName(Security.GetUserName());
+            var displayname = UserManager.GetUserDisplayName(newComment.CreatorUserName);
 
             var templateCache = new List<CultureNotificationContent>();
             var emailFormatKey = (emailFormatType == EmailFormatType.Text) ? "" : "HTML";
@@ -411,7 +411,7 @@ namespace BugNET.BLL
                 try
                 {
                     //send notifications to everyone except who changed it.
-                    if (notification.NotificationUsername.ToLower() == Security.GetUserName().ToLower()) continue;
+                    if (notification.NotificationUsername.ToLower() == newComment.CreatorUserName.ToLower()) continue;
 
                     var user = UserManager.GetUser(notification.NotificationUsername);
 
@@ -427,7 +427,7 @@ namespace BugNET.BLL
                             IsBodyHtml = true
                         };
 
-                    mailService.Send(user.Email, message);
+                    mailService.Send(user.Email, message, issueId);
                 }
                 catch (Exception ex)
                 {

@@ -156,4 +156,7 @@
   <data name="POP3InlineAttachedPictures" xml:space="preserve">
     <value>Process Inline Attachments</value>
   </data>
+  <data name="POP3AllowReplyTo" xml:space="preserve">
+    <value>Allow Reply to Notifications</value>
+  </data>
 </root>

@@ -10,6 +10,7 @@
     <xsl:strip-space elements="*" />
 
     <xsl:template match="/root">
+        <p>-- WRITE ABOVE THIS LINE TO REPLY --</p>
         <p>The following issue has been assigned to you:</p>
         <table border="0">
             <tr>
@@ -38,5 +39,7 @@
         <p style="text-align:center;font-size:8pt;padding:5px;">
             If you no longer wish to receive notifications, please visit <a href="{HostSetting_DefaultUrl}Account/UserProfile.aspx" target="_blank">your profile</a> and change your notifications options.
         </p>
+        <p>-- WRITE BELOW THIS LINE TO REPLY --</p>
+        <p><br/><br/></p>
     </xsl:template>
 </xsl:stylesheet>

@@ -11,6 +11,6 @@ namespace BugNET.BLL.Notifications
 
     public interface IMailDeliveryService
     {
-        Task Send(string recipientEmail, MailMessage message);
+        Task Send(string recipientEmail, MailMessage message, int? relatedIssueId);
     }
 }

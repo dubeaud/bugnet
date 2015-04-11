@@ -438,6 +438,7 @@ CREATE TABLE [dbo].[BugNet_ProjectMailBoxes](
 	[ProjectId] [int] NOT NULL,
 	[AssignToUserId] [uniqueidentifier] NULL,
 	[IssueTypeId] [int] NULL,
+	[CategoryId] [int] NULL,
  CONSTRAINT [PK_BugNet_ProjectMailBoxes] PRIMARY KEY CLUSTERED 
 (
 	[ProjectMailboxId] ASC
@@ -1571,6 +1572,11 @@ REFERENCES [dbo].[BugNet_Projects] ([ProjectId])
 ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[BugNet_ProjectMailBoxes] CHECK CONSTRAINT [FK_BugNet_ProjectMailBoxes_BugNet_Projects]
+GO
+ALTER TABLE [dbo].[BugNet_ProjectMailBoxes]  WITH CHECK ADD  CONSTRAINT [FK_BugNet_ProjectMailBoxes_BugNet_ProjectCategories] FOREIGN KEY([CategoryId])
+REFERENCES [dbo].[BugNet_ProjectCategories] ([CategoryId])
+GO
+ALTER TABLE [dbo].[BugNet_ProjectMailBoxes] CHECK CONSTRAINT [FK_BugNet_ProjectMailBoxes_BugNet_ProjectCategories]
 GO
 ALTER TABLE [dbo].[BugNet_ProjectMailBoxes]  WITH NOCHECK ADD  CONSTRAINT [FK_BugNet_ProjectMailBoxes_Users] FOREIGN KEY([AssignToUserId])
 REFERENCES [dbo].[Users] ([UserId])
@@ -3809,13 +3815,15 @@ INSERT BugNet_ProjectMailBoxes
   MailBox,
   ProjectId,
   AssignToUserId,
-  IssueTypeId
+  IssueTypeId,
+  CategoryId
 )
 SELECT
   Mailbox,
   @NewProjectId,
   AssignToUserId,
-  IssueTypeId
+  IssueTypeId,
+  CategoryId
 FROM
   BugNet_ProjectMailBoxes
 WHERE
@@ -5098,7 +5106,8 @@ CREATE PROCEDURE [dbo].[BugNet_ProjectMailbox_CreateProjectMailbox]
 	@MailBox nvarchar (100),
 	@ProjectId int,
 	@AssignToUserName nvarchar(255),
-	@IssueTypeId int
+	@IssueTypeId int,
+	@CategoryId int
 AS
 
 DECLARE @AssignToUserId UNIQUEIDENTIFIER
@@ -5109,14 +5118,16 @@ INSERT BugNet_ProjectMailBoxes
 	MailBox,
 	ProjectId,
 	AssignToUserId,
-	IssueTypeId
+	IssueTypeId,
+	CategoryId
 )
 VALUES
 (
 	@MailBox,
 	@ProjectId,
 	@AssignToUserId,
-	@IssueTypeId
+	@IssueTypeId,
+	@CategoryId
 )
 RETURN scope_identity()
 
@@ -5158,12 +5169,14 @@ SELECT
 	BugNet_ProjectMailboxes.*,
 	u.UserName AssignToUserName,
 	p.DisplayName AssignToDisplayName,
-	BugNet_ProjectIssueTypes.IssueTypeName
+	BugNet_ProjectIssueTypes.IssueTypeName,
+	BugNet_ProjectCategories.CategoryName
 FROM 
 	BugNet_ProjectMailBoxes
 	INNER JOIN Users u ON u.UserId = AssignToUserId
 	INNER JOIN BugNet_UserProfiles p ON u.UserName = p.UserName
 	INNER JOIN BugNet_ProjectIssueTypes ON BugNet_ProjectIssueTypes.IssueTypeId = BugNet_ProjectMailboxes.IssueTypeId	
+	LEFT JOIN BugNet_ProjectCategories ON BugNet_ProjectCategories.CategoryId = BugNet_ProjectMailboxes.CategoryId	
 WHERE
 	BugNet_ProjectMailBoxes.ProjectMailboxId = @ProjectMailboxId
 
@@ -5184,12 +5197,14 @@ SELECT
 	BugNet_ProjectMailboxes.*,
 	u.UserName AssignToUserName,
 	p.DisplayName AssignToDisplayName,
-	pit.IssueTypeName
+	pit.IssueTypeName,
+	pct.CategoryName
 FROM 
 	BugNet_ProjectMailBoxes
 	INNER JOIN Users u ON u.UserId = AssignToUserId
 	INNER JOIN BugNet_UserProfiles p ON u.UserName = p.UserName
 	INNER JOIN BugNet_ProjectIssueTypes pit ON pit.IssueTypeId = BugNet_ProjectMailboxes.IssueTypeId		
+	LEFT JOIN BugNet_ProjectCategories pct ON pct.CategoryId = BugNet_ProjectMailboxes.CategoryId		
 WHERE
 	BugNet_ProjectMailBoxes.ProjectId = @ProjectId
 
@@ -5210,12 +5225,14 @@ SELECT
 	BugNet_ProjectMailboxes.*,
 	u.UserName AssignToUserName,
 	p.DisplayName AssignToDisplayName,
-	pit.IssueTypeName
+	pit.IssueTypeName,
+	pct.CategoryName
 FROM 
 	BugNet_ProjectMailBoxes
 	INNER JOIN Users u ON u.UserId = AssignToUserId
 	INNER JOIN BugNet_UserProfiles p ON u.UserName = p.UserName
 	INNER JOIN BugNet_ProjectIssueTypes pit ON pit.IssueTypeId = BugNet_ProjectMailboxes.IssueTypeId	
+	LEFT JOIN BugNet_ProjectCategories pct ON pct.CategoryId = BugNet_ProjectMailboxes.CategoryId		
 WHERE
 	BugNet_ProjectMailBoxes.MailBox = @mailbox
 
@@ -5231,7 +5248,8 @@ CREATE PROCEDURE [dbo].[BugNet_ProjectMailbox_UpdateProjectMailbox]
 	@MailBoxEmailAddress nvarchar (100),
 	@ProjectId int,
 	@AssignToUserName nvarchar(255),
-	@IssueTypeId int
+	@IssueTypeId int,
+	@CategoryId int
 AS
 
 DECLARE @AssignToUserId UNIQUEIDENTIFIER
@@ -5241,7 +5259,8 @@ UPDATE BugNet_ProjectMailBoxes SET
 	MailBox = @MailBoxEmailAddress,
 	ProjectId = @ProjectId,
 	AssignToUserId = @AssignToUserId,
-	IssueTypeId = @IssueTypeId
+	IssueTypeId = @IssueTypeId,
+	CategoryId = @CategoryId
 WHERE ProjectMailboxId = @ProjectMailboxId
 
 

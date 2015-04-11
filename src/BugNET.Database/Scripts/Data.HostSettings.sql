@@ -23,6 +23,7 @@ USING (VALUES
 	(N'Pop3ReaderEnabled', N'True'),
 	(N'Pop3ReportingUsername', N'Admin'),
 	(N'Pop3Server', N''),
+	(N'Pop3AllowReplyToEmail', N'False'),
 	(N'Pop3Username', N'bugnetuser'),
 	(N'Pop3UseSSL', N'False'),
 	(N'RepositoryBackupPath', N''),

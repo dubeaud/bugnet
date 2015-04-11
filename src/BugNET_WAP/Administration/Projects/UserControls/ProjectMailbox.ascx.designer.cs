@@ -137,7 +137,16 @@ namespace BugNET.Administration.Projects.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::BugNET.UserControls.PickType IssueAssignedType;
-        
+
+        /// <summary>
+        /// IssueAssignedCategory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::BugNET.UserControls.PickCategory IssueAssignedCategory;
+
         /// <summary>
         /// btnAddMailbox control.
         /// </summary>

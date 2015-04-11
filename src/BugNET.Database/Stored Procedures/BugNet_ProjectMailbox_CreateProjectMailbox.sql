@@ -2,7 +2,8 @@
 	@MailBox nvarchar (100),
 	@ProjectId int,
 	@AssignToUserName nvarchar(255),
-	@IssueTypeId int
+	@IssueTypeId int,
+	@CategoryId int
 AS
 
 DECLARE @AssignToUserId UNIQUEIDENTIFIER
@@ -13,13 +14,15 @@ INSERT BugNet_ProjectMailBoxes
 	MailBox,
 	ProjectId,
 	AssignToUserId,
-	IssueTypeId
+	IssueTypeId,
+	CategoryId
 )
 VALUES
 (
 	@MailBox,
 	@ProjectId,
 	@AssignToUserId,
-	@IssueTypeId
+	@IssueTypeId,
+	@CategoryId
 )
 RETURN scope_identity()

@@ -10,6 +10,8 @@
   <xsl:strip-space elements="*" />
 
   <xsl:template match="/root">
+    <xsl:text>-- WRITE ABOVE THIS LINE TO REPLY --</xsl:text>
+    <xsl:text>&#10;</xsl:text>
     <xsl:text>The following issue has been updated by </xsl:text> <xsl:value-of select="Issue/LastUpdateDisplayName" disable-output-escaping="yes" /><xsl:text>:</xsl:text>
     <xsl:text>&#10;</xsl:text>
     <xsl:text>&#10;</xsl:text>

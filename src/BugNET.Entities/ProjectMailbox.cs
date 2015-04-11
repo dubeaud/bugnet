@@ -51,7 +51,13 @@ namespace BugNET.Entities
 	    /// <value>The issue type id.</value>
 	    public int IssueTypeId { get; set; }
 
-	    /// <summary>
+        /// <summary>
+        /// Gets the category id.
+        /// </summary>
+        /// <value>The category id.</value>
+        public int CategoryId { get; set; }
+        
+        /// <summary>
 	    /// Gets the name of the assign to.
 	    /// </summary>
 	    /// <value>The name of the assign to.</value>
@@ -69,7 +75,13 @@ namespace BugNET.Entities
 	    /// <value>The name of the issue type.</value>
 	    public string IssueTypeName { get; set; }
 
-	    #endregion
+        /// <summary>
+        /// Gets the name of the category.
+        /// </summary>
+        /// <value>The name of the category.</value>
+        public string CategoryName { get; set; }
+        
+        #endregion
 
 
 
