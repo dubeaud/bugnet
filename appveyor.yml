@@ -1,0 +1,65 @@
+
+#---------------------------------#
+#      general configuration      #
+#---------------------------------#
+
+# version format
+version: 1.0.0.{build}
+
+
+#---------------------------------#
+#    environment configuration    #
+#---------------------------------#
+
+# environment variables
+environment:
+  UnitTest: false
+
+# enable service required for build/tests
+services:
+  - mssql2014           # start SQL Server 2014 Express
+
+
+#---------------------------------#
+#       build configuration       #
+#---------------------------------#
+    
+# build Configuration, i.e. Debug, Release, etc.
+configuration: Release
+
+build:
+  project: src\BuildScripts\build.proj
+  verbosity: minimal
+
+  
+  
+#---------------------------------#
+#       tests configuration       #
+#---------------------------------#
+test: off
+
+
+#---------------------------------#
+#      artifacts configuration    #
+#---------------------------------#
+ 
+artifacts:
+# pushing entire folder as a zip archive
+  - path: src\build\dist
+    name: BugNet-$(configuration)
+    type: zip
+
+
+#---------------------------------#
+#     deployment configuration    #
+#---------------------------------#
+
+
+#---------------------------------#
+#        global handlers          #
+#---------------------------------#
+
+
+#---------------------------------#
+#         notifications           #
+#---------------------------------#
