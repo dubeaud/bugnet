@@ -15,6 +15,7 @@ namespace BugNET.Entities
         /// </summary>
         public IssueComment()
         {
+            CreatorUser = new ITUser(new Guid(), string.Empty, string.Empty);
             CreatorUserName = string.Empty;
             Comment = string.Empty;
             CreatorDisplayName = string.Empty;
@@ -89,6 +90,12 @@ namespace BugNET.Entities
         /// </summary>
         /// <value>The issue id.</value>
         public int IssueId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the creator user.
+        /// </summary>
+        /// <value>The creator user</value>
+        public ITUser CreatorUser { get; set; }
 
         #endregion
     }
