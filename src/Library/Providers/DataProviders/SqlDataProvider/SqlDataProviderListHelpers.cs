@@ -505,6 +505,8 @@ namespace BugNET.Providers.DataProviders
                         IssueId = returnData.GetInt32(returnData.GetOrdinal("IssueId")),
                         Resolution = DefaultIfNull(returnData["IssueResolution"], string.Empty),
                         Status = DefaultIfNull(returnData["IssueStatus"], string.Empty),
+                        StatusName = DefaultIfNull(returnData["StatusName"], string.Empty),
+                        StatusImageUrl = DefaultIfNull(returnData["StatusImageUrl"], string.Empty),
                         Title = returnData.GetString(returnData.GetOrdinal("IssueTitle"))
                     };
 

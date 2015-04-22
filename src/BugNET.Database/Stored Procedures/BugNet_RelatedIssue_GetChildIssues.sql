@@ -8,6 +8,8 @@ SELECT
 	IssueTitle,
 	StatusName as IssueStatus,
 	ResolutionName as IssueResolution,
+	ISNULL(dbo.BugNet_ProjectStatus.StatusName, N'Unassigned') AS StatusName,
+	ISNULL(dbo.BugNet_ProjectStatus.StatusImageUrl, '') AS StatusImageUrl,
 	DateCreated
 FROM
 	BugNet_RelatedIssues
