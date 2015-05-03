@@ -1,4 +1,6 @@
 <%@ Control Language="c#" CodeBehind="SubIssues.ascx.cs" AutoEventWireup="True" Inherits="BugNET.Issues.UserControls.SubIssues" %>
+<%@ Register TagPrefix="it" TagName="TextImage" Src="~/UserControls/TextImage.ascx" %>
+
 <p style="margin-bottom:1em">
 	<asp:label ID="lblDescription" meta:resourcekey="lblDescription"  runat="server" />
 </p>
@@ -11,7 +13,14 @@
 		<asp:HyperLinkColumn DataNavigateUrlField="IssueId" DataNavigateUrlFormatString="~/Issues/IssueDetail.aspx?id={0}"
 			DataTextField="Title" SortExpression="IssueTitle" HeaderText="<%$ Resources:SharedResources, Title %>">
 		</asp:HyperLinkColumn>
-        <asp:BoundColumn DataField="Status" SortExpression="IssueStatus" HeaderText="<%$ Resources:SharedResources, Status %>" />
+        <asp:TemplateColumn HeaderText="<%$ Resources:SharedResources, Status %>" SortExpression="IssueStatus">
+            <ItemTemplate>
+                <it:TextImage ID="ctlStatus" ImageDirectory="/Status" Text='<%# DataBinder.Eval(Container.DataItem, "StatusName" )%>' ImageUrl='<%# DataBinder.Eval(Container.DataItem, "StatusImageUrl" )%>'
+                    runat="server" />
+            </ItemTemplate>
+            <ItemStyle CssClass="text-center" />
+            <HeaderStyle CssClass="text-center" />
+        </asp:TemplateColumn>
         <asp:BoundColumn DataField="Resolution" SortExpression="IssueResolution" HeaderText="<%$ Resources:SharedResources, Resolution %>" />
         <asp:TemplateColumn>
             <ItemStyle Width="16px" />

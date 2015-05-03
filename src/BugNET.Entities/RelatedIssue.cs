@@ -40,6 +40,20 @@ namespace BugNET.Entities
         /// <value>The status.</value>
         public string Status { get; set; }
 
+
+        /// <summary>
+        /// Gets the name of the status.
+        /// </summary>
+        /// <value>The name of the status.</value>
+        public string StatusName { get; set; }
+
+        /// <summary>
+        /// Gets the status image URL.
+        /// </summary>
+        /// <value>The status image URL.</value>
+        public string StatusImageUrl { get; set; }
+
+
         /// <summary>
         /// Gets the resolution.
         /// </summary>
