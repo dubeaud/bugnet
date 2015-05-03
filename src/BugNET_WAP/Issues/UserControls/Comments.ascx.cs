@@ -101,6 +101,9 @@ namespace BugNET.Issues.UserControls
 
             var creatorDisplayName = (Label)e.Item.FindControl("CreatorDisplayName");
             creatorDisplayName.Text = UserManager.GetUserDisplayName(currentComment.CreatorUserName);
+            creatorDisplayName.ToolTip = "Id: " + currentComment.CreatorUser.Id + Environment.NewLine + 
+                                         "UserName: " + currentComment.CreatorUser.UserName + Environment.NewLine +
+                                         "DisplayName: " + currentComment.CreatorUser.DisplayName;
 
             var lblDateCreated = (Label)e.Item.FindControl("lblDateCreated");
             lblDateCreated.Text = currentComment.DateCreated.ToString("f");

@@ -263,7 +263,9 @@
             </asp:TemplateField>
             <asp:TemplateField HeaderText="<%$ Resources:SharedResources, Assigned %>" Visible="false" SortExpression="AssignedDisplayName">
                 <ItemTemplate>
-                    <%# DataBinder.Eval(Container.DataItem, "AssignedDisplayName" )%>
+                    <div id="AssignedUser" runat="server">
+                        <%# DataBinder.Eval(Container.DataItem, "AssignedDisplayName" )%>
+                    </div>
                 </ItemTemplate>
                 <HeaderStyle Wrap="False" />
                 <ItemStyle Wrap="False" />

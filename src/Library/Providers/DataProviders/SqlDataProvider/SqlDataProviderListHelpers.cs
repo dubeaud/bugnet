@@ -82,6 +82,10 @@ namespace BugNET.Providers.DataProviders
             {
                 issueCommentList.Add(new IssueComment
                     {
+                        CreatorUser = new ITUser(returnData.GetGuid(returnData.GetOrdinal("CreatorUserId")),
+                                              returnData.GetString(returnData.GetOrdinal("CreatorUsername")),
+                                              returnData.GetString(returnData.GetOrdinal("CreatorDisplayName"))
+                                              ),
                         Id = returnData.GetInt32(returnData.GetOrdinal("IssueCommentId")),
                         Comment = returnData.GetString(returnData.GetOrdinal("Comment")),
                         DateCreated = returnData.GetDateTime(returnData.GetOrdinal("DateCreated")),
@@ -782,6 +786,10 @@ namespace BugNET.Providers.DataProviders
                         returnData.GetString(returnData.GetOrdinal("AssignedDisplayName")),
                     AssignedUserId = DefaultIfNull(returnData["IssueAssignedUserId"], Guid.Empty),
                     AssignedUserName = returnData.GetString(returnData.GetOrdinal("AssignedUserName")),
+                    AssignedUser = new ITUser(DefaultIfNull(returnData["IssueAssignedUserId"], Guid.Empty),
+                                              returnData.GetString(returnData.GetOrdinal("AssignedUserName")),
+                                              returnData.GetString(returnData.GetOrdinal("AssignedDisplayName"))                                              
+                                              ),
                     CategoryId = DefaultIfNull(returnData["IssueCategoryId"], 0),
                     CategoryName = returnData.GetString(returnData.GetOrdinal("CategoryName")),
                     CreatorDisplayName = returnData.GetString(returnData.GetOrdinal("CreatorDisplayName")),
