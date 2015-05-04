@@ -19,7 +19,7 @@ namespace BugNET.Models
             Revisions = new HashSet<IssueRevision>();
             Votes = new HashSet<IssueVote>();
             WorkReports = new HashSet<IssueWorkReport>();
-            CustomFieldValues = new HashSet<ProjectCustomFieldValue>();
+            CustomFieldValues = new HashSet<CustomFieldValue>();
             RelatedIssues = new HashSet<RelatedIssue>();
             RelatedIssues1 = new HashSet<RelatedIssue>();
         }
@@ -102,17 +102,17 @@ namespace BugNET.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<IssueRevision> Revisions { get; set; }
 
-        public virtual ProjectCategory Category { get; set; }
+        public virtual Category Category { get; set; }
 
-        public virtual ProjectIssueType IssueType { get; set; }
+        public virtual IssueType IssueType { get; set; }
 
-        public virtual ProjectMilestone Milestone { get; set; }
+        public virtual Milestone Milestone { get; set; }
 
-        public virtual ProjectMilestone Milestone1 { get; set; }
+        public virtual Milestone Milestone1 { get; set; }
 
-        public virtual ProjectPriority Priority { get; set; }
+        public virtual Priority Priority { get; set; }
 
-        public virtual ProjectResolution Resolution { get; set; }
+        public virtual Resolution Resolution { get; set; }
 
         public virtual Project Project { get; set; }
 
@@ -125,7 +125,7 @@ namespace BugNET.Models
         public virtual ICollection<IssueWorkReport> WorkReports { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProjectCustomFieldValue> CustomFieldValues { get; set; }
+        public virtual ICollection<CustomFieldValue> CustomFieldValues { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RelatedIssue> RelatedIssues { get; set; }

@@ -7,7 +7,7 @@ namespace BugNET.Models
     using System.Data.Entity.Spatial;
 
     [Table("BugNet_ProjectCustomFieldValues")]
-    public partial class ProjectCustomFieldValue
+    public partial class CustomFieldValue
     {
         [Key]
         public int CustomFieldValueId { get; set; }
@@ -21,6 +21,6 @@ namespace BugNET.Models
 
         public virtual Issue Issue { get; set; }
 
-        public virtual ProjectCustomField ProjectCustomFields { get; set; }
+        public virtual CustomField ProjectCustomFields { get; set; }
     }
 }

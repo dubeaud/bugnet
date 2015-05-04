@@ -7,7 +7,7 @@ namespace BugNET.Models
     using System.Data.Entity.Spatial;
 
     [Table("BugNet_RequiredFieldList")]
-    public partial class RequiredFieldList
+    public partial class RequiredField
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]

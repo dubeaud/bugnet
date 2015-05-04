@@ -13,14 +13,14 @@ namespace BugNET.Models
         public Project()
         {
             Issues = new HashSet<Issue>();
-            ProjectCategories = new HashSet<ProjectCategory>();
-            ProjectCustomFields = new HashSet<ProjectCustomField>();
-            ProjectIssueTypes = new HashSet<ProjectIssueType>();
-            ProjectMailBoxes = new HashSet<ProjectMailBox>();
-            ProjectMilestones = new HashSet<ProjectMilestone>();
+            ProjectCategories = new HashSet<Category>();
+            ProjectCustomFields = new HashSet<CustomField>();
+            ProjectIssueTypes = new HashSet<IssueType>();
+            ProjectMailBoxes = new HashSet<ProjectMailbox>();
+            ProjectMilestones = new HashSet<Milestone>();
             ProjectNotifications = new HashSet<ProjectNotification>();
-            ProjectPriorities = new HashSet<ProjectPriority>();
-            ProjectResolutions = new HashSet<ProjectResolution>();
+            ProjectPriorities = new HashSet<Priority>();
+            ProjectResolutions = new HashSet<Resolution>();
             ProjectStatus = new HashSet<ProjectStatus>();
             Queries = new HashSet<Query>();
             Roles = new HashSet<Role>();
@@ -78,28 +78,28 @@ namespace BugNET.Models
         public virtual ICollection<Issue> Issues { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProjectCategory> ProjectCategories { get; set; }
+        public virtual ICollection<Category> ProjectCategories { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProjectCustomField> ProjectCustomFields { get; set; }
+        public virtual ICollection<CustomField> ProjectCustomFields { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProjectIssueType> ProjectIssueTypes { get; set; }
+        public virtual ICollection<IssueType> ProjectIssueTypes { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProjectMailBox> ProjectMailBoxes { get; set; }
+        public virtual ICollection<ProjectMailbox> ProjectMailBoxes { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProjectMilestone> ProjectMilestones { get; set; }
+        public virtual ICollection<Milestone> ProjectMilestones { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProjectNotification> ProjectNotifications { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProjectPriority> ProjectPriorities { get; set; }
+        public virtual ICollection<Priority> ProjectPriorities { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProjectResolution> ProjectResolutions { get; set; }
+        public virtual ICollection<Resolution> ProjectResolutions { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProjectStatus> ProjectStatus { get; set; }

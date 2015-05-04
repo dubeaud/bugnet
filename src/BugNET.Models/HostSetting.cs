@@ -7,7 +7,7 @@ namespace BugNET.Models
     using System.Data.Entity.Spatial;
 
     [Table("BugNet_HostSettings")]
-    public partial class HostSettings
+    public partial class HostSetting
     {
         [Key]
         [StringLength(50)]

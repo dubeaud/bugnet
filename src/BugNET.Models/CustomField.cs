@@ -7,13 +7,13 @@ namespace BugNET.Models
     using System.Data.Entity.Spatial;
 
     [Table("BugNet_ProjectCustomFields")]
-    public partial class ProjectCustomField
+    public partial class CustomField
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ProjectCustomField()
+        public CustomField()
         {
-            ProjectCustomFieldSelections = new HashSet<ProjectCustomFieldSelection>();
-            ProjectCustomFieldValues = new HashSet<ProjectCustomFieldValue>();
+            ProjectCustomFieldSelections = new HashSet<CustomFieldSelection>();
+            ProjectCustomFieldValues = new HashSet<CustomFieldValue>();
         }
 
         [Key]
@@ -31,14 +31,14 @@ namespace BugNET.Models
 
         public int CustomFieldTypeId { get; set; }
 
-        public virtual ProjectCustomFieldType ProjectCustomFieldTypes { get; set; }
+        public virtual CustomFieldType ProjectCustomFieldTypes { get; set; }
 
         public virtual Project Projects { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProjectCustomFieldSelection> ProjectCustomFieldSelections { get; set; }
+        public virtual ICollection<CustomFieldSelection> ProjectCustomFieldSelections { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProjectCustomFieldValue> ProjectCustomFieldValues { get; set; }
+        public virtual ICollection<CustomFieldValue> ProjectCustomFieldValues { get; set; }
     }
 }

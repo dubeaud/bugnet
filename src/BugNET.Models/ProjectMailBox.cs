@@ -7,7 +7,7 @@ namespace BugNET.Models
     using System.Data.Entity.Spatial;
 
     [Table("BugNet_ProjectMailBoxes")]
-    public partial class ProjectMailBox
+    public partial class ProjectMailbox
     {
         [Key]
         public int ProjectMailboxId { get; set; }
@@ -22,7 +22,7 @@ namespace BugNET.Models
 
         public int? IssueTypeId { get; set; }
 
-        public virtual ProjectIssueType ProjectIssueTypes { get; set; }
+        public virtual IssueType ProjectIssueTypes { get; set; }
 
         public virtual Project Projects { get; set; }
     }

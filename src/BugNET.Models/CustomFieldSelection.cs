@@ -7,7 +7,7 @@ namespace BugNET.Models
     using System.Data.Entity.Spatial;
 
     [Table("BugNet_ProjectCustomFieldSelections")]
-    public partial class ProjectCustomFieldSelection
+    public partial class CustomFieldSelection
     {
         [Key]
         public int CustomFieldSelectionId { get; set; }
@@ -24,6 +24,6 @@ namespace BugNET.Models
 
         public int CustomFieldSelectionSortOrder { get; set; }
 
-        public virtual ProjectCustomField ProjectCustomFields { get; set; }
+        public virtual CustomField ProjectCustomFields { get; set; }
     }
 }

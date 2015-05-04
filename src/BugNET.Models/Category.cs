@@ -6,37 +6,31 @@ namespace BugNET.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("BugNet_ProjectIssueTypes")]
-    public partial class ProjectIssueType
+    [Table("BugNet_ProjectCategories")]
+    public partial class Category
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ProjectIssueType()
+        public Category()
         {
             Issues = new HashSet<Issue>();
-            ProjectMailBoxes = new HashSet<ProjectMailBox>();
         }
 
         [Key]
-        public int IssueTypeId { get; set; }
+        public int CategoryId { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string CategoryName { get; set; }
 
         public int ProjectId { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        public string IssueTypeName { get; set; }
+        public int ParentCategoryId { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        public string IssueTypeImageUrl { get; set; }
-
-        public int SortOrder { get; set; }
+        public bool Disabled { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Issue> Issues { get; set; }
 
         public virtual Project Projects { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProjectMailBox> ProjectMailBoxes { get; set; }
     }
 }

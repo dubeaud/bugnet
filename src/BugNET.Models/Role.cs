@@ -13,7 +13,7 @@ namespace BugNET.Models
         public Role()
         {
             UserRoles = new HashSet<UserRole>();
-            Permissions = new HashSet<Permissions>();
+            Permissions = new HashSet<RolePermission>();
         }
 
         [Key]
@@ -37,6 +37,6 @@ namespace BugNET.Models
         public virtual ICollection<UserRole> UserRoles { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Permissions> Permissions { get; set; }
+        public virtual ICollection<RolePermission> Permissions { get; set; }
     }
 }

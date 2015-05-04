@@ -6,23 +6,33 @@ namespace BugNET.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("BugNet_ProjectCustomFieldTypes")]
-    public partial class ProjectCustomFieldType
+    [Table("BugNet_ProjectPriorities")]
+    public partial class Priority
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ProjectCustomFieldType()
+        public Priority()
         {
-            ProjectCustomFields = new HashSet<ProjectCustomField>();
+            Issues = new HashSet<Issue>();
         }
 
         [Key]
-        public int CustomFieldTypeId { get; set; }
+        public int PriorityId { get; set; }
+
+        public int ProjectId { get; set; }
 
         [Required]
         [StringLength(50)]
-        public string CustomFieldTypeName { get; set; }
+        public string PriorityName { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        public string PriorityImageUrl { get; set; }
+
+        public int SortOrder { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProjectCustomField> ProjectCustomFields { get; set; }
+        public virtual ICollection<Issue> Issues { get; set; }
+
+        public virtual Project Projects { get; set; }
     }
 }

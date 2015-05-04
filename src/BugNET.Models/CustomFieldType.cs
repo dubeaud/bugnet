@@ -6,31 +6,23 @@ namespace BugNET.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("BugNet_ProjectCategories")]
-    public partial class ProjectCategory
+    [Table("BugNet_ProjectCustomFieldTypes")]
+    public partial class CustomFieldType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ProjectCategory()
+        public CustomFieldType()
         {
-            Issues = new HashSet<Issue>();
+            ProjectCustomFields = new HashSet<CustomField>();
         }
 
         [Key]
-        public int CategoryId { get; set; }
+        public int CustomFieldTypeId { get; set; }
 
         [Required]
-        [StringLength(100)]
-        public string CategoryName { get; set; }
-
-        public int ProjectId { get; set; }
-
-        public int ParentCategoryId { get; set; }
-
-        public bool Disabled { get; set; }
+        [StringLength(50)]
+        public string CustomFieldTypeName { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Issue> Issues { get; set; }
-
-        public virtual Project Projects { get; set; }
+        public virtual ICollection<CustomField> ProjectCustomFields { get; set; }
     }
 }
