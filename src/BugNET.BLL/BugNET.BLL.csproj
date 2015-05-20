@@ -70,6 +70,16 @@
     <Compile Include="IssueHistoryManager.cs" />
     <Compile Include="IssueManager.cs" />
     <Compile Include="IssueNotificationManager.cs" />
+    <Compile Include="IssueReference\IPathProvider.cs" />
+    <Compile Include="IssueReference\IssueReference.cs" />
+    <Compile Include="IssueReference\IssueReferenceLink.cs" />
+    <Compile Include="IssueReference\IssueReferenceParser.cs" />
+    <Compile Include="IssueReference\IssueReferenceReplacer.cs" />
+    <Compile Include="IssueReference\IssueReferenceToLinkConverter.cs" />
+    <Compile Include="IssueReference\IssueReferenceToIssueLink.cs" />
+    <Compile Include="IssueReference\IssueReferenceToLinkConverterBuilder.cs" />
+    <Compile Include="IssueReference\IssueReferenceValidator.cs" />
+    <Compile Include="IssueReference\PathProvider.cs" />
     <Compile Include="IssueRevisionManager.cs" />
     <Compile Include="IssueTypeManager.cs" />
     <Compile Include="IssueVoteManager.cs" />
@@ -123,6 +133,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

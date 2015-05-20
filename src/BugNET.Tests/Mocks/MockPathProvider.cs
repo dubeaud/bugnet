@@ -1,14 +1,20 @@
-﻿using System.Reflection;
+﻿using BugNET.BLL;
 
-namespace BugNET.Tests.Mocks
+namespace BugNET.Tests
 {
-    public static class MockPathProvider
+    public class MockPathProvider : IPathProvider
     {
-        public static string MapPath(string pathin)
-        {
-            string tmpp = pathin.Replace("/", @"\").Replace("~", "").Trim();
-            tmpp = Assembly.GetExecutingAssembly().Location + tmpp;
+        private readonly string baseUrl;
 
+        public MockPathProvider(string baseUrl)
+        {
+            this.baseUrl = baseUrl;
+        }
+
+        public string GetAbsolutePath(string path)
+        {
+            string tmpp = path.Replace("~", "").Trim();
+            tmpp = baseUrl + tmpp;
             return tmpp;
         }
     }
