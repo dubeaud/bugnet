@@ -115,12 +115,12 @@ namespace BugNET.DAL
         public abstract List<IssueNotification> GetIssueNotificationsByIssueId(int issueId);
         public abstract bool DeleteIssueNotification(int issueId, string username);
 
-        //IssueRevisions
+        // IssueRevisions
         public abstract int CreateNewIssueRevision(IssueRevision newIssueRevision);
         public abstract List<IssueRevision> GetIssueRevisionsByIssueId(int issueId);
         public abstract bool DeleteIssueRevision(int issueRevisionId);
 
-        //IssueVote
+        // IssueVote
         public abstract int CreateNewIssueVote(IssueVote newIssueVote);
         public abstract bool HasUserVoted(int issueId, string username);
 
@@ -192,16 +192,31 @@ namespace BugNET.DAL
         public abstract List<Resolution> GetResolutionsByProjectId(int projectId);
         public abstract bool CanDeleteResolution(int ResolutionId);
 
-        //Project Notifications
+        // Project Notifications
         public abstract int CreateNewProjectNotification(ProjectNotification newProjectNotification);
         public abstract List<ProjectNotification> GetProjectNotificationsByProjectId(int projectId);
         public abstract bool DeleteProjectNotification(int projectId, string username);
         public abstract List<ProjectNotification> GetProjectNotificationsByUsername(string username);
 
-        //Users
+        // Users
         public abstract List<ITUser> GetUsersByProjectId(int projectId);
         public abstract List<ITUser> GetUsersByProjectId(int projectId, bool excludeReadOnlyUsers);
         public abstract string GetUserNameByPasswordResetToken(string token);
+
+        // User Custom Fields
+        public abstract List<UserCustomField> GetUserCustomFields();
+        public abstract UserCustomField GetUserCustomFieldById(int customFieldId);
+        public abstract int CreateNewUserCustomField(UserCustomField newCustomField);
+        public abstract bool UpdateUserCustomField(UserCustomField customFieldToUpdate);
+        public abstract bool DeleteUserCustomField(int customFieldId);
+        public abstract bool SaveUserCustomFieldValues(Guid userId, List<UserCustomField> fields);
+
+        // User Custom Field Selections
+        public abstract int CreateNewUserCustomFieldSelection(UserCustomFieldSelection newCustomFieldSelection);
+        public abstract bool DeleteUserCustomFieldSelection(int customFieldSelectionId);
+        public abstract List<UserCustomFieldSelection> GetUserCustomFieldSelectionsByCustomFieldId(int customFieldId);
+        public abstract UserCustomFieldSelection GetUserCustomFieldSelectionById(int customFieldSelectionId);
+        public abstract bool UpdateUserCustomFieldSelection(UserCustomFieldSelection customFieldSelectionToUpdate);
 
         // Role
         public abstract List<Role> GetAllRoles();

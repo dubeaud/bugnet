@@ -921,6 +921,206 @@ namespace BugNET.Providers.DataProviders
         }
         #endregion
 
+#region User custom field & selection methods
+
+        public override UserCustomField GetUserCustomFieldById(int customFieldId)
+        {
+            if (customFieldId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("customFieldId"));
+
+            using (var sqlCmd = new SqlCommand())
+            {
+                AddParamToSqlCmd(sqlCmd, "@CustomFieldId", SqlDbType.Int, 0, ParameterDirection.Input, customFieldId);
+                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_USERCUSTOMFIELD_GETCUSTOMFIELDBYID);
+
+                var customFieldList = new List<UserCustomField>();
+                ExecuteReaderCmd(sqlCmd, GenerateUserCustomFieldListFromReader, ref customFieldList);
+
+                return customFieldList.Count > 0 ? customFieldList[0] : null;
+            }
+        }
+
+        public override List<UserCustomField> GetUserCustomFields()
+        {
+            using (var sqlCmd = new SqlCommand())
+            {
+                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_USERCUSTOMFIELD_GETCUSTOMFIELDS);
+
+                var customFieldList = new List<UserCustomField>();
+                ExecuteReaderCmd(sqlCmd, GenerateUserCustomFieldListFromReader, ref customFieldList);
+
+                return customFieldList;
+            }
+        }
+
+        public override int CreateNewUserCustomField(UserCustomField newCustomField)
+        {
+            if (newCustomField == null) throw new ArgumentNullException("newCustomField");
+
+            using (var sqlCmd = new SqlCommand())
+            {
+                AddParamToSqlCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
+                AddParamToSqlCmd(sqlCmd, "@CustomFieldName", SqlDbType.NText, 50, ParameterDirection.Input, newCustomField.Name);
+                AddParamToSqlCmd(sqlCmd, "@CustomFieldDataType", SqlDbType.Int, 0, ParameterDirection.Input, newCustomField.DataType);
+                AddParamToSqlCmd(sqlCmd, "@CustomFieldRequired", SqlDbType.Bit, 0, ParameterDirection.Input, newCustomField.Required);
+                AddParamToSqlCmd(sqlCmd, "@CustomFieldTypeId", SqlDbType.Int, 0, ParameterDirection.Input, (int)newCustomField.FieldType);
+
+
+                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_USERCUSTOMFIELD_CREATE);
+                ExecuteScalarCmd(sqlCmd);
+                return ((int)sqlCmd.Parameters["@ReturnValue"].Value);
+            }
+        }
+
+        public override bool UpdateUserCustomField(UserCustomField customFieldToUpdate)
+        {
+            if (customFieldToUpdate == null) throw new ArgumentNullException("customFieldToUpdate");
+
+            using (var sqlCmd = new SqlCommand())
+            {
+                AddParamToSqlCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
+                AddParamToSqlCmd(sqlCmd, "@CustomFieldId", SqlDbType.Int, 0, ParameterDirection.Input, customFieldToUpdate.Id);
+                AddParamToSqlCmd(sqlCmd, "@CustomFieldName", SqlDbType.NText, 50, ParameterDirection.Input, customFieldToUpdate.Name);
+                AddParamToSqlCmd(sqlCmd, "@CustomFieldDataType", SqlDbType.Int, 0, ParameterDirection.Input, customFieldToUpdate.DataType);;
+                AddParamToSqlCmd(sqlCmd, "@CustomFieldRequired", SqlDbType.Bit, 0, ParameterDirection.Input, customFieldToUpdate.Required);
+                AddParamToSqlCmd(sqlCmd, "@CustomFieldTypeId", SqlDbType.Int, 0, ParameterDirection.Input, (int)customFieldToUpdate.FieldType);
+
+                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_USERCUSTOMFIELD_UPDATE);
+                ExecuteScalarCmd(sqlCmd);
+                return ((int)sqlCmd.Parameters["@ReturnValue"].Value == 0);
+            }
+        }
+
+        public override bool DeleteUserCustomField(int customFieldId)
+        {
+            // Validate Parameters
+            if (customFieldId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("customFieldId"));
+
+            using (var sqlCmd = new SqlCommand())
+            {
+                AddParamToSqlCmd(sqlCmd, "@CustomFieldIdToDelete", SqlDbType.Int, 4, ParameterDirection.Input, customFieldId);
+                AddParamToSqlCmd(sqlCmd, "@ResultValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
+
+                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_USERCUSTOMFIELD_DELETE);
+                ExecuteScalarCmd(sqlCmd);
+                var resultValue = (int)sqlCmd.Parameters["@ResultValue"].Value;
+                return (resultValue == 0);
+            }
+        }
+
+        public override bool SaveUserCustomFieldValues(Guid userId, List<UserCustomField> fields)
+        {            // Validate Parameters
+            if (fields == null) throw (new ArgumentNullException("fields"));
+            if (userId == Guid.Empty) throw (new ArgumentOutOfRangeException("userId"));
+
+            using (var sqlCmd = new SqlCommand())
+            {
+                sqlCmd.Parameters.Add("@ReturnValue", SqlDbType.Int, 0).Direction = ParameterDirection.ReturnValue;
+                sqlCmd.Parameters.Add("@UserId", SqlDbType.UniqueIdentifier, 0).Direction = ParameterDirection.Input;
+                sqlCmd.Parameters.Add("@CustomFieldId", SqlDbType.Int, 0).Direction = ParameterDirection.Input;
+                sqlCmd.Parameters.Add("@CustomFieldValue", SqlDbType.NVarChar).Direction = ParameterDirection.Input;
+
+                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_USERCUSTOMFIELD_SAVECUSTOMFIELDVALUE);
+
+                var errors = false;
+
+                foreach (var field in fields)
+                {
+                    sqlCmd.Parameters["@UserId"].Value = userId;
+                    sqlCmd.Parameters["@CustomFieldId"].Value = field.Id;
+                    sqlCmd.Parameters["@CustomFieldValue"].Value = field.Value;
+                    ExecuteScalarCmd(sqlCmd);
+                    if ((int)sqlCmd.Parameters["@ReturnValue"].Value == 1)
+                        errors = true;
+                }
+                return !errors;
+            }
+        }
+
+        public override int CreateNewUserCustomFieldSelection(UserCustomFieldSelection newCustomFieldSelection)
+        {
+            if (newCustomFieldSelection == null) throw new ArgumentNullException("newCustomFieldSelection");
+
+            using (var sqlCmd = new SqlCommand())
+            {
+                AddParamToSqlCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
+                AddParamToSqlCmd(sqlCmd, "@CustomFieldId", SqlDbType.Int, 0, ParameterDirection.Input, newCustomFieldSelection.CustomFieldId);
+                AddParamToSqlCmd(sqlCmd, "@CustomFieldSelectionName", SqlDbType.NVarChar, 255, ParameterDirection.Input, newCustomFieldSelection.Name);
+                AddParamToSqlCmd(sqlCmd, "@CUstomFieldSelectionValue", SqlDbType.NVarChar, 255, ParameterDirection.Input, newCustomFieldSelection.Value);
+
+                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_USERCUSTOMFIELDSELECTION_CREATE);
+                ExecuteScalarCmd(sqlCmd);
+                return ((int)sqlCmd.Parameters["@ReturnValue"].Value);
+            }
+        }
+
+        public override bool DeleteUserCustomFieldSelection(int customFieldSelectionId)
+        {
+            if (customFieldSelectionId <= 0) throw new ArgumentOutOfRangeException("customFieldSelectionId");
+
+            using (var sqlCmd = new SqlCommand())
+            {
+                AddParamToSqlCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
+                AddParamToSqlCmd(sqlCmd, "@CustomFieldSelectionIdToDelete", SqlDbType.Int, 0, ParameterDirection.Input, customFieldSelectionId);
+
+                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_USERCUSTOMFIELDSELECTION_DELETE);
+                ExecuteScalarCmd(sqlCmd);
+                var returnValue = (int)sqlCmd.Parameters["@ReturnValue"].Value;
+                return (returnValue == 0);
+            }
+        }
+
+        public override List<UserCustomFieldSelection> GetUserCustomFieldSelectionsByCustomFieldId(int customFieldId)
+        {
+            if (customFieldId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("customFieldId"));
+
+            using (var sqlCmd = new SqlCommand())
+            {
+                AddParamToSqlCmd(sqlCmd, "@CustomFieldId", SqlDbType.Int, 0, ParameterDirection.Input, customFieldId);
+                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_USERCUSTOMFIELDSELECTION_GETCUSTOMFIELDSELECTIONSBYCUSTOMFIELDID);
+
+                var customFieldSelectionList = new List<UserCustomFieldSelection>();
+                ExecuteReaderCmd(sqlCmd, GenerateUserCustomFieldSelectionListFromReader, ref customFieldSelectionList);
+
+                return customFieldSelectionList;
+            }
+        }
+
+        public override UserCustomFieldSelection GetUserCustomFieldSelectionById(int customFieldSelectionId)
+        {
+            if (customFieldSelectionId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("customFieldSelectionId"));
+
+            using (var sqlCmd = new SqlCommand())
+            {
+                AddParamToSqlCmd(sqlCmd, "@CustomFieldSelectionId", SqlDbType.Int, 0, ParameterDirection.Input, customFieldSelectionId);
+                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_USERCUSTOMFIELDSELECTION_GETCUSTOMFIELDSELECTIONBYID);
+
+                var customFieldSelectionList = new List<UserCustomFieldSelection>();
+                ExecuteReaderCmd(sqlCmd, GenerateUserCustomFieldSelectionListFromReader, ref customFieldSelectionList);
+
+                return customFieldSelectionList.Count > 0 ? customFieldSelectionList[0] : null;
+            }
+        }
+
+        public override bool UpdateUserCustomFieldSelection(UserCustomFieldSelection customFieldSelectionToUpdate)
+        {
+            if (customFieldSelectionToUpdate == null) throw new ArgumentNullException("customFieldSelectionToUpdate");
+
+            using (var sqlCmd = new SqlCommand())
+            {
+                AddParamToSqlCmd(sqlCmd, "@ReturnValue", SqlDbType.Int, 0, ParameterDirection.ReturnValue, null);
+                AddParamToSqlCmd(sqlCmd, "@CustomFieldId", SqlDbType.Int, 0, ParameterDirection.Input, customFieldSelectionToUpdate.CustomFieldId);
+                AddParamToSqlCmd(sqlCmd, "@CustomFieldSelectionId", SqlDbType.Int, 0, ParameterDirection.Input, customFieldSelectionToUpdate.Id);
+                AddParamToSqlCmd(sqlCmd, "@CustomFieldSelectionName", SqlDbType.NVarChar, 255, ParameterDirection.Input, customFieldSelectionToUpdate.Name);
+                AddParamToSqlCmd(sqlCmd, "@CustomFieldSelectionValue", SqlDbType.NVarChar, 255, ParameterDirection.Input, customFieldSelectionToUpdate.Value);
+                AddParamToSqlCmd(sqlCmd, "@CustomFieldSelectionSortOrder", SqlDbType.Int, 0, ParameterDirection.Input, customFieldSelectionToUpdate.SortOrder);
+
+                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_USERCUSTOMFIELDSELECTION_UPDATE);
+                ExecuteScalarCmd(sqlCmd);
+                return ((int)sqlCmd.Parameters["@ReturnValue"].Value == 0);
+            }
+        }
+#endregion
+
         #region Project methods
         /// <summary>
         /// Creates the new project.
