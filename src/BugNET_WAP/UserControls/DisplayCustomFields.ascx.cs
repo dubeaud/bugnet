@@ -216,7 +216,7 @@ namespace BugNET.UserControls
                     var fieldValue = new TextBox { ID = FIELD_VALUE_NAME, Text = currentField.Value,
                         CssClass= "form-control" };
                     fieldValue.Attributes.Add("bn-data-type", "text");
-					
+                    
                     ph.Controls.Add(fieldValue);
 
                     if (currentField.Value.Trim().ToLower().StartsWith("http"))
@@ -294,14 +294,14 @@ namespace BugNET.UserControls
                 //if required dynamically add a required field validator
                 if (currentField.Required && currentField.FieldType != CustomFieldType.YesNo)
                 {
-        		var valReq = new RequiredFieldValidator
-	                {
-	                    ControlToValidate = FIELD_VALUE_NAME,
-	                    Text = string.Format(" ({0})", GetGlobalResourceObject("SharedResources", "Required")).ToLower(),
-	                    Display = ValidatorDisplay.Dynamic,
-	                    CssClass = "text-danger validation-error",
-	                    SetFocusOnError = true
-	                };
+                var valReq = new RequiredFieldValidator
+                    {
+                        ControlToValidate = FIELD_VALUE_NAME,
+                        Text = string.Format(" ({0})", GetGlobalResourceObject("SharedResources", "Required")).ToLower(),
+                        Display = ValidatorDisplay.Dynamic,
+                        CssClass = "text-danger validation-error",
+                        SetFocusOnError = true
+                    };
 
                     if (currentField.FieldType == CustomFieldType.DropDownList)
                         valReq.InitialValue = string.Empty;

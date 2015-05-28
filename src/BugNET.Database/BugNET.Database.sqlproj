@@ -306,6 +306,7 @@
     <Build Include="Stored Procedures\BugNet_UserCustomFieldSelection_GetCustomFieldSelectionById.sql" />
     <Build Include="Stored Procedures\BugNet_UserCustomFieldSelection_GetCustomFieldSelectionsByCustomFieldId.sql" />
     <Build Include="Stored Procedures\BugNet_UserCustomFieldSelection_Update.sql" />
+    <Build Include="Stored Procedures\BugNet_UserCustomField_GetCustomFieldsByUserId.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />

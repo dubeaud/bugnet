@@ -6,8 +6,7 @@ SELECT
 	Fields.CustomFieldName,
 	Fields.CustomFieldDataType,
 	Fields.CustomFieldRequired,
-	ISNULL(CustomFieldValue,'') CustomFieldValue,
+	'' CustomFieldValue,
 	Fields.CustomFieldTypeId
 FROM
 	BugNet_UserCustomFields Fields
-	LEFT OUTER JOIN BugNet_UserCustomFieldValues FieldValues ON (Fields.CustomFieldId = FieldValues.CustomFieldId)

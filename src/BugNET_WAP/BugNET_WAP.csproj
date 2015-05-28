@@ -1030,6 +1030,13 @@
     <Compile Include="SvnBrowse\SubversionBrowser.aspx.designer.cs">
       <DependentUpon>SubversionBrowser.aspx</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\DisplayUserCustomFields.ascx.cs">
+      <DependentUpon>DisplayUserCustomFields.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\DisplayUserCustomFields.ascx.designer.cs">
+      <DependentUpon>DisplayUserCustomFields.ascx</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\HtmlEditor.ascx.cs">
       <DependentUpon>HtmlEditor.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1830,6 +1837,7 @@
     <Content Include="UserControls\CategoryTreeView.ascx" />
     <Content Include="UserControls\DisplayIssues.ascx" />
     <Content Include="UserControls\DisplayCustomFields.ascx" />
+    <Content Include="UserControls\DisplayUserCustomFields.ascx" />
     <Content Include="UserControls\PickCategory.ascx" />
     <Content Include="UserControls\PickDate.ascx" />
     <Content Include="UserControls\PickPriority.ascx" />

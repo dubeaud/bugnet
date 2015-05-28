@@ -1,5 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
     CodeBehind="AddUser.aspx.cs" Inherits="BugNET.Administration.Users.AddUser" meta:resourceKey="Page" Async="true" %>
+<%@ Register TagPrefix="it" TagName="DisplayUserCustomFields" Src="~/UserControls/DisplayUserCustomFields.ascx" %>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
     <div class="page-header">
@@ -57,6 +58,7 @@
                     ControlToValidate="Email" ErrorMessage="<%$ Resources:SharedResources, EmailFormatErrorMessage %>" />
             </div>
         </div>
+        <it:DisplayUserCustomFields id="ctlUserCustomFields" EnableValidation="true" runat="server" />
         <h3>
             <asp:Literal ID="Literal1" runat="Server" Text="<%$ Resources:SharedResources,Password %>" /></h3>
         <p>

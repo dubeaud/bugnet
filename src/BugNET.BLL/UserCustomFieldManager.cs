@@ -66,21 +66,13 @@ namespace BugNET.BLL
         /// <param name="issueId">The issue id.</param>
         /// <param name="fields">The fields.</param>
         /// <returns></returns>
-        public static bool SaveCustomFieldValues(Guid userId, List<UserCustomField> fields, bool isNewIssue = false)
+        public static bool SaveCustomFieldValues(Guid userId, List<UserCustomField> fields)
         {
             if (fields == null) throw (new ArgumentOutOfRangeException("fields"));
 
             try
             {
-                //var issueChanges = GetUserCustomFieldChanges(userId, fields);
                 DataProviderManager.Provider.SaveUserCustomFieldValues(userId, fields);
-
-                /*
-                if(!isNewIssue)
-                { 
-                    UpdateHistory(issueChanges);
-                }
-                */
 
                 return true;
             }
@@ -96,11 +88,11 @@ namespace BugNET.BLL
         /// </summary>
         /// <param name="projectId">The project id.</param>
         /// <returns></returns>
-        public static List<UserCustomField> Get()
+        public static List<UserCustomField> GetAll()
         {
             return (DataProviderManager.Provider.GetUserCustomFields());
         }
-
+        
         /// <summary>
         /// Gets the custom field by id.
         /// </summary>
@@ -111,6 +103,18 @@ namespace BugNET.BLL
             if (customFieldId <= Globals.NEW_ID) throw (new ArgumentOutOfRangeException("customFieldId"));
 
             return DataProviderManager.Provider.GetUserCustomFieldById(customFieldId);
+        }
+        
+        /// <summary>
+        /// Gets the custom fields by issue id.
+        /// </summary>
+        /// <param name="issueId">The issue id.</param>
+        /// <returns></returns>
+        public static List<UserCustomField> GetByUserId(Guid userId)
+        {
+            if (userId == Guid.Empty) throw (new ArgumentOutOfRangeException("userId"));
+
+            return (DataProviderManager.Provider.GetUserCustomFieldsByUserId(userId));
         }
 
         /// <summary>

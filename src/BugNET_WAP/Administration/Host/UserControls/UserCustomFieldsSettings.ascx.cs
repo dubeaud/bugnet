@@ -59,7 +59,7 @@ namespace BugNET.Administration.Host.UserControls
             //check if we are editing the sub grid - needed to fire update command on the nested grid.
             if (ViewState["EditingSubGrid"] == null)
             {
-                grdCustomFields.DataSource = UserCustomFieldManager.Get();
+                grdCustomFields.DataSource = UserCustomFieldManager.GetAll();
                 grdCustomFields.DataKeyField = "Id";
                 grdCustomFields.DataBind();
 

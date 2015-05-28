@@ -206,6 +206,7 @@ namespace BugNET.DAL
         // User Custom Fields
         public abstract List<UserCustomField> GetUserCustomFields();
         public abstract UserCustomField GetUserCustomFieldById(int customFieldId);
+        public abstract List<UserCustomField> GetUserCustomFieldsByUserId(Guid userId);
         public abstract int CreateNewUserCustomField(UserCustomField newCustomField);
         public abstract bool UpdateUserCustomField(UserCustomField customFieldToUpdate);
         public abstract bool DeleteUserCustomField(int customFieldId);

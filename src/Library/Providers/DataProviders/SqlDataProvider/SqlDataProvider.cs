@@ -952,6 +952,27 @@ namespace BugNET.Providers.DataProviders
             }
         }
 
+        /// <summary>
+        /// Gets the custom fields by issue id.
+        /// </summary>
+        /// <param name="issueId">The issue id.</param>
+        /// <returns></returns>
+        public override List<UserCustomField> GetUserCustomFieldsByUserId(Guid userId)
+        {
+            if (userId == Guid.Empty) throw (new ArgumentOutOfRangeException("userId"));
+
+            using (var sqlCmd = new SqlCommand())
+            {
+                AddParamToSqlCmd(sqlCmd, "@UserId", SqlDbType.UniqueIdentifier, 0, ParameterDirection.Input, userId);
+                SetCommandType(sqlCmd, CommandType.StoredProcedure, SP_USERCUSTOMFIELD_GETUSERCUSTOMFIELDSBYUSERID);
+
+                var customFieldList = new List<UserCustomField>();
+                ExecuteReaderCmd(sqlCmd, GenerateUserCustomFieldListFromReader, ref customFieldList);
+
+                return customFieldList;
+            }
+        }
+
         public override int CreateNewUserCustomField(UserCustomField newCustomField)
         {
             if (newCustomField == null) throw new ArgumentNullException("newCustomField");

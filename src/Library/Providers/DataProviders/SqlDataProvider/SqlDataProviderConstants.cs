@@ -52,7 +52,7 @@
         //User - CustomFields & Selection Procs
         private const string SP_USERCUSTOMFIELD_GETCUSTOMFIELDBYID = "BugNet_UserCustomField_GetCustomFieldById";
         private const string SP_USERCUSTOMFIELD_GETCUSTOMFIELDS = "BugNet_UserCustomField_GetCustomFields";
-        //does not exist yet? private const string SP_CUSTOMFIELD_GETUSERCUSTOMFIELDSBYUSERID = "BugNet_UserCustomField_GetCustomFieldsByUserId";
+        private const string SP_USERCUSTOMFIELD_GETUSERCUSTOMFIELDSBYUSERID = "BugNet_UserCustomField_GetCustomFieldsByUserId";
         private const string SP_USERCUSTOMFIELD_CREATE = "BugNet_UserCustomField_CreateNewCustomField";
         private const string SP_USERCUSTOMFIELD_UPDATE = "BugNet_UserCustomField_UpdateCustomField";
         private const string SP_USERCUSTOMFIELD_DELETE = "BugNet_UserCustomField_DeleteCustomField";
