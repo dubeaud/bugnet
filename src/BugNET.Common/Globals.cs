@@ -35,6 +35,9 @@ namespace BugNET.Common
         public const string PROJECT_CUSTOM_FIELDS_VIEW_NAME = "BugNet_P{0}_CFV";
         public const string PROJECT_CUSTOM_FIELDS_PREFIX = "bgn_cf_";
 
+        public const string USER_CUSTOM_FIELDS_VIEW_NAME = "BugNet_USER_CFV";
+        public const string USER_CUSTOM_FIELDS_PREFIX = "bgn_ucf_";
+
         /// <summary>
         /// The default length of short comments (if not specified).
         /// </summary>
