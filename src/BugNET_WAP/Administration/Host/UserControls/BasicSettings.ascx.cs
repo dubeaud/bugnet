@@ -45,6 +45,11 @@ namespace BugNET.Administration.Host.UserControls
             EnableGravatar.Checked = HostSettingManager.Get(HostSettingNames.EnableGravatar,true);
         }
 
+        public bool ShowSaveButton
+        {
+            get { return true; }
+        }
+
         #endregion
     }
 }
