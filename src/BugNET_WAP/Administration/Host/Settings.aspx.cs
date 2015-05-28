@@ -136,7 +136,7 @@ namespace BugNET.Administration.Host
                     controlName = "LanguageSettings.ascx";
                     break;
                 case 9:
-                    controlName = "UserCustomFields.ascx";
+                    controlName = "UserCustomFieldsSettings.ascx";
                     break;
             }
 

@@ -12,7 +12,7 @@ using System.Web.UI.WebControls;
 
 namespace BugNET.Administration.Host.UserControls
 {
-    public partial class UserCustomFields : System.Web.UI.UserControl, IEditHostSettingControl
+    public partial class UserCustomFieldsSettings : System.Web.UI.UserControl, IEditHostSettingControl
     {
 
         #region IEditHostSettingControl Members

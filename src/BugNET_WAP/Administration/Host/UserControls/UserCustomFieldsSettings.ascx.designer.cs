@@ -10,7 +10,7 @@
 namespace BugNET.Administration.Host.UserControls {
     
     
-    public partial class UserCustomFields {
+    public partial class UserCustomFieldsSettings {
         
         /// <summary>
         /// LogViewerTitle control.

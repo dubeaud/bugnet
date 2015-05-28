@@ -1,5 +1,4 @@
 ﻿CREATE PROCEDURE [dbo].[BugNet_UserCustomField_GetCustomFields] 
-	@UserId UNIQUEIDENTIFIER
 AS
 
 SELECT

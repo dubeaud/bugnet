@@ -1,5 +1,5 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="UserCustomFields.ascx.cs"
-    Inherits="BugNET.Administration.Host.UserControls.UserCustomFields" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="UserCustomFieldsSettings.ascx.cs"
+    Inherits="BugNET.Administration.Host.UserControls.UserCustomFieldsSettings" %>
 
 <script type="text/javascript">
     function Toggle(commId, imageId) {
