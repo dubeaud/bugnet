@@ -319,7 +319,4 @@
     <None Include="BugNET.Database.Local.publish.xml" />
     <None Include="Scripts\Data.Roles.sql" />
   </ItemGroup>
-  <ItemGroup>
-    <RefactorLog Include="BugNET.Database.refactorlog" />
-  </ItemGroup>
 </Project>
