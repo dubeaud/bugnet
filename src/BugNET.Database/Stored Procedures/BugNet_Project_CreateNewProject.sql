@@ -6,7 +6,7 @@
  @AttachmentUploadPath nvarchar(80),
  @ProjectAccessType int,
  @ProjectCreatorUserName nvarchar(255),
- @AllowAttachments int,
+ @AllowAttachments bit,
  @SvnRepositoryUrl	nvarchar(255),
  @AllowIssueVoting bit,
  @ProjectImageFileContent varbinary(max),
