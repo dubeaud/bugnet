@@ -26,6 +26,7 @@ FROM
 	LEFT OUTER JOIN BugNet_UserProfiles UP ON U.UserName = UP.UserName
 WHERE
 	IssueId = @IssueId
+	AND M.Email IS NOT NULL
 ORDER BY
 	DisplayName
 
