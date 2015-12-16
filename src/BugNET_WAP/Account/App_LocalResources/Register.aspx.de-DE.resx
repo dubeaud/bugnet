@@ -118,7 +118,7 @@
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
 	<data name="InstructionsLabel.Text" xml:space="preserve">
-    <value>Bitte geben Sie ihren Daten und bestätigen Sie Ihre Eingabe, um ein Konto anzulegen.</value>
+    <value>Bitte geben Sie ihre Daten ein und bestätigen Sie Ihre Eingabe, um ein Konto anzulegen.</value>
   </data>
 	<data name="Page.Title" xml:space="preserve">
     <value>Registrierung</value>

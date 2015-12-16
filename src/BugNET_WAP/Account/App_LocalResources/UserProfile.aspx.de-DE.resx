@@ -184,7 +184,7 @@
     <value>Stärke:&amp;nbsp;</value>
   </data>
   <data name="PasswordStrength.TextStrengthDescriptions" xml:space="preserve">
-    <value>Armselig;Schwach;Durchschnitt;Start;Exzellent</value>
+    <value>Armselig;Schwach;Durchschnitt;Stark;Exzellent</value>
   </data>
   <data name="SecurityQuestionChanged" xml:space="preserve">
     <value>Sicherheitsfrage wurde erfolgreich geändert</value>

@@ -154,7 +154,7 @@
     <value>Konto ist nicht authorisiert oder gesperrt.</value>
   </data>
   <data name="RememberMe.Text" xml:space="preserve">
-    <value>Beim nächsten Besuch automatisch </value>
+    <value>Beim nächsten Besuch automatisch anmelden.</value>
   </data>
   <data name="LoginButton.Text" xml:space="preserve">
     <value>Anmelden</value>
