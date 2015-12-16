@@ -290,6 +290,23 @@
     <Build Include="Stored Procedures\BugNet_User_GetUserNameByPasswordResetToken.sql" />
     <Build Include="Tables\UsersOpenAuthAccounts.sql" />
     <Build Include="Tables\UsersOpenAuthData.sql" />
+    <Build Include="Tables\BugNet_UserCustomFields.sql" />
+    <Build Include="Tables\BugNet_UserCustomFieldSelections.sql" />
+    <Build Include="Tables\BugNet_UserCustomFieldTypes.sql" />
+    <Build Include="Tables\BugNet_UserCustomFieldValues.sql" />
+    <None Include="Scripts\Data.UserCustomFieldTypes.sql" />
+    <Build Include="Stored Procedures\BugNet_UserCustomField_CreateNewCustomField.sql" />
+    <Build Include="Stored Procedures\BugNet_UserCustomField_DeleteCustomField.sql" />
+    <Build Include="Stored Procedures\BugNet_UserCustomField_GetCustomFieldById.sql" />
+    <Build Include="Stored Procedures\BugNet_UserCustomField_GetCustomFields.sql" />
+    <Build Include="Stored Procedures\BugNet_UserCustomField_SaveCustomFieldValue.sql" />
+    <Build Include="Stored Procedures\BugNet_UserCustomField_UpdateCustomField.sql" />
+    <Build Include="Stored Procedures\BugNet_UserCustomFieldSelection_CreateNewCustomFieldSelection.sql" />
+    <Build Include="Stored Procedures\BugNet_UserCustomFieldSelection_DeleteCustomFieldSelection.sql" />
+    <Build Include="Stored Procedures\BugNet_UserCustomFieldSelection_GetCustomFieldSelectionById.sql" />
+    <Build Include="Stored Procedures\BugNet_UserCustomFieldSelection_GetCustomFieldSelectionsByCustomFieldId.sql" />
+    <Build Include="Stored Procedures\BugNet_UserCustomFieldSelection_Update.sql" />
+    <Build Include="Stored Procedures\BugNet_UserCustomField_GetCustomFieldsByUserId.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />

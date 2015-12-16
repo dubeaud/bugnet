@@ -386,6 +386,13 @@
     <Compile Include="Administration\Host\UserControls\SubversionSettings.ascx.designer.cs">
       <DependentUpon>SubversionSettings.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Administration\Host\UserControls\UserCustomFieldsSettings.ascx.cs">
+      <DependentUpon>UserCustomFieldsSettings.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administration\Host\UserControls\UserCustomFieldsSettings.ascx.designer.cs">
+      <DependentUpon>UserCustomFieldsSettings.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Administration\Projects\AddProject.aspx.cs">
       <DependentUpon>AddProject.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1023,6 +1030,13 @@
     <Compile Include="SvnBrowse\SubversionBrowser.aspx.designer.cs">
       <DependentUpon>SubversionBrowser.aspx</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\DisplayUserCustomFields.ascx.cs">
+      <DependentUpon>DisplayUserCustomFields.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\DisplayUserCustomFields.ascx.designer.cs">
+      <DependentUpon>DisplayUserCustomFields.ascx</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\HtmlEditor.ascx.cs">
       <DependentUpon>HtmlEditor.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1213,6 +1227,7 @@
     <Content Include="Administration\Host\Settings.aspx" />
     <Content Include="Administration\Host\UserControls\App_LocalResources\MailSettings.ascx.nl-NL.resx" />
     <Content Include="Administration\Host\UserControls\LanguageSettings.ascx" />
+    <Content Include="Administration\Host\UserControls\UserCustomFieldsSettings.ascx" />
     <Content Include="Administration\Projects\AddProject.aspx" />
     <Content Include="Administration\Projects\EditProject.aspx" />
     <Content Include="Administration\Projects\ProjectList.aspx" />
@@ -1826,6 +1841,7 @@
     <Content Include="UserControls\CategoryTreeView.ascx" />
     <Content Include="UserControls\DisplayIssues.ascx" />
     <Content Include="UserControls\DisplayCustomFields.ascx" />
+    <Content Include="UserControls\DisplayUserCustomFields.ascx" />
     <Content Include="UserControls\PickCategory.ascx" />
     <Content Include="UserControls\PickDate.ascx" />
     <Content Include="UserControls\PickPriority.ascx" />
@@ -3495,6 +3511,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Account\App_LocalResources\Manage.aspx.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Administration\Host\UserControls\App_LocalResources\UserCustomFieldsSettings.ascx.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

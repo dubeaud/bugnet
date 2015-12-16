@@ -658,6 +658,28 @@ namespace BugNET.Providers.DataProviders
         }
 
         /// <summary>
+        /// Ts the generate user custom field list from reader.
+        /// </summary>
+        /// <param name="returnData">The return data.</param>
+        /// <param name="customFieldList">The custom field list.</param>
+        private static void GenerateUserCustomFieldListFromReader(IDataReader returnData,
+                                                              ref List<UserCustomField> customFieldList)
+        {
+            while (returnData.Read())
+            {
+                customFieldList.Add(new UserCustomField
+                {
+                    Id = returnData.GetInt32(returnData.GetOrdinal("CustomFieldId")),
+                    Name = returnData.GetString(returnData.GetOrdinal("CustomFieldName")),
+                    DataType = (ValidationDataType)returnData["CustomFieldDataType"],
+                    FieldType = (CustomFieldType)returnData["CustomFieldTypeId"],
+                    Required = returnData.GetBoolean(returnData.GetOrdinal("CustomFieldRequired")),
+                    Value = returnData.GetString(returnData.GetOrdinal("CustomFieldValue")),
+                });
+            }
+        }
+
+        /// <summary>
         /// Ts the generate custom field selection list from reader.
         /// </summary>
         /// <param name="returnData">The return data.</param>
@@ -676,6 +698,28 @@ namespace BugNET.Providers.DataProviders
                         Name = returnData.GetString(returnData.GetOrdinal("CustomFieldSelectionName")),
                         SortOrder = returnData.GetInt32(returnData.GetOrdinal("CustomFieldSelectionSortOrder")),
                     });
+            }
+        }
+
+        /// <summary>
+        /// Ts the generate custom field selection list from reader.
+        /// </summary>
+        /// <param name="returnData">The return data.</param>
+        /// <param name="customFieldSelectionList">The custom field list.</param>
+        private static void GenerateUserCustomFieldSelectionListFromReader(IDataReader returnData,
+                                                                       ref List<UserCustomFieldSelection>
+                                                                           customFieldSelectionList)
+        {
+            while (returnData.Read())
+            {
+                customFieldSelectionList.Add(new UserCustomFieldSelection
+                {
+                    Id = returnData.GetInt32(returnData.GetOrdinal("CustomFieldSelectionId")),
+                    CustomFieldId = returnData.GetInt32(returnData.GetOrdinal("CustomFieldId")),
+                    Value = returnData.GetString(returnData.GetOrdinal("CustomFieldSelectionValue")),
+                    Name = returnData.GetString(returnData.GetOrdinal("CustomFieldSelectionName")),
+                    SortOrder = returnData.GetInt32(returnData.GetOrdinal("CustomFieldSelectionSortOrder")),
+                });
             }
         }
 

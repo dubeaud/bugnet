@@ -64,6 +64,11 @@ namespace BugNET.Administration.Host.UserControls
             SMTPDomain.Text = HostSettingManager.Get(HostSettingNames.SMTPDomain, string.Empty);
         }
 
+        public bool ShowSaveButton
+        {
+            get { return true; }
+        }
+
         #endregion
 
         /// <summary>

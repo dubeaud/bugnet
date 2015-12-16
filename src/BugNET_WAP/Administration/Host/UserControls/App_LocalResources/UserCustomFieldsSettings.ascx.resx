@@ -117,43 +117,70 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ApplicationConfiguration" xml:space="preserve">
-    <value>Application Configuration</value>
+  <data name="AddNew" xml:space="preserve">
+    <value>Add New Custom Field</value>
   </data>
-  <data name="Attachments" xml:space="preserve">
-    <value>Attachments</value>
+  <data name="ConfirmCustomFieldSelectionDelete" xml:space="preserve">
+    <value>Are you sure you want to delete the "{0}" selection?  This action will remove this value from any issues that have this value assigned to it.</value>
   </data>
-  <data name="Authentication" xml:space="preserve">
-    <value>Authentication</value>
+  <data name="ConfirmDelete" xml:space="preserve">
+    <value>Are you sure you want to delete the "{0}" field?  This delete cannot be undone. </value>
   </data>
-  <data name="Basic" xml:space="preserve">
-    <value>Basic</value>
+  <data name="CustomFieldsTitle.Text" xml:space="preserve">
+    <value>Custom Fields (optional)</value>
   </data>
-  <data name="Languages" xml:space="preserve">
-    <value>Languages</value>
+  <data name="DataType" xml:space="preserve">
+    <value>Data Type</value>
   </data>
-  <data name="Logging" xml:space="preserve">
-    <value>Logging</value>
+  <data name="DateType.Text" xml:space="preserve">
+    <value>Date</value>
   </data>
-  <data name="Mail" xml:space="preserve">
-    <value>Mail / SMTP</value>
+  <data name="DescriptionLabel.Text" xml:space="preserve">
+    <value>You can add one or more custom fields to a project. You can assign a data type to each custom field. In addtion, each custom field can be marked as either required or optional.</value>
   </data>
-  <data name="Notifications" xml:space="preserve">
-    <value>Notifications</value>
+  <data name="DropDownListType.Text" xml:space="preserve">
+    <value>Drop Down List</value>
   </data>
-  <data name="POP3Mailbox" xml:space="preserve">
-    <value>POP3 Mailbox</value>
+  <data name="Field" xml:space="preserve">
+    <value>Field</value>
   </data>
-  <data name="SaveMessage" xml:space="preserve">
-    <value>Your settings have been updated sucessfully!</value>
+  <data name="FieldName" xml:space="preserve">
+    <value>Field Name</value>
   </data>
-  <data name="Subversion" xml:space="preserve">
-    <value>Subversion</value>
+  <data name="FieldType" xml:space="preserve">
+    <value>Field Type</value>
   </data>
-  <data name="UpdateSettings" xml:space="preserve">
-    <value>Update Settings</value>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="NewCustomFieldTitle.Text" xml:space="preserve">
+    <value>New Custom Field</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Required</value>
+  </data>
+  <data name="RichTextType.Text" xml:space="preserve">
+    <value>Rich Text</value>
+  </data>
+  <data name="SelectionValuesLabel.Text" xml:space="preserve">
+    <value>Selection Values</value>
+  </data>
+  <data name="TextType.Text" xml:space="preserve">
+    <value>Text</value>
   </data>
   <data name="UserCustomFields" xml:space="preserve">
     <value>Custom User Fields</value>
+  </data>
+  <data name="UserList.Type" xml:space="preserve">
+    <value>User List</value>
+  </data>
+  <data name="UserListType.Text" xml:space="preserve">
+    <value>User List</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="YesNoType.Text" xml:space="preserve">
+    <value>Yes / No</value>
   </data>
 </root>

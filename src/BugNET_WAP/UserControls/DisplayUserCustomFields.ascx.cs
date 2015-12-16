@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Web.UI;
@@ -10,10 +10,7 @@ using BugNET.Entities;
 
 namespace BugNET.UserControls
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public partial class DisplayCustomFields : UserControl
+    public partial class DisplayUserCustomFields : System.Web.UI.UserControl
     {
         private const string FIELD_VALUE_NAME = "FieldValue";
 
@@ -21,8 +18,7 @@ namespace BugNET.UserControls
         /// 
         /// </summary>
         public bool Required = true;
-
-
+        
         /// <summary>
         /// Gets or sets the data source.
         /// </summary>
@@ -49,16 +45,15 @@ namespace BugNET.UserControls
 
             return list.Keys.Cast<object>().Any(k => k.ToString().ToLower().Equals(key.ToLower())) ? list[key] : string.Empty;
         }
-
         /// <summary>
         /// Gets the values.
         /// </summary>
         /// <value>The values.</value>
-        public List<CustomField> Values
+        public List<UserCustomField> Values
         {
             get
             {
-                var colFields = new List<CustomField>();
+                var colFields = new List<UserCustomField>();
 
                 for (var i = 0; i < rptCustomFields.Items.Count; i++)
                 {
@@ -76,10 +71,10 @@ namespace BugNET.UserControls
 
                     var fieldValue = string.Empty;
 
-                    if (c.GetType() == typeof (DropDownList) && ((DropDownList) c).SelectedIndex != 0)
-                        fieldValue = ((DropDownList) c).SelectedValue;
+                    if (c.GetType() == typeof(DropDownList) && ((DropDownList)c).SelectedIndex != 0)
+                        fieldValue = ((DropDownList)c).SelectedValue;
 
-                    if (c.GetType() == typeof (TextBox))
+                    if (c.GetType() == typeof(TextBox))
                     {
                         var textBox = (TextBox)c;
                         fieldValue = textBox.Text;
@@ -89,20 +84,20 @@ namespace BugNET.UserControls
                         if (dataType.Equals("date"))
                         {
                             DateTime dt;
-                            if(DateTime.TryParse(fieldValue, out dt))
+                            if (DateTime.TryParse(fieldValue, out dt))
                             {
                                 fieldValue = dt.ToString("yyyy-MM-dd");
                             }
                         }
                     }
 
-                    if (c.GetType() == typeof (CheckBox))
-                        fieldValue = ((CheckBox) c).Checked.ToString();
+                    if (c.GetType() == typeof(CheckBox))
+                        fieldValue = ((CheckBox)c).Checked.ToString();
 
-                    if (c.GetType() == typeof (HtmlEditor))
-                        fieldValue = ((HtmlEditor) c).Text;
+                    if (c.GetType() == typeof(HtmlEditor))
+                        fieldValue = ((HtmlEditor)c).Text;
 
-                    colFields.Add(new CustomField {Id = fieldId, Value = fieldValue, Name = fieldName.Value});
+                    colFields.Add(new UserCustomField { Id = fieldId, Value = fieldValue, Name = fieldName.Value });
                 }
                 return colFields;
             }
@@ -135,11 +130,12 @@ namespace BugNET.UserControls
             rptCustomFields.DataBind();
         }
 
+
         protected void rptCustomFields_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem) return;
 
-            var currentField = (CustomField)e.Item.DataItem;
+            var currentField = (UserCustomField)e.Item.DataItem;
 
             var ph = (PlaceHolder)e.Item.FindControl("PlaceHolder");
             var id = (HiddenField)e.Item.FindControl("Id");
@@ -155,10 +151,10 @@ namespace BugNET.UserControls
                     var ddl = new DropDownList
                     {
                         ID = FIELD_VALUE_NAME,
-                        DataSource = CustomFieldSelectionManager.GetByCustomFieldId(currentField.Id),
+                        DataSource = UserCustomFieldSelectionManager.GetByCustomFieldId(currentField.Id),
                         DataTextField = "Name",
                         DataValueField = "Value",
-                        CssClass= "form-control"
+                        CssClass = "form-control"
                     };
 
                     ddl.DataBind();
@@ -213,15 +209,19 @@ namespace BugNET.UserControls
                     break;
                 case CustomFieldType.Text:
 
-                    var fieldValue = new TextBox { ID = FIELD_VALUE_NAME, Text = currentField.Value,
-                        CssClass= "form-control" };
+                    var fieldValue = new TextBox
+                    {
+                        ID = FIELD_VALUE_NAME,
+                        Text = currentField.Value,
+                        CssClass = "form-control"
+                    };
                     fieldValue.Attributes.Add("bn-data-type", "text");
-                    
+
                     ph.Controls.Add(fieldValue);
 
                     if (currentField.Value.Trim().ToLower().StartsWith("http"))
                     {
-                        var url = new HyperLink {Target = "_blank", NavigateUrl = currentField.Value, Text = "&nbsp;GOTO >>"};
+                        var url = new HyperLink { Target = "_blank", NavigateUrl = currentField.Value, Text = "&nbsp;GOTO >>" };
                         ph.Controls.Add(url);
                     }
 
@@ -264,7 +264,7 @@ namespace BugNET.UserControls
                     ddl = new DropDownList
                     {
                         ID = FIELD_VALUE_NAME,
-                        DataSource = UserManager.GetUsersByProjectId(currentField.ProjectId),
+                        DataSource = UserManager.GetAllUsers(),
                         DataTextField = "DisplayName",
                         DataValueField = "UserName",
                         CssClass = "form-control"
@@ -294,7 +294,7 @@ namespace BugNET.UserControls
                 //if required dynamically add a required field validator
                 if (currentField.Required && currentField.FieldType != CustomFieldType.YesNo)
                 {
-                var valReq = new RequiredFieldValidator
+                    var valReq = new RequiredFieldValidator
                     {
                         ControlToValidate = FIELD_VALUE_NAME,
                         Text = string.Format(" ({0})", GetGlobalResourceObject("SharedResources", "Required")).ToLower(),

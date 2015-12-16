@@ -62,7 +62,9 @@
     </Compile>
     <Compile Include="ApplicationLog.cs" />
     <Compile Include="Category.cs" />
+    <Compile Include="UserCustomField.cs" />
     <Compile Include="CustomField.cs" />
+    <Compile Include="UserCustomFieldSelection.cs" />
     <Compile Include="CustomFieldSelection.cs" />
     <Compile Include="DefaultValue.cs" />
     <Compile Include="DistinctIssueComparer.cs" />

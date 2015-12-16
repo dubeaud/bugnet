@@ -42,6 +42,11 @@ namespace BugNET.Administration.Host.UserControls
                 AdminNotificationUser.SelectedValue = adminNotifyUsername;
             }
         }
+        
+        public bool ShowSaveButton
+        {
+            get { return true; }
+        }
 
         #endregion
     }

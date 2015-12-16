@@ -60,6 +60,12 @@ namespace BugNET.Administration.Host.UserControls
             txtUploadPath.Text = HostSettingManager.Get(HostSettingNames.AttachmentUploadPath);
         }
 
+
+        public bool ShowSaveButton
+        {
+            get { return true; }
+        }
+
         #endregion
 
         /// <summary>

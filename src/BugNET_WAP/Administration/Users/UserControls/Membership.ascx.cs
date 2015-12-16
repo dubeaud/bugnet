@@ -63,6 +63,17 @@ namespace BugNET.Administration.Users.UserControls
             cmdUnAuthorize.Visible = user.IsApproved;
             cmdUnLock.Visible = user.IsLockedOut;
         }
+        
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            ctlUserCustomFields.DataSource = UserCustomFieldManager.GetByUserId(UserId);
+            ctlUserCustomFields.DataBind();
+        }
 
         /// <summary>
         /// Handles the Click event of the cmdUpdate control.
@@ -86,6 +97,8 @@ namespace BugNET.Administration.Users.UserControls
                     user.LastName =  LastName.Text;
                     UserManager.UpdateUser(user);
                     OnAction(new ActionEventArgs { Trigger = ActionTriggers.Save });
+
+                    UserCustomFieldManager.SaveCustomFieldValues(UserId, ctlUserCustomFields.Values);
                 }
                 ActionMessage.ShowSuccessMessage(GetLocalResourceObject("UpdateUserMessage").ToString());
             }

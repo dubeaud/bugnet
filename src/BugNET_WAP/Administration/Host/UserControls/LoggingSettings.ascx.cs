@@ -44,6 +44,11 @@ namespace BugNET.Administration.Host.UserControls
             EmailErrors.Checked = Boolean.Parse(HostSettingManager.Get(HostSettingNames.EmailErrors));
         }
 
+        public bool ShowSaveButton
+        {
+            get { return true; }
+        }
+
         #endregion
     }
 }

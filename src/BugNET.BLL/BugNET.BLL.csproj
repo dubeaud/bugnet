@@ -62,6 +62,8 @@
     <Compile Include="CategoryTree.cs" />
     <Compile Include="Comparers\ObjectComparer.cs" />
     <Compile Include="Comparers\ProjectComparer.cs" />
+    <Compile Include="UserCustomFieldSelectionManager.cs" />
+    <Compile Include="UserCustomFieldManager.cs" />
     <Compile Include="CustomFieldManager.cs" />
     <Compile Include="CustomFieldSelectionManager.cs" />
     <Compile Include="HostSettingManager.cs" />

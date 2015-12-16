@@ -83,6 +83,10 @@
     <Compile Include="RelatedIssue.cs" />
     <Compile Include="RequiredField.cs" />
     <Compile Include="Role.cs" />
+    <Compile Include="UserCustomField.cs" />
+    <Compile Include="UserCustomFieldSelection.cs" />
+    <Compile Include="UserCustomFieldType.cs" />
+    <Compile Include="UserCustomFieldValue.cs" />
     <Compile Include="UserProfile.cs" />
     <Compile Include="UserProject.cs" />
     <Compile Include="UserRole.cs" />

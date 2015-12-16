@@ -103,6 +103,11 @@ namespace BugNET.Administration.Host.UserControls
             POP3InlineAttachedPictures.Checked = Boolean.Parse(HostSettingManager.Get(HostSettingNames.Pop3InlineAttachedPictures));
         }
 
+        public bool ShowSaveButton
+        {
+            get { return true; }
+        }
+
         #endregion
     }
 }
