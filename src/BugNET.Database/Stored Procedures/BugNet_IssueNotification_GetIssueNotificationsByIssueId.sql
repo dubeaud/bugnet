@@ -53,5 +53,6 @@ WHERE
 	AND u.UserId = p.UserId
 	AND u.UserId = m.UserId
 	AND u.UserName = up.UserName
+	AND m.Email IS NOT NULL
 
 SELECT DISTINCT IssueId,NotificationUserId, NotificationUserName, NotificationDisplayName, NotificationEmail, NotificationCulture FROM @tmpTable ORDER BY NotificationDisplayName

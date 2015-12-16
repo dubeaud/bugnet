@@ -18,5 +18,6 @@ FROM
 	LEFT OUTER JOIN BugNet_UserProfiles ON U.UserName = BugNet_UserProfiles.UserName
 WHERE
 	P.ProjectId = @ProjectId
+	AND m.Email IS NOT NULL
 ORDER BY
 	DisplayName
