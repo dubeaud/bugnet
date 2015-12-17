@@ -124,7 +124,7 @@
     <value>Issue Summary For &lt;span&gt;{0}&lt;/span&gt;</value>
   </data>
   <data name="OwnedByYou.Text" xml:space="preserve">
-    <value>Owned by you</value>
+    <value>Owned by</value>
   </data>
   <data name="Page.Title" xml:space="preserve">
     <value>My issues</value>
@@ -139,22 +139,22 @@
     <value>Statistics &lt;small&gt;(Total Issues)&lt;/small&gt;</value>
   </data>
   <data name="ViewIssuesDropDownFilter_Assigned.Text" xml:space="preserve">
-    <value>Assigned to you</value>
+    <value>Assigned to </value>
   </data>
   <data name="ViewIssuesDropDownFilter_Closed.Text" xml:space="preserve">
-    <value>Closed by you</value>
+    <value>Closed by </value>
   </data>
   <data name="ViewIssuesDropDownFilter_Created.Text" xml:space="preserve">
-    <value>Created by you</value>
+    <value>Created by </value>
   </data>
   <data name="ViewIssuesDropDownFilter_Monitored.Text" xml:space="preserve">
-    <value>Monitored by you</value>
+    <value>Monitored by </value>
   </data>
   <data name="ViewIssuesDropDownFilter_Owned.Text" xml:space="preserve">
-    <value>Owned by you</value>
+    <value>Owned by </value>
   </data>
   <data name="ViewIssuesDropDownFilter_Relevant.Text" xml:space="preserve">
-    <value>Relevant to you</value>
+    <value>Relevant to </value>
   </data>
   <data name="ViewIssuesDropDownFilter_Select.Text" xml:space="preserve">
     <value>-- Select a View --</value>
