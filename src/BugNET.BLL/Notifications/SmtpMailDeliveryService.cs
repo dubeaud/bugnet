@@ -36,11 +36,11 @@ namespace BugNET.BLL.Notifications
             {
                 int at = HostSettingManager.HostEmailAddress.IndexOf("@");
                 string issueCode = string.Format("+iid-{0}", relatedIssueId.Value);
-                message.From = new MailAddress(HostSettingManager.HostEmailAddress.Insert(at, issueCode));
+                message.From = new MailAddress(HostSettingManager.HostEmailAddress.Insert(at, issueCode), HostSettingManager.ApplicationTitle);
             }
             else
             {
-                message.From = new MailAddress(HostSettingManager.HostEmailAddress);
+                message.From = new MailAddress(HostSettingManager.HostEmailAddress, HostSettingManager.ApplicationTitle);
             }
 
 
