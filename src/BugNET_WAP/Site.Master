@@ -17,7 +17,7 @@
 </head>
 <body>
     <form runat="server" enctype="multipart/form-data">
-        <ajaxToolkit:ToolkitScriptManager runat="server" EnableScriptGlobalization="true"
+        <asp:ScriptManager runat="server" EnableScriptGlobalization="true"
             EnableScriptLocalization="true" EnablePartialRendering="true" EnablePageMethods="true">
 			<Services>
                 <asp:ServiceReference Path="~/Webservices/BugNetServices.asmx" />
@@ -42,7 +42,7 @@
                 <asp:ScriptReference Path="~/Scripts/site.js" />
                 <%--Site Scripts--%>
             </Scripts>
-        </ajaxToolkit:ToolkitScriptManager>
+        </asp:ScriptManager>
 
         <div class="navbar navbar-inverse">
             <div class="container-fluid">
