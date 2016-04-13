@@ -5,17 +5,9 @@ BugNET is a free, open source issue tracking and project issue management soluti
 
 ### More Information & Support
 
-For more information about BugNET please see our website. To report issues use the github issue tracker.
+To report issues use the github issue tracker.
 
-* Project Website - http://www.bugnetproject.com
-* Blog - http://blog.bugnetproject.com
-* Twitter - http://twitter.com/bugnetproject
-* Live Demo - http://demo.bugnetproject.com
 * Code Metrics - https://www.openhub.net/p/bugnet
-
-### BugNET Pro
-
-http://blog.bugnetproject.com/announcing-the-release-of-bugnet-pro
 
 ### Getting started
 
