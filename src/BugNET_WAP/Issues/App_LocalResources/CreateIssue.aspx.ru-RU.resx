@@ -121,7 +121,7 @@
 		<value>Вложение</value>
 	</data>
 	<data name="AttachmentDescriptionLabel.Text" xml:space="preserve">
-		<value>Описание:</value>
+		<value>Описание вложения:</value>
 	</data>
 	<data name="AttachmentFileLabel.Text" xml:space="preserve">
 		<value>Файл:</value>
