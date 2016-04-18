@@ -136,7 +136,7 @@
     <value>Статус:</value>
   </data>
   <data name="PrivateLabel" xml:space="preserve">
-    <value>Закрытое задание:</value>
+    <value>Скрытое задание:</value>
   </data>
   <data name="ProgressLabel" xml:space="preserve">
     <value>Процент выполнения:</value>
