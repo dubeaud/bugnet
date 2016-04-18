@@ -70,7 +70,7 @@ namespace BugNET.BLL
         /// <returns>Collection of membership users</returns>
         public static List<CustomMembershipUser> GetAllUsers()
         {
-            return Membership.GetAllUsers().Cast<CustomMembershipUser>().ToList();
+            return Membership.GetAllUsers().Cast<CustomMembershipUser>().OrderBy(cmu=> cmu.DisplayName).ToList();
         }
 
         /// <summary>
