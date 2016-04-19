@@ -186,4 +186,13 @@
   <data name="NotifyCheckbox" xml:space="preserve">
     <value>Уведомлять</value>
   </data>
+  <data name="IssueDescriptionLabel" xml:space="preserve">
+    <value>Описание:</value>
+  </data>
+  <data name="IssueTitleLabel" xml:space="preserve">
+    <value>Заголовок:</value>
+  </data>
+  <data name="NewIssueLiteral" xml:space="preserve">
+    <value>Новое задание</value>
+  </data>
 </root>
