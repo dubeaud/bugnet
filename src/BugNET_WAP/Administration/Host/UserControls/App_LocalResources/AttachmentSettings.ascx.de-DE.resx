@@ -123,6 +123,9 @@
   <data name="AttachmentSettings" xml:space="preserve">
     <value>Anhänge</value>
   </data>
+  <data name="EnableAttachmentsLabel.Text" xml:space="preserve">
+    <value>Enable Attachments</value>
+  </data>
   <data name="FileSizeLimit" xml:space="preserve">
     <value>Maximale Dateigröße</value>
   </data>

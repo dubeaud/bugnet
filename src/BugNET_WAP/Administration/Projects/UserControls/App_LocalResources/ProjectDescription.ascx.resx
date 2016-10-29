@@ -171,4 +171,7 @@
   <data name="SecurityTitle.Text" xml:space="preserve">
     <value>Security</value>
   </data>
+  <data name="lclAttachments.Text" xml:space="preserve">
+    <value>Allows file attachments to issues</value>
+  </data>
 </root>

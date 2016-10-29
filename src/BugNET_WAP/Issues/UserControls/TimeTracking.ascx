@@ -5,7 +5,7 @@
     GridLines="None"
     OnItemCommand="TimeEntriesDataGrid_ItemCommand"
     OnItemDataBound="TimeEntriesDataGridItemDataBound"
-    ShowFooter="True" SkinID="DataGrid">
+    ShowFooter="True">
     <Columns>
         <asp:BoundColumn DataField="WorkDate" HeaderText="Date" DataFormatString="{0:d}"></asp:BoundColumn>
         <asp:BoundColumn DataField="Duration" HeaderText="Hours" DataFormatString="{0:0.00}"></asp:BoundColumn>

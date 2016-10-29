@@ -514,7 +514,6 @@
     <Compile Include="_Obsolete\StreamLineReader.cs">
       <SubType>Code</SubType>
     </Compile>
-    <None Include="packages.config" />
     <None Include="POP3\POP3_ExtendedCapabilities.cs" />
     <Compile Include="Log\LogEntry.cs" />
     <Compile Include="Log\LogEntryType.cs" />

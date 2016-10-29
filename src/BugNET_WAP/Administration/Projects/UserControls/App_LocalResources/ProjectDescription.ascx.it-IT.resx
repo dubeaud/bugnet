@@ -186,4 +186,7 @@
   <data name="AttachmentStorageTypeFs.Text" xml:space="preserve">
     <value>File System</value>
   </data>
+  <data name="lclAttachments.Text" xml:space="preserve">
+    <value>Allows file attachments to issues</value>
+  </data>
 </root>
