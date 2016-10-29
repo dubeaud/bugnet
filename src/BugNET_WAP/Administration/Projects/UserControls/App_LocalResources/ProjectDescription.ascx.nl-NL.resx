@@ -162,4 +162,7 @@
   <data name="AllowIssueVotingLabel.Text" xml:space="preserve">
     <value>Stemmen op punten toestaan</value>
   </data>
+  <data name="lclAttachments.Text" xml:space="preserve">
+    <value>Allows file attachments to issues</value>
+  </data>
 </root>

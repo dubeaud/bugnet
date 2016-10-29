@@ -147,4 +147,7 @@
   <data name="lclAttachments.Text" xml:space="preserve">
     <value>Allows file attachments to issues</value>
   </data>
+  <data name="EnableAttachmentsLabel.Text" xml:space="preserve">
+    <value>Enable Attachments</value>
+  </data>
 </root>

@@ -123,6 +123,9 @@
   <data name="AttachmentSettings" xml:space="preserve">
     <value>附件</value>
   </data>
+  <data name="EnableAttachmentsLabel.Text" xml:space="preserve">
+    <value>Enable Attachments</value>
+  </data>
   <data name="FileSizeLimit" xml:space="preserve">
     <value>文件大小上限</value>
   </data>
