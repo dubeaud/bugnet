@@ -52,8 +52,9 @@
                         <i class="fa fa-bars"></i>
                     </button> 
                     <a class="navbar-brand navbar-brand-img" runat="server" href="~/">
-                        <img runat="server" src="~/images/logo.png" height="40" width="40" />
-                        BugNET</a>
+                        <img runat="server" src="~/images/logo.png" height="40" width="40" alt="" />
+                        <span class="site-name-text">BugNET</span>
+                    </a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <asp:Literal ID="litMenu" Visible="true" runat="server"></asp:Literal>
