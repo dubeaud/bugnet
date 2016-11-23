@@ -6,6 +6,8 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.jfm
+*.database.jfm
 
 # Build results
 [Dd]ebug/
