@@ -40,7 +40,7 @@
                             </span>>&nbsp;
                             <asp:Localize runat="server" ID="Step3_Localize" /></li>
                     </ul>
-                    <p><a class="btn btn-primary btn-lg" href="http://bugnet.codeplex.com/documentation" role="button">
+                    <p><a class="btn btn-primary btn-lg" href="http://bugnet.codeplex.com/documentation" role="button" target="_blank">
                         <asp:Localize runat="server" ID="LearnMoreLocalize" meta:resourcekey="LearnMore" /></a></p>
                 </div>
                 <br>
