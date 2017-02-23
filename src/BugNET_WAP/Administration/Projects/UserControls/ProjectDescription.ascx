@@ -70,6 +70,16 @@
             <asp:FileUpload ID="ProjectImageUploadFile" runat="server" />
         </div>
     </div>
+	<div class="form-group" id="AttachmentStorageTypeRow" runat="server">
+		<asp:Label ID="Label12" CssClass="col-md-2 control-label"
+			AssociatedControlID="AttachmentStorageType" meta:resourcekey="AttachmentStorageTypeLabel" runat="server" Text="Storage Type"></asp:Label>
+		<div class="col-md-8">
+			<asp:RadioButtonList ID="AttachmentStorageType" CssClass="radio" RepeatLayout="Flow" RepeatDirection="Vertical" runat="server">
+				<asp:ListItem Text="Database" Selected="True" Value="2" meta:resourcekey="AttachmentStorageTypeDb" />
+				<asp:ListItem Text="File System" Value="1" meta:resourcekey="AttachmentStorageTypeFs" />
+			</asp:RadioButtonList>
+		</div>
+	</div>
     <div class="form-group">
         <div class="col-md-2 col-md-offset-2">
             <asp:Image runat="server" ID="ProjectImage" Height="62" Width="62" />

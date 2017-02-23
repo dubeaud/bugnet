@@ -171,4 +171,13 @@
   <data name="SecurityTitle.Text" xml:space="preserve">
     <value>Security</value>
   </data>
+  <data name="AttachmentStorageTypeDb.Text" xml:space="preserve">
+    <value>Database &amp;mdash; Attachments and metadata are stored in the database</value>
+  </data>
+  <data name="AttachmentStorageTypeFs.Text" xml:space="preserve">
+    <value>File System  &amp;mdash; Attachments are stored to a specified path on the file system and metadata is stored in the database</value>
+  </data>
+  <data name="AttachmentStorageTypeLabel.Text" xml:space="preserve">
+    <value>Storage Type</value>
+  </data>
 </root>

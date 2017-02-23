@@ -55,7 +55,7 @@ namespace BugNET.Entities
         ///// Gets or sets the type of the attachment storage.
         ///// </summary>
         ///// <value>The type of the attachment storage.</value>
-        //public IssueAttachmentStorageTypes AttachmentStorageType { get; set; }
+        public IssueAttachmentStorageTypes AttachmentStorageType { get; set; }
 
         /// <summary>
         /// Gets or sets the code.
