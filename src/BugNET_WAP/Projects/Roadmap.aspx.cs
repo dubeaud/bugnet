@@ -62,8 +62,13 @@ namespace BugNET.Projects
                 ltProject.Text = p.Name;
                 litProjectCode.Text = p.Code;
 
-                BindRoadmap();             
+				Page.Title = string.Format("{0} ({1}) - {2}", p.Name, p.Code, GetLocalResourceObject("Roadmap").ToString());
+
+
+				BindRoadmap();             
             }
+
+			
 
             // The ExpandIssuePaths method is called to handle
             // the SiteMapResolve event.

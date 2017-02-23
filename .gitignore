@@ -189,3 +189,5 @@ FakesAssemblies/
 
 #MsBuildTasks
 !.build/*.*
+/src/.vs/config/applicationhost.config
+/src/.vs/BugNET_WAP
