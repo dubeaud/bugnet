@@ -542,9 +542,5 @@ namespace BugNET.Issues {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton lnkCancel;
-
-        protected global::System.Web.UI.WebControls.Label IssueDescriptionLabel;
-
-        protected global::System.Web.UI.WebControls.Label IssueTitleLabel;
     }
 }
