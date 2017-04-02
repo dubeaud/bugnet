@@ -1,0 +1,19 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\BugNET.Database",
+    "\\src\\BugNET.Database\\Scripts",
+    "\\src\\BugNET_WAP",
+    "\\src\\BugNET_WAP\\Scripts",
+    "\\src\\BugNET_WAP\\Scripts\\ckeditor",
+    "\\src\\BugNET_WAP\\Scripts\\ckeditor\\skins",
+    "\\src\\BugNET_WAP\\Scripts\\ckeditor\\skins\\moono",
+    "\\src\\Library",
+    "\\src\\Library\\Providers",
+    "\\src\\Library\\Providers\\DataProviders",
+    "\\src\\Library\\Providers\\DataProviders\\SqlDataProvider"
+  ],
+  "SelectedNode": "\\src\\BugNET_WAP\\Web.config",
+  "PreviewInSolutionExplorer": false
+}

@@ -187,3 +187,5 @@ FakesAssemblies/
 
 #MsBuildTasks
 !.build/*.*
+*.sqlite
+*.jfm

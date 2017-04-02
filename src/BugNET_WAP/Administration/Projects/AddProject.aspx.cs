@@ -34,13 +34,15 @@ namespace BugNET.Administration.Projects
         /// </summary>
         private void LoadWizardStep()
         {
+            if (StepIndex < 0) StepIndex = 0;
+
             _ctlWizardStep = Page.LoadControl((string)_wizardSteps[StepIndex]);
             _ctlWizardStep.ID = "ctlWizardStep";
             ((IEditProjectControl)_ctlWizardStep).ProjectId = ProjectId;
             plhWizardStep.Controls.Clear();
             plhWizardStep.Controls.Add(_ctlWizardStep);
             ((IEditProjectControl)_ctlWizardStep).Initialize();
-            lblStepNumber.Text = String.Format("{2} {0} {3} {1}", StepIndex + 1, _wizardSteps.Count, GetLocalResourceObject("Step"), GetLocalResourceObject("Of"));
+            lblStepNumber.Text = string.Format("{2} {0} {3} {1}", StepIndex + 1, _wizardSteps.Count, GetLocalResourceObject("Step"), GetLocalResourceObject("Of"));
         }
 
         /// <summary>
