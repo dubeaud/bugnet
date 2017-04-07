@@ -171,9 +171,11 @@ namespace BugNET.Issues
             DropPriority.SelectedValue = currentIssue.PriorityId;
             DropOwned.SelectedValue = currentIssue.OwnerUserName;
 
+            IssueReferenceToLinkConverter issueReferenceConverter =  IssueReferenceToLinkConverterBuilder.Build();
+            string issueDescription = issueReferenceConverter.Convert(_currentProject.Code, currentIssue.Description);
 
             // SMOSS: XSS Bugfix
-            Description.Text = (currentIssue.Description);
+            Description.Text = (issueDescription);
 
             // WARNING: Do Not html decode the text for the editor. 
             // The editor is expecting HtmlEncoded text as input.

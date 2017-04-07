@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Activation" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -64,8 +65,13 @@
     <Compile Include="Helpers\RandomIssueCreator.cs" />
     <Compile Include="Helpers\RandomProjectData.cs" />
     <Compile Include="Helpers\RandomStrings.cs" />
+    <Compile Include="IssueNumberToIssueLink\IssueReferenceReplacerTest.cs" />
+    <Compile Include="IssueNumberToIssueLink\IssueReferenceToIssueLinkTest.cs" />
+    <Compile Include="IssueNumberToIssueLink\IssueReferenceToIssueLinkTest2.cs" />
+    <Compile Include="IssueNumberToIssueLink\IssueReferenceParserTest.cs" />
     <Compile Include="IssueTests.cs" />
     <Compile Include="LoggingTests.cs" />
+    <Compile Include="Mocks\IssueReferenceValidatorMock.cs" />
     <Compile Include="Mocks\MockPathProvider.cs" />
     <Compile Include="ProjectTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
