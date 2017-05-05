@@ -3,7 +3,7 @@
 
 BugNET is a free, open source issue tracking and project issue management solution for the ASP.NET platform.
 
-### More Information & Support
+#### More Information & Support
 
 To report issues use the github issue tracker.
 
