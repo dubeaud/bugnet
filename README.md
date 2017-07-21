@@ -11,6 +11,20 @@ To report issues use the github issue tracker.
 
 ### Getting started
 
+#### System Requirements
+
+For Use
+
+- SQL Server 2008 and above. Including Express Editions
+- IIS7+ Server
+- ASP.NET 4.5
+
+For Development
+
+- Visual Studio 2010+ including Express Editions
+- SQL Server 2008 and above. Including Express Editions
+- ASP.NET 4.5
+
 **Getting started with Git and GitHub**
 
  * [Setting up Git for Windows and connecting to GitHub](http://help.github.com/win-set-up-git/)
