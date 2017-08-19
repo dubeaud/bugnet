@@ -7684,3 +7684,62 @@ BEGIN TRAN
 	FROM BugNet_UserCustomFieldSelections 
 	WHERE CustomFieldSelectionId = @CustomFieldSelectionIdToDelete
 COMMIT TRAN 
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[BugNet_UserCustomField_GetCustomFieldsByUserId]    Script Date: 18/08/2017 18:38:47 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[BugNet_UserCustomField_GetCustomFieldsByUserId] 
+	@UserId UNIQUEIDENTIFIER
+AS
+
+SELECT
+	Fields.CustomFieldId,
+	Fields.CustomFieldName,
+	Fields.CustomFieldDataType,
+	Fields.CustomFieldRequired,
+	ISNULL(CustomFieldValue,'') CustomFieldValue,
+	Fields.CustomFieldTypeId
+FROM
+	BugNet_UserCustomFields Fields
+	LEFT OUTER JOIN BugNet_UserCustomFieldValues FieldValues ON (Fields.CustomFieldId = FieldValues.CustomFieldId AND FieldValues.UserId = @UserId)
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[BugNet_UserCustomField_SaveCustomFieldValue]    Script Date: 18/08/2017 18:40:05 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[BugNet_UserCustomField_SaveCustomFieldValue]
+	@UserId UNIQUEIDENTIFIER,
+	@CustomFieldId Int, 
+	@CustomFieldValue NVarChar(MAX)
+AS
+UPDATE 
+	BugNet_UserCustomFieldValues 
+SET
+	CustomFieldValue = @CustomFieldValue
+WHERE
+	UserId = @UserId
+	AND CustomFieldId = @CustomFieldId
+
+IF @@ROWCOUNT = 0
+	INSERT BugNet_UserCustomFieldValues
+	(
+		UserId,
+		CustomFieldId,
+		CustomFieldValue
+	)
+	VALUES
+	(
+		@UserId,
+		@CustomFieldId,
+		@CustomFieldValue
+	)
+
