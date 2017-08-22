@@ -7290,3 +7290,456 @@ GO
 /****** Object:  Statistic [ST_1813581499_9_1_7]    Script Date: 9/11/2014 10:01:37 PM ******/
 CREATE STATISTICS [ST_1813581499_9_1_7] ON [dbo].[BugNet_Projects]([ProjectManagerUserId], [ProjectId], [ProjectDisabled])
 GO
+
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[BugNet_UserCustomField_GetCustomFields]    Script Date: 11/2/2014 3:54:01 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[BugNet_UserCustomField_GetCustomFields] 
+AS
+
+SELECT
+	Fields.CustomFieldId,
+	Fields.CustomFieldName,
+	Fields.CustomFieldDataType,
+	Fields.CustomFieldRequired,
+	'' CustomFieldValue,
+	Fields.CustomFieldTypeId
+FROM
+	BugNet_UserCustomFields Fields
+
+
+GO
+/****** Object:  table [dbo].[BugNet_UserCustomFieldTypes]    Script Date: 11/2/2014 3:54:01 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+	CREATE TABLE [dbo].[BugNet_UserCustomFieldTypes] (
+    [CustomFieldTypeId]   INT           IDENTITY (1, 1) NOT NULL,
+    [CustomFieldTypeName] NVARCHAR (50) NOT NULL,
+    CONSTRAINT [PK_BugNet_UserCustomFieldTypes] PRIMARY KEY CLUSTERED ([CustomFieldTypeId] ASC)
+);
+
+GO
+/****** Object:  table [dbo].[BugNet_UserCustomFields]    Script Date: 11/2/2014 3:54:01 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[BugNet_UserCustomFields] (
+    [CustomFieldId]       INT              IDENTITY (1, 1) NOT NULL,
+    [CustomFieldName]     NVARCHAR (50)    NOT NULL,
+    [CustomFieldRequired] BIT              NOT NULL,
+    [CustomFieldDataType] INT              NOT NULL,
+    [CustomFieldTypeId]   INT              NOT NULL,
+    CONSTRAINT [PK_BugNet_UserCustomFields] PRIMARY KEY CLUSTERED ([CustomFieldId] ASC),
+    CONSTRAINT [FK_BugNet_UserCustomFields_BugNet_UserCustomFieldType] FOREIGN KEY ([CustomFieldTypeId]) REFERENCES [dbo].[BugNet_UserCustomFieldTypes] ([CustomFieldTypeId]) ON DELETE CASCADE
+);
+
+GO
+/****** Object:  Stored Procedure [dbo].[BugNet_UserCustomField_CreateNewCustomField]    Script Date: 11/2/2014 3:54:01 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[BugNet_UserCustomField_CreateNewCustomField]
+	@CustomFieldName NVarChar(50),
+	@CustomFieldDataType Int,
+	@CustomFieldRequired Bit,
+	@CustomFieldTypeId Int
+AS
+IF NOT EXISTS(SELECT CustomFieldId FROM BugNet_UserCustomFields WHERE LOWER(CustomFieldName) = LOWER(@CustomFieldName) )
+BEGIN
+	INSERT BugNet_UserCustomFields
+	(
+		CustomFieldName,
+		CustomFieldDataType,
+		CustomFieldRequired,
+		CustomFieldTypeId
+	)
+	VALUES
+	(
+		@CustomFieldName,
+		@CustomFieldDataType,
+		@CustomFieldRequired,
+		@CustomFieldTypeId
+	)
+
+	RETURN scope_identity()
+END
+RETURN 0
+
+
+
+
+GO
+/****** Object:  Stored Procedure [dbo].[BugNet_UserCustomFieldTypes]    Script Date: 11/2/2014 3:54:01 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET IDENTITY_INSERT BugNet_UserCustomFieldTypes On
+GO 
+MERGE INTO BugNet_UserCustomFieldTypes AS Target 
+USING (VALUES 
+   (1, N'Text'),
+   (2, N'Drop Down List'),
+   (3, N'Date'),
+   (4, N'Rich Text'),
+   (5, N'Yes / No'),
+   (6, N'User List')
+) 
+AS Source (CustomFieldTypeId, CustomFieldTypeName) 
+ON Target.CustomFieldTypeId = Source.CustomFieldTypeId
+-- update matched rows 
+WHEN MATCHED THEN 
+UPDATE SET CustomFieldTypeName = Source.CustomFieldTypeName 
+-- insert new rows 
+WHEN NOT MATCHED BY TARGET THEN 
+INSERT (CustomFieldTypeId, CustomFieldTypeName) 
+VALUES (CustomFieldTypeId, CustomFieldTypeName) 
+-- delete rows that are in the target but not the source 
+WHEN NOT MATCHED BY SOURCE THEN 
+DELETE;
+
+SET IDENTITY_INSERT BugNet_UserCustomFieldTypes OFF 
+GO 
+
+
+GO
+/****** Object:  Stored Procedure [dbo].[BugNet_UserCustomFieldSelection_GetCustomFieldSelectionsByCustomFieldId]    Script Date: 11/2/2014 3:54:01 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[BugNet_UserCustomFieldSelection_GetCustomFieldSelectionsByCustomFieldId] 
+	@CustomFieldId Int
+AS
+SELECT
+	CustomFieldSelectionId,
+	CustomFieldId,
+	CustomFieldSelectionName,
+	rtrim(CustomFieldSelectionValue) CustomFieldSelectionValue,
+	CustomFieldSelectionSortOrder
+FROM
+	BugNet_UserCustomFieldSelections
+WHERE
+	CustomFieldId = @CustomFieldId
+ORDER BY CustomFieldSelectionSortOrder
+
+
+
+GO
+/****** Object:  Stored Procedure [dbo].[BugNet_UserCustomFieldSelections]    Script Date: 11/2/2014 3:54:01 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[BugNet_UserCustomFieldSelections] (
+    [CustomFieldSelectionId]        INT            IDENTITY (1, 1) NOT NULL,
+    [CustomFieldId]                 INT            NOT NULL,
+    [CustomFieldSelectionValue]     NVARCHAR (255) NOT NULL,
+    [CustomFieldSelectionName]      NVARCHAR (255) NOT NULL,
+    [CustomFieldSelectionSortOrder] INT            CONSTRAINT [DF_BugNet_UserCustomFieldSelections_CustomFieldSelectionSortOrder] DEFAULT ((0)) NOT NULL,
+    CONSTRAINT [PK_BugNet_UserCustomFieldSelections] PRIMARY KEY CLUSTERED ([CustomFieldSelectionId] ASC),
+    CONSTRAINT [FK_BugNet_UserCustomFieldSelections_BugNet_UserCustomFields] FOREIGN KEY ([CustomFieldId]) REFERENCES [dbo].[BugNet_UserCustomFields] ([CustomFieldId]) ON DELETE CASCADE
+);
+
+
+GO
+/****** Object:  Stored Procedure [dbo].[BugNet_UserCustomField_GetCustomFieldById]    Script Date: 11/2/2014 3:54:01 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[BugNet_UserCustomField_GetCustomFieldById] 
+	@CustomFieldId Int
+AS
+
+SELECT
+	Fields.CustomFieldId,
+	Fields.CustomFieldName,
+	Fields.CustomFieldDataType,
+	Fields.CustomFieldRequired,
+	'' CustomFieldValue,
+	Fields.CustomFieldTypeId
+FROM
+	BugNet_UserCustomFields Fields
+WHERE
+	Fields.CustomFieldId = @CustomFieldId
+
+
+
+GO
+/****** Object:  Stored Procedure [dbo].[BugNet_UserCustomField_UpdateCustomField]    Script Date: 11/2/2014 3:54:01 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+	CREATE PROCEDURE [dbo].[BugNet_UserCustomField_UpdateCustomField]
+	@CustomFieldId Int,
+	@CustomFieldName NVarChar(50),
+	@CustomFieldDataType Int,
+	@CustomFieldRequired Bit,
+	@CustomFieldTypeId Int
+AS
+UPDATE 
+	BugNet_UserCustomFields 
+SET
+	CustomFieldName = @CustomFieldName,
+	CustomFieldDataType = @CustomFieldDataType,
+	CustomFieldRequired = @CustomFieldRequired,
+	CustomFieldTypeId = @CustomFieldTypeId
+WHERE 
+	CustomFieldId = @CustomFieldId
+
+
+GO
+/****** Object:  Stored Procedure [dbo].[BugNet_UserCustomField_DeleteCustomField]    Script Date: 11/2/2014 3:54:01 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+	CREATE PROCEDURE [dbo].[BugNet_UserCustomField_DeleteCustomField]
+	@CustomFieldIdToDelete INT
+AS
+SET XACT_ABORT ON
+BEGIN TRAN
+	/*Copied from BugNet_ProjectCustomField_DeleteCustomField but this field not point at BugNet_UserCustomField_DeleteCustomField, the field should be renamed in BugNet_QueryClauses? */
+	/*DELETE
+	FROM BugNet_QueryClauses
+	WHERE CustomFieldId = @CustomFieldIdToDelete*/
+	
+	DELETE 
+	FROM BugNet_UserCustomFieldValues 
+	WHERE CustomFieldId = @CustomFieldIdToDelete
+	
+	DELETE 
+	FROM BugNet_UserCustomFields 
+	WHERE CustomFieldId = @CustomFieldIdToDelete
+COMMIT
+
+
+GO
+/****** Object:  Stored Procedure [dbo].[BugNet_UserCustomFieldValues]    Script Date: 11/2/2014 3:54:01 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[BugNet_UserCustomFieldValues] (
+    [CustomFieldValueId] INT              IDENTITY (1, 1) NOT NULL,
+    [UserId]           	 UNIQUEIDENTIFIER NOT NULL,
+    [CustomFieldId]      INT              NOT NULL,
+    [CustomFieldValue]   NVARCHAR (MAX)   NOT NULL,
+    CONSTRAINT [PK_BugNet_UserCustomFieldValues] PRIMARY KEY CLUSTERED ([CustomFieldValueId] ASC),
+    CONSTRAINT [FK_BugNet_UserCustomFieldValues_BugNet_Users] FOREIGN KEY ([UserId]) REFERENCES [dbo].[Users] ([UserId]) ON DELETE CASCADE,
+    CONSTRAINT [FK_BugNet_UserCustomFieldValues_BugNet_UserCustomFields] FOREIGN KEY ([CustomFieldId]) REFERENCES [dbo].[BugNet_UserCustomFields] ([CustomFieldId])
+);
+
+GO
+/****** Object:  Stored Procedure [dbo].[BugNet_UserCustomFieldSelection_CreateNewCustomFieldSelection]    Script Date: 11/2/2014 3:54:01 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[BugNet_UserCustomFieldSelection_CreateNewCustomFieldSelection]
+	@CustomFieldId INT,
+	@CustomFieldSelectionValue NVARCHAR(255),
+	@CustomFieldSelectionName NVARCHAR(255)
+AS
+DECLARE @CustomFieldSelectionSortOrder int
+SELECT @CustomFieldSelectionSortOrder = ISNULL(MAX(CustomFieldSelectionSortOrder),0) + 1 FROM BugNet_UserCustomFieldSelections
+
+IF NOT EXISTS(SELECT CustomFieldSelectionId FROM BugNet_UserCustomFieldSelections WHERE CustomFieldId = @CustomFieldId AND LOWER(CustomFieldSelectionName) = LOWER(@CustomFieldSelectionName) )
+BEGIN
+	INSERT BugNet_UserCustomFieldSelections
+	(
+		CustomFieldId,
+		CustomFieldSelectionValue,
+		CustomFieldSelectionName,
+		CustomFieldSelectionSortOrder
+	)
+	VALUES
+	(
+		@CustomFieldId,
+		@CustomFieldSelectionValue,
+		@CustomFieldSelectionName,
+		@CustomFieldSelectionSortOrder
+		
+	)
+
+	RETURN scope_identity()
+END
+RETURN 0
+
+
+GO
+/****** Object:  Stored Procedure [dbo].[BugNet_UserCustomFieldSelection_GetCustomFieldSelectionById]    Script Date: 11/2/2014 3:54:01 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[BugNet_UserCustomFieldSelection_GetCustomFieldSelectionById] 
+	@CustomFieldSelectionId Int
+AS
+SELECT
+	CustomFieldSelectionId,
+	CustomFieldId,
+	CustomFieldSelectionName,
+	rtrim(CustomFieldSelectionValue) CustomFieldSelectionValue,
+	CustomFieldSelectionSortOrder
+FROM
+	BugNet_UserCustomFieldSelections
+WHERE
+	CustomFieldSelectionId = @CustomFieldSelectionId
+ORDER BY CustomFieldSelectionSortOrder
+
+
+GO
+/****** Object:  Stored Procedure [dbo].[BugNet_UserCustomFieldSelection_Update]    Script Date: 11/2/2014 3:54:01 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[BugNet_UserCustomFieldSelection_Update]
+	@CustomFieldSelectionId INT,
+	@CustomFieldId INT,
+	@CustomFieldSelectionName NVARCHAR(255),
+	@CustomFieldSelectionValue NVARCHAR(255),
+	@CustomFieldSelectionSortOrder INT
+AS
+
+SET XACT_ABORT ON
+SET NOCOUNT ON
+
+DECLARE 
+	@OldSortOrder INT,
+	@OldCustomFieldSelectionId INT,
+	@OldSelectionValue NVARCHAR(255)
+
+SELECT TOP 1 
+	@OldSortOrder = CustomFieldSelectionSortOrder,
+	@OldSelectionValue = CustomFieldSelectionValue
+FROM BugNet_UserCustomFieldSelections 
+WHERE CustomFieldSelectionId = @CustomFieldSelectionId
+
+SET @OldCustomFieldSelectionId = (SELECT TOP 1 CustomFieldSelectionId FROM BugNet_UserCustomFieldSelections WHERE CustomFieldSelectionSortOrder = @CustomFieldSelectionSortOrder  AND CustomFieldId = @CustomFieldId)
+
+UPDATE 
+	BugNet_UserCustomFieldSelections
+SET
+	CustomFieldId = @CustomFieldId,
+	CustomFieldSelectionName = @CustomFieldSelectionName,
+	CustomFieldSelectionValue = @CustomFieldSelectionValue,
+	CustomFieldSelectionSortOrder = @CustomFieldSelectionSortOrder
+WHERE 
+	CustomFieldSelectionId = @CustomFieldSelectionId
+	
+UPDATE BugNet_UserCustomFieldSelections 
+SET CustomFieldSelectionSortOrder = @OldSortOrder
+WHERE CustomFieldSelectionId = @OldCustomFieldSelectionId
+
+/* 
+	this will not work very well with regards to case sensitivity so
+	we only will care if the value is somehow different than the original
+*/
+IF (@OldSelectionValue != @CustomFieldSelectionValue)
+BEGIN
+	UPDATE BugNet_UserCustomFieldValues
+	SET CustomFieldValue = @CustomFieldSelectionValue
+	WHERE CustomFieldId = @CustomFieldId AND CustomFieldValue = @OldSelectionValue
+END
+
+
+GO
+/****** Object:  Stored Procedure [dbo].[BugNet_UserCustomFieldSelection_DeleteCustomFieldSelection]    Script Date: 11/2/2014 3:54:01 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[BugNet_UserCustomFieldSelection_DeleteCustomFieldSelection]
+	@CustomFieldSelectionIdToDelete INT
+AS
+
+SET XACT_ABORT ON
+
+DECLARE
+	@CustomFieldId INT
+
+SET @CustomFieldId = (SELECT TOP 1 CustomFieldId 
+						FROM BugNet_UserCustomFieldSelections 
+						WHERE CustomFieldSelectionId = @CustomFieldSelectionIdToDelete)
+
+BEGIN TRAN
+	UPDATE BugNet_UserCustomFieldValues
+	SET CustomFieldValue = NULL
+	WHERE CustomFieldId = @CustomFieldId
+							
+	DELETE 
+	FROM BugNet_UserCustomFieldSelections 
+	WHERE CustomFieldSelectionId = @CustomFieldSelectionIdToDelete
+COMMIT TRAN 
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[BugNet_UserCustomField_GetCustomFieldsByUserId]    Script Date: 18/08/2017 18:38:47 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[BugNet_UserCustomField_GetCustomFieldsByUserId] 
+	@UserId UNIQUEIDENTIFIER
+AS
+
+SELECT
+	Fields.CustomFieldId,
+	Fields.CustomFieldName,
+	Fields.CustomFieldDataType,
+	Fields.CustomFieldRequired,
+	ISNULL(CustomFieldValue,'') CustomFieldValue,
+	Fields.CustomFieldTypeId
+FROM
+	BugNet_UserCustomFields Fields
+	LEFT OUTER JOIN BugNet_UserCustomFieldValues FieldValues ON (Fields.CustomFieldId = FieldValues.CustomFieldId AND FieldValues.UserId = @UserId)
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[BugNet_UserCustomField_SaveCustomFieldValue]    Script Date: 18/08/2017 18:40:05 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[BugNet_UserCustomField_SaveCustomFieldValue]
+	@UserId UNIQUEIDENTIFIER,
+	@CustomFieldId Int, 
+	@CustomFieldValue NVarChar(MAX)
+AS
+UPDATE 
+	BugNet_UserCustomFieldValues 
+SET
+	CustomFieldValue = @CustomFieldValue
+WHERE
+	UserId = @UserId
+	AND CustomFieldId = @CustomFieldId
+
+IF @@ROWCOUNT = 0
+	INSERT BugNet_UserCustomFieldValues
+	(
+		UserId,
+		CustomFieldId,
+		CustomFieldValue
+	)
+	VALUES
+	(
+		@UserId,
+		@CustomFieldId,
+		@CustomFieldValue
+	)
+
