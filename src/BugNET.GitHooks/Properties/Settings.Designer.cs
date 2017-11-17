@@ -34,7 +34,7 @@ namespace BugNET.GitHooks.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("bugtrack@network")]
+        [global::System.Configuration.DefaultSettingValueAttribute("password")]
         public string BugNetPassword {
             get {
                 return ((string)(this["BugNetPassword"]));
@@ -61,7 +61,7 @@ namespace BugNET.GitHooks.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://dev.jnetwork.ch/bugtrack/WebServices/BugNetServices.asmx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:59847/Webservices/BugNetServices.asmx")]
         public string BugNetServicesUrl {
             get {
                 return ((string)(this["BugNetServicesUrl"]));
@@ -89,7 +89,7 @@ namespace BugNET.GitHooks.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://dev.jnetwork.ch/bugtrack/WebServices/BugNetServices.asmx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:59847/Webservices/BugNetServices.asmx")]
         public string BugNET_SubversionHooks_BugNetServices_BugNetServices {
             get {
                 return ((string)(this["BugNET_SubversionHooks_BugNetServices_BugNetServices"]));
