@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[BugNet_Project_GetProjectsByMemberUserName]
+﻿CREATE PROCEDURE [dbo].[BugNet_Project_GetProjectsByMemberUsername]
 	@UserName nvarchar(255),
 	@ActiveOnly bit
 AS
@@ -26,7 +26,7 @@ SELECT DISTINCT
 	CreatorUserName,
 	CreatorDisplayName,
 	AllowAttachments,
-	AllowAttachments,
+	AttachmentStorageType,
 	SvnRepositoryUrl,
 	AllowIssueVoting
  FROM [BugNet_ProjectsView]

@@ -4120,7 +4120,6 @@ SELECT
 	CreatorUserName,
 	CreatorDisplayName,
 	AllowAttachments,
-	AllowAttachments,
 	AttachmentStorageType,
 	SvnRepositoryUrl,
 	AllowIssueVoting
@@ -4233,7 +4232,6 @@ SELECT DISTINCT
 	ManagerDisplayName,
 	CreatorUserName,
 	CreatorDisplayName,
-	AllowAttachments,
 	AllowAttachments,
 	AttachmentStorageType,
 	SvnRepositoryUrl,

@@ -29,6 +29,7 @@ INSERT BugNet_Projects
   ProjectManagerUserId,
   ProjectCreatorUserId,
   AllowAttachments,
+  AttachmentStorageType,
   SvnRepositoryUrl 
 )
 SELECT
@@ -42,6 +43,7 @@ SELECT
   ProjectManagerUserId,
   @CreatorUserId,
   AllowAttachments,
+  AttachmentStorageType,
   SvnRepositoryUrl
 FROM 
   BugNet_Projects
@@ -58,22 +60,14 @@ INSERT BugNet_ProjectMilestones
   MilestoneName,
   MilestoneImageUrl,
   SortOrder,
-  DateCreated,
-  MilestoneDueDate,
-  MilestoneReleaseDate,
-  MilestoneNotes,
-  MilestoneCompleted
+  DateCreated
 )
 SELECT
   @NewProjectId,
   MilestoneName,
   MilestoneImageUrl,
   SortOrder,
-  GetDate(),
-  MilestoneDueDate,
-  MilestoneReleaseDate,
-  MilestoneNotes,
-  MilestoneCompleted
+  GetDate()
 FROM
   BugNet_ProjectMilestones
 WHERE
@@ -419,119 +413,5 @@ FROM
   BugNet_ProjectNotifications
 WHERE
   ProjectId = @ProjectId
-
--- Copy Project Defaults
-INSERT INTO BugNet_DefaultValues
-    ([ProjectId]
-    ,[DefaultType]
-    ,[StatusId]
-    ,[IssueOwnerUserId]
-    ,[IssuePriorityId]
-    ,[IssueAffectedMilestoneId]
-    ,[IssueAssignedUserId]
-    ,[IssueVisibility]
-    ,[IssueCategoryId]
-    ,[IssueDueDate]
-    ,[IssueProgress]
-    ,[IssueMilestoneId]
-    ,[IssueEstimation]
-    ,[IssueResolutionId]
-    ,[OwnedByNotify]
-    ,[AssignedToNotify])
-SELECT
-    @NewProjectId,
-    DefaultType,
-    StatusId,
-    IssueOwnerUserId,
-    IssuePriorityId,
-    IssueAffectedMilestoneId,
-    IssueAssignedUserId,
-    IssueVisibility,
-    IssueCategoryId,
-    IssueDueDate,
-    IssueProgress, 
-    IssueMilestoneId,
-    IssueEstimation,
-    IssueResolutionId, 
-    OwnedByNotify, 
-    AssignedToNotify
-FROM
-	BugNet_DefaultValues
-WHERE
-	ProjectId = @ProjectId
-
--- Update Default Values with new value keys
-UPDATE BugNet_DefaultValues  SET
-	DefaultType = (SELECT IssueTypeId FROM BugNet_ProjectIssueTypes WHERE ProjectId = @NewProjectId AND IssueTypeName = (SELECT IssueTypeName FROM BugNet_ProjectIssueTypes WHERE IssueTypeId = BugNet_DefaultValues.DefaultType)),
-	StatusId =  (SELECT StatusId FROM BugNet_ProjectStatus WHERE ProjectId = @NewProjectId AND StatusName = (SELECT StatusName FROM BugNet_ProjectStatus WHERE StatusId = BugNet_DefaultValues.StatusId)),
-	IssuePriorityId =  (SELECT PriorityId FROM BugNet_ProjectPriorities WHERE ProjectId = @NewProjectId AND PriorityName = (SELECT PriorityName FROM BugNet_ProjectPriorities WHERE PriorityId = BugNet_DefaultValues.IssuePriorityId)),
-	IssueAffectedMilestoneId = (SELECT MilestoneId FROM BugNet_ProjectMilestones WHERE ProjectId = @NewProjectId AND MilestoneName = (SELECT MilestoneName FROM BugNet_ProjectMilestones WHERE MilestoneId = BugNet_DefaultValues.IssueAffectedMilestoneId)),
-	IssueCategoryId = (SELECT CategoryId FROM BugNet_ProjectCategories WHERE ProjectId = @NewProjectId AND CategoryName = (SELECT CategoryName FROM BugNet_ProjectCategories WHERE CategoryId = BugNet_DefaultValues.IssueCategoryId)),
-	IssueMilestoneId = (SELECT MilestoneId FROM BugNet_ProjectMilestones WHERE ProjectId = @NewProjectId AND MilestoneName = (SELECT MilestoneName FROM BugNet_ProjectMilestones WHERE MilestoneId = BugNet_DefaultValues.IssueMilestoneId)),
-	IssueResolutionId =(SELECT ResolutionId FROM BugNet_ProjectResolutions WHERE ProjectId = @NewProjectId AND ResolutionName = (SELECT ResolutionName FROM BugNet_ProjectResolutions WHERE ResolutionId = BugNet_DefaultValues.IssueResolutionId))
-  WHERE ProjectId = @NewProjectId
-
--- Copy default visiblity
-INSERT INTO BugNet_DefaultValuesVisibility
-    ([ProjectId]
-    ,[StatusVisibility]
-    ,[OwnedByVisibility]
-    ,[PriorityVisibility]
-    ,[AssignedToVisibility]
-    ,[PrivateVisibility]
-    ,[CategoryVisibility]
-    ,[DueDateVisibility]
-    ,[TypeVisibility]
-    ,[PercentCompleteVisibility]
-    ,[MilestoneVisibility]
-    ,[EstimationVisibility]
-    ,[ResolutionVisibility]
-    ,[AffectedMilestoneVisibility]
-    ,[StatusEditVisibility]
-    ,[OwnedByEditVisibility]
-    ,[PriorityEditVisibility]
-    ,[AssignedToEditVisibility]
-    ,[PrivateEditVisibility]
-    ,[CategoryEditVisibility]
-    ,[DueDateEditVisibility]
-    ,[TypeEditVisibility]
-    ,[PercentCompleteEditVisibility]
-    ,[MilestoneEditVisibility]
-    ,[EstimationEditVisibility]
-    ,[ResolutionEditVisibility]
-    ,[AffectedMilestoneEditVisibility])
-SELECT
-    @NewProjectId,
-    StatusVisibility,
-    OwnedByVisibility,
-    PriorityVisibility,
-    AssignedToVisibility,
-    PrivateVisibility,
-    CategoryVisibility,
-    DueDateVisibility,
-    TypeVisibility,
-    PercentCompleteVisibility,
-    MilestoneVisibility,
-    EstimationVisibility,
-    ResolutionVisibility,
-    AffectedMilestoneVisibility,
-    StatusEditVisibility,
-    OwnedByEditVisibility, 
-    PriorityEditVisibility, 
-    AssignedToEditVisibility,
-    PrivateEditVisibility,
-    CategoryEditVisibility,
-    DueDateEditVisibility, 
-    TypeEditVisibility,
-    PercentCompleteEditVisibility,
-    MilestoneEditVisibility,
-    EstimationEditVisibility, 
-    ResolutionEditVisibility,
-    AffectedMilestoneEditVisibility
-FROM
-	BugNet_DefaultValuesVisibility
-WHERE
-	ProjectId = @ProjectId
-
 
 RETURN @NewProjectId

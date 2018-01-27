@@ -1454,6 +1454,7 @@
     <Content Include="Providers\DataProviders\SqlDataProvider\1.5.265.0.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\1.6.307.0.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\1.6.327.0.SqlDataProvider.sql" />
+    <Content Include="Providers\DataProviders\SqlDataProvider\1.6.339.0.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\BugNet.Data.SqlDataProvider.sql" />
     <Content Include="Providers\DataProviders\SqlDataProvider\BugNet.Schema.SqlDataProvider.sql" />
     <None Include="Providers\DataProviders\SqlDataProvider\Latest.SqlDataProvider.sql" />
