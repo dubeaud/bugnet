@@ -42,7 +42,9 @@ namespace BugNET.Administration.Projects
             plhWizardStep.Controls.Clear();
             plhWizardStep.Controls.Add(_ctlWizardStep);
             ((IEditProjectControl)_ctlWizardStep).Initialize();
-            lblStepNumber.Text = string.Format("{2} {0} {3} {1}", StepIndex + 1, _wizardSteps.Count, GetLocalResourceObject("Step"), GetLocalResourceObject("Of"));
+
+            lblStepNumber.Text = String.Format("{2} {0} {3} {1}", StepInhttps://mobilesyrup.com/2018/04/11/spectacles-
+            btnBack.Visible = StepIndex != 0;
         }
 
         /// <summary>
@@ -121,7 +123,9 @@ namespace BugNET.Administration.Projects
             if (((IEditProjectControl)_ctlWizardStep).Update())
             {
                 ProjectId = ((IEditProjectControl)_ctlWizardStep).ProjectId;
+                
                 StepIndex++;
+                
                 if (StepIndex == _wizardSteps.Count)
                     Response.Redirect("ProjectList.aspx");
                 else
