@@ -141,7 +141,8 @@ namespace BugNET.Administration.Projects.UserControls
                     projectImage = new ProjectImage(ProjectId, fileBytes, uploadedFileName, fileSize, uploadFile.ContentType);
                 }
 
-                var project = new Project
+				var attachmentStorageType = (IssueAttachmentStorageTypes)Enum.Parse(typeof(IssueAttachmentStorageTypes), AttachmentStorageType.SelectedItem.Value);
+				var project = new Project
                                       {
                                           AccessType = at,
                                           Name = txtName.Text.Trim(),
@@ -156,8 +157,9 @@ namespace BugNET.Administration.Projects.UserControls
                                           Image = projectImage,
                                           ManagerDisplayName = string.Empty,
                                           ManagerUserName = ProjectManager.SelectedValue,
-                                          SvnRepositoryUrl = string.Empty
-                                      };
+                                          SvnRepositoryUrl = string.Empty,
+										  AttachmentStorageType = attachmentStorageType
+				};
 
                 if (BLL.ProjectManager.SaveOrUpdate(project))
                 {
