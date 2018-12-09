@@ -189,5 +189,15 @@ FakesAssemblies/
 
 #MsBuildTasks
 !.build/*.*
+*.sqlite
+*.jfm
+
+# Visual Studio 2015 cache/options directory
+.vs/
+BugNetDeploy/
+/src/.vs/config/applicationhost.config
+/src/.vs/BugNET_WAP
+/src/.vs/BugNET/v15/Server/sqlite3
+
 /src/.vs/config/applicationhost.config
 /src/.vs/BugNET_WAP

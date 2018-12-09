@@ -34,6 +34,8 @@ namespace BugNET.Administration.Projects
         /// </summary>
         private void LoadWizardStep()
         {
+            if (StepIndex < 0) StepIndex = 0;
+
             _ctlWizardStep = Page.LoadControl((string)_wizardSteps[StepIndex]);
             _ctlWizardStep.ID = "ctlWizardStep";
             ((IEditProjectControl)_ctlWizardStep).ProjectId = ProjectId;

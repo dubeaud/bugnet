@@ -16,7 +16,6 @@ IF  NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[db
 	REFERENCES [dbo].[BugNet_ProjectCategories] ([CategoryId])
 GO
 
-
 ALTER PROCEDURE [dbo].[BugNet_Project_CloneProject] 
 (
   @ProjectId INT,
@@ -556,7 +555,6 @@ WHERE
 RETURN @NewProjectId
 GO
 
-
 ALTER PROCEDURE [dbo].[BugNet_ProjectMailbox_CreateProjectMailbox]
 	@MailBox nvarchar (100),
 	@ProjectId int,
@@ -609,8 +607,6 @@ WHERE
 	BugNet_ProjectMailBoxes.ProjectMailboxId = @ProjectMailboxId
 GO
 
-
-
 ALTER  PROCEDURE [dbo].[BugNet_ProjectMailbox_GetMailboxByProjectId]
 	@ProjectId int
 AS
@@ -632,7 +628,6 @@ FROM
 WHERE
 	BugNet_ProjectMailBoxes.ProjectId = @ProjectId
 GO
-
 
 ALTER PROCEDURE [dbo].[BugNet_ProjectMailbox_GetProjectByMailbox]
     @mailbox nvarchar(100) 
@@ -656,7 +651,6 @@ WHERE
 	BugNet_ProjectMailBoxes.MailBox = @mailbox
 GO
 
-
 ALTER PROCEDURE [dbo].[BugNet_ProjectMailbox_UpdateProjectMailbox]
 	@ProjectMailboxId int,
 	@MailBoxEmailAddress nvarchar (100),
@@ -677,7 +671,6 @@ UPDATE BugNet_ProjectMailBoxes SET
 	CategoryId = @CategoryId
 WHERE ProjectMailboxId = @ProjectMailboxId
 GO
-
 
 ALTER PROCEDURE [dbo].[BugNet_User_GetUsersByProjectId]
 	@ProjectId Int,

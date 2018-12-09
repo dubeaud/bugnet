@@ -1,0 +1,3 @@
+﻿#!/bin/sh
+revision=$(git log -1 --pretty=format:'%H' $newrev)
+"C:\inetpub\web\git.intra.jnetwork.ch\App_Data\BugnetProject\BugNET.GitHooks.exe" post-commit ./ $revision

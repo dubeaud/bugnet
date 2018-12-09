@@ -2,7 +2,8 @@
     CodeBehind="ProjectCustomFields.ascx.cs" %>
 <div>
     <h2>
-        <asp:Literal ID="CustomFieldsTitle" runat="Server" meta:resourcekey="CustomFieldsTitle" /></h2>
+        <asp:Literal ID="CustomFieldsTitle" runat="Server" meta:resourcekey="CustomFieldsTitle" />
+    </h2>
     <p>
         <asp:Label ID="DescriptionLabel" runat="server" meta:resourcekey="DescriptionLabel" />
     </p>
@@ -28,7 +29,7 @@
     <br />
     <asp:UpdatePanel ID="UpdatePanel2" runat="server">
         <ContentTemplate>
-            <asp:DataGrid ID="grdCustomFields" SkinID="DataGrid" OnUpdateCommand="grdCustomFields_Update"
+            <asp:DataGrid ID="grdCustomFields" OnUpdateCommand="grdCustomFields_Update"
                 AutoGenerateColumns="false" GridLines="None" CssClass="table table-striped"
                 UseAccessibleHeader="true"
                 OnEditCommand="grdCustomFields_Edit" OnCancelCommand="grdCustomFields_Cancel"
@@ -76,9 +77,9 @@
                                 <asp:ListItem Text="Text" Selected="True" Value="1" meta:resourcekey="TextType" />
                                 <asp:ListItem Text="Drop Down List" Value="2" meta:resourcekey="DropDownListType" />
                                 <asp:ListItem Text="Date" Value="3" meta:resourcekey="DateType" />
-                                <asp:ListItem Text="Rich Text" Value="4" meta:resourcekey="RichTextType"/>
-                                <asp:ListItem Text="Yes / No" Value="5" meta:resourcekey="YesNoType"/>
-                                <asp:ListItem Text="User List" Value="6" meta:resourcekey="UserListType"/>
+                                <asp:ListItem Text="Rich Text" Value="4" meta:resourcekey="RichTextType" />
+                                <asp:ListItem Text="Yes / No" Value="5" meta:resourcekey="YesNoType" />
+                                <asp:ListItem Text="User List" Value="6" meta:resourcekey="UserListType" />
                             </asp:DropDownList>
                         </EditItemTemplate>
                     </asp:TemplateColumn>
@@ -127,7 +128,8 @@
                                                 <div id="divSelectionValues" runat="server" style="display: inline;">
                                                     <div style="font-size: 12px; font-weight: bold; padding: 5px 0 5px 0;">
                                                         <h4>
-                                                            <asp:Label ID="SelectionValuesLabel" runat="server" meta:resourcekey="SelectionValuesLabel" /></h4>
+                                                            <asp:Label ID="SelectionValuesLabel" runat="server" meta:resourcekey="SelectionValuesLabel" />
+                                                        </h4>
                                                     </div>
                                                     <asp:DataGrid ID="grdSelectionValues" runat="server"
                                                         CssClass="table table-striped" UseAccessibleHeader="true"
@@ -153,7 +155,8 @@
                                                                 </EditItemTemplate>
                                                                 <FooterTemplate>
                                                                     <div class="align-right">
-                                                                        <asp:ImageButton ID="btnAddSelectionValue" ImageUrl="~/Images/add.gif" ValidationGroup="AddSelection" CommandName="add" ToolTip="<%$ Resources:SharedResources, Add %>" runat="server" /></div>
+                                                                        <asp:ImageButton ID="btnAddSelectionValue" ImageUrl="~/Images/add.gif" ValidationGroup="AddSelection" CommandName="add" ToolTip="<%$ Resources:SharedResources, Add %>" runat="server" />
+                                                                    </div>
                                                                 </FooterTemplate>
                                                             </asp:TemplateColumn>
 
@@ -222,7 +225,8 @@
             </asp:DataGrid>
             <div class="form-horizontal">
                 <h3>
-                    <asp:Literal ID="DetailsTitle" runat="Server" meta:resourcekey="NewCustomFieldTitle" /></h3>
+                    <asp:Literal ID="DetailsTitle" runat="Server" meta:resourcekey="NewCustomFieldTitle" />
+                </h3>
                 <div class="form-group">
                     <asp:Label ID="label1" CssClass="control-label col-md-2" runat="server" AssociatedControlID="txtName" Text="<%$ Resources:FieldName %>" />
                     <div class="col-md-10">

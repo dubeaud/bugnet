@@ -20,7 +20,7 @@
 <asp:Label ID="lblError" ForeColor="red" EnableViewState="false" runat="Server" />
 <asp:UpdatePanel ID="UpdatePanel2" runat="server">
     <ContentTemplate>
-        <asp:DataGrid ID="grdCustomFields" SkinID="DataGrid" OnUpdateCommand="grdCustomFields_Update"
+        <asp:DataGrid ID="grdCustomFields" OnUpdateCommand="grdCustomFields_Update"
             AutoGenerateColumns="false" GridLines="None" CssClass="table table-striped"
             UseAccessibleHeader="true"
             OnEditCommand="grdCustomFields_Edit" OnCancelCommand="grdCustomFields_Cancel"

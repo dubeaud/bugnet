@@ -10,6 +10,7 @@
     [ProjectManagerUserId]    UNIQUEIDENTIFIER NOT NULL,
     [ProjectCreatorUserId]    UNIQUEIDENTIFIER NOT NULL,
     [AllowAttachments]        BIT              CONSTRAINT [DF_BugNet_Projects_AllowAttachments] DEFAULT ((1)) NOT NULL,
+	[AttachmentStorageType]   INT              NULL,
     [SvnRepositoryUrl]        NVARCHAR (255)   NULL,
     [AllowIssueVoting]        BIT              CONSTRAINT [DF_BugNet_Projects_AllowIssueVoting] DEFAULT ((1)) NOT NULL,
     [ProjectImageFileContent] VARBINARY (MAX)  NULL,

@@ -129,6 +129,9 @@
   <data name="ProgressMessage" xml:space="preserve">
     <value>{0} of {1} issues have been resolved</value>
   </data>
+  <data name="Roadmap" xml:space="preserve">
+    <value>Roadmap</value>
+  </data>
   <data name="TitleLabel.Text" xml:space="preserve">
     <value>Roadmap</value>
   </data>

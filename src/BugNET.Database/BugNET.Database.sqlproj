@@ -319,5 +319,6 @@
     <None Include="Scripts\Data.HostSettings.sql" />
     <None Include="BugNET.Database.Local.publish.xml" />
     <None Include="Scripts\Data.Roles.sql" />
+    <None Include="BugNET.Compare.scmp" />
   </ItemGroup>
 </Project>
