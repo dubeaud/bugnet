@@ -1,5 +1,6 @@
 ## BugNET
-[![Build status](https://ci.appveyor.com/api/projects/status/ror9c96krbd7knld?svg=true)](https://ci.appveyor.com/project/dubeaud/bugnet)
+
+## Note: This repository is no longer in active development or maintenance.
 
 BugNET is a free, open source issue tracking and project issue management solution for the ASP.NET platform.
 
