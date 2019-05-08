@@ -96,11 +96,6 @@ namespace BugNET.Administration.Host.UserControls
             SvnHookPath.Text = HostSettingManager.Get(HostSettingNames.SvnHookPath);
         }
 
-        public bool ShowSaveButton
-        {
-            get { return true; }
-        }
-
         #endregion
     }
 }

@@ -122,18 +122,13 @@ namespace BugNET.UserInterfaceLayer
                         var p = ProjectManager.GetById(IssueManager.GetById(attachment.IssueId).ProjectId);
                         var projectPath = p.UploadPath;
 
-                        // append a trailing slash if it doesn't exist
-                        if (!projectPath.EndsWith(@"\"))
-                            projectPath = String.Concat(projectPath, @"\");
+                        //append a trailing slash if it doesn't exist
+                        if (!projectPath.EndsWith("\\"))
+                            projectPath = String.Concat(projectPath, "\\");
 
-                        var path = String.Concat(HostSettingManager.Get(HostSettingNames.AttachmentUploadPath), projectPath, fileName);
+                        var path = String.Concat("~", Globals.UPLOAD_FOLDER, projectPath, fileName);
 
-                        if(HostSettingManager.Get(HostSettingNames.AttachmentUploadPath).StartsWith("~"))
-                        {
-                            path = context.Server.MapPath(path);
-                        }
-                        
-                        if (System.IO.File.Exists(path))
+                        if (System.IO.File.Exists(context.Server.MapPath(path)))
                         {
                             context.Response.Clear();
                             context.Response.ContentType = attachment.ContentType;

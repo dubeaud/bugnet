@@ -95,6 +95,10 @@ namespace BugNET.Common
         DeleteParentIssue = 28,
         AdminDeleteProject = 29,
         ChangeIssueStatus = 31,
-        EditQuery = 32
+        EditQuery = 32,
+        ViewWiki = 200, // BugNET Pro permissions start at 200
+        EditWiki = 201,
+        DeleteWiki = 202,
+        AllowAnonymousWiki = 203,
     }
 }

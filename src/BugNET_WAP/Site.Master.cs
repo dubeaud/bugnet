@@ -83,7 +83,7 @@ namespace BugNET
             if (HostSettingManager.Get(HostSettingNames.EnableGravatar, true))
             {
                 var user = Membership.GetUser(Security.GetUserName());
-                if (user != null && user.Email != null)
+                if (user != null)
                 {
                     Image img =  (System.Web.UI.WebControls.Image)LoginView1.FindControl("Avatar");
                     img.ImageUrl = PresentationUtils.GetGravatarImageUrl(user.Email, 32);

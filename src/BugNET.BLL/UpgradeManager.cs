@@ -29,16 +29,40 @@ namespace BugNET.BLL
             try
             {
                 var projects = DataProviderManager.Provider.GetAllProjects();
-                bool successful = true;
+
                 foreach (var project in projects)
                 {
-                    if(!CustomFieldManager.UpdateCustomFieldView(project.Id))
-                    {
-                        successful = false;
-                    }               
+                    CustomFieldManager.UpdateCustomFieldView(project.Id);
                 }
 
-                return successful;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Creates the wiki home pages.
+        /// </summary>
+        /// <returns></returns>
+        public static bool CreateWikiHomePages()
+        {
+            try
+            {
+                var projects = DataProviderManager.Provider.GetAllProjects();
+
+                foreach (var project in projects)
+                {
+                    WikiManager.Save(project.Id, 0, HttpContext.GetGlobalResourceObject("SharedResources", "WikiHome").ToString().ToLower(),
+                        HttpContext.GetGlobalResourceObject("SharedResources", "WikiHome").ToString(),
+                        HttpContext.GetGlobalResourceObject("SharedResources", "WikiHomePageContent").ToString(), "Admin");
+                }
+
+                return true;
             }
             catch (Exception ex)
             {
@@ -117,6 +141,15 @@ namespace BugNET.BLL
         {
             return String.Format("{0}", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
 
+        }
+
+        /// <summary>
+        /// Gets the name of the current product.
+        /// </summary>
+        /// <returns></returns>
+        public static string GetProductName()
+        {
+            return DataProviderManager.Provider.GetProductName();
         }
 
         /// <summary>

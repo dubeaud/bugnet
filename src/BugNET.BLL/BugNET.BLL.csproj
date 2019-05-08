@@ -36,9 +36,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -62,8 +62,6 @@
     <Compile Include="CategoryTree.cs" />
     <Compile Include="Comparers\ObjectComparer.cs" />
     <Compile Include="Comparers\ProjectComparer.cs" />
-    <Compile Include="UserCustomFieldSelectionManager.cs" />
-    <Compile Include="UserCustomFieldManager.cs" />
     <Compile Include="CustomFieldManager.cs" />
     <Compile Include="CustomFieldSelectionManager.cs" />
     <Compile Include="HostSettingManager.cs" />
@@ -93,6 +91,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryManager.cs" />
     <Compile Include="RelatedIssueManager.cs" />
+    <Compile Include="ReportManager.cs" />
     <Compile Include="RequiredFieldManager.cs" />
     <Compile Include="ResolutionManager.cs" />
     <Compile Include="ResourceManager.cs" />
@@ -103,6 +102,7 @@
     <Compile Include="UpgradeManager.cs" />
     <Compile Include="UserManager.cs" />
     <Compile Include="WebProfile.cs" />
+    <Compile Include="WikiManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BugNET.Common\BugNET.Common.csproj">

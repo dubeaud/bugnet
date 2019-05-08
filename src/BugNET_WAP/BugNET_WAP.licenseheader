@@ -1,0 +1,11 @@
+extensions: designer.cs generated.cs
+extensions: .cs .cpp .h
+// Copyright (C) CodeAscent.
+extensions: .aspx .ascx
+<%-- 
+Copyright (C) CodeAscent
+--%>
+extensions:  .xml .config .xsd
+<!--
+Copyright (C) CodeAscent
+-->

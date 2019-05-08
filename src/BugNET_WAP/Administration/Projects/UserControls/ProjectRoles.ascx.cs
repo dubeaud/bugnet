@@ -232,7 +232,7 @@ namespace BugNET.Administration.Projects.UserControls
             Roles.Visible = !Roles.Visible;
             txtRoleName.Visible = true;
             txtRoleName.Text = string.Empty;
-            //RoleNameTitle.Text = (string)GetLocalResourceObject("AddNewRole.Text");       
+            // RoleNameTitle.Text = (string)GetLocalResourceObject("AddNewRole.Text");       
             cmdDelete.Visible = false;
             cancel.Visible = false;
             BindRoleDetails(-1);
@@ -359,6 +359,21 @@ namespace BugNET.Administration.Projects.UserControls
             { RoleManager.AddPermission(roleId, (int)Common.Permission.DeleteTimeEntry); }
             else
             { RoleManager.DeletePermission(roleId, (int)Common.Permission.DeleteTimeEntry); }
+
+            if (chkViewWiki.Checked)
+            { RoleManager.AddPermission(roleId, (int)Common.Permission.ViewWiki); }
+            else
+            { RoleManager.DeletePermission(roleId, (int)Common.Permission.ViewWiki); }
+
+            if (chkEditWiki.Checked)
+            { RoleManager.AddPermission(roleId, (int)Common.Permission.EditWiki); }
+            else
+            { RoleManager.DeletePermission(roleId, (int)Common.Permission.EditWiki); }
+
+            if (chkDeleteWiki.Checked)
+            { RoleManager.AddPermission(roleId, (int)Common.Permission.DeleteWiki); }
+            else
+            { RoleManager.DeletePermission(roleId, (int)Common.Permission.DeleteWiki); }
         }
 
         /// <summary>
@@ -397,6 +412,9 @@ namespace BugNET.Administration.Projects.UserControls
             chkDeleteProject.Checked = false;
             chkCloneProject.Checked = false;
             chkCreateProject.Checked = false;
+            chkViewWiki.Checked = false;
+            chkEditWiki.Checked = false;
+            chkDeleteWiki.Checked = false;
 
             var permissions = RoleManager.GetPermissionsById(RoleId);
 
@@ -498,6 +516,15 @@ namespace BugNET.Administration.Projects.UserControls
                         break;
                     case Common.Permission.EditQuery:
                         chkEditQuery.Checked = true;
+                        break;
+                    case Common.Permission.ViewWiki:
+                        chkViewWiki.Checked = true;
+                        break;
+                    case Common.Permission.EditWiki:
+                        chkEditWiki.Checked = true;
+                        break;
+                    case Common.Permission.DeleteWiki:
+                        chkDeleteWiki.Checked = true;
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

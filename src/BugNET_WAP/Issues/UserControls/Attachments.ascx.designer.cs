@@ -85,15 +85,6 @@ namespace BugNET.Issues.UserControls {
         protected global::System.Web.UI.WebControls.FileUpload AspUploadFile;
         
         /// <summary>
-        /// FileSizeLimit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal FileSizeLimit;
-        
-        /// <summary>
         /// Label7 control.
         /// </summary>
         /// <remarks>

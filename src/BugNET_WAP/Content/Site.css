@@ -11,17 +11,7 @@
 }
 
 .navbar-inverse .navbar-brand-img {
-    padding: 7px 15px 15px 15px;
-}
-
-.navbar-inverse .navbar-brand-img img, .navbar-inverse  .navbar-brand-img span.site-name-text {
-    display: inline-block;
-}
-
-.navbar-inverse .navbar-brand-img span.site-name-text {
-    position: relative;
-    top: 2px;
-    left: 8px;
+    padding: 5px 15px 15px 15px;
 }
 
 .navbar-inverse .navbar-toggle {
@@ -72,13 +62,6 @@ input[type="tel"],
 input[type="select"] {
     max-width: 280px;
 }*/
-
-.number{
-    color:#bbb;
-}
-.number-text{
-    color:white;
-}
 
 .checkbox input[type="checkbox"] {
     margin-left: 0;
@@ -383,4 +366,184 @@ ul.permissions {
     .mainnav-toggle {
         display: none;
     }
+}
+
+
+/* Wiki Styles */
+.editWikiForm fieldset
+{
+    width:auto;
+    margin:1em 0;
+    padding:1em;
+    border:1px solid #CCC;
+    clear:both;
+    background-color:#FFF;
+}
+
+.editWikiForm label
+{
+    display: block;
+    float: left;
+    width: 5em;
+    margin-bottom:.5em;
+}
+
+.editWikiForm input[type=text], form input[type=password], form textarea
+{
+   /* display: block;*/
+    margin: 0 0 .5em;
+    color:#333;
+    border:1px solid #CCC;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:1em;
+}
+
+.editWikiForm textarea
+{
+    height:16em;
+}
+
+.editWikiForm legend {
+    display:none;
+}
+
+.clear
+{
+    clear: both;
+}
+
+.error
+{
+    color:Red;
+}
+
+#title
+{
+    display:block;
+    float:left;
+    text-align:left;
+}
+
+#menu
+{
+	padding-top:2.5em;
+	float:right;
+}
+
+#wikiContainer{
+    margin-top:15px;
+    font-size: 1em;
+    font-family: Verdana, Helvetica, Sans-Serif;
+    color: dimGray;
+}
+
+#wikiContainer ul, #wikiContainer  ol {
+    margin: 1.12em 0 1em 3em;
+}
+
+#wikiContainer h1, #wikiContainer h2, #wikiContainer h3, #wikiContainer h4, #wikiContainer h5, #wikiContainer h6 {
+    /*font-size: 1.5em;*/
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#wikiContainer a:visited {
+    color: #3C7DC4;
+}
+
+#wikiContainer a:link {
+    color: #3C7DC4;
+    text-decoration: underline;
+}
+
+/*#wikiHistory
+{
+	float: right;
+	margin-top:1.5em;
+	width:13%;
+	padding-left:.5em;
+	border:solid 1px #CCC;
+}
+
+
+
+
+#wikiHistory ul li
+{
+	margin-left:-4.25em;
+	font-size:.9em;
+}*/
+
+#wikiHistory h3
+{
+	font-size:1.1em;
+	margin-top:.5em;
+	margin-bottom:0;
+}
+
+#wikiHistory ul
+{
+    margin-left:0;
+	margin-top:5px;
+	margin-bottom:.5em;
+	list-style-type:none;
+}
+
+
+#wikiContent
+{
+	width:85%;
+}
+
+.editWiki
+{
+	text-align:right;
+	border-bottom:solid 1px #CCC;
+	padding-top:.25em;
+}
+
+.editWiki a
+{
+	background-color:#CCC;
+	padding: .25em 2em .40em 2em;
+	color:White;
+}
+
+.editWiki a:hover
+{
+	color: #585858;
+}
+
+.editWikiForm
+{
+	display:none;
+}
+
+#editWikiNotLatest
+{
+	color:Red;
+}
+
+.field-validation-error
+{
+    color: #ff0000;
+}
+
+.input-validation-error
+{
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+
+.validation-summary-errors
+{
+    font-weight: bold;
+    color: #ff0000;
+}
+
+/* Dialog
+------------*/
+.ui-dialog-titlebar
+{
+	display:none;
 }

@@ -62,10 +62,7 @@ namespace BugNET.Issues.UserControls
             if (!Page.IsPostBack)
             {
                 IssueTabsMenu.Items.Add(new MenuItem(GetTabName(GetLocalResourceObject("Comments").ToString(), "0"), "TabComments", "~/images/comment.gif"));
-                if(HostSettingManager.Get(HostSettingNames.AllowAttachments, false) && ProjectManager.GetById(ProjectId).AllowAttachments)
-                {
-                    IssueTabsMenu.Items.Add(new MenuItem(GetTabName(GetLocalResourceObject("Attachments").ToString(), "1"), "TabAttachments", "~/images/attach.gif"));
-                }
+                IssueTabsMenu.Items.Add(new MenuItem(GetTabName(GetLocalResourceObject("Attachments").ToString(), "1"), "TabAttachments", "~/images/attach.gif"));
                 IssueTabsMenu.Items.Add(new MenuItem(GetLocalResourceObject("History").ToString(), "TabHistory", "~/images/history.gif"));
                 IssueTabsMenu.Items.Add(new MenuItem(GetLocalResourceObject("Notifications").ToString(), "TabNotifications", "~/images/email.gif"));
                 IssueTabsMenu.Items.Add(new MenuItem(GetLocalResourceObject("SubIssues").ToString(), "TabSubIssues", "~/images/link.gif"));
@@ -139,36 +136,26 @@ namespace BugNET.Issues.UserControls
         /// <returns></returns>
         private string GetTabName(string tabName, string tabValue)
         {
-            int cnt ;
             switch (tabValue.ToLower())
             {
                 case "tabcomments":
-                    cnt = IssueId == 0 ? 0 : IssueCommentManager.GetByIssueId(IssueId).Count;
-                    return string.Format("<span class='{2}'>{0} ({1})</span>", tabName, cnt, cnt == 0 ? "normal" : "bold");
+                    return string.Format("{0} ({1})", tabName, IssueId == 0 ? 0 : IssueCommentManager.GetByIssueId(IssueId).Count);
                 case "tabhistory":
-                    cnt = IssueId == 0 ? 0 : IssueHistoryManager.GetByIssueId(IssueId).Count;
-                    return string.Format("<span class='{2}'>{0} ({1})</span>", tabName, cnt, cnt == 0 ? "normal" : "normal");
+                    return string.Format("{0} ({1})", tabName, IssueId == 0 ? 0 : IssueHistoryManager.GetByIssueId(IssueId).Count);
                 case "tabattachments":
-                    cnt = IssueId == 0 ? 0 : IssueAttachmentManager.GetByIssueId(IssueId).Count;
-                    return string.Format("<span class='{2}'>{0} ({1})</span>", tabName, cnt, cnt == 0 ? "normal" : "bold");
+                    return string.Format("{0} ({1})",tabName,IssueId == 0 ? 0 : IssueAttachmentManager.GetByIssueId(IssueId).Count);
                 case "tabnotifications":
-                    cnt = IssueId == 0 ? 0 : IssueNotificationManager.GetByIssueId(IssueId).Count;
-                    return string.Format("<span class='{2}'>{0} ({1})</span>", tabName, cnt, cnt == 0 ? "normal" : "normal");
+                    return string.Format("{0} ({1})", tabName, IssueId == 0 ? 0 : IssueNotificationManager.GetByIssueId(IssueId).Count);
                 case "tabrelatedissues":
-                    cnt = IssueId == 0 ? 0 : RelatedIssueManager.GetRelatedIssues(IssueId).Count;
-                    return string.Format("<span class='{2}'>{0} ({1})</span>", tabName, cnt, cnt == 0 ? "normal" : "bold");
+                    return string.Format("{0} ({1})", tabName, IssueId == 0 ? 0 : RelatedIssueManager.GetRelatedIssues(IssueId).Count);
                 case "tabparentissues":
-                    cnt = IssueId == 0 ? 0 : RelatedIssueManager.GetParentIssues(IssueId).Count;
-                    return string.Format("<span class='{2}'>{0} ({1})</span>", tabName, cnt, cnt == 0 ? "normal" : "bold");
+                    return string.Format("{0} ({1})", tabName, IssueId == 0 ? 0 : RelatedIssueManager.GetParentIssues(IssueId).Count);
                 case "tabsubissues":
-                    cnt = IssueId == 0 ? 0 : RelatedIssueManager.GetChildIssues(IssueId).Count;
-                    return string.Format("<span class='{2}'>{0} ({1})</span>", tabName, cnt, cnt == 0 ? "normal" : "bold");
+                    return string.Format("{0} ({1})", tabName, IssueId == 0 ? 0 : RelatedIssueManager.GetChildIssues(IssueId).Count);
                 case "tabrevisions":
-                    cnt = IssueId == 0 ? 0 : IssueRevisionManager.GetByIssueId(IssueId).Count;
-                    return string.Format("<span class='{2}'>{0} ({1})</span>", tabName, cnt, cnt == 0 ? "normal" : "normal");
+                    return string.Format("{0} ({1})", tabName, IssueId == 0 ? 0 : IssueRevisionManager.GetByIssueId(IssueId).Count);
                 case "tabtimetracking":
-                    cnt = IssueId == 0 ? 0 : IssueWorkReportManager.GetByIssueId(IssueId).Count;
-                    return string.Format("<span class='{2}'>{0} ({1})</span>", tabName, cnt, cnt == 0 ? "normal" : "normal");
+                    return string.Format("{0} ({1})", tabName, IssueId == 0 ? 0 : IssueWorkReportManager.GetByIssueId(IssueId).Count);
                 default:
                     return tabName;
             }

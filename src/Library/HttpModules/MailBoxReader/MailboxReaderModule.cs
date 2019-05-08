@@ -126,15 +126,9 @@ namespace BugNET.HttpModules
             // creating the timer.
             lock (_locker) _readerErrors = 0;
 
-            var uploadPath = HostSettingManager.Get(HostSettingNames.AttachmentUploadPath);
-            if(uploadPath.StartsWith("~"))
-            {
-                uploadPath = application.Context.Server.MapPath(uploadPath);
-            }
-
             var state = new MailboxReaderThreadState
             {
-                UploadsFolderPath = uploadPath,
+                UploadsFolderPath = application.Context.Server.MapPath(Globals.UPLOAD_FOLDER),
             };
 
             // create the timer instance
@@ -200,7 +194,7 @@ namespace BugNET.HttpModules
                     DeleteAllMessages = HostSettingManager.Get(hostSettings, HostSettingNames.Pop3DeleteAllMessages, true),
                     ReportingUserName = HostSettingManager.Get(hostSettings, HostSettingNames.Pop3ReportingUsername, string.Empty),
                     ProcessAttachments = HostSettingManager.Get(hostSettings, HostSettingNames.Pop3ProcessAttachments, true),
-                    UploadsFolderPath = (state == null) ? Path.Combine(HostSettingManager.Get(HostSettingNames.AttachmentUploadPath), path) : state.UploadsFolderPath,
+                    UploadsFolderPath = (state == null) ? Path.Combine(Globals.UPLOAD_FOLDER, path) : state.UploadsFolderPath,
                     AllowedFileExtensions = HostSettingManager.Get(hostSettings, HostSettingNames.AllowedFileExtensions, "."),
                     FileSizeLimit = HostSettingManager.Get(hostSettings, HostSettingNames.FileSizeLimit, 0),
                     EmailFormatType = emailFormat

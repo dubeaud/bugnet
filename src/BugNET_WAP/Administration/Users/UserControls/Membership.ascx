@@ -1,5 +1,4 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Membership.ascx.cs" Inherits="BugNET.Administration.Users.UserControls.Membership" %>
-<%@ Register TagPrefix="it" TagName="DisplayUserCustomFields" Src="~/UserControls/DisplayUserCustomFields.ascx" %>
 
 <h2>
     <asp:Literal ID="ControlTitle" runat="server" Text="<%$ Resources:ControlTitle %>" /></h2>
@@ -37,7 +36,6 @@
             <asp:TextBox ID="Email" runat="server" CssClass="form-control" />
         </div>
     </div>
-    <it:DisplayUserCustomFields ID="ctlUserCustomFields" EnableValidation="true" runat="server" />
     <div class="form-group">
         <label class="col-md-2 control-label">
             <asp:Literal ID="CreatedDateLabel" runat="server" Text="<%$ Resources:CreatedDate %>" /></label>

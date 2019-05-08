@@ -88,10 +88,6 @@
                                 <asp:ListItem Text="Closed by You" Value="Closed" meta:resourceKey="ViewIssuesDropDownFilter_Closed" />
                             </asp:DropDownList>
                         </div>
-                        <div>
-                            <asp:DropDownList ID="ViewIssueMemberDropDown" CssClass="form-control" AutoPostBack="True" runat="Server" OnSelectedIndexChanged="ViewIssueMemberDropDown_SelectedIndexChanged">
-                            </asp:DropDownList>
-                        </div>
                     </div>
                     <div class="col-md-3">
                         <div class="checkbox">

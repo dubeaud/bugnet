@@ -71,7 +71,7 @@ namespace BugNET.BLL
             var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
 
             var data = new Dictionary<string, object> { { "Issue", issue } };
-
+ 
             var displayname = UserManager.GetUserDisplayName(Security.GetUserName());
 
             var templateCache = new List<CultureNotificationContent>();
@@ -98,9 +98,9 @@ namespace BugNET.BLL
                     if (notification.NotificationUsername.ToLower() == Security.GetUserName().ToLower()) continue;
 
                     var user = UserManager.GetUser(notification.NotificationUsername);
-
+                    
                     // skip to the next user if this user is not approved
-                    if (!user.IsApproved) continue;
+                    if(!user.IsApproved) continue; 
                     // skip to next user if this user doesn't have notifications enabled.
                     if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications) continue;
 
@@ -121,7 +121,7 @@ namespace BugNET.BLL
                             IsBodyHtml = true
                         };
 
-                    mailService.Send(user.Email, message, issueId);
+                    mailService.Send(user.Email, message);
                 }
                 catch (Exception ex)
                 {
@@ -146,7 +146,7 @@ namespace BugNET.BLL
             var issNotifications = DataProviderManager.Provider.GetIssueNotificationsByIssueId(issueId);
             var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
 
-            var data = new Dictionary<string, object> { { "Issue", issue } };
+            var data = new Dictionary<string, object> {{"Issue", issue}};
 
             var templateCache = new List<CultureNotificationContent>();
             var emailFormatKey = (emailFormatType == EmailFormatType.Text) ? "" : "HTML";
@@ -169,12 +169,12 @@ namespace BugNET.BLL
                 try
                 {
                     //send notifications to everyone except who added it.
-                    //if (notification.NotificationUsername.ToLower() == Security.GetUserName().ToLower()) continue;
+                    if (notification.NotificationUsername.ToLower() == Security.GetUserName().ToLower()) continue;
 
                     var user = UserManager.GetUser(notification.NotificationUsername);
 
                     // skip to the next user if this user is not approved
-                    if (!user.IsApproved) continue;
+                    if (!user.IsApproved) continue; 
                     // skip to next user if this user doesn't have notifications enabled.
                     if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications) continue;
 
@@ -195,7 +195,7 @@ namespace BugNET.BLL
                             IsBodyHtml = true
                         };
 
-                    mailService.Send(user.Email, message, issueId);
+                    mailService.Send(user.Email, message);
                 }
                 catch (Exception ex)
                 {
@@ -213,7 +213,7 @@ namespace BugNET.BLL
         {
             // validate input
             if (issueId <= Globals.NEW_ID)
-            {
+            { 
                 throw (new ArgumentOutOfRangeException("issueId"));
             }
 
@@ -224,7 +224,7 @@ namespace BugNET.BLL
             var issNotifications = DataProviderManager.Provider.GetIssueNotificationsByIssueId(issueId);
             var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
 
-            var data = new Dictionary<string, object> { { "Issue", issue } };
+            var data = new Dictionary<string, object> {{"Issue", issue}};
 
             var writer = new System.IO.StringWriter();
             using (System.Xml.XmlWriter xml = new System.Xml.XmlTextWriter(writer))
@@ -270,7 +270,7 @@ namespace BugNET.BLL
                     var user = UserManager.GetUser(notification.NotificationUsername);
 
                     // skip to the next user if this user is not approved
-                    if (!user.IsApproved) continue;
+                    if (!user.IsApproved) continue; 
                     // skip to next user if this user doesn't have notifications enabled.
                     if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications) continue;
 
@@ -291,7 +291,7 @@ namespace BugNET.BLL
                             IsBodyHtml = true
                         };
 
-                    mailService.Send(user.Email, message, issueId);
+                    mailService.Send(user.Email, message);
                 }
                 catch (Exception ex)
                 {
@@ -312,7 +312,7 @@ namespace BugNET.BLL
             // TODO - create this via dependency injection at some point.
             IMailDeliveryService mailService = new SmtpMailDeliveryService();
 
-            var issue = DataProviderManager.Provider.GetIssueById(notification.IssueId);
+        	var issue = DataProviderManager.Provider.GetIssueById(notification.IssueId);
             var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
 
             // data for template
@@ -331,7 +331,7 @@ namespace BugNET.BLL
                 var user = UserManager.GetUser(notification.NotificationUsername);
 
                 // skip to the next user if this user is not approved
-                if (!user.IsApproved) return;
+                if (!user.IsApproved) return; 
                 // skip to next user if this user doesn't have notifications enabled.
                 if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications)
                     return;
@@ -351,7 +351,7 @@ namespace BugNET.BLL
                         IsBodyHtml = true
                     };
 
-                mailService.Send(user.Email, message, notification.IssueId);
+                mailService.Send(user.Email, message);
             }
             catch (Exception ex)
             {
@@ -377,8 +377,8 @@ namespace BugNET.BLL
             var emailFormatType = HostSettingManager.Get(HostSettingNames.SMTPEMailFormat, EmailFormatType.Text);
 
             // data for template
-            var data = new Dictionary<string, object> { { "Issue", issue }, { "Comment", newComment } };
-            var displayname = UserManager.GetUserDisplayName(newComment.CreatorUserName);
+            var data = new Dictionary<string, object> {{"Issue", issue}, {"Comment", newComment}};
+            var displayname = UserManager.GetUserDisplayName(Security.GetUserName());
 
             var templateCache = new List<CultureNotificationContent>();
             var emailFormatKey = (emailFormatType == EmailFormatType.Text) ? "" : "HTML";
@@ -411,12 +411,12 @@ namespace BugNET.BLL
                 try
                 {
                     //send notifications to everyone except who changed it.
-                    if (notification.NotificationUsername.ToLower() == newComment.CreatorUserName.ToLower()) continue;
+                    if (notification.NotificationUsername.ToLower() == Security.GetUserName().ToLower()) continue;
 
                     var user = UserManager.GetUser(notification.NotificationUsername);
 
                     // skip to the next user if this user is not approved
-                    if (!user.IsApproved) continue;
+                    if (!user.IsApproved) continue; 
                     // skip to next user if this user doesn't have notifications enabled.
                     if (!new WebProfile().GetProfile(user.UserName).ReceiveEmailNotifications) continue;
 
@@ -427,7 +427,7 @@ namespace BugNET.BLL
                             IsBodyHtml = true
                         };
 
-                    mailService.Send(user.Email, message, issueId);
+                    mailService.Send(user.Email, message);
                 }
                 catch (Exception ex)
                 {

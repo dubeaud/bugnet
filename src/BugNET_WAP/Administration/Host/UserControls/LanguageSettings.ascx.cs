@@ -58,11 +58,6 @@ namespace BugNET.Administration.Host.UserControls
 
         }
 
-        public bool ShowSaveButton
-        {
-            get { return true; }
-        }
-
         #endregion
     }
 }

@@ -4,8 +4,16 @@
 <bn:Message ID="Message1" runat="server" Visible="false" />
 <div class="form-horizontal">
     <div class="form-group">
-        <asp:Label ID="lblApplicationTitle" CssClass="col-md-2 control-label" runat="server" AssociatedControlID="ApplicationTitle" Text="<%$ Resources:Title %>" />
+     <asp:Label ID="Label3" runat="server" CssClass="label" Text="<%$ Resources:ProductName %>" />
+
         <div class="col-md-10">
+           
+            <asp:Label ID="ProductName" runat="server" />
+</div>
+ <div class="form-group">
+
+        <asp:Label ID="lblApplicationTitle" CssClass="col-md-3 control-label" runat="server" AssociatedControlID="ApplicationTitle" Text="<%$ Resources:Title %>" />
+        <div class="col-md-9">
             <asp:TextBox ID="ApplicationTitle" CssClass="form-control" runat="Server" MaxLength="500"></asp:TextBox>
         </div>
     </div>

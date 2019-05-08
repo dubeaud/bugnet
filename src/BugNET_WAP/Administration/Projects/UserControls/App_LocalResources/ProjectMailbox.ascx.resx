@@ -144,7 +144,4 @@
   <data name="MailboxesTitle.Text" xml:space="preserve">
     <value>Mailboxes</value>
   </data>
-  <data name="IssueCategoryLabel.Text" xml:space="preserve">
-    <value>Category</value>
-  </data>
 </root>

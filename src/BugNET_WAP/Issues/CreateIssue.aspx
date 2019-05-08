@@ -10,9 +10,9 @@
 <%@ Register TagPrefix="it" TagName="PickResolution" Src="~/UserControls/PickResolution.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="Server">
-     <div class="page-header">
+    <div class="page-header">
         <h1 class="page-title">
-            <asp:Literal ID="Literal1" runat="server" Text="<%$Resources:SharedIssueProperties, NewIssueLiteral %>" /> 
+            <asp:Literal ID="Literal1" runat="server" Text="New Issue" /> 
             <small>
                 <asp:Literal ID="litProject" runat="Server" />
                 <span>(<asp:Literal ID="litProjectCode" runat="Server"></asp:Literal>)</span>
@@ -24,7 +24,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group <%= !TitleRequired.IsValid ? "has-error" : "" %>">
-                    <asp:Label ID="IssueTitleLabel" runat="server" CssClass="col-sm-2 control-label" AssociatedControlID="TitleTextBox" Text="<%$Resources:SharedIssueProperties, IssueTitleLabel %>" />
+                    <label for="TitleTextBox" class="control-label col-sm-2">Title</label>
                     <div class="col-sm-10">
                         <asp:TextBox ID="TitleTextBox" CssClass="form-control input-lg" placeholder="<%$ Resources:SharedIssueProperties, IssueTitleWatermark %>" runat="server" />
                         <asp:RequiredFieldValidator ControlToValidate="TitleTextBox" SetFocusOnError="true" ErrorMessage="<%$ Resources:SharedIssueProperties, IssueTitleRequiredErrorMessage %>"
@@ -163,7 +163,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <asp:Label ID="IssueDescriptionLabel" AssociatedControlID="DescriptionHtmlEditor" runat="server" CssClass="col-sm-2 control-label" Text="<%$Resources:SharedIssueProperties, IssueDescriptionLabel %>" />
+                    <label class="control-label col-sm-2">Description</label>
                     <div class="col-sm-10">
                         <bn:HtmlEditor ID="DescriptionHtmlEditor" runat="server" />
                     </div>

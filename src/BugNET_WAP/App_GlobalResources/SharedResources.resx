@@ -465,35 +465,57 @@
   <data name="PasswordRequiredErrorMessage" xml:space="preserve">
     <value>Password is required.</value>
   </data>
-  <data name="ProjectSummary" xml:space="preserve">
-    <value>Summary</value>
+	<data name="ProjectSummary" xml:space="preserve">
+		<value>Summary</value>
+	</data>
+	<data name="Register" xml:space="preserve">
+		<value>Register</value>
+	</data>
+	<data name="Login" xml:space="preserve">
+		<value>Login</value>
+	</data>
+	<data name="Logout" xml:space="preserve">
+		<value>Logout</value>
+	</data>
+	<data name="ViewProfile" xml:space="preserve">
+		<value>View profile</value>
+	</data>
+	<data name="ManageAccount" xml:space="preserve">
+		<value>Manage your account</value>
+	</data>
+	<data name="ConfirmPasswordRequiredErrorMessage" xml:space="preserve">
+		<value>Confirm password is required.</value>
+	</data>
+	<data name="EmailRequiredErrorMessage" xml:space="preserve">
+		<value>Email is required.</value>
+	</data>
+	<data name="EmailFormatErrorMessage" xml:space="preserve">
+		<value>Email format is invalid.</value>
+	</data>
+	<data name="SelectProject" xml:space="preserve">
+		<value>Select project</value>
+	</data>
+	  <data name="Reports" xml:space="preserve">
+    <value>Reports</value>
   </data>
-  <data name="Register" xml:space="preserve">
-    <value>Register</value>
+  <data name="WikiHome" xml:space="preserve">
+    <value>Home</value>
   </data>
-  <data name="Login" xml:space="preserve">
-    <value>Login</value>
+  <data name="WikiHomePageContent" xml:space="preserve">
+    <value>! Welcome To Your Project Wiki
+
+
+You can customize this content by clicking edit in the right hand menu.
+
+This wiki is fully featured based on the [url:WikiPlex|http://wikiplex.codeplex.com] project. Each page has a comphrensive wiki syntax support and a full revision history.
+
+For formatting and wiki syntax reference please refer to the [url:WikiPlex Formatting Documentation|http://wikiplex.codeplex.com/wikipage?title=Markup%20Guide&amp;referringTitle=Documentation]</value>
   </data>
-  <data name="Logout" xml:space="preserve">
-    <value>Logout</value>
+  <data name="Wiki" xml:space="preserve">
+    <value>Wiki</value>
   </data>
-  <data name="ViewProfile" xml:space="preserve">
-    <value>View profile</value>
-  </data>
-  <data name="ManageAccount" xml:space="preserve">
-    <value>Manage your account</value>
-  </data>
-  <data name="ConfirmPasswordRequiredErrorMessage" xml:space="preserve">
-    <value>Confirm password is required.</value>
-  </data>
-  <data name="EmailRequiredErrorMessage" xml:space="preserve">
-    <value>Email is required.</value>
-  </data>
-  <data name="EmailFormatErrorMessage" xml:space="preserve">
-    <value>Email format is invalid.</value>
-  </data>
-  <data name="SelectProject" xml:space="preserve">
-    <value>Select project</value>
+  <data name="PasswordRequired" xml:space="preserve">
+    <value>Password is required.</value>
   </data>
   <data name="PerPage" xml:space="preserve">
     <value>Per Page</value>

@@ -530,19 +530,12 @@ namespace BugNET.UserControls
                 {
                     e.Row.Cells[i].Text = dt.ToShortDateString();
                 }
-                else if (value.Trim().ToLower().StartsWith("http"))
-                {
-                    e.Row.Cells[i].Text = string.Format("<a href='{0}' target='_blank'>{0}</a>", value);
-                }
 
                 i++;
             }
 
             e.Row.FindControl("PrivateIssue").Visible = issue.Visibility != 0;
 
-            ((HtmlControl)e.Row.FindControl("AssignedUser")).Attributes.Add("title", "Id: " + issue.AssignedUser.Id + Environment.NewLine + 
-                                                                                     "UserName: " + issue.AssignedUser.UserName + Environment.NewLine +
-                                                                                     "DisplayName: " + issue.AssignedUser.DisplayName);
             ((HtmlControl)e.Row.FindControl("ProgressBar")).Attributes.CssStyle.Add("width", issue.Progress + "%");
             ((HtmlControl)e.Row.FindControl("ProgressBar")).Attributes.Add("aria-valuenow", issue.Progress.ToString());
         }

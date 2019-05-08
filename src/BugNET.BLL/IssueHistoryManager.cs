@@ -27,7 +27,7 @@ namespace BugNET.BLL
             issueHistoryToSave.Id = tempId;
 
             if (issueHistoryToSave.TriggerLastUpdateChange)
-                DataProviderManager.Provider.UpdateIssueLastUpdated(issueHistoryToSave.IssueId, issueHistoryToSave.CreatedUserName);
+                DataProviderManager.Provider.UpdateIssueLastUpdated(issueHistoryToSave.IssueId, Security.GetUserName());
 
             return true;
         }

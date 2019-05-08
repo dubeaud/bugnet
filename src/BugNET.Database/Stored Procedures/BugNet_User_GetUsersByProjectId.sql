@@ -2,7 +2,7 @@
 	@ProjectId Int,
 	@ExcludeReadonlyUsers bit
 AS
-SELECT DISTINCT U.UserId, U.UserName, FirstName, LastName, DisplayName, Email FROM 
+SELECT DISTINCT U.UserId, U.UserName, FirstName, LastName, DisplayName FROM 
 	Users U
 JOIN BugNet_UserProjects
 	ON U.UserId = BugNet_UserProjects.UserId

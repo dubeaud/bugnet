@@ -63,7 +63,7 @@ namespace BugNET.Issues
                 {
                     pnlAddAttachment.Visible = false;
                 }
-                else if (HostSettingManager.Get(HostSettingNames.AllowAttachments, false) && CurrentProject.AllowAttachments)
+                else
                 {
                     pnlAddAttachment.Visible = true;
                 }

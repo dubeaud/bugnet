@@ -73,14 +73,6 @@
         </div>
     </div>
     <div class="form-group">
-        <asp:Label ID="label3" CssClass="col-md-2 control-label" runat="server" AssociatedControlID="POP3AllowReplyTo" Text="<%$ Resources:POP3AllowReplyTo %>" />
-        <div class="col-md-10">
-            <div class="checkbox">
-                <asp:CheckBox ID="POP3AllowReplyTo" runat="server"></asp:CheckBox>
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
         <asp:Label ID="label20" CssClass="col-md-2 control-label" runat="server" AssociatedControlID="POP3BodyTemplate" Text="<%$ Resources:BodyTemplate %>" />
         <div class="col-md-10">
             <asp:TextBox ID="POP3BodyTemplate" CssClass="form-control" runat="Server" />

@@ -92,10 +92,6 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.5\lib\net40-full\log4net.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -514,7 +510,6 @@
     <Compile Include="_Obsolete\StreamLineReader.cs">
       <SubType>Code</SubType>
     </Compile>
-    <None Include="packages.config" />
     <None Include="POP3\POP3_ExtendedCapabilities.cs" />
     <Compile Include="Log\LogEntry.cs" />
     <Compile Include="Log\LogEntryType.cs" />

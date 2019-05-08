@@ -1,5 +1,5 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Message.ascx.cs" Inherits="BugNET.UserControls.Message" %>
-<%--<script type="text/javascript">
+<script type="text/javascript">
     $(document).ready(function () {
         
         <%if(!ShowStatic) { %>
@@ -14,8 +14,8 @@
             $(this).parent().hide();
         });
     });
-</script>--%>
+</script>
 <asp:Panel ID="MessageContainer" runat="server">
-    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <asp:Image ID="CloseImage" CssClass="closeImage icon" runat="server" ImageUrl="~/images/close.png" />
     <asp:Label ID="lblMessage" EnableViewState="false" runat="server" />
 </asp:Panel>

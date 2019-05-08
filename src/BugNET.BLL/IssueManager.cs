@@ -47,7 +47,7 @@ namespace BugNET.BLL
                 // to fix the inline images.  we don't have an http context so we are limited to what we can
                 // do from here.  in any case the mailbox reader is creating and updating concurrently so
                 // we are not missing anything.
-                if (HttpContext.Current != null)
+                if(HttpContext.Current != null)
                 {
                     //existing issue
                     entity.LastUpdate = DateTime.Now;
@@ -66,7 +66,7 @@ namespace BugNET.BLL
                         //add this user to notifications and send them a notification
                         var notification = new IssueNotification
                             {
-                                IssueId = entity.Id,
+                                IssueId = entity.Id, 
                                 NotificationUsername = entity.AssignedUserName,
                                 NotificationCulture = string.Empty
                             };
@@ -88,7 +88,7 @@ namespace BugNET.BLL
 
                 return true;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Log.Error(LoggingManager.GetErrorMessageResource("SaveIssueError"), ex);
                 return false;
@@ -151,27 +151,25 @@ namespace BugNET.BLL
                 if (originalIssue.ResolutionId != issueToCompare.ResolutionId)
                     issueChanges.Add(GetNewIssueHistory(history, "Resolution", originalIssue.ResolutionName, issueToCompare.ResolutionName));
 
-                var unassignedLiteral = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Unassigned", "Unassigned");
+                var newAssignedUserName = String.IsNullOrEmpty(issueToCompare.AssignedUserName) ? Globals.UNASSIGNED_DISPLAY_TEXT : issueToCompare.AssignedUserName;
 
-                var newAssignedUserName = String.IsNullOrEmpty(issueToCompare.AssignedUserName) ? unassignedLiteral : issueToCompare.AssignedUserName;
-
-                if (originalIssue.AssignedUserName != newAssignedUserName)
+                if ((originalIssue.AssignedUserName != newAssignedUserName))
                 {
                     // if the new assigned user is the unassigned user then don't trigger the new assignee notification
-                    issueToCompare.SendNewAssigneeNotification = (newAssignedUserName != unassignedLiteral);
-                    issueToCompare.NewAssignee = true;
-                    var newAssignedDisplayName = (newAssignedUserName == unassignedLiteral) ? newAssignedUserName : UserManager.GetUserDisplayName(newAssignedUserName);
+					issueToCompare.SendNewAssigneeNotification = (newAssignedUserName != Globals.UNASSIGNED_DISPLAY_TEXT);
+					issueToCompare.NewAssignee = true;
+
+                    var newAssignedDisplayName = (newAssignedUserName == Globals.UNASSIGNED_DISPLAY_TEXT) ? newAssignedUserName : UserManager.GetUserDisplayName(newAssignedUserName);
                     issueChanges.Add(GetNewIssueHistory(history, "Assigned to", originalIssue.AssignedDisplayName, newAssignedDisplayName));
                 }
 
-                var newOwnerUserName = String.IsNullOrEmpty(issueToCompare.OwnerUserName) ? unassignedLiteral : issueToCompare.OwnerUserName;
+                var newOwnerUserName = String.IsNullOrEmpty(issueToCompare.OwnerUserName) ? Globals.UNASSIGNED_DISPLAY_TEXT : issueToCompare.OwnerUserName;
 
                 if (originalIssue.OwnerUserName != newOwnerUserName)
                 {
-                    var newOwnerDisplayName = (newOwnerUserName == unassignedLiteral) ? newOwnerUserName : UserManager.GetUserDisplayName(issueToCompare.OwnerUserName);
+                    var newOwnerDisplayName = (newOwnerUserName == Globals.UNASSIGNED_DISPLAY_TEXT) ? newOwnerUserName : UserManager.GetUserDisplayName(issueToCompare.OwnerUserName);
                     issueChanges.Add(GetNewIssueHistory(history, "Owner", originalIssue.OwnerDisplayName, newOwnerDisplayName));
                 }
-
 
                 if (originalIssue.Estimation != issueToCompare.Estimation)
                     issueChanges.Add(GetNewIssueHistory(history, "Estimation", Utilities.EstimationToString(originalIssue.Estimation), Utilities.EstimationToString(issueToCompare.Estimation)));
@@ -186,15 +184,15 @@ namespace BugNET.BLL
 
                     issueChanges.Add(GetNewIssueHistory(history, "Due Date", originalDate, newDate));
                 }
-
+                    
                 if (originalIssue.Progress != issueToCompare.Progress)
                 {
-                    var nfi = new NumberFormatInfo { PercentDecimalDigits = 0 };
+                    var nfi = new NumberFormatInfo {PercentDecimalDigits = 0};
 
                     var oldProgress = originalIssue.Progress.Equals(0) ? 0 : (originalIssue.Progress.To<double>() / 100);
                     var newProgress = issueToCompare.Progress.Equals(0) ? 0 : (issueToCompare.Progress.To<double>() / 100);
 
-                    issueChanges.Add(GetNewIssueHistory(history, "Progress", oldProgress.ToString("P", nfi), newProgress.ToString("P", nfi)));
+                    issueChanges.Add(GetNewIssueHistory(history, "Progress", oldProgress.ToString("P", nfi), newProgress.ToString("P", nfi)));   
                 }
             }
             else
@@ -241,7 +239,7 @@ namespace BugNET.BLL
             {
                 var count = (decimal)issueCount.Count;
 
-                if (count == 0)
+                if(count == 0)
                 {
                     issueCount.Percentage = 0;
                 }
@@ -250,7 +248,7 @@ namespace BugNET.BLL
                     var value = (count / issueSum) * 100;
                     value = Math.Round(value, MidpointRounding.ToEven); // might help make the percentages closer to 100% on UI
                     issueCount.Percentage = issueSum != 0 ? value : 0;
-                }
+                } 
             }
 
             return issueCountList;
@@ -486,80 +484,62 @@ namespace BugNET.BLL
         /// <param name="projectId">The project id.</param>
         /// <param name="title"></param>
         /// <param name="description"></param>
-        /// <param name="issueTypeId"></param>
         /// <param name="assignedName"></param>
         /// <param name="ownerName"></param>
         /// <returns></returns>
-        public static Issue GetDefaultIssueByProjectId(int projectId, string title, string description, int issueTypeId, string assignedName, string ownerName)
+        public static Issue GetDefaultIssueByProjectId(int projectId, string title, string description, string assignedName, string ownerName)
         {
+
             if (projectId <= Globals.NEW_ID)
                 throw new ArgumentException(string.Format(LoggingManager.GetErrorMessageResource("InvalidProjectId"), projectId));
 
             var curProject = ProjectManager.GetById(projectId);
 
-            if (curProject == null)
+            if (curProject == null) 
                 throw new ArgumentException(string.Format(LoggingManager.GetErrorMessageResource("ProjectNotFoundError"), projectId));
 
-            var issue = new Issue()
-            {
-                ProjectId = projectId
-            };
+            var cats = CategoryManager.GetByProjectId(projectId);
+            var statuses = StatusManager.GetByProjectId(projectId);
+            var priorities = PriorityManager.GetByProjectId(projectId);
+            var issueTypes = IssueTypeManager.GetByProjectId(projectId);
+            var resolutions = ResolutionManager.GetByProjectId(projectId);
+            var affectedMilestones = MilestoneManager.GetByProjectId(projectId);
+            var milestones = MilestoneManager.GetByProjectId(projectId);
 
-            SetDefaultValues(issue);
+            // Select the first one in the list, not really the default intended.
+            var defCat = cats[0];
+            var defStatus = statuses[0];
+            var defPriority = priorities[0];
+            var defIssueType = issueTypes[0];
+            var defResolution = resolutions[0];
+            var defAffectedMilestone = affectedMilestones[0];
+            var defMilestone = milestones[0];
 
-            issue.Id = Globals.NEW_ID;
-            issue.Title = title;
-            issue.CreatorUserName = ownerName;
-            issue.DateCreated = DateTime.Now;
-            issue.Description = description;
-            issue.IssueTypeId = issueTypeId;
-            issue.AssignedUserName = assignedName;
-            issue.OwnerUserName = ownerName;
+            // Now create an issue   
+            var issue = new Issue
+                            {
+                                ProjectId = projectId,
+                                Id = Globals.NEW_ID, 
+                                Title = title,
+                                CreatorUserName = ownerName,
+                                DateCreated = DateTime.Now,
+                                Description = description, 
+                                DueDate = DateTime.MinValue, 
+                                IssueTypeId = defIssueType.Id, 
+                                AffectedMilestoneId = defAffectedMilestone.Id, 
+                                AssignedUserName = assignedName, 
+                                CategoryId = defCat.Id, 
+                                MilestoneId = defMilestone.Id, 
+                                OwnerUserName = ownerName, 
+                                PriorityId = defPriority.Id,
+                                ResolutionId = defResolution.Id,
+                                StatusId = defStatus.Id,
+                                Estimation = 0,
+                                Visibility = 1
+                            };
 
             return issue;
         }
-
-        /// <summary>
-        /// Applies project default values to the issue
-        /// </summary>
-        /// <param name="issue">Issue that will be initialized with default values</param>
-        private static void SetDefaultValues(Issue issue)
-        {
-
-            List<DefaultValue> defValues = IssueManager.GetDefaultIssueTypeByProjectId(issue.ProjectId);
-            DefaultValue selectedValue = defValues.FirstOrDefault();
-
-            if (selectedValue != null)
-            {
-                issue.IssueTypeId = selectedValue.IssueTypeId;
-                issue.PriorityId = selectedValue.PriorityId;
-                issue.ResolutionId = selectedValue.ResolutionId;
-                issue.CategoryId = selectedValue.CategoryId;
-                issue.MilestoneId = selectedValue.MilestoneId;
-                issue.AffectedMilestoneId = selectedValue.AffectedMilestoneId;
-
-                if (selectedValue.AssignedUserName != "none")
-                    issue.AssignedUserName = selectedValue.AssignedUserName;
-
-                if (selectedValue.OwnerUserName != "none")
-                    issue.OwnerUserName = selectedValue.OwnerUserName;
-
-                issue.StatusId = selectedValue.StatusId;
-
-                issue.Visibility = selectedValue.IssueVisibility;
-
-                if (selectedValue.DueDate.HasValue)
-                {
-                    DateTime date = DateTime.Today;
-                    date = date.AddDays(selectedValue.DueDate.Value);
-                    issue.DueDate = date;
-                }
-
-                issue.Progress = selectedValue.Progress;
-                issue.Estimation = selectedValue.Estimation;
-            }
-        }
-
 
         /// <summary>
         /// Gets the open issues.
@@ -621,30 +601,28 @@ namespace BugNET.BLL
             return list;
         }
 
-        private static bool NeedLocalize
-        {
-            get { return System.Threading.Thread.CurrentThread.CurrentUICulture.Name != "en-US"; }
+        private static bool NeedLocalize {
+        	get { return System.Threading.Thread.CurrentThread.CurrentUICulture.Name != "en-US";}
         }
-
+        
         private static void LocalizeUnassigned(List<Issue> issues)
         {
             if (NeedLocalize)
             {
                 var s = ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Unassigned", "Unassigned");
-
-                foreach (var issue in issues)
-                {
+                
+                foreach (var issue in issues) {
                     LocalizeUnassigned(issue, s);
                 }
             }
         }
-
+        
         private static void LocalizeUnassigned(Issue issue)
         {
             if (NeedLocalize)
                 LocalizeUnassigned(issue, ResourceStrings.GetGlobalResource(GlobalResources.SharedResources, "Unassigned", "Unassigned"));
         }
-
+        
         private static void LocalizeUnassigned(Issue issue, string unassignedLiteral)
         {
             if (issue.AffectedMilestoneId == 0) issue.AffectedMilestoneName = unassignedLiteral;
@@ -658,7 +636,7 @@ namespace BugNET.BLL
             if (issue.ResolutionId == 0) issue.ResolutionName = unassignedLiteral;
             if (issue.StatusId == 0) issue.StatusName = unassignedLiteral;
         }
-
+        
         /// <summary>
         /// Validates the issue by fetching the issue from the database
         /// </summary>

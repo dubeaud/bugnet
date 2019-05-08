@@ -315,4 +315,7 @@
   <data name="IssueTracking.Text" xml:space="preserve">
     <value>Issue Tracking</value>
   </data>
+  <data name="DeleteWiki.Text" xml:space="preserve">
+    <value>Delete wiki page</value>
+  </data>
 </root>

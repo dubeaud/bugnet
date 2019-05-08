@@ -145,7 +145,7 @@
     <value>Benutzer hinzufügen</value>
   </data>
 	<data name="PasswordDescription" xml:space="preserve">
-    <value>Geben Sie optional ein Kennwort für diesen Nutzer ein, oder lassen Sie vom System automatisch ein zufälliges Kennwort generieren.</value>
+    <value>Geben Sie optional ein Kennwort ein oder lassen Sie dass System automatische ein Kennwort generieren.</value>
   </data>
 	<data name="RandomPassword" xml:space="preserve">
     <value>Zufallskennwort</value>

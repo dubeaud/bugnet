@@ -73,11 +73,6 @@ namespace BugNET.Administration.Host.UserControls
             ShowHideUserAccountSourceCredentials();
         }
 
-        public bool ShowSaveButton
-        {
-            get { return true; }
-        }
-
         #endregion
 
         /// <summary>

@@ -39,15 +39,11 @@ namespace BugNET.Administration.Host.UserControls
         public void Initialize()
         {
             //get hostsettings for this control here and bind them to ctrls
+            ProductName.Text = HostSettingManager.Get(HostSettingNames.ProductName);
             ApplicationTitle.Text = HostSettingManager.Get(HostSettingNames.ApplicationTitle);
             WelcomeMessageHtmlEditor.Text = HostSettingManager.Get(HostSettingNames.WelcomeMessage);
             DefaultUrl.Text = HostSettingManager.Get(HostSettingNames.DefaultUrl);
             EnableGravatar.Checked = HostSettingManager.Get(HostSettingNames.EnableGravatar,true);
-        }
-
-        public bool ShowSaveButton
-        {
-            get { return true; }
         }
 
         #endregion

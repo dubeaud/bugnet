@@ -150,6 +150,18 @@
                     <asp:CheckBox ID="chkCreateProject" Text="Create project" meta:resourcekey="CreateProject" runat="server"></asp:CheckBox></li>
             </ul>
         </fieldset>
+        <fieldset>
+            <legend>
+                <asp:Literal ID="WikiTitle" runat="Server" Text="<%$ Resources:SharedResources, Wiki %>"></asp:Literal></legend>
+            <ul class="permissions">
+                <li>
+                    <asp:CheckBox ID="chkViewWiki" Text="View wiki" meta:resourcekey="ViewWiki" runat="server"></asp:CheckBox></li>
+                <li>
+                    <asp:CheckBox ID="chkEditWiki" Text="Edit wiki" meta:resourcekey="EditWiki" runat="server" /></li>
+                <li>
+                    <asp:CheckBox ID="chkDeleteWiki" Text="Delete wiki page" meta:resourcekey="DeleteWiki" runat="server" /></li>
+            </ul>
+        </fieldset>
     </div>
     <br />
     <br />

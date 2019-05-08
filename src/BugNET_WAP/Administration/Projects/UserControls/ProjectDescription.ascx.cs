@@ -65,11 +65,19 @@ namespace BugNET.Administration.Projects.UserControls
 				{
 					txtName.Text = projectToUpdate.Name;
                     ProjectDescriptionHtmlEditor.Text = projectToUpdate.Description;
+					txtUploadPath.Text = projectToUpdate.UploadPath;
 					ProjectCode.Text = projectToUpdate.Code;
 					rblAccessType.SelectedValue = projectToUpdate.AccessType.ToString();
                     ProjectManager.SelectedValue = projectToUpdate.ManagerUserName;
                     AllowAttachments.Checked = projectToUpdate.AllowAttachments;
+                    AttachmentStorageTypeRow.Visible = AllowAttachments.Checked;
                     chkAllowIssueVoting.Checked = projectToUpdate.AllowIssueVoting;
+                    if (AttachmentStorageType.Visible)
+                    {
+                        AttachmentStorageType.SelectedValue = Convert.ToInt32(projectToUpdate.AttachmentStorageType).ToString();
+                        AttachmentUploadPathRow.Visible = AllowAttachments.Checked && AttachmentStorageType.SelectedValue == "1";
+                        AttachmentStorageType.Enabled = false;
+                    }
                     ProjectImage.ImageUrl = string.Format("~/DownloadAttachment.axd?id={0}&mode=project", ProjectId);
 				}
 			}
@@ -100,6 +108,7 @@ namespace BugNET.Administration.Projects.UserControls
 			if (Page.IsValid) 
 			{
                 var at = (rblAccessType.SelectedValue == "Public") ? ProjectAccessType.Public : ProjectAccessType.Private;
+                var attachmentStorageType = (AttachmentStorageType.SelectedValue == "2") ? IssueAttachmentStorageTypes.Database : IssueAttachmentStorageTypes.FileSystem;
 
 			    ProjectImage projectImage = null;
 
@@ -141,8 +150,7 @@ namespace BugNET.Administration.Projects.UserControls
                     projectImage = new ProjectImage(ProjectId, fileBytes, uploadedFileName, fileSize, uploadFile.ContentType);
                 }
 
-				var attachmentStorageType = (IssueAttachmentStorageTypes)Enum.Parse(typeof(IssueAttachmentStorageTypes), AttachmentStorageType.SelectedItem.Value);
-				var project = new Project
+                var project = new Project
                                       {
                                           AccessType = at,
                                           Name = txtName.Text.Trim(),
@@ -152,14 +160,15 @@ namespace BugNET.Administration.Projects.UserControls
                                           Description = ProjectDescriptionHtmlEditor.Text.Trim(),
                                           AllowAttachments = AllowAttachments.Checked,
                                           AllowIssueVoting = chkAllowIssueVoting.Checked,
+                                          AttachmentStorageType = attachmentStorageType,
                                           Code = ProjectCode.Text.Trim(),
                                           Disabled = false,
                                           Image = projectImage,
                                           ManagerDisplayName = string.Empty,
                                           ManagerUserName = ProjectManager.SelectedValue,
                                           SvnRepositoryUrl = string.Empty,
-										  AttachmentStorageType = attachmentStorageType
-				};
+                                          UploadPath = txtUploadPath.Text.Trim()
+                                      };
 
                 if (BLL.ProjectManager.SaveOrUpdate(project))
                 {
@@ -175,5 +184,39 @@ namespace BugNET.Administration.Projects.UserControls
       
 
 		#endregion
+
+        /// <summary>
+        /// Allows the attachments changed.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void AllowAttachmentsChanged(object sender, EventArgs e)
+        {
+            if (!AllowAttachments.Checked)
+                txtUploadPath.Text = string.Empty;
+
+            AttachmentStorageTypeRow.Visible = AllowAttachments.Checked;
+            AttachmentUploadPathRow.Visible = AllowAttachments.Checked && AttachmentStorageType.SelectedValue == "1";        
+        }
+
+        /// <summary>
+        /// Handles the Changed event of the AttachmentStorageType control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void AttachmentStorageType_Changed(object sender, EventArgs e)
+        {
+            if (AttachmentStorageType.SelectedValue != "1")
+                txtUploadPath.Text = string.Empty;
+
+            AttachmentUploadPathRow.Visible = AllowAttachments.Checked && AttachmentStorageType.SelectedValue == "1"; 
+         
+        }
+
+        protected void validUploadPath_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            // BGN-1909
+            args.IsValid = Utilities.CheckUploadPath("~" + Globals.UPLOAD_FOLDER + txtUploadPath.Text);
+        }
 	}
 }

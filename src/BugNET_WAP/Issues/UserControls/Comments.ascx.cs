@@ -101,9 +101,6 @@ namespace BugNET.Issues.UserControls
 
             var creatorDisplayName = (Label)e.Item.FindControl("CreatorDisplayName");
             creatorDisplayName.Text = UserManager.GetUserDisplayName(currentComment.CreatorUserName);
-            creatorDisplayName.ToolTip = "Id: " + currentComment.CreatorUser.Id + Environment.NewLine + 
-                                         "UserName: " + currentComment.CreatorUser.UserName + Environment.NewLine +
-                                         "DisplayName: " + currentComment.CreatorUser.DisplayName;
 
             var lblDateCreated = (Label)e.Item.FindControl("lblDateCreated");
             lblDateCreated.Text = currentComment.DateCreated.ToString("f");
@@ -125,7 +122,7 @@ namespace BugNET.Issues.UserControls
             if (HostSettingManager.Get(HostSettingNames.EnableGravatar, true))
             {
                 var user = Membership.GetUser(currentComment.CreatorUserName);
-                if (user != null && user.Email != null) avatar.Attributes.Add("src", PresentationUtils.GetGravatarImageUrl(user.Email, 64));
+                if (user != null) avatar.Attributes.Add("src", GetGravatarImageUrl(user.Email, 64));
             }
 
             var hlPermaLink = (HyperLink)e.Item.FindControl("hlPermalink");
@@ -167,6 +164,33 @@ namespace BugNET.Issues.UserControls
             }
         }
 
+        /// <summary>
+        /// Gets the gravatar image URL.
+        /// </summary>
+        /// <param name="email">The email id.</param>
+        /// <param name="imgSize">Size of the img.</param>
+        /// <returns></returns>
+        private static string GetGravatarImageUrl(string email, int imgSize)
+        {
+            // Convert emailID to lower-case
+            email = email.Trim().ToLower();
+
+            var emailBytes = Encoding.ASCII.GetBytes(email);
+            var hashBytes = new MD5CryptoServiceProvider().ComputeHash(emailBytes);
+
+            Debug.Assert(hashBytes.Length == 16);
+
+            var hash = new StringBuilder();
+            foreach (var b in hashBytes)
+            {
+                hash.Append(b.ToString("x2"));
+            }
+
+            // build Gravatar Image URL
+            var imageUrl = string.Format("http://www.gravatar.com/avatar/{0}?s={1}&d=identicon&r=g", hash, imgSize);
+
+            return imageUrl;
+        }
 
         /// <summary>
         /// Handles the ItemCommand event of the rptComments control.

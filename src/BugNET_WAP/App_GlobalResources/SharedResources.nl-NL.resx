@@ -468,4 +468,7 @@
   <data name="PerPage" xml:space="preserve">
     <value>Per Pagina</value>
   </data>
+  <data name="Wiki" xml:space="preserve">
+    <value>Wiki</value>
+  </data>
 </root>

@@ -32,7 +32,9 @@ USING (VALUES
   (29, N'AdminDeleteProject', N'Delete a project'),
   (30, N'ViewProjectCalendar', N'View the project calendar'),
   (31, N'ChangeIssueStatus', N'Change an issues status field'),
-  (32, N'EditQuery', N'Edit queries')
+  (32, N'EditQuery', N'Edit queries'),
+  (200, N'ViewWiki', N'View wiki'),
+  (201, N'EditWiki', N'Edit wiki')
 ) 
 AS Source (PermissionId, PermissionKey, PermissionName) 
 ON Target.PermissionId = Source.PermissionId 

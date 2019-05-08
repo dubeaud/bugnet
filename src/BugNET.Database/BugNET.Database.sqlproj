@@ -288,25 +288,23 @@
     <Build Include="Tables\UsersInRoles.sql" />
     <Build Include="Stored Procedures\BugNet_User_GetUserIdByUserName.sql" />
     <Build Include="Stored Procedures\BugNet_User_GetUserNameByPasswordResetToken.sql" />
+    <Build Include="Tables\BugNet_WikiContent.sql" />
+    <Build Include="Tables\BugNet_WikiTitle.sql" />
     <Build Include="Tables\UsersOpenAuthAccounts.sql" />
     <Build Include="Tables\UsersOpenAuthData.sql" />
-    <Build Include="Tables\BugNet_UserCustomFields.sql" />
-    <Build Include="Tables\BugNet_UserCustomFieldSelections.sql" />
-    <Build Include="Tables\BugNet_UserCustomFieldTypes.sql" />
-    <Build Include="Tables\BugNet_UserCustomFieldValues.sql" />
-    <None Include="Scripts\Data.UserCustomFieldTypes.sql" />
-    <Build Include="Stored Procedures\BugNet_UserCustomField_CreateNewCustomField.sql" />
-    <Build Include="Stored Procedures\BugNet_UserCustomField_DeleteCustomField.sql" />
-    <Build Include="Stored Procedures\BugNet_UserCustomField_GetCustomFieldById.sql" />
-    <Build Include="Stored Procedures\BugNet_UserCustomField_GetCustomFields.sql" />
-    <Build Include="Stored Procedures\BugNet_UserCustomField_SaveCustomFieldValue.sql" />
-    <Build Include="Stored Procedures\BugNet_UserCustomField_UpdateCustomField.sql" />
-    <Build Include="Stored Procedures\BugNet_UserCustomFieldSelection_CreateNewCustomFieldSelection.sql" />
-    <Build Include="Stored Procedures\BugNet_UserCustomFieldSelection_DeleteCustomFieldSelection.sql" />
-    <Build Include="Stored Procedures\BugNet_UserCustomFieldSelection_GetCustomFieldSelectionById.sql" />
-    <Build Include="Stored Procedures\BugNet_UserCustomFieldSelection_GetCustomFieldSelectionsByCustomFieldId.sql" />
-    <Build Include="Stored Procedures\BugNet_UserCustomFieldSelection_Update.sql" />
-    <Build Include="Stored Procedures\BugNet_UserCustomField_GetCustomFieldsByUserId.sql" />
+    <Build Include="Stored Procedures\BugNet_Reports_Burndown.sql" />
+    <Build Include="Stored Procedures\BugNet_Reports_GetClosedIssueCountByDate.sql" />
+    <Build Include="Stored Procedures\BugNet_Reports_GetOpenIssueCountByDate.sql" />
+    <Build Include="Stored Procedures\BugNet_Reports_IssuesByPriority.sql" />
+    <Build Include="Stored Procedures\BugNet_Reports_IssueTrend.sql" />
+    <Build Include="Stored Procedures\BugNet_Reports_MilestoneBurnup.sql" />
+    <Build Include="Stored Procedures\BugNet_Reports_TimeLogged.sql" />
+    <Build Include="Stored Procedures\BugNet_Wiki_Delete.sql" />
+    <Build Include="Stored Procedures\BugNet_Wiki_GetById.sql" />
+    <Build Include="Stored Procedures\BugNet_Wiki_GetBySlugAndTitle.sql" />
+    <Build Include="Stored Procedures\BugNet_Wiki_GetByVersion.sql" />
+    <Build Include="Stored Procedures\BugNet_Wiki_GetHistory.sql" />
+    <Build Include="Stored Procedures\BugNet_Wiki_Save.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
@@ -319,5 +317,8 @@
     <None Include="Scripts\Data.HostSettings.sql" />
     <None Include="BugNET.Database.Local.publish.xml" />
     <None Include="Scripts\Data.Roles.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="BugNET.Database.refactorlog" />
   </ItemGroup>
 </Project>

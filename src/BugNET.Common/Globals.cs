@@ -18,6 +18,7 @@ namespace BugNET.Common
         public const string ISSUE_COLUMNS = "issuecolumns";
 
         public const string CONFIG_FOLDER = "\\Config\\";
+        public const string UPLOAD_FOLDER = "\\Uploads\\";
         public const string UPLOAD_TOKEN = "UploadToken";
         public const int UPLOAD_FOLDER_LIMIT = 64;
 
@@ -35,9 +36,6 @@ namespace BugNET.Common
         public const string PROJECT_CUSTOM_FIELDS_VIEW_NAME = "BugNet_P{0}_CFV";
         public const string PROJECT_CUSTOM_FIELDS_PREFIX = "bgn_cf_";
 
-        public const string USER_CUSTOM_FIELDS_VIEW_NAME = "BugNet_USER_CFV";
-        public const string USER_CUSTOM_FIELDS_PREFIX = "bgn_ucf_";
-
         /// <summary>
         /// The default length of short comments (if not specified).
         /// </summary>
@@ -49,7 +47,8 @@ namespace BugNET.Common
         /// Default read only role permissions
         /// </summary>
         public static readonly int[] ReadOnlyPermissions = { 
-                (int)Permission.SubscribeIssue
+                (int)Permission.SubscribeIssue,
+                (int)Permission.ViewWiki
             };
 
         /// <summary>
@@ -63,7 +62,8 @@ namespace BugNET.Common
                 (int)Permission.AddAttachment, 
                 (int)Permission.AddRelated,
                 (int)Permission.AddParentIssue,
-                (int)Permission.AddSubIssue
+                (int)Permission.AddSubIssue,
+                (int)Permission.ViewWiki
             };
 
         /// <summary>
@@ -82,7 +82,10 @@ namespace BugNET.Common
                 (int)Permission.SubscribeIssue,
                 (int)Permission.EditIssue,
                 (int)Permission.AssignIssue,
-                (int)Permission.ChangeIssueStatus
+                (int)Permission.ChangeIssueStatus,
+                (int)Permission.ViewWiki,
+                (int)Permission.EditWiki,
+                (int)Permission.DeleteWiki
             };
 
         /// <summary>
@@ -104,7 +107,10 @@ namespace BugNET.Common
                 (int)Permission.AssignIssue,
                 (int)Permission.CloseIssue,
                 (int)Permission.DeleteIssue,
-                (int)Permission.ChangeIssueStatus
+                (int)Permission.ChangeIssueStatus,
+                (int)Permission.ViewWiki,
+                (int)Permission.EditWiki,
+                (int)Permission.DeleteWiki
             };
 
         /// <summary>
@@ -139,7 +145,10 @@ namespace BugNET.Common
                 (int)Permission.CloseIssue,
                 (int)Permission.AdminEditProject,
                 (int)Permission.ChangeIssueStatus,
-                (int)Permission.ReopenIssue
+                (int)Permission.ReopenIssue,
+                (int)Permission.ViewWiki,
+                (int)Permission.EditWiki,
+                (int)Permission.DeleteWiki
             };
 
         #endregion

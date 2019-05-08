@@ -54,16 +54,16 @@ namespace BugNET.Install
 
                     switch (status)
                     {
-                        case UpgradeStatus.Install:
+                        case Common.UpgradeStatus.Install:
                             InstallApplication();
                             break;
-                        case UpgradeStatus.Upgrade:
+                        case Common.UpgradeStatus.Upgrade:
                             UpgradeApplication();
                             break;
-                        case UpgradeStatus.None:
+                        case Common.UpgradeStatus.None:
                             NoUpgrade();
                             break;
-                        case UpgradeStatus.Authenticated:
+                        case Common.UpgradeStatus.Authenticated:
                             InstallerLogout();
                             break;
                         default:
@@ -125,7 +125,6 @@ namespace BugNET.Install
             WriteMessage(string.Format("<h2>Version: {0}</h2>", UpgradeManager.GetCurrentVersion()));
             WriteMessage("&nbsp;");
             WriteMessage("<h2>Installation Status Report</h2>");
-
             if (!InstallBugNET())
             {
                 WriteMessage("<h2>Installation Failed!</h2>");
@@ -157,11 +156,11 @@ namespace BugNET.Install
                     ExecuteSqlInFile(string.Format("{0}BugNET.Schema.SqlDataProvider.sql", providerPath));
                     WriteMessage("Installing BugNET Default Data:<br/>", 0, true);
                     ExecuteSqlInFile(string.Format("{0}BugNET.Data.SqlDataProvider.sql", providerPath));
-                    WriteMessage("Creating Administrator Account<br/>", 0, true);
-
+                    WriteMessage("Installing BugNET Pro:<br/>", 0, true);
+                    ExecuteSqlInFile(string.Format("{0}BugNETPro.Upgrade.SqlDataProvider.sql", providerPath));
+                    WriteMessage("Creating Administrator Account", 0, true);
                     //create admin user
                     MembershipCreateStatus status;
-
                     var newUser = Membership.CreateUser("Admin", "password", "admin@yourdomain.com", "no question", "no answer", true, out status);
 
                     switch (status)
@@ -243,7 +242,8 @@ namespace BugNET.Install
             WriteMessage(string.Format("<h2>Current Assembly Version: {0}</h2>", UpgradeManager.GetCurrentVersion()));
             WriteMessage(string.Format("<h2>Current Database Version: {0}</h2>", UpgradeManager.GetInstalledVersion()));
             WriteMessage(string.Format("Upgrading To Version: {0}<br/>", UpgradeManager.GetCurrentVersion()), 0, true);
-            if (UpgradeBugNET())
+             
+            if (UpgradeBugNETPro())
             {
                 WriteMessage("<h2>Upgrade Complete</h2>");
                 WriteMessage("<h2><a href='../Default.aspx'>Click Here To Access Your BugNET Installation</a></h2>");
@@ -268,6 +268,98 @@ namespace BugNET.Install
             }
 
             WriteFooter();
+        }
+
+        /// <summary>
+        /// Upgrades to BugNET Pro.
+        /// </summary>
+        /// <returns></returns>
+        private bool UpgradeBugNETPro()
+        {
+            try
+            {
+                var providerPath = UpgradeManager.GetProviderPath();
+
+                if (!providerPath.StartsWith("ERROR"))
+                {
+                    //get current App version
+                    var assemblyVersion = Convert.ToInt32(UpgradeManager.GetCurrentVersion().Replace(".", ""));
+                    var databaseVersion = Convert.ToInt32(UpgradeManager.GetInstalledVersion().Replace(".", ""));
+
+                    if (UpgradeManager.GetProductName() != "BugNET Pro")
+                    {
+                        // TODO: Update this each release!
+                        if (databaseVersion < 163390)
+                        {
+                            //upgrade error
+                            Response.Write("<h2>Upgrade Error: Please upgrade to BugNET 1.6.339 before upgrading to BugNET Pro.</h2>");
+                            return false;
+                        }
+                        // WriteMessage("Upgrading to BugNET:<br/>", 0, true);
+                        // upgrade to the latest version.
+                        // this.UpgradeBugNET();
+
+                        // upgrade to BugNET Pro
+                        WriteMessage("Upgrading to BugNET Pro:<br/>", 0, true);
+                        ExecuteSqlInFile(string.Format("{0}BugNETPro.Upgrade.SqlDataProvider.sql", providerPath));
+
+                        // add default data for each project wiki.
+                        UpgradeManager.CreateWikiHomePages();
+                    }
+
+                    //get list of script files
+                    var arrScriptFiles = new ArrayList();
+
+                    // upgrade BugNET Pro to the latest version.
+                    var arrFiles = Directory.GetFiles(providerPath, "*.sql");
+
+                    foreach (var file in arrFiles)
+                    {
+                        var fileName = Path.GetFileNameWithoutExtension(file);
+
+                        if (string.IsNullOrEmpty(fileName)) continue;
+
+                        fileName = fileName.ToLower().Trim();
+                        if (fileName.Length.Equals(0)) continue;
+                        if (fileName.StartsWith("bugnetpro.upgrade")) continue;
+                        if (!fileName.StartsWith("bugnetpro")) continue;
+
+                        // not a version script
+                        if (fileName.LastIndexOf(".").Equals(-1)) continue;
+
+                        // trim off bugnetpro
+                        fileName = fileName.Substring(10, fileName.Length - 10);
+
+                        var strScriptVersion = fileName.Substring(0, fileName.LastIndexOf("."));
+                        var scriptVersion = Convert.ToInt32(strScriptVersion.Replace(".", ""));
+
+                        //check if script file is relevant for upgrade
+                        if (scriptVersion > databaseVersion && scriptVersion <= assemblyVersion)
+                        {
+                            arrScriptFiles.Add(file);
+                        }
+                    }
+
+                    arrScriptFiles.Sort();
+
+                    foreach (var scriptFile in arrScriptFiles.Cast<string>().Where(strScriptFile => databaseVersion != assemblyVersion))
+                    {
+                        //execute script file (and version upgrades) for version
+                        ExecuteSqlInFile(scriptFile);
+                    }
+
+                    UpgradeManager.UpdateDatabaseVersion(UpgradeManager.GetCurrentVersion());
+                    return true;
+                }
+                //upgrade error
+                Response.Write("<h2>Upgrade Error: " + providerPath + "</h2>");
+                return false;
+            }
+            catch (Exception e)
+            {
+                WriteErrorMessage(e.Message);
+                return false;
+            }
         }
 
         /// <summary>
@@ -304,7 +396,7 @@ namespace BugNET.Install
                             WriteMessage("You can manually re-generate the custom field views by going to the <a href='../Administration/Projects/ProjectList.aspx'>Project List</a> page and using the generate feature along the top menu<br/>", 0, true);
                         }
                     }
-
+             
                     var arrFiles = Directory.GetFiles(providerPath, "*.sql");
 
                     foreach (var file in arrFiles)
@@ -325,8 +417,9 @@ namespace BugNET.Install
                         var strScriptVersion = fileName.Substring(0, fileName.LastIndexOf("."));
                         var scriptVersion = Convert.ToInt32(strScriptVersion.Replace(".", ""));
 
-                        //check if script file is relevant for upgrade
-                        if (scriptVersion > databaseVersion && scriptVersion <= assemblyVersion)
+                        // check if script file is relevant for upgrade
+                        //if (scriptVersion > databaseVersion && scriptVersion <= assemblyVersion)
+                        if (scriptVersion > databaseVersion)
                         {
                             arrScriptFiles.Add(file);
                         }
@@ -336,11 +429,11 @@ namespace BugNET.Install
 
                     foreach (var scriptFile in arrScriptFiles.Cast<string>().Where(strScriptFile => databaseVersion != assemblyVersion))
                     {
-                        //execute script file (and version upgrades) for version
+                        // execute script file (and version upgrades) for version
                         ExecuteSqlInFile(scriptFile);
                     }
 
-                    //check if the admin user is in the super users role.
+                    // check if the admin user is in the super users role.
                     var found = false;
                     var roles = RoleManager.GetForUser("Admin");
                     if (roles.Count > 0)
@@ -359,7 +452,7 @@ namespace BugNET.Install
                     return true;
                 }
 
-                //upgrade error
+                // upgrade error
                 Response.Write("<h2>Upgrade Error: " + providerPath + "</h2>");
                 return false;
             }

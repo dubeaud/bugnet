@@ -237,7 +237,7 @@ namespace BugNET.BLL
             {
                 var val = Get(HostSettingNames.SMTPEmailTemplateRoot, "~/templates");
 
-                val = System.Web.Hosting.HostingEnvironment.MapPath(val);
+                val = HttpContext.Current.Server.MapPath(val);
 
                 if (!System.IO.Directory.Exists(val))
                     throw new Exception(string.Format("The configured path: [{0}] does not exist, cannot load Xslt template", val));

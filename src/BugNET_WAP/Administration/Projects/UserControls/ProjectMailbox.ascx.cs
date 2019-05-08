@@ -53,9 +53,6 @@ namespace BugNET.Administration.Projects.UserControls
 
             IssueAssignedType.DataSource = IssueTypeManager.GetByProjectId(ProjectId);
             IssueAssignedType.DataBind();
-
-            IssueAssignedCategory.DataSource =  CategoryManager.GetByProjectId(ProjectId);
-            IssueAssignedCategory.DataBind();
         }
 
         /// <summary>
@@ -75,7 +72,6 @@ namespace BugNET.Administration.Projects.UserControls
             grdMailboxes.Columns[1].HeaderText = GetLocalResourceObject("EmailAddressLabel.Text").ToString();
             grdMailboxes.Columns[2].HeaderText = GetLocalResourceObject("IssueAssignedUserLabel.Text").ToString();
             grdMailboxes.Columns[3].HeaderText = GetLocalResourceObject("IssueTypeLabel.Text").ToString();
-            grdMailboxes.Columns[4].HeaderText = GetLocalResourceObject("IssueCategoryLabel.Text").ToString();
 
             grdMailboxes.DataSource = ProjectMailboxManager.GetByProjectId(ProjectId);
             grdMailboxes.DataKeyField = "Id";
@@ -104,7 +100,6 @@ namespace BugNET.Administration.Projects.UserControls
                                   AssignToId = Guid.Empty,
                                   AssignToUserName = IssueAssignedUser.SelectedValue,
                                   IssueTypeId = IssueAssignedType.SelectedValue,
-                                  CategoryId = IssueAssignedCategory.SelectedValue,
                                   Mailbox = txtMailbox.Text,
                                   ProjectId = ProjectId
                               };
@@ -149,9 +144,6 @@ namespace BugNET.Administration.Projects.UserControls
                 var issueTypeName = (Label)e.Item.FindControl("IssueTypeName");
                 issueTypeName.Text = currentMailbox.IssueTypeName;
 
-                var issueCategoryName = (Label)e.Item.FindControl("IssueCategoryName");
-                issueCategoryName.Text = currentMailbox.CategoryName;
-
                 var cmdDelete = (ImageButton)e.Item.FindControl("cmdDelete");
                 var message = string.Format(GetLocalResourceObject("ConfirmDelete").ToString(), currentMailbox.Mailbox.Trim());
                 cmdDelete.Attributes.Add("onclick", String.Format("return confirm('{0}');", message.JsEncode()));
@@ -173,11 +165,6 @@ namespace BugNET.Administration.Projects.UserControls
             pickType.DataSource = IssueTypeManager.GetByProjectId(currentMailbox.ProjectId);
             pickType.DataBind();
             pickType.SelectedValue = currentMailbox.IssueTypeId;
-
-            var pickCategory = (PickCategory)e.Item.FindControl("IssueCategory");
-            pickCategory.DataSource = CategoryManager.GetByProjectId(currentMailbox.ProjectId);
-            pickCategory.DataBind();
-            pickCategory.SelectedValue = currentMailbox.CategoryId;
         }
 
         /// <summary>
@@ -201,7 +188,6 @@ namespace BugNET.Administration.Projects.UserControls
             var emailAddress = (TextBox)e.Item.FindControl("txtEmailAddress");
             var pickUser = (PickSingleUser)e.Item.FindControl("IssueAssignedUser");
             var pickType = (PickType)e.Item.FindControl("IssueType");
-            var pickCategory = (PickCategory)e.Item.FindControl("IssueCategory");
             var id = Convert.ToInt32(grdMailboxes.DataKeys[e.Item.ItemIndex]);
 
             if (emailAddress.Text.Trim() == "")
@@ -215,7 +201,6 @@ namespace BugNET.Administration.Projects.UserControls
             {
                 mailbox.Mailbox = emailAddress.Text;
                 mailbox.IssueTypeId = pickType.SelectedValue;
-                mailbox.CategoryId = pickCategory.SelectedValue;
                 mailbox.AssignToUserName = pickUser.SelectedValue;
 
                 ProjectMailboxManager.SaveOrUpdate(mailbox);

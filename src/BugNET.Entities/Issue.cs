@@ -14,7 +14,6 @@ namespace BugNET.Entities
         /// </summary>
         public Issue()
         {
-            AssignedUser = new ITUser(new Guid(), string.Empty, string.Empty);
             AssignedDisplayName = string.Empty;
             AssignedUserName = string.Empty;
             LastUpdateUserName = string.Empty;
@@ -82,12 +81,6 @@ namespace BugNET.Entities
         /// <value>The time logged.</value>
         public double TimeLogged { get; set; }
 
-
-        /// <summary>
-        /// Gets or sets the assigned user.
-        /// </summary>
-        /// <value>The assigned user.</value>
-        public ITUser AssignedUser { get; set; }
 
         /// <summary>
         /// Gets or sets the display name of the assigned to user.

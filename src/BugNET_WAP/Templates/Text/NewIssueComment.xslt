@@ -10,8 +10,6 @@
   <xsl:strip-space elements="*" />
 
   <xsl:template match="/root">
-    <xsl:text>-- WRITE ABOVE THIS LINE TO REPLY --</xsl:text>
-    <xsl:text>&#10;</xsl:text>
     <xsl:text>A new comment has been added to the following issue.</xsl:text>
     <xsl:text>&#10;</xsl:text>
     <xsl:text>&#10;</xsl:text>

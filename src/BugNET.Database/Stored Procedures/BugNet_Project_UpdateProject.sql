@@ -8,6 +8,7 @@
  @ProjectAccessType			int,
  @ProjectDisabled			int,
  @AllowAttachments			bit,
+ @AttachmentStorageType		int,
  @SvnRepositoryUrl	nvarchar(255),
  @AllowIssueVoting bit,
  @ProjectImageFileContent varbinary(max),
@@ -28,6 +29,7 @@ IF @ProjectImageFileContent IS NULL
 		ProjectAccessType = @ProjectAccessType,
 		ProjectDisabled = @ProjectDisabled,
 		AllowAttachments = @AllowAttachments,
+		AttachmentStorageType = @AttachmentStorageType,
 		SvnRepositoryUrl = @SvnRepositoryUrl,
 		AllowIssueVoting = @AllowIssueVoting
 	WHERE
@@ -42,6 +44,7 @@ ELSE
 		ProjectAccessType = @ProjectAccessType,
 		ProjectDisabled = @ProjectDisabled,
 		AllowAttachments = @AllowAttachments,
+		AttachmentStorageType = @AttachmentStorageType,
 		SvnRepositoryUrl = @SvnRepositoryUrl,
 		ProjectImageFileContent = @ProjectImageFileContent,
 		ProjectImageFileName = @ProjectImageFileName,

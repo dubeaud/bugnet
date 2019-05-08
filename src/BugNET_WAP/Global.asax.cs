@@ -5,12 +5,11 @@ using BugNET.Common;
 using log4net;
 using System.Web.Routing;
 using System.Web.Optimization;
+using WikiPlex;
+using BugNET.UserInterfaceLayer.Wiki;
 
 namespace BugNET
-{
-    /// <summary>
-    /// Global Application Class
-    /// </summary>
+{     
     public class Global : HttpApplication
     {
         private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -123,12 +122,17 @@ namespace BugNET
                 }
       
 
-                //load the host settings into the application cache
+                // load the host settings into the application cache
                 HostSettingManager.GetHostSettings();
 
+                // configure logging
                 LoggingManager.ConfigureLogging();
 
                 AuthConfig.RegisterOpenAuth();
+
+                // register wiki renderers
+                Macros.Register<TitleLinkMacro>();
+                Macros.Register<IssueLinkMacro>();
 
                 Log.Info("Application Start");
 
@@ -136,6 +140,8 @@ namespace BugNET
                 _sInitializedAlready = true;
 
             }
+
         }
+
     }
 }

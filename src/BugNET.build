@@ -31,8 +31,8 @@
 				<attribute type="ComVisibleAttribute" value="false" />
                 <attribute type="AssemblyConfigurationAttribute" value="${nant.settings.currentframework}.${platform::get-name()}" />
                 <attribute type="AssemblyCompanyAttribute" value="http://www.bugnetproject.com" />
-				<attribute type="AssemblyCopyrightAttribute" value="Copyright (C) 2006-2014 BugNET Project" />
-                <attribute type="AssemblyProductAttribute" value="BugNET Open Source Issue Tracker" />
+				<attribute type="AssemblyCopyrightAttribute" value="Copyright (C) 2006-2013 BugNET Project" />
+                <attribute type="AssemblyProductAttribute" value="BugNET Pro Issue Tracker" />
                 <attribute type="AssemblyVersionAttribute" value="${build.number}" /> <!-- Major.Minor.Build.Revision-->
                 <attribute type="AssemblyInformationalVersionAttribute" value="${build.number}" /> <!-- Major.Minor.Build.Revision-->
             </attributes>
@@ -75,6 +75,7 @@
 		<copy includeemptydirs="false" todir="${build.dir}\dist\BugNET">
 			<fileset basedir=".\BugNET_WAP\obj\Release\Package\PackageTmp">
 				<include name="**\*"/>
+				<exclude name="**\*.licenseheader" />
 				<exclude name="**\Latest.SqlDataProvider.sql" />
 				<exclude name="**\App_Data\**" />
 			</fileset>
@@ -101,9 +102,9 @@
 		<if test="${file::exists(filename) and file::get-length(filename) > 0}">
 			<echo message="Copying latest sql script" />
 			<copy file="${filename}"
-				tofile="${build.dir}\dist\BugNET\Providers\DataProviders\SqlDataProvider\${build.number}.SqlDataProvider.sql" />
+				tofile="${build.dir}\dist\BugNET\Providers\DataProviders\SqlDataProvider\BugNETPro.${build.number}.SqlDataProvider.sql" />
 			<copy file="${filename}"
-				tofile="${build.dir}\source\src\BugNET_WAP\Providers\DataProviders\SqlDataProvider\${build.number}.SqlDataProvider.sql" />
+				tofile="${build.dir}\source\src\BugNET_WAP\Providers\DataProviders\SqlDataProvider\BugNETPro.${build.number}.SqlDataProvider.sql" />
 		</if>	
 		
 		<property name="filename" value=".\BugNET_WAP\Install\LatestReleaseNotes.htm" />	
@@ -112,6 +113,9 @@
 			<copy file="${filename}"
 				tofile="${build.dir}\dist\BugNET\Install\${build.number}.htm" />
 		</if>	
+			
+		<copy file=".\..\EULA.txt" 
+			tofile="${build.dir}\dist\EULA.txt" overwrite="true" />
 			
 		<!-- copy svn hooks utility-->
 		<copy todir="${build.dir}\dist\BugNET.SubversionHooks">
@@ -139,21 +143,21 @@
 			<mkdir dir="${publishdirectory}" />
 			
 			<!-- zip it! -->
-			<zip zipfile="${publishdirectory}\BugNET-${build.number}-Install.zip">
+			<zip zipfile="${publishdirectory}\BugNETPro-${build.number}-Install.zip">
 				<fileset basedir="${build.dir}\dist">
 					<include name="**\*" />
 				</fileset>
 			</zip>
 			
 			<!-- zip the source -->
-			<zip zipfile="${publishdirectory}\BugNET-${build.number}-Source.zip">
+			<zip zipfile="${publishdirectory}\BugNETPro-${build.number}-Source.zip">
 				<fileset basedir="${build.dir}\source">
 					<include name="**\*" />
 				</fileset>
 			</zip>
 			
 			<!-- zip the web deploy package -->
-			<zip zipfile="${publishdirectory}\BugNET-${build.number}-WebDeploy.zip">
+			<zip zipfile="${publishdirectory}\BugNETPro-${build.number}-WebDeploy.zip">
 				<fileset basedir="${build.dir}\dist\BugNET" prefix="BugNET">
 					<include name="**\*" />
 				</fileset>

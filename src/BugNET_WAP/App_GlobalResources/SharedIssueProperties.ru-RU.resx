@@ -136,7 +136,7 @@
     <value>Статус:</value>
   </data>
   <data name="PrivateLabel" xml:space="preserve">
-    <value>Скрытое задание:</value>
+    <value>Закрытое задание:</value>
   </data>
   <data name="ProgressLabel" xml:space="preserve">
     <value>Процент выполнения:</value>
@@ -185,14 +185,5 @@
   </data>
   <data name="NotifyCheckbox" xml:space="preserve">
     <value>Уведомлять</value>
-  </data>
-  <data name="IssueDescriptionLabel" xml:space="preserve">
-    <value>Описание:</value>
-  </data>
-  <data name="IssueTitleLabel" xml:space="preserve">
-    <value>Заголовок:</value>
-  </data>
-  <data name="NewIssueLiteral" xml:space="preserve">
-    <value>Новое задание</value>
   </data>
 </root>

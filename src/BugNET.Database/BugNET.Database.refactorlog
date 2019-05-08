@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="cc791438-8b81-473b-abbd-c49539adfef9" ChangeDateTime="02/16/2014 21:48:52">
+    <Property Name="ElementName" Value="[dbo].[BugNet_WikiContent].[CreatedByUserId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[BugNet_WikiContent]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CreatorUserId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="5a22520f-9b5e-4d61-b764-5dd56d19b0ab" ChangeDateTime="02/16/2014 21:51:59">
+    <Property Name="ElementName" Value="[dbo].[BugNet_WikiContent].[CreatorUserId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[BugNet_WikiContent]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserId" />
+  </Operation>
+</Operations>

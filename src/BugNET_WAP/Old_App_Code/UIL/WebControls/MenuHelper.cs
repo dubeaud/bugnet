@@ -31,7 +31,18 @@ namespace BugNET.UserInterfaceLayer.WebControls
                 oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/ProjectSummary/{0}", projectId), Resources.SharedResources.ProjectSummary, this));
                 oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/Roadmap/{0}", projectId), Resources.SharedResources.Roadmap,this));
                 oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/ChangeLog/{0}", projectId), Resources.SharedResources.ChangeLog, this));
-                oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/ProjectCalendar/{0}", projectId), Resources.SharedResources.Calendar, this));
+                oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/Projects/ProjectCalendar.aspx?pid={0}", projectId), Resources.SharedResources.Calendar, this));
+
+                //TODO: Add new permission and localize this 
+                var oItemReports = new SuckerMenuItem(string.Format("~/Reports/ReportList/{0}", projectId), "Reports", this);
+                //oItemReports.Items.Add(new SuckerMenuItem(string.Format("~/Reports/Burndown/{0}", projectId), "Milestone Burndown", this));
+                //oItemReports.Items.Add(new SuckerMenuItem(string.Format("~/Reports/IssueTrend/{0}", projectId), "Milestone Issue Trend", this));
+                //oItemReports.Items.Add(new SuckerMenuItem(string.Format("~/Reports/TimeLogged/{0}", projectId), "Time Logged", this));
+                //oItemReports.Items.Add(new SuckerMenuItem(string.Format("~/Reports/IssuesByPriority/{0}", projectId), "Issues By Priority", this));
+
+                Items.Add(oItemReports);
+
+                Items.Add(new SuckerMenuItem(string.Format("~/Wiki/Default.aspx?pid={0}", projectId), "Wiki", this));
 
                 if (!string.IsNullOrEmpty(ProjectManager.GetById(projectId).SvnRepositoryUrl))
                     oItemProject.Items.Add(new SuckerMenuItem(string.Format("~/SvnBrowse/SubversionBrowser.aspx?pid={0}", projectId), Resources.SharedResources.Repository, this));

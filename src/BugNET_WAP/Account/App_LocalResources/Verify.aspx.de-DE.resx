@@ -130,6 +130,6 @@
     <value>Ihr Konto wurde nicht während der ersten 7 Tage nach Registrierung aktiviert oder deaktiviert. Bitte kontaktieren Sie den Seitenadministrator für Fragen.</value>
   </data>
   <data name="AccountVerified" xml:space="preserve">
-    <value>Ihr Konto wurde verifiziert und aktiviert;  Sie können sich nun &lt;a href="Login.aspx"&gt;anmelden&lt;/a&gt;.</value>
+    <value>Ihr konto wurde verifiziert und aktiviert;  Sie können sich nun &lt;a href="Login.aspx"&gt;anmelden&lt;/a&gt;.</value>
   </data>
 </root>

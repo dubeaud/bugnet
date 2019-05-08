@@ -39,10 +39,16 @@ namespace BugNET.Account
                 if (user != null && user.IsApproved)
                 {
                     var profile = new WebProfile().GetProfile(UserName.Text.Trim());
-                    string token = GenerateToken();
-                    profile.PasswordVerificationToken = token;
-                    profile.PasswordVerificationTokenExpirationDate = DateTime.Now.AddMinutes(1440);
-                    profile.Save();
+                    string token = profile.PasswordVerificationToken;
+
+                    // Generate password reset token and store in the users profile
+                    if (string.IsNullOrWhiteSpace(token))
+                    {
+                        token = GenerateToken();
+                        profile.PasswordVerificationToken = token;
+                        profile.PasswordVerificationTokenExpirationDate = DateTime.Now.AddMinutes(1440);
+                        profile.Save();
+                    }
 
                     // Email the user the password reset token
                     UserManager.SendForgotPasswordEmail(user, token);

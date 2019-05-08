@@ -25,17 +25,17 @@ namespace BugNET.Providers.DataProviders
                     IssueTypeId = (int)returnData["DefaultType"],
                     StatusId = (int)returnData["StatusId"],
                     OwnerUserName = (string)returnData["OwnerUserName"],
-                    PriorityId = returnData["IssuePriorityId"] == DBNull.Value ? 1 : (int)returnData["IssuePriorityId"],
+                    PriorityId =  returnData["IssuePriorityId"] == DBNull.Value ? 1 : (int)returnData["IssuePriorityId"],
                     AffectedMilestoneId = returnData["IssueAffectedMilestoneId"] == DBNull.Value ? 1 : (int)returnData["IssueAffectedMilestoneId"],
                     IssueVisibility = returnData["IssueVisibility"] == DBNull.Value ? 0 : (int)returnData["IssueVisibility"],
-                    CategoryId = returnData["IssueCategoryId"] == DBNull.Value ? 0 : (int)returnData["IssueCategoryId"],
+                    CategoryId =  returnData["IssueCategoryId"] == DBNull.Value ? 0 : (int)returnData["IssueCategoryId"],
                     DueDate = returnData["IssueDueDate"] == DBNull.Value ? null : (int?)returnData["IssueDueDate"],
                     Progress = returnData["IssueProgress"] == DBNull.Value ? 0 : (int)returnData["IssueProgress"],
                     MilestoneId = returnData["IssueMilestoneId"] == DBNull.Value ? 0 : (int)returnData["IssueMilestoneId"],
                     Estimation = returnData["IssueEstimation"] == DBNull.Value ? 0 : (decimal)returnData["IssueEstimation"],
                     ResolutionId = returnData["IssueResolutionId"] == DBNull.Value ? 0 : (int)returnData["IssueResolutionId"],
-                    StatusVisibility = returnData["StatusVisibility"] == DBNull.Value ? true : (bool)returnData["StatusVisibility"],
-                    OwnedByVisibility = returnData["OwnedByVisibility"] == DBNull.Value ? true : (bool)returnData["OwnedByVisibility"],
+                    StatusVisibility= returnData["StatusVisibility"] == DBNull.Value ? true : (bool)returnData["StatusVisibility"],
+                    OwnedByVisibility =  returnData["OwnedByVisibility"] == DBNull.Value ? true : (bool)returnData["OwnedByVisibility"],
                     PriorityVisibility = returnData["PriorityVisibility"] == DBNull.Value ? true : (bool)returnData["PriorityVisibility"],
                     AssignedToVisibility = returnData["AssignedToVisibility"] == DBNull.Value ? true : (bool)returnData["AssignedToVisibility"],
                     PrivateVisibility = returnData["PrivateVisibility"] == DBNull.Value ? true : (bool)returnData["PrivateVisibility"],
@@ -61,7 +61,7 @@ namespace BugNET.Providers.DataProviders
                     ResolutionEditVisibility = returnData["ResolutionEditVisibility"] == DBNull.Value ? true : (bool)returnData["ResolutionEditVisibility"],
                     AffectedMilestoneEditVisibility = returnData["AffectedMilestoneEditVisibility"] == DBNull.Value ? true : (bool)returnData["AffectedMilestoneEditVisibility"],
                     AssignedToNotify = returnData["AssignedToNotify"] == DBNull.Value ? true : (bool)returnData["AssignedToNotify"],
-                    OwnedByNotify = returnData["OwnedByNotify"] == DBNull.Value ? true : (bool)returnData["OwnedByNotify"],
+                    OwnedByNotify =  returnData["OwnedByNotify"] == DBNull.Value ? true : (bool)returnData["OwnedByNotify"],
                     AssignedUserName = (string)returnData["AssignedUserName"]
                 };
 
@@ -82,10 +82,6 @@ namespace BugNET.Providers.DataProviders
             {
                 issueCommentList.Add(new IssueComment
                     {
-                        CreatorUser = new ITUser(returnData.GetGuid(returnData.GetOrdinal("CreatorUserId")),
-                                              returnData.GetString(returnData.GetOrdinal("CreatorUsername")),
-                                              returnData.GetString(returnData.GetOrdinal("CreatorDisplayName"))
-                                              ),
                         Id = returnData.GetInt32(returnData.GetOrdinal("IssueCommentId")),
                         Comment = returnData.GetString(returnData.GetOrdinal("Comment")),
                         DateCreated = returnData.GetDateTime(returnData.GetOrdinal("DateCreated")),
@@ -108,9 +104,9 @@ namespace BugNET.Providers.DataProviders
             {
                 var issueCount = new IssueCount(
                     returnData.GetValue(2),
-                    (string)returnData.GetValue(0),
-                    (int)returnData.GetValue(1),
-                    (string)returnData.GetValue(3)
+                    (string) returnData.GetValue(0),
+                    (int) returnData.GetValue(1),
+                    (string) returnData.GetValue(3)
                     );
                 issueCountList.Add(issueCount);
             }
@@ -139,7 +135,7 @@ namespace BugNET.Providers.DataProviders
         {
             while (returnData.Read())
             {
-                cultureCodes.Add((string)returnData["cultureCode"]);
+                cultureCodes.Add((string) returnData["cultureCode"]);
             }
         }
 
@@ -240,7 +236,7 @@ namespace BugNET.Providers.DataProviders
         {
             while (returnData.Read())
             {
-                var permission = new RolePermission((int)returnData["PermissionId"], (int)returnData["ProjectId"],
+                var permission = new RolePermission((int) returnData["PermissionId"], (int) returnData["ProjectId"],
                                                     returnData["RoleName"].ToString(),
                                                     returnData["PermissionName"].ToString(),
                                                     returnData["PermissionKey"].ToString());
@@ -258,7 +254,7 @@ namespace BugNET.Providers.DataProviders
         {
             while (returnData.Read())
             {
-                var permission = new Permission((int)returnData["PermissionId"],
+                var permission = new Permission((int) returnData["PermissionId"],
                                                 returnData["PermissionName"].ToString(),
                                                 returnData["PermissionKey"].ToString());
                 permissionList.Add(permission);
@@ -274,8 +270,8 @@ namespace BugNET.Providers.DataProviders
         {
             while (returnData.Read())
             {
-                var user = new ITUser((Guid)returnData["UserId"], (string)returnData["UserName"],
-                                      (string)returnData["DisplayName"], (string)returnData["Email"]);
+                var user = new ITUser((Guid) returnData["UserId"], (string) returnData["UserName"],
+                                      (string) returnData["DisplayName"]);
                 userList.Add(user);
             }
         }
@@ -297,8 +293,9 @@ namespace BugNET.Providers.DataProviders
                         CreatorUserName = returnData.GetString(returnData.GetOrdinal("CreatorUserName")),
                         CreatorDisplayName = returnData.GetString(returnData.GetOrdinal("CreatorDisplayName")),
                         AllowAttachments = returnData.GetBoolean(returnData.GetOrdinal("AllowAttachments")),
-                        AccessType = (ProjectAccessType)returnData["ProjectAccessType"],
+                        AccessType = (ProjectAccessType) returnData["ProjectAccessType"],
                         AllowIssueVoting = returnData.GetBoolean(returnData.GetOrdinal("AllowIssueVoting")),
+                        AttachmentStorageType = (IssueAttachmentStorageTypes) returnData["AttachmentStorageType"],
                         Code = returnData.GetString(returnData.GetOrdinal("ProjectCode")),
                         Disabled = returnData.GetBoolean(returnData.GetOrdinal("ProjectDisabled")),
                         ManagerDisplayName = returnData.GetString(returnData.GetOrdinal("ManagerDisplayName")),
@@ -325,14 +322,14 @@ namespace BugNET.Providers.DataProviders
                 bool found = false;
                 for (i = 0; i < memberRoleList.Count; i++)
                 {
-                    if (!memberRoleList[i].Username.Equals((string)returnData.GetValue(0))) continue;
-                    memberRoleList[i].AddRole((string)returnData.GetValue(1));
+                    if (!memberRoleList[i].Username.Equals((string) returnData.GetValue(0))) continue;
+                    memberRoleList[i].AddRole((string) returnData.GetValue(1));
                     found = true;
                 }
 
                 if (found) continue;
 
-                var memberRoles = new MemberRoles((string)returnData.GetValue(0), (string)returnData.GetValue(1));
+                var memberRoles = new MemberRoles((string) returnData.GetValue(0), (string) returnData.GetValue(1));
                 memberRoleList.Add(memberRoles);
             }
         }
@@ -444,7 +441,7 @@ namespace BugNET.Providers.DataProviders
                         FieldName = returnData["FieldName"].ToString(),
                         ComparisonOperator = returnData["ComparisonOperator"].ToString(),
                         FieldValue = returnData["FieldValue"].ToString(),
-                        DataType = (SqlDbType)returnData["DataType"]
+                        DataType = (SqlDbType) returnData["DataType"]
                     };
 
                 if (!returnData.IsDBNull(returnData.GetOrdinal("CustomFieldId")))
@@ -505,8 +502,6 @@ namespace BugNET.Providers.DataProviders
                         IssueId = returnData.GetInt32(returnData.GetOrdinal("IssueId")),
                         Resolution = DefaultIfNull(returnData["IssueResolution"], string.Empty),
                         Status = DefaultIfNull(returnData["IssueStatus"], string.Empty),
-                        StatusName = DefaultIfNull(returnData["StatusName"], string.Empty),
-                        StatusImageUrl = DefaultIfNull(returnData["StatusImageUrl"], string.Empty),
                         Title = returnData.GetString(returnData.GetOrdinal("IssueTitle"))
                     };
 
@@ -604,8 +599,6 @@ namespace BugNET.Providers.DataProviders
                         Id = returnData.GetInt32(returnData.GetOrdinal("ProjectMailboxId")),
                         IssueTypeId = returnData.GetInt32(returnData.GetOrdinal("IssueTypeId")),
                         IssueTypeName = returnData.GetString(returnData.GetOrdinal("IssueTypeName")),
-                        CategoryId = DefaultIfNull(returnData["CategoryId"], 0),
-                        CategoryName = DefaultIfNull(returnData["CategoryName"], string.Empty),
                         Mailbox = returnData.GetString(returnData.GetOrdinal("Mailbox")),
                         ProjectId = returnData.GetInt32(returnData.GetOrdinal("ProjectId"))
                     };
@@ -649,33 +642,11 @@ namespace BugNET.Providers.DataProviders
                         Id = returnData.GetInt32(returnData.GetOrdinal("CustomFieldId")),
                         ProjectId = returnData.GetInt32(returnData.GetOrdinal("ProjectId")),
                         Name = returnData.GetString(returnData.GetOrdinal("CustomFieldName")),
-                        DataType = (ValidationDataType)returnData["CustomFieldDataType"],
-                        FieldType = (CustomFieldType)returnData["CustomFieldTypeId"],
+                        DataType = (ValidationDataType) returnData["CustomFieldDataType"],
+                        FieldType = (CustomFieldType) returnData["CustomFieldTypeId"],
                         Required = returnData.GetBoolean(returnData.GetOrdinal("CustomFieldRequired")),
                         Value = returnData.GetString(returnData.GetOrdinal("CustomFieldValue")),
                     });
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate user custom field list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="customFieldList">The custom field list.</param>
-        private static void GenerateUserCustomFieldListFromReader(IDataReader returnData,
-                                                              ref List<UserCustomField> customFieldList)
-        {
-            while (returnData.Read())
-            {
-                customFieldList.Add(new UserCustomField
-                {
-                    Id = returnData.GetInt32(returnData.GetOrdinal("CustomFieldId")),
-                    Name = returnData.GetString(returnData.GetOrdinal("CustomFieldName")),
-                    DataType = (ValidationDataType)returnData["CustomFieldDataType"],
-                    FieldType = (CustomFieldType)returnData["CustomFieldTypeId"],
-                    Required = returnData.GetBoolean(returnData.GetOrdinal("CustomFieldRequired")),
-                    Value = returnData.GetString(returnData.GetOrdinal("CustomFieldValue")),
-                });
             }
         }
 
@@ -698,28 +669,6 @@ namespace BugNET.Providers.DataProviders
                         Name = returnData.GetString(returnData.GetOrdinal("CustomFieldSelectionName")),
                         SortOrder = returnData.GetInt32(returnData.GetOrdinal("CustomFieldSelectionSortOrder")),
                     });
-            }
-        }
-
-        /// <summary>
-        /// Ts the generate custom field selection list from reader.
-        /// </summary>
-        /// <param name="returnData">The return data.</param>
-        /// <param name="customFieldSelectionList">The custom field list.</param>
-        private static void GenerateUserCustomFieldSelectionListFromReader(IDataReader returnData,
-                                                                       ref List<UserCustomFieldSelection>
-                                                                           customFieldSelectionList)
-        {
-            while (returnData.Read())
-            {
-                customFieldSelectionList.Add(new UserCustomFieldSelection
-                {
-                    Id = returnData.GetInt32(returnData.GetOrdinal("CustomFieldSelectionId")),
-                    CustomFieldId = returnData.GetInt32(returnData.GetOrdinal("CustomFieldId")),
-                    Value = returnData.GetString(returnData.GetOrdinal("CustomFieldSelectionValue")),
-                    Name = returnData.GetString(returnData.GetOrdinal("CustomFieldSelectionName")),
-                    SortOrder = returnData.GetInt32(returnData.GetOrdinal("CustomFieldSelectionSortOrder")),
-                });
             }
         }
 
@@ -801,14 +750,14 @@ namespace BugNET.Providers.DataProviders
             {
                 var newAppLog = new ApplicationLog
                     {
-                        Id = (int)returnData["Id"],
-                        Date = (DateTime)returnData["Date"],
-                        Thread = (string)returnData["Thread"],
-                        Level = (string)returnData["Level"],
-                        User = (string)returnData["User"],
-                        Logger = (string)returnData["Logger"],
-                        Message = (string)returnData["Message"],
-                        Exception = (string)returnData["Exception"]
+                        Id = (int) returnData["Id"],
+                        Date = (DateTime) returnData["Date"],
+                        Thread = (string) returnData["Thread"],
+                        Level = (string) returnData["Level"],
+                        User = (string) returnData["User"],
+                        Logger = (string) returnData["Logger"],
+                        Message = (string) returnData["Message"],
+                        Exception = (string) returnData["Exception"]
                     };
 
                 applicationLogList.Add(newAppLog);
@@ -832,10 +781,6 @@ namespace BugNET.Providers.DataProviders
                         returnData.GetString(returnData.GetOrdinal("AssignedDisplayName")),
                     AssignedUserId = DefaultIfNull(returnData["IssueAssignedUserId"], Guid.Empty),
                     AssignedUserName = returnData.GetString(returnData.GetOrdinal("AssignedUserName")),
-                    AssignedUser = new ITUser(DefaultIfNull(returnData["IssueAssignedUserId"], Guid.Empty),
-                                              returnData.GetString(returnData.GetOrdinal("AssignedUserName")),
-                                              returnData.GetString(returnData.GetOrdinal("AssignedDisplayName"))                                              
-                                              ),
                     CategoryId = DefaultIfNull(returnData["IssueCategoryId"], 0),
                     CategoryName = returnData.GetString(returnData.GetOrdinal("CategoryName")),
                     CreatorDisplayName = returnData.GetString(returnData.GetOrdinal("CreatorDisplayName")),
@@ -903,7 +848,7 @@ namespace BugNET.Providers.DataProviders
         {
             if (value == DBNull.Value) return defaultValue;
 
-            return (T)value;
+            return (T) value;
         }
     }
 }

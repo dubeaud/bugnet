@@ -153,7 +153,4 @@
   <data name="UpdateSettings" xml:space="preserve">
     <value>Update Settings</value>
   </data>
-  <data name="UserCustomFields" xml:space="preserve">
-    <value>Custom User Fields</value>
-  </data>
 </root>

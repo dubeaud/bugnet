@@ -156,7 +156,4 @@
   <data name="POP3ProcessAttachments" xml:space="preserve">
     <value>Process Attachments</value>
   </data>
-  <data name="POP3AllowReplyTo" xml:space="preserve">
-    <value>Permitir responder a notificaciones</value>
-  </data>
 </root>

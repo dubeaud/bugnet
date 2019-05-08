@@ -145,9 +145,9 @@
     <value>Add Attachment</value>
   </data>
   <data name="DescriptionLabel.Text" xml:space="preserve">
-    <value>Description</value>
+    <value>Description:</value>
   </data>
   <data name="FileLabel.Text" xml:space="preserve">
-    <value>File</value>
+    <value>File:</value>
   </data>
 </root>

@@ -24,6 +24,7 @@ namespace BugNET.Entities
             Description = string.Empty;
             Name = string.Empty;
             UploadPath = string.Empty;
+            AttachmentStorageType = IssueAttachmentStorageTypes.None;
             AccessType = ProjectAccessType.None;
         }
 
@@ -51,10 +52,10 @@ namespace BugNET.Entities
         public bool AllowIssueVoting { get; set; }
 
 
-        ///// <summary>
-        ///// Gets or sets the type of the attachment storage.
-        ///// </summary>
-        ///// <value>The type of the attachment storage.</value>
+        /// <summary>
+        /// Gets or sets the type of the attachment storage.
+        /// </summary>
+        /// <value>The type of the attachment storage.</value>
         public IssueAttachmentStorageTypes AttachmentStorageType { get; set; }
 
         /// <summary>

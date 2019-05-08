@@ -193,15 +193,6 @@ namespace BugNET.Administration.Users {
         protected global::System.Web.UI.WebControls.RegularExpressionValidator regexEmailValid;
         
         /// <summary>
-        /// ctlUserCustomFields control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::BugNET.UserControls.DisplayUserCustomFields ctlUserCustomFields;
-        
-        /// <summary>
         /// Literal1 control.
         /// </summary>
         /// <remarks>

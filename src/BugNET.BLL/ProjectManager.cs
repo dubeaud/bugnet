@@ -25,7 +25,6 @@ namespace BugNET.BLL
             if (entity.Id > 0)
                 return (Update(entity));
 
-            entity.UploadPath = Guid.NewGuid().ToString();
             var tempId = DataProviderManager.Provider.CreateNewProject(entity);
             if (tempId <= Globals.NEW_ID)
                 return false;
@@ -33,6 +32,11 @@ namespace BugNET.BLL
             entity.Id = tempId;
 
             CustomFieldManager.UpdateCustomFieldView(entity.Id);
+
+            // Insert new Wiki content for the new project
+            WikiManager.Save(entity.Id, 0, HttpContext.GetGlobalResourceObject("SharedResources", "WikiHome").ToString().ToLower(), 
+                HttpContext.GetGlobalResourceObject("SharedResources", "WikiHome").ToString(), 
+                HttpContext.GetGlobalResourceObject("SharedResources", "WikiHomePageContent").ToString(), Security.GetUserName());
 
             try
             {
@@ -50,14 +54,10 @@ namespace BugNET.BLL
             }
 
             //create attachment directory
-            if (HostSettingManager.Get(HostSettingNames.AttachmentStorageType, 0) == (int)IssueAttachmentStorageTypes.FileSystem)
+            if (entity.AttachmentStorageType == IssueAttachmentStorageTypes.FileSystem)
             {
-                var uploadPath = string.Concat(HostSettingManager.Get(HostSettingNames.AttachmentUploadPath), entity.UploadPath);
-                if(uploadPath.StartsWith("~"))
-                {
-                    uploadPath = HttpContext.Current.Server.MapPath(uploadPath);
-                }
-
+                var uploadPath = string.Concat("~", Globals.UPLOAD_FOLDER, entity.UploadPath);
+                var fullUploadPath = HttpContext.Current.Server.MapPath(uploadPath);
 
                 try
                 {
@@ -66,14 +66,14 @@ namespace BugNET.BLL
                     if (!Utilities.CheckUploadPath(uploadPath))
                         throw new InvalidDataException(LoggingManager.GetErrorMessageResource("UploadPathInvalid"));
 
-                    Directory.CreateDirectory(uploadPath);
+                    Directory.CreateDirectory(fullUploadPath);
                 }
                 catch (Exception ex)
                 {
                     if (Log.IsErrorEnabled)
                         Log.Error(
                             string.Format(
-                                LoggingManager.GetErrorMessageResource("CouldNotCreateUploadDirectory"), uploadPath), ex);
+                                LoggingManager.GetErrorMessageResource("CouldNotCreateUploadDirectory"), fullUploadPath), ex);
                     return false;
                 }
             }
@@ -251,13 +251,8 @@ namespace BugNET.BLL
                 try
                 {
 
-                    uploadpath = string.Concat(HostSettingManager.Get(HostSettingNames.AttachmentUploadPath), uploadpath);
-                    if(uploadpath.StartsWith("~"))
-                    {
-                        uploadpath = HttpContext.Current.Server.MapPath(uploadpath);
-                    }
-
-                    Directory.Delete(uploadpath, true);
+                    uploadpath = string.Concat("~", Globals.UPLOAD_FOLDER, uploadpath);
+                    Directory.Delete(HttpContext.Current.Server.MapPath(uploadpath), true);
                 }
                 catch (Exception ex)
                 {
@@ -311,20 +306,14 @@ namespace BugNET.BLL
 
                 try
                 {
-                    if (newProject.AllowAttachments && HostSettingManager.Get(HostSettingNames.AttachmentStorageType, 0) == (int)IssueAttachmentStorageTypes.FileSystem)
+                    if (newProject.AllowAttachments && newProject.AttachmentStorageType == IssueAttachmentStorageTypes.FileSystem)
                     {
-                        // set upload path to new Guid
+                        // Old bugfix which wasn't carried forward.
                         newProject.UploadPath = Guid.NewGuid().ToString();
 
                         DataProviderManager.Provider.UpdateProject(newProject);
 
-                        var fullPath = string.Concat(HostSettingManager.Get(HostSettingNames.AttachmentUploadPath), newProject.UploadPath);
-
-                        if (fullPath.StartsWith("~"))
-                        {
-                            fullPath = HttpContext.Current.Server.MapPath(fullPath);
-                        }
-
+                        var fullPath = HttpContext.Current.Server.MapPath(string.Concat("~", Globals.UPLOAD_FOLDER, newProject.UploadPath));
                         Directory.CreateDirectory(fullPath);
                     }
                 }
@@ -333,9 +322,7 @@ namespace BugNET.BLL
                     if (Log.IsErrorEnabled)
                         Log.Error(string.Format(LoggingManager.GetErrorMessageResource("CreateProjectUploadFolderError"), newProject.UploadPath, projectId), ex);
                 }
-
                 HttpContext.Current.Cache.Remove("RolePermission");
-
                 return newProjectId;
             }
 
@@ -376,50 +363,49 @@ namespace BugNET.BLL
         {
             var p = GetById(entity.Id);
 
-            //if (entity.AttachmentStorageType == IssueAttachmentStorageTypes.FileSystem && p.UploadPath != entity.UploadPath)
-            //{
-            //    // BGN-1909
-            //    // Better santization of Upload Paths
-            //    var currentPath = string.Concat("~", Globals.UPLOAD_FOLDER, p.UploadPath.Trim());
-            //    var currentFullPath = HttpContext.Current.Server.MapPath(currentPath);
+            if (entity.AttachmentStorageType == IssueAttachmentStorageTypes.FileSystem && p.UploadPath != entity.UploadPath)
+            {
+                // BGN-1909
+                // Better santization of Upload Paths
+                var currentPath = string.Concat("~", Globals.UPLOAD_FOLDER, p.UploadPath.Trim());
+                var currentFullPath = HttpContext.Current.Server.MapPath(currentPath);
 
-            //    var newPath = string.Concat("~", Globals.UPLOAD_FOLDER, entity.UploadPath.Trim());
-            //    var newFullPath = HttpContext.Current.Server.MapPath(newPath);
+                var newPath = string.Concat("~", Globals.UPLOAD_FOLDER, entity.UploadPath.Trim());
+                var newFullPath = HttpContext.Current.Server.MapPath(newPath);
 
-            //    // WARNING: When editing an invalid path, and trying to make it valid, 
-            //    // you will still get an error. This is because the Directory.Move() call 
-            //    // can traverse directories! Maybe we should allow the database to change, 
-            //    // but not change the file system?
-            //    var isPathNorty = !Utilities.CheckUploadPath(currentPath);
+                // WARNING: When editing an invalid path, and trying to make it valid, 
+                // you will still get an error. This is because the Directory.Move() call 
+                // can traverse directories! Maybe we should allow the database to change, 
+                // but not change the file system?
+                var isPathNorty = !Utilities.CheckUploadPath(currentPath);
 
-            //    if (!Utilities.CheckUploadPath(newPath))
-            //        isPathNorty = true;
+                if (!Utilities.CheckUploadPath(newPath))
+                    isPathNorty = true;
 
-            //    if (isPathNorty)
-            //    {
-            //        // something bad is going on. DONT even File.Exist()!!
-            //        if (Log.IsErrorEnabled)
-            //            Log.Error(string.Format(LoggingManager.GetErrorMessageResource("CouldNotCreateUploadDirectory"), newFullPath));
+                if (isPathNorty)
+                {
+                    // something bad is going on. DONT even File.Exist()!!
+                    if (Log.IsErrorEnabled)
+                        Log.Error(string.Format(LoggingManager.GetErrorMessageResource("CouldNotCreateUploadDirectory"), newFullPath));
 
-            //        return false;
-            //    }
+                    return false;
+                }
 
-            //    try
-            //    {
-            //        // BGN-1878 Upload path not recreated when user fiddles with a project setting
-            //        if (File.Exists(currentFullPath))
-            //            Directory.Move(currentFullPath, newFullPath);
-            //        else
-            //            Directory.CreateDirectory(newFullPath);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        if (Log.IsErrorEnabled)
-            //            Log.Error(string.Format(LoggingManager.GetErrorMessageResource("CouldNotCreateUploadDirectory"), newFullPath), ex);
-            //        return false;
-            //    }
-            //}
-
+                try
+                {
+                    // BGN-1878 Upload path not recreated when user fiddles with a project setting
+                    if (File.Exists(currentFullPath))
+                        Directory.Move(currentFullPath, newFullPath);
+                    else
+                        Directory.CreateDirectory(newFullPath);
+                }
+                catch (Exception ex)
+                {
+                    if (Log.IsErrorEnabled)
+                        Log.Error(string.Format(LoggingManager.GetErrorMessageResource("CouldNotCreateUploadDirectory"), newFullPath), ex);
+                    return false;
+                }
+            }
             return DataProviderManager.Provider.UpdateProject(entity);
 
         }

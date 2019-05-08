@@ -34,10 +34,6 @@ namespace BugNET.Administration.Users
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            //need to rebind these on every postback because of dynamic controls
-            ctlUserCustomFields.DataSource = UserCustomFieldManager.GetAll();
-            ctlUserCustomFields.DataBind();
-
             if (Page.IsPostBack) return;
 
             ResetForNewUser();
@@ -103,11 +99,6 @@ namespace BugNET.Administration.Users
                     {
                         RoleManager.AddUser(mu.UserName, r.Id);
                     }
-                }
-                
-                if (!UserCustomFieldManager.SaveCustomFieldValues((Guid)mu.ProviderUserKey, ctlUserCustomFields.Values))
-                {
-                    throw new Exception(Resources.Exceptions.SaveCustomFieldValuesError);
                 }
 
                 ResetForNewUser();

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Security.Permissions;
 using System.Threading;
 using System.Web.Script.Serialization;
@@ -9,7 +10,10 @@ using System.Web.Services;
 using BugNET.BLL;
 using BugNET.Common;
 using BugNET.Entities;
-using BugNET;
+using BugNET.UserInterfaceLayer.Wiki;
+using WikiPlex;
+using WikiPlex.Formatting;
+using WikiPlex.Formatting.Renderers;
 
 namespace BugNET.Webservices
 {
@@ -237,45 +241,6 @@ namespace BugNET.Webservices
         }
 
         /// <summary>
-        /// Populates the nodes.
-        /// </summary>
-        /// <param name="list">The list.</param>
-        /// <param name="nodes">The nodes.</param>
-        //private void PopulateNodes(List<Category> list, List<JsTreeNode> nodes)
-        //{
-
-        //    foreach (Category c in list)
-        //    {
-        //        JsTreeNode cnode = new JsTreeNode();
-        //        cnode.attr = new Attributes();
-        //        cnode.attr.id = Convert.ToString(c.Id);
-        //        cnode.attr.rel = "cat" + Convert.ToString(c.Id);
-        //        cnode.data = new Data();
-        //        cnode.data.title = Convert.ToString(c.Name);
-        //        cnode.data.icon = "../../images/plugin.gif";
-        //        //cnode.attributes.mdata = "{ draggable : true, max_children : 100, max_depth : 100 }";
-
-        //        nodes.Add(cnode);
-
-        //        if (c.ChildCount > 0)
-        //        {
-
-        //            PopulateSubLevel(c.Id, cnode);
-        //        }
-        //    }
-        //}
-
-        /// <summary>
-        /// Populates the sub level.
-        /// </summary>
-        /// <param name="parentid">The parentid.</param>
-        /// <param name="parentNode">The parent node.</param>
-        //private void PopulateSubLevel(int parentid, JsTreeNode parentNode)
-        //{
-        //    PopulateNodes(CategoryManager.GetChildCategoriesByCategoryId(parentid), parentNode.children);
-        //}
-
-        /// <summary>
         /// Adds the Category.
         /// </summary>
         /// <param name="projectId">The project id.</param>
@@ -500,12 +465,6 @@ namespace BugNET.Webservices
             return project.Id;
         }
 
-        /// <summary>
-        /// Gets the project issues.
-        /// </summary>
-        /// <param name="ProjectId">The project id.</param>
-        /// <param name="Filter">The filter.</param>
-        /// <returns></returns>
         [PrincipalPermission(SecurityAction.Demand, Authenticated = true)]
         [WebMethod(EnableSession = true)]
         public object[] GetProjectIssues(int ProjectId, string Filter)
@@ -582,6 +541,46 @@ namespace BugNET.Webservices
         #endregion
 
 
+        #region Wiki Methods
+        /// <summary>
+        /// Gets the wiki source.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="slug">The slug.</param>
+        /// <param name="version">The version.</param>
+        /// <returns></returns>
+        [WebMethod]
+        public string GetWikiSource(int id, string slug, int version)
+        {
+            WikiContent content = WikiManager.GetByVersion(id, version);
+            return content.Source;
+        }
+
+        /// <summary>
+        /// Gets the wiki preview.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="slug">The slug.</param>
+        /// <param name="source">The source.</param>
+        /// <returns></returns>
+        [WebMethod]
+        public string GetWikiPreview(int projectId, int id, string slug, string source)
+        {
+            var wikiEngine = new WikiEngine();
+            return wikiEngine.Render(source, GetFormatter(projectId));
+        }
+
+        /// <summary>
+        /// Gets the formatter.
+        /// </summary>
+        /// <returns></returns>
+        private static Formatter GetFormatter(int projectId)
+        {
+            var siteRenderers = new IRenderer[] { new IssueLinkRenderer(), new TitleLinkRenderer(projectId)  };
+            IEnumerable<IRenderer> allRenderers = Renderers.All.Union(siteRenderers);
+            return new Formatter(allRenderers);
+        }
+        #endregion
 
     }
 }

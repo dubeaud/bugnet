@@ -49,22 +49,6 @@
         private const string SP_ROLE_UPDATEROLE = "BugNet_Role_UpdateRole";
         private const string SP_ROLE_CREATE = "BugNet_Role_CreateNewRole";
 
-        //User - CustomFields & Selection Procs
-        private const string SP_USERCUSTOMFIELD_GETCUSTOMFIELDBYID = "BugNet_UserCustomField_GetCustomFieldById";
-        private const string SP_USERCUSTOMFIELD_GETCUSTOMFIELDS = "BugNet_UserCustomField_GetCustomFields";
-        private const string SP_USERCUSTOMFIELD_GETUSERCUSTOMFIELDSBYUSERID = "BugNet_UserCustomField_GetCustomFieldsByUserId";
-        private const string SP_USERCUSTOMFIELD_CREATE = "BugNet_UserCustomField_CreateNewCustomField";
-        private const string SP_USERCUSTOMFIELD_UPDATE = "BugNet_UserCustomField_UpdateCustomField";
-        private const string SP_USERCUSTOMFIELD_DELETE = "BugNet_UserCustomField_DeleteCustomField";
-        private const string SP_USERCUSTOMFIELD_SAVECUSTOMFIELDVALUE = "BugNet_UserCustomField_SaveCustomFieldValue";
-
-        private const string SP_USERCUSTOMFIELDSELECTION_CREATE = "BugNet_UserCustomFieldSelection_CreateNewCustomFieldSelection";
-        private const string SP_USERCUSTOMFIELDSELECTION_DELETE = "BugNet_UserCustomFieldSelection_DeleteCustomFieldSelection";
-        private const string SP_USERCUSTOMFIELDSELECTION_GETCUSTOMFIELDSELECTIONSBYCUSTOMFIELDID = "BugNet_UserCustomFieldSelection_GetCustomFieldSelectionsByCustomFieldId";
-        private const string SP_USERCUSTOMFIELDSELECTION_GETCUSTOMFIELDSELECTIONBYID = "BugNet_UserCustomFieldSelection_GetCustomFieldSelectionById";
-        private const string SP_USERCUSTOMFIELDSELECTION_UPDATE = "BugNet_UserCustomFieldSelection_Update";
-        //private const string SP_USERCUSTOMFIELDSELECTION_GETCUSTOMFIELDSELECTION = "BugNet_UserCustomFieldSelection_GetCustomFieldSelection";
-
         //Issue Stored Procs
         private const string SP_ISSUE_CREATE = "BugNet_Issue_CreateNewIssue";
         private const string SP_ISSUE_UPDATE = "BugNet_Issue_UpdateIssue";

@@ -131,6 +131,9 @@ namespace BugNET
 				if (!Context.User.Identity.IsAuthenticated || !UserManager.HasPermission(p.Id, Common.Permission.AdminEditProject.ToString()))
 					e.Item.FindControl("Settings").Visible = false;
 
+                if (!Context.User.Identity.IsAuthenticated ||  !UserManager.HasPermission(p.Id, Common.Permission.ViewWiki.ToString()))
+                    e.Item.FindControl("Wiki").Visible = false;
+
 				Image ProjectImage = (Image)e.Item.FindControl("ProjectImage");				 
 				ProjectImage.ImageUrl = string.Format("~/DownloadAttachment.axd?id={0}&mode=project",p.Id);
 				
