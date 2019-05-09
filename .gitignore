@@ -191,3 +191,4 @@ FakesAssemblies/
 !.build/*.*
 /src/.vs/config/applicationhost.config
 /src/.vs/BugNET_WAP
+/src/.vs/BugNET/v15/Server/sqlite3
