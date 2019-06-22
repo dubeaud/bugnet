@@ -65,7 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\BugNET.Common\BugNET.Common.csproj">
-      <Project>{69F2F661-AA9A-4C9F-8217-6A22E8C66FEB}</Project>
+      <Project>{69f2f661-aa9a-4c9f-8217-6a22e8c66feb}</Project>
       <Name>BugNET.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\BugNET.DAL\BugNET.DAL.csproj">

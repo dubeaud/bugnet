@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using BugNET.BLL;
+﻿using BugNET.BLL;
 using BugNET.Entities;
-using System.Web.Security;
-using BugNET.Providers.MembershipProviders;
+using System;
+using System.Collections.Generic;
 
 namespace IssueGenerator.Helpers
 {

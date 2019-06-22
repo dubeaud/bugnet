@@ -11,9 +11,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>IssueGenerator</RootNamespace>
     <AssemblyName>IssueGenerator</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -23,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,6 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
@@ -57,23 +60,23 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BugNET.BLL\BugNET.BLL.csproj">
-      <Project>{001B5C78-CC5E-4DB6-A03A-EAAE1D558D2C}</Project>
+      <Project>{001b5c78-cc5e-4db6-a03a-eaae1d558d2c}</Project>
       <Name>BugNET.BLL</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\BugNET.DAL\BugNET.DAL.csproj">
-      <Project>{EFD03A92-584B-4930-9FB1-58DF64BF7FD4}</Project>
+      <Project>{efd03a92-584b-4930-9fb1-58df64bf7fd4}</Project>
       <Name>BugNET.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\BugNET.Entities\BugNET.Entities.csproj">
-      <Project>{5A0AE67B-1F8C-4A6D-A02B-B57BB219288F}</Project>
+      <Project>{5a0ae67b-1f8c-4a6d-a02b-b57bb219288f}</Project>
       <Name>BugNET.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Library\Providers\DataProviders\SqlDataProvider\Provider.SqlDataProvider.csproj">
-      <Project>{DF8C87FA-3398-4AEE-99B0-D47F1831C158}</Project>
+      <Project>{df8c87fa-3398-4aee-99b0-d47f1831c158}</Project>
       <Name>Provider.SqlDataProvider</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Library\Providers\MembershipProviders\Provider.MembershipProviders.csproj">
-      <Project>{6B8EBBE2-196F-4F79-BC2F-918FC0AF3D67}</Project>
+      <Project>{6b8ebbe2-196f-4f79-bc2f-918fc0af3d67}</Project>
       <Name>Provider.MembershipProviders</Name>
     </ProjectReference>
   </ItemGroup>
